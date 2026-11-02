@@ -239,8 +239,8 @@
     },
     {
       "path": "app/zhiyu/app.tsx",
-      "bytes": 125719,
-      "sha256": "bc295499333ddd071cc0d6a6f46d373796bad74c21261aaa2fc92e1803ee1bc2"
+      "bytes": 125520,
+      "sha256": "885b332828c338adaef580d87371f97129dad5bcef585ce6cd1575bae4d05127"
     },
     {
       "path": "app/zhiyu/application-shell.tsx",
@@ -381,6 +381,11 @@
       "path": "app/zhiyu/desktop-bridge.ts",
       "bytes": 2031,
       "sha256": "8d576ca0d9cab8cb069f7a62211e12c7233164a99424f1c3b60d0e3746380177"
+    },
+    {
+      "path": "app/zhiyu/directory-divider.tsx",
+      "bytes": 1673,
+      "sha256": "469e60b38307a5ef8cedd24570aa443c5fef83bb6ed2dc330b30b19313350d51"
     },
     {
       "path": "app/zhiyu/dual-preview.css",
@@ -634,8 +639,8 @@
     },
     {
       "path": "app/zhiyu/pets.tsx",
-      "bytes": 16246,
-      "sha256": "667f3db85ae7fcd15ca46669ab7c4a51342c640666c5e03cd6f8dd9658b1d9b7"
+      "bytes": 15741,
+      "sha256": "f8728a53b6ead28ef660286d8a86b9a573aa2fc2f2b4c1aa05ba108e90e0fe10"
     },
     {
       "path": "app/zhiyu/pressable-icon-button.css",
@@ -699,13 +704,13 @@
     },
     {
       "path": "app/zhiyu/rail-navigation.css",
-      "bytes": 1683,
-      "sha256": "e7e343b5209c5a80f4b35a100b8c853586b8ca8adaf77a9c758acffbb6ac7406"
+      "bytes": 2244,
+      "sha256": "e305ae3fdbca5e6b82e4683e004ce71ea3d9e66374dcaa7a78e28b9b54b12535"
     },
     {
       "path": "app/zhiyu/rail-navigation.tsx",
-      "bytes": 425,
-      "sha256": "a832010b486456d6f95285630f2afb2dcda7e4a050216809ddb01d62171930df"
+      "bytes": 602,
+      "sha256": "f952d0329a57ee6a7057f65d47ed16477046ca5a1e3a1ca6963b9b4b9953aaac"
     },
     {
       "path": "app/zhiyu/realtime-speech-settings.css",
@@ -734,8 +739,8 @@
     },
     {
       "path": "app/zhiyu/refinements.css",
-      "bytes": 21435,
-      "sha256": "162ec5b3d144ac813cde5a9b4f69916c0e503f4ea55a907342de97fd3354c267"
+      "bytes": 21697,
+      "sha256": "06aa910231f9c5a038dd93eee49467d2627f90ab0a9c0e2ea583ebdd27509db0"
     },
     {
       "path": "app/zhiyu/relationship-dashboard.css",
@@ -794,13 +799,13 @@
     },
     {
       "path": "app/zhiyu/task-board/task-board.css",
-      "bytes": 9717,
-      "sha256": "41c389dbff60bd640cb19df66ce4089112ca327a67a88281ceb8d18068d46d4a"
+      "bytes": 9565,
+      "sha256": "b39de5a312fd5855478374a7fa8b6e799fa8e8ae134bf7d166be30a4046ec634"
     },
     {
       "path": "app/zhiyu/task-board/task-board.tsx",
-      "bytes": 11870,
-      "sha256": "ab6f81ad6e4958c9420978a385d4198f043f6a077bea2686f02d9b3ec4134390"
+      "bytes": 12166,
+      "sha256": "1edb5791d8a7b394c57d5ad55aafab7f63989a5e507ccd06ede151240145ac58"
     },
     {
       "path": "app/zhiyu/task-board/task-components.css",

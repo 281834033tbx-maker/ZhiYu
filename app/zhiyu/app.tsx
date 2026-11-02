@@ -9,6 +9,8 @@ import {hideMessage, isMessageHidden, useMessageVisibility} from './message-visi
 import LocalChatHeader from './local-chat-header';
 import ChatAddMenu from './chat-add-menu';
 import TaskBoard from './task-board/task-board';
+import {useTaskBoard} from './task-board/use-task-board';
+import DirectoryDivider from './directory-divider';
 import type {Task as BoardTask} from './task-board/types';
 import {taskPageContextFor} from './task-board/task-context';
 import {refreshTaskCompletions} from './task-completion-sync';
@@ -16,7 +18,7 @@ import {shanghaiToday,taskCalendarRange,taskItemsForDate} from './task-items';
 import {openTaskCalendarWindow, bindTaskCalendarWindowLifecycle} from './task-calendar-window';
 import {ingestProfessionalTasks} from './professional-task-store';
 import AppSettings from './app-settings';
-import RailNavigation from './rail-navigation';
+import RailNavigation, {RailNotificationDot} from './rail-navigation';
 import LiquidBasePlate from './liquid-base-plate';
 import RelationshipDashboard from './relationship-dashboard';
 import ProfessionalProfile from './professional-profile';
@@ -443,6 +445,8 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
   const [page, setPage] = useState<Page>('chat');
   const [selected, setSelected] = useState('');
   const [taskConversation, setTaskConversation] = useState<{npcId:string;task:BoardTask}|null>(null);
+  const taskBoard=useTaskBoard(account.id);
+  const hasTaskInProgress=taskBoard.ready&&taskBoard.model.tasks.some(task=>task.date===taskBoard.model.today&&task.status==='in_progress');
   useEffect(()=>{setTaskConversation(null);},[account.id]);
   const receivedSecretaryGroups=useRef(new Set<string>());
   const [displayPet, setDisplayPet] = useState<DisplayPet | null>(null);
@@ -460,7 +464,6 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
   const [relationshipOpenFor, setRelationshipOpenFor] = useState<string | null>(null);
   useEffect(() => { setRelationshipOpenFor(null); }, [selected]);
   const [dirWidth, setDirWidth] = useState(260);
-  const dirDrag = useRef<{ x: number; w: number } | null>(null);
   const [contact, setContact] = useState('');
   const [messages, setMessages] = useState(initialMessages);
   const hiddenMessages = useMessageVisibility(account.id);
@@ -1462,8 +1465,8 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
             <Users fill={page === 'contacts' ? 'currentColor' : 'none'} />
             <span className="zy-mobile-nav-label" aria-hidden="true">联系人</span>
           </IconButton>
-          <IconButton label="任务" pressed={page === 'tasks'} className={page === 'tasks' ? 'active' : ''} onClick={() => navigateMain('tasks')}>
-            <CalendarCheck/>
+          <IconButton label={hasTaskInProgress?'任务，有正在进行的任务':'任务'} pressed={page === 'tasks'} className={page === 'tasks' ? 'active' : ''} onClick={() => navigateMain('tasks')}>
+            <span className="zy-nav-glyph"><CalendarCheck/>{hasTaskInProgress&&<RailNotificationDot label="有正在进行的任务"/>}</span>
             <span className="zy-mobile-nav-label" aria-hidden="true">任务</span>
           </IconButton>
           <IconButton
@@ -1472,8 +1475,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
             className={page === 'moments' ? 'active' : ''}
             onClick={() => openMoments()}
           >
-            <Compass fill={page === 'moments' ? 'currentColor' : 'none'} />
-            {momentBadge && <span className="zy-moments-dot" aria-hidden="true" />}
+            <span className="zy-nav-glyph"><Compass fill={page === 'moments' ? 'currentColor' : 'none'} />{momentBadge&&<RailNotificationDot label="动态有新内容"/>}</span>
             <span className="zy-mobile-nav-label" aria-hidden="true">动态</span>
           </IconButton>
           <IconButton
@@ -1603,25 +1605,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
               </div>
             )}
           </aside>
-          <div
-            className="zy-panel-divider"
-            role="separator"
-            aria-orientation="vertical"
-            aria-label="调整列表宽度"
-            onPointerDown={(e) => {
-              if (e.button !== 0) return;
-              e.preventDefault();
-              dirDrag.current = { x: e.clientX, w: dirWidth };
-              e.currentTarget.setPointerCapture(e.pointerId);
-            }}
-            onPointerMove={(e) => {
-              const d = dirDrag.current;
-              if (!d) return;
-              setDirWidth(Math.max(200, Math.min(420, d.w + (e.clientX - d.x))));
-            }}
-            onPointerUp={() => { dirDrag.current = null; }}
-            onLostPointerCapture={() => { dirDrag.current = null; }}
-          />
+          <DirectoryDivider width={dirWidth} onWidthChange={setDirWidth}/>
           </>
         )}
         {page === 'chat' && !selected && (
@@ -1799,7 +1783,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
             </div>
           </section>
         )}
-        {page === 'tasks' && <TaskBoard key={account.id} accountId={account.id} onOpenConversation={(npcId,task)=>{const target=[molly,...people].find(item=>item.id===npcId);if(target){if(task){setTaskConversation({npcId,task});}else setTaskConversation(null);openChat(displayPerson(target));}}}/>}
+        {page === 'tasks' && <TaskBoard key={account.id} board={taskBoard} dirWidth={dirWidth} onDirectoryWidthChange={setDirWidth} onOpenConversation={(npcId,task)=>{const target=[molly,...people].find(item=>item.id===npcId);if(target){if(task){setTaskConversation({npcId,task});}else setTaskConversation(null);openChat(displayPerson(target));}}}/>}
         {page === 'pets' && <PetPage accountId={account.id} dirWidth={dirWidth} onDirectoryWidthChange={setDirWidth} />}
         {page === 'moments' && (
           <section className="zy-moments" ref={feed} aria-label="好友动态">

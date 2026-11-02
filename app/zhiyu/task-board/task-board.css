@@ -6,9 +6,9 @@ html[data-zy-theme='light'] .zy-task-board{--zy-canvas:#fff;--zy-incoming:#f0f1f
 .zy-task-board button,.zy-task-board input{font:inherit}
 .zy-task-board button{cursor:pointer}
 .zy-task-board button:disabled{cursor:default}
-html[data-zy-theme] .zy-app.zy-desktop.zy-page-tasks>.zy-rail{width:72px}
-html[data-zy-theme] .zy-app.zy-desktop.zy-page-tasks .zy-task-board>.zy-task-board-guide{display:flex;flex-direction:column;flex:0 0 272px;width:272px;min-width:0;min-height:0;max-width:none;padding:22px 14px 18px;overflow:hidden;border-radius:0}
-.zy-tb-guide-scroll{flex:1;min-height:0;overflow:auto;scrollbar-width:thin;overscroll-behavior:contain}
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-tasks .zy-task-board>.zy-task-board-guide{display:flex;flex-direction:column;flex:0 0 auto;min-width:0;min-height:0;max-width:none;padding:22px 14px 18px;overflow:hidden;border-radius:0}
+.zy-tb-guide-scroll{flex:1;min-height:0;overflow:auto;scrollbar-width:none;overscroll-behavior:contain}
+.zy-tb-guide-scroll::-webkit-scrollbar{display:none}
 .zy-tb-guide-title{margin:0 8px 12px;font-size:20px;line-height:29px;font-weight:700;color:var(--zy-ink)}
 .zy-tb-search-line{display:flex;align-items:center;gap:7px;margin:0 0 16px}
 .zy-tb-search{display:flex;align-items:center;gap:7px;flex:1;min-width:0;height:34px;padding:0 10px;border:1px solid transparent;border-radius:9px;background:var(--zy-glass-inner);color:var(--zy-secondary)}
@@ -76,7 +76,7 @@ html[data-zy-theme='light'] .zy-tb-weekly-review{background:rgb(255 255 255 / 55
 .zy-tb-loading{position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden}
 .zy-task-board button:focus-visible{outline:2px solid var(--zy-composer-edge);outline-offset:3px}
 @media(max-width:1080px){.zy-task-board-content{padding-inline:28px}}
-@media(max-width:880px){html[data-zy-theme] .zy-app.zy-desktop.zy-page-tasks .zy-task-board>.zy-task-board-guide{flex-basis:240px;width:240px}.zy-task-board-content{padding-inline:22px}}
+@media(max-width:880px){.zy-task-board-content{padding-inline:22px}}
 html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-task-board{flex-direction:column;min-height:0}
 html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-task-board>.zy-task-board-guide{flex:0 0 auto;width:100%!important;max-height:170px;padding:10px 12px 8px;border-radius:0}
 .zy-phone-content .zy-mobile .zy-tb-guide-scroll{overflow:auto}

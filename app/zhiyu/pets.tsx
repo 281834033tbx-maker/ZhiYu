@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useId, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useId, useState, type FormEvent } from 'react';
+import DirectoryDivider from './directory-divider';
 import { BookOpen, Check, PawPrint, Pencil, X } from 'lucide-react';
 import Dungeons from './dungeons';
 import { PET_STATE_CHANGED_EVENT, petStorageKey, type StoredPetState } from './pet-storage';
@@ -87,7 +88,6 @@ export default function PetPage({ accountId, dirWidth, onDirectoryWidthChange }:
   const [section, setSection] = useState<'mine' | 'explore'>('mine');
   const [discover, setDiscover] = useState<'pets' | 'dungeons' | null>(null);
   const [notice, setNotice] = useState('');
-  const dirDrag = useRef<{ x: number; w: number } | null>(null);
   const [dialog, setDialog] = useState<'rename' | null>(null);
   const [draftName, setDraftName] = useState('');
   const [error, setError] = useState('');
@@ -176,10 +176,7 @@ export default function PetPage({ accountId, dirWidth, onDirectoryWidthChange }:
         <button type="button" className={discover === 'dungeons' ? 'is-active' : ''} aria-current={discover === 'dungeons' ? 'page' : undefined} onClick={() => { setDiscover('dungeons'); setNotice(''); }}><BookOpen size={18} /><span>副本</span></button>
       </nav>
     </aside>
-    <div className="zy-panel-divider" role="separator" aria-orientation="vertical" aria-label="调整宠物导航宽度"
-      onPointerDown={event => { if (event.button !== 0) return; event.preventDefault(); dirDrag.current = { x: event.clientX, w: dirWidth }; event.currentTarget.setPointerCapture(event.pointerId); }}
-      onPointerMove={event => { const drag = dirDrag.current; if (drag) onDirectoryWidthChange(Math.max(200, Math.min(420, drag.w + event.clientX - drag.x))); }}
-      onPointerUp={() => { dirDrag.current = null; }} onLostPointerCapture={() => { dirDrag.current = null; }} />
+    <DirectoryDivider width={dirWidth} onWidthChange={onDirectoryWidthChange} label="调整宠物导航宽度"/>
     {discover === 'dungeons' ? <Dungeons onBack={() => setDiscover('pets')} /> : discover === 'pets' ? <section className="zy-pets" aria-label={section === 'mine' ? '我的宠物' : '去领养'}>
       <div className="zy-pets-inner">
         <nav className="zy-pets-tabs" aria-label="宠物">

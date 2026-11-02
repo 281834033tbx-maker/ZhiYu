@@ -3,7 +3,8 @@
 import {useCallback, useMemo, useRef, useState} from 'react';
 import {CalendarDays, CalendarCheck, History, Plus, Search, ChevronDown, X} from 'lucide-react';
 import PressableIconButton from '../pressable-icon-button';
-import {useTaskBoard} from './use-task-board';
+import type {useTaskBoard} from './use-task-board';
+import DirectoryDivider from '../directory-divider';
 import {categoryGroups, categories, npcs, plans} from './config';
 import {categoryOverview, futureOverview, historyOverview, isTaskFinished, shiftBoardDate, taskMatchesQuery} from './reducer';
 import {TaskRow, ActiveTaskCard, ProgressPill, EndTaskConfirm, CategoryIcon, NpcAvatar, SegmentedControl, type TaskActions} from './task-components';
@@ -15,11 +16,13 @@ const monthDay = (date:string) => `${Number(date.slice(5,7))}月${Number(date.sl
 const weekday = (date:string) => new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Shanghai',weekday:'short'}).format(new Date(date+'T12:00:00+08:00'));
 const matchesCategory = (task:Task,category?:string) => !category || task.categoryId===category;
 
-export default function TaskBoard({accountId,onOpenConversation}: {
-  accountId:string;
+export default function TaskBoard({board,dirWidth,onDirectoryWidthChange,onOpenConversation}: {
+  board:ReturnType<typeof useTaskBoard>;
+  dirWidth:number;
+  onDirectoryWidthChange:(width:number)=>void;
   onOpenConversation:(npcId:string,task?:Task)=>void;
 }) {
-  const {model,dispatch,now,ready,storageError}=useTaskBoard(accountId);
+  const {model,dispatch,now,ready,storageError}=board;
   const [query,setQuery]=useState('');
   const [confirmId,setConfirmId]=useState<string|null>(null);
   const [confirmAnchor,setConfirmAnchor]=useState<HTMLElement|null>(null);
@@ -73,7 +76,7 @@ export default function TaskBoard({accountId,onOpenConversation}: {
   const countsFor=(categoryId:string)=>categoryOverview(model,categoryId,historyMonth);
   function selectView(next:TaskView){dispatch({type:'set-view',view:next});setQuery('');content.current?.scrollTo({top:0});}
   return <div className="zy-task-board" data-task-view={view} aria-label="任务工作台">
-    <aside className="zy-directory zy-pet-directory zy-task-board-guide" aria-label="任务指引栏">
+    <aside className="zy-directory zy-pet-directory zy-task-board-guide" style={{width:dirWidth}} aria-label="任务指引栏">
       <div className="zy-tb-guide-scroll">
         <h1 className="zy-tb-guide-title">任务</h1>
         <div className="zy-tb-search-line"><label className="zy-tb-search"><Search size={15}/><input aria-label="搜索任务" placeholder="搜索" value={query} onChange={event=>setQuery(event.target.value)}/>{query&&<button type="button" aria-label="清空任务搜索" onClick={()=>setQuery('')}><X size={13}/></button>}</label><PressableIconButton rotateOnClick type="button" aria-label="让 Molly 安排任务" onClick={()=>onOpenConversation('molly')}><Plus size={21}/></PressableIconButton></div>
@@ -83,6 +86,7 @@ export default function TaskBoard({accountId,onOpenConversation}: {
       </div>
       <div className="zy-tb-weekly-review"><NpcAvatar npc={npcs.find(npc=>npc.id==='molly')!} size={28}/><div><strong>本周复盘</strong><span>Molly · {model.page.weeklyReview.time}</span></div></div>
     </aside>
+    <DirectoryDivider width={dirWidth} onWidthChange={onDirectoryWidthChange} label="调整任务指引栏宽度"/>
     <section ref={content} className="zy-task-board-content" aria-label={view==='today'?'今天的任务':view==='future'?'未来的任务':'任务历史'}>
       <div className="zy-tb-content-inner">
         {!ready&&<output className="zy-tb-loading">正在读取任务…</output>}

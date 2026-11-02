@@ -25,6 +25,11 @@ html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-sliding-navigation .zy-icon:no
 }
 html[data-zy-theme] .zy-app.zy-desktop .zy-sliding-navigation .zy-icon.active { color:#252628; }
 /* Anchor the unread reminder to the glyph, independently of its larger hit area. */
+.zy-nav-items {
+  --zy-nav-notification-color:#ee3639;
+  --zy-nav-notification-dot-size:8px;
+  --zy-nav-notification-dot-offset:-5px;
+}
 .zy-nav-glyph {
   position:relative;
   display:inline-flex;
@@ -32,6 +37,19 @@ html[data-zy-theme] .zy-app.zy-desktop .zy-sliding-navigation .zy-icon.active { 
   justify-content:center;
   flex:0 0 auto;
   line-height:0;
+}
+.zy-app .zy-nav-glyph > :is(.zy-badge,.zy-nav-notification-dot) {
+  position:absolute;
+  background:var(--zy-nav-notification-color);
+  pointer-events:none;
+}
+.zy-nav-glyph > .zy-nav-notification-dot {
+  display:block;
+  top:var(--zy-nav-notification-dot-offset);
+  right:var(--zy-nav-notification-dot-offset);
+  width:var(--zy-nav-notification-dot-size);
+  height:var(--zy-nav-notification-dot-size);
+  border-radius:50%;
 }
 .zy-nav-glyph > .zy-badge {
   display:inline-flex;

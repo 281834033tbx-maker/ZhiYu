@@ -104,8 +104,11 @@
 .zy-app .zy-directory .zy-list-scroll { background: var(--directory-background); }
 .zy-app .zy-chat-list { margin: 0 -14px; width: calc(100% + 28px); }
 /* 2026-10-15: all directory pages share the straight seam and 6px resize hit area. */
-.zy-app:is(.zy-page-chat,.zy-page-contacts,.zy-page-pets) .zy-directory + .zy-panel-divider { position: relative; width: 0; min-width: 0; flex: 0 0 0; z-index: 2; }
-.zy-app:is(.zy-page-chat,.zy-page-contacts,.zy-page-pets) .zy-directory + .zy-panel-divider::before { content: ''; position: absolute; top: 0; bottom: 0; left: -3px; width: 6px; cursor: col-resize; }
+.zy-app:is(.zy-page-chat,.zy-page-contacts,.zy-page-pets,.zy-page-tasks) .zy-directory + .zy-panel-divider { position: relative; width: 0; min-width: 0; flex: 0 0 0; z-index: 2; }
+.zy-app:is(.zy-page-chat,.zy-page-contacts,.zy-page-pets,.zy-page-tasks) .zy-directory + .zy-panel-divider::before { content: ''; position: absolute; top: 0; bottom: 0; left: -3px; width: 6px; cursor: col-resize; }
+.zy-directory-divider{align-self:stretch;margin:0;border:0;touch-action:none;-webkit-app-region:no-drag}
+.zy-directory-divider:focus-visible{outline:0}
+.zy-directory-divider:focus-visible::before{background:var(--zy-composer-edge)}
 .zy-app .zy-conversation:not(.selected):not(.zy-conversation-pinned):not(:hover) { background: var(--directory-background); }
 .zy-app .zy-conversation { padding: 13px 24px; gap: 11px; margin: 0; border-radius: 0; box-shadow: none; }
 .zy-app .zy-directory { --zy-row-divider: rgb(38 42 39 / 8%); --zy-row-hover: color-mix(in srgb, var(--directory-background) 92%, #262a27 8%); }
