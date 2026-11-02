@@ -10,13 +10,14 @@ import LocalChatHeader from './local-chat-header';
 import ChatAddMenu from './chat-add-menu';
 import TaskBoard from './task-board/task-board';
 import {useTaskBoard} from './task-board/use-task-board';
+import {useLiveTaskImport} from './task-board/use-live-task-import';
 import DirectoryDivider from './directory-divider';
 import type {Task as BoardTask} from './task-board/types';
 import {taskPageContextFor} from './task-board/task-context';
 import {refreshTaskCompletions} from './task-completion-sync';
 import {shanghaiToday,taskCalendarRange,taskItemsForDate} from './task-items';
 import {openTaskCalendarWindow, bindTaskCalendarWindowLifecycle} from './task-calendar-window';
-import {ingestProfessionalTasks} from './professional-task-store';
+import {ingestProfessionalTasks,useProfessionalTasks} from './professional-task-store';
 import AppSettings from './app-settings';
 import RailNavigation, {RailNotificationDot} from './rail-navigation';
 import LiquidBasePlate from './liquid-base-plate';
@@ -446,6 +447,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
   const [selected, setSelected] = useState('');
   const [taskConversation, setTaskConversation] = useState<{npcId:string;task:BoardTask}|null>(null);
   const taskBoard=useTaskBoard(account.id);
+  const professionalBoardTasks=useProfessionalTasks(account.id);
   const hasTaskInProgress=taskBoard.ready&&taskBoard.model.tasks.some(task=>task.date===taskBoard.model.today&&task.status==='in_progress');
   useEffect(()=>{setTaskConversation(null);},[account.id]);
   const receivedSecretaryGroups=useRef(new Set<string>());
@@ -500,6 +502,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
   const [momentsNotificationsOpen, setMomentsNotificationsOpen] = useState(false);
   const [ready, setReady] = useState(false);
   const groupChats = useGroupChats(account.id, ready);
+  useLiveTaskImport(taskBoard,professionalBoardTasks,groupChats.groups);
   useEffect(()=>{
     if(!ready||groupChats.loading)return;
     const {dates}=taskCalendarRange(groupChats.groups,[],shanghaiToday(Date.now()));
@@ -1080,6 +1083,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     navigate(next);
   }
   function openTasks() {
+    taskBoard.dispatch({type:'set-view',view:'today'});
     navigate('tasks');
   }
   function openChat(p: Person) {

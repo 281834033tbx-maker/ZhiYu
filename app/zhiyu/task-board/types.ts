@@ -16,6 +16,9 @@ export interface Task {
   pinned?:boolean; status:TaskStatus; steps?:Step[];
   count?:{current:number; target:number; perTime:number; unit:'ml'|'步'|'次'};
   note?:string; missReason?:string; missText?:string; completedAt?:string; planId?:string;
+  /** Imported snapshots keep their first append position independently of status. */
+  appendOrder?:number;
+  source?:{key:string;kind:'professional'|'group';id:string;createdAt:string;originalDate?:string;revision?:number};
 }
 export interface TaskPageState {
   view:TaskView; futureRange:7|30; historyFilter:'all'|'done'|'missed';
@@ -34,10 +37,14 @@ export interface TaskBoardModel {
   version:1; today:string; tasks:Task[]; page:TaskPageState;
   rest?:TaskTimer; timers:Record<string,TaskTimer>; historyLoadedDays:number;
   demoOverview?:DemoOverview;
+  /** Persisted opt-in cutoff; opening the board never imports historical tasks. */
+  liveImport?:{since:string};
 }
 export type TaskBoardAction =
   | {type:'hydrate'; model:TaskBoardModel}
   | {type:'reset'; now?:number}
+  | {type:'enable-live-import'; now:number}
+  | {type:'import-tasks'; tasks:Task[]}
   | {type:'set-view'; view:TaskView}
   | {type:'set-future-range'; range:7|30}
   | {type:'set-history-filter'; filter:'all'|'done'|'missed'}

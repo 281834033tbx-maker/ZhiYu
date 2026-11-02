@@ -66,6 +66,31 @@ export function taskBoardReducer(model:TaskBoardModel,action:TaskBoardAction):Ta
   switch(action.type) {
     case 'hydrate': return action.model;
     case 'reset': return createInitialTaskBoard(action.now);
+    case 'enable-live-import':return model.liveImport||!Number.isFinite(new Date(action.now).getTime())?model:{...model,liveImport:{since:timestamp(action.now)}};
+    case 'import-tasks': {
+      const since=Date.parse(model.liveImport?.since||'');
+      if(!Number.isFinite(since))return model;
+      const keys=new Set(model.tasks.flatMap(task=>task.source?[task.source.key]:[]));
+      const ids=new Set(model.tasks.map(task=>task.id));
+      let order=Math.floor(model.tasks.reduce((largest,task)=>Math.max(largest,task.order,task.appendOrder??-1),-1));
+      const added:Task[]=[];
+      // This is a creation snapshot. Later source revisions must not overwrite
+      // completion, edits or append positions already owned by this board.
+      const candidates=action.tasks.map((task,index)=>({task,index})).sort((a,b)=>Date.parse(a.task.source?.createdAt||'')-Date.parse(b.task.source?.createdAt||'')||a.index-b.index);
+      for(const {task} of candidates) {
+        const source=task.source,createdAt=Date.parse(source?.createdAt||'');
+        if(!source?.key||!['professional','group'].includes(source.kind)||!Number.isFinite(createdAt)||createdAt<since||keys.has(source.key)
+          ||!task.id||task.id.length>128||!/^[a-zA-Z0-9:_-]+$/.test(task.id))continue;
+        let id=task.id,collision=0;
+        // Full provenance keys deduplicate records. A rare short-ID collision
+        // must neither drop a different source nor replace an existing row.
+        while(ids.has(id))id=`${task.id.slice(0,110)}-${++collision}`;
+        order++;
+        added.push({...structuredClone(task),id,date:model.today,order,appendOrder:order,pinned:undefined});
+        keys.add(source.key);ids.add(id);
+      }
+      return added.length?{...model,tasks:[...model.tasks,...added]}:model;
+    }
     case 'set-view':return {...model,page:{...model.page,view:action.view,categoryFilter:undefined,expandedStepId:undefined}};
     case 'set-future-range':return {...model,page:{...model.page,futureRange:action.range}};
     case 'set-history-filter':return {...model,page:{...model.page,historyFilter:action.filter}};

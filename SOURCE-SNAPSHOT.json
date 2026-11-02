@@ -239,8 +239,8 @@
     },
     {
       "path": "app/zhiyu/app.tsx",
-      "bytes": 125520,
-      "sha256": "885b332828c338adaef580d87371f97129dad5bcef585ce6cd1575bae4d05127"
+      "bytes": 125804,
+      "sha256": "f16e8e89063032d70975f00351c49497cf3fc78f24e16c9312f41765aadd14c1"
     },
     {
       "path": "app/zhiyu/application-shell.tsx",
@@ -774,8 +774,8 @@
     },
     {
       "path": "app/zhiyu/task-board/data-source.ts",
-      "bytes": 4571,
-      "sha256": "135e139b1b6391215b21fc3ff49462c5b0b410cc0f3b76609dd9062ed138e2f3"
+      "bytes": 5746,
+      "sha256": "9fb9d07cd5da5bf7b20c83bea982ec98f54036a7ddb77057b069bb6de8cfe313"
     },
     {
       "path": "app/zhiyu/task-board/history-view.css",
@@ -788,14 +788,19 @@
       "sha256": "e0353bf8052d376700f321f518977796982b8755e1bc7cec809485177b815587"
     },
     {
+      "path": "app/zhiyu/task-board/live-task-import.ts",
+      "bytes": 9609,
+      "sha256": "a07a6c9c17a03e9354d859f75fa9d1ab16db8e8b21f08595053f96f4328eeff2"
+    },
+    {
       "path": "app/zhiyu/task-board/mock.ts",
       "bytes": 13908,
       "sha256": "0b9f5ecca00a4622cea040a14a54bcb99582d665a5716bbd4380095c61f86d5f"
     },
     {
       "path": "app/zhiyu/task-board/reducer.ts",
-      "bytes": 12343,
-      "sha256": "d7ce214da5a7d8396b2ca1bdc7ebf7070bdbaa23e68de2016fb15317159aaaad"
+      "bytes": 14136,
+      "sha256": "8c8b7917f846d5c627e2b555eb13b3cf09596487a454159717f1579e9865ed64"
     },
     {
       "path": "app/zhiyu/task-board/task-board.css",
@@ -804,8 +809,8 @@
     },
     {
       "path": "app/zhiyu/task-board/task-board.tsx",
-      "bytes": 12166,
-      "sha256": "1edb5791d8a7b394c57d5ad55aafab7f63989a5e507ccd06ede151240145ac58"
+      "bytes": 12745,
+      "sha256": "775508cf41806f8b6e4c08a16a0dc7cb2c68f43d12fc1bb4b8791a7d18853469"
     },
     {
       "path": "app/zhiyu/task-board/task-components.css",
@@ -824,8 +829,13 @@
     },
     {
       "path": "app/zhiyu/task-board/types.ts",
-      "bytes": 3047,
-      "sha256": "e08ff5aed1bc52f848470ae4b54eba95ab799ee8fba2d9c32566308c653f1462"
+      "bytes": 3471,
+      "sha256": "ac30314821f15efbb6f683d9e3e95e18c19368170102fbdc8098b129d6bf92f9"
+    },
+    {
+      "path": "app/zhiyu/task-board/use-live-task-import.ts",
+      "bytes": 1021,
+      "sha256": "e53cfd72a3cdcc4dbc772b1fba5ac69895a23d9aeaba29a4b9187d6bb4831d6c"
     },
     {
       "path": "app/zhiyu/task-board/use-task-board.ts",
@@ -3894,8 +3904,8 @@
     },
     {
       "path": "scripts/task-page-ui-fixture.mjs",
-      "bytes": 12386,
-      "sha256": "ae9fd842c3c55650c34b41fb74263fd4ec0730fde172fcb877cd35ed72be26e6"
+      "bytes": 17037,
+      "sha256": "a6b51f272acdda0138245e307d1a3ba9e3d96e2ce4aa67ab22b0daa423399558"
     },
     {
       "path": "scripts/test-all-npc-capabilities.mjs",
@@ -4451,6 +4461,11 @@
       "path": "scripts/test-task-auto-skip-display.mjs",
       "bytes": 10851,
       "sha256": "8ce490e2012c1b89b15fd799050569bb32faf2156c5b257bb04bd558e450b7c8"
+    },
+    {
+      "path": "scripts/test-task-board-live-import.mjs",
+      "bytes": 13259,
+      "sha256": "6e09bd3cd06ed76cade12458215e516425d115e2236e1b69271a1e62751b6b0d"
     },
     {
       "path": "scripts/test-task-calendar-api.mjs",

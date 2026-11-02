@@ -37,8 +37,10 @@ export default function TaskBoard({board,dirWidth,onDirectoryWidthChange,onOpenC
   const active=todayTasks.find(task=>task.id===model.page.activeTaskId);
   const matches=(task:Task)=>matchesCategory(task,categoryFilter)&&taskMatchesQuery(task,query);
   const order=(a:Task,b:Task)=>Number(!!b.pinned)-Number(!!a.pinned)||a.order-b.order;
-  const pending=todayTasks.filter(task=>!isTaskFinished(task)&&task.id!==active?.id&&matches(task)).sort(order);
-  const completed=todayTasks.filter(task=>isTaskFinished(task)&&task.id!==active?.id&&matches(task)).sort((a,b)=>(b.completedAt||'').localeCompare(a.completedAt||''));
+  const existingTodayTasks=todayTasks.filter(task=>task.appendOrder===undefined);
+  const pending=existingTodayTasks.filter(task=>!isTaskFinished(task)&&task.id!==active?.id&&matches(task)).sort(order);
+  const completed=existingTodayTasks.filter(task=>isTaskFinished(task)&&task.id!==active?.id&&matches(task)).sort((a,b)=>(b.completedAt||'').localeCompare(a.completedAt||''));
+  const appended=todayTasks.filter(task=>task.appendOrder!==undefined&&task.id!==active?.id&&matches(task)).sort((a,b)=>(a.appendOrder??0)-(b.appendOrder??0));
   const confirmTask=model.tasks.find(task=>task.id===confirmId)||null;
   const categoryFor=(task:Task)=>categories.find(category=>category.id===task.categoryId)||categories[0];
   const npcFor=(task:Task)=>npcs.find(npc=>npc.id===task.npcId)||npcs[0];
@@ -60,9 +62,9 @@ export default function TaskBoard({board,dirWidth,onDirectoryWidthChange,onOpenC
     onTimerStart(task,step){dispatch({type:'start-timer',taskId:task.id,stepId:step.id,now:Date.now()});},
     onExpandTask(task){dispatch({type:'toggle-task',taskId:task.id});},
     onExpandStep(stepId){dispatch({type:'expand-step',stepId});},
-    onPin(task){dispatch({type:'pin',taskId:task.id});},
+    onPin(task){if(task.appendOrder===undefined)dispatch({type:'pin',taskId:task.id});},
   };
-  const row=(task:Task,mode:'today'|'future')=><TaskRow key={task.id} task={task} category={categoryFor(task)} npc={npcFor(task)} mode={mode} expanded={model.page.expandedTaskIds.includes(task.id)} expandedStepId={model.page.expandedStepId} active={task.id===active?.id} now={now} rest={model.rest} timers={model.timers} today={model.today} actions={actions}/>;
+  const row=(task:Task,mode:'today'|'future')=><TaskRow key={task.id} task={task} category={categoryFor(task)} npc={npcFor(task)} mode={mode} expanded={model.page.expandedTaskIds.includes(task.id)} expandedStepId={model.page.expandedStepId} active={task.id===active?.id} now={now} rest={model.rest} timers={model.timers} today={model.today} actions={task.appendOrder===undefined?actions:{...actions,onPin:undefined}}/>;
   const futureDates=Array.from({length:model.page.futureRange},(_,index)=>shiftBoardDate(model.today,index+1));
   const futureTasks=model.tasks.filter(task=>task.date>model.today&&task.date<=futureDates.at(-1)!);
   const dailyByTitle=new Map<string,Task>();
@@ -96,7 +98,8 @@ export default function TaskBoard({board,dirWidth,onDirectoryWidthChange,onOpenC
           {active&&matches(active)&&<section className="zy-tb-active-section" aria-label="进行中"><h2><i/>进行中</h2><ActiveTaskCard task={active} category={categoryFor(active)} npc={npcFor(active)} mode="today" expanded={model.page.activeExpanded} expandedStepId={model.page.expandedStepId} active now={now} rest={model.rest} timers={model.timers} today={model.today} actions={{...actions,onExpandTask(){dispatch({type:'toggle-active-expanded'});}}}/></section>}
           {!!pending.length&&<section className="zy-tb-task-section" aria-label="待完成"><header><h2>待完成</h2><span>按建议顺序</span></header>{pending.map(task=>row(task,'today'))}</section>}
           {!!completed.length&&<section className="zy-tb-task-section" aria-label="已完成"><header><h2>已完成</h2></header>{completed.map(task=>row(task,'today'))}</section>}
-          {!pending.length&&!completed.length&&!(active&&matches(active))&&<div className="zy-tb-empty">没有匹配的任务</div>}
+          {!!appended.length&&<section className="zy-tb-task-section" aria-label="新增任务"><header><h2>新增任务</h2><span>按添加顺序</span></header>{appended.map(task=>row(task,'today'))}</section>}
+          {!pending.length&&!completed.length&&!appended.length&&!(active&&matches(active))&&<div className="zy-tb-empty">没有匹配的任务</div>}
         </>}
         {view==='future'&&<>
           <header className="zy-tb-page-heading"><div><h1>未来</h1><p>{monthDay(futureDates[0])} – {monthDay(futureDates.at(-1)!)}</p></div><SegmentedControl label="未来日期范围" value={String(model.page.futureRange)} options={[{value:'7',label:'7 天'},{value:'30',label:'30 天'}]} onChange={value=>dispatch({type:'set-future-range',range:value==='30'?30:7})}/></header>

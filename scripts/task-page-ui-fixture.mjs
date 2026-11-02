@@ -2,6 +2,11 @@ import {createServer, request as proxyRequest} from 'node:http';
 
 // A read-only UI fixture. No NPC/auth plugins, databases, credentials, or models
 // are loaded. The real App supplies GET UI assets only; every API stays here.
+// This opt-in creates only in-memory ProfessionalTask-shaped source snapshots.
+// It does not enable API writes, execute task commands, or send chat messages.
+const taskBoardImportFixture = process.env.ZHIYU_TASK_BOARD_IMPORT_FIXTURE === '1';
+const fixtureStartedAt = new Date(Date.now() - process.uptime() * 1000).toISOString();
+const oldImportTaskAt = new Date(Date.parse(fixtureStartedAt) - 60_000).toISOString();
 const accounts = {
   a: {id: 'task-ui-fixture-account-a', username: '任务预览 A'},
   b: {id: 'task-ui-fixture-account-b', username: '任务预览 B'},
@@ -84,7 +89,49 @@ function syntheticGroups(key) {
   ];
 }
 
-const groupsByAccount = {a: syntheticGroups('a'), b: syntheticGroups('b')};
+const groupsByAccount = taskBoardImportFixture ? {a: [], b: []} : {a: syntheticGroups('a'), b: syntheticGroups('b')};
+function makeImportTask(key, kind, at) {
+  const id = `task-board-import-${key}-${kind}`;
+  const cooking = kind === 'cooking';
+  const title = cooking ? '番茄炒蛋（接入验证）' : kind === 'old' ? '旧有腿部训练（应排除）' : '腿部训练（接入验证）';
+  const step = (suffix, content) => ({id: `${id}-${suffix}`, scheduledDate: today, hints: [], ...content});
+  return {
+    id, characterId: cooking ? 'zhou-chef' : 'chen-nian', title, goalKey: title,
+    status: 'active', assignedDate: today, createdAt: at, updatedAt: at, revision: 1,
+    sourceMessageId: `${id}-source`, cardMessageId: `${id}-card`,
+    steps: cooking ? [
+      step('prepare', {title: '备料并打散鸡蛋', category: 'preparation', durationSeconds: 120,
+        details: ['番茄300克切块，鸡蛋2个打散，葱5克切碎。'],
+        instructions: ['番茄洗净切块，鸡蛋打散，葱切碎并放在手边。'],
+        completionCondition: '所有食材切配完成，蛋液均匀。'}),
+      step('eggs', {title: '炒熟鸡蛋盛出', category: 'main', durationSeconds: 60,
+        details: ['锅中加油10毫升，中火炒蛋约1分钟后盛出。'],
+        instructions: ['中火热锅加油，倒入蛋液，轻轻推散至凝固后盛出。'],
+        notes: ['以蛋液凝固为准，热锅不要离人。'], completionCondition: '鸡蛋已凝固并盛到盘中。'}),
+      step('combine', {title: '炒番茄后合炒', category: 'main', durationSeconds: 180,
+        details: ['中火炒番茄约3分钟至出汁，放回鸡蛋，加盐2克翻匀。'],
+        instructions: ['番茄下锅炒至出汁，倒回鸡蛋，加盐后翻匀。'],
+        completionCondition: '番茄出汁，鸡蛋热透且均匀裹汁。'}),
+    ] : [
+      step('squat', {title: '高脚杯深蹲', category: 'main',
+        details: ['3组，每组8～12次，组间休息90秒。'],
+        instructions: ['双脚站稳，抱铃在胸前，下蹲时膝盖跟随脚尖方向，保持躯干稳定。'],
+        notes: ['保留2次余力；出现关节疼痛立即停止。'],
+        completionCondition: '完成3组并记录每组次数。',
+        training: {target: '股四头肌与臀大肌', sets: 3, reps: '8～12次', restSeconds: 90, effort: '保留2次余力。'}}),
+      step('hinge', {title: '哑铃罗马尼亚硬拉', category: 'main',
+        details: ['3组，每组8～10次，组间休息120秒。'],
+        instructions: ['膝微屈，髋部向后移动，哑铃贴近腿部下降，保持背部稳定后站起。'],
+        notes: ['不要弯腰代偿；动作幅度以能稳定控制为准。'],
+        completionCondition: '完成3组并记录重量和次数。',
+        training: {target: '腘绳肌与臀大肌', sets: 3, reps: '8～10次', restSeconds: 120, effort: '保留2次余力。'}}),
+    ],
+  };
+}
+const importTasksByAccount = taskBoardImportFixture ? {
+  a: [makeImportTask('a', 'old', oldImportTaskAt)],
+  b: [makeImportTask('b', 'old', oldImportTaskAt)],
+} : {a: [], b: []};
 function currentAccount(req) {
   const cookie = (req.headers.cookie || '').split(';').map(item => item.trim())
     .find(item => item.startsWith('task_ui_fixture_account='));
@@ -141,7 +188,19 @@ const server = createServer((req, res) => {
     if (path === '/fixture/report') return json(res, 200, {
       isolated: true, authentication: 'synthetic-account-cookie', realModel: false,
       activeAccount: accounts[key], today, dates, ...counters,
+      ...(taskBoardImportFixture ? {taskBoardImportFixture: {
+        enabled: true, fixtureStartedAt,
+        tasks: importTasksByAccount[key].map(task => ({id: task.id, characterId: task.characterId, title: task.title, createdAt: task.createdAt})),
+      }} : {}),
     });
+    if (taskBoardImportFixture && (path === '/fixture/add-leg' || path === '/fixture/add-cooking')) {
+      const kind = path.endsWith('add-leg') ? 'leg' : 'cooking';
+      const id = `task-board-import-${key}-${kind}`;
+      if (!importTasksByAccount[key].some(task => task.id === id))
+        importTasksByAccount[key].push(makeImportTask(key, kind, new Date().toISOString()));
+      res.writeHead(302, {Location: '/#tasks', 'Cache-Control': 'no-store'});
+      return res.end();
+    }
     if (path === '/fixture/account-a' || path === '/fixture/account-b') {
       const next = path.endsWith('-b') ? 'b' : 'a';
       res.writeHead(302, {
@@ -172,7 +231,11 @@ const server = createServer((req, res) => {
         {id: `task-fixture-${key}-user`, role: 'user', at: createdAt, part: {type: 'text', text: '隔离预览：今天可以怎么安排？'}},
         {id: `task-fixture-${key}-assistant`, role: 'assistant', at: updatedAt, part: {type: 'text', text: '这是合成消息，供核对右键菜单文字大小。'}},
       ] : [];
-      return json(res, 200, {...session, conversationId: `task-fixture-${key}`, messages});
+      const characterId = path.slice('/api/npc/'.length);
+      return json(res, 200, {...session, conversationId: `task-fixture-${key}`, messages,
+        ...(taskBoardImportFixture && ['chen-nian', 'liu', 'zhou-chef'].includes(characterId)
+          ? {professionalTasks: importTasksByAccount[key].filter(task => task.characterId === characterId)} : {}),
+      });
     }
     return json(res, 404, {error: '隔离预览未提供这个 API'});
   }
@@ -233,4 +296,5 @@ server.listen(0, '127.0.0.1', () => console.log(JSON.stringify({
   url: `http://127.0.0.1:${server.address().port}`, isolated: true,
   accountAPath: '/fixture/account-a', accountBPath: '/fixture/account-b',
   reportPath: '/fixture/report', today, dates, modelCalls: 0, actualRealWrites: 0,
+  ...(taskBoardImportFixture ? {taskBoardImportFixture: true, addLegPath: '/fixture/add-leg', addCookingPath: '/fixture/add-cooking'} : {}),
 })));
