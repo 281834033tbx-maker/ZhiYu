@@ -1,0 +1,47 @@
+.zy-npc-type-badge {
+ position:relative;
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ width:11px;
+ height:11px;
+ flex:0 0 11px;
+ box-sizing:border-box;
+ border:1px solid currentColor;
+ border-radius:50%;
+ font-family:Arial,sans-serif;
+ font-size:7px;
+ font-weight:700;
+ line-height:1;
+}
+.zy-npc-type-badge.is-companion { color:#174963; }
+.zy-npc-type-badge.is-professional { color:#886847; }
+.zy-npc-type-badge::after {
+ content:attr(data-tooltip);
+ position:absolute;
+ z-index:40;
+ top:calc(100% + 8px);
+ left:50%;
+ padding:6px 9px;
+ border-radius:5px;
+ background:#fff;
+ color:#292725;
+ box-shadow:var(--zy-popup-shadow,0 9px 28px #0002);
+ font-family:inherit;
+ font-size:11px;
+ font-weight:400;
+ line-height:1.4;
+ white-space:nowrap;
+ opacity:0;
+ visibility:hidden;
+ transform:translateX(-50%);
+ pointer-events:none;
+ transition:opacity 120ms ease,visibility 120ms ease;
+}
+.zy-npc-type-badge:hover::after,
+.chat-header-person:focus-visible .zy-npc-type-badge::after { opacity:1;visibility:visible; }
+html[data-zy-theme='dark'] .zy-npc-type-badge.is-companion { color:#73a8c2; }
+html[data-zy-theme='dark'] .zy-npc-type-badge.is-professional { color:#b7966f; }
+html[data-zy-theme='dark'] .zy-npc-type-badge::after { background:#303033;color:#eeeef0; }
+.zy-app .chat-header-person .chat-header-copy strong { gap:5px; }
+@media (prefers-reduced-motion:reduce) { .zy-npc-type-badge::after { transition:none; } }

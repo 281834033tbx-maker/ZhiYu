@@ -1,0 +1,19 @@
+.zy-desktop-stage{padding:0;display:block;min-width:0;min-height:100vh;background:transparent}
+.zy-dual-preview{display:block;width:100%;height:100vh;min-height:0;max-width:none;margin:0}
+.zy-desktop-slot{width:100%;height:100%;min-width:0;position:relative}
+.zy-desktop-slot>.zy-app{width:100%;height:100%;min-width:0;min-height:0;max-width:none;max-height:none;border-radius:0;box-shadow:none;border:0;background:#e2e3e5}
+.zy-desktop .zy-directory{width:260px;flex-shrink:0}
+.zy-desktop .zy-rail{width:68px;flex-shrink:0}
+.zy-desktop-slot>.zy-entrance{position:absolute;border-radius:0}
+.zy-desktop .zy-rail{padding-top:44px}
+.zy-desktop .zy-base{flex:1;min-width:0;margin:3px 3px 3px 0;border-radius:12px}
+.zy-desktop .xx-layout{flex:1;border-radius:0}
+.zy-app .zy-chat{flex:1;border-radius:0}
+.zy-panel-divider{width:6px;flex-shrink:0;cursor:col-resize;background:transparent;user-select:none}
+/* 拖拽窗口移动区域 */
+.zy-rail{-webkit-app-region:drag}
+.zy-rail button{-webkit-app-region:no-drag}
+.xx-head,.unified-chat-head{-webkit-app-region:drag}
+.xx-head button,.unified-chat-head button{-webkit-app-region:no-drag}
+.zy-self{-webkit-app-region:drag}
+.zy-self button{-webkit-app-region:no-drag}

@@ -1,0 +1,8 @@
+.zy-dialog.zy-message-forward {height:min(440px,calc(100dvh - 72px));width:min(640px,calc(100vw - 48px));}
+.zy-message-forward .zy-contact-create-head {padding-bottom:12px;}
+.zy-message-forward-face {display:flex;align-items:center;justify-content:center;flex-shrink:0;width:36px;height:36px;}
+.zy-message-forward-recipient {margin:0 0 16px;font-size:14px;line-height:1.5;color:var(--zy-ink,#252723);}
+.zy-message-forward-preview {flex:1;min-height:48px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;padding:12px;border:1px solid var(--zy-line,#e3e5dd);border-radius:8px;font-size:14px;line-height:1.7;}
+.zy-message-forward-note {margin:10px 0 0;color:var(--zy-muted,#73776d);font-size:11px;}
+.zy-message-forward .is-unavailable {opacity:.45;cursor:default;}
+@media(max-width:420px){.zy-dialog.zy-message-forward{height:calc(100dvh - 40px);}.zy-message-forward .zy-contact-create-layout{grid-template-rows:minmax(140px,1fr) minmax(210px,1fr);}}

@@ -1,0 +1,29 @@
+.message-actions{position:relative;max-width:100%}
+.message-menu-trigger{position:absolute;right:-28px;top:8px;background:none;border:0;color:#8b8885;opacity:0;padding:4px;cursor:pointer}
+.message-actions:hover>.message-menu-trigger,.message-actions:focus-within>.message-menu-trigger{opacity:1}
+.user .message-menu-trigger,.mine .message-menu-trigger{right:auto;left:-28px}
+.message-context-menu{position:fixed;z-index:10000;box-sizing:border-box;width:150px;max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);overflow-y:auto;padding:6px;border:1px solid #0000000d;border-radius:10px;background:#fff;box-shadow:var(--zy-popup-shadow,0 9px 28px #0002)}
+.message-context-menu button{display:grid;grid-template-columns:17px 1fr;align-items:center;column-gap:10px;width:100%;min-height:38px;padding:8px 12px;border:0;background:none;border-radius:5px;font-family:inherit;font-size:14px;line-height:22px;color:#000;cursor:pointer;text-align:left;white-space:nowrap}
+.message-context-menu:not(.message-language-menu) button{font-size:13px}
+.message-context-menu button>svg{display:block;color:inherit}
+.message-action-icon-space{width:17px;height:17px}
+.message-context-menu button:hover,.message-context-menu button:focus-visible{background:#00000006;outline:none}
+.message-context-menu button:disabled{opacity:.4;cursor:default}
+.message-context-menu button:disabled:hover{background:none}
+.message-context-menu button.message-action-delete{color:#f05b60}
+.message-action-divider{height:1px;border:0;margin:5px 7px;background:#0000000a}
+.message-language-menu{width:104px}
+.message-language-menu button{display:block;padding-left:14px}
+html[data-zy-theme='dark'] .message-context-menu .message-action-divider{background:#ffffff12}
+html[data-zy-theme='dark'] .message-context-menu button.message-action-delete{color:#ff777b}
+.message-transcript,.message-translation{display:block;margin-top:6px;padding:10px 12px;background:#f3f1ef;border-radius:9px;color:#353331;font-size:13px;line-height:1.6;white-space:pre-wrap;max-width:420px}
+.message-transcript small,.message-translation small{display:block;color:#8a8580;font-size:11px;margin-bottom:4px}
+.message-translation button{background:none;border:0;color:inherit;cursor:pointer}
+.npc-voice{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:13px;background:#f3f1ef;max-width:290px}
+.npc-voice audio{width:250px;max-width:100%;height:36px}
+.npc-voice small{font-size:10px;color:#8b8580}
+.npc-voice p{font-size:13px;margin:0}
+.voice-recording{display:flex;align-items:center;gap:12px;padding:9px 12px;margin-bottom:10px;background:#fff0e8;border-radius:10px;font-size:12px}
+.voice-recording audio{height:32px;max-width:230px}
+.voice-recording span{flex:1}
+.voice-recording .recording-dot{color:#e66767;font-weight:600}

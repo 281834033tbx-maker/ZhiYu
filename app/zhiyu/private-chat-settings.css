@@ -1,0 +1,49 @@
+.zy-private-drawer { position:absolute;z-index:35;top:72px;right:0;bottom:0;height:auto;box-sizing:border-box;width:min(264px,100%);padding:14px 20px;border-left:1px solid var(--zy-soft-divider,#eff0ed);background:var(--zy-canvas,#fafaf8);color:var(--zy-ink,#252723);font-size:12px;line-height:1.55;overflow:auto;overscroll-behavior:contain;box-shadow:var(--zy-popup-shadow,0 9px 28px #0002); }
+.zy-private-drawer>header { display:flex;align-items:center;justify-content:space-between;margin-bottom:12px; }
+.zy-private-drawer>header>strong { font-size:13px;font-weight:600;color:#000; }
+.xx-call-actions .zy-private-drawer button { width:auto;height:auto;border:0;background:transparent;border-radius:0;box-shadow:none;padding:0;color:inherit;font:inherit;cursor:pointer; }
+.xx-call-actions .zy-private-drawer>header>button { display:flex;justify-content:center;align-items:center;width:28px;height:28px;border-radius:6px;color:var(--zy-muted,#73776d); }
+.xx-call-actions .zy-private-drawer>header>button:hover { background:var(--zy-incoming,#efefec); }
+.xx-call-actions .zy-private-drawer>.zy-private-person { display:flex;flex-direction:column;align-items:flex-start;gap:0;width:46px;max-width:100%;margin:0 0 16px; }
+.xx-head .zy-private-person>.xx-avatar { width:46px;height:46px;min-width:46px;border-radius:50%;object-fit:cover; }
+.xx-call-actions .zy-private-drawer>.zy-private-search { display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:17px 0;border-top:1px solid var(--zy-soft-divider,#eff0ed);border-bottom:1px solid var(--zy-soft-divider,#eff0ed);text-align:left; }
+.zy-app .xx-call-actions .zy-private-drawer>.zy-private-search { color:var(--zy-ink,#252723);border-radius:0; }
+.zy-private-search>svg { color:var(--zy-muted,#73776d); }
+.zy-private-switches { border-bottom:1px solid var(--zy-soft-divider,#eff0ed);padding:7px 0; }
+.zy-private-switches>label { position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:47px;cursor:pointer; }
+.zy-private-switches input { position:absolute;width:1px;height:1px;opacity:0; }
+.zy-private-switches i { position:relative;flex-shrink:0;width:32px;height:19px;border-radius:20px;background:#c6c6ca;transition:background .18s ease; }
+.zy-private-switches i::after { content:'';position:absolute;top:2px;left:2px;width:15px;height:15px;background:white;border-radius:50%;box-shadow:0 1px 3px #0002;transition:transform .18s ease; }
+.zy-private-switches input:checked+i { background:linear-gradient(110deg,#ff946f,#ed628e); }
+.zy-private-switches input:checked+i::after { transform:translateX(13px); }
+.zy-private-switches input:focus-visible+i { outline:2px solid #ed7b7b;outline-offset:3px; }
+.zy-private-switches label:has(input:disabled) { cursor:default;opacity:.5; }
+.zy-app .xx-call-actions .zy-private-drawer>.zy-private-clear { display:block;width:100%;padding:21px 0;text-align:center;color:#df5d58; }
+.zy-app .xx-call-actions .zy-private-drawer>.zy-private-clear:hover:not(:disabled) { color:#c74742; }
+.xx-call-actions .zy-private-drawer button:disabled { cursor:default; }
+.zy-dialog.zy-private-clear-dialog { box-sizing:border-box;width:min(340px,calc(100vw - 40px));padding:28px 24px 20px;border:1px solid var(--zy-soft-divider,#eff0ed);border-radius:12px;background:var(--zy-canvas,#fafaf8);color:var(--zy-ink,#252723); }
+.zy-private-clear-dialog::backdrop { background:rgb(0 0 0 / 18%); }
+.zy-private-clear-dialog>h2 { margin:0 0 28px;text-align:center;font-size:15px;font-weight:550; }
+.zy-private-clear-dialog>p { font-size:12px;color:#c65d4a;line-height:1.7; }
+.zy-private-clear-dialog>footer { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px; }
+.xx-call-actions .zy-private-clear-dialog button { width:auto;height:auto;padding:8px 18px;border:0;border-radius:7px;background:var(--zy-incoming,#efefec);color:var(--zy-ink,#252723);font:inherit;font-size:13px;cursor:pointer; }
+.xx-call-actions .zy-private-clear-dialog .zy-private-clear-confirm { background:var(--zy-incoming,#efefec);color:#ed746d; }
+.zy-private-clear-dialog button:disabled { opacity:.5;cursor:default; }
+html[data-zy-theme='dark'] .zy-private-drawer>header>strong { color:#f4f4f5; }
+.xx-thread { position:relative;isolation:isolate; }
+.xx-thread>:not(.zy-private-location-highlight) { position:relative;z-index:1; }
+.zy-private-location-highlight { position:absolute;z-index:0;left:0;right:0;pointer-events:none;background:rgb(115 117 122 / 12%);box-shadow:0 2px 9px rgb(0 0 0 / 5%); }
+@media(prefers-reduced-motion:reduce) { .zy-private-switches i,.zy-private-switches i::after { transition:none; } }
+.xx-chat,.zy-chat { position:relative; }
+
+/* Drawer rows have no hover plate; keyboard focus and switches stay visible. */
+.zy-private-drawer { --zy-soft-divider:#eff0ed; }
+html[data-zy-theme='dark'] .zy-private-drawer { --zy-soft-divider:#3b3b3f; }
+html[data-zy-theme] .zy-app .xx-call-actions .zy-private-drawer button:is(:hover,:focus-visible,:active) { background:transparent; background-color:transparent; box-shadow:none; transform:none; }
+html[data-zy-theme] .zy-app .xx-call-actions .zy-private-drawer button:focus-visible { outline:2px solid #ed7b7b; outline-offset:3px; }
+
+/* The avatar alone opens the profile; the name, signature and badge remain ordinary content. */
+.zy-app .chat-header-person.chat-header-person-avatar-only { cursor:default;-webkit-app-region:no-drag; }
+.zy-app .chat-header-person-avatar-only>.chat-header-avatar { display:flex;flex:0 0 auto;align-items:center;justify-content:center;padding:0;border:0;border-radius:50%;background:transparent;color:inherit;cursor:pointer; }
+.zy-app .chat-header-person-avatar-only>.chat-header-avatar:disabled { opacity:1;cursor:default; }
+.zy-app .chat-header-person-avatar-only>.chat-header-avatar:focus-visible { outline:2px solid #ed7b7b;outline-offset:3px; }

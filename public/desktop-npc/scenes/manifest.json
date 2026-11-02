@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "characterWindowComposition": {
+    "sceneAspectRatio": "16:9",
+    "originalAspectRatio": "4:3",
+    "originalLeftFraction": 0.16666666666666666,
+    "originalWidthFraction": 0.75,
+    "extraWidthDistribution": {
+      "left": "2/3",
+      "right": "1/3"
+    },
+    "rendering": "Approved original over generated side background; central face and body not regenerated. Background edges softly blended."
+  },
+  "assets": [
+    {
+      "id": "chen-nian-sofa-burgundy-v1",
+      "personId": "chen-nian",
+      "path": "/desktop-npc/scenes/chen-nian-burgundy-v1.png",
+      "use": "character-dock-scene",
+      "status": "historical-static-preview",
+      "source": "user-uploaded image, 2026-09-26"
+    },
+    {
+      "id": "yuan-xiaoman-sofa-v1",
+      "personId": "yuan-xiaoman",
+      "path": "/desktop-npc/scenes/yuan-xiaoman-sofa-v1.png",
+      "use": "character-dock-scene",
+      "status": "historical-static-preview",
+      "source": "user-uploaded image, 2026-09-26"
+    },
+    {
+      "id": "chen-nian-widescreen-background-v2",
+      "personId": "chen-nian",
+      "path": "/desktop-npc/scenes/chen-nian-widescreen-background-v2.png",
+      "use": "character-window-side-background-only",
+      "status": "historical-static-preview",
+      "source": "imagegen horizontal environment expansion, 2026-09-26",
+      "protectedOriginal": "/desktop-npc/scenes/chen-nian-burgundy-v1.png",
+      "generationBrief": "Expand dark navy wall and black leather sofa; left 2/3 and right 1/3 of added width. Preserve original character, camera and lighting. Generated center is covered by approved original."
+    },
+    {
+      "id": "yuan-xiaoman-widescreen-background-v2",
+      "personId": "yuan-xiaoman",
+      "path": "/desktop-npc/scenes/yuan-xiaoman-widescreen-background-v2.png",
+      "use": "character-window-side-background-only",
+      "status": "historical-static-preview",
+      "source": "imagegen horizontal environment expansion, 2026-09-26",
+      "protectedOriginal": "/desktop-npc/scenes/yuan-xiaoman-sofa-v1.png",
+      "generationBrief": "Expand dark navy wall and black leather sofa; left 2/3 and right 1/3 of added width. Preserve original character, camera and lighting. Generated center is covered by approved original."
+    },
+    {
+      "id": "chen-nian-desktop-20260926",
+      "personId": "chen-nian",
+      "currentName": "陈年",
+      "path": "/desktop-npc/scenes/chen-nian-red-suit-20260926.png",
+      "use": "character-window-scene",
+      "status": "current-static-preview",
+      "source": "user-provided Desktop/人物 image, 2026-09-26",
+      "sha256": "33337bd622ebd2d31085c1d77bd3c18a6a84a4a788dd8f89851d0664b4e11805"
+    },
+    {
+      "id": "he-jiawei-desktop-20260926",
+      "personId": "he-jiawei",
+      "currentName": "何嘉伟",
+      "path": "/desktop-npc/scenes/he-jiawei-20260926.png",
+      "use": "character-window-scene",
+      "status": "current-static-preview",
+      "source": "user-provided Desktop/人物 image, 2026-09-26",
+      "sha256": "71456d93b9e87ec51d78e8f537cf0cde0b141eb7b83b823d0d2dce15878d6611"
+    },
+    {
+      "id": "zhao-yifan-desktop-20260926",
+      "personId": "zhao-yifan",
+      "currentName": "赵一帆",
+      "path": "/desktop-npc/scenes/zhao-yifan-20260926.png",
+      "use": "character-window-scene",
+      "status": "current-static-preview",
+      "source": "user-provided Desktop/人物 image, 2026-09-26",
+      "sha256": "96361a0ca92e85bf9412f9637626bcd2f29642599057c096d19f11d424f28441"
+    },
+    {
+      "id": "liu-desktop-20260926",
+      "personId": "liu",
+      "currentName": "柳智敏",
+      "path": "/desktop-npc/scenes/liu-zhimin-20260926.png",
+      "use": "character-window-scene",
+      "status": "current-static-preview",
+      "source": "user-provided Desktop/人物 image, 2026-09-26",
+      "sha256": "9d885347fbf726fa9b433adf6b8fdb375d9cf744d352c9f343aeb808d8712ac9"
+    },
+    {
+      "id": "yuan-xiaoman-desktop-20260926",
+      "personId": "yuan-xiaoman",
+      "currentName": "许晓曼",
+      "path": "/desktop-npc/scenes/xu-xiaoman-20260926.png",
+      "use": "character-window-scene",
+      "status": "current-static-preview",
+      "source": "user-provided Desktop/人物 image, 2026-09-26",
+      "sha256": "a05d01208b283830e9332d1592780ad3a7abf82e6a933c7a53ff23f52a199473"
+    },
+    {
+      "id": "xia-xia-desktop-20260926",
+      "personId": "xia-xia",
+      "currentName": "唐佳怡",
+      "path": "/desktop-npc/scenes/tang-jiayi-20260926.png",
+      "use": "character-window-scene",
+      "status": "historical-static-preview",
+      "source": "user-provided Desktop/人物 image, 2026-09-26",
+      "sha256": "ac6edd4fee1354595debde9d40100a42d9af9a849214a6a2f9348d3f6e0fc70c",
+      "supersededBy": "xia-xia-anime-desktop-20261021"
+    },
+    {
+      "id": "xia-xia-anime-desktop-20261021",
+      "personId": "xia-xia",
+      "currentName": "唐佳怡",
+      "path": "/desktop-npc/scenes/xia-xia-anime-sofa-final-20261021.png",
+      "use": "character-window-scene",
+      "status": "user-endorsed-static-image",
+      "source": "built-in imagegen original anime redesign and full-scene edit; user finalized natural side-seated version 2026-10-21",
+      "sourceImage": "output/xia-anime-redesign-20261021/xia-night-sofa-fullscene-lap-cushion-v2.png",
+      "identityReference": "output/xia-anime-redesign-20261021/xia-sakura-v3-slimmer-shirt.png",
+      "compositionReference": "output/xia-anime-redesign-20261021/inputs/user-fullscene-reference-chen-20261021.png",
+      "sha256": "31d495fab0ce6ca6e127b273a444de78ca23b39ab8a7c73148a5ad9c082cc7d1",
+      "width": 1672,
+      "height": 941,
+      "acceptanceQuote": "算了 还是定稿上一张吧 这张太正经了",
+      "installationQuote": "先把这个图片设置为桌面动态人物",
+      "installedAt": "2026-10-21",
+      "rendering": "Direct full-scene image in the existing desktop character window; no new motion/video asset."
+    },
+    {
+      "id": "zhou-chef-desktop-20261005-v1",
+      "personId": "zhou-chef",
+      "currentName": "周师傅",
+      "path": "/desktop-npc/scenes/zhou-chef-night-sofa-20261005-v1.png",
+      "use": "character-window-scene",
+      "status": "user-endorsed-static-image",
+      "source": "built-in imagegen edit of user-provided Zhao Yifan scene; user endorsed 2026-10-05",
+      "identityReference": "/desktop-npc/scenes/zhao-yifan-20260926.png",
+      "sha256": "f5d8ca57712b57e721c02cbb511f77e5302c9d937fe8feebb9d7fc61783350c4",
+      "acceptanceQuote": "可以，差不多就是这个意思。"
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+/* Product detail pass: preserve the established three-layer layout and coral brand.
+   System fonts avoid a blocking download; Lucide remains the single icon family.
+   Radius roles: 8px controls, square conversation rows, existing 22px surfaces/pill composer. */
+.zy-app {
+  --detail-ink: #252628;
+  --detail-secondary: #626469;
+  --detail-muted: #717378;
+  --detail-hover: #e7e8ea;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: var(--detail-ink);
+}
+.zy-app svg { stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.zy-app .zy-icon,
+.zy-app .xx-call-actions button {
+  color: var(--detail-secondary);
+  border-radius: 8px;
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+.zy-app .zy-icon:hover,
+.zy-app .xx-call-actions button:hover { background-color: var(--detail-hover); color: var(--detail-ink); }
+.zy-app .zy-icon:active,
+.zy-app .xx-call-actions button:active { transform: scale(.94); }
+.zy-app button:focus-visible { outline: 2px solid #65676c; outline-offset: 3px; }
+.zy-app .zy-nav-items .active { color: #000; }
+.zy-app .zy-nav-items .active .lucide-compass circle { fill: none; }
+.zy-app .zy-nav-items .active .lucide-compass path { fill: currentColor; }
+.zy-app .zy-nav-items .active .lucide-layout-grid rect { fill: currentColor; }
+.zy-app .zy-nav-items .zy-moments-dot { position: absolute; top: 3px; right: 3px; width: 8px; height: 8px; border-radius: 50%; background: #f34f59; pointer-events: none; }
+.zy-app .zy-icon svg { width: 20px; height: 20px; }
+.zy-app .zy-nav-items svg { width: 22px; height: 22px; }
+.zy-app .zy-self strong { font-size: 16px; font-weight: 600; letter-spacing: -.25px; }
+.zy-app .zy-self small { font-size: 12px; color: var(--detail-secondary); }
+.zy-app .zy-search { border-radius: 12px; box-shadow: 0 1px 2px #25262805; }
+.zy-app .zy-search input { font-size: 13px; }
+.zy-app .zy-search input::placeholder { color: var(--detail-muted); }
+.zy-app .zy-conversation { padding: 15px 10px; gap: 13px; border-radius: 0; }
+.zy-app .zy-conversation strong { font-size: 15px; font-weight: 600; line-height: 1.45; }
+.zy-app .zy-conversation.selected strong { font-weight: 600; }
+.zy-app .zy-conversation time { font-size: 11px; color: var(--detail-muted); font-variant-numeric: tabular-nums; }
+.zy-app .zy-conversation small { margin-top: 5px; font-size: 13px; line-height: 1.55; color: var(--detail-secondary); }
+.zy-app .zy-conversation-pinned:not(.selected) { background: #e4e4e6; }
+.zy-app .zy-system-label { color: #67696e; background: #f8f8f9; font-size: 10px; font-weight: 500; border-radius: 4px; }
+.zy-app .zy-contact-row strong { font-size: 15px; font-weight: 600; }
+.zy-app .zy-chat-head strong,
+.zy-app .xx-head strong { font-size: 16px; font-weight: 600; letter-spacing: -.2px; }
+.zy-app .zy-chat-head small,
+.zy-app .xx-head small { font-size: 12px; line-height: 1.5; color: var(--detail-secondary); }
+.zy-app .zy-status-badge { font-size: 10px !important; line-height: 15px; padding: 1px 6px; border-radius: 5px; vertical-align: 2px; letter-spacing: 0; }
+.zy-app .xx-head { border-bottom-color: #e9eaec; }
+.zy-app .xx-call-actions { gap: 10px; }
+.zy-app .xx-call-actions svg { width: 20px; height: 20px; }
+.zy-app .xx-meta { color: var(--detail-muted); font-variant-numeric: tabular-nums; }
+.zy-app .zy-composer textarea::placeholder,
+.zy-app .xx-compose textarea::placeholder { color: #757074; }
+.zy-app .xx-compose textarea,
+.zy-app .zy-composer textarea { caret-color: #c74559; }
+.zy-app .xx-welcome h2 { font-size: 18px; font-weight: 600; color: var(--detail-ink); }
+.zy-app .xx-welcome p { font-size: 13px; color: var(--detail-secondary); line-height: 1.7; }
+.zy-app .npc-quote { color: #626469; border-left-color: #e87961; background: #e9e9eb; }
+.zy-app .npc-quote strong { color: #a74b38; }
+.zy-app .npc-reply-action { color: #65676c; }
+.zy-app .zy-profile-inner h1 { font-size: 26px; font-weight: 600; letter-spacing: .2px; }
+.zy-app .zy-profile-bio { font-size: 14px; line-height: 1.7; color: var(--detail-secondary); }
+.zy-app .zy-profile-actions .zy-icon {
+  color: #a34d3b;
+  background: linear-gradient(110deg, #fce8de, #f9e5e8);
+  border: 1px solid #edcfc6;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px #a34d3b06;
+}
+.zy-app .zy-profile-actions .zy-icon:hover { background: #f8dace; color: #853c2d; }
+.zy-app .zy-profile-actions .zy-icon svg { width: 21px; height: 21px; }
+.zy-app .zy-post-person strong { font-size: 16px; font-weight: 600; }
+.zy-app .zy-post-person time { font-size: 11px; color: var(--detail-muted); font-variant-numeric: tabular-nums; }
+.zy-app .zy-post-person small { font-size: 12px; color: #252628; line-height: 1.6; }
+.zy-app .zy-post-caption { font-size: 14px; line-height: 1.75; }
+.zy-app .zy-post-caption strong { font-weight: 600; }
+.zy-app .zy-post-actions .zy-icon { border-radius: 50%; }
+@media (prefers-reduced-motion: reduce) {
+  .zy-app *, .zy-app *::before, .zy-app *::after { transition: none !important; scroll-behavior: auto !important; }
+}
+
+.zy-resize-handles { position: absolute; inset: 0; pointer-events: none; z-index: 50; }
+.zy-resize-handle { position: absolute; pointer-events: auto; touch-action: none; border: 0; background: transparent; padding: 0; }
+.zy-resize-handle.n, .zy-resize-handle.s { left: 22px; right: 22px; height: 6px; cursor: ns-resize; }
+.zy-resize-handle.n { top: 0; } .zy-resize-handle.s { bottom: 0; }
+.zy-resize-handle.e, .zy-resize-handle.w { top: 22px; bottom: 22px; width: 6px; cursor: ew-resize; }
+.zy-resize-handle.e { right: 0; } .zy-resize-handle.w { left: 0; }
+.zy-resize-handle.ne, .zy-resize-handle.nw, .zy-resize-handle.se, .zy-resize-handle.sw { width: 20px; height: 20px; }
+.zy-resize-handle.ne { right: 0; top: 0; cursor: nesw-resize; }
+.zy-resize-handle.nw { left: 0; top: 0; cursor: nwse-resize; }
+.zy-resize-handle.se { right: 0; bottom: 0; cursor: nwse-resize; }
+.zy-resize-handle.sw { left: 0; bottom: 0; cursor: nesw-resize; }
+.zy-resize-handle.se::after { content: ''; position: absolute; right: 7px; bottom: 7px; width: 7px; height: 7px; border-right: 1.5px solid #96989d; border-bottom: 1.5px solid #96989d; border-radius: 0 0 2px 0; }
+.zy-app .zy-search-row { margin-bottom: 9px; }
+.zy-app .zy-search { height: 34px; padding: 0 11px; border-radius: 9px; gap: 8px; }
+.zy-app .zy-search input { font-size: 12px; }
+.zy-app .zy-search > svg { width: 15px; height: 15px; }
+.zy-app .zy-search .zy-icon { width: 24px; height: 24px; }
+.zy-app .zy-directory { --directory-background: #f2f2f2; background: var(--directory-background); }
+.zy-app .zy-directory .zy-self,
+.zy-app .zy-directory .zy-list-scroll { background: var(--directory-background); }
+.zy-app .zy-chat-list { margin: 0 -14px; width: calc(100% + 28px); }
+/* 2026-10-15: all directory pages share the straight seam and 6px resize hit area. */
+.zy-app:is(.zy-page-chat,.zy-page-contacts,.zy-page-pets) .zy-directory + .zy-panel-divider { position: relative; width: 0; min-width: 0; flex: 0 0 0; z-index: 2; }
+.zy-app:is(.zy-page-chat,.zy-page-contacts,.zy-page-pets) .zy-directory + .zy-panel-divider::before { content: ''; position: absolute; top: 0; bottom: 0; left: -3px; width: 6px; cursor: col-resize; }
+.zy-app .zy-conversation:not(.selected):not(.zy-conversation-pinned):not(:hover) { background: var(--directory-background); }
+.zy-app .zy-conversation { padding: 13px 24px; gap: 11px; margin: 0; border-radius: 0; box-shadow: none; }
+.zy-app .zy-directory { --zy-row-divider: rgb(38 42 39 / 8%); --zy-row-hover: color-mix(in srgb, var(--directory-background) 92%, #262a27 8%); }
+.zy-app .zy-conversation:not(:last-child)::after { content: ''; position: absolute; left: 24px; right: 24px; bottom: 0; height: 1px; pointer-events: none; background: var(--zy-row-divider); }
+.zy-app .zy-conversation:hover:not(.selected) { z-index: 2; background: var(--zy-row-hover); box-shadow: 0 2px 8px rgb(31 35 32 / 9%); }
+.zy-app .zy-conversation:hover::after, .zy-app .zy-conversation.selected::after { opacity: 0; }
+.zy-app .zy-conversation:has(+ .zy-conversation:hover)::after, .zy-app .zy-conversation:has(+ .zy-conversation.selected)::after { opacity: 0; }
+.zy-address-group { position: relative; }
+.zy-address-group-start::before { content: ''; position: absolute; top: 0; left: 24px; right: 24px; height: 1px; pointer-events: none; background: var(--zy-row-divider); }
+.zy-address-group-start:has(.zy-contact-row:hover)::before, .zy-address-group-start:has(.zy-contact-row.selected)::before { opacity: 0; }
+.zy-address-group:has(.zy-contact-row:hover), .zy-address-group:has(.zy-contact-row.selected) { z-index: 2; }
+.zy-address-group:has(.zy-contact-row:hover) + .zy-address-group-start::before, .zy-address-group:has(.zy-contact-row.selected) + .zy-address-group-start::before { opacity: 0; }
+html[data-zy-theme='dark'] .zy-app .zy-directory { --zy-row-divider: rgb(255 255 255 / 12%); --zy-row-hover: color-mix(in srgb, var(--directory-background) 88%, #fff 12%); }
+.zy-app .zy-conversation.selected { background: linear-gradient(110deg, #f49373, #e47a96); color: #fff; }
+.zy-app .zy-conversation.selected strong,
+.zy-app .zy-conversation.selected small,
+.zy-app .zy-conversation.selected time { color: #fff; }
+.zy-app .zy-conversation.selected .zy-system-label { color: #fff; background: #ffffff30; }
+.zy-app .zy-conversation strong, .zy-app .zy-contact-row strong { font-size: 14px; }
+.zy-app .zy-conversation small { font-size: 12px; margin-top: 3px; }
+.zy-app .zy-conversation time { font-size: 10px; }
+.zy-app .zy-conversation time .is-yesterday { font-size: calc(1em - 2px); }
+.zy-app .zy-conversation.selected::before { left: 0; top: 0; bottom: 0; width: 3px; border-radius: 0; background: #28665f; }
+.zy-app .zy-molly-pinned { margin-bottom: 0; }
+.zy-app .zy-contact-row { height: 52px; padding: 7px 12px; gap: 11px; }
+.zy-app .zy-letter { margin-top: 7px; margin-bottom: 4px; }
+/* One composer treatment for both demo and live NPCs: white interior,
+   brand gradient ONLY on the thin border, with gently rounded rectangular corners. */
+.zy-app .zy-composer, .zy-app .xx-compose { gap: 12px; align-items: center; }
+.zy-app .zy-composer textarea, .zy-app .xx-compose textarea {
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  min-height: 44px;
+  max-height: 110px;
+  field-sizing: content;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(110deg, #ff936e, #ee7395) border-box;
+  padding: 10px 14px;
+  font: inherit;
+  font-size: 14px;
+  line-height: 22px;
+  resize: none;
+  outline: none;
+  box-shadow: none;
+}
+.zy-app .zy-composer textarea:focus-visible, .zy-app .xx-compose textarea:focus-visible { outline: none; box-shadow: none; }
+
+/* One panel-3 header and shared metrics, using Xiaxia as the reference. */
+.zy-app .unified-chat-head{flex-shrink:0;height:72px;min-height:72px;padding:11px 26px;gap:14px;border-bottom:1px solid #e9eaec;background:#fff;}
+.zy-app .chat-header-person{display:flex;align-items:center;gap:14px;min-width:0;flex:0 0 auto;padding:0;border:0;background:none;text-align:left;color:inherit;cursor:pointer;}
+.zy-app .chat-header-person:disabled{opacity:1;cursor:default;}
+.zy-app .chat-header-person .xx-avatar{width:40px;height:40px;flex-shrink:0;}
+.zy-app .chat-header-copy{min-width:0;}
+.zy-app .chat-header-copy strong{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:600;line-height:22px;}
+.zy-app .chat-header-copy small{display:block;margin-top:5px;font-size:12px;line-height:18px;color:var(--detail-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.zy-app .unified-chat-head .xx-call-actions{gap:10px;margin-left:auto;flex-shrink:0;}
+.zy-app .unified-chat-head .xx-call-actions > button,
+.zy-app .unified-chat-head .zy-chat-more > button{width:36px;height:36px;padding:8px;}
+.zy-app .unified-chat-head .xx-call-actions svg{width:20px;height:20px;}
+.zy-app .zy-chat-more{position:relative;-webkit-app-region:no-drag;}
+.zy-app .zy-chat-more-menu{position:absolute;z-index:30;top:calc(100% + 9px);right:0;width:190px;padding:5px;border:1px solid #e4e5e7;border-radius:10px;background:#fff;box-shadow:var(--zy-popup-shadow,0 9px 28px #0002);-webkit-app-region:no-drag;}
+.zy-app .unified-chat-head .zy-chat-more-menu button{display:flex;align-items:center;justify-content:flex-start;gap:11px;width:100%;height:38px;padding:0 11px;border:0;border-radius:7px;background:transparent;color:#303236;text-align:left;white-space:nowrap;font-size:13px;font-weight:500;line-height:1.4;}
+.zy-app .unified-chat-head .zy-chat-more-menu button + button{margin-top:2px;}
+.zy-app .unified-chat-head .zy-chat-more-menu button:hover,.zy-app .unified-chat-head .zy-chat-more-menu button:focus-visible{background:#f1f2f3;color:#202225;}
+.zy-app .unified-chat-head .zy-chat-more-menu button svg{width:17px;height:17px;color:#6d7075;}
+.zy-app .zy-chat{margin:0;border:0;border-radius:22px;background:#f8f8f7;box-shadow:none;min-height:0;}
+.zy-app .zy-thread{min-height:0;}
+.zy-app .zy-thread-inner{padding:20px 26px;}
+.zy-app .zy-message{gap:13px;margin-bottom:4px;}
+.zy-app .zy-message.new-group{margin-top:0;}
+.zy-app .zy-message.group-last{margin-bottom:20px;}
+.zy-app .zy-message-avatar{align-self:flex-end;margin:0 0 22px;}
+.zy-app .zy-message-content{max-width:min(82%,680px);min-width:0;}
+.zy-app .zy-bubble{font-size:14px;line-height:1.55;padding:10px 16px;border:0;border-radius:21px;box-shadow:0 1px 2px #00000005;color:#242321;}
+.zy-app .zy-message:not(.mine)[data-bubble-position='start'] .zy-bubble{border-radius:21px 21px 21px 5px;}
+.zy-app .zy-message:not(.mine)[data-bubble-position='middle'] .zy-bubble{border-radius:5px 21px 21px 5px;}
+.zy-app .zy-message:not(.mine)[data-bubble-position='end'] .zy-bubble{border-radius:5px 21px 21px 21px;}
+.zy-app .mine .zy-bubble{background:#242321;color:#fff;border-radius:21px;}
+.zy-app .zy-message.mine[data-bubble-position='start'] .zy-bubble{border-radius:21px 21px 5px 21px;}
+.zy-app .zy-message.mine[data-bubble-position='middle'] .zy-bubble{border-radius:21px 5px 5px 21px;}
+.zy-app .zy-message.mine[data-bubble-position='end'] .zy-bubble{border-radius:21px 5px 21px 21px;}
+.zy-app .zy-message-time{font-size:11px;gap:7px;margin-top:5px;color:#97938c;}
+.zy-app .zy-message-time .read{color:#f16f5e;}
+.zy-app .zy-composer-area{padding:0;border:0;background:transparent;}
+.zy-app .zy-composer-area>.chat-composer-shell{margin:8px 20px 16px;}
+
+.zy-chat-context{position:fixed;z-index:1200;width:180px;padding:6px;background:#fff;border:1px solid #e8e6e3;border-radius:12px;box-shadow:var(--zy-popup-shadow,0 9px 28px #0002)}
+.zy-chat-context button{display:block;width:100%;text-align:left;padding:10px 13px;border:0;border-radius:7px;background:none;font-size:13px;color:#302d2a;cursor:pointer}
+.zy-chat-context button:hover,.zy-chat-context button:focus-visible{background:#fff0e9;outline:none}.zy-chat-context button:disabled{color:#aaa;cursor:default;background:none}
+.zy-signature-edit{display:flex;flex-direction:column;gap:10px;text-align:left;width:100%;margin:20px 0;color:#777;font-size:13px}.zy-signature-edit textarea{resize:vertical;min-height:80px;padding:12px;border:1px solid #e4e1dd;border-radius:10px;color:#282624;background:#fafaf9;font:inherit}
+.zy-npc-profile-card{padding:10px 16px 20px;max-height:70vh;overflow:auto}.zy-npc-profile-top{display:flex;align-items:center;gap:24px;padding:12px 0 28px}.zy-npc-profile-top h3{font-size:24px;font-weight:600;margin:0 0 14px}.zy-npc-profile-top p{font-size:14px;color:#83807b;margin:6px 0}.zy-npc-profile-card dl{display:grid;grid-template-columns:86px 1fr;gap:22px 16px;padding:26px 0;margin:0;border-top:1px solid #eeece9;font-size:14px}.zy-npc-profile-card dt{color:#8a857f}.zy-npc-profile-card dd{margin:0;line-height:1.6}.zy-profile-moments{border:0;border-top:1px solid #eeece9;background:none;display:flex;align-items:center;justify-content:space-between;padding:24px 0;width:100%;font-size:14px;color:#78736e;cursor:pointer}.zy-profile-moments span{display:flex;align-items:center;gap:5px}.zy-profile-moments img{width:48px;height:48px;object-fit:cover;border-radius:5px}.zy-npc-profile-actions{display:flex;justify-content:space-between;border-top:1px solid #eeece9;padding:26px 0 0;gap:22px}.zy-npc-profile-actions button{display:flex;flex:1;flex-direction:column;align-items:center;gap:12px;padding:10px 0;background:none;border:0;color:#52504c;font-size:12px;cursor:pointer}.zy-npc-profile-actions button:hover{color:#f17760}.zy-npc-profile-actions svg{width:25px;height:25px}
+.xx-profile-avatar-button{border:0;padding:0;background:none;flex-shrink:0;align-self:flex-end;cursor:pointer;border-radius:50%}.xx-profile-avatar-button:focus-visible{outline:2px solid #f17760;outline-offset:3px}
+.zy-npc-identity{min-width:0;flex:1}.zy-npc-profile-top .zy-npc-identity h3{display:flex;align-items:center;gap:12px;overflow-wrap:anywhere;font-size:24px;margin-bottom:14px}.zy-gender{font-size:20px;font-weight:600;flex-shrink:0}.zy-gender.female{color:#f27a9c}.zy-gender.male{color:#579fe0}.zy-npc-profile-top .zy-npc-identity p{font-size:13px;color:#92908e;line-height:1.7;margin:2px 0}.zy-friend-details{border-top:1px solid #eeece9;padding-top:24px}.zy-friend-details h4{margin:0;color:#797570;font-weight:500;font-size:15px}.zy-npc-profile-card .zy-friend-details dl{border:0;padding:20px 0 26px;align-items:center}.zy-friend-details input{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid transparent;border-radius:7px;background:#f5f4f2;font:inherit;color:#292725;outline:none}.zy-friend-details input:focus{border-color:#edb4a4;background:#fff}.zy-npc-profile-card .zy-friend-source{padding:24px 0}.zy-npc-profile-actions button{border-radius:10px}.zy-npc-profile-actions button:hover{background:#fff1eb}
+
+.zy-self-avatar-edit{position:relative;display:inline-flex;padding:0;border:0;border-radius:50%;background:none;cursor:pointer;overflow:hidden;flex-shrink:0}.zy-avatar-camera{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0006;color:white;opacity:0;transition:opacity .16s}.zy-self-avatar-edit:hover .zy-avatar-camera,.zy-self-avatar-edit:focus-visible .zy-avatar-camera{opacity:1}.zy-self-avatar-edit:focus-visible{outline:2px solid #ed9d85;outline-offset:4px}.zy-my-profile .zy-self-account{font-size:15px;color:#77716b;margin:16px 0 6px}.zy-signature-edit input{padding:12px;border:1px solid #e4e1dd;border-radius:10px;color:#282624;background:#fafaf9;font:inherit;width:100%;box-sizing:border-box}.zy-signature-edit:focus-within{color:#514b45}@media(hover:none){.zy-avatar-camera{opacity:1;background:#0003}}
+
+
+/* Friend profile: plain content, outside-click dismissal, no page scrim. */
+.zy-profile-popover{border:0;background:#fff;box-shadow:var(--zy-popup-shadow,0 9px 28px #0002)}
+.zy-profile-popover::backdrop{background:transparent;backdrop-filter:none}
+.zy-profile-popover .zy-dialog-head,.zy-profile-popover .zy-friend-details,.zy-profile-popover .zy-npc-profile-card dl,.zy-profile-popover .zy-profile-moments,.zy-profile-popover .zy-npc-profile-actions{border:0;background:transparent}
+.zy-profile-popover .zy-friend-details input,.zy-profile-popover .zy-friend-details input:focus{border:0;border-radius:0;background:transparent;padding:8px 0;box-shadow:none}
+.zy-profile-popover .zy-npc-profile-actions button,.zy-profile-popover .zy-npc-profile-actions button:hover{background:transparent}
+.zy-profile-popover .zy-npc-profile-actions button:disabled{color:#bbb7b2;cursor:default}
+.zy-molly-profile-bio{text-align:left;margin:0;padding:4px 0 20px;color:#797570;line-height:1.7}
+
+.zy-molly-profile-card .zy-npc-profile-actions{justify-content:center}
+.zy-molly-profile-card .zy-npc-profile-actions button{flex:0 0 auto;min-width:96px;border:0;border-radius:0;background:transparent;box-shadow:none;color:#000;outline:none}
+.zy-molly-profile-card .zy-npc-profile-actions button:hover,.zy-molly-profile-card .zy-npc-profile-actions button:focus-visible{color:#000;background:transparent;box-shadow:none;outline:none}
+.zy-molly-profile-card .zy-npc-profile-actions button:focus-visible{text-decoration:underline;text-underline-offset:4px}
+.zy-molly-profile-card .zy-npc-profile-actions svg{color:#000;stroke:#000;fill:none}
+.zy-app .zy-post-actions .zy-icon.commented,.zy-app .zy-post-actions .zy-icon.commented:hover{color:#e57362}
+.zy-app .zy-publish-fab{position:fixed;top:auto;right:42px;bottom:36px;z-index:30;width:52px;height:52px;border:1px solid #f3b5a5;border-radius:17px;color:#d86853;background:#fff9f6;box-shadow:0 5px 22px #68433620}.zy-app .zy-publish-fab:hover{background:#ffebe2;transform:translateY(-2px)}.zy-publish-editor{display:flex;flex-direction:column;gap:16px}.zy-publish-editor>textarea{width:100%;min-height:145px;resize:vertical;border:0;outline:none;background:#faf9f7;border-radius:14px;padding:18px;font:inherit;font-size:15px;line-height:1.7;box-sizing:border-box}.zy-publish-hint{font-size:12px;color:#98928c;margin:0}.zy-publish-editor footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:16px;border-top:1px solid #eeebe7}.zy-publish-editor footer small{font-size:11px;color:#98928c}.zy-publish-dialog .zy-upload-grid{margin:0}.zy-publish-editor .zy-publish-person{margin:0}

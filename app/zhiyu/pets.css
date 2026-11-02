@@ -1,0 +1,126 @@
+.zy-page-pets .zy-base { background: #f2f2f2; }
+.zy-pets { flex: 1; min-width: 0; overflow-y: auto; background: var(--zy-canvas, #fff); color: var(--zy-ink, #25282c); scrollbar-width: thin; }
+.zy-pets-inner { width: min(100% - 64px, 1040px); margin: 0 auto; padding: 24px 0 48px; }
+.zy-pets-heading, .zy-pets-section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.zy-pets-heading h1 { margin: 0; font-size: 25px; line-height: 1.25; font-weight: 560; letter-spacing: -.025em; }
+.zy-pets-heading p { margin: 8px 0 0; color: #72777d; font-size: 13px; line-height: 1.6; }
+.zy-pets-text-button, .zy-pets-create { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex-shrink: 0; min-height: 31px; padding: 5px 11px; border: 1px solid #eceef0; border-radius: 10px; background: #f7f7f8; color: #282b2f; font: inherit; font-size: 12px; cursor: pointer; }
+.zy-pets-text-button:hover, .zy-pets-create:hover { background: #f0f1f2; }
+.zy-pets-tabs { position:sticky; top:0; z-index:3; display: grid; grid-template-columns: 1fr 1fr; min-height: 50px; border-bottom: 1px solid #ececef; background:var(--zy-canvas,#fff); }
+.zy-pets-tabs button { position: relative; border: 0; background: transparent; color: #85898e; font: inherit; font-size: 14px; font-weight: 560; cursor: pointer; }
+.zy-pets-tabs button::after { content: ''; position: absolute; left: 24%; right: 24%; bottom: -1px; height: 2px; border-radius: 2px; background: transparent; }
+.zy-pets-tabs button:hover { color: #363a3e; }
+.zy-pets-tabs button.is-active { color: #292d31; }
+.zy-pets-tabs button.is-active::after { background: #292d31; }
+.zy-pets-preview { position: relative; min-height: 276px; margin-top: 28px; padding: 52px 32px 30px; border: 1px solid #e6e7e9; border-radius: 16px; display: grid; grid-template-columns: minmax(150px,1fr) minmax(150px,1fr); align-items: center; gap:28px; background: #fff; }
+.zy-pets-empty { min-height: 220px; margin-top: 28px; padding: 35px 18px; border: 1px solid var(--zy-line, #e6e7e9); border-radius: 16px; background: var(--zy-canvas, #fff); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--zy-muted, #777c82); }
+.zy-pets-empty h2 { margin: 13px 0 0; color: var(--zy-ink, #25282c); font-size: 15px; font-weight: 600; }
+.zy-pets-empty p { margin: 6px 0 18px; font-size: 12px; }
+.zy-pets-empty button { min-height: 32px; padding: 0 17px; border: 1px solid var(--zy-line, #dcdfe3); border-radius: 8px; background: var(--zy-canvas, #fff); color: var(--zy-ink, #25282c); font: inherit; font-size: 12px; cursor: pointer; }
+.zy-pets-empty button:hover { border-color: #a999b9; }
+.zy-pet-art { display: block; width: 94px; height: 94px; flex-shrink: 0; background-image: url('/pets/zhiyu-pets-atlas.png'); background-repeat: no-repeat; background-size: 300% 200%; image-rendering: pixelated; }
+.zy-pet-image { display: block; width: 94px; height: 94px; flex-shrink: 0; object-fit: contain; object-position:center; overflow:hidden; image-rendering: pixelated; }
+.zy-pet-art-0 { background-position: 0% 0%; }
+.zy-pet-art-1 { background-position: 50% 0%; }
+.zy-pet-art-2 { background-position: 100% 0%; }
+.zy-pet-art-3 { background-position: 0% 100%; }
+.zy-pet-art-4 { background-position: 50% 100%; }
+.zy-pet-art-5 { background-position: 100% 100%; }
+.zy-pets-preview-art { width: 174px; height: 174px; max-width:100%; justify-self:center; }
+.zy-pets :is(.zy-pet-image,.zy-pet-art).is-regular { transform:scale(.85); transform-origin:center; }
+.zy-pets-preview-label { position: absolute; top: 18px; left: 20px; color: #777c82; font-size: 11px; }
+.zy-pets-preview-details { width: min(100%, 270px); margin-top: 0; display: flex; flex-direction: column; align-items: flex-start; gap:4px; }
+.zy-pets-preview-name { display: flex; align-items: center; gap: 5px; }
+.zy-pets-preview-name strong { color: #30343a; font-size: 17px; font-weight: 620; }
+.zy-pets-preview-name button { width: 25px; height: 25px; border: 0; border-radius: 6px; display: grid; place-items: center; background: transparent; color: #777c82; cursor: pointer; }
+.zy-pets-preview-name button:hover { background: #f1f2f3; color: #34383c; }
+.zy-pets-preview-details p { margin: 5px 0 9px; color: #777c82; font-size: 12px; line-height: 1.5; }
+.zy-pets-preview-details > span { padding: 5px 9px; border-radius: 15px; background: #f5f6f6; color: #71777c; font-size: 11px; }
+.zy-pets-section-heading { align-items: center; margin: 36px 0 14px; }
+.zy-pets-section-heading h2 { margin: 0; font-size: 15px; font-weight: 600; }
+.zy-pets-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(156px,100%), 1fr)); gap: 18px; }
+.zy-pet-card { position: relative; display: flex; flex-direction: column; align-items: center; min-height: 213px; padding: 35px 12px 18px; border: 1px solid var(--zy-line, #e7e8eb); border-radius: 13px; background: var(--zy-canvas, #fff); color: inherit; font: inherit; text-align: center; cursor: pointer; transition: border-color .16s, box-shadow .16s, transform .16s; }
+.zy-pet-card:hover { transform: translateY(-2px); border-color: #d5d7da; box-shadow: 0 8px 22px #2025300a; }
+.zy-pet-card.is-selected { border-color: #cdd0d4; box-shadow: inset 0 0 0 1px #e8e9eb; }
+.zy-pet-card strong { margin-top: 12px; font-size: 13px; font-weight: 600; line-height: 1.4; }
+.zy-pet-description { max-width: 190px; margin-top: 5px; color: var(--zy-muted, #777c82); font-size: 12px; line-height: 1.45; }
+.zy-pet-selected-label { position: absolute; top: 11px; right: 11px; display: inline-flex; align-items: center; gap: 3px; color: #6e7479; font-size: 10px; }
+.zy-pets-dialog-backdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 20px; background: #161b2491; }
+.zy-pets-dialog { width: min(100%, 410px); padding: 23px; border: 1px solid #e5e6e8; border-radius: 18px; background: #fff; box-shadow: var(--zy-popup-shadow,0 9px 28px #0002); display: flex; flex-direction: column; }
+.zy-pets-dialog-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.zy-pets-dialog-heading h2 { margin: 0; font-size: 18px; font-weight: 600; }
+.zy-pets-dialog-heading button { display: grid; place-items: center; width: 28px; height: 28px; border: 0; border-radius: 7px; background: transparent; cursor: pointer; }
+.zy-pets-dialog-heading button:hover { background: #f0f1f2; }
+.zy-pets-dialog label, .zy-pets-appearance-title { margin-bottom: 8px; font-size: 12px; font-weight: 600; }
+.zy-pets-dialog input { height: 42px; padding: 0 13px; border: 1px solid #dcdfe3; border-radius: 9px; background: #fff; color: #25282c; font: inherit; font-size: 14px; }
+.zy-pets-dialog input::placeholder { color: #92979c; }
+.zy-pets-appearance-title { margin-top: 22px; }
+.zy-pets-appearance-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+.zy-pets-appearance-grid button { min-width: 0; height: 55px; padding: 0; border: 1px solid #e7e8eb; border-radius: 9px; background: #fff; display: grid; place-items: center; cursor: pointer; }
+.zy-pets-appearance-grid button.is-picked { border-color: #41474d; box-shadow: inset 0 0 0 1px #41474d; }
+.zy-pets-appearance-grid .zy-pet-art { width: 48px; height: 48px; }
+.zy-pets-error { margin: 10px 0 0; color: #b73737; font-size: 12px; }
+.zy-pets-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 28px; }
+.zy-pets-dialog-actions button { min-height: 35px; padding: 0 14px; border: 1px solid #e1e3e5; border-radius: 9px; background: #fff; color: #2d3236; font: inherit; font-size: 12px; cursor: pointer; }
+.zy-pets-dialog-actions button[type='submit'] { border-color: #292d31; background: #292d31; color: #fff; }
+@media (max-width: 900px) { .zy-pets-inner { width: min(100% - 36px, 900px); } }
+@media (max-width: 680px) { .zy-pets-inner { width: calc(100% - 32px); padding-top: 18px; } .zy-pet-card { padding-left: 8px; padding-right: 8px; } }
+@container pet-content (max-width: 480px) { .zy-pets-preview { grid-template-columns:1fr; gap:16px; padding:48px 20px 24px; } .zy-pets-preview-details { align-items:center; justify-self:center; text-align:center; } }
+.zy-pets { container-type:inline-size; container-name:pet-content; }
+@media (prefers-reduced-motion: reduce) { .zy-pet-card { transition: none; } .zy-pet-card:hover { transform: none; } }
+
+/* 宠物页沿用聊天页的第二栏 / 分隔条 / 内容区三层结构。 */
+.zy-pet-directory { border-right: 0; }
+.zy-pet-directory-heading { height: 76px; flex-shrink: 0; display: flex; align-items: center; gap: 11px; padding: 0 10px; color: #363631; }
+.zy-pet-directory-heading strong { font-size: 14px; font-weight: 550; }
+.zy-pet-directory-nav { display: flex; flex-direction: column; gap: 0; margin: 0 -16px; }
+.zy-pet-directory-nav button { position: relative; z-index: 0; width: 100%; height: 48px; display: flex; align-items: center; gap: 13px; padding: 0 30px; border: 0; border-radius: 0; background: transparent; color: var(--zy-ink, #30332f); text-align: left; font: inherit; font-size: 13px; font-weight: 550; cursor: pointer; transition: background .16s, box-shadow .16s, color .16s; }
+.zy-pet-directory-nav button:hover:not(.is-active) { z-index: 2; background: var(--zy-row-hover, #e9e9e7); box-shadow: 0 2px 8px rgb(31 35 32 / 9%); }
+.zy-pet-directory-nav button.is-active { z-index: 1; background: var(--zy-selected); color: var(--zy-ink); box-shadow: none; font-weight: 550; }
+.zy-pet-directory-nav button.is-active::before { content:''; position:absolute; inset:0 auto 0 0; width:3px; background:var(--zy-selected-accent); }
+.zy-pet-directory-nav small { margin-left: auto; color: #8c8d89; font-size: 12px; font-weight: 400; }
+.zy-pets-section-heading > div p { margin: 5px 0 0; color: #81868c; font-size: 12px; }
+.zy-pets-limited-heading { margin-top: 31px; }
+.zy-pets-limited-heading h2 { font-size: 15px; }
+.zy-pets-limited-heading > div { display: block; }
+.zy-pet-card { min-height: 240px; padding:42px 14px 20px; gap:6px; }
+.zy-pet-card .zy-pet-art, .zy-pet-card .zy-pet-image { width:120px; height:120px; max-width:100%; margin:4px 0 0; }
+.zy-pet-mood { margin-top: auto; padding: 5px 9px; border-radius: 15px; background: #f5f6f6; color: #71777c; font-size: 11px; }
+.zy-pet-discover-card { cursor: default; padding: 34px 14px 18px; }
+.zy-pet-discover-card:hover { transform: none; }
+.zy-pet-discover-card .zy-pet-art, .zy-pet-discover-card .zy-pet-image { width:120px; height:120px; max-width:100%; }
+.zy-pet-discover-card strong { margin-top: 10px; font-size: 12px; }
+.zy-pet-caption { min-height: 34px; margin: 8px 0 12px; color: #76618f; font-size: 12px; line-height: 1.4; }
+.zy-pet-discover-card > button { min-width: 85px; min-height: 27px; margin-top: auto; padding: 0 11px; border: 1px solid var(--zy-line, #dedee1); border-radius: 8px; background: var(--zy-canvas, #fff); color: var(--zy-ink, #454950); font: inherit; font-size: 11px; cursor: pointer; }
+.zy-pet-discover-card > button:hover:not(:disabled) { border-color: #a999b9; background: #f9f5ff; color: #745293; }
+.zy-pet-discover-card > button:disabled { border-color: #ded7e6; background: #f6f2fa; color: #71647c; cursor: default; }
+.zy-pets-limited-grid { grid-template-columns: repeat(auto-fit, minmax(min(190px,100%), 1fr)); }
+.zy-pets-limited-grid .zy-pet-card { min-height: 242px; }
+.zy-pets-limited-grid .zy-pet-image { width: 120px; height: 120px; max-width:100%; margin-top: 1px; }
+.zy-pet-card.is-limited { border-color: #d8c8f3; background: #fff; box-shadow: 0 3px 15px #65449e0b; }
+.zy-pet-card.is-limited:hover { border-color: #bda2ed; box-shadow: 0 8px 22px #65449e18; }
+.zy-pet-limited-badge { position: absolute; top: 11px; left: 11px; z-index: 1; padding: 4px 9px; border-radius: 7px; color: #fff; font-size: 10px; font-weight: 600; letter-spacing: .015em; white-space: nowrap; background-color: #9b75e9; background-image: radial-gradient(circle at 13px 6px,#ffffffad 0 1px,transparent 1.3px),radial-gradient(circle at 31px 16px,#ffffff8c 0 1px,transparent 1.3px),radial-gradient(circle at 52px 8px,#ffffffa6 0 .8px,transparent 1.1px),radial-gradient(circle at 69px 19px,#ffffff91 0 .9px,transparent 1.2px),linear-gradient(100deg,#6e64d7 0%,#a172f1 49%,#d295ee 100%); background-size: 76px 24px,76px 24px,76px 24px,76px 24px,100% 100%; box-shadow: 0 2px 8px #8b61d12e; }
+.zy-pets-discover-heading { margin-top: 30px; }
+.zy-pets-discover-scroll { overflow: visible; padding: 1px; }
+.zy-pets-discover-scroll .zy-pet-card { min-height: 240px; }
+.zy-pets-discover-scroll .zy-pets-grid { gap: 18px; }
+.zy-pets-notice { margin: 13px 0 0; padding: 9px 12px; border-radius: 8px; background: #f4f0fa; color: #705489; font-size: 12px; }
+
+/* Match the existing layered dark UI without introducing a separate pet-page theme. */
+html[data-zy-theme='dark'] .zy-pets { color: var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-pets-tabs { border-color: var(--zy-line); }
+html[data-zy-theme='dark'] .zy-pets-tabs button { color: var(--zy-secondary); }
+html[data-zy-theme='dark'] .zy-pets-tabs button.is-active { color: var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-pets-tabs button.is-active::after { background: var(--zy-nav-active); }
+html[data-zy-theme='dark'] .zy-pets-section-heading > div p { color: var(--zy-secondary); }
+html[data-zy-theme='dark'] .zy-pets-preview { border-color: #3b3b3e; background: #272729; }
+html[data-zy-theme='dark'] .zy-pets-preview-label,
+html[data-zy-theme='dark'] .zy-pets-preview-details p,
+html[data-zy-theme='dark'] .zy-pets-preview-name button { color: var(--zy-secondary); }
+html[data-zy-theme='dark'] .zy-pets-preview-name strong { color: var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-pets-preview-details > span,
+html[data-zy-theme='dark'] .zy-pet-mood { background: #363639; color: #c2c2c4; }
+html[data-zy-theme='dark'] .zy-pets-create { border-color: #4a4a4c; background: #303032; color: var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-pet-card.is-limited { border-color: #594a67; background: #29272c; }
+html[data-zy-theme='dark'] .zy-pet-caption { color: #c5abd9; }
+html[data-zy-theme='dark'] .zy-pet-discover-card > button:disabled { border-color: #5e5064; background: #403948; color: #ded0e2; }

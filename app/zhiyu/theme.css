@@ -1,0 +1,230 @@
+/* The approved pearl / grey-green palette keeps the existing geometry and
+   coral brand accents. Floating surfaces are shared in theme-glass.css. */
+:root {
+  --zy-canvas:#f1f4f0; --zy-sidebar:#e5ebe4; --zy-rail:#d9e2d9;
+  --zy-incoming:#e5ebe4; --zy-outgoing:#2e3a32; --zy-on-outgoing:#f1f4f0;
+  --zy-ink:#252c27; --zy-secondary:#58645c; --zy-muted:#66746b;
+  --zy-line:#d5ded5; --zy-hover:#dce5dc;
+  --zy-pinned:#dfe7de; --zy-row-badge:#edf2ed;
+  --zy-selected:linear-gradient(110deg,#f2ddcf,#efd7d4);
+  --zy-selected-accent:#c78a79; --zy-selected-badge:#f6e9e2;
+  --zy-nav-active:#2e6252;
+  --zy-layer-shadow:-8px 0 16px -7px rgb(31 39 34 / 12%), 0 8px 18px -15px rgb(31 39 34 / 8%);
+  --zy-popup-shadow:0 9px 28px #0002;
+  --zy-composer-shadow:0 2px 8px rgb(31 39 34 / 5%);
+  --zy-chat-control-ink:#242322;
+  --zy-chat-control-accent:#e66562;
+}
+:root[data-zy-theme='dark'] {
+  --zy-canvas:#232b28; --zy-sidebar:#313b35; --zy-rail:#29332d;
+  --zy-incoming:#37423b; --zy-outgoing:#37423b; --zy-on-outgoing:#edf2ee;
+  --zy-ink:#edf2ee; --zy-secondary:#b9c7bd; --zy-muted:#a3b4a8;
+  --zy-line:#435047; --zy-hover:#3c4940;
+  --zy-pinned:#354239; --zy-row-badge:#53665a;
+  --zy-selected:linear-gradient(110deg,#574b43,#574644);
+  --zy-selected-accent:#d79988; --zy-selected-badge:#6c5551;
+  --zy-nav-active:#91ac9a;
+  --zy-layer-shadow:-6px 0 14px -8px rgb(0 0 0 / 26%), 0 8px 18px -16px rgb(0 0 0 / 18%);
+  --zy-popup-shadow:0 9px 28px rgb(0 0 0 / 28%);
+  --zy-composer-shadow:0 2px 8px rgb(0 0 0 / 14%);
+  --zy-chat-control-ink:#b9c7bd;
+}
+
+/* Preserve the outer layers; the directory and detail pane share a straight seam.
+   The base alone supplies the same 3px top, bottom and right inset. */
+/* Keep each surface's specificity independent: :is() would give the stage
+   the app selector's weight and prevent the native transparent override. */
+html[data-zy-theme] .zy-desktop-stage,
+html[data-zy-theme] .zy-desktop-slot>.zy-app.zy-desktop { background:var(--zy-rail); }
+/* 2026-10-21 板块1 透明（暗色）：底板只留 4% 底色，颜色仍取 --zy-rail。
+   4% = Hermes「窗口透明」色调 96% 的等效值（100 − 96）。 */
+html[data-zy-theme='dark'] .zy-desktop-slot>.zy-app.zy-desktop { background:color-mix(in srgb, var(--zy-rail) 4%, transparent); }
+html[data-zy-theme] .zy-desktop .zy-base { position:relative; z-index:1; margin:3px 3px 3px 0; border-radius:12px; background:var(--zy-sidebar); box-shadow:var(--zy-layer-shadow); }
+html[data-zy-theme] .zy-app.zy-desktop :is(.xx-layout,.zy-chat) { margin:0; border-radius:0 12px 12px 0; overflow:hidden; }
+html[data-zy-theme] .zy-app.zy-desktop :is(.zy-contact-detail,.zy-pets) { margin:0; border-radius:0 12px 12px 0; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-chat-empty { background:var(--zy-canvas); color:var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop :is(.zy-rail,.zy-directory,.xx-chat,.zy-chat,.zy-chat-empty) {
+  --detail-ink:var(--zy-ink); --detail-secondary:var(--zy-secondary);
+  --detail-muted:var(--zy-muted); --detail-hover:var(--zy-hover);
+  color:var(--zy-ink);
+}
+html[data-zy-theme] .zy-desktop .zy-rail { width:68px; padding:40px 0 20px; background:var(--zy-rail); }
+html[data-zy-theme] .zy-logo { width:34px; height:34px; margin-bottom:28px; }
+html[data-zy-theme] .zy-nav-items { gap:10px; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-nav-items .zy-icon { width:34px; height:34px; color:var(--zy-secondary); border-radius:8px; }
+html[data-zy-theme] .zy-app.zy-desktop :is(.zy-nav-items,.zy-rail-bottom) svg { width:18px; height:18px; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-nav-items .active { color:var(--zy-nav-active); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-directory { --directory-background:var(--zy-sidebar); padding:0 16px; border-right:0; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-self { height:72px; padding:0 4px; gap:10px; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-self strong { font-size:14px; font-weight:550; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-self-status { font-size:11px; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-search-row { margin:0 0 14px; gap:8px; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-search { height:32px; }
+/* Search keeps its white field and original control colors in either theme. */
+html[data-zy-theme] .zy-app.zy-desktop .zy-search { --detail-ink:#252628; --detail-secondary:#626469; --detail-muted:#717378; --detail-hover:#e7e8ea; }
+/* Focus belongs to the complete rounded search field, including its search icon. */
+html[data-zy-theme] .zy-app.zy-desktop .zy-directory .zy-search { box-sizing:border-box; border:1px solid transparent; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-directory .zy-search:focus-within { border-color:var(--zy-chat-control-accent,#e66562); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-directory .zy-search input:is(:focus,:focus-visible) { outline:none; box-shadow:none; border:0; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-chat-list { width:calc(100% + 32px); margin:0 -16px; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-conversation { margin:0; padding:12px 20px; gap:10px; border-radius:0; }
+/* Pinned rows stay quiet; selection echoes the logo in a muted coral gradient. */
+html[data-zy-theme] .zy-app.zy-desktop .zy-conversation-pinned:not(.selected) {
+  --detail-ink:var(--zy-ink); --detail-secondary:var(--zy-secondary); --detail-muted:var(--zy-muted);
+  background:var(--zy-pinned); color:var(--zy-ink);
+}
+html[data-zy-theme] .zy-app.zy-desktop :is(.zy-conversation,.zy-contact-row).selected {
+  --detail-ink:var(--zy-ink); --detail-secondary:var(--zy-secondary); --detail-muted:var(--zy-muted);
+  background:var(--zy-selected); color:var(--zy-ink);
+}
+html[data-zy-theme] .zy-app.zy-desktop :is(.zy-conversation,.zy-contact-row).selected strong { color:var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-conversation.selected :is(small,time) { color:var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-conversation.selected::before { background:var(--zy-selected-accent); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-conversation .zy-system-label { color:var(--zy-secondary); background:var(--zy-row-badge); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-conversation.selected .zy-system-label { background:var(--zy-selected-badge); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-conversation:hover:not(.selected):not(.zy-conversation-pinned) { background:var(--zy-hover); }
+html[data-zy-theme] .zy-app.zy-desktop :is(.zy-conversation,.zy-contact-row) strong { font-size:13px; font-weight:550; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-conversation small { font-size:11px; margin-top:3px; }
+html[data-zy-theme] .zy-app.zy-desktop :is(.zy-self-status,.zy-letter,.zy-contact-count) { color:var(--zy-muted); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-row:hover:not(.selected) { --detail-ink:var(--zy-ink); color:var(--zy-ink); }
+
+html[data-zy-theme] .zy-app.zy-desktop .zy-pet-directory-heading { color:var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pet-directory-nav button { color:var(--zy-ink); }
+
+/* Both chat implementations share bubble colors, while their shapes stay intact. */
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat :is(.xx-layout,.xx-chat,.zy-chat,.zy-chat-empty,.xx-thread,.zy-thread) { background:var(--zy-canvas); color:var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .unified-chat-head { height:72px; min-height:72px; padding:14px 28px; background:var(--zy-canvas); border-bottom:1px solid var(--zy-line); }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-header-person { flex:0 1 auto; }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-header-person .xx-avatar { width:34px; height:34px; }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-header-copy strong { font-size:14px; font-weight:550; }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-header-copy small { font-size:11px; margin-top:3px; }
+/* Messages follow the real chat pane edges at every window width. */
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat :is(.xx-thread,.zy-thread-inner) { padding:28px 28px 20px; max-width:none; margin-inline:0; }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .xx-group { margin-bottom:22px; }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .zy-message.group-last { margin-bottom:22px; }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat :is(.xx-group-row,.zy-message) { gap:14px; }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat :is(.xx-group-bubbles,.zy-message-content) { max-width:min(78%,560px); }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat :is(.xx-bubble,.zy-bubble) { padding:10px 15px; font-size:13px; line-height:1.65; border:0; box-shadow:none; background:var(--zy-incoming); color:var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat :is(.xx-group.user .xx-bubble,.xx-message.user .xx-bubble,.zy-message.mine .zy-bubble) { background:var(--zy-outgoing); color:var(--zy-on-outgoing); }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .xx-group .xx-emoji { background:transparent; font-size:26px; padding:0; }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat :is(.xx-group-meta,.zy-message-time,.xx-meta,.xx-typing-text,.xx-wait,.zy-empty) { color:var(--zy-muted); }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat :is(.xx-group-meta,.zy-message-time) { font-size:10px; }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat :is(.xx-group-meta .read,.zy-message-time .read) { color:var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .zy-unread-line { color:var(--zy-muted); }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .zy-unread-line span { background:var(--zy-line); }
+/* These existing media cards keep their pale backgrounds and matching dark ink. */
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat :is(.npc-voice,.xx-candidate) { color:#272523; }
+
+/* Preserve the white composer and its thin orange-pink gradient border.
+   Only bare buttons need lighter ink where they sit directly on the dark panel. */
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-composer-shell { margin:10px 28px 20px; }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-compose-row textarea { font-size:13px; }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-compose-row>button { color:var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-compose-row>button:hover { color:#e66562; }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .zy-composer-area { padding:0; background:var(--zy-canvas); border-color:var(--zy-line); }
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .zy-composer-area>.chat-composer-shell { margin:10px 28px 20px; }
+
+/* New settings control stays inside the existing light settings dialog. */
+html[data-zy-theme] .zy-theme-settings { padding:0 0 28px; margin:0 0 24px; border:0; border-bottom:1px solid #e3e5dd; min-width:0; }
+html[data-zy-theme] .zy-theme-settings legend { padding:0; font-size:15px; color:#252723; font-weight:600; }
+html[data-zy-theme] .zy-theme-settings>p { margin:7px 0 18px; font-size:12px; color:#62665d; }
+html[data-zy-theme] .zy-theme-options { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+html[data-zy-theme] .zy-theme-option { display:block; width:100%; position:relative; cursor:pointer; border:1px solid #e3e5dd; border-radius:12px; padding:7px; background:#fff; text-align:left; font:inherit; }
+html[data-zy-theme] .zy-theme-option[aria-pressed='true'] { border-color:#747d68; box-shadow:0 0 0 1px #747d68; }
+html[data-zy-theme] .zy-theme-option:focus-visible { outline:2px solid #252723; outline-offset:4px; }
+html[data-zy-theme] .zy-theme-preview { display:flex; height:82px; overflow:hidden; border-radius:7px; background:#fafaf8; }
+html[data-zy-theme] .zy-theme-preview>i { width:27%; background:#f2f2ef; border-right:1px solid #e3e5dd; }
+html[data-zy-theme] .zy-theme-preview>span { flex:1; padding:14px; display:flex; flex-direction:column; gap:7px; }
+html[data-zy-theme] .zy-theme-preview b { display:block; width:62%; height:10px; border-radius:6px; background:#e3e5dd; }
+html[data-zy-theme] .zy-theme-preview em { align-self:flex-end; width:48%; height:10px; border-radius:6px; background:#292b27; }
+html[data-zy-theme] .zy-theme-preview.dark { background:#1e1e20; }
+html[data-zy-theme] .zy-theme-preview.dark>i { background:#343436; border-color:#2e2e31; }
+html[data-zy-theme] .zy-theme-preview.dark b { background:#303032; }
+html[data-zy-theme] .zy-theme-preview.dark em { background:#303032; }
+html[data-zy-theme] .zy-theme-option-label { display:flex; align-items:center; gap:7px; padding:11px 4px 4px; color:#252723; }
+html[data-zy-theme] .zy-theme-option-label strong { font-size:12px; font-weight:500; flex:1; }
+
+/* Subtle grey-green layers, with the existing geometry and click accents. */
+/* 2026-10-21 板块1 透明（暗色）：导航栏不再自己上色，底色统一由底板那一笔给（见上方
+   dark 底板规则），这样浅色/暗色是同一套做法，图标与文字仍各自不透明。 */
+html[data-zy-theme='dark'] .zy-desktop .zy-rail {
+  background:transparent;
+}
+html[data-zy-theme='dark'] .zy-desktop .zy-base {
+  background:var(--zy-sidebar);
+}
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-directory {
+  --directory-background:var(--zy-sidebar);
+  background:linear-gradient(180deg,#38453c 0%,var(--zy-sidebar) 40%,#2d3831 100%);
+}
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-directory :is(.zy-self,.zy-list-scroll) {
+  background:transparent;
+}
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-nav-items .zy-icon:not(.active):hover,
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-rail-bottom:hover {
+  background:rgb(255 255 255 / 8%);
+  color:#e4e1df;
+}
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-rail-bottom { color:var(--zy-secondary); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-search {
+  --detail-ink:var(--zy-ink); --detail-secondary:var(--zy-secondary); --detail-muted:var(--zy-muted);
+  background:#435248; color:var(--zy-secondary); box-shadow:none;
+}
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-search input { color:var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-search input::placeholder { color:var(--zy-muted); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-search .zy-icon:hover { background:var(--zy-hover); color:var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-conversation:not(.selected):not(.zy-conversation-pinned):not(:hover) { background:transparent; }
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-conversation :is(small,time) { color:var(--zy-muted); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-conversation:not(.selected) { border-bottom:1px solid rgb(255 255 255 / 4%); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-conversation.selected { border-bottom:1px solid transparent; }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat :is(.xx-layout,.xx-chat,.zy-chat,.zy-chat-empty,.xx-thread,.zy-thread,.zy-composer-area) {
+  background:var(--zy-canvas);
+}
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .unified-chat-head {
+  background:var(--zy-canvas); border-color:var(--zy-line);
+}
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .zy-chat-more-menu { background:#303033; border-color:#47474b; box-shadow:var(--zy-popup-shadow,0 9px 28px #0002); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .unified-chat-head .zy-chat-more-menu button { color:var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .unified-chat-head .zy-chat-more-menu button:hover,
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .unified-chat-head .zy-chat-more-menu button:focus-visible { background:var(--zy-glass-hover,var(--zy-hover)); color:var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .unified-chat-head .zy-chat-more-menu button svg { color:var(--zy-glass-secondary,var(--zy-secondary)); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .chat-header-copy small { color:var(--zy-muted); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat :is(.xx-welcome h2,.zy-chat-welcome h2) { color:var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat :is(.xx-welcome,.zy-chat-welcome,.zy-chat-welcome small) { color:var(--zy-muted); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .chat-composer-shell { color:var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .chat-text-entry {
+  background:linear-gradient(var(--zy-canvas),var(--zy-canvas)) padding-box,
+    linear-gradient(110deg,#ff946f,#ed628e) border-box;
+}
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .chat-compose-row textarea {
+  background:transparent;
+  color:var(--zy-ink); caret-color:var(--zy-ink);
+}
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .chat-compose-row textarea::placeholder { color:var(--zy-muted); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .chat-compose-row>button:not(.zy-pressable-icon):not(:hover) { color:var(--zy-chat-control-ink); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat :is(.chat-attachment,.voice-recording,.npc-quote-draft,.message-transcript,.message-translation,.npc-voice,.xx-candidate) {
+  background:var(--zy-incoming); border-color:var(--zy-line); color:var(--zy-ink);
+}
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat :is(.chat-attachment,.npc-voice,.xx-candidate,.message-transcript,.message-translation) small { color:var(--zy-secondary); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .chat-sticker-panel,
+html[data-zy-theme='dark'] :is(.message-context-menu,.zy-chat-context) {
+  background:#303033; border-color:#48484b; color:#e7e7e9; box-shadow:var(--zy-popup-shadow,0 9px 28px #0002);
+}
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .chat-sticker-panel :is(.emoji-picker-tabs,.emoji-picker-tabs span,.saved-sticker-empty) { border-color:var(--zy-glass-line); color:var(--zy-glass-muted); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .chat-sticker-panel :is(.emoji-picker-tabs button,.emoji-categories button) { color:var(--zy-glass-secondary); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .chat-sticker-panel :is(.emoji-picker-tabs button[aria-selected='true'],.emoji-categories button[aria-pressed='true']) { background:var(--zy-glass-hover); color:#ef7b67; }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .chat-sticker-panel :is(.emoji-grid button:hover,.saved-sticker-grid button,.emoji-categories button,.emoji-search) { background:var(--zy-glass-inner); color:var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-app.zy-desktop.zy-page-chat .chat-sticker-panel .emoji-search { border-color:var(--zy-glass-line); }
+html[data-zy-theme='dark'] :is(.message-context-menu,.zy-chat-context) button { color:#e7e7e9; }
+html[data-zy-theme='dark'] :is(.message-context-menu,.zy-chat-context) button:is(:hover,:focus-visible) { background:#414144; }
+
+@media(max-width:1100px) {
+  html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat :is(.xx-thread,.zy-thread-inner) { padding:28px 28px 16px; }
+  html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-composer-shell,html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .zy-composer-area>.chat-composer-shell { margin:10px 24px 22px; }
+}
+@media(max-height:740px) {
+  html[data-zy-theme] .zy-app.zy-desktop .zy-search-row { margin-bottom:14px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  html[data-zy-theme] .zy-theme-option { transition:none; }
+}

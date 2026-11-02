@@ -1,0 +1,501 @@
+/* 2026-10-29 · Independent phone presentation. The desktop theme, glass,
+   button states, bubbles and component animations remain the source of paint. */
+.zy-mobile-nav-label { display:none; }
+
+.zy-phone-preview {
+  --zy-phone-width:min(426px,calc(100vw - 32px),calc((100dvh - 32px) * 426 / 900));
+  display:grid;
+  place-items:center;
+  box-sizing:border-box;
+  width:100%;
+  min-height:100dvh;
+  padding:16px;
+  overflow:auto;
+  background:var(--zy-canvas);
+  color:var(--zy-ink);
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+}
+.zy-phone-shell {
+  position:relative;
+  isolation:isolate;
+  box-sizing:border-box;
+  width:var(--zy-phone-width);
+  aspect-ratio:426 / 900;
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+  border:1px solid var(--zy-line);
+  border-radius:56px;
+  /* Hardware rim uses the established near-black theme neutral. */
+  background:#1e1e20;
+  box-shadow:var(--zy-popup-shadow);
+}
+.zy-phone-screen {
+  position:absolute;
+  inset:7px;
+  isolation:isolate;
+  overflow:hidden;
+  border-radius:48px;
+  background:var(--zy-canvas);
+}
+/* The mobile screen has one painted plane. The desktop directory's original
+   teal/lilac hues and fade now cover status, heading, list and nav backdrop. */
+html[data-zy-theme='light'] .zy-phone-screen:has(.zy-mobile:is(.zy-page-chat,.zy-page-contacts):not(.is-mobile-detail)) {
+  background:#eef1f5;
+}
+html[data-zy-theme='light'] .zy-phone-screen:has(.zy-mobile:is(.zy-page-chat,.zy-page-contacts):not(.is-mobile-detail))::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(90deg,#7fb5ae 0%,#b4bfbc 48%,#b2a0ca 100%);
+  -webkit-mask-image:linear-gradient(180deg,rgb(0 0 0 / 78%) 0%,rgb(0 0 0 / 55%) 28%,rgb(0 0 0 / 25%) 65%,rgb(0 0 0 / 4%) 100%);
+  mask-image:linear-gradient(180deg,rgb(0 0 0 / 78%) 0%,rgb(0 0 0 / 55%) 28%,rgb(0 0 0 / 25%) 65%,rgb(0 0 0 / 4%) 100%);
+}
+html[data-zy-theme='dark'] .zy-phone-screen:has(.zy-mobile:is(.zy-page-chat,.zy-page-contacts):not(.is-mobile-detail)) {
+  background:linear-gradient(180deg,#38453c 0%,var(--zy-sidebar) 40%,#2d3831 100%);
+}
+html[data-zy-theme='light'] .zy-phone-screen:has(.zy-mobile:is(.is-mobile-detail,.zy-page-pets)) {
+  background:#fff;
+}
+.zy-phone-status {
+  position:absolute;
+  z-index:5;
+  top:3px;
+  left:23px;
+  right:23px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  color:var(--zy-ink);
+  pointer-events:none;
+}
+.zy-phone-status time,
+.zy-phone-status>span:first-child {
+  min-width:45px;
+  font-size:14px;
+  font-weight:650;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.3px;
+}
+.zy-phone-status-icons,
+.zy-phone-status>div {
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+.zy-phone-status svg { width:16px; height:16px; stroke-width:2; }
+.zy-phone-status svg:last-child { width:22px; height:18px; }
+.zy-phone-island {
+  position:absolute;
+  z-index:6;
+  top:11px;
+  left:50%;
+  width:112px;
+  height:29px;
+  border-radius:999px;
+  background:#1e1e20;
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+.zy-phone-content {
+  position:absolute;
+  inset:47px 0 0;
+  overflow:hidden;
+  border-radius:0;
+  min-width:0;
+  min-height:0;
+}
+.zy-phone-home-indicator {
+  position:absolute;
+  z-index:8;
+  bottom:10px;
+  left:50%;
+  width:126px;
+  height:5px;
+  border-radius:999px;
+  background:var(--zy-ink);
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+
+/* The dedicated Electron window already supplies the 426 × 900 viewport. */
+html[data-zy-mobile-native='true'] .zy-phone-preview {
+  --zy-phone-width:100vw;
+  width:100vw;
+  height:100dvh;
+  min-height:0;
+  padding:0;
+  overflow:hidden;
+}
+html[data-zy-mobile-native='true'] .zy-phone-shell {
+  width:100%;
+  height:100%;
+  aspect-ratio:auto;
+}
+html[data-zy-mobile-native='true'] .zy-phone-status,
+html[data-zy-mobile-native='true'] .zy-phone-island {
+  -webkit-app-region:drag;
+  pointer-events:auto;
+}
+
+/* Login and loading belong to the screen, including before .zy-mobile mounts. */
+.zy-phone-content .zy-auth-stage {
+  box-sizing:border-box;
+  width:100%;
+  height:100%;
+  min-height:0;
+  padding:12px 14px 30px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  background:transparent;
+}
+.zy-phone-content .zy-auth-card {
+  box-sizing:border-box;
+  width:100%;
+  min-height:min(660px,100%);
+  padding:26px 23px 25px;
+  border-radius:26px;
+}
+.zy-phone-content .zy-auth-heading { margin-top:46px; }
+.zy-phone-content .zy-auth-heading h1 { font-size:22px; }
+.zy-phone-content :is(.zy-auth-form,.zy-auth-choices) { margin-top:32px; }
+.zy-phone-content .zy-auth-qr { margin-top:90px; }
+.zy-phone-content .zy-auth-entry { margin-top:auto; }
+
+/* The viewport uses the original app tree and its existing theme selectors. */
+.zy-phone-content :is(.zy-desktop-stage,.zy-dual-preview,.zy-desktop-slot) {
+  width:100%;
+  height:100%;
+  min-width:0;
+  min-height:0;
+  padding:0;
+  margin:0;
+  background:transparent;
+}
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile {
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  box-sizing:border-box;
+  width:100%;
+  height:100%;
+  min-width:0;
+  min-height:0;
+  max-width:none;
+  max-height:none;
+  padding:0 0 112px;
+  overflow:hidden;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  background:transparent;
+}
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile:is(.zy-page-chat,.zy-page-contacts):not(.is-mobile-detail) {
+  padding-bottom:0;
+}
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile.is-mobile-detail {
+  padding-bottom:24px;
+}
+html[data-zy-theme='light'] .zy-phone-content .zy-app.zy-desktop.zy-mobile.zy-page-contacts.is-mobile-detail {
+  --zy-canvas:#fff;
+}
+html[data-zy-theme] .zy-phone-content .zy-mobile .zy-base {
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  min-width:0;
+  min-height:0;
+  margin:0;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  overflow:hidden;
+  background:transparent;
+}
+.zy-mobile :is(.zy-mobile-page-head,.zy-mobile-detail-head) {
+  position:relative;
+  z-index:4;
+  display:flex;
+  align-items:center;
+  flex:0 0 62px;
+  min-width:0;
+  gap:10px;
+  padding:0 14px;
+  -webkit-app-region:no-drag;
+}
+.zy-mobile :is(.zy-mobile-page-head,.zy-mobile-detail-head) h1 {
+  flex:1;
+  min-width:0;
+  margin:0;
+  color:var(--zy-ink);
+  font-size:calc(20px + var(--zy-font-adjust,0px));
+  line-height:1.3;
+  font-weight:600;
+  letter-spacing:-.4px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.zy-mobile :is(.zy-mobile-page-head,.zy-mobile-detail-head)>button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 36px;
+  width:36px;
+  height:36px;
+  padding:0;
+  border:0;
+  border-radius:10px;
+  background:transparent;
+  color:var(--zy-secondary);
+  cursor:pointer;
+}
+.zy-mobile .zy-mobile-brand [data-navigation-logo],
+.zy-mobile .zy-mobile-brand img { width:31px; height:31px; object-fit:contain; }
+.zy-mobile .zy-mobile-self { overflow:hidden; border-radius:50%; }
+.zy-mobile .zy-mobile-self img { width:32px; height:32px; border-radius:50%; object-fit:cover; }
+.zy-mobile :is(.zy-mobile-page-head,.zy-mobile-detail-head)>button>svg { width:20px; height:20px; }
+.zy-mobile .zy-mobile-detail-head { flex-basis:48px; padding-left:8px; }
+.zy-mobile .zy-mobile-detail-head h1 { font-size:calc(16px + var(--zy-font-adjust,0px)); }
+/* The back arrow belongs to the existing chat header; a second title strip
+   would divide a single white conversation into two unrelated panels. */
+.zy-mobile.zy-page-chat.is-mobile-detail .zy-mobile-detail-head {
+  position:absolute;
+  top:0;
+  left:3px;
+  width:38px;
+  height:66px;
+  padding:0;
+  pointer-events:none;
+}
+.zy-mobile.zy-page-chat.is-mobile-detail .zy-mobile-detail-head h1 { display:none; }
+.zy-mobile.zy-page-chat.is-mobile-detail .zy-mobile-detail-head>button { pointer-events:auto; }
+
+/* Reuse the actual rail as a floating horizontal capsule. The highlight's
+   paint is inherited from theme-frosted; only the travel axis changes. */
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-rail {
+  position:absolute;
+  z-index:20;
+  inset:auto 12px 26px;
+  display:flex;
+  flex-direction:row;
+  box-sizing:border-box;
+  width:auto;
+  height:72px;
+  padding:6px;
+  border:1px solid var(--zy-glass-border);
+  border-radius:999px;
+  background:var(--zy-glass-fill);
+  -webkit-backdrop-filter:blur(24px) saturate(125%);
+  backdrop-filter:blur(24px) saturate(125%);
+  box-shadow:var(--zy-popup-shadow),inset 0 1px 0 var(--zy-glass-highlight);
+  -webkit-app-region:no-drag;
+}
+.zy-phone-content .zy-mobile .zy-rail>.zy-logo,
+.zy-phone-content .zy-mobile .zy-rail>.zy-rail-bottom { display:none; }
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile.is-mobile-detail .zy-rail { display:none; }
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-sliding-navigation {
+  --zy-nav-size:20%;
+  --zy-nav-gap:0px;
+  display:flex;
+  flex-direction:row;
+  width:100%;
+  height:100%;
+  gap:0;
+}
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-nav-highlight {
+  inset:0 auto 0 0;
+  width:20%;
+  height:100%;
+  border-radius:999px;
+  transform:translateX(calc(var(--zy-nav-index) * 100%));
+  transition:transform 280ms cubic-bezier(.22,.8,.25,1);
+}
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-nav-items .zy-icon {
+  display:flex;
+  flex:1 1 20%;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:20%;
+  height:100%;
+  min-width:0;
+  gap:5px;
+  padding:0;
+  border-radius:999px;
+}
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-nav-items svg { width:20px; height:20px; }
+.zy-phone-content .zy-mobile .zy-mobile-nav-label {
+  display:block;
+  font-size:calc(10px + var(--zy-font-adjust,0px));
+  font-weight:550;
+  line-height:14px;
+  white-space:nowrap;
+}
+.zy-phone-content .zy-mobile .zy-nav-items .zy-moments-dot { top:8px; right:calc(50% - 16px); }
+
+/* Both lists retain their exact selected, hover, badge and avatar treatments. */
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-directory {
+  flex:1;
+  box-sizing:border-box;
+  width:100% !important; /* Desktop split width is an inline preference. */
+  min-width:0;
+  min-height:0;
+  max-width:none;
+  padding:0 16px;
+  border-radius:0;
+  --directory-background:transparent;
+  background:transparent;
+  -webkit-app-region:no-drag;
+}
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-directory::before { content:none; }
+.zy-phone-content .zy-mobile .zy-directory>.zy-self { display:none; }
+.zy-phone-content .zy-mobile .zy-directory>.zy-search { margin-top:14px; }
+.zy-phone-content .zy-mobile .zy-panel-divider { display:none; }
+html[data-zy-theme] .zy-phone-content .zy-mobile.zy-page-chat:not(.is-mobile-detail) .zy-base>:is(.xx-layout,.zy-chat),
+html[data-zy-theme] .zy-phone-content .zy-mobile.zy-page-contacts:not(.is-mobile-detail) .zy-base>:is(.zy-contact-detail,.zy-contact-profile,.zy-chat),
+html[data-zy-theme] .zy-phone-content .zy-mobile.is-mobile-detail .zy-base>.zy-directory { display:none; }
+.zy-phone-content .zy-mobile :is(.zy-list-scroll,.zy-address-list) { min-height:0; overscroll-behavior:contain; }
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-directory :is(.zy-list-scroll,.zy-address-list) {
+  padding-bottom:112px;
+  background:transparent;
+}
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile.is-mobile-detail .zy-base>:is(.xx-layout,.zy-chat,.zy-contact-detail) {
+  flex:1;
+  width:100%;
+  min-width:0;
+  min-height:0;
+  margin:0;
+  border-radius:0;
+}
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-contact-profile { width:calc(100% - 40px); margin:26px auto 30px; }
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .unified-chat-head {
+  flex-shrink:0;
+  height:66px;
+  min-height:66px;
+  padding:10px 14px;
+  gap:9px;
+  -webkit-app-region:no-drag;
+}
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile.zy-page-chat.is-mobile-detail .unified-chat-head {
+  padding-left:44px;
+}
+.zy-phone-content .zy-mobile .chat-header-person { min-width:0; }
+.zy-phone-content .zy-mobile .chat-header-copy { min-width:0; }
+.zy-phone-content .zy-mobile .chat-header-copy strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.zy-phone-content .zy-mobile .xx-call-actions { flex:0 0 auto; gap:1px; }
+.zy-phone-content .zy-mobile .xx-call-actions>button { padding:6px; }
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile.zy-page-chat :is(.xx-thread,.zy-thread-inner,.zy-group-thread) { padding:20px 14px 16px; }
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile.zy-page-chat :is(.xx-group-row,.zy-message) { gap:9px; }
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile.zy-page-chat :is(.xx-group-bubbles,.zy-message-content) { max-width:calc(100% - 48px); }
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile.zy-page-chat .chat-composer-shell,
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile.zy-page-chat .zy-composer-area>.chat-composer-shell { margin:9px 10px 12px; }
+.zy-phone-content .zy-mobile .chat-compose-row { gap:4px; }
+.zy-phone-content .zy-mobile .chat-compose-row>button { padding:5px; }
+.zy-phone-content .zy-mobile .chat-text-entry textarea { padding-left:10px; }
+.zy-phone-content .zy-mobile :is(.zy-group-muted-composer,.zy-group-rename,.zy-group-members) { margin-inline:0; padding-inline:14px; }
+
+/* The task page gets a bounded flex area, so the real task list can scroll. */
+.zy-phone-content .zy-mobile .zy-mobile-task-page {
+  display:flex;
+  flex:1;
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+  border-radius:0;
+}
+.zy-phone-content .zy-mobile .zy-today-tasks.zy-today-tasks-page { height:100%; min-height:0; padding:0 14px 12px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page>.zy-today-tasks-head { gap:8px; padding:8px 0 6px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-today-tasks-head h2 { font-size:calc(16px + var(--zy-font-adjust,0px)); }
+.zy-phone-content .zy-mobile .zy-today-tasks-page>.zy-task-summary { gap:8px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-stat {
+  min-height:74px;
+  height:74px;
+  padding:9px 10px;
+}
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-stat>span { font-size:calc(11px + var(--zy-font-adjust,0px)); line-height:18px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-stat>strong { margin-top:3px; font-size:27px; line-height:30px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-stat>small { display:none; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page>.zy-task-categories { margin:8px 0 10px; padding:0 0 2px; scrollbar-width:none; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-categories>button { flex-basis:54px; min-width:54px; height:44px; gap:4px; padding:3px 0; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-categories>button>svg { width:18px; height:18px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-categories>button>span { line-height:14px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-card { min-height:200px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-card-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:10px 12px;
+}
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-list-heading { flex:1; min-width:0; gap:6px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-list-heading>h3 { min-width:0; line-height:18px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-count { flex-shrink:0; gap:4px; padding:3px 6px; font-size:calc(9px + var(--zy-font-adjust,0px)); }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-percent { flex-shrink:0; margin:0; font-size:22px; line-height:28px; letter-spacing:-.5px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-percent>span { margin-left:1px; font-size:12px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-card-head>p { display:none; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-list { min-height:150px; }
+.zy-phone-content .zy-mobile .zy-today-tasks-page .zy-task-save-error { max-height:42px; overflow:auto; padding:0 12px 8px; }
+
+/* Moments keeps the desktop feed's paint, media, reactions and author cards. */
+.zy-phone-content .zy-mobile .zy-moments { min-height:0; overscroll-behavior:contain; }
+.zy-phone-content .zy-mobile .zy-moments-cover { height:225px; }
+.zy-phone-content .zy-mobile .zy-moments-tools { top:14px; right:14px; }
+.zy-phone-content .zy-mobile .zy-moments-identity { padding:60px 18px 28px; }
+.zy-phone-content .zy-mobile .zy-feed-stream { width:100%; max-width:none; padding:0 18px; box-sizing:border-box; }
+.zy-phone-content .zy-mobile .zy-post { margin-bottom:35px; }
+.zy-phone-content .zy-mobile .zy-post>header { gap:8px; margin-bottom:14px; }
+.zy-phone-content .zy-mobile .zy-post-person { gap:10px; }
+.zy-phone-content .zy-mobile .zy-post-person>span>span { gap:8px; }
+.zy-phone-content .zy-mobile .zy-post-person strong { font-size:14px; }
+.zy-phone-content .zy-mobile .zy-post-person time { font-size:10px; }
+.zy-phone-content .zy-mobile .zy-media.count-2 { height:280px; }
+.zy-phone-content .zy-mobile .zy-media.count-3 { grid-template-rows:160px 160px; }
+.zy-phone-content .zy-mobile .zy-media.is-carousel { height:320px; }
+.zy-phone-content .zy-mobile .zy-post-comments { padding:10px 12px; }
+
+/* Multifunction retains both existing entries in a compact horizontal list. */
+html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-pet-directory { flex:0 0 auto; padding:0 12px 12px; }
+.zy-phone-content .zy-mobile .zy-pet-directory-heading { display:none; }
+.zy-phone-content .zy-mobile .zy-pet-directory-nav { flex-direction:row; gap:6px; margin:12px 0 0; }
+.zy-phone-content .zy-mobile .zy-pet-directory-nav button { flex:1; justify-content:center; height:42px; padding:0 10px; border-radius:10px; gap:8px; }
+.zy-phone-content .zy-mobile .zy-pet-directory-nav button.is-active::before { display:none; }
+.zy-phone-content .zy-mobile :is(.zy-pets,.zy-dungeons) { flex:1; min-width:0; min-height:0; border-radius:0; overscroll-behavior:contain; }
+.zy-phone-content .zy-mobile :is(.zy-pets-inner,.zy-dungeons-inner) { width:calc(100% - 28px); padding-top:12px; padding-bottom:26px; }
+.zy-phone-content .zy-mobile .zy-pets-preview { grid-template-columns:1fr; margin-top:18px; gap:12px; padding:48px 20px 22px; }
+.zy-phone-content .zy-mobile .zy-pets-preview-details { align-items:center; justify-self:center; text-align:center; }
+.zy-phone-content .zy-mobile .zy-pets-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.zy-phone-content .zy-mobile .zy-pet-card { min-width:0; padding-inline:8px; }
+.zy-phone-content .zy-mobile .zy-pet-directory-nav small { margin-left:0; }
+.zy-phone-content .zy-mobile .zy-shelf-books { gap:16px; }
+
+/* Top layers stay narrow in this presentation only; desktop portals keep
+   their existing widths. Centered dialogs align with the centered device. */
+html:has(.zy-mobile) body :is(.zy-dialog,.zy-settings-dialog,.zy-logout-dialog,.zy-pets-dialog,.zy-dungeon-card) {
+  box-sizing:border-box;
+  max-width:min(374px,calc(100vw - 48px));
+  max-height:min(750px,calc(100dvh - 120px));
+  overscroll-behavior:contain;
+}
+html:has(.zy-mobile) body :is(.zy-dialog:not(.zy-profile-popover),.zy-settings-dialog,.zy-logout-dialog) { width:min(374px,calc(100vw - 48px)); }
+html:has(.zy-mobile) body .zy-contact-create-layout { grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(130px,1fr) minmax(180px,1fr); min-width:0; }
+html:has(.zy-mobile) body :is(.zy-menu,.zy-chat-more-menu,.zy-chat-context,.message-context-menu,.message-language-menu,.zy-chat-add-menu,.chat-sticker-panel,.zy-moments-notifications,.zy-group-mention-menu,.zy-professional-task-picker) { max-width:min(350px,calc(100vw - 60px)); }
+html:has(.zy-mobile) body :is(.zy-profile-popover,.zy-self-profile-popover) { max-width:min(305px,calc(100vw - 60px)); }
+html:has(.zy-mobile) body .zy-dialog.zy-today-tasks { max-height:min(720px,calc(100dvh - 140px)); }
+html:has(.zy-mobile) body .zy-settings-dialog>header { padding-inline:18px; }
+html:has(.zy-mobile) body .zy-settings-content { padding-inline:18px; }
+html:has(.zy-mobile) body .zy-task-date-popup { max-width:min(244px,calc(100vw - 80px)); }
+html:has(.zy-mobile) body :is(.zy-private-drawer,.zy-group-drawer) { max-width:calc(100% - 12px); }
+
+@supports not (backdrop-filter:blur(1px)) {
+  html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-rail { background:var(--zy-sidebar); }
+}
+@media(prefers-reduced-transparency:reduce) {
+  html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-rail { background:var(--zy-sidebar); -webkit-backdrop-filter:none; backdrop-filter:none; }
+}
+@media(prefers-reduced-motion:reduce) {
+  html[data-zy-theme] .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-nav-highlight { transition:none; }
+}

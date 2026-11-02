@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "timezone": "Asia/Shanghai",
+  "items": [
+    {
+      "id": "approved-xiaoman_20260919_v2_1",
+      "personId": "yuan-xiaoman",
+      "title": "小猫",
+      "text": "",
+      "images": [
+        "/npc/yuan-xiaoman/moments/xiaoman_20260919_v2_1.png"
+      ],
+      "sourceRequestId": "xiaoman_20260919_v2_1",
+      "authorization": "用户于2026-09-19明确改为建档至今的历史动态，取消未来定时，保留六条原图文并立即显示",
+      "provenance": "AI-generated fictional NPC scene, user-approved",
+      "approved": true,
+      "timelineAt": "2026-09-19T13:50:00+08:00",
+      "publicationMode": "historical"
+    },
+    {
+      "id": "approved-xiaoman_20260919_2",
+      "personId": "yuan-xiaoman",
+      "title": "街边夜宵",
+      "text": "老板问要不要辣，我说要。\n现在一边吸气一边吃。",
+      "images": [
+        "/npc/yuan-xiaoman/moments/xiaoman_20260919_2.png"
+      ],
+      "sourceRequestId": "xiaoman_20260919_2",
+      "authorization": "用户于2026-09-19明确改为建档至今的历史动态，取消未来定时，保留六条原图文并立即显示",
+      "provenance": "AI-generated fictional NPC scene, user-approved",
+      "approved": true,
+      "timelineAt": "2026-09-17T20:36:00+08:00",
+      "publicationMode": "historical"
+    },
+    {
+      "id": "approved-xiaoman_20260919_3",
+      "personId": "yuan-xiaoman",
+      "title": "休息日自拍",
+      "text": "头发夹了三次还是掉。\n算了，这样也能看。",
+      "images": [
+        "/npc/yuan-xiaoman/moments/xiaoman_20260919_3.png"
+      ],
+      "sourceRequestId": "xiaoman_20260919_3",
+      "authorization": "用户于2026-09-19明确改为建档至今的历史动态，取消未来定时，保留六条原图文并立即显示",
+      "provenance": "AI-generated fictional NPC scene, user-approved",
+      "approved": true,
+      "timelineAt": "2026-09-18T11:36:00+08:00",
+      "publicationMode": "historical"
+    },
+    {
+      "id": "approved-xiaoman_20260919_v2_2",
+      "personId": "yuan-xiaoman",
+      "title": "买水带回花",
+      "text": "只打算下楼买瓶水的。",
+      "images": [
+        "/npc/yuan-xiaoman/moments/xiaoman_20260919_v2_2.png"
+      ],
+      "sourceRequestId": "xiaoman_20260919_v2_2",
+      "authorization": "用户于2026-09-19明确改为建档至今的历史动态，取消未来定时，保留六条原图文并立即显示",
+      "provenance": "AI-generated fictional NPC scene, user-approved",
+      "approved": true,
+      "timelineAt": "2026-09-19T15:08:00+08:00",
+      "publicationMode": "historical"
+    },
+    {
+      "id": "approved-xiaoman_20260919_1",
+      "personId": "yuan-xiaoman",
+      "title": "宅家剪视频",
+      "text": "本来是坐下来剪视频的。\n桌子擦干净了，杯子也洗了。\n好，现在真的开始。",
+      "images": [
+        "/npc/yuan-xiaoman/moments/xiaoman_20260919_1.png"
+      ],
+      "sourceRequestId": "xiaoman_20260919_1",
+      "authorization": "用户于2026-09-19明确改为建档至今的历史动态，取消未来定时，保留六条原图文并立即显示",
+      "provenance": "AI-generated fictional NPC scene, user-approved",
+      "approved": true,
+      "timelineAt": "2026-09-17T14:34:00+08:00",
+      "publicationMode": "historical"
+    },
+    {
+      "id": "approved-xiaoman_20260919_v2_0",
+      "personId": "yuan-xiaoman",
+      "title": "有点想家",
+      "text": "今天有点想家，又不想被问是不是在外面受委屈了。",
+      "images": [],
+      "sourceRequestId": "xiaoman_20260919_v2_0",
+      "authorization": "用户于2026-09-19明确改为建档至今的历史动态，取消未来定时，保留六条原图文并立即显示",
+      "provenance": "AI-generated fictional NPC scene, user-approved",
+      "approved": true,
+      "timelineAt": "2026-09-18T22:32:00+08:00",
+      "publicationMode": "historical"
+    }
+  ],
+  "mode": "historical",
+  "characterCreatedAt": "2026-09-17T12:15:50+08:00",
+  "historyImportedAt": "2026-09-19T16:08:00+08:00"
+}

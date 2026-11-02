@@ -1,0 +1,1712 @@
+.zy-desktop-stage {
+  --window-gap-y: clamp(48px, 8vh, 112px);
+  --window-gap-x: clamp(48px, 8vw, 160px);
+  min-height: 100dvh;
+  padding: var(--window-gap-y) var(--window-gap-x);
+  display: grid;
+  place-items: center;
+  background: #e2e3e5;
+}
+.zy-app {
+  width: min(100%, 1560px);
+  height: min(1000px, calc(100dvh - var(--window-gap-y, 0px) * 2));
+  min-height: 500px;
+  min-width: min(960px, calc(100vw - var(--window-gap-x, 0px) * 2));
+  display: flex;
+  background: #e8e8e8;
+  color: #22211f;
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+  border: 1px solid #ffffff9c;
+  border-radius: 22px;
+  box-shadow: 0 24px 70px -22px #29303a38, 0 3px 12px #29303a0c;
+}
+.zy-app button:focus-visible,
+.zy-dialog button:focus-visible,
+.zy-app input:focus-visible,
+.zy-dialog input:focus-visible,
+.zy-app textarea:focus-visible {
+  outline: 2px solid #fa795a;
+  outline-offset: 3px;
+}
+.zy-app svg,
+.zy-dialog svg {
+  stroke-width: 1.8;
+}
+.zy-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  color: #77736d;
+  position: relative;
+}
+.zy-icon:hover {
+  background: #00000006;
+  color: #272522;
+}
+.zy-icon svg {
+  width: 22px;
+  height: 22px;
+}
+.zy-rail {
+  width: 88px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 24px 0 20px;
+}
+.zy-logo {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 36px;
+}
+.zy-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.zy-nav-items {
+  display: flex;
+  flex-direction: column;
+  gap: 29px;
+}
+.zy-nav-items .zy-icon {
+  width: 44px;
+  height: 44px;
+  color: #5b5751;
+}
+.zy-nav-items svg {
+  width: 28px;
+  height: 28px;
+}
+.zy-nav-items .active {
+  color: #242320;
+}
+.zy-rail-bottom {
+  margin-top: auto;
+}
+.zy-badge {
+  position: absolute;
+  right: -3px;
+  top: -4px;
+  background: #ee3639;
+  border: 2px solid #f3f3f3;
+  color: #fff;
+  font-size: 11px;
+  line-height: 18px;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 20px;
+  text-align: center;
+  padding: 0 4px;
+}
+.zy-badge.brown {
+  background: #906642;
+}
+.zy-base {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  background: #f2f2f2;
+  border-radius: 22px;
+  margin: 4px 6px 4px 0;
+  overflow: hidden;
+}
+.zy-directory {
+  width: 340px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 14px;
+  background: #f2f2f2;
+}
+.zy-self {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 10px;
+  flex-shrink: 0;
+}
+.zy-self strong {
+  font-size: 17px;
+  font-weight: 650;
+  display: block;
+}
+.zy-self small {
+  color: #918c85;
+  display: block;
+  margin-top: 3px;
+}
+.zy-self > .zy-icon {
+  margin-left: auto;
+}
+.zy-avatar {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.zy-avatar img,
+.zy-avatar-letter {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.zy-avatar-letter {
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+}
+.zy-ring {
+  padding: 3px;
+  border: 2px solid #fc855d;
+  border-radius: 50%;
+  background: #fff;
+}
+.zy-presence {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  background: #9ca4b0;
+  border: 2px solid #f2f2f2;
+  border-radius: 50%;
+}
+.zy-presence.is-online,
+.zy-online-dot {
+  background: #0abc88;
+}
+.zy-search-row {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+  margin: 0 0 13px;
+}
+.zy-search {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  background: #fff;
+  border-radius: 13px;
+  box-shadow: 0 1px 3px #00000008;
+  padding: 0 14px;
+  height: 46px;
+  flex: 1;
+  color: #8a857d;
+}
+.zy-search input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: none;
+  font-size: 14px;
+}
+.zy-search input::placeholder {
+  color: #918b83;
+}
+.zy-search .zy-icon {
+  width: 22px;
+  height: 24px;
+}
+.zy-add {
+  height: 46px;
+  width: 46px;
+  background: #fff;
+  border-radius: 13px;
+  box-shadow: 0 1px 3px #00000008;
+  color: #222;
+}
+.zy-list-scroll {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #d6d3ce transparent;
+}
+.zy-conversation {
+  width: 100%;
+  padding: 18px 10px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  text-align: left;
+  border-radius: 13px;
+  margin: 2px 0;
+}
+.zy-conversation:hover {
+  background: #eae9e7;
+}
+.zy-conversation-copy {
+  min-width: 0;
+  flex: 1;
+}
+.zy-conversation-copy > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.zy-conversation strong {
+  font-size: 16px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.zy-conversation.selected strong {
+  font-weight: 650;
+}
+.zy-conversation time {
+  font-size: 12px;
+  color: #928c85;
+  white-space: nowrap;
+}
+.zy-conversation small {
+  display: block;
+  margin-top: 9px;
+  font-size: 14px;
+  color: #726d66;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.zy-list-avatar {
+  position: relative;
+}
+.zy-list-avatar .zy-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  top: -7px;
+  right: -7px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  border: 0;
+  border-radius: 16px;
+  font-size: 10px;
+  line-height: 16px;
+}
+.zy-chat {
+  flex: 1;
+  min-width: 0;
+  background: #f7f7f7;
+  border: 1px solid #e9e9e9;
+  border-radius: 19px;
+  display: flex;
+  flex-direction: column;
+  margin: 4px 4px 4px 0;
+  overflow: hidden;
+  box-shadow: 0 1px 2px #00000005;
+}
+.zy-chat-head {
+  height: 76px;
+  flex-shrink: 0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid #eceae7;
+}
+.zy-chat-person {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  min-width: 0;
+}
+.zy-chat-person strong {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 19px;
+  font-weight: 650;
+}
+.zy-chat-person small {
+  display: block;
+  font-size: 14px;
+  margin-top: 4px;
+  color: #5d5750;
+}
+.zy-online-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.zy-chat-tools {
+  display: flex;
+  gap: 11px;
+  margin-left: 20px;
+}
+.zy-thread {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.zy-thread-inner {
+  padding: 12px 32px 28px;
+}
+.zy-message {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 10px;
+  align-items: flex-end;
+}
+.zy-message.mine {
+  justify-content: flex-end;
+}
+.zy-message.new-group {
+  margin-top: 22px;
+}
+.zy-message-avatar {
+  width: 36px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 24px;
+}
+.zy-message-content {
+  max-width: 77%;
+}
+.zy-bubble-wrap {
+  position: relative;
+  width: fit-content;
+}
+.zy-bubble {
+  padding: 15px 22px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 21px;
+  font-size: 18px;
+  line-height: 1.55;
+  box-shadow: 0 2px 2px #00000003;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.mine .zy-bubble {
+  background: #22211f;
+  color: #fff;
+  border-color: #161614;
+  border-radius: 21px;
+}
+.mine .zy-bubble-wrap {
+  margin-left: auto;
+}
+.zy-message-time {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #99928a;
+  font-size: 12px;
+  margin-top: 12px;
+}
+.mine .zy-message-time {
+  justify-content: flex-end;
+}
+.zy-message-time .read {
+  color: #fa6254;
+}
+.zy-reaction {
+  position: absolute;
+  right: -9px;
+  bottom: -9px;
+  display: grid;
+  place-items: center;
+  background: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  box-shadow: 0 1px 5px #00000009;
+  color: #948f89;
+}
+.liked {
+  color: #f45f50 !important;
+}
+.zy-unread-line {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  justify-content: center;
+  margin: 44px 12% 36px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.zy-unread-line span {
+  height: 1px;
+  background: #e0ddd7;
+  flex: 1;
+}
+.zy-composer-area {
+  padding: 18px 18px 14px;
+  position: relative;
+}
+.zy-composer {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: #fff;
+  border: 1px solid #e4e1dd;
+  border-radius: 19px;
+  padding: 12px 19px;
+  box-shadow: 0 2px 2px #00000004;
+}
+.zy-composer textarea {
+  flex: 1;
+  background: none;
+  border: 0;
+  outline: none;
+  line-height: 26px;
+  height: 28px;
+  max-height: 110px;
+  field-sizing: content;
+  font-size: 17px;
+  padding: 0 12px;
+  color: #222;
+}
+.zy-composer textarea::placeholder {
+  color: #99938a;
+}
+.zy-send {
+  height: 48px;
+  width: 48px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: #242320;
+  color: white;
+  border: 1px solid #111;
+}
+.zy-send:disabled {
+  opacity: 1;
+  color: #f8f8f8;
+}
+.zy-send:hover:not(:disabled) {
+  background: #423e39;
+}
+.zy-chat-welcome {
+  text-align: center;
+  padding: 100px 0;
+  color: #928a83;
+}
+.zy-chat-welcome h2 {
+  font-size: 22px;
+  color: #333;
+  margin: 18px 0 8px;
+}
+.zy-chat-welcome small {
+  display: block;
+  margin: 20px;
+}
+.zy-message-photo {
+  max-width: 300px;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+.zy-file {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.zy-emoji-picker {
+  position: absolute;
+  bottom: 95px;
+  left: 22px;
+  display: flex;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 12px;
+  border-radius: 14px;
+  box-shadow: var(--zy-popup-shadow,0 9px 28px #0002);
+}
+.zy-emoji-picker button {
+  padding: 8px;
+  border-radius: 8px;
+}
+.zy-emoji-picker button:hover {
+  background: #f6eee8;
+}
+.zy-page-contacts .zy-directory {
+  width: 320px;
+  background: #f1f1f1;
+}
+.zy-address-list {
+  padding: 0 1px 30px;
+}
+.zy-manage {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  color: #77726c;
+  font-size: 13px;
+}
+.zy-manage > svg:last-child {
+  margin-left: auto;
+}
+.zy-directory-row {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 11px 12px;
+  text-align: left;
+}
+.zy-tile {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  color: white;
+  display: grid;
+  place-items: center;
+}
+.zy-tile.orange {
+  background: #fc9548;
+}
+.zy-tile.green {
+  background: #4cad80;
+}
+.zy-tile.blue {
+  background: #669ed4;
+}
+.zy-directory-row small {
+  margin-left: auto;
+  color: #99928a;
+  font-size: 12px;
+}
+.zy-directory-row b {
+  margin-left: auto;
+  color: #fff;
+  background: #f37c55;
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-size: 10px;
+}
+.zy-letter {
+  display: block;
+  font-size: 12px;
+  color: #a0a0ab;
+  margin: 11px 17px 7px;
+}
+.zy-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-align: left;
+  width: 100%;
+  height: 62px;
+  border-radius: 10px;
+  padding: 8px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.zy-contact-row strong {
+  font-weight: 550;
+  font-size: 15px;
+}
+.zy-contact-row:hover {
+  background: #ece9e6;
+}
+.zy-contact-row.selected {
+  background: linear-gradient(90deg, #ffebe0, #eee8e3);
+}
+.zy-contact-row.selected:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(#ff9265, #ff664c);
+}
+.zy-contact-detail {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  background: #faf9f7;
+  scrollbar-width: thin;
+}
+.zy-contact-cover {
+  height: 240px;
+  position: relative;
+}
+.zy-contact-cover > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 48%;
+}
+.zy-cover-menu {
+  position: absolute !important;
+  top: 18px;
+  right: 22px;
+}
+.zy-cover-menu > .zy-icon {
+  background: #ffffffa8;
+  border-radius: 50%;
+}
+.zy-profile-surface {
+  position: relative;
+  padding-top: 77px;
+  min-height: calc(100% - 240px);
+}
+.zy-large-avatar {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -50%);
+  border: 5px solid #faf9f7;
+  border-radius: 50%;
+}
+.zy-large-avatar:active:not(:disabled) {
+  transform: translate(-50%, -50%);
+}
+.zy-profile-inner {
+  max-width: 800px;
+  padding: 0 45px 48px;
+  margin: auto;
+}
+.zy-profile-inner h1 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 650;
+  letter-spacing: 1px;
+}
+.zy-profile-bio {
+  text-align: center;
+  margin-top: 12px;
+  color: #78716a;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.zy-profile-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 34px 0 40px;
+}
+.zy-profile-actions .zy-icon {
+  width: 100%;
+  height: 48px;
+  border-radius: 13px;
+  color: #fff;
+  background: linear-gradient(110deg, #ff9767, #fc774b);
+  box-shadow: 0 4px 9px #ff884a18;
+}
+.zy-profile-actions .zy-icon:hover {
+  filter: brightness(1.04);
+  box-shadow: 0 5px 16px #ff884a30;
+}
+.zy-info {
+  margin: 0;
+  border-top: 1px solid #e8e5df;
+  border-bottom: 1px solid #e8e5df;
+  padding: 25px 0;
+  display: grid;
+  gap: 22px;
+}
+.zy-info > div {
+  display: flex;
+  gap: 25px;
+}
+.zy-info dt {
+  color: #928a82;
+  width: 65px;
+  font-size: 13px;
+}
+.zy-info dd {
+  margin: 0;
+  color: #55504a;
+  font-size: 13px;
+}
+.zy-preview {
+  margin-top: 28px;
+}
+.zy-preview-heading {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.zy-preview-heading h2 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.zy-preview-heading svg {
+  color: #8c847a;
+}
+.zy-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 13px;
+}
+.zy-preview-grid button {
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+.zy-preview-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.zy-preview-grid button:hover img {
+  transform: scale(1.04);
+}
+.zy-preview > small {
+  display: block;
+  margin-top: 14px;
+  color: #a39b90;
+  font-size: 11px;
+}
+.zy-page-moments.zy-app {
+  background: #e8e8e8;
+}
+.zy-page-moments .zy-base {
+  background: white;
+}
+.zy-base > .zy-moments {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+}
+.zy-moments-cover {
+  height: clamp(270px, 42vh, 360px);
+  position: relative;
+  flex-shrink: 0;
+  isolation: isolate;
+}
+.zy-moments-cover > img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 47%;
+}
+.zy-moments-cover-change {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.zy-moments-tools {
+  position: absolute;
+  z-index: 4;
+  top: 18px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.zy-moments-tool {
+  position: relative;
+  width: 23px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  mix-blend-mode: difference;
+  cursor: pointer;
+}
+.zy-moments-tool:hover { opacity: .72; }
+.zy-moments-notification-anchor { position: relative; display: flex; }
+.zy-moments-notification-dot { position: absolute; top: 1px; right: 0; width: 6px; height: 6px; border-radius: 50%; background: #ee5b53; box-shadow: 0 0 0 1px rgb(255 255 255 / 65%); }
+.zy-moments-notifications {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 10px);
+  right: -35px;
+  width: min(330px, calc(100vw - 100px));
+  max-height: min(420px, 65vh);
+  overflow: auto;
+  border: 1px solid #e8e9e4;
+  border-radius: 10px;
+  background: #fff;
+  color: #303531;
+  box-shadow: var(--zy-popup-shadow,0 9px 28px #0002);
+  mix-blend-mode: normal;
+}
+.zy-moments-notifications > header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid #eceee9; font-size: 13px; }
+.zy-moments-notifications > header button { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; background: transparent; color: #7b837d; cursor: pointer; }
+.zy-moments-notification { display: block; width: 100%; padding: 11px 14px; border: 0; border-bottom: 1px solid #f0f1ee; background: #fff; color: #454b46; text-align: left; cursor: pointer; }
+.zy-moments-notification:hover { background: #f7f8f6; }
+.zy-moments-notification > span { display: block; font-size: 12px; line-height: 1.5; }
+.zy-moments-notification > span strong { color: #2e6252; font-weight: 600; }
+.zy-moments-notification small { display: block; overflow: hidden; margin-top: 3px; color: #7b837d; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.zy-moments-notification time { display: block; margin-top: 5px; color: #9a9f9b; font-size: 10px; }
+.zy-moments-notifications-empty { margin: 0; padding: 22px 14px; color: #858b86; font-size: 12px; text-align: center; }
+.zy-camera {
+  position: absolute;
+  right: 30px;
+  top: 24px;
+  background: #ffffffd9;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  color: #4b5146;
+}
+.zy-camera-plus {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  width: 10px !important;
+  height: 10px !important;
+}
+.zy-self-cover-avatar {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: -57px;
+  transform: translateX(-50%);
+  display: flex;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+}
+.zy-self-cover-avatar::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid #fc855d;
+  border-radius: 50%;
+  background: transparent;
+  pointer-events: none;
+}
+.zy-self-cover-avatar:active:not(:disabled) {
+  transform: translateX(-50%);
+}
+.zy-moments-identity {
+  text-align: center;
+  padding: 80px 20px 34px;
+}
+.zy-moments-identity h1 {
+  margin: 0;
+  color: #30332f;
+  font-size: 25px;
+  line-height: 1.35;
+  font-weight: 560;
+}
+.zy-moments-identity .zy-signature {
+  font-family: 'Snell Roundhand', 'Brush Script MT', cursive;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.zy-moments-identity p {
+  margin: 8px 0 0;
+  color: #626962;
+  font-size: 12px;
+  line-height: 1.65;
+  letter-spacing: 0.1px;
+}
+.zy-post .zy-media.count-1 {
+  width: min(183px, 100%);
+  height: 244px;
+  max-height: none;
+  border-radius: 0;
+}
+.zy-post .zy-media.count-1 img {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: contain;
+  border-radius: 0;
+}
+.zy-feed-stream {
+  width: 700px;
+  max-width: calc(100% - 100px);
+  margin: auto;
+}
+.zy-post {
+  margin-bottom: 68px;
+}
+.zy-post > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.zy-post-person {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  text-align: left;
+  min-width: 0;
+}
+.zy-post-person > span:last-child {
+  min-width: 0;
+}
+.zy-post-person > span > span {
+  display: flex;
+  gap: 13px;
+  align-items: baseline;
+}
+.zy-post-person strong {
+  font-size: 17px;
+  font-weight: 650;
+}
+.zy-post-person time {
+  font-size: 12px;
+  color: #a19b95;
+}
+.zy-post-person small {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  color: #242320;
+  margin-top: 7px;
+  line-height: 1.5;
+}
+.zy-media {
+  display: grid;
+  gap: 10px;
+  overflow: hidden;
+  border-radius: 18px;
+  position: relative;
+}
+.zy-image-hit {
+  padding: 0;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  background: #f4f3f0;
+  touch-action: pan-y;
+}
+.zy-image-hit img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.zy-media.count-3 {
+  grid-template-columns: 1.1fr 1fr;
+  grid-template-rows: 240px 240px;
+}
+.zy-media.count-3 .zy-image-hit:first-child {
+  grid-row: 1/3;
+}
+.zy-media.count-2 {
+  grid-template-columns: 1fr 1fr;
+  height: 450px;
+}
+.zy-media.count-1 {
+  height: auto;
+  max-height: 650px;
+}
+.zy-media.count-1 img {
+  max-height: 650px;
+  object-fit: contain;
+}
+.zy-media.is-carousel {
+  height: 540px;
+}
+.zy-chat-screenshot {
+  overflow: hidden;
+  margin-bottom: 2px;
+  border: 1px solid #e4e1dd;
+  border-radius: 18px;
+  background: #f8f8f7;
+}
+.zy-chat-shot-head {height:72px;min-height:72px;}
+.zy-chat-shot-head .chat-header-person {pointer-events:none;}
+.zy-chat-shot-thread {height:auto;overflow:visible;padding:24px 26px 4px;}
+.zy-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffff9c;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  color: #36332f;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.zy-media:hover .zy-carousel-arrow,
+.zy-media:focus-within .zy-carousel-arrow {
+  opacity: 1;
+}
+.zy-carousel-arrow.prev {
+  left: 16px;
+}
+.zy-carousel-arrow.next {
+  right: 16px;
+}
+.zy-dots {
+  position: absolute;
+  bottom: 13px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 3px;
+  filter: drop-shadow(0 1px 3px #0005);
+}
+.zy-dots button {
+  width: 20px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+}
+.zy-dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffffc9;
+  transition:
+    width 0.2s,
+    height 0.2s,
+    background 0.2s;
+}
+.zy-dots .current {
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #ffa073, #ff5e66);
+}
+.zy-location {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #a19a91;
+  margin-top: 17px;
+}
+.zy-post-caption {
+  font-size: 14px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  margin: 0 0 16px;
+  color: #222;
+}
+.zy-post-caption strong {
+  font-weight: 650;
+  margin-right: 12px;
+}
+.zy-post-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+.zy-post-actions .zy-icon {
+  width: 29px;
+  height: 30px;
+  border-radius: 0;
+  color: #262422;
+}
+.zy-feed-end {
+  padding: 5px 0 40px;
+  color: #b4afa8;
+  font-size: 11px;
+  text-align: center;
+  letter-spacing: 2px;
+}
+.zy-feed-end span {
+  display: block;
+  margin: 0 auto 18px;
+  height: 1px;
+  width: 40px;
+  background: #d7d1c9;
+}
+.zy-back-feed {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #aa7863;
+  font-size: 12px;
+  margin-bottom: 30px;
+}
+.zy-menu-anchor {
+  position: relative;
+}
+.zy-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  min-width: 182px;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid #eee9e3;
+  box-shadow: var(--zy-popup-shadow,0 9px 28px #0002);
+  border-radius: 13px;
+  z-index: 30;
+  color: #554e46;
+}
+.zy-menu button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  white-space: nowrap;
+  padding: 11px 12px;
+  width: 100%;
+  font-size: 12px;
+  border-radius: 8px;
+  text-align: left;
+}
+.zy-menu svg {
+  width: 16px;
+  height: 16px;
+}
+.zy-menu button:hover {
+  background: #f7f1ed;
+}
+.zy-empty {
+  padding: 50px 15px;
+  text-align: center;
+  color: #9c958c;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.zy-empty > svg {
+  margin: 0 auto 14px;
+  opacity: 0.6;
+}
+.zy-empty button {
+  margin-top: 15px;
+  color: #d47d59;
+  font-size: 12px;
+}
+.zy-empty-small {
+  padding: 20px;
+}
+.zy-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.zy-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: 480px;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100dvh - 60px);
+  padding: 0;
+  border: 1px solid #e7e2dc;
+  border-radius: 22px;
+  background: #fff;
+  color: #292723;
+  box-shadow: var(--zy-popup-shadow,0 9px 28px #0002);
+  font:
+    14px 'PingFang SC',
+    'Microsoft YaHei',
+    sans-serif;
+  overflow: auto;
+}
+.zy-dialog::backdrop {
+  background: #25232045;
+  backdrop-filter: blur(5px);
+}
+.zy-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid #f0ece7;
+}
+.zy-dialog-head h2 {
+  font-size: 17px;
+  font-weight: 600;
+}
+.zy-primary {
+  padding: 10px 17px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #292623;
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.zy-primary:hover:not(:disabled) {
+  background: #504840;
+}
+.zy-call {
+  text-align: center;
+  padding: 35px 25px;
+}
+.zy-call h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 22px 0 10px;
+}
+.zy-call p {
+  color: #9b8d81;
+  font-size: 14px;
+}
+.zy-call small {
+  display: block;
+  margin: 16px 0 35px;
+  color: #a6a099;
+  font-size: 12px;
+}
+.zy-call > div {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+}
+.zy-call .zy-icon {
+  background: #f4f1ed;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+}
+.zy-call .zy-icon[aria-pressed='true'] {
+  background: #e7dcd3;
+}
+.zy-call .zy-hangup {
+  background: #f56c59;
+  color: white;
+}
+.zy-comment-dialog {
+  left: auto;
+  right: 18px;
+  width: 420px;
+  height: calc(100dvh - 36px);
+  max-height: none;
+  display: none;
+}
+.zy-comment-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+.zy-comment-context {
+  padding: 22px;
+  background: #fbf9f6;
+  border-bottom: 1px solid #f0ece7;
+}
+.zy-comment-context p {
+  font-size: 13px;
+  line-height: 1.8;
+  margin-top: 10px;
+  color: #8d8175;
+}
+.zy-comments {
+  flex: 1;
+  overflow: auto;
+  padding: 22px;
+}
+.zy-comment {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.zy-comment > div {
+  flex: 1;
+  min-width: 0;
+}
+.zy-comment strong {
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+}
+.zy-comment time {
+  font-size: 11px;
+  color: #aca399;
+  font-weight: 400;
+}
+.zy-comment p {
+  font-size: 13px;
+  margin-top: 9px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.zy-comment-form {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid #eee9e3;
+  padding: 18px;
+}
+.zy-comment-form input {
+  background: #f7f4f0;
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 12px;
+  flex: 1;
+  font-size: 13px;
+  min-width: 0;
+}
+.zy-publish-dialog {
+  width: 590px;
+}
+.zy-publish-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 25px 0;
+}
+.zy-publish-person small {
+  margin-left: auto;
+  font-size: 11px;
+  color: #aaa196;
+}
+.zy-publish-dialog > textarea {
+  width: calc(100% - 50px);
+  margin: 20px 25px;
+  height: 100px;
+  border: 0;
+  outline: none;
+  line-height: 1.8;
+  background: transparent;
+}
+.zy-upload-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 0 25px;
+}
+.zy-upload-grid > div {
+  aspect-ratio: 1;
+  position: relative;
+}
+.zy-upload-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.zy-upload-grid .zy-icon {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  background: #fff9;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+.zy-photo-add {
+  border: 1px dashed #dcd1c6;
+  border-radius: 10px;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #b0927a;
+  background: #faf7f3;
+  font-size: 12px;
+}
+.zy-publish-location {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 25px;
+  color: #a69788;
+}
+.zy-publish-location input {
+  border: 0;
+  outline: none;
+  flex: 1;
+  font-size: 12px;
+}
+.zy-publish-dialog footer {
+  padding: 20px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #eee8e1;
+  gap: 12px;
+}
+.zy-publish-dialog footer small {
+  font-size: 11px;
+  color: #a49b90;
+}
+.zy-settings {
+  padding: 23px;
+}
+.zy-demo-info {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #eee8e1;
+  margin-bottom: 12px;
+}
+.zy-demo-info > svg {
+  flex-shrink: 0;
+  color: #c88e6a;
+  width: 20px;
+}
+.zy-demo-info p {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #948b80;
+  margin-top: 8px;
+}
+.zy-settings > button,
+.zy-settings > a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 8px;
+  width: 100%;
+  font-size: 13px;
+  text-decoration: none;
+  color: inherit;
+}
+.zy-settings > button:hover,
+.zy-settings > a:hover {
+  background: #faf6f0;
+}
+.zy-settings > button svg,
+.zy-settings > a svg {
+  width: 17px;
+  height: 17px;
+}
+.zy-settings > button > svg:last-child,
+.zy-settings > a > svg:last-child,
+.zy-settings > button > span {
+  margin-left: auto;
+}
+.zy-settings > small {
+  display: block;
+  margin-top: 22px;
+  color: #aca398;
+  font-size: 11px;
+}
+.zy-people-dialog {
+  padding: 22px;
+}
+.zy-people-dialog > .zy-search {
+  background: #f7f4f0;
+  margin-bottom: 15px;
+}
+.zy-person-option {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px 0;
+  border-bottom: 1px solid #f0ebe4;
+}
+.zy-person-option > div {
+  min-width: 0;
+  flex: 1;
+}
+.zy-person-option small {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #a3988b;
+  font-size: 11px;
+  margin-top: 6px;
+}
+.zy-my-profile {
+  text-align: center;
+  padding: 32px;
+}
+.zy-my-profile h3 {
+  font-size: 24px;
+  margin: 18px 0 10px;
+}
+.zy-my-profile p {
+  font-size: 12px;
+  color: #817468;
+  line-height: 1.8;
+}
+.zy-my-profile dl {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  text-align: left;
+  font-size: 13px;
+  gap: 16px;
+  margin: 30px 0;
+}
+.zy-my-profile dt {
+  color: #aa9a8b;
+}
+.zy-my-profile dd {
+  margin: 0;
+}
+.zy-lightbox {
+  width: 90vw;
+  max-width: 1200px;
+  background: #171716;
+  color: #fff;
+  border: 0;
+}
+.zy-lightbox .zy-dialog-head {
+  border-color: #ffffff17;
+}
+.zy-lightbox .zy-icon {
+  color: #fff;
+}
+.zy-lightbox-image {
+  height: 75dvh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 65px;
+}
+.zy-lightbox-image > img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.zy-lightbox-image > .zy-icon {
+  position: absolute;
+  top: 50%;
+  background: #ffffff1a;
+  border-radius: 50%;
+}
+.zy-lightbox-image > .prev {
+  left: 15px;
+}
+.zy-lightbox-image > .next {
+  right: 15px;
+}
+.zy-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 23px;
+  background: #302b27;
+  color: #fff9f3;
+  border-radius: 13px;
+  font-size: 13px;
+  z-index: 200;
+  box-shadow: var(--zy-popup-shadow,0 9px 28px #0002);
+  max-width: 80vw;
+  pointer-events: none;
+}
+@media (max-width: 1150px) {
+  .zy-directory {
+    width: 285px;
+  }
+  .zy-page-contacts .zy-directory {
+    width: 275px;
+  }
+  .zy-rail {
+    width: 74px;
+  }
+  .zy-bubble {
+    font-size: 16px;
+    padding: 13px 18px;
+  }
+  .zy-chat-head {
+    padding: 0 18px;
+  }
+  .zy-thread-inner {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  .zy-chat-tools {
+    gap: 3px;
+  }
+  .zy-profile-inner {
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+  .zy-profile-actions {
+    gap: 18px;
+  }
+  .zy-moments-cover {
+    height: clamp(220px, 42vh, 300px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zy-app * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+
+.zy-molly-avatar {width:100%;height:100%;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,#ffe3cf,#ffd4c9);color:#cf7656;border:1px solid #f4c9b7;}
+.zy-molly-pinned {margin-bottom:0;}
+.zy-system-label {font-size:10px;font-weight:500;color:#ab816a;background:#f8f2ec;border-radius:4px;padding:2px 5px;margin-left:7px;vertical-align:middle;}
+
+.zy-presence.is-busy {background:#e7a34a;}
+.zy-presence.is-offline {background:#a2a6ac;}
+.zy-status-badge {display:inline-flex;align-items:center;font-size:11px!important;font-weight:500;line-height:1.5;padding:2px 7px;border:1px solid #d9dadd;border-radius:6px;color:#8c9096;background:#f3f4f5;margin-left:8px;vertical-align:middle;}
+.zy-status-badge.online {color:#24936e;background:#edf8f3;border-color:#cbeadd;}
+.zy-status-badge.busy {color:#b67b25;background:#fff6e8;border-color:#f0dcba;}
+.zy-self-status {display:block;font-size:12px;color:#89867f;cursor:pointer;margin-top:3px;}
+
+/* 板块1: .zy-app 底层；板块2: .zy-base/.zy-directory 覆盖其上；
+   板块3: .zy-chat/.xx-layout 覆盖板块2。保留嵌套圆角，不拆成分离卡片。 */
+.zy-desktop-stage {--window-gap-y:clamp(32px,6vh,88px);--window-gap-x:clamp(32px,6vw,128px);}
+.zy-app {height:min(1120px,calc(100dvh - var(--window-gap-y)*2));}
+.zy-rail {width:72px;padding-top:20px;}
+.zy-logo {width:38px;height:38px;margin-bottom:25px;}
+.zy-nav-items {gap:16px;}
+.zy-nav-items .zy-icon {width:38px;height:38px;}
+.zy-nav-items svg {width:22px;height:22px;}
+.zy-directory {width:300px;}
+.zy-chat-head {height:66px;}
+.zy-chat-person strong {font-size:17px;}
+.zy-chat-person small {font-size:12px;}
+.zy-thread-inner {padding:18px 26px 20px;}
+.zy-bubble {font-size:14px;line-height:1.55;padding:10px 16px;}
+.zy-message {gap:12px;margin-bottom:5px;}
+.zy-message.new-group {margin-top:18px;}
+.zy-message-avatar {align-self:flex-end;margin:0 0 23px;}
+.zy-composer-area {padding:8px 20px 16px;}
+.zy-composer {border:0;background:transparent;box-shadow:none;padding:0;gap:10px;}
+.zy-composer textarea {border:0;border-radius:24px;background:linear-gradient(110deg,#fff0e8 0%,#fde8eb 100%);font-size:14px;line-height:22px;height:44px;min-height:44px;padding:11px 18px;}
+.zy-app .zy-composer textarea:focus-visible {outline:none;box-shadow:none;}
+.zy-send,.zy-send:hover:not(:disabled),.zy-send:disabled {background:transparent;border:0;border-radius:0;color:#111;box-shadow:none;width:38px;height:40px;}
+.zy-send:disabled {opacity:.35;}
+.zy-send svg {width:22px;height:22px;}
+@media(max-width:1150px){.zy-directory {width:270px;}.zy-rail{width:64px;}}
+
+.zy-conversation {position:relative;transition:background .18s,box-shadow .18s;}
+.zy-conversation.selected {background:linear-gradient(110deg,#f49373,#e47a96);box-shadow:none;}
+.zy-conversation.selected::before {content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0;background:#28665f;}
+.npc-quote {display:flex;flex-direction:column;gap:3px;max-width:100%;padding:7px 11px;border:0;border-left:2px solid #ee8769;border-radius:4px;background:#ebe6e18a;text-align:left;color:#746b64;font-size:12px;cursor:pointer;}
+.npc-quote strong {font-size:11px;font-weight:600;color:#ba6e57;}
+.npc-quote span {max-width:360px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.npc-quote-draft {display:flex;gap:10px;align-items:center;margin:6px 24px 0;padding:8px 12px;border-left:2px solid #ef9279;background:#f3efec;border-radius:5px;color:#8e7c70;font-size:12px;}
+.npc-quote-draft>span {flex:1;min-width:0;}
+.npc-quote-draft strong {font-size:11px;}
+.npc-quote-draft small {display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-top:3px;}
+.npc-quote-draft button {background:transparent;flex-shrink:0;}
+.npc-reply-action {position:absolute;right:-29px;top:8px;opacity:0;width:25px;height:25px;display:grid;place-items:center;color:#91857a;background:#f0ece8;border:0;border-radius:50%;cursor:pointer;}
+.xx-message,.zy-bubble-wrap {position:relative;}
+.xx-message:hover>.npc-reply-action,.xx-message:focus-within>.npc-reply-action,.zy-bubble-wrap:hover>.npc-reply-action,.zy-bubble-wrap:focus-within>.npc-reply-action {opacity:1;}
+.xx-group.user .npc-reply-action,.mine .npc-reply-action {left:-29px;right:auto;}
+.xx-message>.npc-quote {margin-bottom:3px;}
+.zy-bubble-wrap>.npc-quote {margin-bottom:3px;}
+.zy-send:disabled {opacity:1;color:#111;}
+
+.zy-post-actions .zy-icon{width:auto;min-width:38px;gap:7px;padding:4px 8px}.zy-interaction-count{font-size:13px;font-variant-numeric:tabular-nums}.zy-post-actions .commented{color:#e57362}.zy-comment-filled circle{fill:#fff;stroke:#fff}.zy-comment-filled path:not(:first-child){stroke:#fff}.zy-post-likers{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:12px;color:#a9675a}.zy-post-comments{margin-top:12px;padding:12px 16px;background:#f7f7f6;border-radius:8px;font-size:13px;line-height:1.8}.zy-inline-comment+.zy-inline-comment{margin-top:6px}.zy-inline-comment button{background:none;border:0;padding:0;text-align:left;color:#444;white-space:pre-wrap;overflow-wrap:anywhere}.zy-inline-comment strong{color:#775f56;font-weight:600}
+
+/* 空状态：未选择会话时的空白 + 灰色 logo */
+.zy-chat-empty{display:flex;align-items:center;justify-content:center;background:#f8f8f7}
+.zy-chat-empty .zy-empty-logo img{width:120px;height:120px;object-fit:contain;filter:grayscale(1);opacity:.4;user-select:none;-webkit-user-drag:none}

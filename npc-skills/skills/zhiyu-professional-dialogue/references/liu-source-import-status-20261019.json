@@ -1,0 +1,1277 @@
+{
+  "date": "2026-10-19",
+  "characterId": "liu",
+  "knowledgeLibrary": "liu-clinical-knowledge-20261015.json",
+  "sourceAccess": {
+    "schemaVersion": 1,
+    "characterId": "liu",
+    "date": "2026-10-19",
+    "phase": "completed_available_body_import_with_explicit_gaps",
+    "completeAllSources": false,
+    "sourceCount": 34,
+    "entryCount": 49,
+    "manifest": [
+      {
+        "sourceId": "liu-import-source-cns-core-2022",
+        "url": "https://dg.cnsoc.org/article/04/J4-AsD_DR3OLQMnHG0-jZA.html",
+        "title": "中国居民膳食指南（2022）：平衡膳食八准则",
+        "status": "official_cached_body_read",
+        "readSections": "准则一、四核心推荐；官方搜索返回完整核心正文，直接open502。",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-cns-grains",
+          "liu-import-cns-animal-food"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-cns-vegetables-2022",
+        "url": "https://dg.cnsoc.org/article/04/70JvPbFmTlyZbjoO67LeRg.html",
+        "title": "中国居民膳食指南2022：准则三",
+        "status": "official_cached_body_read",
+        "readSections": "核心推荐及实践应用；官方缓存正文已读。",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-cns-vegetable-fruit-amount",
+          "liu-import-cns-milk-equivalent"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-cns-salt-2022",
+        "url": "https://dg.cnsoc.org/article/04/ApX3_ozGTmSoqQaFFh5z_Q.html",
+        "title": "中国居民膳食指南2022：准则五",
+        "status": "official_cached_body_read",
+        "readSections": "核心推荐、实践应用二至五；官方缓存正文已读。",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-cns-salt-oil-sugar-amount"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-cns-meals-water-2022",
+        "url": "https://dg.cnsoc.org/article/04/wDCyy7cWSJCN6pwKHOo5Dw.html",
+        "title": "中国居民膳食指南2022：准则六",
+        "status": "official_cached_body_read",
+        "readSections": "核心推荐及实践应用一；官方缓存正文已读。",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-cns-water-context",
+          "liu-import-cns-meal-energy-share"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-china-fcd-values",
+        "url": "https://nlc.chinanutri.cn/fq/foodinfo/281.html",
+        "title": "中国食物成分表公开记录：粳米（标一）",
+        "status": "direct_official_body",
+        "readSections": "每100g能量/蛋白/水分及页面数据符号备注；官方缓存实数已核。",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-fcd-raw-rice-unit"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-china-fcd-symbols",
+        "url": "https://nlc.chinanutri.cn/fq/foodinfo/288.html",
+        "title": "中国食物成分表公开记录：粳米粥",
+        "status": "direct_official_body",
+        "readSections": "每100g记录与页尾—、Tr、un和0的定义。",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-fcd-missing-zero"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-thiamin",
+        "url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/",
+        "title": "Thiamin: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "页面Updated 2023-02-09（非初刊）；Introduction；Food；Groups at Risk；官方正文直开",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-thiamin-processing"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-riboflavin",
+        "url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/",
+        "title": "Riboflavin: Fact Sheet for Health Professionals",
+        "status": "official_cached_body_read",
+        "readSections": "页面Updated 2022-05-11（非初刊）；Introduction中FMN/FAD及光敏；官方搜索缓存正文已读，直开失败",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-riboflavin-light"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-niacin",
+        "url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
+        "title": "Niacin: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "页面Updated 2022-11-18（非初刊）；Recommended Intakes；Health Risks from Excessive Niacin；官方正文直开",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-niacin-equivalent-form"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-pantothenic",
+        "url": "https://ods.od.nih.gov/factsheets/PantothenicAcid-HealthProfessional/",
+        "title": "Pantothenic Acid: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "页面Updated 2026-05-01（非初刊）；Sources；Deficiency；官方正文直开",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-pantothenic-ubiquity"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-biotin",
+        "url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/",
+        "title": "Biotin: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "页面Updated 2022-01-10（非初刊）；Hair/nail/skin health；Interactions with Laboratory Tests；官方正文直开",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-biotin-lab-interference",
+          "liu-import-biotin-hair-evidence"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-vitaminc",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
+        "title": "Vitamin C: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "页面Updated 2025-07-31（非初刊）；Introduction；Dietary supplements；Health Risks；官方正文直开",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-vitaminc-form-iron-risk"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-vitamine",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
+        "title": "Vitamin E: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "页面Updated 2021-03-26（非初刊）；International Units and Milligrams；Interactions with anticoagulant/antiplatelet medications；官方正文直开",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-vitamine-iu-form"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-selenium",
+        "url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/",
+        "title": "Selenium: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "页面Updated 2025-09-04（非初刊）；Food；Health Risks from Excessive Selenium；官方正文直开",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-selenium-variation-excess"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-copper",
+        "url": "https://ods.od.nih.gov/factsheets/Copper-HealthProfessional/",
+        "title": "Copper: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "页面Updated 2022-10-18（非初刊）；Food；Health Risks from Excessive Copper/Wilson disease；官方正文直开",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-copper-wilson"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-phosphorus",
+        "url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/",
+        "title": "Phosphorus: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "页面Updated 2023-05-04（非初刊）；Food中磷酸盐添加剂；官方正文直开",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-phosphorus-additives"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-choline",
+        "url": "https://ods.od.nih.gov/factsheets/Choline-HealthProfessional/",
+        "title": "Choline: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "页面Updated 2022-06-02（非初刊）；Food；Choline and Health/NAFLD；官方正文直开",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-choline-food-not-cure"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-espen-cancer-2021",
+        "url": "https://www.espen.org/files/ESPEN-Guidelines/ESPEN-practical-guideline-clinical-nutrition-in-cancer.pdf",
+        "title": "ESPEN practical guideline: Clinical Nutrition in cancer",
+        "status": "direct_official_body",
+        "readSections": "Clinical Nutrition40 (2021) 2898–2913; sections3.1–3.3, recommendations3,4,7 and comments; printed pp.2899–2901.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-cancer-energy-protein",
+          "liu-import-cancer-intake-threshold"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-espen-geriatrics-2022",
+        "url": "https://2022.espen.org/files/ESPEN-Guidelines/ESPEN_practical_guideline_Clinical_nutrition_and_hydration_in_geriatrics.pdf",
+        "title": "ESPEN practical guideline: Clinical nutrition and hydration in geriatrics",
+        "status": "direct_official_body",
+        "readSections": "Clinical Nutrition 41 (2022) 958–989; items 2,29 and low-intake dehydration assessment.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-older-protein-ons",
+          "liu-import-older-dehydration-assessment"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-espen-liver-2020",
+        "url": "https://academy.espen.org/files/ESPEN-Guidelines/ESPEN_practical_guideline_Clinical_nutrition_in_liver_disease.pdf",
+        "title": "ESPEN practical guideline: Clinical nutrition in liver disease",
+        "status": "direct_official_body",
+        "readSections": "Clinical Nutrition 39 (2020) 3533–3562; recommendations 58,61.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-cirrhosis-meal-structure",
+          "liu-import-ascites-salt-palatability"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-espen-ibd-2023",
+        "url": "https://2022.espen.org/files/ESPEN-Guidelines/ESPEN_guideline_on_Clinical_nutrition_in_inflammatory_bowel_disease.pdf",
+        "title": "ESPEN guideline on Clinical nutrition in inflammatory bowel disease",
+        "status": "direct_official_body",
+        "readSections": "Clinical Nutrition 42 (2023) 352–379; recommendations 7,8,24,25.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-ibd-protein-phase",
+          "liu-import-crohn-een-population"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-espen-surgery-2025",
+        "url": "https://www.espen.org/files/ESPEN-guideline-on-clinical-nutrition-in-surgery-Update-2025.pdf",
+        "title": "ESPEN guideline on clinical nutrition in surgery – Update 2025",
+        "status": "direct_official_body",
+        "readSections": "Clinical Nutrition 53 (2025) 222–261; recommendations 1,4 and comments.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-elective-fasting-conditions",
+          "liu-import-postop-early-feeding"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-espen-icu-2023",
+        "url": "https://www.espen.org/files/ESPEN-Guidelines/ESPEN_practical_and_partially_revised_guideline_Clinical_nutrition_in_the_intensive_care_unit.pdf",
+        "title": "ESPEN practical and partially revised guideline: Clinical nutrition in the intensive care unit",
+        "status": "direct_official_body",
+        "readSections": "Clinical Nutrition 42 (2023) 1671–1689; items 19,22,23,25 (R15,R19,R17,R22).",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-icu-energy-measurement",
+          "liu-import-icu-protein-progressive"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-espen-pancreatitis-2024",
+        "url": "https://www.espen.org/files/ESPEN-Guidelines/ESPEN-practical-guideline-on-clinical-nutrition-in-acute-and-chronic-pancreatitis.pdf",
+        "title": "ESPEN practical guideline on clinical nutrition in acute and chronic pancreatitis",
+        "status": "direct_official_body",
+        "readSections": "Clinical Nutrition 43 (2024) 395–412; DOI10.1016/j.clnu.2023.12.019; items 3,4,11,36,38.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-mild-pancreatitis-restart",
+          "liu-import-pancreatitis-fat-probiotics"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-espen-hpn-2023",
+        "url": "https://www.espen.org/files/ESPEN-Guidelines/ESPEN_practical_guideline_Home_parenteral_nutrition.pdf",
+        "title": "ESPEN practical guideline: Home parenteral nutrition",
+        "status": "direct_official_body",
+        "readSections": "Clinical Nutrition 42 (2023) 411–430; R1,S2,R54–56 and Table2.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-hpn-selection",
+          "liu-import-hpn-longterm-monitoring"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-espen-hen-2022",
+        "url": "https://www.espen.org/files/ESPEN-Guidelines/ESPEN_practical_guideline_Home_enteral_nutrition.pdf",
+        "title": "ESPEN practical guideline: Home enteral nutrition",
+        "status": "direct_official_body",
+        "readSections": "Clinical Nutrition 41 (2022) 468–488; R39,R46 and comments.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-hen-standard-formula",
+          "liu-import-hen-weaning-criteria"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-espen-kidney-2024",
+        "url": "https://www.espen.org/files/ESPEN-Guidelines/ESPEN_practical_guideline_on_clinical_nutrition_in_hospitalized_patients_with_acute_or_chronic_kidney_disease-text.pdf",
+        "title": "ESPEN practical guideline on clinical nutrition in hospitalized patients with acute or chronic kidney disease",
+        "status": "direct_official_body",
+        "readSections": "Clinical Nutrition 43 (2024) 2238–2254; DOI10.1016/j.clnu.2024.08.002; R18,R19 and protein comments.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-kidney-weight-basis",
+          "liu-import-aki-protein-krt"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-espen-micronutrients-short-2024",
+        "url": "https://www.espen.org/files/ESPEN-Guidelines/ESPEN-practical-short-micronutrient-guideline.pdf",
+        "title": "ESPEN practical short micronutrient guideline",
+        "status": "direct_official_body",
+        "readSections": "Clinical Nutrition 43 (2024) 825–857; section3.4, recommendation3; .",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-inflammation-micronutrient-labs"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-aspen-refeeding-2020",
+        "url": "https://aspenjournals.onlinelibrary.wiley.com/doi/10.1002/ncp.10474",
+        "title": "ASPEN Consensus Recommendations for Refeeding Syndrome",
+        "status": "direct_official_body",
+        "readSections": "Nutrition in Clinical Practice 35 (2020) 178–195; Proposed Diagnostic Criteria for RS; DOI10.1002/ncp.10474.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-refeeding-diagnosis-window"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-kdigo-ckd-2024",
+        "url": "https://kdigo.org/wp-content/uploads/2026/04/KDIGO-2024-CKD-Guideline.pdf",
+        "title": "KDIGO 2024 Clinical Practice Guideline for the Evaluation and Management of CKD",
+        "status": "direct_official_body",
+        "readSections": "Kidney International105 Suppl4S (2024) S117–S314; sections3.3.1–3.3.2; PDF pp.92–95; recommendations3.3.1.1,3.3.2.1 and practice points.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-ckd-stable-protein",
+          "liu-import-ckd-sodium-exception"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-vitamind",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
+        "title": "Vitamin D: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "Introduction; Assessing vitamin D status; Dietary supplements. Page accessed2026-10-19; publication date not inferred from Updated.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-vitamind-status-marker",
+          "liu-import-vitamind-forms-units"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-vitaminb12",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+        "title": "Vitamin B12: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "Assessing vitamin B12 status; serum B12 and methylmalonic acid (MMA). Page accessed2026-10-19; publication date not inferred from Updated.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-b12-mma-kidney-confounding"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-ods-iron",
+        "url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/",
+        "title": "Iron: Fact Sheet for Health Professionals",
+        "status": "direct_official_body",
+        "readSections": "Sources of Iron — Dietary supplements; elemental iron and calcium interaction. Page accessed2026-10-19; publication date not inferred from Updated.",
+        "fullWorkRead": false,
+        "importedEntryIds": [
+          "liu-import-iron-elemental-label"
+        ]
+      },
+      {
+        "sourceId": "liu-import-source-cns-raw-edible-basis",
+        "title": "膳食宝塔推荐量称量口径",
+        "readStatus": "full_text_sections",
+        "url": "https://www.gxcdc.org.cn/index.php?a=show&c=index&id=9118&m=special",
+        "sectionsRead": [
+          "正文原料生重可食部说明"
+        ],
+        "usedByEntries": [
+          "liu-import-cns-grains",
+          "liu-import-cns-animal-food",
+          "liu-import-cns-vegetable-fruit-amount"
+        ],
+        "rootCrossReview": true
+      }
+    ],
+    "blocked": [
+      {
+        "source": "China DRIs2023",
+        "status": "numeric_table_bodies_unobtained",
+        "numericTablesImported": 0
+      },
+      {
+        "source": "石汉平临床营养学指定版",
+        "status": "catalog_only_no_reading_rights",
+        "bodyPagesRead": 0,
+        "chaptersImported": 0
+      },
+      {
+        "source": "ACSM Nutrition and Athletic Performance2016",
+        "status": "publisher_abstract_only_no_full_body"
+      }
+    ],
+    "next": "本批49条为已读公开正文的独立简要知识；未获部分如上，不宣称全部资料/整书全文已完成导入。",
+    "originalSourceCoverage": [
+      {
+        "originalSourceId": "cns-2022",
+        "title": "中国居民膳食指南（2022）：平衡膳食八准则核心推荐",
+        "url": "https://www.cnsoc.org/bookpublica/0522202019.html",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "diet-pattern",
+          "breakfast",
+          "labels",
+          "sugar",
+          "hydration",
+          "weight-loss",
+          "children"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "who-diet-2026",
+        "title": "Healthy diet",
+        "url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "energy",
+          "protein",
+          "carbohydrate",
+          "fats",
+          "sugar",
+          "weight-loss",
+          "restriction-risk",
+          "potassium-salt",
+          "children"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "nhc-diabetes-2023",
+        "title": "成人糖尿病食养指南（2023年版）问答",
+        "url": "https://www.nhc.gov.cn/sps/c100088/202301/f01895a06c5349ef999f25da833c166d/files/1732844468167_10535.pdf",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "carbohydrate",
+          "diabetes"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "nhc-hypertension-2023",
+        "title": "成人高血压食养指南（2023年版）问答",
+        "url": "https://www.nhc.gov.cn/sps/c100088/202301/f01895a06c5349ef999f25da833c166d/files/1732844468136_16321.pdf",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "sodium"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "kdigo-2024",
+        "title": "KDIGO 2024 Clinical Practice Guideline for the Evaluation and Management of CKD",
+        "url": "https://kdigo.org/wp-content/uploads/2026/04/KDIGO-2024-CKD-Guideline.pdf",
+        "originalGroup": "existingRuntimeSources",
+        "status": "relevant_body_sections_imported_this_batch",
+        "newSourceId": "liu-import-source-kdigo-ckd-2024",
+        "newEntryIds": [
+          "liu-import-ckd-stable-protein",
+          "liu-import-ckd-sodium-exception"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "espen-cancer-2021",
+        "title": "ESPEN practical guideline: Clinical Nutrition in cancer",
+        "url": "https://www.espen.org/files/ESPEN-Guidelines/ESPEN-practical-guideline-clinical-nutrition-in-cancer.pdf",
+        "originalGroup": "existingRuntimeSources",
+        "status": "relevant_body_sections_imported_this_batch",
+        "newSourceId": "liu-import-source-espen-cancer-2021",
+        "newEntryIds": [
+          "liu-import-cancer-energy-protein",
+          "liu-import-cancer-intake-threshold"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "espen-geriatrics-2022",
+        "title": "ESPEN practical guideline: Clinical nutrition and hydration in geriatrics",
+        "url": "https://2022.espen.org/files/ESPEN-Guidelines/ESPEN_practical_guideline_Clinical_nutrition_and_hydration_in_geriatrics.pdf",
+        "originalGroup": "existingRuntimeSources",
+        "status": "relevant_body_sections_imported_this_batch",
+        "newSourceId": "liu-import-source-espen-geriatrics-2022",
+        "newEntryIds": [
+          "liu-import-older-protein-ons",
+          "liu-import-older-dehydration-assessment"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "espen-liver-2020",
+        "title": "ESPEN practical guideline: Clinical nutrition in liver disease",
+        "url": "https://academy.espen.org/files/ESPEN-Guidelines/ESPEN_practical_guideline_Clinical_nutrition_in_liver_disease.pdf",
+        "originalGroup": "existingRuntimeSources",
+        "status": "relevant_body_sections_imported_this_batch",
+        "newSourceId": "liu-import-source-espen-liver-2020",
+        "newEntryIds": [
+          "liu-import-cirrhosis-meal-structure",
+          "liu-import-ascites-salt-palatability"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "espen-ibd-2023",
+        "title": "ESPEN guideline on Clinical Nutrition in inflammatory bowel disease",
+        "url": "https://2022.espen.org/files/ESPEN-Guidelines/ESPEN_guideline_on_Clinical_nutrition_in_inflammatory_bowel_disease.pdf",
+        "originalGroup": "existingRuntimeSources",
+        "status": "relevant_body_sections_imported_this_batch",
+        "newSourceId": "liu-import-source-espen-ibd-2023",
+        "newEntryIds": [
+          "liu-import-ibd-protein-phase",
+          "liu-import-crohn-een-population"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "espen-surgery-2025",
+        "title": "ESPEN guideline on clinical nutrition in surgery – Update 2025",
+        "url": "https://www.espen.org/files/ESPEN-guideline-on-clinical-nutrition-in-surgery-Update-2025.pdf",
+        "originalGroup": "existingRuntimeSources",
+        "status": "relevant_body_sections_imported_this_batch",
+        "newSourceId": "liu-import-source-espen-surgery-2025",
+        "newEntryIds": [
+          "liu-import-elective-fasting-conditions",
+          "liu-import-postop-early-feeding"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "nhlbi-dash-2026",
+        "title": "DASH Eating Plan",
+        "url": "https://www.nhlbi.nih.gov/health/dash-eating-plan",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "fats",
+          "dash"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "niddk-hypoglycemia-2021",
+        "title": "Low Blood Glucose (Hypoglycemia)",
+        "url": "https://www.niddk.nih.gov/health-information/diabetes/overview/preventing-problems/low-blood-glucose-hypoglycemia",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "hypoglycemia"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "niddk-lactose-2018",
+        "title": "Eating, Diet, & Nutrition for Lactose Intolerance",
+        "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/lactose-intolerance/eating-diet-nutrition",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "lactose",
+          "food-allergy"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "niddk-celiac-2020",
+        "title": "Eating, Diet, & Nutrition for Celiac Disease",
+        "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/celiac-disease/eating-diet-nutrition",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "celiac"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "niddk-constipation-2018",
+        "title": "Eating, Diet, & Nutrition for Constipation",
+        "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/constipation/eating-diet-nutrition",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "constipation"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "niddk-gerd-2020",
+        "title": "Eating, Diet, & Nutrition for GER & GERD",
+        "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/acid-reflux-ger-gerd-adults/eating-diet-nutrition",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "gerd"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "who-pregnancy-2023",
+        "title": "Nutrition counselling during pregnancy",
+        "url": "https://www.who.int/tools/elena/interventions/nutrition-counselling-pregnancy",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "pregnancy"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "who-infant-2026",
+        "title": "Infant and young child feeding",
+        "url": "https://www.who.int/news-room/fact-sheets/detail/infant-and-young-child-feeding",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "infant"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "who-food-safety",
+        "title": "Promoting safe food handling: Five keys to safer food",
+        "url": "https://www.who.int/activities/promoting-safe-food-handling/five-key-to-safer-food/",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "food-safety"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "ods-supplements-2023",
+        "title": "Dietary Supplements: What You Need to Know",
+        "url": "https://ods.od.nih.gov/factsheets/WYNTK-Consumer/",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "supplements"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "pmph-catalog-2024",
+        "title": "临床营养学（石汉平、陈伟；ISBN 9787117370073）官方书目",
+        "url": "https://medu.pmph.com/readdetail/todetail.action?id=33148",
+        "originalGroup": "existingRuntimeSources",
+        "status": "publisher_catalog_only_body_unobtained",
+        "priorVerificationScope": "作者、版次、ISBN和图书详情；22章168节仅是书目介绍",
+        "wholeWorkImported": false,
+        "newEntryIds": [],
+        "bodyPagesRead": 0,
+        "chaptersImported": 0
+      },
+      {
+        "originalSourceId": "ods-iron-2023",
+        "title": "Iron: Fact Sheet for Consumers",
+        "url": "https://ods.od.nih.gov/factsheets/Iron-Consumer/",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "iron"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "ods-b12-2023",
+        "title": "Vitamin B12: Fact Sheet for Consumers",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminB12-Consumer/",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "b12"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "ods-vitamin-d-2022",
+        "title": "Vitamin D: Fact Sheet for Consumers",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminD-Consumer/",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "vitamin-d"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "nhs-anaphylaxis-2023",
+        "title": "Anaphylaxis",
+        "url": "https://www.nhs.uk/conditions/anaphylaxis/",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "food-allergy"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "espen-icu-2023",
+        "title": "ESPEN practical and partially revised guideline: Clinical nutrition in the ICU",
+        "url": "https://www.espen.org/files/ESPEN-Guidelines/ESPEN_practical_and_partially_revised_guideline_Clinical_nutrition_in_the_intensive_care_unit.pdf",
+        "originalGroup": "existingRuntimeSources",
+        "status": "relevant_body_sections_imported_this_batch",
+        "newSourceId": "liu-import-source-espen-icu-2023",
+        "newEntryIds": [
+          "liu-import-icu-energy-measurement",
+          "liu-import-icu-protein-progressive"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "aspen-assessment-2021",
+        "title": "Appropriate Use of Visceral Proteins in Nutrition Screening and Assessment",
+        "url": "https://nutritioncare.org/wp-content/uploads/2024/12/Appropriate-Use-Visceral-Proteins-Nutrition-Screening-Assessment.pdf",
+        "originalGroup": "existingRuntimeSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "albumin"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "ods-calcium-hp-2026",
+        "title": "Calcium: Fact Sheet for Health Professionals",
+        "url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/",
+        "originalGroup": "newCandidateEvidenceSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "calcium-food-sources",
+          "calcium-supplement-form"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "ods-folate-hp-2022",
+        "title": "Folate: Fact Sheet for Health Professionals",
+        "url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+        "originalGroup": "newCandidateEvidenceSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "folate-dfe-units"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "ods-iodine-hp-2024",
+        "title": "Iodine: Fact Sheet for Health Professionals",
+        "url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/",
+        "originalGroup": "newCandidateEvidenceSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "iodine-seaweed-variability"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "ods-zinc-hp-2026",
+        "title": "Zinc: Fact Sheet for Health Professionals",
+        "url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/",
+        "originalGroup": "newCandidateEvidenceSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "zinc-food-bioavailability"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "ods-magnesium-hp-2026",
+        "title": "Magnesium: Fact Sheet for Health Professionals",
+        "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
+        "originalGroup": "newCandidateEvidenceSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "magnesium-food-and-supplement"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "ods-b6-hp-2023",
+        "title": "Vitamin B6: Fact Sheet for Health Professionals",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
+        "originalGroup": "newCandidateEvidenceSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "b6-excess-neuropathy"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "ods-omega3-hp-2025",
+        "title": "Omega-3 Fatty Acids: Fact Sheet for Health Professionals",
+        "url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/",
+        "originalGroup": "newCandidateEvidenceSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "omega3-forms-and-labels"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "ods-vitamina-hp-2025",
+        "title": "Vitamin A and Carotenoids: Fact Sheet for Health Professionals",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+        "originalGroup": "newCandidateEvidenceSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "vitamina-preformed-pregnancy"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "ods-vitamink-hp-2021",
+        "title": "Vitamin K: Fact Sheet for Health Professionals",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminK-HealthProfessional/",
+        "originalGroup": "newCandidateEvidenceSources",
+        "status": "existing_selected_knowledge_preserved_no_duplicate_import",
+        "existingEntryIds": [
+          "vitamink-warfarin-consistency"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "aspen-refeeding-2020",
+        "title": "ASPEN Consensus Recommendations for Refeeding Syndrome",
+        "url": "https://aspenjournals.onlinelibrary.wiley.com/doi/10.1002/ncp.10474",
+        "originalGroup": "newCandidateEvidenceSources",
+        "status": "relevant_body_sections_imported_this_batch",
+        "newSourceId": "liu-import-source-aspen-refeeding-2020",
+        "newEntryIds": [
+          "liu-import-refeeding-diagnosis-window"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "kdigo-2024-potassium-20261019",
+        "title": "KDIGO 2024 Clinical Practice Guideline for the Evaluation and Management of Chronic Kidney Disease — dietary potassium section",
+        "url": "https://kdigo.org/wp-content/uploads/2026/04/KDIGO-2024-CKD-Guideline.pdf",
+        "originalGroup": "newCandidateEvidenceSources",
+        "status": "relevant_body_sections_imported_this_batch",
+        "newSourceId": "liu-import-source-kdigo-ckd-2024",
+        "newEntryIds": [
+          "liu-import-ckd-stable-protein",
+          "liu-import-ckd-sodium-exception"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "cns-dris-2023",
+        "title": "中国居民膳食营养素参考摄入量（2023版）及官方人群表入口",
+        "url": "https://www.cnsoc.org/drpostand/",
+        "originalGroup": "roadmapSources",
+        "status": "official_index_only_numeric_tables_unobtained",
+        "priorVerificationScope": "官方索引的检索可见内容已核：按年龄/性别人群列阅读入口；直接打开本轮超时，未逐表核数字，也未读全书。",
+        "wholeWorkImported": false,
+        "newEntryIds": [],
+        "reason": "中文目录直开超时；英文官方索引可读但详情超时/客户端拦截；没有逐表数字正文。"
+      },
+      {
+        "originalSourceId": "china-food-composition",
+        "title": "中国食物成分数据库发展90年；国家食物成分数据公众查询平台",
+        "url": "https://www.chinanutri.cn/xwzx_238/gzdt/202103/t20210311_224599.html",
+        "originalGroup": "roadmapSources",
+        "status": "official_explanation_and_two_records_only",
+        "priorVerificationScope": "官方文章正文已核：记载2018植物册/2019动物册《中国食物成分表标准版》与公众查询平台地址；未逐条核数据。",
+        "wholeWorkImported": false,
+        "newSourceIds": [
+          "liu-import-source-china-fcd-values",
+          "liu-import-source-china-fcd-symbols"
+        ],
+        "newEntryIds": [
+          "liu-import-fcd-raw-rice-unit",
+          "liu-import-fcd-missing-zero"
+        ],
+        "unobtained": "未取得全量数据、每种食品全部成分及商业许可。"
+      },
+      {
+        "originalSourceId": "usda-fdc-documentation",
+        "title": "FoodData Central Data Type Documentation",
+        "url": "https://fdc.nal.usda.gov/data-documentation/",
+        "originalGroup": "roadmapSources",
+        "status": "prior_verification_only_no_new_body_extract",
+        "priorVerificationScope": "官方数据类型说明完整正文已核：Foundation、Experimental、FNDDS、Branded、SR Legacy的含义/数据来源和版本频率。",
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "who-healthy-diet",
+        "title": "Healthy diet",
+        "url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+        "originalGroup": "roadmapSources",
+        "status": "prior_verification_only_no_new_body_extract",
+        "priorVerificationScope": "官方Fact Sheet正文已打开：Key facts、碳水/糖/脂肪/蛋白/盐钾/微量营养段。",
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "acsm-nutrition-2016",
+        "title": "Nutrition and Athletic Performance — Joint Position Statement",
+        "url": "https://doi.org/10.1249/MSS.0000000000000852",
+        "originalGroup": "roadmapSources",
+        "status": "publisher_abstract_only",
+        "priorVerificationScope": "出版社题名、三机构联合立场、2016年MSSE48(3):543–568与摘要已核；显示Full Text Access for Subscribers，未将付费全文当本轮已读。",
+        "wholeWorkImported": false,
+        "newEntryIds": [],
+        "unobtained": "未获得合法可读正文；不从未读正文生成碳水/蛋白/补水数字。",
+        "officialIndex": "https://acsm.org/education-resources/pronouncements-scientific-communications/position-stands/",
+        "legitimateAcquisition": "出版社合法订阅或图书馆服务。"
+      },
+      {
+        "originalSourceId": "ods-exercise-hp-2024",
+        "title": "Dietary Supplements for Exercise and Athletic Performance: Fact Sheet for Health Professionals",
+        "url": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
+        "originalGroup": "roadmapSources",
+        "status": "prior_verification_only_no_new_body_extract",
+        "priorVerificationScope": "官方公开专业正文已核：Introduction、Table1及若干成分效用/安全段；页面Updated2024-04-01。",
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "espen-practical-index",
+        "title": "ESPEN Practical Guidelines (PDF Versions)",
+        "url": "https://www.espen.org/guidelines/espen-practical-guidelines-pdf-versions",
+        "originalGroup": "roadmapSources",
+        "status": "official_discovery_index_not_clinical_knowledge",
+        "priorVerificationScope": "官方实用指南索引已核，包含2024住院肾病/胰腺病、2024多病共存及各专病下载；本项仅索引，未声称每部下载全文已读。",
+        "wholeWorkImported": false,
+        "newEntryIds": [],
+        "note": "入口用于发现具体指南，不冒充全部指南正文。"
+      },
+      {
+        "originalSourceId": "espen-kidney-2024",
+        "title": "ESPEN practical guideline on clinical nutrition in hospitalized patients with acute or chronic kidney disease",
+        "url": "https://www.espen.org/files/ESPEN-Guidelines/ESPEN_practical_guideline_on_clinical_nutrition_in_hospitalized_patients_with_acute_or_chronic_kidney_disease-text.pdf",
+        "originalGroup": "roadmapSources",
+        "status": "relevant_body_sections_imported_this_batch",
+        "newSourceId": "liu-import-source-espen-kidney-2024",
+        "newEntryIds": [
+          "liu-import-kidney-weight-basis",
+          "liu-import-aki-protein-krt"
+        ],
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "espen-micronutrients-2022",
+        "title": "ESPEN micronutrient guideline",
+        "url": "https://www.espen.org/files/ESPEN-Guidelines/ESPEN_micronutrient_guideline.pdf",
+        "originalGroup": "roadmapSources",
+        "status": "official_pdf_metadata_read_not_fully_extracted",
+        "priorVerificationScope": "官方68页PDF可开、题名/年份/范围已核，尚未逐营养素阅读全部建议，故只作为精确全文获取入口。",
+        "wholeWorkImported": false,
+        "newEntryIds": [],
+        "relatedImportedPracticalVersion": "liu-import-source-espen-micronutrients-short-2024",
+        "unobtained": "2022完整逐营养素建议尚未逐条导入；2024实用短版仅CRP解释段已导入。"
+      },
+      {
+        "originalSourceId": "aspen-guidelines-index",
+        "title": "Guidelines & Standards",
+        "url": "https://nutritioncare.org/clinical-resources/guidelines-standards/",
+        "originalGroup": "roadmapSources",
+        "status": "official_discovery_index_not_clinical_knowledge",
+        "priorVerificationScope": "官方索引正文已核：成人/儿科支持、GLIM、再喂养、PN安全、危重营养等；部分链接为期刊文章/摘要，获取权限依各项。",
+        "wholeWorkImported": false,
+        "newEntryIds": [],
+        "note": "入口用于发现具体指南，不冒充全部指南正文。"
+      },
+      {
+        "originalSourceId": "nhc-metabolic-guidelines-2023",
+        "title": "关于印发成人高脂血症食养指南（2023年版）等4项食养指南的通知",
+        "url": "https://www.nhc.gov.cn/sps/c100088/202301/f01895a06c5349ef999f25da833c166d.shtml",
+        "originalGroup": "roadmapSources",
+        "status": "prior_verification_only_no_new_body_extract",
+        "priorVerificationScope": "官方通知检索可见正文与8项附件题名已核，包含高脂血症/高血压/糖尿病/儿童生长迟缓；本轮直接打开通知失败，未把索引当四部指南全文。",
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "nhc-obesity-2024-notice",
+        "title": "关于印发成人高尿酸血症与痛风食养指南（2024年版）等4项食养指南的通知",
+        "url": "https://www.nhc.gov.cn/wjw/c100378/202402/afd5dda4bd6745fda10aad8d43a16369.shtml",
+        "originalGroup": "roadmapSources",
+        "status": "prior_verification_only_no_new_body_extract",
+        "priorVerificationScope": "官方通知检索可见正文及附件目录已核：成人高尿酸痛风、成人肥胖、儿童青少年肥胖、成人CKD；未将四部指南全文称已读。",
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "nhc-obesity-qa-2024",
+        "title": "成人肥胖食养指南（2024年版）问答",
+        "url": "https://www.nhc.gov.cn/sps/c100088/202402/9ba512ba8e314a47a181db11d2fa188d/files/1743476135429_97340.pdf",
+        "originalGroup": "roadmapSources",
+        "status": "prior_verification_only_no_new_body_extract",
+        "priorVerificationScope": "官方5页问答PDF正文已核，适用人群/使用方法/主要内容等；不是完整食养指南。",
+        "wholeWorkImported": false
+      },
+      {
+        "originalSourceId": "pmph-shi-2024-catalog",
+        "title": "临床营养学（第十轮临床教材；石汉平、陈伟主编；ISBN9787117370073）",
+        "url": "https://wap.pmphmall.com/gdsdetail/654140-332734",
+        "originalGroup": "roadmapSources",
+        "status": "publisher_catalog_only_body_unobtained",
+        "priorVerificationScope": "出版社自营商城检索可见书目已核：作者、ISBN、22章168节简介；本轮直接打开返回空/失败，正文未取得。",
+        "wholeWorkImported": false,
+        "newEntryIds": [],
+        "bodyPagesRead": 0,
+        "chaptersImported": 0
+      },
+      {
+        "originalSourceId": "pmph-shi-2022-catalog",
+        "title": "临床营养学（石汉平、凌文华、李增宁；ISBN9787117332538）",
+        "url": "https://medu.pmph.com/readdetail/todetail.action?id=40067",
+        "originalGroup": "roadmapSources",
+        "status": "publisher_catalog_only_body_unobtained",
+        "priorVerificationScope": "出版社书目检索可见作者、ISBN与2022-10-09/版次1已核；项目历史试读未见正文。",
+        "wholeWorkImported": false,
+        "newEntryIds": [],
+        "bodyPagesRead": 0,
+        "chaptersImported": 0
+      },
+      {
+        "originalSourceId": "who-complementary-2023",
+        "title": "WHO Guideline for complementary feeding of infants and young children 6–23 months of age",
+        "url": "https://www.who.int/publications/i/item/9789240081864",
+        "originalGroup": "roadmapSources",
+        "status": "prior_verification_only_no_new_body_extract",
+        "priorVerificationScope": "官方发布页与概述已读：2023-10-16、95页、ISBN9789240081864；正文及证据附件有下载入口，未逐条读指南。",
+        "wholeWorkImported": false
+      }
+    ],
+    "dris2023Status": {
+      "title": "中国居民膳食营养素参考摄入量（2023版）",
+      "officialChineseIndex": "https://www.cnsoc.org/drpostand/",
+      "officialEnglishIndex": "https://en.cnsoc.org/DRIs",
+      "englishIndexStatus": "official_html_read_by_root",
+      "details": [
+        {
+          "url": "https://en.cnsoc.org/DRIs/122510202.html",
+          "title": "2023 original edition official detail",
+          "status": "web_timeout_no_tables"
+        },
+        {
+          "url": "https://en.cnsoc.org/DRIs/122510203.html",
+          "title": "English summary report official detail",
+          "status": "web_timeout_and_cua_ERR_BLOCKED_BY_CLIENT_no_tables"
+        }
+      ],
+      "numericTablesImported": 0,
+      "knownDirectoryGroups": [
+        {
+          "directoryTableNumber": 1,
+          "ageSexGroup": "0–6月龄",
+          "status": "index_label_only_no_numeric_table_body",
+          "importedValues": 0
+        },
+        {
+          "directoryTableNumber": 2,
+          "ageSexGroup": "7–12月龄",
+          "status": "index_label_only_no_numeric_table_body",
+          "importedValues": 0
+        },
+        {
+          "directoryTableNumber": 3,
+          "ageSexGroup": "1–3岁",
+          "status": "index_label_only_no_numeric_table_body",
+          "importedValues": 0
+        },
+        {
+          "directoryTableNumber": 4,
+          "ageSexGroup": "4–6岁",
+          "status": "index_label_only_no_numeric_table_body",
+          "importedValues": 0
+        },
+        {
+          "directoryTableNumber": 5,
+          "ageSexGroup": "7–8岁",
+          "status": "index_label_only_no_numeric_table_body",
+          "importedValues": 0
+        },
+        {
+          "directoryTableNumber": 6,
+          "ageSexGroup": "9–11岁",
+          "status": "index_label_only_no_numeric_table_body",
+          "importedValues": 0
+        },
+        {
+          "directoryTableNumber": 7,
+          "ageSexGroup": "12–14岁",
+          "status": "index_label_only_no_numeric_table_body",
+          "importedValues": 0
+        },
+        {
+          "directoryTableNumber": 8,
+          "ageSexGroup": "15–17岁",
+          "status": "index_label_only_no_numeric_table_body",
+          "importedValues": 0
+        },
+        {
+          "directoryTableNumber": 9,
+          "ageSexGroup": "18–29岁男",
+          "status": "index_label_only_no_numeric_table_body",
+          "importedValues": 0
+        },
+        {
+          "directoryTableNumber": 10,
+          "ageSexGroup": "18–29岁女",
+          "status": "index_label_only_no_numeric_table_body",
+          "importedValues": 0
+        },
+        {
+          "directoryTableNumber": 11,
+          "ageSexGroup": "30–49岁男",
+          "status": "index_label_only_no_numeric_table_body",
+          "importedValues": 0
+        },
+        {
+          "directoryTableNumber": 12,
+          "ageSexGroup": "30–49岁女",
+          "status": "index_label_only_no_numeric_table_body",
+          "importedValues": 0
+        }
+      ],
+      "otherTables": "其他年龄、孕期、哺乳期等范围未获完整目录/表体；不虚构总表数、标题和数值。",
+      "attempts": "直接https/http/index入口反复超时，系统浏览器清单为空；根另核英文官方入口与两个详情失败。",
+      "importRule": "不将US RDA/AI/UL或旧版DRIs数值替称中国DRIs2023。"
+    },
+    "specifiedBookStatus": {
+      "title": "临床营养学",
+      "targetAuthors": [
+        "石汉平",
+        "陈伟"
+      ],
+      "targetISBN": "9787117370073",
+      "targetYear": 2024,
+      "publisher": "人民卫生出版社",
+      "officialCatalogs": [
+        "https://medu.pmph.com/readdetail/todetail.action?id=33148",
+        "https://wap.pmphmall.com/gdsdetail/654140-332734"
+      ],
+      "status": "catalog_only_no_active_reading_rights",
+      "bodyPagesRead": 0,
+      "chaptersImported": 0,
+      "activationCode": "历史已明确没有；本轮不重复询问。",
+      "alternativeEdition": {
+        "authors": [
+          "石汉平",
+          "凌文华",
+          "李增宁"
+        ],
+        "year": 2022,
+        "isbn": "9787117332538",
+        "url": "https://medu.pmph.com/readdetail/todetail.action?id=40067",
+        "status": "distinct_catalog_not_user_approved_replacement"
+      },
+      "unobtained": "指定版本全部章节正文；书目简介和22章168节介绍不能算正文。",
+      "acquisition": "正规纸书/合法电子阅读权益或有授权馆藏；本轮无购买、无绕过权限。",
+      "rejectedSubstitution": "不以焦广宇2017或其他同名书冒充。"
+    },
+    "rights": "只导入短篇自主概括，不复制整书、整篇或全成分数据库。食物成分平台商业使用许可未取得。"
+  },
+  "teachingSourceIdsAdded": [
+    "liu-import-source-cns-core-2022",
+    "liu-import-source-cns-vegetables-2022",
+    "liu-import-source-cns-salt-2022",
+    "liu-import-source-cns-meals-water-2022",
+    "liu-import-source-china-fcd-values",
+    "liu-import-source-china-fcd-symbols",
+    "liu-import-source-ods-thiamin",
+    "liu-import-source-ods-riboflavin",
+    "liu-import-source-ods-niacin",
+    "liu-import-source-ods-pantothenic",
+    "liu-import-source-ods-biotin",
+    "liu-import-source-ods-vitaminc",
+    "liu-import-source-ods-vitamine",
+    "liu-import-source-ods-selenium",
+    "liu-import-source-ods-copper",
+    "liu-import-source-ods-phosphorus",
+    "liu-import-source-ods-choline",
+    "liu-import-source-espen-cancer-2021",
+    "liu-import-source-espen-geriatrics-2022",
+    "liu-import-source-espen-liver-2020",
+    "liu-import-source-espen-ibd-2023",
+    "liu-import-source-espen-surgery-2025",
+    "liu-import-source-espen-icu-2023",
+    "liu-import-source-espen-pancreatitis-2024",
+    "liu-import-source-espen-hpn-2023",
+    "liu-import-source-espen-hen-2022",
+    "liu-import-source-espen-kidney-2024",
+    "liu-import-source-espen-micronutrients-short-2024",
+    "liu-import-source-aspen-refeeding-2020",
+    "liu-import-source-kdigo-ckd-2024",
+    "liu-import-source-ods-vitamind",
+    "liu-import-source-ods-vitaminb12",
+    "liu-import-source-ods-iron",
+    "liu-import-source-cns-raw-edible-basis"
+  ],
+  "entryIdsAdded": [
+    "liu-import-cns-grains",
+    "liu-import-cns-animal-food",
+    "liu-import-cns-vegetable-fruit-amount",
+    "liu-import-cns-milk-equivalent",
+    "liu-import-cns-salt-oil-sugar-amount",
+    "liu-import-cns-water-context",
+    "liu-import-cns-meal-energy-share",
+    "liu-import-fcd-raw-rice-unit",
+    "liu-import-fcd-missing-zero",
+    "liu-import-thiamin-processing",
+    "liu-import-riboflavin-light",
+    "liu-import-niacin-equivalent-form",
+    "liu-import-pantothenic-ubiquity",
+    "liu-import-biotin-lab-interference",
+    "liu-import-biotin-hair-evidence",
+    "liu-import-vitaminc-form-iron-risk",
+    "liu-import-vitamine-iu-form",
+    "liu-import-selenium-variation-excess",
+    "liu-import-copper-wilson",
+    "liu-import-phosphorus-additives",
+    "liu-import-choline-food-not-cure",
+    "liu-import-cancer-energy-protein",
+    "liu-import-cancer-intake-threshold",
+    "liu-import-older-protein-ons",
+    "liu-import-older-dehydration-assessment",
+    "liu-import-cirrhosis-meal-structure",
+    "liu-import-ascites-salt-palatability",
+    "liu-import-ibd-protein-phase",
+    "liu-import-crohn-een-population",
+    "liu-import-elective-fasting-conditions",
+    "liu-import-postop-early-feeding",
+    "liu-import-icu-energy-measurement",
+    "liu-import-icu-protein-progressive",
+    "liu-import-mild-pancreatitis-restart",
+    "liu-import-pancreatitis-fat-probiotics",
+    "liu-import-hpn-selection",
+    "liu-import-hpn-longterm-monitoring",
+    "liu-import-hen-standard-formula",
+    "liu-import-hen-weaning-criteria",
+    "liu-import-kidney-weight-basis",
+    "liu-import-aki-protein-krt",
+    "liu-import-inflammation-micronutrient-labs",
+    "liu-import-refeeding-diagnosis-window",
+    "liu-import-ckd-stable-protein",
+    "liu-import-ckd-sodium-exception",
+    "liu-import-vitamind-status-marker",
+    "liu-import-vitamind-forms-units",
+    "liu-import-b12-mma-kidney-confounding",
+    "liu-import-iron-elemental-label"
+  ],
+  "unreadMaterialsSupportTeaching": false
+}

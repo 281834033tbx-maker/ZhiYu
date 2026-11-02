@@ -1,0 +1,27 @@
+.zy-npc-contact-card {
+  position: relative;
+  display: block;
+  width: 290px;
+  max-width: 100%;
+  min-width: 0;
+  margin-top: 9px;
+  padding: 12px 14px 10px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 21px;
+  background: var(--zy-incoming, #eef0f4);
+  color: var(--zy-ink, #252729);
+  font: inherit;
+  font-size: calc(13px + var(--zy-font-adjust, 0px));
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+}
+.zy-npc-contact-card-top { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.zy-npc-contact-card-top > img { flex: 0 0 44px; width: 44px; height: 44px; object-fit: cover; object-position: center 32%; border-radius: 50%; }
+.zy-npc-contact-card-copy { display: block; min-width: 0; flex: 1; }
+.zy-npc-contact-card-copy strong { display: flex; align-items: center; gap: 5px; font-weight: 600; overflow-wrap: anywhere; }
+.zy-npc-contact-card-copy strong > span:first-child { min-width: 0; }
+.zy-npc-contact-card-copy > span { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; margin-top: 3px; color: var(--zy-secondary, #777b82); font-size: calc(11px + var(--zy-font-adjust, 0px)); font-weight: 400; }
+.zy-npc-contact-card-footer { display: block; margin-top: 10px; color: var(--zy-muted, #969aa2); font-size: calc(11px + var(--zy-font-adjust, 0px)); }
+.zy-npc-contact-card:focus-visible { outline: 2px solid var(--zy-selected-accent, #c78a79); outline-offset: 3px; }

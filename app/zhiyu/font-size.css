@@ -1,0 +1,23 @@
+/* Typography preferences change text, while avatars, navigation and chat gutters keep their size. */
+:root { --zy-font-adjust:0px; }
+:root[data-zy-font-size='small'] { --zy-font-adjust:-1px; }
+:root[data-zy-font-size='large'] { --zy-font-adjust:2px; }
+html[data-zy-theme][data-zy-font-size] :is(.zy-app,.zy-dialog,.zy-auth-stage) { font-size:calc(14px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] .zy-app.zy-desktop :is(.xx-bubble,.zy-bubble,.chat-compose-row textarea,.zy-group-history-search input,.zy-group-search-preview) { font-size:calc(13px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] .zy-app.zy-desktop :is(.zy-conversation,.zy-contact-row) strong,
+html[data-zy-theme][data-zy-font-size] .zy-app.zy-desktop .zy-pet-directory-nav button { font-size:calc(13px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] .zy-app.zy-desktop :is(.zy-conversation small,.chat-header-copy small,.zy-group-message-sender,.zy-group-member-meta,.zy-self-copy small) { font-size:calc(11px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] .zy-app.zy-desktop :is(.zy-self strong,.chat-header-copy strong,.zy-group-head-copy strong,.zy-pet-directory-heading strong) { font-size:calc(14px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] .zy-app.zy-desktop :is(.zy-inline-name-label,.zy-inline-name-value) { font-size:calc(12px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] .zy-app.zy-desktop .zy-group-drawer .zy-inline-name-label { font-size:calc(13px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] .zy-app.zy-desktop .zy-group-drawer .zy-inline-name-edit { --zy-inline-name-font-size:calc(12px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] :is(.zy-dialog-head h2,.zy-settings-dialog h2) { font-size:calc(17px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] :is(.zy-group-search-sender,.zy-search input,.zy-auth-field-error) { font-size:calc(12px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] :is(.zy-auth-form label,.zy-auth-error) { font-size:calc(13px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] :is(.zy-auth-form input,.zy-auth-primary,.zy-auth-secondary,.zy-post-text,.zy-publish-editor>textarea) { font-size:calc(15px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] :is(.zy-my-profile-name strong,.zy-my-profile-name input) { font-size:calc(16px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] :is(.zy-auth-switch,.zy-auth-back,.zy-settings-button) { font-size:calc(13px + var(--zy-font-adjust)); }
+
+html[data-zy-theme][data-zy-font-size] .zy-app.zy-desktop :is(.zy-private-drawer,.zy-group-drawer) { font-size:calc(12px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] .zy-app.zy-desktop :is(.zy-private-person>span:last-child,.zy-group-member-stack-name,.zy-group-drawer-member,.zy-group-drawer-row-value,.zy-group-drawer .zy-inline-name-value,.zy-group-drawer-search-row,.zy-group-drawer-pin,.zy-group-drawer-actions>button,.zy-group-drawer-picker>p,.zy-group-drawer-picker-actions>button,.zy-group-announcement-editor>label,.zy-group-announcement-editor>textarea,.zy-group-drawer-save,.zy-group-drawer .zy-group-error) { font-size:calc(12px + var(--zy-font-adjust)); }
+html[data-zy-theme][data-zy-font-size] .zy-app.zy-desktop :is(.zy-private-drawer>header>strong,.zy-group-drawer>header>strong,.zy-group-drawer-field-title) { font-size:calc(13px + var(--zy-font-adjust)); }

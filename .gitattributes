@@ -1,0 +1,15 @@
+* text=auto
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.icns binary
+*.mp4 binary
+*.mov binary
+*.webm binary
+*.wav binary
+*.mp3 binary
+
+# Preserve upstream bytes for the optional-source SHA-256 manifests.
+/vendor/optional-sources/** -text

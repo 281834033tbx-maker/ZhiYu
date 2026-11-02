@@ -1,0 +1,29 @@
+/* Only theme changes suppress the browser's default root crossfade. */
+:root[data-zy-theme-motion]::view-transition,
+:root[data-zy-theme-motion]::view-transition-group(*),
+:root[data-zy-theme-motion]::view-transition-image-pair(*),
+:root[data-zy-theme-motion]::view-transition-old(*),
+:root[data-zy-theme-motion]::view-transition-new(*) { pointer-events: none; }
+
+:root[data-zy-theme-motion]::view-transition-group(root),
+:root[data-zy-theme-motion]::view-transition-old(root),
+:root[data-zy-theme-motion]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+:root[data-zy-theme-motion]::view-transition-image-pair(root) {
+  isolation: isolate;
+}
+
+:root[data-zy-theme-motion='dark']::view-transition-old(root),
+:root[data-zy-theme-motion='light']::view-transition-new(root) { z-index: 1; }
+
+:root[data-zy-theme-motion='dark']::view-transition-new(root),
+:root[data-zy-theme-motion='light']::view-transition-old(root) { z-index: 2; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-zy-theme-motion]::view-transition-group(root),
+  :root[data-zy-theme-motion]::view-transition-old(root),
+  :root[data-zy-theme-motion]::view-transition-new(root) { animation: none !important; }
+}

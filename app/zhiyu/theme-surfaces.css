@@ -1,0 +1,103 @@
+/* Main App surfaces share the pearl / grey-green palette. Keep media, the
+   selected coral rows, special badges and every existing layout measurement. */
+html[data-zy-theme] .zy-app.zy-desktop {
+  --detail-ink: var(--zy-ink);
+  --detail-secondary: var(--zy-secondary);
+  --detail-muted: var(--zy-muted);
+  --detail-hover: var(--zy-hover);
+  color: var(--zy-ink);
+}
+
+/* Contact details already use the shared palette; only the remaining labels
+   and divider controls need the same foreground. */
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-contacts .zy-contact-profile :is(.zy-contact-profile-section h2,.zy-inline-name-label,.zy-contact-profile-row > span,.zy-contact-profile-moments > span:first-child) {
+  color: var(--zy-ink);
+}
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-count { color: var(--zy-muted); }
+
+/* Moments: photos and the white controls on the cover retain their colors. */
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-moments .zy-base,
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments {
+  background: var(--zy-canvas);
+  color: var(--zy-ink);
+}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments :is(.zy-moments-identity h1,.zy-post-person strong,.zy-post-person small,.zy-post-caption) { color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moments-identity p { color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments :is(.zy-post-person time,.zy-location,.zy-feed-end) { color: var(--zy-muted); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-feed-end span { background: var(--zy-line); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-actions .zy-icon:not(.liked):not(.commented) { color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-actions .zy-icon:not(.liked):not(.commented):hover { color: var(--zy-ink); background: var(--zy-hover); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-comments { background: var(--zy-incoming); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-inline-comment button { color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-inline-comment strong { color: var(--zy-nav-active); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-back-feed { color: var(--zy-nav-active); }
+
+/* Relationship scores: use quiet card surfaces and a muted green progress
+   track, without changing values or milestone behavior. */
+html[data-zy-theme] .zy-app.zy-desktop .relationship-dashboard {
+  background: var(--zy-canvas);
+  color: var(--zy-ink);
+}
+html[data-zy-theme] .zy-app.zy-desktop .relationship-dashboard-head { background: var(--zy-canvas); border-color: var(--zy-line); color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .relationship-dashboard-head button { background: var(--zy-incoming); color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .relationship-dashboard-head button:hover { background: var(--zy-hover); color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .relationship-kicker { color: var(--zy-nav-active); }
+html[data-zy-theme] .zy-app.zy-desktop :is(.relationship-value,.relationship-unlock-card) {
+  background: color-mix(in srgb,var(--zy-canvas) 65%,var(--zy-sidebar) 35%);
+  border-color: var(--zy-line);
+}
+html[data-zy-theme] .zy-app.zy-desktop :is(.relationship-value-copy strong,.relationship-unlocks h3,.relationship-unlock-card strong) { color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .relationship-value-copy b { color: var(--zy-nav-active); }
+html[data-zy-theme] .zy-app.zy-desktop :is(.relationship-intro p,.relationship-unlock-card p,.relationship-footnote) { color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop :is(.relationship-value-copy small,.relationship-unavailable,.relationship-unlock-card > small) { color: var(--zy-muted); }
+html[data-zy-theme] .zy-app.zy-desktop .relationship-track { background: var(--zy-line); }
+html[data-zy-theme] .zy-app.zy-desktop .relationship-track i { background: linear-gradient(90deg,color-mix(in srgb,var(--zy-nav-active) 60%,var(--zy-sidebar) 40%),var(--zy-nav-active)); }
+html[data-zy-theme] .zy-app.zy-desktop .relationship-unlock-icon { background: var(--zy-incoming); color: var(--zy-muted); }
+html[data-zy-theme] .zy-app.zy-desktop .relationship-unlock-card.is-open .relationship-unlock-icon { background: var(--zy-hover); color: var(--zy-nav-active); }
+html[data-zy-theme] .zy-app.zy-desktop .relationship-unlock-card.is-open > small { color: var(--zy-nav-active); }
+
+/* Pets: the pictures and purple limited badge remain recognizable, while the
+   surrounding cards stop using a separate white / charcoal theme. */
+html[data-zy-theme] .zy-app.zy-desktop .zy-pets :is(.zy-pets-heading p,.zy-pets-section-heading > div p,.zy-pets-preview-label,.zy-pets-preview-details p,.zy-pets-preview-name button) { color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pets :is(.zy-pets-text-button,.zy-pets-create) { background: var(--zy-incoming); border-color: var(--zy-line); color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pets :is(.zy-pets-text-button,.zy-pets-create):hover { background: var(--zy-hover); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pets-tabs { border-color: var(--zy-line); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pets-tabs button { color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pets-tabs button:is(.is-active,:hover) { color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pets-tabs button.is-active::after { background: var(--zy-nav-active); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pets-preview,
+html[data-zy-theme] .zy-app.zy-desktop .zy-pet-card {
+  background: var(--zy-canvas);
+  border-color: var(--zy-line);
+  color: var(--zy-ink);
+}
+html[data-zy-theme] .zy-app.zy-desktop .zy-pets-preview-name strong { color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pets-preview-name button:hover { background: var(--zy-hover); color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop :is(.zy-pets-preview-details > span,.zy-pet-mood) { background: var(--zy-incoming); color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pet-card:hover { border-color: var(--zy-nav-active); box-shadow: 0 8px 22px color-mix(in srgb,var(--zy-nav-active) 10%,transparent); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pet-card.is-selected { border-color: var(--zy-nav-active); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--zy-nav-active) 35%,transparent); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pet-selected-label { color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pet-card.is-limited { background: var(--zy-canvas); border-color: color-mix(in srgb,var(--zy-line) 75%,#a172f1 25%); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pet-card.is-limited:hover { border-color: color-mix(in srgb,var(--zy-nav-active) 65%,#a172f1 35%); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pet-caption { color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pet-discover-card > button { background: var(--zy-canvas); border-color: var(--zy-line); color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pet-discover-card > button:hover:not(:disabled) { background: var(--zy-hover); border-color: var(--zy-nav-active); color: var(--zy-nav-active); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pet-discover-card > button:disabled { background: var(--zy-incoming); border-color: var(--zy-line); color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-pets-notice { background: var(--zy-incoming); color: var(--zy-secondary); }
+
+/* The book shelf is an App page. Its detail dialog is styled separately by the
+   shared glass layer, and the book geometry remains untouched. */
+html[data-zy-theme] .zy-app.zy-desktop .zy-dungeons { background: var(--zy-canvas); color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-dungeons-back { background: var(--zy-incoming); border-color: var(--zy-line); color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-dungeons-back:hover { background: var(--zy-hover); color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-dungeons-head p { color: var(--zy-secondary); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-shelf-plank { background: linear-gradient(180deg,var(--zy-line),var(--zy-sidebar)); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-dungeons .zy-shelf .zy-book-cover { background: color-mix(in srgb,var(--zy-canvas) 88%,var(--zy-sidebar) 12%); border-color: var(--zy-line); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-dungeons .zy-shelf .zy-book:hover .zy-book-cover,
+html[data-zy-theme] .zy-app.zy-desktop .zy-dungeons .zy-shelf .zy-book:focus-visible .zy-book-cover { border-color: var(--zy-nav-active); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-book-title { color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-book-title.is-dim { color: var(--zy-muted); }
+/* The liker names stay readable on the grey-green dark canvas. */
+html[data-zy-theme] .zy-app.zy-desktop .zy-post-likers { color:var(--zy-nav-active); }
+/* Authored chat snapshots keep their established light media presentation. */
+html[data-zy-theme] .zy-app.zy-desktop .zy-chat-screenshot { color:#252628; --detail-ink:#252628; --detail-secondary:#626469; --detail-muted:#717378; --detail-hover:#e7e8ea; }

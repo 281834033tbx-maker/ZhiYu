@@ -1,0 +1,187 @@
+.zy-character-window {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100dvh;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 0;
+  background: #fff;
+  color: #242322;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.zy-character-window-titlebar {
+  flex: 0 0 28px;
+  box-sizing: border-box;
+  background: #fff;
+  border-bottom: 1px solid #eeeeef;
+  -webkit-app-region: drag;
+}
+.zy-character-window.is-mac-fullscreen .zy-character-window-titlebar {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  flex: none;
+  border: 0;
+  opacity: 0;
+  pointer-events: auto;
+  transition: opacity 180ms ease;
+}
+.zy-character-window.is-mac-fullscreen .zy-character-window-titlebar:hover,
+.zy-character-window.is-mac-fullscreen .zy-character-window-titlebar:focus-within { opacity: 1; }
+.zy-character-window-exit-fullscreen {
+  display: block;
+  height: 100%;
+  margin-left: auto;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  color: #4a4948;
+  font: 12px -apple-system, BlinkMacSystemFont, sans-serif;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+}
+.zy-character-window-exit-fullscreen:hover { color: #111; }
+.zy-character-window-exit-fullscreen kbd { margin-left: 6px; color: #8d8a87; font: inherit; }
+.zy-character-window-stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  background: #0b1928;
+  container-type: size;
+}
+.zy-character-window-scene-direct,
+.zy-character-window-scene-video {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100cqw, calc(100cqh * 16 / 9));
+  height: max(100cqh, calc(100cqw * 9 / 16));
+  transform: translate(-50%, -50%);
+  display: block;
+  object-fit: cover;
+  pointer-events: none;
+}
+.zy-character-window-scene-video {
+  opacity: 0;
+  z-index: 1;
+}
+.zy-character-window-scene-video.is-active { opacity: 1; }
+.zy-character-window-avatar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12%;
+  pointer-events: none;
+}
+.zy-character-window-chat {
+  position: absolute;
+  z-index: 3;
+  top: 8px;
+  left: 10px;
+  /* Match fullscreen proportions; retain room for an unscaled short bubble in tiny windows. */
+  width: min(max(136px, 21.1cqw), calc(100% - 20px));
+  height: min(max(64px, 26.1cqh), calc(100% - 16px));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  border: 1px solid #ffffff30;
+  border-radius: 14px;
+  background: rgb(11 16 25 / 42%);
+  color: #fff;
+  box-shadow: 0 8px 24px #070b131c, inset 0 1px #ffffff20;
+  backdrop-filter: blur(6px) saturate(105%);
+  -webkit-backdrop-filter: blur(6px) saturate(105%);
+  animation: zy-character-chat-appear 280ms cubic-bezier(.18,.8,.24,1) both;
+}
+.zy-character-window-chat-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  scrollbar-width: none;
+}
+.zy-character-window-chat-scroll::-webkit-scrollbar { display: none; }
+.zy-character-window-chat-scroll.is-overflowing {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18px, #000);
+  mask-image: linear-gradient(to bottom, transparent, #000 18px, #000);
+}
+.zy-character-window-chat-message {
+  display: flex;
+  font-size: 14px;
+  line-height: 1.55;
+  min-width: 0;
+  flex: 0 0 auto;
+  animation: zy-character-message-appear 280ms cubic-bezier(.18,.8,.24,1) both;
+}
+.zy-character-window-chat-message.is-npc { justify-content: flex-start; }
+.zy-character-window-chat-message.is-mine { justify-content: flex-end; }
+.zy-character-window-chat-bubble {
+  max-width: 89%;
+  min-width: 0;
+  padding: 10px 16px;
+  border-radius: 21px;
+  background: rgb(115 120 126 / 50%);
+  overflow-wrap: anywhere;
+}
+.zy-character-window-chat-message.is-mine .zy-character-window-chat-bubble {
+  background: rgb(75 80 86 / 50%);
+}
+.zy-character-window-chat-message.is-npc[data-bubble-position='start'] .zy-character-window-chat-bubble { border-radius: 21px 21px 21px 5px; }
+.zy-character-window-chat-message.is-npc[data-bubble-position='middle'] .zy-character-window-chat-bubble { border-radius: 5px 21px 21px 5px; }
+.zy-character-window-chat-message.is-npc[data-bubble-position='end'] .zy-character-window-chat-bubble { border-radius: 5px 21px 21px 21px; }
+.zy-character-window-chat-message.is-mine[data-bubble-position='start'] .zy-character-window-chat-bubble { border-radius: 21px 21px 5px 21px; }
+.zy-character-window-chat-message.is-mine[data-bubble-position='middle'] .zy-character-window-chat-bubble { border-radius: 21px 5px 5px 21px; }
+.zy-character-window-chat-message.is-mine[data-bubble-position='end'] .zy-character-window-chat-bubble { border-radius: 21px 5px 21px 21px; }
+.zy-character-window-chat-message span {
+  display: block;
+  white-space: pre-wrap;
+  color: #fff;
+  text-shadow: 0 1px 2px #0008;
+}
+@keyframes zy-character-chat-appear { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes zy-character-message-appear { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .zy-character-window-chat,
+  .zy-character-window-chat-message { animation-duration: 1ms; }
+}
+.zy-character-window-composer {
+  flex: 0 0 auto;
+  min-height: 54px;
+  padding: 8px 12px 9px;
+  background: #fff;
+  border-top: 1px solid #eeeeef;
+}
+.zy-character-window .chat-composer-shell { margin: 0; }
+.zy-app.zy-character-window .chat-compose-row textarea {
+  border: 0;
+  min-height: 36px;
+  max-height: 80px;
+  padding: 5px 12px;
+  background: transparent;
+  box-shadow: none;
+  color: #1f252b;
+}
+.zy-character-window .voice-recording {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: #f6f6f6;
+  font-size: 12px;
+}
+.zy-character-window .voice-recording span { flex: 1; }
+.zy-character-window .voice-recording audio { max-width: 230px; height: 30px; }
+

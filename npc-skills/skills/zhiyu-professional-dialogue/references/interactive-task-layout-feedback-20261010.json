@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-10",
+  "scope": "赵一帆任务卡、任务详情、用户点击式步骤计时；保留其他人物实际能力边界",
+  "sourceKind": "current_user_request",
+  "userStatements": [
+    {
+      "text": "在整个框架下，每一个都是小板块分布。当前任务背景和其他的任务背景不一样。右侧还是有小箭头，点击之后会出现下拉内容。",
+      "status": "user_required"
+    },
+    {
+      "text": "点击这个15分钟，它自己就开始计时。",
+      "status": "user_required_interaction"
+    },
+    {
+      "text": "把它分成两个任务，这样的话也方便来计时。比如说步骤一是炸土豆，步骤二是炸茄子，一个是5分钟，一个是10分钟。",
+      "status": "user_required_step_split_example"
+    },
+    {
+      "text": "像先炒30秒的蒜末，然后再炒1分钟的青椒，这种任务就不需要计时。",
+      "status": "user_required"
+    },
+    {
+      "text": "我如果打开任务三，任务一的详情就会自己关闭。",
+      "status": "user_required"
+    },
+    {
+      "text": "有些是注意事项，有些是必须要做的，它要分开。你不要把每一个点都加，前面都加上一个点。然后同时记得换行。",
+      "status": "user_required"
+    }
+  ],
+  "derivedRules": [
+    {
+      "rule": "每个父任务的步骤详情共享一个展开位置；新步骤按操作/注意事项/完成判断分组。",
+      "status": "implementation_interpretation"
+    },
+    {
+      "rule": "仅120至86400秒的有效长时操作提供点击计时；独立操作分别作为步骤，30秒/1分钟短炒只保留文字。",
+      "status": "implementation_interpretation"
+    },
+    {
+      "rule": "用户实际点击时间启动，可暂停继续；到点不自动完成或启动下一步。",
+      "status": "implementation_interpretation"
+    }
+  ],
+  "capabilityStatus": "用户点击式计时与持久状态已接入源码；NPC自动到点发消息、系统通知、厨房观察与实时音视频尚未接。验证结果以本轮交接记录为准。",
+  "examplesStatus": "土豆5分钟和茄子10分钟是用户的结构举例，非通用时长或厨房实测配方。",
+  "preserves": [
+    "正式历史与已完成/结束状态",
+    "手动完成后的下一步提示",
+    "普通NPC气泡颜色与字号",
+    "既有任务意图与来源保护"
+  ],
+  "attachments": [
+    "codex-clipboard-69f01a63-564f-456f-b081-4dd27acbe357.png",
+    "codex-clipboard-876b6b7e-66a8-4958-b3f3-6751120d1258.png",
+    "codex-clipboard-e790c2f2-eed7-47bb-b575-6d6ddf5f764e.png",
+    "codex-clipboard-43a87f51-d7d3-4200-a95d-0720828e0e9c.png",
+    "codex-clipboard-a30d9558-4a6f-4d2a-a787-c9422e288c3b.png",
+    "codex-clipboard-bb11be96-9fda-4a8a-9809-8f9cf223264e.png"
+  ]
+}

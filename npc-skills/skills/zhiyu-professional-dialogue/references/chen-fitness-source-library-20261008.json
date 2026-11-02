@@ -1,0 +1,3237 @@
+{
+  "schemaVersion": 1,
+  "version": "chen-fitness-source-library-20261008-v1",
+  "characterId": "chen-nian",
+  "status": "user_authorized_source_reference",
+  "author": {
+    "name": "谭成义",
+    "handle": "nishitiantan",
+    "profileUrl": "https://www.douyin.com/user/MS4wLjABAAAArfpAmbNNdODGpzfznrZAXrt2JgCGFWxE25eFkQDGXOY"
+  },
+  "coverage": {
+    "totalAccountPosts": 155,
+    "indexedPosts": 55,
+    "trainingEntries": 43,
+    "nutritionEntries": 12,
+    "excludedLifestylePosts": 0,
+    "complete": false
+  },
+  "entries": [
+    {
+      "id": "tcy-7694102180848707505",
+      "videoId": "7694102180848707505",
+      "title": "卧推，下拉，推肩动作中肩部不适如何改善",
+      "category": "training",
+      "topics": [
+        "肩部不适",
+        "卧推",
+        "下拉",
+        "推肩"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7694102180848707505",
+        "publishedAt": null,
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7690225219625580977",
+      "videoId": "7690225219625580977",
+      "title": "上肢功能性训练：身体各平面、脊柱旋转与抗旋转、心肺、肩胛",
+      "category": "training",
+      "topics": [
+        "上肢功能",
+        "旋转",
+        "抗旋转",
+        "肩胛"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7690225219625580977",
+        "publishedAt": "2026-09-28",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7688311849762979057",
+      "videoId": "7688311849762979057",
+      "title": "下肢功能＋肌力训练计划：关节不适逻辑、动作、呼吸",
+      "category": "training",
+      "topics": [
+        "下肢功能",
+        "肌力",
+        "呼吸"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7688311849762979057",
+        "publishedAt": "2026-09-23",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7686888075494347697",
+      "videoId": "7686888075494347697",
+      "title": "训练要目标肌肉收紧：对握上斜推胸做法与原因",
+      "category": "training",
+      "topics": [
+        "上胸",
+        "对握",
+        "哑铃上斜卧推"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7686888075494347697",
+        "publishedAt": "2026-09-19",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整画面核对",
+        "组次、重量剂量、休息、周频率",
+        "手臂与手腕细节转写中多次用“这样”，须看画面",
+        "适用人群和进阶阈值"
+      ],
+      "safetyNotes": [
+        "来源为搜索缓存显示的本人 AI 文稿；/shipin 聚合页动态变化，不能用当前顶部转载日期充当原片日期。",
+        "不能将作者对关节压力、肌张力与疼痛的解释当作已验证诊断或治疗效果。",
+        "原文有吸气与少吸气等情境提示，不能据此生成整组持续屏气指令。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7684636286796509105",
+      "videoId": "7684636286796509105",
+      "title": "大重量少次数与小重量多次数的选择：重量、姿势、固定器械",
+      "category": "training",
+      "topics": [
+        "重量选择",
+        "次数",
+        "姿势",
+        "器械"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7684636286796509105",
+        "publishedAt": "2026-09-13",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7679415198898073009",
+      "videoId": "7679415198898073009",
+      "title": "如何评估疲劳度：小臂握力、膝盖不适、健腹轮、倒立",
+      "category": "training",
+      "topics": [
+        "疲劳",
+        "握力",
+        "膝盖",
+        "健腹轮",
+        "倒立"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7679415198898073009",
+        "publishedAt": "2026-08-30",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7675287401501176506",
+      "videoId": "7675287401501176506",
+      "title": "肩肘腕不适动作安排和思路",
+      "category": "training",
+      "topics": [
+        "肩",
+        "肘",
+        "腕",
+        "不适"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7675287401501176506",
+        "publishedAt": "2026-08-19",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7674643042243064997",
+      "videoId": "7674643042243064997",
+      "title": "绳索划船类动作讲解",
+      "category": "training",
+      "topics": [
+        "绳索划船"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7674643042243064997",
+        "publishedAt": "2026-08-17",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7671852814386030521",
+      "videoId": "7671852814386030521",
+      "title": "罗马尼亚硬拉动作介绍",
+      "category": "training",
+      "topics": [
+        "罗马尼亚硬拉"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7671852814386030521",
+        "publishedAt": "2026-08-09",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7668880941976944817",
+      "videoId": "7668880941976944817",
+      "title": "哑铃推胸与推肩动作教学",
+      "category": "training",
+      "topics": [
+        "哑铃推胸",
+        "哑铃推肩"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7668880941976944817",
+        "publishedAt": "2026-08-01",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7666644718105452666",
+      "videoId": "7666644718105452666",
+      "title": "哑铃侧平举教学：动作流畅、胸腔充盈、姿势稳定",
+      "category": "training",
+      "topics": [
+        "侧平举"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7666644718105452666",
+        "publishedAt": "2026-07-26",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7664787164882481402",
+      "videoId": "7664787164882481402",
+      "title": "沉肩的作用、弊端以及如何做",
+      "category": "training",
+      "topics": [
+        "沉肩"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7664787164882481402",
+        "publishedAt": "2026-07-21",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7662562022056718449",
+      "videoId": "7662562022056718449",
+      "title": "高位下拉动作讲解",
+      "category": "training",
+      "topics": [
+        "高位下拉"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7662562022056718449",
+        "publishedAt": "2026-07-15",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7661923214516256369",
+      "videoId": "7661923214516256369",
+      "title": "坐姿夹胸、反飞鸟一体机：使用方法、变式、常见问题",
+      "category": "training",
+      "topics": [
+        "蝴蝶机",
+        "夹胸",
+        "反飞鸟"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7661923214516256369",
+        "publishedAt": "2026-07-13",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7658495365934683493",
+      "videoId": "7658495365934683493",
+      "title": "私教系列之手臂训练（二）：二练或一练内容",
+      "category": "training",
+      "topics": [
+        "二练手臂"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7658495365934683493",
+        "publishedAt": "2026-07-04",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7657365167379023973",
+      "videoId": "7657365167379023973",
+      "title": "私教系列之腹肌教学",
+      "category": "training",
+      "topics": [
+        "腹肌"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7657365167379023973",
+        "publishedAt": "2026-07-01",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7655982129109198321",
+      "videoId": "7655982129109198321",
+      "title": "私教系列之腿部训练",
+      "category": "training",
+      "topics": [
+        "腿部训练"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7655982129109198321",
+        "publishedAt": "2026-06-27",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7651943506576442225",
+      "videoId": "7651943506576442225",
+      "title": "私教系列之肩部教学",
+      "category": "training",
+      "topics": [
+        "肩部训练"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7651943506576442225",
+        "publishedAt": "2026-06-16",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7650309381392785073",
+      "videoId": "7650309381392785073",
+      "title": "私教系列之胸部教学",
+      "category": "training",
+      "topics": [
+        "胸部训练"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7650309381392785073",
+        "publishedAt": "2026-06-12",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7648931004442846193",
+      "videoId": "7648931004442846193",
+      "title": "私教系列之手臂教学",
+      "category": "training",
+      "topics": [
+        "手臂训练"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7648931004442846193",
+        "publishedAt": "2026-06-08",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7647176615788911793",
+      "videoId": "7647176615788911793",
+      "title": "私教跟练系列：保姆级长视频",
+      "category": "training",
+      "topics": [
+        "私教跟练",
+        "背部训练"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7647176615788911793",
+        "publishedAt": "2026-06-04",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7645715297237252785",
+      "videoId": "7645715297237252785",
+      "title": "全身完整拉伸教学",
+      "category": "training",
+      "topics": [
+        "全身拉伸",
+        "拉伸",
+        "胸大肌",
+        "肩部",
+        "背部",
+        "二头",
+        "三头",
+        "腹肌",
+        "臀部",
+        "腿部",
+        "颈部"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7645715297237252785",
+        "publishedAt": "2026-05-31",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7645715297237252785-ocr.json",
+        "reviewedMethod": "已下载本人公开原片，通时段固定间隔取帧识别字幕并逐项阅读；数字定点查看原图。非连续核听或动作实练。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "全身拉伸视频以主动对抗方式串联胸、肩、背、手臂、腹部、臀腿及颈部主题；保留示范与部分三组例子。排除健身衣广告，颈部深压及含水吞咽等末段技巧不作为陈年可执行指导。",
+      "observations": [
+        {
+          "text": "作者开场讨论练前/练后拉伸各有取舍，后续采用拉伸位加主动对抗；不能将他的表述提升为所有训练前都应拉伸。",
+          "evidenceTimes": [
+            21,
+            81
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "胸部：屈肘手掌靠墙，移动胸部寻找拉伸位，避免主动顶肩；对抗后休息，示范三组并按自己能力调整幅度。",
+          "evidenceTimes": [
+            84,
+            204
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "三角肌后束：抱臂并做相互对抗；三角肌前束：借固定杠杆/架子，调握距与坐位，不强迫肩关节超过可控范围。前束段说以三组为例。",
+          "evidenceTimes": [
+            210,
+            387
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "背与三头：先肘靠墙向外推的对抗，再双手抓固定支点、人后移并适量旋转；第二种背部拉伸说以三组为例。",
+          "evidenceTimes": [
+            390,
+            627
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "菱形肌主题：抓固定支点，调整胸廓后侧扩张；二头主题：墙/固定支点拉伸和手臂对抗，随后说明三头可在前述背部动作中涉及。",
+          "evidenceTimes": [
+            636,
+            873
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "腹部及侧腹：地面手撑、后伸与侧向转动的示范，作者以三组为例；他强调存气，但陈年应用时不把屏息或加大腰椎后伸设为默认。",
+          "evidenceTimes": [
+            879,
+            981
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "臀和大腿后侧：仰卧抓腿，屈腿用于臀部、伸腿用于腿后侧，结合手和腿的相互对抗并换侧。",
+          "evidenceTimes": [
+            1008,
+            1107
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "大腿前侧：弓步抓脚踝并做对抗，以三组为例；小腿借前掌稍抬高的支点做拉伸。",
+          "evidenceTimes": [
+            1110,
+            1296
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "末段依次涉及肩胛提肌、胸锁乳突肌、斜角肌及颈阔肌主题；肩胛提肌段作者明确仅用很小的压力。未将其他颈部手法编入可操作建议。",
+          "evidenceTimes": [
+            1299,
+            1671
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "各动作准确收缩/保持秒数、休息和用力比例",
+        "三组为示范而非所有人的固定规定",
+        "颈部手法、含水吞咽技巧的专业安全审核",
+        "与训练前后安排、伤病及活动度的个体适配"
+      ],
+      "safetyNotes": [
+        "排除987–1005秒健身衣广告及开场比赛/生活信息，不导为营养、训练效果或商品背书。",
+        "不导入颈部深压、抠锁骨/颈侧、强行旋转后仰和后仰含水吞咽等高要求技巧；这部分只保留来源主题。",
+        "不要求每组比上一组更用力或更大幅度；轻微牵拉与疼痛分开，正常呼吸，不弹震。不宣传拉伸能保证增加力量、纠正所有旋转问题或消除疼痛。",
+        "先暖身再拉伸，强度及动作按个人条件调整；独立核查：https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20047931"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    },
+    {
+      "id": "tcy-7615846680018354609",
+      "videoId": "7615846680018354609",
+      "title": "居家训练之背部跟练",
+      "category": "training",
+      "topics": [
+        "居家",
+        "背部"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7615846680018354609",
+        "publishedAt": "2026-03-11",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7613586950141907450",
+      "videoId": "7613586950141907450",
+      "title": "基础四分化第4期：肩加手臂训练",
+      "category": "training",
+      "topics": [
+        "肩",
+        "手臂",
+        "肩部",
+        "四分化",
+        "反飞鸟",
+        "实力推",
+        "面拉",
+        "前平举",
+        "二头",
+        "三头",
+        "练肩",
+        "肩膀",
+        "肩臂",
+        "练手臂"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7613586950141907450",
+        "publishedAt": "2026-03-05",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7613586950141907450-ocr.json",
+        "reviewedMethod": "已下载本人公开原片，通时段固定间隔取帧识别字幕并逐项阅读；数字定点查看原图。非连续核听或动作实练。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "四分化基础系列第4期肩臂：热身后反飞鸟、实力推、面拉、前平举，再带三头及二头。以原片说明为准，不能误标为完整居家课表，也不把休息日建议变成不得休息。",
+      "observations": [
+        {
+          "text": "开场标示新手通用四分化跟练第4期；作者回顾上一期单腿硬拉不适，并给静态/动态退阶示范，属于他的处理思路，不是对用户腰痛的诊断。",
+          "evidenceTimes": [
+            0,
+            159
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "肩部热身：弹力带前后拉和环绕，幅度较小保持张力；随后示范折叠式推撑，以及俯卧凳面拇指向上抬举和前后推变式。后者约2组。",
+          "evidenceTimes": [
+            165,
+            408
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第1项坐姿反飞鸟：按器械调座高，让手肩位置合适、肘不下掉、发力向外延展、胸廓稳定；作者提出正握、对握及反手的变式。",
+          "evidenceTimes": [
+            411,
+            600
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第2项杠铃实力推：控制手腕、保持躯干稳定，不用明显腰部后仰代偿；作者将其列本日主项。",
+          "evidenceTimes": [
+            606,
+            720
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "723–735秒回顾坐姿反飞鸟做4组，随后对主项说选能做8–10次的负荷；未据这段补造反飞鸟次数或实力推组数。726、735秒原图核对。",
+          "evidenceTimes": [
+            723,
+            735
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第3项面拉，作者对比坐姿/仰卧及站姿提拉；示范手腕稳定、手肘微屈、连续中段行程，并说明仰卧时头部支撑问题。",
+          "evidenceTimes": [
+            738,
+            981
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "面拉明确4组，每组10–15次；984、987秒原图确认。",
+          "evidenceTimes": [
+            984,
+            987
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第4项前平举，作者个人偏好对握，强调挺胸但不后仰、动作连贯；本项明确每组10–12次，未直接读到本项组数。",
+          "evidenceTimes": [
+            990,
+            1209
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "手臂部分是颈后绳索臂屈伸及二头弯举；作者说两者均4组、每组10–12次，1422/1428秒原图确认。",
+          "evidenceTimes": [
+            1215,
+            1428
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者说四天训练完后，休息日可安排腹肌或低强度有氧；这是他的安排示例，不能推成每个人都不能完全休息。",
+          "evidenceTimes": [
+            1431,
+            1458
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "反飞鸟明确次数、实力推组数、前平举组数",
+        "各动作工作重量、休息、强度及进阶退阶",
+        "完整周频率/休息安排与实际训练时长",
+        "伤痛、年龄、支撑能力和器械限制适用条件"
+      ],
+      "safetyNotes": [
+        "腰痛、肩痛的成因不能仅由文字推断为核心弱、肌肉未激活或磨损；痛时先停/退阶，持续或加重需现场评估。",
+        "休息日可轻活动不等于不得完全休息；作者四分化只是训练安排示例，应结合每周能练几天及恢复。",
+        "不导入强行闭眼、整组屏息、临时垫不稳物品或倒立为所有新手默认。关于姿势/动作流畅与减少磨损的因果主张未逐项科学验证。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    },
+    {
+      "id": "tcy-7612270623104450533",
+      "videoId": "7612270623104450533",
+      "title": "下肢训练",
+      "category": "training",
+      "topics": [
+        "下肢",
+        "练腿",
+        "腿部",
+        "功能训练",
+        "内收",
+        "硬拉",
+        "弓步蹲",
+        "旋转",
+        "小腿",
+        "提踵",
+        "四分化",
+        "热身",
+        "拉伸",
+        "腿肌"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7612270623104450533",
+        "publishedAt": "2026-03-02",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7612270623104450533-ocr.json",
+        "reviewedMethod": "已下载本人公开原片，通时段每2秒取帧识别字幕并逐项阅读，数字及弓步蹲名称另定点查看原图；非连续核听或动作实练。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "四分化跟练第3期下肢功能示范：先伸展，再做髋内收、单腿哑铃硬拉、后撤弓步蹲、弓步旋转、站姿提踵；作者明确区别于其肌肥大练腿课，不能混同为完整增肌腿日。",
+      "observations": [
+        {
+          "text": "作者说明该系列第1天胸、肩、三头，第2天背、二头，随后插入下肢，再练肩，以免整个上肢连续训练多天。这里记录的是作者该系列顺序，没有确认训练日之间的休息安排。",
+          "evidenceTimes": [
+            0,
+            34
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "热身用弓步支撑的伸展与胸椎旋转：后腿尽量伸直，转时眼睛跟随手、配合吸气；一侧先说5次，另一侧说5–10次。随后前/后侧与内收拉伸，其中一处约20秒；不要用弹振方式硬拉。",
+          "evidenceTimes": [
+            36,
+            146
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第1项为调低靠背的髋内收器械示范，作者倾向髋伸位内收；强调选择合适重量、躺低程度循序渐进，离心时腰部不反弓，稳定后再做。",
+          "evidenceTimes": [
+            148,
+            278
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "器械髋内收作者建议每组约15–20次、约4组，280及284秒原图确认。",
+          "evidenceTimes": [
+            280,
+            284
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "没有该内收器械时示范哥本哈根支撑：小腿支撑较易，脚放高处增加杠杆；保持髋部伸直，可静态或动态。还示范仰卧臀桥夹普拉提圈的替代，未给这些替代动作的统一组次或持续时间。",
+          "evidenceTimes": [
+            286,
+            396
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者说明本期更多满足下肢功能需求，男女均可按需要选择；想练肌肥大应参考先前练腿跟练，本期与那套内容不同。",
+          "evidenceTimes": [
+            398,
+            418
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第2项单腿哑铃硬拉：双手持哑铃、单腿站立，下放时吸气、还原时呼气；颈部随躯干控制，不刻意抬头。难以平衡时示范单手持哑铃、另一手扶杆退阶，按能力选择。",
+          "evidenceTimes": [
+            420,
+            494
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "单腿哑铃硬拉作者在496秒明确做3组，未读到每组次数。",
+          "evidenceTimes": [
+            496,
+            498
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第3项弓步蹲采用持哑铃后撤迈步，双腿交替；作者另强调以后腿膝伸回正，区别于其所描述的常规前腿主导版本。片中关于锁膝的论述仅保留为作者说法，不升级为应用要求。",
+          "evidenceTimes": [
+            502,
+            658
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第4项弓步姿势持杠铃片旋转，下蹲时向前支撑腿的内侧旋转，再回正；稳定基础版后，作者提出可加向斜上方快速发力版本，稳不住则回到只旋转回正的退阶。",
+          "evidenceTimes": [
+            662,
+            774
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "旋转动作作者先说每边约10次，随后退阶版说每边10–12次；766及778秒原图确认，未说明组数。",
+          "evidenceTimes": [
+            766,
+            778
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第5项站姿提踵：前脚掌踩台阶/支撑面，后跟悬空；需要时扶稳，站距约髋宽。下放幅度以大脚趾、小脚趾侧及前脚掌仍能踩住为限，不为增加下放幅度翘起前脚掌；身体重心保持控制。",
+          "evidenceTimes": [
+            782,
+            912
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "提踵作者提醒次日或后续酸痛可能影响生活工作，推荐3–4组，928秒原图确认；未读到统一次数。",
+          "evidenceTimes": [
+            914,
+            932
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "单腿硬拉、弓步蹲、提踵的次数；弓步蹲/旋转的组数；哥本哈根支撑等替代的具体剂量。",
+        "负荷选择、组间休息、剩余次数、每周训练频率/休息日、进阶周期。",
+        "总体训练时长与个体适用条件；15分36秒为原片长度，不是用户课时。",
+        "本期下肢功能示范没有构成完整肌肥大练腿方案。"
+      ],
+      "safetyNotes": [
+        "器械后仰程度、哥本哈根支撑杠杆、单腿平衡及旋转速度都需按控制能力退阶；新手不直接采用高速负重旋转。",
+        "不把作者改善骨盆、腰痛或膝痛的主张当成医学诊断/治疗；存在持续或明显疼痛时需要适当专业评估。",
+        "后撤弓步以稳定、可控为前提，不强行追求锁死膝盖；前后腿用力版本的差异不能靠文字保证现场动作正确。",
+        "提踵不靠强拉下放幅度或疼痛完成训练；作者组次仅作示例并依个人恢复调整。",
+        "哑铃7.5KG、器械20KG等画面标识不当成所有人的推荐工作重量。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    },
+    {
+      "id": "tcy-7601336175694233265",
+      "videoId": "7601336175694233265",
+      "title": "屈髋腰不适、久坐腰不舒服、腿后侧链紧张的练习",
+      "category": "training",
+      "topics": [
+        "屈髋",
+        "腰",
+        "后侧链"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7601336175694233265",
+        "publishedAt": "2026-01-31",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7600619216958695537",
+      "videoId": "7600619216958695537",
+      "title": "背部跟练第二期：不存在无效训练、保持专注",
+      "category": "training",
+      "topics": [
+        "背部跟练",
+        "热身",
+        "下拉",
+        "划船",
+        "直臂下压"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7600619216958695537",
+        "publishedAt": null,
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整画面核对",
+        "每动作重量、休息、总时长、适用经验",
+        "训练频率、逐周期进阶与恢复阈值",
+        "部分方向、行程只用现场指示，需要看画面"
+      ],
+      "safetyNotes": [
+        "实际转录在聚合页相关视频中《不存在无效训练…》，点击链接 id 已确认；不可与顶部私教系列 id 7647176615788911793 混淆。",
+        "24 组为作者这一节示范，不能自动对所有新手或恢复不足的人套用。",
+        "不导入“任何训练都有效/可改善所有不适”等绝对命题。",
+        "不能把转写中的憋气要求直接扩展为普通用户整组憋气；疼痛处理不能当作远程诊断。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7599135033329384443",
+      "videoId": "7599135033329384443",
+      "title": "优化过后的胸部跟练 2.0",
+      "category": "training",
+      "topics": [
+        "胸部",
+        "热身",
+        "跟练",
+        "胸肌",
+        "练胸",
+        "上胸",
+        "下胸",
+        "哑铃卧推",
+        "夹胸",
+        "双杠"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7599135033329384443",
+        "publishedAt": "2026-01-25",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7599135033329384443-ocr.json",
+        "reviewedMethod": "已下载本人公开原片，通时段固定间隔取帧识别字幕并逐项阅读；数字定点查看原图。非连续核听或动作实练。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "胸部跟练2.0示范：热身后由上胸往下，依次上斜夹胸、上斜哑铃卧推、双杠臂屈伸、平板夹胸、龙门架下胸夹胸。保留作者当天20组示例及局部次数，不能直接定为所有人的默认课表。",
+      "observations": [
+        {
+          "text": "热身先用泡沫轴配合呼吸感受胸廓，再做掌心朝上的墙/泡沫轴支撑推伸、地面前链拉伸；作者随后说明三项热身结束，再做约两组专项热身。",
+          "evidenceTimes": [
+            69,
+            480
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "墙/泡沫轴推伸：肩胛推出后再往上，控制丢失就不继续增加幅度；作者建议2–3组。",
+          "evidenceTimes": [
+            225,
+            300
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "正式训练顺序第1项：上斜固定夹胸，偏上半程、轻重量和较多次数；没有同款器械时提出仰卧龙门架夹胸替代。",
+          "evidenceTimes": [
+            549,
+            627
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "上斜夹胸先做两组激活；作者建议每组12–16次。抽样中未直接读到本项正式组数，结尾另说五项共20组。",
+          "evidenceTimes": [
+            702,
+            720
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第2项上斜哑铃卧推：全握、控制手腕、腰部贴住凳面、头部不主动抬起；离心时保持控制。",
+          "evidenceTimes": [
+            723,
+            870
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "上斜哑铃卧推：作者明确4组正式组，每组12–15次；984及987秒原图确认。",
+          "evidenceTimes": [
+            984,
+            987
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第3项辅助或自重双杠臂屈伸；作者提出不会做/感受困难时用含胸夹胸或器械退阶。",
+          "evidenceTimes": [
+            1014,
+            1203
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "双杠：作者明确4组；次数按能力选择，没有给本项统一固定次数。",
+          "evidenceTimes": [
+            1221,
+            1233
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第4项平板夹胸，可选坐姿机；作者强调脊柱中立、后放不顶腰，不用借腰部动作增加行程。",
+          "evidenceTimes": [
+            1314,
+            1410
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "平板夹胸作者明确4组，先说尽量15次以上，随即说12–15次左右；保留原片两种表述，不改成唯一确定次数。",
+          "evidenceTimes": [
+            1524,
+            1530
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第5项龙门架下胸夹胸：作者示范挺胸，向大腿根方向夹，不把身体前移变成另一夹胸角度。",
+          "evidenceTimes": [
+            1536,
+            1623
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "下胸夹胸作者明确4组、次数多一些，未说明具体范围；结尾说明五个动作共20组。1656、1665秒原图确认。",
+          "evidenceTimes": [
+            1650,
+            1665
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者结尾强调按个人需求训练、动作控制与目标肌肉感受；这是他的教学主张，未由本轮验证增肌效果。",
+          "evidenceTimes": [
+            1761,
+            1842
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "每项工作重量、组间休息、训练总时长",
+        "每周频率、其他部位训练及恢复安排",
+        "第1项正式组数的直接表述、第3/5项固定次数",
+        "平板夹胸次数前后表述不同",
+        "新手负荷、伤痛/病史适用范围及进退阶阈值"
+      ],
+      "safetyNotes": [
+        "作者的20组胸部示例不得直接设为所有用户每次必做；需结合训练经验、每周总量与恢复。ACSM 2026健康成人指导强调个体化，周训练量与单次剂量不同：https://acsm.org/resistance-training-guidelines-update-2026/",
+        "不导入长时间屏息、用力顶死关节、闭眼负重、临时垫不稳泡沫砖为默认做法；稳定呼吸、支撑和器械安全先确认。",
+        "胸部收紧、胸中缝、筋膜松解等感受提示不等于能改变胸肌遗传形态或保证效果；不能诊断或治疗肩痛。疼痛出现先停止/降低动作，持续症状需专业评估。",
+        "原片热身含放松、激活和拉伸；热身与长时静态拉伸分开，不把全身拉伸片塞到每次训练前。Mayo指导：https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20047931"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    },
+    {
+      "id": "tcy-7598367331702636465",
+      "videoId": "7598367331702636465",
+      "title": "肋骨外翻的改善练习",
+      "category": "training",
+      "topics": [
+        "肋骨外翻"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7598367331702636465",
+        "publishedAt": "2026-01-23",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7596620584764655537",
+      "videoId": "7596620584764655537",
+      "title": "推肩、卧推、直臂下压、划船肩部不适的两个练习",
+      "category": "training",
+      "topics": [
+        "肩部",
+        "热身"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7596620584764655537",
+        "publishedAt": "2026-01-18",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7595410750903198075",
+      "videoId": "7595410750903198075",
+      "title": "三分化系列最后一期",
+      "category": "training",
+      "topics": [
+        "三分化"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7595410750903198075",
+        "publishedAt": "2026-01-15",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7594285071629030769",
+      "videoId": "7594285071629030769",
+      "title": "三分化循环系列之拉日",
+      "category": "training",
+      "topics": [
+        "三分化",
+        "拉日"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7594285071629030769",
+        "publishedAt": "2026-01-12",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7593287633183731953",
+      "videoId": "7593287633183731953",
+      "title": "新手和爱好者三分化跟练系列",
+      "category": "training",
+      "topics": [
+        "三分化",
+        "新手"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7593287633183731953",
+        "publishedAt": "2026-01-09",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7590030572307680549",
+      "videoId": "7590030572307680549",
+      "title": "腿部训练：能开花的腿怎么练",
+      "category": "training",
+      "topics": [
+        "腿部"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7590030572307680549",
+        "publishedAt": "2026-01-01",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7585131280636923193",
+      "videoId": "7585131280636923193",
+      "title": "个人推荐的第一个腹部核心训练",
+      "category": "training",
+      "topics": [
+        "腹部",
+        "核心"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7585131280636923193",
+        "publishedAt": "2025-12-18",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7582048702325181745",
+      "videoId": "7582048702325181745",
+      "title": "背部训练目标：依据形体薄弱部位加强",
+      "category": "training",
+      "topics": [
+        "背部",
+        "薄弱部位",
+        "目标"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7582048702325181745",
+        "publishedAt": null,
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7565387028940492090",
+      "videoId": "7565387028940492090",
+      "title": "腿部焚决之腿屈伸三种模式",
+      "category": "training",
+      "topics": [
+        "腿屈伸"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7565387028940492090",
+        "publishedAt": "2025-10-26",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7553189442762542393",
+      "videoId": "7553189442762542393",
+      "title": "肩部教学",
+      "category": "training",
+      "topics": [
+        "肩部"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7553189442762542393",
+        "publishedAt": "2025-09-23",
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7610712695184852603",
+      "videoId": "7610712695184852603",
+      "title": "基础训练计划：形体、肌肉量、功能",
+      "category": "training",
+      "topics": [
+        "基础训练",
+        "胸部",
+        "胸肌",
+        "练胸",
+        "卧推",
+        "夹胸",
+        "肩部",
+        "三头",
+        "四分化"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7610712695184852603",
+        "publishedAt": "2026-02-25",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7610712695184852603-ocr.json",
+        "reviewedMethod": "已下载本人公开原片，通时段固定间隔取帧识别字幕并逐项阅读；数字定点查看原图。非连续核听或动作实练。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "作者称适合新手和普通爱好者的基础胸、肩、三头示例，共五个正式动作；原片的夹胸次数为8–15，平台摘要所写统一12次未沿用。示例组数不作为所有新手起始处方。",
+      "observations": [
+        {
+          "text": "作者明确这期主要面向新手、普通爱好者，系列分四期，目标含肌肉量与功能；不是完整周计划。",
+          "evidenceTimes": [
+            2,
+            28
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "热身从弹力带后拉和环绕开始，两种各约2组；随后示范倒立/折刀式推撑等，给2–3组，具体难度按能力选。",
+          "evidenceTimes": [
+            30,
+            180
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "本日胸、肩、三头合练，共五个动作。第1项龙门架绳索夹胸，从下胸开始，方向靠近大腿根，放时吸气、夹时呼气。",
+          "evidenceTimes": [
+            184,
+            240
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "绳索夹胸先说1–2适应组，随后示例为1适应+3正式，共4组；正式负荷选能控制完成8–15次的范围。",
+          "evidenceTimes": [
+            282,
+            302
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第2项杠铃卧推为主项；全握、臀部留在凳面、握距用下放时前臂近垂直地面来调整，不强行追求超出自己能力的幅度。",
+          "evidenceTimes": [
+            306,
+            458
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "杠铃卧推第一组为热身激活，后5组为正式，建议约10次；后组疲劳时作者举8次为例，不勉强凑数。",
+          "evidenceTimes": [
+            490,
+            524
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者随后界定停止点为躯干不能再稳定、动作开始晃动；不能把他提到力竭理解为失控乱做或顶臀凑次数。",
+          "evidenceTimes": [
+            530,
+            554
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第3项上斜器械推胸，作者强调下背贴凳、避免肋骨外翘；1激活+3正式，次数10–12，不强求疲劳后仍达到首组数字。",
+          "evidenceTimes": [
+            762,
+            868
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第4项杠铃实力推：手腕保持稳定、躯干不后仰；失去稳定就不要加重。",
+          "evidenceTimes": [
+            878,
+            984
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "实力推明确1适应/热身+3正式，选10–12次的负荷；下放稍慢、推起较快，仍保持流畅稳定。",
+          "evidenceTimes": [
+            1008,
+            1048
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第5项颈后绳索臂屈伸，作者用它替代较难的仰卧杠铃臂屈伸；滑轮调低、肘位置控制，动作流畅。尾段未读到本项明确组次。",
+          "evidenceTimes": [
+            1052,
+            1136
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "颈后绳索臂屈伸本项明确组数和次数",
+        "各动作实际工作重量、组间休息、RIR/强度及负荷进阶",
+        "训练时长、周频率、恢复日与完整四期组合",
+        "个体年龄、伤痛、能力、器械安全适用条件"
+      ],
+      "safetyNotes": [
+        "倒立、折刀式推撑不是所有新手默认热身；先核上肢支撑和控制能力，不能因作者称新手系列就免评估。",
+        "保留技术稳定即停，不把每组失控力竭设为必须；ACSM 2026指出普通健康成人不必依靠每次力竭获得效果：https://acsm.org/resistance-training-guidelines-update-2026/",
+        "卧推用安全杆或可靠保护者；疼痛不是继续训练的理由，不能仅凭文字推断疼痛来源为无力或肌肉紧张。",
+        "作者有整组屏息、触摸胸中缝等提示；不作为默认动作指令，不宣传治疗、神经抑制或必然增肌的因果结论。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    },
+    {
+      "id": "tcy-7638569547629063665",
+      "videoId": "7638569547629063665",
+      "title": "一次性看完三分化热身整套流程",
+      "category": "training",
+      "topics": [
+        "三分化",
+        "热身",
+        "胸部",
+        "背部",
+        "下肢",
+        "肩膀",
+        "手腕",
+        "足踝"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7638569547629063665",
+        "publishedAt": "2026-05-11",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7638569547629063665-ocr.json",
+        "reviewedMethod": "已下载本人公开原片，通时段固定间隔取帧识别字幕并逐项阅读；数字定点查看原图。非连续核听或动作实练。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "本人三分化热身整套视频，按胸肩三头、背、下肢分三段：肌肉放松后做关节活动与激活。固定抽帧核对动作主题和顺序；不是已验证人人照做的完整暖身处方。",
+      "observations": [
+        {
+          "text": "第一段为三分化胸、肩、三头热身：先用球放松胸小肌，再泡沫轴胸大肌、二头；随后弹力带前后拉/环绕，幅度保持控制。",
+          "evidenceTimes": [
+            2,
+            218
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "胸段激活：俯卧垫面或泡沫轴支撑Y字抬举及变式，躯干稳定不仰腰；拉锯式平板向前后推，再示范折叠式推撑。",
+          "evidenceTimes": [
+            220,
+            396
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "胸段末尾做墙面五指支撑的手腕激活；作者明确要注意强度，阻力太大可能受伤。",
+          "evidenceTimes": [
+            400,
+            448
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第二段背部热身：先滚中斜方/菱形肌区域、大圆/冈下区域及三头，再弹力带前后拉和环绕；部分滚动提示约30秒，并非所有部位统一剂量。",
+          "evidenceTimes": [
+            458,
+            622
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "背段进一步做推撑、跪姿手肘撑凳向后推及微动；作者说失去躯干控制就减小幅度。",
+          "evidenceTimes": [
+            624,
+            724
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "背段末尾弹力带固定后跪姿内旋，肩胛顶起、躯干不塌、速度偏慢；固定点必须可靠。",
+          "evidenceTimes": [
+            728,
+            808
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第三段下肢热身：依次泡沫轴小腿后侧、大腿后侧、臀、外侧及内侧，然后青蛙趴及变式、单腿站立、支撑腿后侧激活、扶墙飞机转圈。",
+          "evidenceTimes": [
+            810,
+            1296
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "青蛙趴示范骨盆前后移动及内旋变式；单腿站立示范闭眼以减少视觉辅助，这只记录作者动作，不能直接给平衡能力未知的人闭眼站立指令。",
+          "evidenceTimes": [
+            1032,
+            1160
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "支撑腿后侧激活与飞机转圈允许扶物支撑，作者让能力不足者先在较容易姿势感受支撑腿后侧，再做旋转。",
+          "evidenceTimes": [
+            1162,
+            1296
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "每项确切组次、强度、持续时间和总暖身时长",
+        "个人限制/伤痛、平衡、肩腕支撑的适用条件",
+        "专项热身如何衔接每个正式动作及工作重量",
+        "泡沫轴压力与禁用位置、所有变式的现场动作审核"
+      ],
+      "safetyNotes": [
+        "泡沫轴放松、激活、关节活动、专项热身各有作用，不能把本片时长当作每次必须的暖身时长。",
+        "不从局部酸紧推断肩痛/腰痛病因，也不宣传必然扩大肩锁空间或治疗疼痛；不直接压骨、关节及痛点。",
+        "未知平衡能力先睁眼并扶稳；闭眼和倒立是更高要求的示范，不能自动推荐。",
+        "训练前先渐进暖身，不把完整长时静态拉伸当暖身替代。独立核查：https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20047931"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    },
+    {
+      "id": "tcy-7569788930779558053",
+      "videoId": "7569788930779558053",
+      "title": "肩后束训练秘诀及热身教学",
+      "category": "training",
+      "topics": [
+        "肩后束",
+        "热身"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7569788930779558053",
+        "publishedAt": null,
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7568344357516073082",
+      "videoId": "7568344357516073082",
+      "title": "坐姿绳索划船及两个上肢热身",
+      "category": "training",
+      "topics": [
+        "绳索划船",
+        "上肢热身"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7568344357516073082",
+        "publishedAt": null,
+        "researchFile": "output/tan-chengyi-research-20261008/training-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "完整动作与画面校对",
+        "组数、次数、重量、组间休息",
+        "适用水平、频率、进阶与退阶",
+        "总训练时长"
+      ],
+      "safetyNotes": [
+        "标题或视频时长不能当作训练剂量、训练时长或适用性证明。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7577618867309183589",
+      "videoId": "7577618867309183589",
+      "title": "增肌减脂同时进行需要做到四点",
+      "category": "nutrition",
+      "topics": [
+        "同时增肌减脂",
+        "饮食服务训练",
+        "饮食结构",
+        "补剂",
+        "体重记录",
+        "训练状态",
+        "心态",
+        "睡眠",
+        "增肌",
+        "减脂",
+        "饮食"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7577618867309183589",
+        "publishedAt": "2025-11-28",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7577618867309183589-ocr.json",
+        "reviewedMethod": "916.867秒原片，每2秒采样Vision字幕OCR，410条不同可识别文本样本全部实读；查看60、752、758、764、776、502秒原图。未连续听读或完整转录；补剂推广和强生理因果另行筛分。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "四点为心态、睡眠、饮食、训练；主张以体型、训练状态与体重记录调整饮食，介绍粗细粮、蛋白来源、蔬菜和补剂。可保留执行原则；饥饿必要性、麸质/小脑、A2低过敏、种籽油有害等不作为普适事实。",
+      "observations": [
+        {
+          "text": "作者认为同时增肌减脂可以实现，要求心态、睡眠、饮食和训练四点兼顾；训练包括计划、水平和强度。60秒原图配合46至64秒采样核四点。这是作者主张，不承诺人人实现。",
+          "evidenceTimes": [
+            12,
+            70
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者先以恒定饮食值为起点，再看体型变化、训练状态和体重记录三项，调整饮食量和训练量；本片未给起始能量和每次调整克数，结尾说明具体量留后续。",
+          "evidenceTimes": [
+            74,
+            98
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者区分营养质量与热量，倾向低热量高营养；食物质量和能量应共同评估，不能从此推导增肌减脂不受能量平衡影响。",
+          "evidenceTimes": [
+            28,
+            42
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者提避免吃太饱，也承认吃太少、热量或营养不足会令状态变差；其训练必须饥饿的绝对表达不作为增肌成功条件。",
+          "evidenceTimes": [
+            104,
+            160
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者建议粗细粮搭配，蛋白来源鸡蛋、红肉、白肉、鱼肉交替，蔬菜选多颜色、多种类，鼓励自己做饭控制食材。",
+          "evidenceTimes": [
+            290,
+            440
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者谈面食麸质、普肯野细胞/小脑、核心控制及A2奶的因果解释；本段没有个体诊断和研究出处，不能据此诊断麸质过敏、动作僵硬或向牛奶过敏者推荐A2奶。",
+          "evidenceTimes": [
+            318,
+            430
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者谈种籽油、高温、损肝/血管和四肢瘦肚子大的强因果；502秒原图字幕为巨型繁殖脂肪，该词不是本次核实的营养学概念，不作种籽油普遍有害的证据。",
+          "evidenceTimes": [
+            460,
+            608
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者以水煮蔬菜后拌调料为日常操作例；不能将其高温令维生素和矿物质全流失的概括泛化为蔬菜只能水煮。",
+          "evidenceTimes": [
+            612,
+            638
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者偏好黑巧和发酵食物，强调肠胃舒适与规律生活；不把超级抗炎、定时排便就保证训练状态等概括作为效果承诺。",
+          "evidenceTimes": [
+            664,
+            738
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "补剂段谈钙镁、肌酸、鱼油、复合维生素和谷氨酰胺。752/758秒原图分别300–600mg、200–300mg，但可读字幕未明确钙或镁分别对应及总摄入/补充量，不填成处方。",
+          "evidenceTimes": [
+            646,
+            760
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "764秒原图作者说每天训练日吃3克肌酸、饭后吃，这是2025年11月本片条件；与2026年2月专题每日3–5克不同，保留日期范围，不合成休息日停用方案。",
+          "evidenceTimes": [
+            762,
+            770
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "776秒原图配合774至780秒可核作者谷氨酰胺每天5–8g，并说自己备赛吃更多；这是本人补剂主张，不证明普通用户运动或恢复获益。",
+          "evidenceTimes": [
+            770,
+            786
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "822秒起作者明确广告、品牌支持、赠品和橱窗下单；保留商业背景，品牌或认证简称推荐不当独立效果/品质证据。",
+          "evidenceTimes": [
+            820,
+            896
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "同时增肌减脂的经验、体成分与目标条件",
+        "起始能量和营养量、调整幅度与复盘周期",
+        "300–600/200–300mg分别指钙或镁及总量/补充量",
+        "麸质/小脑、A2、油脂/肝血管等原始科研与人群条件",
+        "本人备赛与普通健身差异",
+        "原声核听与无字幕内容"
+      ],
+      "safetyNotes": [
+        "同时增肌减脂需结合经验、体脂、总能量和训练；不承诺四点做齐必定成功，营养质量不取消能量平衡。",
+        "饥饿不是增肌必须条件；持续饥饿或训练恢复变差需评估能量和恢复，不强迫空腹训练。",
+        "NIH/NIDDK不支持一般人统一无麸质来改善健康/减脂；不把动作僵硬诊断为麸质攻击小脑，不按人种预设过敏。",
+        "ASCIA明确A2奶对牛奶蛋白过敏者也不适用；乳糖不耐受与过敏不同，A2不是过敏替代方案。",
+        "WHO优先不饱和脂肪；不把动物油/椰子油设健康默认，不把菜籽/大豆等种籽油一般烹调一律说成损肝损血管。避免过热反复用油与合适烹调应区分。",
+        "巨型繁殖脂肪仅为原字幕用词，不能当科学术语或用于脂肪肝、血脂及体型外观诊断。",
+        "烹调影响因营养素、时间、温度、水量而异，不称所有矿物质被高温破坏或所有蔬菜只能水煮。",
+        "矿物质剂量对应关系不明不生成补充计划；备赛补剂用法不泛化。",
+        "NIH ODS不支持谷氨酰胺例行提高运动表现；本人使用与剂量归档不构成功效证据。",
+        "黑巧和发酵食品按偏好搭配并计能量，不作抗炎治疗或训练表现保证；广告不成为购买品牌要求。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    },
+    {
+      "id": "tcy-7581664913727294769",
+      "videoId": "7581664913727294769",
+      "title": "按训练状态、营养与记录调整增肌减脂饮食",
+      "category": "nutrition",
+      "topics": [
+        "训练状态",
+        "饮食调整",
+        "记录复盘"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7581664913727294769",
+        "publishedAt": "2025-12-09",
+        "researchFile": "output/tan-chengyi-research-20261008/nutrition-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "具体记录字段与复盘周期",
+        "何时调整及调整多少",
+        "营养与状态关系的完整限定"
+      ],
+      "safetyNotes": [
+        "不把睡眠、情绪或训练状态问题全部归因于饮食",
+        "不保证吃得健康可以改善任何问题"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7583147740042120485",
+      "videoId": "7583147740042120485",
+      "title": "我的饮食安排和具体操作",
+      "category": "nutrition",
+      "topics": [
+        "全天饮食",
+        "食材与餐次",
+        "生米",
+        "练前餐",
+        "练后餐",
+        "碳水",
+        "饮食记录",
+        "早餐",
+        "晚餐"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7583147740042120485",
+        "publishedAt": "2025-12-13",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7583147740042120485-ocr.json",
+        "reviewedMethod": "1241秒本人混合vlog，每3秒采样Vision字幕OCR，279条不同文本样本全部实读。核57/177生米、624红薯、669牛肉、747盐换算、834/843/864补剂、1041/1071餐次和1104至1119全天总结原图；麦克风购买、带娃与生活闲聊排除，未连续原声听读或完整转录。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "本人训练日四次进食与备餐示例：早餐蛋炒饭配水果酸奶；练前红薯和牛肉；练后生米口径饭与牛肉；晚餐玉米番茄。原片明确生米重量并演示秤去皮，全天约420–430g碳水、150g蛋白、50多g脂肪是本人估计，不作用户默认。",
+      "observations": [
+        {
+          "text": "开头作者按当时体重约84kg提出本人约5.5倍碳水，结尾自报约83kg；这是本人历史当日例子，非用户资料，数值为估计。",
+          "evidenceTimes": [
+            18,
+            48
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者前一天用260g生米煮饭，再分成两份各相当130g生米口径。早餐用其中一份配3个全蛋与约10g猪油做蛋炒饭；57/177秒原图核生米，132至186秒字幕核鸡蛋和油。已煮熟饭画面不能把130g错成当前熟饭净重。",
+          "evidenceTimes": [
+            54,
+            192
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "早餐还配草莓或平常蓝莓、西红柿和酸奶，作者希望吃得稍丰富。赠送/互换草莓、家人闲聊只保留营养相关食物选择，不入生活记忆。",
+          "evidenceTimes": [
+            285,
+            357
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "练前餐为500g红薯和200g牛肉；624/669秒原图核重量。作者粗估500g红薯约100g碳水、200g牛肉约40–44g蛋白，称量状态/部位/标签未完全明确，不当通用精确换算。",
+          "evidenceTimes": [
+            624,
+            786
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者称去皮归零方便核重量；使用20g老抽并粗算相当2.6–2.7g盐，747秒原图是2.6g，后续改口2.7g。这属于其当时产品口径，不用来给所有酱油固定换算。",
+          "evidenceTimes": [
+            675,
+            774
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "本人练前饮品另加约2g盐、15g甜菜根粉、5g谷氨酰胺和一勺肌酸，随后3粒钙镁D片；834/843/864秒原图核前3项，肌酸勺和矿物质片剂净量不明。个人做法归档，不导成必须练前补盐/多补剂。",
+          "evidenceTimes": [
+            825,
+            897
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "练后第三餐作者说明相当130g生米、200g牛肉和约5g猪油，1041秒原图强调生米；用具或菜盒展示不改变称重口径。",
+          "evidenceTimes": [
+            1038,
+            1062
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "晚餐或睡前餐为作者所称700多g玉米加西红柿；1071秒原图显示整根带芯玉米，可食粒净重未说明，不能把整根重量按玉米粒数据库精算。",
+          "evidenceTimes": [
+            1065,
+            1080
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "1104至1119秒原图核作者自报约83kg、当日420–430g碳水、蛋白1.8倍约150g、脂肪50多g。1134秒又出现1.6倍蛋白的简述，与1.8倍不同，保留差异，不声称全天精确命中某个固定系数。",
+          "evidenceTimes": [
+            1101,
+            1137
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "结尾再用体重记录、对比图和训练状态作反馈调碳水，提醒不要太饿；未给统一调整量/周期。保留记录和可执行备餐，不把微饿当身体代谢正常的证明。",
+          "evidenceTimes": [
+            1140,
+            1239
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "当日总能量和所有配料、菜/水果/酸奶准确用量及标签",
+        "红薯和牛肉的生熟/可食部口径、玉米粒净重",
+        "同片83/84kg与蛋白1.8/1.6倍的差异原声核对",
+        "肌酸每勺和钙镁D每粒的实际成分剂量",
+        "酱油实际钠标签及全天总盐、汗量条件",
+        "本人当日完整训练量和体成分、用户实际目标与活动",
+        "原声核听与无字幕段落"
+      ],
+      "safetyNotes": [
+        "这是教练本人历史训练日，体重、食量、训练和用餐时间不写成陈年或用户资料，不把高碳水系数直接复制给不同活动量用户。",
+        "生米130g代表干米口径；不能替换成130g熟饭，也不按同一系数精算不同米品种。肉/薯/玉米需确认生熟和可食部再计算。",
+        "作者全天合计和食品含量是估计；水果、酸奶、调味料等不能自动零热量，同片蛋白系数差异需保留，不假称精确配方。",
+        "备餐可以按主食、蛋白食物、蔬果、油脂组成和口味替换，按个体需要重新核算，而不是统一吃500g红薯或700g玉米。",
+        "猪油是作者偏好，WHO优先不饱和脂肪；不因作者使用而设动物油健康默认。",
+        "老抽的钠含量按实际标签、重量/体积核；总盐含食物、酱油和额外2g盐，普通成人WHO总盐小于5g/日另存，不默认每次训练额外加2g盐。",
+        "练前甜菜根/谷氨酰胺/肌酸和矿物质是本人选择，未知净剂量不补猜、不要求用户购买或照吞3粒；补剂不替代饮食睡眠。",
+        "熟饭次日再用需考虑及时冷却冷藏和充分复热；影片未展示储存全流程，不从vlog保证食品安全。",
+        "不把一日样例当完整减脂/增肌计划，不要求所有用户睡前吃或按该时间训练；持续饥饿和恢复下降需评估能量。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    },
+    {
+      "id": "tcy-7586889620748225841",
+      "videoId": "7586889620748225841",
+      "title": "休息日饮食和疲劳管理",
+      "category": "nutrition",
+      "topics": [
+        "休息日",
+        "饮食",
+        "疲劳管理"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7586889620748225841",
+        "publishedAt": "2025-12-23",
+        "researchFile": "output/tan-chengyi-research-20261008/nutrition-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "休息日碳水和总能量如何调整",
+        "疲劳判定",
+        "活动安排与适用条件",
+        "具体步骤"
+      ],
+      "safetyNotes": [
+        "不可依据休息日标题自动安排低碳或断食",
+        "第三方仓库的进食顺序、20至30分钟有氧不是已核实作者内容"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7592224321251214810",
+      "videoId": "7592224321251214810",
+      "title": "过年前减脂：蔬菜与盐摄入建议",
+      "category": "nutrition",
+      "topics": [
+        "减脂",
+        "蔬菜",
+        "盐与钠"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7592224321251214810",
+        "publishedAt": "2026-01-06",
+        "researchFile": "output/tan-chengyi-research-20261008/nutrition-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "盐或钠单位的画面/音频核对",
+        "是否含食材和调味料已有盐",
+        "汗量和竞技背景",
+        "总能量与餐次"
+      ],
+      "safetyNotes": [
+        "WHO普通成人建议总钠小于2000毫克/日，相当于总盐小于5克/日；不能仅按男女设置7克/5克默认量",
+        "盐与钠必须分别存储：1克盐约含400毫克钠",
+        "如为大量出汗场景，应另外评估，不把竞技补钠量套普通日常"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7604123900088481009",
+      "videoId": "7604123900088481009",
+      "title": "肌酸作用、用量及补充时间",
+      "category": "nutrition",
+      "topics": [
+        "肌酸",
+        "补剂",
+        "训练饮食睡眠"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7604123900088481009",
+        "publishedAt": "2026-02-08",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7604123900088481009-nutrition-wide-ocr.json",
+        "reviewedMethod": "197.648秒原片，每1秒采样本地Vision OCR；原字幕区域只得到18条稀疏样本，改用y=0.18,height=0.40后得到160条不同文本样本，全部实读。直接查看14、25、37、68、73、83、115秒原图，14秒核每日3至5克的数字。没有连续原声听读或完整转录；166至188秒广告赞助隔离。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "原片扩大区域每1秒采样字幕已实读：作者推荐肌酸每日3至5克并长期规律补充，原图14秒核数字；谈运动表现、肌肉储水与减脂期体重，末段明确品牌赞助。必须性、脸部浮肿、代谢和脑神经效果的强因果不作为通用结论。",
+      "observations": [
+        {
+          "text": "作者先说明自己在训练后吃完饭再用肌酸，这段是本人习惯，不是唯一有效时间。",
+          "evidenceTimes": [
+            8,
+            10
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者在11至14秒、25至27秒、48至50秒以及118至119秒推荐每日3–5克肌酸。14秒原图确认3–5克；15至22秒用该产品勺子估量不作为跨品牌通用量具。",
+          "evidenceTimes": [
+            11,
+            27
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者强调持续、规律补充，并把每日3–5克和高剂量短期补充的最终浓度相近联系起来；他所谓没有冲击期不按字面变成装载无效。原片比较的高量方案和停用描述不组成可执行方案。",
+          "evidenceTimes": [
+            28,
+            50
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者推荐与碳水同吃并声称利用率更高；本片未给额外碳水克数，不从此要求额外喝糖或必须训练后进食。",
+          "evidenceTimes": [
+            51,
+            55
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者讲肌酸增加肌肉储水、外观更饱满，称更多作用是提高运动表现；提到力量/耐力，但不把这概括成所有耐力运动都有效。",
+          "evidenceTimes": [
+            59,
+            75
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者推荐减脂期也用肌酸，解释储水可能使体重增加而不代表未减脂。保留体重与体脂有别的解释，不采用所有减脂者必须吃的绝对要求。",
+          "evidenceTimes": [
+            77,
+            91
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者62至69秒把脸部储水与压力/盐钠等关联，92至112秒把水分下降、代谢和平台期联系；不能凭该片为脸部肿胀作诊断，不能称肌酸解决所有代谢或平台期。",
+          "evidenceTimes": [
+            62,
+            112
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者124至164秒还提糖原储存与大脑专注、神经信号和训练感受的作用；本次资料未独立确认其神经认知效果，不能承诺使用后专注力、神经输出或力量必然提高。",
+          "evidenceTimes": [
+            124,
+            164
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "166至188秒进入送产品、下单和口味介绍；170至172秒作者明确该品牌赞助本视频。商业背景保留，购买指定品牌不导成训练或减脂必要条件。",
+          "evidenceTimes": [
+            166,
+            188
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "本人建议的产品剂型和每勺实际净含量标签原图",
+        "个体适用条件、健康情况和用药等排除条件",
+        "作者完整装载方案和持续时长",
+        "脸部储水/代谢/认知因果说法的原始科研证据",
+        "用户年龄、训练类型、饮食和目标",
+        "原声核听与无字幕内容"
+      ],
+      "safetyNotes": [
+        "作者每日3至5克已核原片；仍先了解年龄、训练类型、目标、健康/用药背景，不自动给未成年人、孕哺期、肾脏疾病等人群生成服用安排。",
+        "肌酸是可选补剂，不是增肌或减脂必需。NIH主要支持反复短时高强度活动，不能承诺所有耐力项目有益。",
+        "作者产品的一勺/不满勺不能跨品牌作克数；若选择补充按可靠产品标签实际剂型与重量，而非凭勺子外观。",
+        "规律小剂量和装载方案达到储备的速度可不同；不能把作者没有冲击期当装载完全无效，不能从零散20克/停几天话术拼个人方案。",
+        "体重上升可能包括储水，不等于脂肪增加；不能反推所有体重下降都是脱水或减脂失败。",
+        "不凭脸部浮肿解释自行增盐、减盐或诊断；不承诺肌酸解决代谢平台、治疗认知问题或确保专注力提升。",
+        "与饭同服是作者习惯/建议，不额外规定必须训练后、必须多吃糖或某个硬时间窗口。",
+        "末段明确品牌赞助，原片商业推广不作为效果或品质的独立证据，不要求购买指定品牌。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    },
+    {
+      "id": "tcy-7618962209967965617",
+      "videoId": "7618962209967965617",
+      "title": "完整减脂计划：食物、吃多少与如何调整",
+      "category": "nutrition",
+      "topics": [
+        "生活化减脂",
+        "宏量营养素",
+        "食材换算",
+        "调整",
+        "减脂",
+        "减脂餐",
+        "营养搭配",
+        "三餐",
+        "热量"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7618962209967965617",
+        "publishedAt": "2026-03-20",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7618962209967965617-ocr.json",
+        "reviewedMethod": "950.4秒原片，每2秒采样本地Vision OCR字幕区域；实读全部可识别样本，直接查看150、294、300、770、864、874秒原图核对表格、食谱与盐钠。未连续听读或完整转录；450至460秒字幕矛盾、部分生熟重量继续标未知。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "原片采样实读覆盖：减脂目标、按运动小时设宏量营养素参考起点、7至10天趋势复盘、三餐食材及85公斤样例；原片明确将口误的钠6至8克改为总盐6至8克，不能作普通用户默认。",
+      "observations": [
+        {
+          "text": "作者区分减脂与单纯减重，主张了解身体状态和食物成分，让饮食能够在生活中执行；将追低体重直接导致代谢变差的因果绝对表述不作为一般结论。",
+          "evidenceTimes": [
+            10,
+            40
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者把三个月设为本次目标周期，用来维持目标感；未证明所有人三个月达到特定体型。",
+          "evidenceTimes": [
+            62,
+            80
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "按每周2–3、4–5、6–7、8–9小时运动量，作者男性示例表列每日碳水2.2/2.5/3.0/3.5 g/kg、蛋白1.4/1.6/1.7/1.8 g/kg、脂肪0.8/0.9/1.0/1.0 g/kg。150秒整表原图核对；这是作者估计起点，不等于只凭运动小时就得到个体完整计划。",
+          "evidenceTimes": [
+            106,
+            152
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "85公斤、每周2至3小时运动为作者样例：187克碳水、蛋白约120克、68克脂肪。178秒OCR把脂肪误写蛋白质，150秒白板第三列标脂肪及68g，故不照抄错误词。",
+          "evidenceTimes": [
+            156,
+            178
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "女性示例在碳水栏另加2.0/2.2/2.5/3.0 g/kg、蛋白与男性相同，脂肪另加1.0/1.1/1.1/1.2 g/kg；300秒无遮挡整表原图核。原片按性别偏向不同供能解释，不能仅按性别自动套系数。",
+          "evidenceTimes": [
+            184,
+            300
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者明确承认同样100公斤的人瘦体重、代谢和食量会不同，并把前述表格称为起点。",
+          "evidenceTimes": [
+            338,
+            362
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者建议先执行约7天、拍对比照片，在约10天形成趋势对比再调整；下降过快可拉高一点碳水，过慢可稍降。不要因两天体重或排便波动急着改；未给每次增减克数及目标下降速率。",
+          "evidenceTimes": [
+            368,
+            406
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者建议约第10天按当时体重再乘前述系数作参考；454至458秒采样字幕出现加碳水又调低的矛盾，该段不推断准确方向。",
+          "evidenceTimes": [
+            424,
+            460
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "三餐结构例子为早餐燕麦、鸡蛋、南瓜籽与蓝莓；午餐米饭、鱼或去皮去骨鸡肉或虾、蔬菜；晚餐薯类或贝贝南瓜、牛肉、蔬菜、油与混合坚果。食材可替换，原片食材成分是粗略口径，未确立所有生熟状态。",
+          "evidenceTimes": [
+            496,
+            734
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "85公斤、每周2至3小时的示例白板：早餐70g燕麦、3个全蛋、15g南瓜籽、100g蓝莓；午餐93g生米、150g肉、25g油、200–300g蔬菜；晚餐300g薯类、180g牛肉、25g油、20g混合坚果、200–300g蔬菜。770秒原图结合758至804秒字幕核对；肉和薯类生熟称重状态未说明，作者部分种籽/蓝莓/坚果简化不计，不可声称精确热量。",
+          "evidenceTimes": [
+            748,
+            804
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者在蓝莓、南瓜籽或坚果的计算中允许简化不计；不等于这些食物零热量。红薯、紫薯、土豆和贝贝南瓜约22g碳水/100g是作者方便换算口径，不能作为不同品种、生熟状态的精确营养参数。",
+          "evidenceTimes": [
+            574,
+            734
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者按炒菜烟点提及牛油果油、山茶油、低芥酸菜籽油以及猪油牛油，另示例水煮牛肉后淋酱料/橄榄油。油的整体健康性不能仅由烟点判断，不把猪牛油自动设优选。",
+          "evidenceTimes": [
+            808,
+            846
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "848至858秒作者先说钠并给6–8克，860秒说错了，862至868秒明确改为每天总盐6–8克。864秒原图确认盐6–8克；第三方摘为钠6–8克是错误，必须阻止单位错用。作者总盐量亦不能作普通成人默认。",
+          "evidenceTimes": [
+            848,
+            868
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "874至878秒作者明确1克钠约等于2.5克盐；874秒原图核。换算要包含生抽等调味料的已有钠，不是只记额外撒盐。",
+          "evidenceTimes": [
+            872,
+            892
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "肉、薯类、蔬菜等生熟或可食部状态",
+        "全部食材品牌/品种、实际营养标签及精确能量核算",
+        "体重趋势目标与每次调整克数",
+        "450至460秒字幕矛盾的原声核对",
+        "普通成人/运动汗量/疾病等总盐适用条件",
+        "用户本人年龄、目标、身高体重、当前食量、周训练与日常活动、健康条件",
+        "原声和无字幕讲解、连续完整音画审核"
+      ],
+      "safetyNotes": [
+        "男性/女性与运动小时系数仅归属作者估计，不作为陈年给任何用户的默认计划；总能量、实际活动、体成分、饮食执行和趋势共同评估。",
+        "减脂需可持续能量缺口，不承诺三个月必达、不追求极端降重或竞技脱水。",
+        "作者先口误为钠6至8克后立即改为总盐6至8克；第三方的钠6至8克禁止导入。普通成人WHO总盐小于5克/日另存；大量出汗等需具体评估，禁按性别自动配盐。",
+        "蓝莓、种籽和坚果都有能量；作者简化不计不能导成零热量，食谱不能声称精确命中187/120/68克。",
+        "食材营养值需按实际品种/品牌、可食部、生熟称重验证，薯类/南瓜不能统一按22克碳水作精确等换。",
+        "按烟点选择烹调油不等于油脂健康排序；WHO优先不饱和脂肪并控制饱和脂肪，不能把猪牛油设健康默认。",
+        "持续强烈饥饿、训练表现或恢复显著变差等需重估能量与恢复，不能继续盲目降碳。",
+        "85公斤食谱是视频假设样例，不是用户真实资料；肉/薯类重量状态未知时不擅自补熟重。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    },
+    {
+      "id": "tcy-7620313918720746673",
+      "videoId": "7620313918720746673",
+      "title": "蛋白质作用、推荐用量及补充时间",
+      "category": "nutrition",
+      "topics": [
+        "蛋白质",
+        "用量",
+        "营养时间",
+        "蛋白",
+        "蛋白粉",
+        "乳清",
+        "增肌"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7620313918720746673",
+        "publishedAt": "2026-03-24",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7620313918720746673-ocr.json",
+        "reviewedMethod": "86.146秒原片，每1秒采样本地Vision OCR字幕区域；实读全部可识别样本，并直接查看28、33秒原图核对数字。未连续听读或完整逐帧观看；品牌宣传段隔离。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "采样字幕显示：按训练强度和日常消耗考虑每日蛋白总量，肉蛋奶或植物来源均可；后半段是乳清产品推荐，品牌和宣传不作为训练要求。",
+      "observations": [
+        {
+          "text": "作者强调每天的蛋白质总摄入需要充足。",
+          "evidenceTimes": [
+            9,
+            18
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者把每天需要多少蛋白质与训练强度、日常消耗联系起来。",
+          "evidenceTimes": [
+            19,
+            23
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "25至29秒上下文按每公斤体重、每天补充蛋白质；28秒原图清楚显示1.2–2.0克。原OCR把下限误识别，原图复核纠正为1.2。",
+          "evidenceTimes": [
+            25,
+            29
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "30至34秒作者对大部分爱好者推荐每公斤1.6克蛋白质；33秒原图可核。这是作者参考范围，个体目标仍需训练与健康背景。",
+          "evidenceTimes": [
+            30,
+            34
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者把肉、鸡蛋、牛奶列为蛋白质来源。",
+          "evidenceTimes": [
+            35,
+            40
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者认可植物蛋白并提到交替补充；其对缺少必需氨基酸的概括需改写为重视具体来源和多样搭配，不能泛化所有植物蛋白。",
+          "evidenceTimes": [
+            42,
+            49
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "50至77秒转为具体乳清产品的口味、勺子、标示成分及便利性推荐；保留商业背景，不导入品牌购买要求或食品等量宣传。",
+          "evidenceTimes": [
+            50,
+            77
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "具体乳清产品第三方品质证据",
+        "特定健康条件与素食总量调整",
+        "原声核听与无字幕内容",
+        "补充时间未在实读字幕中给具体规则"
+      ],
+      "safetyNotes": [
+        "不同植物蛋白的氨基酸组成不同，可通过食物多样性和足量摄入满足需求，不能说所有植物蛋白都缺少数种必需氨基酸。",
+        "总量充足不等于品质和用餐分配完全没有影响。",
+        "一勺蛋白粉等于一大块牛肉是产品宣传式等量说明，未限定牛肉重量和食材状态，不导入。",
+        "该片广告段不证明购买指定品牌是训练必要条件。",
+        "个体蛋白目标需结合训练、饮食、目标及健康条件，不能自动套给所有人。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    },
+    {
+      "id": "tcy-7627845492777962865",
+      "videoId": "7627845492777962865",
+      "title": "电解质作用、出汗与饮水",
+      "category": "nutrition",
+      "topics": [
+        "电解质",
+        "补水",
+        "运动出汗",
+        "产品推广"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7627845492777962865",
+        "publishedAt": null,
+        "researchFile": "output/tan-chengyi-research-20261008/nutrition-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "本人完整讲解",
+        "产品配方与商业关系",
+        "补液量与钠量",
+        "训练持续时间、气温和汗量",
+        "适用和排除条件"
+      ],
+      "safetyNotes": [
+        "不采用相关视频的1100毫克/条、三倍电解质宣传或每日至少4至5升饮水",
+        "不把喝水少视为任何人都需要电解质补剂",
+        "不能将补充剂用于自行诊断或纠正酸碱、电解质紊乱"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7642300123128891067",
+      "videoId": "7642300123128891067",
+      "title": "韩国赛前全天饮食做法与胸部教学",
+      "category": "nutrition",
+      "topics": [
+        "备赛饮食",
+        "全天餐食",
+        "胸部训练",
+        "补剂品牌话题"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7642300123128891067",
+        "publishedAt": "2026-05-22",
+        "researchFile": "output/tan-chengyi-research-20261008/nutrition-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "教学段与生活段的时间界限",
+        "每餐原片用量",
+        "生熟重",
+        "比赛条件",
+        "营养和胸部动作完整讲解"
+      ],
+      "safetyNotes": [
+        "排除生活和比赛经历段",
+        "108克生米、晚上8点后不喝水等用户评论不作为作者已核实参数",
+        "个人备赛食谱只作有条件案例，不能成为普通用户默认"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7660136955972019877",
+      "videoId": "7660136955972019877",
+      "title": "新饮食计划与胸部训练教学",
+      "category": "nutrition",
+      "topics": [
+        "饮食计划",
+        "减脂",
+        "胸部训练"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7660136955972019877",
+        "publishedAt": "2026-07-09",
+        "researchFile": "output/tan-chengyi-research-20261008/nutrition-research.json",
+        "reviewedMethod": null
+      },
+      "evidenceStatus": "title_only",
+      "summary": null,
+      "observations": [],
+      "missingParameters": [
+        "尚未完成原片动作与讲解核对，不能据标题生成方法或参数",
+        "新旧饮食计划差异",
+        "本人当时体脂与目标",
+        "营养剂量与适用条件",
+        "胸训步骤",
+        "完整音画"
+      ],
+      "safetyNotes": [
+        "标题的没脂肪硬减不等于应鼓励已偏瘦人群继续减脂",
+        "不把此视频与旧计划合并成作者未发布的统一计划"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": false
+      }
+    },
+    {
+      "id": "tcy-7677788313952198385",
+      "videoId": "7677788313952198385",
+      "title": "增肌减脂的底层逻辑",
+      "category": "nutrition",
+      "topics": [
+        "增肌",
+        "减脂",
+        "体系原则",
+        "碳水",
+        "蛋白质",
+        "脂肪",
+        "饮食记录",
+        "有氧",
+        "恢复",
+        "饮食调整"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7677788313952198385",
+        "publishedAt": "2026-08-25",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7677788313952198385-ocr.json",
+        "reviewedMethod": "1449.834秒原片，每2秒采样Vision字幕OCR，653条可识别文本样本全部实读；查看214、218、378、386、466、500、586、1046、1058秒原图。未连续原声听读或完整转录；数值、口误与适用条件分别记录。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "以支持力量训练、避免长期极端缺口和综合记录反馈为可迁移原则。作者给脂肪/蛋白/碳水系数与有氧频次参考，但单位、调整条件和个体需要分开核；长期无缺口减脂、饥饿最佳/抗炎、放屁判断吸收率与线粒体机制等不作普适事实。",
+      "observations": [
+        {
+          "text": "作者把增肌的训练强度放在核心位置，谈训练容量、次数、组间休息和力量进步。可以用训练表现作综合反馈，力量提升本身不等于已经证明肌肉增长，本片没有完整分化或动作处方。",
+          "evidenceTimes": [
+            40,
+            78
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者承认短期减脂需要热量缺口，同时反对长期大缺口导致状态差；随后谈长期激素、脂肪代谢与持平甚至增加热量减脂。后者不作为取消能量缺口或凭主观状态诊断激素的证据。",
+          "evidenceTimes": [
+            86,
+            220
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "214秒原图为200–300，218秒字幕为卡路里，讨论一天较小缺口以维持训练。记录作者的口语示例；字幕没有区别cal与kcal，未原声核听，不自行补成单位明确的个体能量目标。",
+          "evidenceTimes": [
+            206,
+            220
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者用本人多吃、体重上涨但训练状态下降的经历说明不应盲目强迫加餐；皮肤、困倦和胃口变化可记录，不能据此诊断碳水过量、激素或代谢异常。",
+          "evidenceTimes": [
+            272,
+            330
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "378秒原图0.6–0.8，382秒字幕口误公斤，386秒明确改成克每公斤，并在白板写g；这是作者在日常饮食讨论中的脂肪系数参考，保留为0.6–0.8g/kg，不能导入0.6–0.8kg/kg，也不作为所有用户默认量。",
+          "evidenceTimes": [
+            374,
+            386
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者建议注意omega-3来源、不要只吃omega-3，但将橄榄油、坚果和牛油果一并列入其补充来源。教学时应区分单不饱和与多不饱和脂肪，按具体食材识别ALA/EPA/DHA，不把这三类食物统一当富含omega-3。",
+          "evidenceTimes": [
+            390,
+            436
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "466秒原图蛋白区间1.2–2.0，之后说正常锻炼基本够用；本片可读字幕在此没有重申每公斤/每日单位，白板可见g。其另一蛋白专题的g/kg/day单位独立保存，不默称本片重新给出了完整剂量条件。作者又建议看放屁决定加减，不能把放屁频率当蛋白吸收率测试。",
+          "evidenceTimes": [
+            438,
+            486
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者举本月蛋白系数1.5、下月1.8和减脂低碳时提高蛋白的例子。个体可结合总量、训练与肠胃耐受重新评估，不能把低碳或饥饿就提升吸收率当通用生理事实。",
+          "evidenceTimes": [
+            490,
+            568
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者给不清楚碳水量时2.5–3.5g/kg起点，578至586秒采样及586秒原图核每公斤和克；易胖从2.5、易瘦从3.5是作者简化说法，体质标签不能替代实际活动量和能量评估。",
+          "evidenceTimes": [
+            572,
+            608
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者展示从3.5到4倍碳水、食欲变化后约一周调回3.5或3，再谈约10天/半个月回降与波形调整；未给完整量化监测和人群条件，不拼成固定循环或承诺恢复胰岛素敏感性。",
+          "evidenceTimes": [
+            648,
+            894
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者希望保持微饿，认为有利于增肌减脂、恢复和抗炎；这些最佳或治疗式表述不采纳为效果保证。备赛防暴食的个人策略与普通用户能量充足分开。",
+          "evidenceTimes": [
+            754,
+            980
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "1046秒原图作者参考有氧每周3–4次，1058秒每次30–40分钟，并谈过多可能疲劳、按状态选爬坡等。保留作者参考频次，不代替按体能、总活动和恢复安排；本片没有明确强度、心率、器械和疼痛条件。",
+          "evidenceTimes": [
+            984,
+            1124
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者强调睡眠；关于熬夜导致旧线粒体堆积、新线粒体无法进入等简化机制与有氧/饥饿最抗炎表述未核实，不用于解释疾病或提供治疗。",
+          "evidenceTimes": [
+            1130,
+            1162
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "作者最后以训练意愿、精神、睡眠、体重和形体照片共同观察碳水加减，并举3到4/5或3到2的情境；可保留综合记录原则，不能仅凭饥饿感加减、把异常症状全归饮食或激素，或保证一直保持竞技低体脂。",
+          "evidenceTimes": [
+            1184,
+            1442
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "200–300卡路里原声单位、实际维持能量与缺口计算方法",
+        "本片蛋白1.2–2.0系数的每公斤/每日单位重新说明",
+        "用户年龄、体成分、目标、疾病用药、实际训练和活动量",
+        "宏量系数与总能量匹配的完整日饮食、食材和生熟口径",
+        "饮食调整的统一监测周期、趋势阈值和每次克数",
+        "有氧具体强度、方式、力量训练排期、体能与疼痛条件",
+        "饥饿、激素、炎症和线粒体机制的原始科研证据",
+        "原声核听和无字幕段落"
+      ],
+      "safetyNotes": [
+        "作者本人竞技体型和历史经历不写成陈年或用户档案，不承诺普通用户同时增肌减脂或常年低体脂。",
+        "减脂仍需可持续能量缺口；支持训练的能量、睡眠和恢复共同评估，不能从本片推导提高摄入不受能量平衡约束。",
+        "脂肪0.6–0.8为g/kg，作者已将公斤口误改成克；碳水2.5–3.5g/kg是参考，不凭易胖/易瘦标签自动处方。蛋白专题已核1.2–2.0g/kg/day，但本片单位重述不足保留缺项。",
+        "200–300作者字幕仅称卡路里，cal/kcal区别未原声核听；不默补单位或自动扣除用户热量。",
+        "不要用放屁判断蛋白吸收率或无限加蛋白。肠胃反应、总摄入、食物类型与其他症状需共同看，持续不适不从视频诊断。",
+        "不把所有脂肪二分成omega-3/omega-6，橄榄油和牛油果不是等量omega-3替代品，坚果按品种；富含omega-3的鱼类、核桃/亚麻籽等出处另存。",
+        "饥饿感不能证明激素正常、抗炎或最佳恢复；吃不下也不能证明能量足够，持续饥饿、疲劳和恢复下降需重新评估。",
+        "碳水上下波形和约一周/10–15天是作者示例，不能称已验证的胰岛素敏感性治疗或自动周期。",
+        "有氧每周3–4次/30–40分钟保留作者归属，按体能与恢复调整，不保证完全够用、不默认爬楼强度适合所有人。",
+        "睡眠与规律生活原则可用，未经核实的线粒体/抗炎强因果不能用于疾病解释或治疗承诺。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    },
+    {
+      "id": "tcy-7611481791380257969",
+      "videoId": "7611481791380257969",
+      "title": "基础背部跟练：背部训练与动作细节",
+      "category": "training",
+      "topics": [
+        "背部",
+        "背部跟练",
+        "基础训练",
+        "练背",
+        "二头",
+        "直臂下压",
+        "划船",
+        "引体向上",
+        "高位下拉",
+        "四分化",
+        "热身",
+        "拉伸",
+        "背肌",
+        "引体",
+        "背阔肌"
+      ],
+      "source": {
+        "url": "https://www.douyin.com/video/7611481791380257969",
+        "publishedAt": "2026-02-27",
+        "researchFile": "output/tan-chengyi-research-20261008/raw/7611481791380257969-ocr.json",
+        "reviewedMethod": "已下载本人公开原片，通时段每3秒取帧识别字幕并逐项阅读，明确数字另定点查看原图；非连续核听或动作实练。"
+      },
+      "evidenceStatus": "source_reviewed",
+      "summary": "四分化跟练第2期背部示范：热身与主动拉伸后，依次直臂下压、单手绳索划船、引体向上或辅助引体、坐姿划船、高位下拉，再追加杠铃二头弯举；保留部分组次与动作纠偏，未说明的参数不拼成完整课表。",
+      "observations": [
+        {
+          "text": "本期定位为新手四分化跟练第2期，训练背部；开头先补充上期卧推细节，再进入本期热身。",
+          "evidenceTimes": [
+            0,
+            240
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "热身采用跪姿、肘撑凳的前推/肩胛撑起动作；不能控制屈伸时先用静态位置配合呼吸。作者关于缓解腰、颈或肩部问题的说法仅作其主张记录，不作为诊断或治疗结论。",
+          "evidenceTimes": [
+            240,
+            405
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "随后做墙面支撑的背部主动拉伸：一侧支撑、同侧旋转、肩胛前引并呼吸，在拉长位置仍保持主动控制。",
+          "evidenceTimes": [
+            408,
+            531
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "正式动作第1项直臂下压：关注手腕、肘位置与肩胛前引；作者说明不一定压到底，可用约三分之二行程；做4组、每组约12–15次，737及741秒原图确认。",
+          "evidenceTimes": [
+            534,
+            741
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第2项单手绳索划船：以另一手撑上斜凳稳定，肩胛向前伸，避免躯干侧屈和旋转；作者提出可先用反手找感受，再尝试正手；做4组，随后说明每边选择约12次的重量，1030及1031秒原图确认。",
+          "evidenceTimes": [
+            747,
+            1031
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第3项引体向上；做不了自重版时用辅助器械或跪姿退阶，按自身能力选择。作者推荐4组、每组约10–12次，1332–1334秒原图确认。",
+          "evidenceTimes": [
+            1032,
+            1335
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第4项坐姿划船：脚蹬稳，借下肢后侧参与稳定骨盆；头不向前探，躯干倾斜与幅度以能控制为限；作者强调由肩伸带动肩胛，而不是刻意主动后缩肩胛。",
+          "evidenceTimes": [
+            1338,
+            1521
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "坐姿划船作者在1524秒明确4组，随后希望多做几次、先考虑质量再考虑重量，未给确定次数范围。",
+          "evidenceTimes": [
+            1524,
+            1539
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "第5项高位下拉：使用介于对握与反握之间的斜45度握法，45度指握法而非凳子；保持身体控制，区分向下拉与过多向后拉的动作取向。",
+          "evidenceTimes": [
+            1542,
+            1674
+          ],
+          "evidenceType": "video_frame"
+        },
+        {
+          "text": "背部后追加杠铃二头弯举：握距不过宽、肘略向前、手腕保持控制，每次注意收紧；原片未读到本项明确组次。",
+          "evidenceTimes": [
+            1677,
+            1776
+          ],
+          "evidenceType": "video_frame"
+        }
+      ],
+      "missingParameters": [
+        "高位下拉和弯举的组次，坐姿划船的次数，各动作的专项热身组数。",
+        "工作重量或负荷选择、组间休息、剩余次数、每周安排与休息日、进阶周期。",
+        "本期完整课时与动作停止条件；30分22秒是原片长度，不能替代用户实际训练时长。"
+      ],
+      "safetyNotes": [
+        "本片是作者示范及个人动作理论，不是适用于所有新手的统一处方；4组等参数应结合经验、恢复和目标调整。",
+        "作者多处谈屏气、卧推抬腿及疼痛/体态原因；应用中不默认要求长时间屏气或抬腿卧推，不把疼痛归因于单一肌肉紧张或无力。",
+        "拉伸和训练采用能主动控制、无明显关节痛的范围；肩痛时不硬做引体或强拉幅度。",
+        "画面中的27.5KG、32.5KG等器械/配重标识没有被核定为推荐工作重量。"
+      ],
+      "verification": {
+        "completeProtocol": false,
+        "practiceTested": false,
+        "safetyReviewed": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+html[data-zy-theme] .zy-app.zy-desktop .zy-sliding-navigation {
+  --zy-nav-size:34px;
+  --zy-nav-gap:10px;
+  position:relative;
+  isolation:isolate;
+  width:var(--zy-nav-size);
+  gap:var(--zy-nav-gap);
+}
+.zy-nav-highlight {
+  position:absolute;
+  inset:0 auto auto 0;
+  width:var(--zy-nav-size);
+  height:var(--zy-nav-size);
+  border-radius:6px;
+  background:#fff;
+  pointer-events:none;
+  transform:translateY(calc(var(--zy-nav-index) * (var(--zy-nav-size) + var(--zy-nav-gap))));
+  transition:transform 280ms cubic-bezier(.22,.8,.25,1);
+}
+html[data-zy-theme] .zy-app.zy-desktop .zy-sliding-navigation .zy-icon,
+html[data-zy-theme] .zy-app.zy-desktop .zy-sliding-navigation .zy-icon:hover,
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-sliding-navigation .zy-icon:not(.active):hover {
+  position:relative;
+  background:transparent;
+}
+html[data-zy-theme] .zy-app.zy-desktop .zy-sliding-navigation .zy-icon.active { color:#252628; }
+/* Anchor the unread reminder to the glyph, independently of its larger hit area. */
+.zy-nav-glyph {
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+  line-height:0;
+}
+.zy-nav-glyph > .zy-badge {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  top:-8px;
+  right:-8px;
+  min-width:15px;
+  height:15px;
+  padding:0 2px;
+  border:0;
+  border-radius:15px;
+  font-size:8px;
+  line-height:15px;
+  pointer-events:none;
+}
+.zy-mobile-nav-label { display:none; }
+.zy-mobile-task-page { display:flex; flex:1; flex-direction:column; min-width:0; min-height:0; height:100%; overflow:hidden; }
+@media(prefers-reduced-motion:reduce) { .zy-nav-highlight { transition:none; } }

@@ -1,0 +1,12 @@
+.zy-app .voice-bubble{position:relative;display:inline-flex;align-items:center;justify-content:flex-end;gap:5px;min-width:80px;height:20px;padding:0;border:0;background:transparent;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;line-height:inherit;cursor:pointer;white-space:nowrap;vertical-align:middle}
+.zy-app .voice-bubble:focus-visible{outline:2px solid #e47a96;outline-offset:2px}
+.zy-app .voice-bubble-waves{flex:none}
+.zy-app .voice-bubble-wrap{display:inline-flex;flex-direction:column;align-items:flex-end;gap:3px}
+.zy-app .voice-bubble-wrap audio{display:none}
+.zy-app .voice-bubble-error{font-size:10px;color:#b84040;white-space:nowrap}
+.zy-app .voice-bubble.is-playing .voice-wave-one{fill:#000}
+.zy-app .voice-bubble.is-playing .voice-wave-two{animation:voice-wave-two .9s steps(1,end) infinite}
+.zy-app .voice-bubble.is-playing .voice-wave-three{animation:voice-wave-three .9s steps(1,end) infinite}
+@keyframes voice-wave-two{0%,33.32%{stroke:currentColor}33.33%,100%{stroke:#000}}
+@keyframes voice-wave-three{0%,66.65%{stroke:currentColor}66.66%,100%{stroke:#000}}
+@media(prefers-reduced-motion:reduce){.zy-app .voice-bubble.is-playing :is(.voice-wave-two,.voice-wave-three){animation:none;stroke:#000}}

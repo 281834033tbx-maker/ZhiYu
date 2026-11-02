@@ -1,0 +1,109 @@
+html:has(.zy-companion), body:has(.zy-companion) {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: transparent !important;
+  overflow: hidden;
+}
+
+.zy-companion {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: transparent;
+  color: #254257;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.zy-companion-figure {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 36px;
+  width: 100%;
+  height: calc(100% - 42px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+}
+
+.zy-companion-figure.is-dragging { cursor: grabbing; }
+.zy-companion-figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 6px rgba(31, 34, 43, .15));
+  transform-origin: center bottom;
+  animation: zy-companion-breathe 3.8s ease-in-out infinite;
+}
+
+.zy-companion-figure.zy-companion-playful img { animation: zy-companion-playful .8s ease-in-out infinite alternate; }
+.zy-companion-figure.zy-companion-fidget img { animation: zy-companion-fidget 1.3s ease-in-out infinite alternate; }
+.zy-companion-figure.zy-companion-selfie img { animation: zy-companion-selfie 2.1s ease-in-out infinite alternate; }
+.zy-companion-figure.zy-companion-sit img { animation: zy-companion-breathe 4.8s ease-in-out infinite; }
+.zy-companion-figure.is-dragging img { animation: none; }
+
+.zy-companion-close {
+  position: absolute;
+  top: 10px;
+  right: 9px;
+  z-index: 3;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.82);
+  color: #435c6a;
+  font-size: 20px;
+  line-height: 25px;
+  text-align: center;
+  box-shadow: 0 2px 7px rgba(19,41,57,.12);
+  opacity: .55;
+}
+
+.zy-companion-close:hover, .zy-companion-close:focus-visible { opacity: 1; }
+.zy-companion-actions {
+  position: absolute;
+  z-index: 2;
+  left: 13px;
+  right: 13px;
+  bottom: 3px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 3px;
+  padding: 2px 4px;
+  border: 1px solid rgba(141,168,191,.38);
+  border-radius: 16px;
+  background: rgba(251,252,254,.88);
+  box-shadow: 0 3px 12px rgba(20,39,54,.13);
+  opacity: .72;
+}
+
+.zy-companion:hover .zy-companion-actions, .zy-companion-actions:focus-within { opacity: 1; }
+.zy-companion-actions button {
+  width: 29px;
+  height: 25px;
+  border-radius: 12px;
+  color: #45657a;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.zy-companion-actions button:hover,
+.zy-companion-actions button[aria-pressed="true"] { background: #dcebf7; color: #1f567e; }
+
+@keyframes zy-companion-breathe { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-2px) scale(1.004); } }
+@keyframes zy-companion-playful { from { transform: rotate(-1.3deg) translateY(0); } to { transform: rotate(1.3deg) translateY(-4px); } }
+@keyframes zy-companion-fidget { from { transform: rotate(-.4deg) translateY(0); } to { transform: rotate(.4deg) translateY(-1px); } }
+@keyframes zy-companion-selfie { from { transform: rotate(-.7deg) translateY(0); } to { transform: rotate(.7deg) translateY(-2px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .zy-companion-figure img { animation: none !important; }
+}

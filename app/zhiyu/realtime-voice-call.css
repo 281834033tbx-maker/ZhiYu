@@ -1,0 +1,97 @@
+.zy-realtime-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  color: #fff;
+  pointer-events: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  -webkit-app-region: no-drag;
+}
+.zy-realtime-scene-tools {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  pointer-events: auto;
+}
+.zy-realtime-scene-tools button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  filter: drop-shadow(0 1px 3px rgb(0 0 0 / 65%));
+  transition: color 140ms ease, opacity 140ms ease;
+}
+.zy-realtime-scene-tools button:hover { opacity: .78; }
+.zy-realtime-scene-tools button:focus-visible { outline: 2px solid #fff; outline-offset: -3px; border-radius: 6px; }
+.zy-realtime-scene-tools button.is-active { color: #b4f3d5; }
+.zy-realtime-scene-tools .zy-realtime-scene-mute { width: 34px; color: rgb(255 255 255 / 75%); }
+.zy-realtime-scene-tools .zy-realtime-scene-mute[aria-pressed='true'] { color: #ffc4b9; }
+.zy-realtime-scene-status {
+  position: absolute;
+  top: 54px;
+  right: 17px;
+  width: min(330px, calc(100% - 34px));
+  text-align: right;
+  text-shadow: 0 1px 4px #000, 0 0 12px rgb(0 0 0 / 70%);
+}
+.zy-realtime-scene-status p { margin: 0; font-size: 11px; line-height: 1.7; overflow-wrap: anywhere; }
+.zy-realtime-scene-error { margin-top: 7px; color: #ffc8bd; }
+.zy-realtime-scene-error button {
+  padding: 0;
+  margin-top: 5px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-shadow: inherit;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.zy-realtime-scene-status .zy-realtime-scene-notice { margin-top: 7px; }
+.zy-realtime-scene-captions {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(560px, calc(100% - 36px));
+  max-height: 30%;
+  overflow: auto;
+  scrollbar-width: none;
+  pointer-events: auto;
+  text-align: center;
+  text-shadow: 0 1px 4px #000, 0 0 14px rgb(0 0 0 / 85%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12px, #000);
+  mask-image: linear-gradient(to bottom, transparent, #000 12px, #000);
+}
+.zy-realtime-scene-captions::-webkit-scrollbar { display: none; }
+.zy-realtime-scene-caption {
+  margin: 0;
+  padding-top: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.zy-realtime-scene-caption span { margin-right: 9px; font-size: 11px; font-weight: 400; opacity: .72; }
+.zy-realtime-scene-caption.user { color: #d3e7dd; }
+.zy-character-window.is-mac-fullscreen .zy-realtime-scene-tools { top: 37px; }
+.zy-character-window.is-mac-fullscreen .zy-realtime-scene-status { top: 82px; }
+@media (max-height: 440px) {
+  .zy-realtime-scene-captions { bottom: 10px; max-height: 26%; }
+  .zy-realtime-scene-caption { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .zy-realtime-scene-tools button { transition: none; } }

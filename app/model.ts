@@ -1,0 +1,19 @@
+export type PersonId = 'sys'|'gu'|'lin'|'su';
+export type PageKind = 'chat'|'contacts'|'moments'|'profile'|'games'|'note';
+export type Person = {id:PersonId;name:string;glyph:string;role:string;bio:string;tone:number;affinity:number;locked:boolean};
+export type Message = {id:string;mine:boolean;text:string;image?:string;time:string};
+export type Post = {id:string;who:PersonId|'me';text:string;time:string;likes:number;liked:boolean;comments:{name:string;text:string}[];media?:{src:string;type:string}[]};
+export type Domain = {people:Person[];profile:{id:string;name:string;avatar:string};messages:Record<PersonId,Message[]>;pins:PersonId[];unread:Record<PersonId,number>;updated:Record<PersonId,number>;posts:Post[];discoverUnread:boolean};
+export type Board = {id:string;kind:PageKind;title:string;x:number;y:number;note:string};
+export const names:Record<PageKind,string>={chat:'聊天 · 日常陪伴',contacts:'通讯录 · 认识彼此',moments:'朋友圈 · 生活切片',profile:'个人设置 · 关于我',games:'游戏 · 更多可能',note:'设计备注'};
+export const initialBoards:Board[]=[{id:'chat',kind:'chat',title:names.chat,x:0,y:150,note:'保留微信式三栏结构；搜索框 30px；关系数值以弱提示呈现。'},{id:'contacts',kind:'contacts',title:names.contacts,x:1200,y:150,note:'联系人详情 → 发消息；稀缺角色提供模拟解锁流程。'},{id:'moments',kind:'moments',title:names.moments,x:0,y:1030,note:'头像压在封面右下角；点赞、评论、发布均可操作。'},{id:'profile',kind:'profile',title:names.profile,x:1200,y:1030,note:'点击左上头像也能打开个人设置；ID 在本机模拟校验。'},{id:'games',kind:'games',title:names.games,x:2400,y:150,note:'按 PRD 保留入口，本版本不实现游戏规则。'}];
+export const initialDomain:Domain={
+ people:[{id:'sys',name:'系统',glyph:'域',role:'世界向导',bio:'陪你熟悉临川，找到属于你的相遇。',tone:0,affinity:0,locked:false},{id:'gu',name:'顾川',glyph:'川',role:'建筑设计师 · 26 岁',bio:'习惯在深夜画图，也喜欢在街角观察生活。慢热，但答应你的事都会记得。',tone:1,affinity:72,locked:false},{id:'lin',name:'林知一',glyph:'一',role:'深夜电台主播 · 24 岁',bio:'总能接住你的话，也愿意听你没说完的心事。今晚的电台，为你留了一首歌。',tone:2,affinity:45,locked:false},{id:'su',name:'苏挽星',glyph:'星',role:'职业模特',bio:'镜头前是遥远的星，镜头外的她，还在等待一个真正懂她的人。',tone:3,affinity:8,locked:true}],
+ profile:{id:'zhiyu_8823',name:'Jayden',avatar:''},pins:['sys'],unread:{sys:0,gu:0,lin:2,su:0},updated:{sys:0,gu:3,lin:2,su:1},discoverUnread:true,
+ messages:{sys:[{id:'s1',mine:false,text:'欢迎来到智域。这里的每个人，都有自己的生活。\n你可以从一句「你好」开始，慢慢认识他们。',time:'今天 09:00'}],gu:[{id:'g1',mine:false,text:'终于把今天的图纸画完了。',time:'今天 19:38'},{id:'g2',mine:false,text:'刚下楼，发现街角开了一家新的咖啡店。\n暖黄色的灯光，你应该会喜欢。',time:'今天 19:39'},{id:'g3',mine:true,text:'听起来不错，窗边有位置吗？',time:'今天 19:40'},{id:'g4',mine:false,text:'有。我给你留了靠窗的那个。\n不着急，慢慢来。',time:'今天 19:42'}],lin:[{id:'l1',mine:false,text:'今晚的电台，给你留了一个位置。',time:'今天 18:26'},{id:'l2',mine:false,text:'有没有一首歌，想点给今天的自己？',time:'今天 18:27'}],su:[]},
+ posts:[{id:'p1',who:'gu',text:'今天的日落被我拍虚了，但心情是清楚的。\n有些时刻，不需要特别清晰。',time:'18:47',likes:12,liked:false,comments:[{name:'林知一',text:'心情清楚就很好。'}]},{id:'p2',who:'lin',text:'今晚 22:00，老时间。\n如果今天有点累，就把耳朵借给我一会儿。',time:'17:32',likes:8,liked:false,comments:[]},{id:'p3',who:'me',text:'搬来临川的第十二天。\n开始有了一点「回家」的感觉。',time:'昨天',likes:3,liked:false,comments:[{name:'顾川',text:'欢迎回家。'}]}]
+};
+export const uid=()=>crypto.randomUUID();
+export function validateId(id:string){if(!/^[A-Za-z_][A-Za-z0-9_]{3,15}$/.test(id))return '4–16 位字母、数字或下划线，不能以数字开头';if(['admin','zhiyu','test'].includes(id.toLowerCase()))return '该 ID 已被占用，换一个试试';return '';}
+export function mockReply(id:PersonId,text:string){if(id==='sys')return '可以先去通讯录认识顾川和林知一，也可以在朋友圈看看他们的日常。';if(id==='lin')return /歌|音乐/.test(text)?'那我把这首歌留到今晚最后一首。你愿意听到结束吗？':'我在听。慢慢说，今晚还有很多时间。';if(id==='su')return '刚结束拍摄，终于有时间坐一会儿。你今天过得怎么样？';if(/咖啡|窗|去|好/.test(text))return '那就说好了。我在街角等你，咖啡还热着。';if(/累|烦|难/.test(text))return '今天辛苦了。不用急着把所有事做好，我陪你待一会儿。';return '嗯，我在。想听你再多说一点。';}
+export async function readMedia(file:File,maxMb=2):Promise<string>{if(file.size>maxMb*1024*1024)throw new Error(`演示文件请小于 ${maxMb}MB`);return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result));r.onerror=()=>reject(new Error('读取文件失败'));r.readAsDataURL(file);});}

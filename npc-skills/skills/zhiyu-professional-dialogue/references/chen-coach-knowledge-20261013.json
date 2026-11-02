@@ -1,0 +1,5689 @@
+{
+  "schemaVersion": 1,
+  "version": "chen-coach-knowledge-20261017-v2",
+  "characterId": "chen-nian",
+  "status": "user_authorized_coach_knowledge",
+  "coverage": {
+    "complete": false,
+    "practiceTested": false,
+    "mediaDownloads": 0,
+    "entryCount": 97,
+    "sourceCount": 121
+  },
+  "coreRules": [
+    "陈年现行本职健身教练：训练动作、热身、适配、排期、进阶/减量、训练补剂及日常运动恢复；柳智敏主责早餐/减脂饮食/日常营养，保留既有口吻和人物历史。",
+    "动作指导给可执行的准备→轨迹/终点→主要错误→退阶，短提示跟当前步骤；图示可以辅助，不能替代用户姿势观察或假称已实时看懂动作。",
+    "沉肩、离心和呼吸须随动作阶段说明；肩推/侧平举不能全程锁死肩胛，离心不是所有动作同秒数或越慢越好。",
+    "A/B是同动作位两种条件候选；按器械、疼痛、最小阻力、承载、起落/取放能力选择一项；两项都不适配可退阶或暂不做专项，不称人人最佳，不一概丢弃有证据且适配的动作。",
+    "居家/徒手也有真实负荷；地面推困难可墙推，蹲起困难可稳定椅坐站/扶稳浅蹲，下地困难不默认仰卧/俯卧；不拿体重大一条信息判断所有动作。",
+    "每周可训练天数由用户决定，分化内容、肌群频率和总量另外安排；三练可PPL/全身，四练可胸背腿肩/上下肢，五练可胸背肩腿手臂；别虚报每肌群每周两次或默认七天高强度。",
+    "胸/肩推已涉及三头，背拉涉及二头/后束；删独立手臂日不等于删全部手臂刺激；恢复差可插休并顺延，不能隔天补双课。",
+    "助手保守起步示例：每动作1工作组熟悉→适应后约2组；复合8–12次、孤立10–15次，约3次余力；负荷使其无痛可控，不能达到下限先退阶。数字按用户情况调整，非作者唯一处方。",
+    "主项复合动作休息可先2–3分钟、孤立约90秒；未恢复可延长。核心时间支撑不硬套重复次数RIR。热身轻组另记且远离力竭。",
+    "同技术/幅度/休息下达到目标且保有计划余力再小幅加重；后组次数下降不自动减重；反复失控先结束该组，检查设置/休息再减负荷。",
+    "较重复合/失控代价高动作不默认力竭，孤立也非必须力竭；大小重量相对本人能力与目标，不按固定公斤数夸专业。",
+    "热身用轻活动→相关轻试做→首项逐级加负荷，确认当天无痛可控；不把闭眼平衡/五指墙撑/全体重胸口滚轴设为未知新手默认，不保证热身必然防伤。",
+    "当天疲惫先看轻热身表现，异常吃力取消冲重/力竭并减当日压力；连续表现下降可减辅助组/频率或增休息，不固定每4周或统一降50%。动作痛先停。",
+    "原因不明疲劳持续几周、影响生活或伴异常，建议医疗评估；不靠提神补剂硬顶，不自行诊断缺铁、激素低或过度训练。",
+    "日常精力建议围绕固定作息、按年龄的睡眠、少久坐和可承受活动；18–60岁成人至少7小时且关注质量。运动能支持情绪/睡眠，不承诺治疲劳/焦虑或人人立即提神。",
+    "补剂先看是否需要：一水肌酸可选，健康训练成人常见每日3–5g、无需强制加载；蛋白粉只补总蛋白缺口；咖啡因看全天总量/睡眠耐受，不默认新手氮泵。",
+    "补剂建议保留必要健康/用药/年龄条件与剂量单位；肾病、孕哺期、未成年人不套健康成人肌酸/咖啡因方案；蛋白充足时不把BCAA/谷氨酰胺列必买，未知成分/剂量不精确推荐。",
+    "知识来源分层：独立指南/研究、作者简介、局部字幕/画面、旧抽帧和助手适配分开；目录/标题不构造教学，原片秒数不作为训练时间，缺参数保持未知。",
+    "所有资料覆盖complete=false、practiceTested=false，知识保存不代表全量视频已看完、真人实操验证或现实医疗资质。正常对话保持自然短句，专业细节只讲当前用户需要执行的。",
+    "科学结论、实用处方和作者局部观察分开：没有显著差异不等于绝对等效，排名不证明单因素胜出；先匹配用户同一动作及实际轻重区间，不偷换成跨动作公斤数或极端负荷。",
+    "用户质疑或明确问科学依据时，可按本轮已核authority/adjudication报组织、论文题目、年份、样本、比较、真实结果和链接；不编全文状态、原句、数字或本人实验，普通聊天仍直接短答。",
+    "依据的目的在于更好判断并允许纠错，不是证明陈年永远正确；缺直接证据要明确，随后给有条件的可执行选择，不承诺训练效果或知识绝对正确。",
+    "不同部位及具体动作分别安排；每个真实训练步骤标清组数、次数及选重办法，未知公斤数不编造。较重组与较轻多次是处方选择，不把大小肌群写成一刀切或增肌速度定理。"
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "title": "ACSM 2026 抗阻训练立场及官方发布说明",
+      "url": "https://acsm.org/resistance-training-guidelines-update-2026/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2026-04-01（期刊卷期）；官方说明2026-03-17",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "健康成人应按目标、能力和喜好调整抗阻训练。力竭、复杂周期、特定器械不应被当作获得效果的统一必要条件。",
+      "limitations": [
+        "面向健康成人的群体证据；并不证明所有器械/动作完全等效，不提供个人损伤康复处方。",
+        "官方说明全文＋原论文PMC搜索索引中的有关段落；PMC直开遇验证，LWW直开402，未取得完整新立场全文"
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "ACSM 2009：Progression models in resistance training for healthy adults",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19204579/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2009-03",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "在既定RM负荷下，当前负荷能比目标多做1–2次时，建议增加2–10%负荷；同时要求按目标、能力和训练水平应用。",
+      "limitations": [
+        "2026新版已经更新此立场；2–10%是历史条件规则，不能称为2026新版统一幅度，也不能作为每天自动加重。",
+        "PubMed原摘要搜索索引；直开PubMed仅返回页脚"
+      ]
+    },
+    {
+      "id": "S03",
+      "title": "Efficacy of Split Versus Full-Body Resistance Training on Strength and Muscle Growth",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38595233/",
+      "attribution": "independent",
+      "evidenceLevel": "research_review",
+      "publishedAt": "2024-07",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "训练量相等时，分化和全身训练在所测肌肥大、力量结果上未显示显著差异。",
+      "limitations": [
+        "不是直接比较所有三/五/七分化；未显著不等于每名用户效果完全一致。",
+        "原摘要搜索索引"
+      ]
+    },
+    {
+      "id": "S04",
+      "title": "How many times per week should a muscle be trained to maximize muscle hypertrophy?",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30558493/",
+      "attribution": "independent",
+      "evidenceLevel": "research_review",
+      "publishedAt": "2019-06",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "周训练量相等时，训练频率对增肌没有显著或有实际意义的独立影响；频率可帮助分配训练量。",
+      "limitations": [
+        "不能据此说每周一次、两次对所有人的技术学习、恢复、时间安排完全相同。",
+        "原摘要搜索索引"
+      ]
+    },
+    {
+      "id": "S05",
+      "title": "NSCA：Introduction to Dynamic Warm-Up",
+      "url": "https://www.nsca.com/education/articles/kinetic-select/introduction-to-dynamic-warm-up/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2017-06",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "热身为后续活动作生理和心理准备，通用热身加与正式动作相似的专项热身；热身和拉伸不同，过程应避免过度疲劳。",
+      "limitations": [
+        "教材宽泛描述伤害风险；不能因此承诺普通健身热身必然防伤。",
+        "全文，重点原网页205–214行"
+      ]
+    },
+    {
+      "id": "S06",
+      "title": "A systematic review of the effects of upper body warm-up on performance and injury",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25694615/",
+      "attribution": "independent",
+      "evidenceLevel": "research_review",
+      "publishedAt": "2015",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "动态热身有支持力量/功率表现的证据；当时缺少上肢热身减少损伤的直接研究依据。",
+      "limitations": [
+        "运动专项、热身负荷、人群不同；不能将运动员高负荷激活方案硬套新手。",
+        "PubMed/BJSM原摘要和结论搜索索引"
+      ]
+    },
+    {
+      "id": "S07",
+      "title": "Effects of Horizontal and Incline Bench Press on Neuromuscular Adaptations in Untrained Young Men",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7449336/",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2020",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "上斜组在所测三个胸大肌位置中的一个较上方位置增长较大；其他位置未显示同样组间差异。",
+      "limitations": [
+        "实验上斜角为44°，不能将此研究声称成15°、30°或某器械必然最佳。没有直接比较本文件所有候选动作或证明下胸最佳动作。",
+        "原摘要＋PMC方法和讨论搜索索引；PMC直开遇验证"
+      ]
+    },
+    {
+      "id": "S08",
+      "title": "Triceps brachii hypertrophy is substantially greater after elbow extension training performed in the overhead versus neutral arm position",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35819335/",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2023-07（2022在线）",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "两种方式均使三头增长，过顶方式增长更大，特别是长头；过顶使用的绝对重量较低。",
+      "limitations": [
+        "小样本；不能要求肩部过顶受限者硬做，也不能把下压删为无效。",
+        "PubMed原摘要搜索索引"
+      ]
+    },
+    {
+      "id": "S09",
+      "title": "Greater Hamstrings Muscle Hypertrophy but Similar Damage Protection after Training at Long versus Short Muscle Lengths",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33009197/",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2021",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "坐姿腿弯举对双关节腘绳肌的增长优于俯卧腿弯举；单关节肌不呈相同差异。",
+      "limitations": [
+        "腿弯举并不替代整个髋伸训练；俯卧方式仍有效，坐姿疼痛或设备不合适者可选替代。",
+        "原摘要＋PMC研究结论搜索索引"
+      ]
+    },
+    {
+      "id": "S10",
+      "title": "Hip thrust and back squat training elicit similar gluteus muscle hypertrophy and transfer similarly to the deadlift",
+      "url": "https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2023.1279170/full",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2023",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "臀推和深蹲均使臀肌增长；在该实验中臀肌增长相近，深蹲更多涉及大腿增长，力量有动作特异性。",
+      "limitations": [
+        "杠铃实验不能直接证明机器臀推、箱式蹲完全同效；适配版本是助手外推。避免引用早期预印本代替正式版本。",
+        "正式期刊全文重点摘要/方法/结论与搜索索引"
+      ]
+    },
+    {
+      "id": "S11",
+      "title": "Triceps surae muscle hypertrophy is greater after standing versus seated calf-raise training",
+      "url": "https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2023.1272106/full",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2023-12-13",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "直膝站姿提踵对腓肠肌增长优于屈膝坐姿；比目鱼肌增长两者未见显著差异。",
+      "limitations": [
+        "坐姿不能说完全无效；高体重、站姿平衡受限者的坐姿替代不保证腓肠肌刺激等同。",
+        "期刊全文，重点训练方法/摘要/结论"
+      ]
+    },
+    {
+      "id": "S12",
+      "title": "Dumbbell versus cable lateral raises for lateral deltoid hypertrophy: an experimental study",
+      "url": "https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2025.1611468/full",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2025-07-07",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "绳索和哑铃侧平举均增加中束肌厚，结果支持相近增肌效果。",
+      "limitations": [
+        "不能拿绳索张力曲线或某一瞬间EMG排名，宣布哑铃效果差而舍弃。",
+        "期刊全文摘要/结论和原摘要搜索索引"
+      ]
+    },
+    {
+      "id": "S13",
+      "title": "Distinct muscle growth and strength adaptations after preacher and incline biceps curls",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39809454/",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2025-05（2025-01-14在线）",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "上斜弯举近端增长较大，牧师凳弯举远端增长较大，力量遵循动作特异性。",
+      "limitations": [
+        "区域性结论不能简化成一个动作全面最好；受试者不是所有年龄/训练经验/肩肘状况的人。",
+        "PubMed原摘要搜索索引"
+      ]
+    },
+    {
+      "id": "S14",
+      "title": "Hypertrophic Effects of Single- versus Multi-Joint Exercise: A Direct Comparison Between Knee Extension and Leg Press",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41630124/",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2026-07卷期（2026-02-05在线）",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "伸膝对股直肌增长更大，腿举与伸膝对股四头肌整体及股外侧等肌群增长相近；腿举还涉及臀及大收肌增长。",
+      "limitations": [
+        "两动作目标有重叠但不是完全等价；不能把腿举或腿屈伸其中一个一概删为差动作。",
+        "原摘要及PMC原文结果搜索索引"
+      ]
+    },
+    {
+      "id": "S15",
+      "title": "Motion of the shoulder complex during multiplanar humeral elevation",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19181982/",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2009-02",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "抬臂包含锁骨抬升及旋转、肩胛向上旋转和后倾等协同运动。",
+      "limitations": [
+        "解剖运动学不是某个健身动作治疗研究；能说明不能对所有抬臂动作统一锁死沉肩，不能诊断个人疼痛原因。",
+        "PubMed原摘要搜索索引"
+      ]
+    },
+    {
+      "id": "S16",
+      "title": "Interpreting Signal Amplitudes in Surface Electromyography Studies in Sport and Rehabilitation Sciences",
+      "url": "https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2017.00985/full",
+      "attribution": "independent",
+      "evidenceLevel": "research_review",
+      "publishedAt": "2018-01-04",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "sEMG幅度反映肌肉兴奋，不能单独被当作力量/长期肌肥大的替代终点。",
+      "limitations": [
+        "不是说EMG毫无用途；它可帮助研究动作机制，但不够作全人群增肌动作排行榜。",
+        "期刊全文，重点长期结果章节"
+      ]
+    },
+    {
+      "id": "S17",
+      "title": "Mayo Clinic：Weight training: Do's and don'ts of proper technique",
+      "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/weight-training/art-20045842",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "使用能保持技术的适当负荷；无法维持动作时减重；动作引起疼痛时停止。",
+      "limitations": [
+        "一般指导，不是具体损伤诊断、治疗或全人群最佳动作证明。",
+        "官方页面搜索索引"
+      ]
+    },
+    {
+      "id": "S18",
+      "title": "NSCA：Time-Efficient Training Approach as a Solution to Sedentary Occupational Health Risks",
+      "url": "https://www.nsca.com/education/articles/ptq/time-efficient-training/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "专项热身可用即将训练动作的次最大负荷；示例含卧推、下拉、划船、杯式蹲、RDL等常见动作。",
+      "limitations": [
+        "时间效率专题文章的具体休息/力竭例子不直接升级为所有新手默认规则，也不证明这些动作最优。",
+        "全文，重点热身结构及训练示例"
+      ]
+    },
+    {
+      "id": "S19",
+      "title": "NCBI Bookshelf / StatPearls：Anatomy, Thorax, Pectoralis Major Major",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK525991/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "胸大肌可按锁骨部、胸肋部及其分段理解；上/中/下胸是日常训练侧重说法。",
+      "limitations": [
+        "不能声称存在三块完全独立的肌肉或动作能百分之百隔离某一区域。",
+        "官方书目摘录搜索索引"
+      ]
+    },
+    {
+      "id": "S20",
+      "title": "NSCA：Low Back Pain—The Mobility-Stability Continuum",
+      "url": "https://www.nsca.com/education/articles/ptq/low-back-painthe-mobility-stability-continuum/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "平板、死虫等可用于躯干控制/抗伸展训练。",
+      "limitations": [
+        "用于本文件核心稳定候选的机制支持；不证明治好所有腰痛，也不构成完整核心增肌计划。",
+        "官方页面搜索索引"
+      ]
+    },
+    {
+      "id": "S21",
+      "title": "Optimizing Resistance Training Technique to Maximize Muscle Hypertrophy: A Narrative Review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38249086/",
+      "attribution": "independent",
+      "evidenceLevel": "research_review",
+      "publishedAt": "2023-12-29",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "动作轨迹和身体位置的长期增肌证据仍有限，应区分应用解剖/力学推断与直接干预证据；不应把任一固定姿势或节奏当作已证全面最佳。",
+      "limitations": [
+        "低于系统综述的证据汇总层级；本文件不据此硬性规定每次重复2–8秒或极慢离心。",
+        "原摘要搜索索引"
+      ]
+    },
+    {
+      "id": "S22",
+      "title": "Does Varying Resistance Exercises Promote Superior Muscle Hypertrophy and Strength Gains? A Systematic Review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35438660/",
+      "attribution": "independent",
+      "evidenceLevel": "research_review",
+      "publishedAt": "2022-06",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "有计划的动作变化可能改善区域适应；过度随机替换和刺激高度重复的动作并非更好。",
+      "limitations": [
+        "候选保留与筛选原则，不是某套两动作全人群最优的证明。",
+        "PubMed原摘要搜索索引"
+      ]
+    },
+    {
+      "id": "S23",
+      "title": "Exploring the Dose-Response Relationship Between Estimated Resistance Training Proximity to Failure, Strength Gain, and Muscle Hypertrophy",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38970765/",
+      "attribution": "independent",
+      "evidenceLevel": "research_review",
+      "publishedAt": "2024",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "接近力竭程度可能与增肌相关，应关注训练努力程度而非仅重量。",
+      "limitations": [
+        "各试验RIR由描述估算；并不直接验证本文件RIR2或RIR1–3是所有人的最优值。",
+        "原摘要搜索索引"
+      ]
+    },
+    {
+      "id": "X01",
+      "title": "NSCA’s Essentials of Personal Training, Third Edition：Types of Resistance Training Equipment",
+      "url": "https://www.nsca.com/certification/nsca-cpt/essentials-of-personal-training--3rd-edition/excerpts/types-of-resistance-training-equipment/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2025-12",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/evidence-and-pairs.json",
+      "supports": "器械选择要按训练水平、动作熟练、身高体重等体型参数与喜好；机器增加稳定性，但大/小体型仍可能因设计而不适配；自由重量需要足够稳定和技术。",
+      "limitations": [
+        "不证明某个退阶版本普适无痛或与原动作等效增肌。",
+        "全文，重点201–212、235–241行"
+      ]
+    },
+    {
+      "id": "HC01",
+      "title": "ACSM 2026 resistance-training guidance",
+      "url": "https://acsm.org/resistance-training-guidelines-update-2026/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2026-03-17",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-coach-completion-20261013/new-creator-research.json",
+      "supports": "自重、弹力带、居家抗阻训练可以有效。；计划按目标、能力及可坚持性个体化；一般健康成人不必统一追求力竭或复杂周期。；官方概述强调主要肌群至少每周两次，而非仅追求分化名称。",
+      "limitations": [
+        "适用健康成人；不直接验证本程序每个具体动作、每组数字或伤痛适配。",
+        "用户每周几练不唯一决定三/四/五分化。"
+      ]
+    },
+    {
+      "id": "HC02",
+      "title": "Strength exercises",
+      "url": "https://www.nhs.uk/live-well/exercise/strength-exercises/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2024-02-28",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-coach-completion-20261013/new-creator-research.json",
+      "supports": "居家练习可从稳定无轮椅坐站、扶椅浅蹲、扶支撑提踵和墙俯卧撑起步。；坐站：脚稳、微前倾，控制站起和坐下。；浅蹲：扶稳、膝朝脚趾方向，深度舒适。；墙俯卧撑：双手约胸高，躯干稳，控制靠近墙及推回。；提踵：扶稳，缓慢抬落双脚跟。",
+      "limitations": [
+        "本页是基础健康/活动能力练习，不证明与大重量训练同等刺激或适合所有人。",
+        "不把特定练习的慢速表述泛化成所有动作越慢越好；不照搬次数为统一训练处方。"
+      ]
+    },
+    {
+      "id": "HC03",
+      "title": "About Sleep",
+      "url": "https://www.cdc.gov/sleep/about/index.html",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2024-05-15",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-coach-completion-20261013/new-creator-research.json",
+      "supports": "18–60岁成人建议每日睡眠至少7小时，也要关注睡眠质量。；固定睡起时间、安静凉爽卧室、睡前减少屏幕、下午/晚间避免咖啡因，有助睡眠习惯。；持续睡眠问题应找医疗人员评估。",
+      "limitations": [
+        "不把成人时长用于儿童或所有年龄。",
+        "睡够时长仍疲倦不能简单归因缺乏锻炼；不承诺补觉即完全恢复。"
+      ]
+    },
+    {
+      "id": "HC04",
+      "title": "Benefits of Physical Activity",
+      "url": "https://www.cdc.gov/physical-activity-basics/benefits/index.html",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2025-12-04",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-coach-completion-20261013/new-creator-research.json",
+      "supports": "运动可支持情绪、认知和睡眠，少久坐、多活动也有益。；体重管理同时受饮食和活动影响；个体需求不同。",
+      "limitations": [
+        "不能据此保证任意训练当天必然提神或替代心理/疾病治疗。",
+        "小量散步的具体分钟数是助手执行起点，不是该页人人处方。"
+      ]
+    },
+    {
+      "id": "HC05",
+      "title": "Tiredness and fatigue",
+      "url": "https://www.nhs.uk/symptoms/tiredness-and-fatigue/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2023-06-02",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-coach-completion-20261013/new-creator-research.json",
+      "supports": "疲劳可能与睡眠、生活方式、压力、疾病或药物相关。；原因不明持续几周、影响生活或伴其他症状，应就医评估而非自行诊断。",
+      "limitations": [
+        "页面列出可能原因不能据对话诊断贫血、甲状腺病等。",
+        "不以铁剂、维生素或提神补剂替代原因评估。"
+      ]
+    },
+    {
+      "id": "HC06",
+      "title": "Integrating Deloading into Strength and Physique Sports Training Programmes: An International Delphi Consensus Approach",
+      "url": "https://link.springer.com/article/10.1186/s40798-023-00633-0",
+      "attribution": "independent",
+      "evidenceLevel": "expert_consensus",
+      "publishedAt": "2023-09-21",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-coach-completion-20261013/new-creator-research.json",
+      "supports": "减量可通过减少组数、次数或频率，或降低努力程度来减少训练压力。；可按计划或根据身体/心理疲劳调整，依据个人响应和生活安排。；辅助练习可以删减，保留熟悉主项并侧重技术。",
+      "limitations": [
+        "专家共识，主要研究力量/健美教练，非统一减量疗效随机试验。",
+        "不支持所有人固定每4周减量、固定减50%或单次状态差即判过度训练。"
+      ]
+    },
+    {
+      "id": "HC07",
+      "title": "Physical activity",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-coach-completion-20261013/new-creator-research.json",
+      "supports": "成人一般健康目标：每周150–300分钟中等强度或75–150分钟较高强度有氧，配合肌肉强化活动。；少量活动优于完全不活动，应按能力逐渐增加。",
+      "limitations": [
+        "不是初次训练必须一次达到的门槛；特殊健康情况需调整。"
+      ]
+    },
+    {
+      "id": "issn-creatine-2017",
+      "title": "ISSN肌酸立场声明",
+      "url": "https://link.springer.com/article/10.1186/s12970-017-0173-z",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2017-06-13",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/kai-supplements.json",
+      "supports": "对规律力量训练或反复高强度运动可考虑；不等于必需。",
+      "limitations": [
+        "仅复用先前独立资料已读段落，具体人群和剂量限制见条目；不是凯圣王原片剂量。"
+      ]
+    },
+    {
+      "id": "issn-protein-2017",
+      "title": "ISSN蛋白质与运动立场声明",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28642676/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2017-06-20",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/kai-supplements.json",
+      "supports": "饮食蛋白不足或吃饭不方便时补缺口；吃够后无需强制额外加粉。；便携补蛋白选择；按实际蛋白、热量和食物耐受判断，不自动当减脂食品。",
+      "limitations": [
+        "仅复用先前独立资料已读段落，具体人群和剂量限制见条目；不是凯圣王原片剂量。"
+      ]
+    },
+    {
+      "id": "issn-caffeine-2021",
+      "title": "ISSN咖啡因与运动表现立场声明",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33388079/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2021-01-02",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/kai-supplements.json",
+      "supports": "可改善部分运动表现，须以睡眠、敏感性和耐受为条件，不给所有新手默认使用。；按每项成分和剂量评估，不把氮泵当成一种统一有效的物质。",
+      "limitations": [
+        "仅复用先前独立资料已读段落，具体人群和剂量限制见条目；不是凯圣王原片剂量。"
+      ]
+    },
+    {
+      "id": "ais-a",
+      "title": "AIS补剂Group A",
+      "url": "https://www.ausport.gov.au/ais/nutrition/supplements/group_a",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/kai-supplements.json",
+      "supports": "对规律力量训练或反复高强度运动可考虑；不等于必需。；饮食蛋白不足或吃饭不方便时补缺口；吃够后无需强制额外加粉。；可改善部分运动表现，须以睡眠、敏感性和耐受为条件，不给所有新手默认使用。；针对某些持续1–4分钟的高强度任务可考虑，不默认给普通力量新手。",
+      "limitations": [
+        "仅复用先前独立资料已读段落，具体人群和剂量限制见条目；不是凯圣王原片剂量。"
+      ]
+    },
+    {
+      "id": "ais-c",
+      "title": "AIS补剂Group C",
+      "url": "https://www.ausport.gov.au/ais/nutrition/supplements/group_c",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/kai-supplements.json",
+      "supports": "蛋白已充足时不列为普通增肌者必买；AIS为Group C。",
+      "limitations": [
+        "仅复用先前独立资料已读段落，具体人群和剂量限制见条目；不是凯圣王原片剂量。"
+      ]
+    },
+    {
+      "id": "ods-performance",
+      "title": "NIH ODS运动表现补剂专业资料",
+      "url": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/kai-supplements.json",
+      "supports": "对规律力量训练或反复高强度运动可考虑；不等于必需。；按每项成分和剂量评估，不把氮泵当成一种统一有效的物质。；蛋白已充足时不列为普通增肌者必买；AIS为Group C。；普通健身者不默认购买；单独提高运动表现缺乏支持。；不建立通用促睾购物单；逐成分与缺乏状态核验。",
+      "limitations": [
+        "仅复用先前独立资料已读段落，具体人群和剂量限制见条目；不是凯圣王原片剂量。"
+      ]
+    },
+    {
+      "id": "fda-caffeine",
+      "title": "FDA：多少咖啡因算过量",
+      "url": "https://www.fda.gov/consumers/consumer-updates/spilling-beans-how-much-caffeine-too-much",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/kai-supplements.json",
+      "supports": "可改善部分运动表现，须以睡眠、敏感性和耐受为条件，不给所有新手默认使用。",
+      "limitations": [
+        "仅复用先前独立资料已读段落，具体人群和剂量限制见条目；不是凯圣王原片剂量。"
+      ]
+    },
+    {
+      "id": "ais-fish-oil",
+      "title": "AIS鱼油使用依据",
+      "url": "https://www.ausport.gov.au/ais/nutrition/supplements/group_b/other/fish-oils/how-and-when-do-i-use-it",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/kai-supplements.json",
+      "supports": "按吃鱼与EPA+DHA摄入评估；AIS运动效果属Group B，不能宣传人人吃才能增肌。",
+      "limitations": [
+        "仅复用先前独立资料已读段落，具体人群和剂量限制见条目；不是凯圣王原片剂量。"
+      ]
+    },
+    {
+      "id": "ais-b",
+      "title": "AIS补剂Group B",
+      "url": "https://www.ausport.gov.au/ais/nutrition/supplements/group_b",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/kai-supplements.json",
+      "supports": "按吃鱼与EPA+DHA摄入评估；AIS运动效果属Group B，不能宣传人人吃才能增肌。",
+      "limitations": [
+        "仅复用先前独立资料已读段落，具体人群和剂量限制见条目；不是凯圣王原片剂量。"
+      ]
+    },
+    {
+      "id": "ods-omega3",
+      "title": "NIH ODS Omega-3专业资料",
+      "url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/kai-supplements.json",
+      "supports": "按吃鱼与EPA+DHA摄入评估；AIS运动效果属Group B，不能宣传人人吃才能增肌。",
+      "limitations": [
+        "仅复用先前独立资料已读段落，具体人群和剂量限制见条目；不是凯圣王原片剂量。"
+      ]
+    },
+    {
+      "id": "issn-beta-alanine-2015",
+      "title": "ISSN β-丙氨酸立场声明",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26175657/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2015-07-15",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/kai-supplements.json",
+      "supports": "针对某些持续1–4分钟的高强度任务可考虑，不默认给普通力量新手。",
+      "limitations": [
+        "仅复用先前独立资料已读段落，具体人群和剂量限制见条目；不是凯圣王原片剂量。"
+      ]
+    },
+    {
+      "id": "alcohol-rct-2014",
+      "title": "运动后饮酒与肌原纤维蛋白合成随机交叉试验",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24533082/",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2014-02-12",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": null,
+      "researchFile": "output/fitness-classics-research-20261012/kai-supplements.json",
+      "supports": "不把酒精作为促进训练的补剂；大剂量运动后饮酒可影响恢复。",
+      "limitations": [
+        "仅复用先前独立资料已读段落，具体人群和剂量限制见条目；不是凯圣王原片剂量。"
+      ]
+    },
+    {
+      "id": "legacy-L01-1",
+      "title": "优化过后的胸部跟练 2.0：上斜哑铃卧推",
+      "url": "https://www.douyin.com/video/7599135033329384443",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-01-25",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        723,
+        870
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "握持和手腕稳定，头不主动抬起，下降保持控制。",
+      "limitations": [
+        "可补当前上斜哑铃的局部提示；不能把作者腰贴凳的表达改成所有人必须强压自然腰弧。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L02-1",
+      "title": "优化过后的胸部跟练 2.0：向下绳索夹胸",
+      "url": "https://www.douyin.com/video/7599135033329384443",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-01-25",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        1536,
+        1623
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "向大腿根附近合拢，避免前移身体改变夹胸方向。",
+      "limitations": [
+        "能补下胸夹胸方向；高滑轮设置、可用坐姿支持、起始负荷仍不是旧摘要已核参数。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L03-1",
+      "title": "基础训练计划：形体、肌肉量、功能：杠铃卧推",
+      "url": "https://www.douyin.com/video/7610712695184852603",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-25",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        306,
+        458
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "全握，臀部保持凳面接触，以前臂受力方向调整握距。",
+      "limitations": [
+        "原条目是杠铃卧推，不能升级为水平器械推胸或高台俯卧撑的作者专属操作。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L04-1",
+      "title": "基础训练计划：形体、肌肉量、功能：技术停止条件",
+      "url": "https://www.douyin.com/video/7610712695184852603",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-25",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        530,
+        554
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "躯干失稳、晃动时停止该组，不能靠顶臀或乱做凑次数。",
+      "limitations": [
+        "是该片停止提示；没有给统一减重百分比或降载周期。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L05-1",
+      "title": "基础训练计划：形体、肌肉量、功能：后组疲劳与次数",
+      "url": "https://www.douyin.com/video/7610712695184852603",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-25",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        490,
+        524
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "后组少做几次是作者允许的示例，不必强凑首组次数。",
+      "limitations": [
+        "不据此规定每次掉次数都减重；组间休息和强度仍有缺项。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L05-2",
+      "title": "基础训练计划：形体、肌肉量、功能：后组疲劳与次数",
+      "url": "https://www.douyin.com/video/7610712695184852603",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-25",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        762,
+        868
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "后组少做几次是作者允许的示例，不必强凑首组次数。",
+      "limitations": [
+        "不据此规定每次掉次数都减重；组间休息和强度仍有缺项。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L06-1",
+      "title": "基础训练计划：形体、肌肉量、功能：上斜器械推胸",
+      "url": "https://www.douyin.com/video/7610712695184852603",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-25",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        762,
+        868
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "躯干与靠背稳定，避免肋骨明显外翻，疲劳后不硬凑次数。",
+      "limitations": [
+        "可补当前同名动作的局部控制提示；机器尺寸、路径和负荷仍须个人适配。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L07-1",
+      "title": "基础训练计划：形体、肌肉量、功能：杠铃肩推",
+      "url": "https://www.douyin.com/video/7610712695184852603",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-25",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        878,
+        984
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "手腕和躯干保持稳定，不后仰代偿；稳定丢失时不继续加重，下降受控。",
+      "limitations": [
+        "是杠铃版本，不直接核证当前中立握器械或坐姿哑铃版本；未给加重比例/周期。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L07-2",
+      "title": "基础训练计划：形体、肌肉量、功能：杠铃肩推",
+      "url": "https://www.douyin.com/video/7610712695184852603",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-25",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        1008,
+        1048
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "手腕和躯干保持稳定，不后仰代偿；稳定丢失时不继续加重，下降受控。",
+      "limitations": [
+        "是杠铃版本，不直接核证当前中立握器械或坐姿哑铃版本；未给加重比例/周期。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L08-1",
+      "title": "基础训练计划：形体、肌肉量、功能：过顶绳索伸肘",
+      "url": "https://www.douyin.com/video/7610712695184852603",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-25",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        1052,
+        1136
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "记录滑轮起点、肘部位置控制和动作流畅的要求。",
+      "limitations": [
+        "肩能无痛过顶等适配来自独立审计；本项旧摘要明确组次缺失，不补成完整处方。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L09-1",
+      "title": "基础四分化第4期：肩加手臂训练：坐姿器械反飞鸟",
+      "url": "https://www.douyin.com/video/7613586950141907450",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-03-05",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        411,
+        600
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "调整座位使肩手位置合适，向外展开，胸廓稳定。",
+      "limitations": [
+        "与反向蝴蝶机为近似器械模式；具体机型未确认，不把肘高和所有握法统一固定。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L10-1",
+      "title": "基础背部跟练：背部训练与动作细节：高位下拉",
+      "url": "https://www.douyin.com/video/7611481791380257969",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-27",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        1542,
+        1674
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "作者用介于对握和反握之间的斜握；躯干受控，区分下拉与过多后拉。",
+      "limitations": [
+        "斜45度指握法，不是凳角；不能称已核中立握或单臂下拉的完整版本。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L11-1",
+      "title": "基础背部跟练：背部训练与动作细节：坐姿绳索划船",
+      "url": "https://www.douyin.com/video/7611481791380257969",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-27",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        1338,
+        1521
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "脚踩稳、头不前探，前后倾幅度以可控为限，质量优先于重量。",
+      "limitations": [
+        "允许自然肩胛运动的整理不能改写成完全禁止后缩；没有统一次数或工作重量。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L11-2",
+      "title": "基础背部跟练：背部训练与动作细节：坐姿绳索划船",
+      "url": "https://www.douyin.com/video/7611481791380257969",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-27",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        1524,
+        1539
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "脚踩稳、头不前探，前后倾幅度以可控为限，质量优先于重量。",
+      "limitations": [
+        "允许自然肩胛运动的整理不能改写成完全禁止后缩；没有统一次数或工作重量。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L12-1",
+      "title": "基础背部跟练：背部训练与动作细节：有支撑单手绳索划船",
+      "url": "https://www.douyin.com/video/7611481791380257969",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-27",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        747,
+        1031
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "另一手撑凳帮助稳定，避免侧屈、扭身抢次数。",
+      "limitations": [
+        "这是水平单手划船，不是单臂下拉，也不是胸托器械划船。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L13-1",
+      "title": "下肢训练：单腿哑铃硬拉",
+      "url": "https://www.douyin.com/video/7612270623104450533",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-03-02",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        420,
+        494
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "颈随躯干控制，难以平衡可单手持重、另手扶杆。",
+      "limitations": [
+        "与当前双腿RDL相近；不能声称旧课已核双腿RDL或扶稳自重髋后移的完整教学。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L14-1",
+      "title": "下肢训练：台阶站姿提踵",
+      "url": "https://www.douyin.com/video/7612270623104450533",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-03-02",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        782,
+        912
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "可扶稳；下放以足底仍可靠接触支撑为限，不为深度翘起前掌。",
+      "limitations": [
+        "当前地面双脚版是独立适配；旧片台阶深度和组数不直接复制给大体重者。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L15-1",
+      "title": "一次性看完三分化热身整套流程：背部热身控制",
+      "url": "https://www.douyin.com/video/7638569547629063665",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-05-11",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        624,
+        724
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "热身推撑或撑凳微动时，躯干控制丢失就减小幅度。",
+      "limitations": [
+        "支持控制优先原则，不能证明特定热身能诊断、治疗腰肩痛或必然防伤。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L16-1",
+      "title": "一次性看完三分化热身整套流程：下肢热身退阶",
+      "url": "https://www.douyin.com/video/7638569547629063665",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-05-11",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        1162,
+        1296
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "支撑腿激活及旋转可扶物，能力不足先用较容易姿势。",
+      "limitations": [
+        "闭眼站立仅是旧片示范；当前未知平衡能力者不沿用闭眼要求。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L17-1",
+      "title": "一次性看完三分化热身整套流程：手腕热身负荷",
+      "url": "https://www.douyin.com/video/7638569547629063665",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-05-11",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        400,
+        448
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "墙面手腕激活也要控制阻力，不能认为热身就没有负荷风险。",
+      "limitations": [
+        "不能从此推导人人要做五指墙撑、统一力度或组数。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L18-1",
+      "title": "基础背部跟练：背部训练与动作细节：杠铃弯举",
+      "url": "https://www.douyin.com/video/7611481791380257969",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-27",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        1677,
+        1776
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "作者强调握距和手腕控制，未给该项明确组次。",
+      "limitations": [
+        "只能作一般弯举提示，不能核证牧师凳和上斜弯举的角度、区域效果与剂量。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L19-1",
+      "title": "全身完整拉伸教学：胸部主动拉伸",
+      "url": "https://www.douyin.com/video/7645715297237252785",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-05-31",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        84,
+        204
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "墙面拉伸按能力控制幅度，避免主动顶肩。",
+      "limitations": [
+        "是拉伸不是高台俯卧撑；保持时间、对抗比例不全，不移作每次必做热身。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L20-1",
+      "title": "肌酸作用、用量及补充时间：肌酸旧记录",
+      "url": "https://www.douyin.com/video/7604123900088481009",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-08",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        8,
+        10
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "旧抽样核到每日3–5克和持续补充；饭后是本人习惯，储水可影响体重读数，片尾有赞助。",
+      "limitations": [
+        "仅旧作者记录；补剂可选，不能要求训练后额外加糖、购买品牌或保证解决减脂平台。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L20-2",
+      "title": "肌酸作用、用量及补充时间：肌酸旧记录",
+      "url": "https://www.douyin.com/video/7604123900088481009",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-08",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        11,
+        27
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "旧抽样核到每日3–5克和持续补充；饭后是本人习惯，储水可影响体重读数，片尾有赞助。",
+      "limitations": [
+        "仅旧作者记录；补剂可选，不能要求训练后额外加糖、购买品牌或保证解决减脂平台。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L20-3",
+      "title": "肌酸作用、用量及补充时间：肌酸旧记录",
+      "url": "https://www.douyin.com/video/7604123900088481009",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-08",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        28,
+        50
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "旧抽样核到每日3–5克和持续补充；饭后是本人习惯，储水可影响体重读数，片尾有赞助。",
+      "limitations": [
+        "仅旧作者记录；补剂可选，不能要求训练后额外加糖、购买品牌或保证解决减脂平台。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L20-4",
+      "title": "肌酸作用、用量及补充时间：肌酸旧记录",
+      "url": "https://www.douyin.com/video/7604123900088481009",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-08",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        77,
+        91
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "旧抽样核到每日3–5克和持续补充；饭后是本人习惯，储水可影响体重读数，片尾有赞助。",
+      "limitations": [
+        "仅旧作者记录；补剂可选，不能要求训练后额外加糖、购买品牌或保证解决减脂平台。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L20-5",
+      "title": "肌酸作用、用量及补充时间：肌酸旧记录",
+      "url": "https://www.douyin.com/video/7604123900088481009",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-02-08",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        166,
+        188
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "旧抽样核到每日3–5克和持续补充；饭后是本人习惯，储水可影响体重读数，片尾有赞助。",
+      "limitations": [
+        "仅旧作者记录；补剂可选，不能要求训练后额外加糖、购买品牌或保证解决减脂平台。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L21-1",
+      "title": "蛋白质作用、推荐用量及补充时间：蛋白旧记录",
+      "url": "https://www.douyin.com/video/7620313918720746673",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-03-24",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        9,
+        18
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "旧数字帧核到1.2–2.0g/kg/day及多数爱好者1.6参考，食物与蛋白粉区分，广告隔离。",
+      "limitations": [
+        "实际目标须重新适配；标题提时间但旧可读内容没有具体时机规则，不补造窗口。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L21-2",
+      "title": "蛋白质作用、推荐用量及补充时间：蛋白旧记录",
+      "url": "https://www.douyin.com/video/7620313918720746673",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-03-24",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        25,
+        29
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "旧数字帧核到1.2–2.0g/kg/day及多数爱好者1.6参考，食物与蛋白粉区分，广告隔离。",
+      "limitations": [
+        "实际目标须重新适配；标题提时间但旧可读内容没有具体时机规则，不补造窗口。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L21-3",
+      "title": "蛋白质作用、推荐用量及补充时间：蛋白旧记录",
+      "url": "https://www.douyin.com/video/7620313918720746673",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-03-24",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        30,
+        34
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "旧数字帧核到1.2–2.0g/kg/day及多数爱好者1.6参考，食物与蛋白粉区分，广告隔离。",
+      "limitations": [
+        "实际目标须重新适配；标题提时间但旧可读内容没有具体时机规则，不补造窗口。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L21-4",
+      "title": "蛋白质作用、推荐用量及补充时间：蛋白旧记录",
+      "url": "https://www.douyin.com/video/7620313918720746673",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-03-24",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        35,
+        40
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "旧数字帧核到1.2–2.0g/kg/day及多数爱好者1.6参考，食物与蛋白粉区分，广告隔离。",
+      "limitations": [
+        "实际目标须重新适配；标题提时间但旧可读内容没有具体时机规则，不补造窗口。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L21-5",
+      "title": "蛋白质作用、推荐用量及补充时间：蛋白旧记录",
+      "url": "https://www.douyin.com/video/7620313918720746673",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-03-24",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        50,
+        77
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "旧数字帧核到1.2–2.0g/kg/day及多数爱好者1.6参考，食物与蛋白粉区分，广告隔离。",
+      "limitations": [
+        "实际目标须重新适配；标题提时间但旧可读内容没有具体时机规则，不补造窗口。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L22-1",
+      "title": "增肌减脂的底层逻辑：训练反馈",
+      "url": "https://www.douyin.com/video/7677788313952198385",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-08-25",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        40,
+        78
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "结合训练表现、睡眠和形体等记录作反馈。",
+      "limitations": [
+        "力量提高不等于已证明增肌；该片不提供完整分化、动作处方或统一加减重量阈值。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "legacy-L22-2",
+      "title": "增肌减脂的底层逻辑：训练反馈",
+      "url": "https://www.douyin.com/video/7677788313952198385",
+      "attribution": "author",
+      "evidenceLevel": "legacy_video_frame_reviewed",
+      "publishedAt": "2026-08-25",
+      "reviewedAt": "2026-10-08",
+      "evidenceTimes": [
+        1184,
+        1442
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/legacy-reviewed-detail-index.json",
+      "supports": "结合训练表现、睡眠和形体等记录作反馈。",
+      "limitations": [
+        "力量提高不等于已证明增肌；该片不提供完整分化、动作处方或统一加减重量阈值。",
+        "2026-10-08旧帧抽样，10-13只读复用；本轮未重新播放该段，非连续核听。"
+      ]
+    },
+    {
+      "id": "local-tan-depression-01-1",
+      "title": "沉肩的作用，弊端以及如何做",
+      "url": "https://www.douyin.com/video/7664787164882481402",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2026-07-21 09:28",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        63,
+        85
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "作者用手沿裤缝向下摸、伸肘的示范帮助体会沉肩，指出这一表现也会伴随胸背与三头肌用力。",
+      "limitations": [
+        "这只是学习肩部动作感觉的示例；不能把肘锁直直接等同于所有训练的正确沉肩方式。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-depression-02-1",
+      "title": "沉肩的作用，弊端以及如何做",
+      "url": "https://www.douyin.com/video/7664787164882481402",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2026-07-21 09:28",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        289,
+        315
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "作者先谈沉肩帮助找到胸/背发力，随后提醒长期保持沉肩并结合孤立训练可能存在弊端。",
+      "limitations": [
+        "作者使用关节间隙/撞击解释；本轮没有独立确认该简化因果，不能拿来诊断肩痛或断言必然受伤。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-depression-03-1",
+      "title": "沉肩的作用，弊端以及如何做",
+      "url": "https://www.douyin.com/video/7664787164882481402",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2026-07-21 09:28",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        321,
+        327
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "侧平举段落示范先整理肩部状态再抬臂，收尾强调呼吸准备与避免过度孤立地做动作。",
+      "limitations": [
+        "抬臂时肩胛如何运动的连续口述、负重幅度和具体呼吸周期尚未完整核实，不补造固定角度/必须憋气规则。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-depression-03-2",
+      "title": "沉肩的作用，弊端以及如何做",
+      "url": "https://www.douyin.com/video/7664787164882481402",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2026-07-21 09:28",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        368,
+        374
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "侧平举段落示范先整理肩部状态再抬臂，收尾强调呼吸准备与避免过度孤立地做动作。",
+      "limitations": [
+        "抬臂时肩胛如何运动的连续口述、负重幅度和具体呼吸周期尚未完整核实，不补造固定角度/必须憋气规则。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-warmup-01-1",
+      "title": "一次性看完三分化热身整套流程",
+      "url": "https://www.douyin.com/video/7638569547629063665",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        58,
+        73
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "肩部环绕作为准备，随后进入胸部放松。",
+      "limitations": [
+        "仅本片该局部提示，不能补造完整训练处方。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-warmup-02-1",
+      "title": "一次性看完三分化热身整套流程",
+      "url": "https://www.douyin.com/video/7638569547629063665",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        78,
+        108
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "胸部泡沫轴滚动时，用双手支撑身体，控制所压重量。",
+      "limitations": [
+        "不得将全体重压在胸口设成新手必做；本轮未核剂量和禁忌。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-warmup-03-1",
+      "title": "一次性看完三分化热身整套流程",
+      "url": "https://www.douyin.com/video/7638569547629063665",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        158,
+        203
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "弹力带前后展开及环绕时保持躯干稳定，强调身体配合。",
+      "limitations": [
+        "不由画面补造固定握距、组次或无痛幅度。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-warmup-04-1",
+      "title": "一次性看完三分化热身整套流程",
+      "url": "https://www.douyin.com/video/7638569547629063665",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        243,
+        263
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "俯卧抬臂时不要靠抬腰完成；示范重点在肩臂控制。",
+      "limitations": [
+        "仅本片该局部提示，不能补造完整训练处方。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-warmup-05-1",
+      "title": "一次性看完三分化热身整套流程",
+      "url": "https://www.douyin.com/video/7638569547629063665",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        413,
+        438
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "靠墙斜向支撑段强调抵抗负荷别太大、身体不完全贴墙。",
+      "limitations": [
+        "原示范有五指支撑，不能直接设为手腕受限或大体重者默认热身；全掌墙撑是助手替代。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-warmup-06-1",
+      "title": "一次性看完三分化热身整套流程",
+      "url": "https://www.douyin.com/video/7638569547629063665",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        1098,
+        1128
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "腿日前安排足踝和平衡准备，示范站立约30秒。",
+      "limitations": [
+        "作者原示范涉及闭眼；面向新手改为睁眼扶稳是助手安全适配，不能归因原片。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-rdl-01-1",
+      "title": "罗马尼亚硬拉动作介绍",
+      "url": "https://www.douyin.com/video/7671852814386030521",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2026-08-09 10:27",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        214,
+        214
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "示范围绕髋铰链展开，强调骨盆中立、足下承重稳定，站起时臀部参与。",
+      "limitations": [
+        "不解读为重心坐标绝对不动、膝盖必须锁死或人人同一站距。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-rdl-01-2",
+      "title": "罗马尼亚硬拉动作介绍",
+      "url": "https://www.douyin.com/video/7671852814386030521",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2026-08-09 10:27",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        286,
+        296
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "示范围绕髋铰链展开，强调骨盆中立、足下承重稳定，站起时臀部参与。",
+      "limitations": [
+        "不解读为重心坐标绝对不动、膝盖必须锁死或人人同一站距。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-rdl-01-3",
+      "title": "罗马尼亚硬拉动作介绍",
+      "url": "https://www.douyin.com/video/7671852814386030521",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2026-08-09 10:27",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        360,
+        371
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "示范围绕髋铰链展开，强调骨盆中立、足下承重稳定，站起时臀部参与。",
+      "limitations": [
+        "不解读为重心坐标绝对不动、膝盖必须锁死或人人同一站距。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-rdl-02-1",
+      "title": "罗马尼亚硬拉动作介绍",
+      "url": "https://www.douyin.com/video/7671852814386030521",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2026-08-09 10:27",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        350,
+        360
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "作者把动作变形与控制问题提出，不能为了完成动作忽略原姿势。",
+      "limitations": [
+        "原片固定减重量百分比与加重阈值未核。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-tan-rdl-03-1",
+      "title": "罗马尼亚硬拉动作介绍",
+      "url": "https://www.douyin.com/video/7671852814386030521",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2026-08-09 10:27",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        500,
+        540
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "下放幅度需有肌力和从该位置起身的能力支撑，不能只追求更大幅度。",
+      "limitations": [
+        "仅本片该局部提示，不能补造完整训练处方。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-kai-rpe-01-1",
+      "title": "RM/RPE与训练计划实践③",
+      "url": "https://www.douyin.com/video/7160989696926043428",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2022-11-01",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        41,
+        41
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "卧推示例采用约8 RPE；后段示例约8–8.5 RPE，对应约剩1–2次余量。",
+      "limitations": [
+        "是本片示例，不表示所有训练组均须该RPE。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-kai-rpe-01-2",
+      "title": "RM/RPE与训练计划实践③",
+      "url": "https://www.douyin.com/video/7160989696926043428",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2022-11-01",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        141,
+        144
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "卧推示例采用约8 RPE；后段示例约8–8.5 RPE，对应约剩1–2次余量。",
+      "limitations": [
+        "是本片示例，不表示所有训练组均须该RPE。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-kai-rpe-02-1",
+      "title": "RM/RPE与训练计划实践③",
+      "url": "https://www.douyin.com/video/7160989696926043428",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2022-11-01",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        136,
+        136
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "先把当前负荷完成到目标状态，再讨论加重；加重后变难，随后再次做到目标状态。",
+      "limitations": [
+        "屏幕+2.5/1.5仅为示例，目标组数与次数条件尚未完整核实，不设所有动作统一增量。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-kai-rpe-02-2",
+      "title": "RM/RPE与训练计划实践③",
+      "url": "https://www.douyin.com/video/7160989696926043428",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2022-11-01",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        146,
+        161
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "先把当前负荷完成到目标状态，再讨论加重；加重后变难，随后再次做到目标状态。",
+      "limitations": [
+        "屏幕+2.5/1.5仅为示例，目标组数与次数条件尚未完整核实，不设所有动作统一增量。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-kai-rpe-03-1",
+      "title": "RM/RPE与训练计划实践③",
+      "url": "https://www.douyin.com/video/7160989696926043428",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2022-11-01",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        171,
+        171
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "收尾图示讨论强度和容量如何配合调整。",
+      "limitations": [
+        "不能据此给新手自动生成未核实的周期数字。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-kai-incline-01-1",
+      "title": "上斜哑铃卧推详解",
+      "url": "https://www.bilibili.com/video/BV1aa4y1o7XA/",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2023-12-04 20:00",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        30,
+        37
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "准备时先把哑铃握稳，作者示范握在把手中段；不要握持还未稳妥就继续起落准备。",
+      "limitations": [
+        "尚未完整核实拿起、借腿上凳与安全放下顺序，不能仅凭这段组成完整起落教程。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-kai-decline-01-1",
+      "title": "器械技巧系列2——New tech下斜卧推",
+      "url": "https://www.douyin.com/video/7619337731822406953",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2026-03-20 22:22",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        420,
+        420
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "作者把这一特定改装器械用于下胸侧重，示范推起与上臂内收配合，并提示呼吸建立胸廓支撑。",
+      "limitations": [
+        "肩胛的连续路线和呼吸完整条件未核；不等同所有下斜器械的通用口令或效果比较。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-kai-decline-01-2",
+      "title": "器械技巧系列2——New tech下斜卧推",
+      "url": "https://www.douyin.com/video/7619337731822406953",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2026-03-20 22:22",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        480,
+        480
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "作者把这一特定改装器械用于下胸侧重，示范推起与上臂内收配合，并提示呼吸建立胸廓支撑。",
+      "limitations": [
+        "肩胛的连续路线和呼吸完整条件未核；不等同所有下斜器械的通用口令或效果比较。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-kai-decline-01-3",
+      "title": "器械技巧系列2——New tech下斜卧推",
+      "url": "https://www.douyin.com/video/7619337731822406953",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2026-03-20 22:22",
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        570,
+        570
+      ],
+      "researchFile": "output/fitness-classics-research-20261012/online-video-detail-checks.json",
+      "supports": "作者把这一特定改装器械用于下胸侧重，示范推起与上臂内收配合，并提示呼吸建立胸廓支撑。",
+      "limitations": [
+        "肩胛的连续路线和呼吸完整条件未核；不等同所有下斜器械的通用口令或效果比较。",
+        "仅核选定画面/字幕，非连续全片核听。"
+      ]
+    },
+    {
+      "id": "local-ep1-rir",
+      "title": "共创三分化①：首次上斜余力",
+      "url": "https://www.douyin.com/video/7623732958012198179",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        581,
+        585
+      ],
+      "researchFile": "output/fitness-video-pilot-20261012/episode-01.json",
+      "supports": "某阶段首次按该强度练上斜哑铃卧推，留2–3次余力。",
+      "limitations": [
+        "不能升级为所有动作所有阶段固定2–3次余力。",
+        "仅局部字幕，非完整周期。"
+      ]
+    },
+    {
+      "id": "local-ep1-failure",
+      "title": "共创三分化①：力竭条件",
+      "url": "https://www.douyin.com/video/7623732958012198179",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        602,
+        605
+      ],
+      "researchFile": "output/fitness-video-pilot-20261012/episode-01.json",
+      "supports": "该讲解段后两组力竭以动作不变形为条件。",
+      "limitations": [
+        "阶段条件未完整核全，不要求每次固定两组力竭。",
+        "仅局部字幕，非完整周期。"
+      ]
+    },
+    {
+      "id": "local-ep1-progress",
+      "title": "共创三分化①：进阶变量",
+      "url": "https://www.douyin.com/video/7623732958012198179",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        606,
+        611
+      ],
+      "researchFile": "output/fitness-video-pilot-20261012/episode-01.json",
+      "supports": "该条件下考虑组间休息与适当加重。",
+      "limitations": [
+        "具体幅度和休息数字未核，不补成作者周期。",
+        "仅局部字幕，非完整周期。"
+      ]
+    },
+    {
+      "id": "shuaiso-7143145638266506537-1",
+      "title": "【高效休息】4个方法帮你缓解疲劳!",
+      "url": "https://www.douyin.com/video/7143145638266506537",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        10.079294,
+        10.079294
+      ],
+      "researchFile": "output/chen-coach-completion-20261013/online-creator-checks.json",
+      "supports": "画面字幕：要尽量避免玩手机。",
+      "limitations": [
+        "只核局部烧录字幕，没有连续核听四方法完整上下文。",
+        "谷氨酸/褪黑素机制及饮食限制的局部字幕不支持因果结论或补剂处方；未导为运行知识。",
+        "日光不是直视太阳，不据片段指定日晒剂量；热水澡不列为人人必需。"
+      ]
+    },
+    {
+      "id": "shuaiso-7143145638266506537-2",
+      "title": "【高效休息】4个方法帮你缓解疲劳!",
+      "url": "https://www.douyin.com/video/7143145638266506537",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        25.079294,
+        25.079294
+      ],
+      "researchFile": "output/chen-coach-completion-20261013/online-creator-checks.json",
+      "supports": "画面字幕：接触日光。",
+      "limitations": [
+        "只核局部烧录字幕，没有连续核听四方法完整上下文。",
+        "谷氨酸/褪黑素机制及饮食限制的局部字幕不支持因果结论或补剂处方；未导为运行知识。",
+        "日光不是直视太阳，不据片段指定日晒剂量；热水澡不列为人人必需。"
+      ]
+    },
+    {
+      "id": "shuaiso-7143145638266506537-3",
+      "title": "【高效休息】4个方法帮你缓解疲劳!",
+      "url": "https://www.douyin.com/video/7143145638266506537",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        30.079294,
+        30.079294
+      ],
+      "researchFile": "output/chen-coach-completion-20261013/online-creator-checks.json",
+      "supports": "画面字幕：并洗一个热水澡。",
+      "limitations": [
+        "只核局部烧录字幕，没有连续核听四方法完整上下文。",
+        "谷氨酸/褪黑素机制及饮食限制的局部字幕不支持因果结论或补剂处方；未导为运行知识。",
+        "日光不是直视太阳，不据片段指定日晒剂量；热水澡不列为人人必需。"
+      ]
+    },
+    {
+      "id": "shuaiso-7526867477746289972-1",
+      "title": "健身博主低能量的一天（如何积极恢复）",
+      "url": "https://www.douyin.com/video/7526867477746289972",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        13.984285,
+        13.984285
+      ],
+      "researchFile": "output/chen-coach-completion-20261013/online-creator-checks.json",
+      "supports": "喝水画面与字幕：起床后的第一杯水。",
+      "limitations": [
+        "作者个人的一天与局部示例不是适用于所有人的恢复处方。",
+        "未核具体饮水量、运动强度、拉伸剂量与效果；个人产品展示不导为专业推荐。"
+      ]
+    },
+    {
+      "id": "shuaiso-7526867477746289972-2",
+      "title": "健身博主低能量的一天（如何积极恢复）",
+      "url": "https://www.douyin.com/video/7526867477746289972",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        53.984285,
+        53.984285
+      ],
+      "researchFile": "output/chen-coach-completion-20261013/online-creator-checks.json",
+      "supports": "草地拉伸演示与字幕：比如拉伸。",
+      "limitations": [
+        "作者个人的一天与局部示例不是适用于所有人的恢复处方。",
+        "未核具体饮水量、运动强度、拉伸剂量与效果；个人产品展示不导为专业推荐。"
+      ]
+    },
+    {
+      "id": "shuaiso-7526867477746289972-3",
+      "title": "健身博主低能量的一天（如何积极恢复）",
+      "url": "https://www.douyin.com/video/7526867477746289972",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": null,
+      "reviewedAt": "2026-10-13",
+      "evidenceTimes": [
+        58.984285,
+        58.984285
+      ],
+      "researchFile": "output/chen-coach-completion-20261013/online-creator-checks.json",
+      "supports": "户外画面与字幕：接触一会阳光。",
+      "limitations": [
+        "作者个人的一天与局部示例不是适用于所有人的恢复处方。",
+        "未核具体饮水量、运动强度、拉伸剂量与效果；个人产品展示不导为专业推荐。"
+      ]
+    },
+    {
+      "id": "EVID-kubo_2021_bench_4_8_12rm",
+      "title": "Effects of 4, 8, and 12 Repetition Maximum Resistance Training Protocols on Muscle Volume and Strength",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32304514/",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2021",
+      "reviewedAt": "2026-10-17",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-evidence-upgrade-20261017/authority-research.json",
+      "supports": "同一动作、胸大肌、8RM对12RM的直接且接近提问的证据；支持较重处方的最大力量优势。",
+      "limitations": [
+        "不能证明6–8次普遍增肌更快，也不是同组数比较、非等效性试验。",
+        "已读 PubMed 原论文摘要和书目信息；出版社全文链接读取失败。未核实全文胸大肌增长百分比或CI，不采用二手网页的约10–11%数字。"
+      ],
+      "authority": {
+        "organization": null,
+        "journal": "Journal of Strength and Conditioning Research 35(4):879–885",
+        "studyType": "randomized_trial",
+        "doi": "10.1519/JSC.0000000000003575",
+        "pmid": "32304514",
+        "accessLevel": "abstract",
+        "population": "42 名男性随机分 4RM×7组(n=10)、8RM×4组(n=12)、12RM×3组(n=10)、不训练对照(n=10)；10周、每周2次；训练量配平。",
+        "sampleSize": 42,
+        "durationWeeks": 10,
+        "comparison": "42 名男性随机分 4RM×7组(n=10)、8RM×4组(n=12)、12RM×3组(n=10)、不训练对照(n=10)；10周、每周2次；训练量配平。；测量：MRI 胸大肌体积；卧推 1RM。",
+        "findings": [
+          "三个训练组的肌肉体积相对增长未检出显著组间差异；12RM 的卧推 1RM 相对增长低于4RM(p=0.029)与8RM(p=0.021)。",
+          "同一动作、胸大肌、8RM对12RM的直接且接近提问的证据；支持较重处方的最大力量优势。"
+        ]
+      }
+    },
+    {
+      "id": "EVID-acsm_2026_position_stand",
+      "title": "American College of Sports Medicine Position Stand. Resistance Training Prescription for Muscle Function, Hypertrophy, and Physical Performance in Healthy Adults: An Overview of Reviews",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12965823/",
+      "attribution": "independent",
+      "evidenceLevel": "official_guidance",
+      "publishedAt": "2026-03-05",
+      "reviewedAt": "2026-10-17",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-evidence-upgrade-20261017/authority-research.json",
+      "supports": "作为当前组织级总框架，更新2009版。",
+      "limitations": [
+        "不是>30,000人直接比较6–8与10–12；正文承认可用证据没有直接比较不同身体部位或肌群，不能据此宣布大肌群必须重、小肌群必须轻。",
+        "已读原文检索结果所返回的摘要、Table2/4/6、Hypertrophy、Discussion与局限相关段落；PMC直开触发captcha，未读补充附录，不宣称整篇逐字阅读。",
+        "综述重叠与群体平均证据；适用健康成年人，不能机械外推病理、竞技峰值或所有个体。"
+      ],
+      "authority": {
+        "organization": "American College of Sports Medicine (ACSM)",
+        "journal": "Medicine & Science in Sports & Exercise 58(4):851–872",
+        "studyType": "guideline",
+        "doi": "10.1249/MSS.0000000000003897",
+        "pmid": "41843416",
+        "accessLevel": "official_summary",
+        "population": "137篇系统综述的综述，>30,000参与者；检索截至2024-10；健康成年人，原干预6–52周。",
+        "sampleSize": null,
+        "durationWeeks": null,
+        "comparison": "137篇系统综述的综述，>30,000参与者；检索截至2024-10；健康成年人，原干预6–52周。",
+        "findings": [
+          "较重负荷(≥80%1RM)更有利于最大力量；对增肌未发现稳定负荷优势，周组数等因素更有支持。",
+          "作为当前组织级总框架，更新2009版。"
+        ]
+      }
+    },
+    {
+      "id": "EVID-lopez_2021_network_load",
+      "title": "Resistance Training Load Effects on Muscle Hypertrophy and Strength Gain: Systematic Review and Network Meta-analysis",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8126497/",
+      "attribution": "independent",
+      "evidenceLevel": "research_review",
+      "publishedAt": "2021",
+      "reviewedAt": "2026-10-17",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-evidence-upgrade-20261017/authority-research.json",
+      "supports": "分档较接近6–8对10–12；未见高负荷增肌优势。",
+      "limitations": [
+        "无显著差异不是完全等效；同一来源的高对中力量比较CI仍跨零，不能把广泛高vs低力量优势无条件搬到这个精确分档。",
+        "已读PubMed摘要；原文搜索抓取的负荷定义、增肌结果、Table2及局限相关片段，未逐篇复核28项原研究。",
+        "短期、未训练/休闲训练人群居多；高质量高vs中增肌子组仅2比较/n51，精度更低。"
+      ],
+      "authority": {
+        "organization": null,
+        "journal": null,
+        "studyType": "meta_analysis",
+        "doi": "10.1249/MSS.0000000000002585",
+        "pmid": "33433148",
+        "accessLevel": "abstract",
+        "population": "28项研究、747名健康成年人；只纳入到自主力竭训练；高≤8RM、中9–15RM、低>15RM。增肌网络24项研究，力量网络23项。",
+        "sampleSize": 747,
+        "durationWeeks": null,
+        "comparison": "28项研究、747名健康成年人；只纳入到自主力竭训练；高≤8RM、中9–15RM、低>15RM。增肌网络24项研究，力量网络23项。",
+        "findings": [
+          "；高对中增肌SMD=-0.09，95%CI[-0.33,0.16]，p=0.469，9比较/107人；不是完全等效证明。",
+          "分档较接近6–8对10–12；未见高负荷增肌优势。"
+        ]
+      }
+    },
+    {
+      "id": "EVID-currier_2023_prescription_network",
+      "title": "Resistance training prescription for muscle strength and hypertrophy in healthy adults: a systematic review and Bayesian network meta-analysis",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10579494/",
+      "attribution": "independent",
+      "evidenceLevel": "research_review",
+      "publishedAt": "2023",
+      "reviewedAt": "2026-10-17",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-evidence-upgrade-20261017/authority-research.json",
+      "supports": "重负荷、多组处方可以是优秀选择。",
+      "limitations": [
+        "排名第一≠重这一变量已证明优于中负荷；0.66不是6–8vs10–12的差值，也不是增肌多66%。",
+        "已读原论文摘要和搜索返回的Figure3说明、主要增肌结果/结论；全文直开未成功，不采用未读附录具体组间比较。"
+      ],
+      "authority": {
+        "organization": null,
+        "journal": null,
+        "studyType": "meta_analysis",
+        "doi": "10.1136/bjsports-2023-106807",
+        "pmid": "37414459",
+        "accessLevel": "abstract",
+        "population": "力量178试验/n5097，增肌119试验/n3364；按负荷≥80%或<80%1RM、单/多组、周频率构建处方。",
+        "sampleSize": null,
+        "durationWeeks": null,
+        "comparison": "力量178试验/n5097，增肌119试验/n3364；按负荷≥80%或<80%1RM、单/多组、周频率构建处方。",
+        "findings": [
+          "高负荷多组每周2次处方增肌排名最高，SMD0.66(95%可信区间0.47–0.85)是相对不训练对照；作者整体结论强调多组增肌、较重负荷力量。",
+          "重负荷、多组处方可以是优秀选择。"
+        ]
+      }
+    },
+    {
+      "id": "EVID-refalo_2021_load_meta",
+      "title": "Influence of resistance training load on measures of skeletal muscle hypertrophy and improvements in maximal strength and neuromuscular task performance: A systematic review and meta-analysis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33874848/",
+      "attribution": "independent",
+      "evidenceLevel": "research_review",
+      "publishedAt": "2021",
+      "reviewedAt": "2026-10-17",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-evidence-upgrade-20261017/authority-research.json",
+      "supports": "整体肌肥大未见稳定负荷差异，较重负荷提高最大力量。",
+      "limitations": [
+        "该分档通常把用户6–8与10–12都放入高负荷侧，不是两档的直接对照。",
+        "已读PubMed摘要与书目信息，未读出版社全文。"
+      ],
+      "authority": {
+        "organization": null,
+        "journal": null,
+        "studyType": "meta_analysis",
+        "doi": "10.1080/02640414.2021.1898094",
+        "pmid": "33874848",
+        "accessLevel": "abstract",
+        "population": "45项研究；高>60%1RM或<15RM，低≤60%或≥15RM。",
+        "sampleSize": null,
+        "durationWeeks": null,
+        "comparison": "45项研究；高>60%1RM或<15RM，低≤60%或≥15RM。",
+        "findings": [
+          "全肌增肌ES0.06(95%CI−0.11至0.24)；1RM力量ES0.34(0.15至0.52)，偏向高负荷。",
+          "整体肌肥大未见稳定负荷差异，较重负荷提高最大力量。"
+        ]
+      }
+    },
+    {
+      "id": "EVID-mangine_2015_heavy_advantage",
+      "title": "The effect of training volume and intensity on improvements in muscular strength and size in resistance-trained men",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26272733/",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2015",
+      "reviewedAt": "2026-10-17",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-evidence-upgrade-20261017/authority-research.json",
+      "supports": "确有短期试验某些体积/力量指标有利重负荷，不应选择性忽略。",
+      "limitations": [
+        "同时改变负荷与休息；测得手臂瘦组织不等于胸大肌；3–5对10–12不是6–8对10–12。不能归因于负荷唯一因素。",
+        "已读PubMed摘要；未以未读全文中的胸/腿超声指标作额外断言。"
+      ],
+      "authority": {
+        "organization": null,
+        "journal": null,
+        "studyType": "randomized_trial",
+        "doi": "10.14814/phy2.12472",
+        "pmid": "26272733",
+        "accessLevel": "abstract",
+        "population": "训练男性29人，8周；重组4×3–5、约90%1RM、休3分钟；中组4×10–12、约70%、休1分钟。",
+        "sampleSize": 29,
+        "durationWeeks": 8,
+        "comparison": "训练男性29人，8周；重组4×3–5、约90%1RM、休3分钟；中组4×10–12、约70%、休1分钟。",
+        "findings": [
+          "重组DXA手臂瘦组织增长5.2±2.9% vs2.2±5.6%；卧推1RM增长14.8±9.7% vs6.9±9.0%，均组间p<.05。",
+          "确有短期试验某些体积/力量指标有利重负荷，不应选择性忽略。"
+        ]
+      }
+    },
+    {
+      "id": "EVID-lasevicius_2018_very_low",
+      "title": "Effects of different intensities of resistance training with equated volume load on muscle strength and hypertrophy",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29564973/",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2018",
+      "reviewedAt": "2026-10-17",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-evidence-upgrade-20261017/authority-research.json",
+      "supports": "极轻20%负荷可能较差；说明不能将任何轻重无条件一概称为相同。",
+      "limitations": [
+        "20%极轻负荷不是10–12RM，不能用该优势证明6–8优于10–12。",
+        "已读PubMed摘要和方法/结果概述；未读全文。"
+      ],
+      "authority": {
+        "organization": null,
+        "journal": null,
+        "studyType": "randomized_trial",
+        "doi": "10.1080/17461391.2018.1450898",
+        "pmid": "29564973",
+        "accessLevel": "abstract",
+        "population": "30男，12周每周2次，自身对照肘屈/腿举；20%1RM一侧与另一侧40/60/80%比较，配平总负荷量。",
+        "sampleSize": 30,
+        "durationWeeks": 12,
+        "comparison": "30男，12周每周2次，自身对照肘屈/腿举；20%1RM一侧与另一侧40/60/80%比较，配平总负荷量。",
+        "findings": [
+          "80%相对20%股外侧肌CSA增加19.5% vs8.9%，肘屈肌25% vs11.4%，组间p<.05。40/60/80%的点估计接近。",
+          "极轻20%负荷可能较差；说明不能将任何轻重无条件一概称为相同。"
+        ]
+      }
+    },
+    {
+      "id": "EVID-plotkin_2022_progression",
+      "title": "Progressive overload without progressing load? The effects of load or repetition progression on muscular adaptations",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36199287/",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2022",
+      "reviewedAt": "2026-10-17",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-evidence-upgrade-20261017/authority-research.json",
+      "supports": "加重有用，增加次数也能进阶。",
+      "limitations": [
+        "不是卧推6–8vs10–12，也不是多年长期效果验证；不能把力量→更重→更快增肌当作已证明的必然链。",
+        "已读PubMed摘要及原文搜索返回的讨论相关段落；未读全部分析与原始数据。"
+      ],
+      "authority": {
+        "organization": null,
+        "journal": null,
+        "studyType": "randomized_trial",
+        "doi": "10.7717/peerj.14142",
+        "pmid": "36199287",
+        "accessLevel": "abstract",
+        "population": "43名有≥1年下肢训练经验者，8周；加重量固定次数范围vs加次数固定重量，4下肢动作、每周2次。",
+        "sampleSize": 43,
+        "durationWeeks": 8,
+        "comparison": "43名有≥1年下肢训练经验者，8周；加重量固定次数范围vs加次数固定重量，4下肢动作、每周2次。",
+        "findings": [
+          "大多数肌厚和表现差异小；两种进阶均可用。股直肌合计厚度调整差2.8mm，90%CI−0.5至5.8，偏加次数；动态力量差2.0kg，−2.4至7.8，偏加重。",
+          "加重有用，增加次数也能进阶。"
+        ]
+      }
+    },
+    {
+      "id": "EVID-larsen_2025_lateral_raise",
+      "title": "Dumbbell versus cable lateral raises for lateral deltoid hypertrophy: an experimental study",
+      "url": "https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2025.1611468/full",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2025",
+      "reviewedAt": "2026-10-17",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-evidence-upgrade-20261017/authority-research.json",
+      "supports": "12–16次侧平举在该处方下可有效增肌，可支持实用起点。",
+      "limitations": [
+        "完全没有对比6–8次；不能证明肩中束轻重量多次数优于重负荷，也不能由此推广所有小肌群。",
+        "已读出版社全文摘要、方法、训练流程；并读PMC索引返回局限与实用段落。关键训练流程在原文Resistance training procedures，网页行452–455。"
+      ],
+      "authority": {
+        "organization": null,
+        "journal": null,
+        "studyType": "randomized_trial",
+        "doi": "10.3389/fphys.2025.1611468",
+        "pmid": "40692697",
+        "accessLevel": "full_text",
+        "population": "24名训练男女完成8周、每周2次；左右臂随机哑铃/绳索侧平举；12–16RM到力竭，第1周8组/周、后7周10组/周。",
+        "sampleSize": 24,
+        "durationWeeks": 8,
+        "comparison": "24名训练男女完成8周、每周2次；左右臂随机哑铃/绳索侧平举；12–16RM到力竭，第1周8组/周、后7周10组/周。",
+        "findings": [
+          "肩中束厚度增3.3–4.6%；研究比较的是器械形式。",
+          "12–16次侧平举在该处方下可有效增肌，可支持实用起点。"
+        ]
+      }
+    },
+    {
+      "id": "EVID-morton_2016_trained",
+      "title": "Neither load nor systemic hormones determine resistance training-mediated hypertrophy or strength gains in resistance-trained young men",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27174923/",
+      "attribution": "independent",
+      "evidenceLevel": "research_primary",
+      "publishedAt": "2016",
+      "reviewedAt": "2026-10-17",
+      "evidenceTimes": null,
+      "researchFile": "output/chen-evidence-upgrade-20261017/authority-research.json",
+      "supports": "训练人群中可以力量增幅不同、肌肥大差异未显著；二者不能互相替代。",
+      "limitations": [
+        "不是6–8对10–12、非胸肌MRI直接测量、非等效性证明。",
+        "已读PubMed完整摘要与书目信息，未逐行读全文。"
+      ],
+      "authority": {
+        "organization": null,
+        "journal": null,
+        "studyType": "randomized_trial",
+        "doi": "10.1152/japplphysiol.00154.2016",
+        "pmid": "27174923",
+        "accessLevel": "abstract",
+        "population": "49名训练男性，12周全身训练；20–25次/约30–50%1RM对8–12次/约75–90%，全部到自主力竭。",
+        "sampleSize": 49,
+        "durationWeeks": 12,
+        "comparison": "49名训练男性，12周全身训练；20–25次/约30–50%1RM对8–12次/约75–90%，全部到自主力竭。",
+        "findings": [
+          "瘦体重与I/II型肌纤维横截面积增加，组间无显著差异；卧推1RM重组多增，14±1kg vs9±1kg(p=.012)。",
+          "训练人群中可以力量增幅不同、肌肥大差异未显著；二者不能互相替代。"
+        ]
+      }
+    },
+    {
+      "id": "FB-820487497207816-partial",
+      "title": "體德健身教練培訓：增肌到底是小重量還是大重量，60天對比實驗（局部在线核看）",
+      "url": "https://www.facebook.com/100094429786812/videos/820487497207816/",
+      "attribution": "author",
+      "evidenceLevel": "author_video_partial",
+      "publishedAt": "2025-09-22",
+      "reviewedAt": "2026-10-17",
+      "evidenceTimes": [
+        58,
+        229
+      ],
+      "researchFile": "output/chen-evidence-upgrade-20261017/facebook-video-review.json",
+      "supports": "00:58画面标小15–30次对大3–6次；03:33展示Jeremy左右侧结果；03:40起展示Dennis；03:49局部字幕谈做到力竭。",
+      "limitations": [
+        "不是连续核听或完整转写；文字记录需登录未读。",
+        "个人展示和二次解说不等于随机对照试验；原始数据、测量误差、完整执行和同行评议未核。",
+        "比较3–6对15–30不能替代用户6–8对10–12；画面百分比不导为普适效果数据。"
+      ]
+    }
+  ],
+  "entries": [
+    {
+      "id": "pair-upper_chest",
+      "title": "上胸（锁骨部侧重）：A/B适配候选",
+      "topics": [
+        "上胸",
+        "上斜",
+        "胸部",
+        "练胸"
+      ],
+      "category": "movement_pairs",
+      "summary": "上斜推举，侧重上方胸大肌；同时涉及三头和肩前束",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：先尝试更低角度、轻阻力的无痛推举；仍不合适则暂停该动作并评估肩/起落限制，不硬追上胸隔离。",
+        "哑铃起落、凳子承载与肩控制都要满足；体重大或上下凳困难时不自动给哑铃卧推。",
+        "机器稳定不等于适配：座位宽度、靠背、握把起点、固定轨迹、承载和最小阻力都需检查。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S07",
+        "S01",
+        "S17",
+        "S19",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "上斜区域适应有直接研究；本A/B器械形式及角度优先序为助手筛选，非研究证明两者全人群最佳",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "incline_db_press",
+          "name": "上斜哑铃卧推",
+          "suitability": "能安全持哑铃上下凳、肩部推举无痛，能控制两侧轨迹",
+          "setup": "选可调凳与可安全起落的轻重量；上斜角按舒适度选，不把固定角度称为最佳",
+          "cues": [
+            "脚和躯干保持稳定；背部自然贴凳，勿为了把重量推起过度顶腰",
+            "手腕与前臂基本在受力线上；肘位以肩部舒适和控制为准",
+            "下放受控，落到能保持肩稳定的幅度；推起不碰撞哑铃"
+          ],
+          "regression": "减少哑铃重量、降低凳角或缩到无痛可控幅度；哑铃起落难直接选B；审计分支：优先试适配上斜器械；器械也不适配则改可接受推胸并暂不追上胸专项。",
+          "avoidWhen": "起落无法安全完成；肩部动作疼痛；需要他人全程抬起才能完成"
+        },
+        {
+          "id": "incline_machine_press",
+          "name": "上斜器械推胸",
+          "suitability": "平衡/哑铃起落困难、希望背部支撑、机器尺寸与路径适合本人",
+          "setup": "调整座椅令把手位置与胸肩自然推举方向相配；检查最小阻力能控制",
+          "cues": [
+            "背部和脚稳定；无需使肩胛僵硬不动",
+            "先用轻阻力试轨迹；两侧推进速度一致",
+            "不耸头抢重量、不猛弹到底"
+          ],
+          "regression": "减阻力、调整座椅/握把；固定路径不舒服时更换机器，不因机器稳就硬练；审计分支：调座/握法并减到能控制；最小档仍过重或痛则不用该机器。",
+          "avoidWhen": "固定轨迹引发肩痛；座椅/体重承载不适配；最小阻力仍过重"
+        }
+      ]
+    },
+    {
+      "id": "pair-mid_chest",
+      "title": "中胸（胸肋部/整体推胸侧重）：A/B适配候选",
+      "topics": [
+        "中胸",
+        "胸部",
+        "推胸",
+        "俯卧撑",
+        "练胸"
+      ],
+      "category": "movement_pairs",
+      "summary": "水平推举；不宣称存在独立的中胸肌",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：可试轻阻力弹力带推胸（锚点可靠、坐位支撑）；仍疼痛或基本动作受限则先评估。",
+        "不能按体重数字自动定档；试轻负荷确认坐稳、脚支撑与肩轨迹。",
+        "只能用固定墙面/牢固高台；高度较高可减小承重，但支撑高度和身体角度一起决定需求。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S01",
+        "S17",
+        "S19",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "健康成人器械/自重均可训练；候选不以试验直接排名，B的角度用于调承重",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "flat_machine_press",
+          "name": "坐姿水平器械推胸",
+          "suitability": "新手、体重较大、俯卧撑太重或上下卧推凳不方便",
+          "setup": "座椅令把手接近胸部适当高度；脚和靠背支撑稳定",
+          "cues": [
+            "手腕保持稳定，肘随握把自然路径移动",
+            "回程受控，不让肩头被拉到疼痛幅度",
+            "推起时勿用躯干前冲代替手臂推举"
+          ],
+          "regression": "降低阻力/改握法/换更适配的机器；审计分支：不合适时用墙面/高台推，不能认定机器必然更安全。",
+          "avoidWhen": "固定路径痛；机器最小阻力太大；尺寸不适"
+        },
+        {
+          "id": "elevated_push_up",
+          "name": "高支撑俯卧撑（墙面/固定高台起步）",
+          "suitability": "缺少器械，地面俯卧撑承重过大，能站立和扶住固定支撑",
+          "setup": "支撑稳固，起始越高通常越容易；手位按肩腕舒适调，防支撑滑动",
+          "cues": [
+            "从脚到头保持整体，不先探头或塌腰",
+            "肘自然向侧后方弯，勿刻意把上臂完全横张",
+            "胸和躯干一起靠近支撑；回推过程稳定呼吸"
+          ],
+          "regression": "提高支撑高度、靠近墙面；逐步降低高度增加难度；审计分支：先墙面，能无痛稳定做才逐步降低高度；不用普通可移动椅子作默认支撑。",
+          "avoidWhen": "肩腕支撑疼痛；支撑不稳；无法维持站姿平衡"
+        }
+      ]
+    },
+    {
+      "id": "pair-lower_chest",
+      "title": "下胸（胸肋部下方侧重）：A/B适配候选",
+      "topics": [
+        "下胸",
+        "下斜",
+        "夹胸",
+        "胸部",
+        "练胸"
+      ],
+      "category": "movement_pairs",
+      "summary": "向前下方推/内收候选；胸区域侧重不等于完全隔离",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：使用可接受的水平推胸覆盖胸训练，暂不分下胸专项；不能以强做双杠保证下胸效果。",
+        "下斜设备不是所有健身房都有；躺式起落、头低位舒适度、垫位与肩轨迹需满足。",
+        "双手夹胸时通常无法同时用另一手扶稳；站姿对平衡仍有要求。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S19",
+        "S21",
+        "S17",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "这里只是应用解剖/可调负荷筛出的候选；本次未找到证明这两种动作下胸长期增肌全面最优的直接比较",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "decline_machine_press",
+          "name": "下斜/向前下方器械推胸",
+          "suitability": "机器提供可调阻力，双杠臂屈伸无法承重、肩部可接受该轨迹",
+          "setup": "选适配的下斜推胸设备；按器械说明调座，不将椅子临时垫出不稳角度",
+          "cues": [
+            "躯干稳定，手腕受力稳定",
+            "让把手沿设备轨迹前下方推进，不把肩向前顶",
+            "受控回程，不强求极深拉伸"
+          ],
+          "regression": "减阻力/缩可控幅度/改水平推胸；审计分支：没有适配设备不为凑下胸改成大体重徒手双杠；保留水平推胸。",
+          "avoidWhen": "设备不适配；下斜起落困难；肩部该轨迹痛"
+        },
+        {
+          "id": "high_to_low_cable_fly",
+          "name": "高位向下绳索夹胸",
+          "suitability": "希望负荷很轻、可独立调轨迹，站姿稳定；也可用有支撑坐姿版本",
+          "setup": "小重量，滑轮较高；站稳/靠凳支撑；肩部开合幅度以可控为准",
+          "cues": [
+            "肘微弯并大致保持，不靠反复伸肘把夹胸做成下压",
+            "前臂向前下方合拢，不需要越过中线用力交叉",
+            "回程慢且受控，勿为了拉伸让肩头失控前顶"
+          ],
+          "regression": "减阻力、减站姿负担、缩幅度；无法稳定时换支撑坐位版本；审计分支：仅站稳者使用；需要支撑者须选已确认可用的靠背坐姿轨迹，否则回到适配推胸，不能虚构支撑。",
+          "avoidWhen": "肩部水平内收疼痛；绳索拉力使身体失衡；锚点/设备不适"
+        }
+      ]
+    },
+    {
+      "id": "pair-lats_vertical",
+      "title": "背阔肌（竖直拉侧重）：A/B适配候选",
+      "topics": [
+        "背阔",
+        "下拉",
+        "竖直拉",
+        "练背",
+        "背部"
+      ],
+      "category": "movement_pairs",
+      "summary": "背阔肌（竖直拉侧重）的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：可先用无痛范围的水平拉覆盖部分背训练，竖直拉受限原因需评估；不能假定所有拉动作完全等效。",
+        "腿垫和座位须适配大体型，抬臂须无痛；不能把更窄/中立握称为保证无痛。",
+        "坐姿和可靠支撑需真实存在；单手工作时另一手可扶固定支撑，但不可用活动拉杆扶稳。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S18",
+        "S15",
+        "S17",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "来自常见拉动模式与适配原则；尚无本A/B长期增肌优势直接比较，未用背部EMG排列最优",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "neutral_lat_pulldown",
+          "name": "对握/中立握高位下拉",
+          "suitability": "做不了自重引体向上，能无痛抬臂，机器腿垫合适",
+          "setup": "调腿垫和座椅，重量不把身体拉离座位",
+          "cues": [
+            "身体稳定略后倾即可，不靠大幅摆躯干拉下",
+            "想象肘往身侧下方走，把手拉至舒适位置",
+            "回程允许手臂和肩胛正常上移；不在顶端强锁沉肩"
+          ],
+          "regression": "减重/调整握距、握法或做单臂B；审计分支：最低档试做；抬臂受限用合适水平拉先覆盖部分背训练，不冒称等效。",
+          "avoidWhen": "抬臂痛；肩/手肘受限；腿垫不适或最小负荷过重"
+        },
+        {
+          "id": "supported_single_arm_pulldown",
+          "name": "有支撑单臂绳索下拉",
+          "suitability": "双手固定握距不舒服，想调每侧角度，能坐稳和抬臂",
+          "setup": "坐/跪姿按能力选择；体重大或跪地困难优先坐位支撑",
+          "cues": [
+            "躯干不扭着抢次数",
+            "肘向身侧拉，肩胛随上臂自然运动",
+            "手腕不硬弯，回程不被重量猛拽"
+          ],
+          "regression": "减重/改起始手位；不必强求两侧完全相同轨迹；审计分支：调每侧角度/起点；无法抬臂仍停止，不为下拉强行拉伸。",
+          "avoidWhen": "任何适配角度仍疼痛；不能稳住躯干"
+        }
+      ]
+    },
+    {
+      "id": "pair-upper_back_horizontal",
+      "title": "上背（水平拉侧重）：A/B适配候选",
+      "topics": [
+        "上背",
+        "划船",
+        "水平拉",
+        "练背",
+        "背部"
+      ],
+      "category": "movement_pairs",
+      "summary": "上背（水平拉侧重）的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：试单臂、有靠背或更小幅度的轻阻力划船；持续症状先评估。",
+        "胸垫可能压迫腹胸或妨碍呼吸；设备胸托/座位不可适配时不自动作为大体重优先。",
+        "坐姿并不自动消除下背负担，伸手拿把手和脚支撑都须可完成。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S18",
+        "S17",
+        "S15",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "模式候选，未证明胸托与坐姿绳索谁增肌最优；肩胛提示基于功能运动原则",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "chest_supported_row",
+          "name": "胸托器械划船",
+          "suitability": "腰背维持俯身困难，胸托舒适，机器握法适合",
+          "setup": "调座椅/胸垫，让手臂自然前伸且胸部支撑不压迫呼吸",
+          "cues": [
+            "肘向后拉，不通过仰头或顶胸抢重量",
+            "肩胛在回程可适度前伸，拉回时自然后缩",
+            "不把肩胛全程焊死；不猛拉"
+          ],
+          "regression": "减阻力/改握把与胸托；胸垫压迫换B；审计分支：换坐姿绳索或适配其他支撑划船；保持可呼吸和可控轨迹。",
+          "avoidWhen": "胸垫压迫不适、设备体型不适配或划船痛"
+        },
+        {
+          "id": "seated_cable_row",
+          "name": "坐姿绳索划船",
+          "suitability": "胸托不舒服或器械不可用，能坐稳，可调轻阻力",
+          "setup": "保持可控坐姿，脚踩稳；握法和肘路径按舒适/训练侧重调",
+          "cues": [
+            "躯干稳定，不用反复折腰和大幅后仰产生惯性",
+            "手臂回伸时肩胛可跟随前伸；背部不失控弓起",
+            "肩部运动不等于必须在每次顶端极端夹背"
+          ],
+          "regression": "减重、坐得更靠近/换支撑版本；审计分支：用轻阻力并缩到能控制；无法坐稳则另选真实支撑设备，不许身体大幅前后甩。",
+          "avoidWhen": "无法保持可控坐姿；下背或肩部疼痛"
+        }
+      ]
+    },
+    {
+      "id": "pair-front_deltoid",
+      "title": "肩前束（推举侧重）：A/B适配候选",
+      "topics": [
+        "前束",
+        "肩前",
+        "肩推",
+        "推举",
+        "练肩",
+        "肩部"
+      ],
+      "category": "movement_pairs",
+      "summary": "肩前束（推举侧重）的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：先检查现有胸推已给前束的训练量；不必硬加前束孤立动作，必要时评估抬臂限制。",
+        "仍属于过顶模式；肩活动受限者不能只因机器稳定就做。",
+        "机器不适配者可控制更轻哑铃，但仍需无痛抬臂、可靠座椅/脚支撑、稳定及安全取放能力；坐姿/轻哑铃不等于普适。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S15",
+        "S17",
+        "S01",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "A/B均为有条件负重推举候选；B针对机器不适配但无痛抬臂者，未直接证明长期前束增肌全面最优或与A等同。",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "neutral_machine_shoulder_press",
+          "name": "中立握器械肩推",
+          "suitability": "能无痛抬臂，想靠背支撑，设备推举方向适合",
+          "setup": "调座椅/把手，起点和终点以可控无痛为准",
+          "cues": [
+            "腹部保持张力，勿肋骨外翻和顶腰代替抬臂",
+            "抬臂时允许肩胛向上转动，不强行全程沉肩",
+            "不猛顶到肩部疼痛终点"
+          ],
+          "regression": "减重、改握把或起始高度；审计分支：无痛范围轻试；不合适时省略额外前束课，核现有胸推参与。",
+          "avoidWhen": "所有过顶角度都痛；固定轨迹不适"
+        },
+        {
+          "id": "seated_neutral_db_shoulder_press",
+          "name": "坐姿轻哑铃中立握肩推",
+          "suitability": "机器尺寸/座位/握把或无痛轨迹不适配，但能无痛抬臂；可独立安全坐下起身、拿起放下哑铃，座椅与靠背可靠；最低哑铃负荷试推和回程也无痛可控",
+          "setup": "选牢固适配座椅和靠背，双脚有可靠支撑；先极轻或无负荷试举，确认起点、回程和取放路径；不靠猛甩把重量送到肩旁",
+          "cues": [
+            "手掌相向或舒适的接近中立握，肘在可控舒适路径移动，不强求固定肘角",
+            "抬臂时允许肩胛向上转动，不全程压死沉肩",
+            "保持躯干控制，不能靠顶腰/后仰完成；回程到无痛可控位置"
+          ],
+          "regression": "先无负荷试活动范围；降低重量/缩小到可控无痛幅度；最轻哑铃仍不能控制则不加载；审计分支：符合条件可替代器械肩推该动作位；最轻负荷不合适先无负荷试举，两者都不适配可省略前束专项并核现有胸推。",
+          "avoidWhen": "抬臂或回程疼痛/明显受限；无法安全起落或取放哑铃；最轻负荷仍失控；坐姿/靠背不适配"
+        }
+      ]
+    },
+    {
+      "id": "pair-lateral_deltoid",
+      "title": "肩中束：A/B适配候选",
+      "topics": [
+        "中束",
+        "肩中",
+        "侧平举",
+        "练肩",
+        "肩部"
+      ],
+      "category": "movement_pairs",
+      "summary": "肩中束的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：无负荷、可接受范围的抬臂练习用于评估动作，不作为已等效增肌方案；症状持续评估。",
+        "最小配重可能仍过大；单手时另一手能扶固定支撑，此真实条件与双手夹胸不同。",
+        "坐位可减少摆动但不治疗肩痛；凳宽/承载和极轻哑铃仍需适配。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S12",
+        "S15",
+        "S17",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "有本模式直接8周比较支持两者相近增肌；不是绳索必然优于哑铃",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "cable_lateral_raise",
+          "name": "单臂绳索侧平举",
+          "suitability": "能无痛侧抬，滑轮最小阻力合适，喜欢独立调路径",
+          "setup": "用轻重量；必要时另一手扶稳，手臂略在身体前方的舒适平面抬起",
+          "cues": [
+            "肘微弯，抬到可控舒适高度，无需强求越过肩高",
+            "不摆腰猛甩，不把自然肩胛运动误当全部错误",
+            "回程控制，不强压肩胛阻止向上旋转"
+          ],
+          "regression": "减重、缩无痛幅度或扶稳身体；审计分支：无法控制最小档改极轻坐姿哑铃；需确认肩侧抬本身无痛。",
+          "avoidWhen": "抬臂疼痛；最小绳索阻力过大"
+        },
+        {
+          "id": "seated_db_lateral_raise",
+          "name": "坐姿哑铃侧平举",
+          "suitability": "绳索不合适/不可用，站姿容易摆动，可用极轻哑铃",
+          "setup": "坐稳，哑铃从轻开始，握法以肩腕舒适为准",
+          "cues": [
+            "肘微弯，轨迹稳定，不必刻意小拇指高翘倒水",
+            "勿用脖子前探和躯干弹起启动",
+            "受控下降；后几次变慢不等于必须马上加重或减重"
+          ],
+          "regression": "更轻哑铃/缩幅度；先练无负重控制；审计分支：减重/减可接受幅度；无负荷也痛则不强行加组。",
+          "avoidWhen": "肩部侧抬疼痛；无法控制极轻重量"
+        }
+      ]
+    },
+    {
+      "id": "pair-rear_deltoid",
+      "title": "肩后束：A/B适配候选",
+      "topics": [
+        "后束",
+        "肩后",
+        "反飞鸟",
+        "反向蝴蝶机",
+        "练肩",
+        "肩部"
+      ],
+      "category": "movement_pairs",
+      "summary": "肩后束的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：可保留无痛水平划船对后束的参与，后束专项另按可接受轨迹试选。",
+        "胸托、手臂起始角、座位是否可调整影响大体型适配。",
+        "俯卧凳上起落、腹胸压迫、哑铃摆放均可能使它比机器更难，不能作为所有功能受限者默认B。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S17",
+        "S21",
+        "S16",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "应用动作机制筛选；本次未取得本A/B长期肌肥大直接比较，不能用急性EMG宣布某一最佳",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "reverse_pec_deck",
+          "name": "反向蝴蝶机",
+          "suitability": "需要支撑、能无痛水平开臂、机器尺寸适配",
+          "setup": "调整把手和座椅，让上臂在肩部舒适平面；胸贴垫但不憋气",
+          "cues": [
+            "上臂向两侧后方展开，肘微弯",
+            "不靠耸头或大幅夹背把重量甩开",
+            "末端到可控幅度，回程不猛砸配重"
+          ],
+          "regression": "减阻力/调整手位与座椅；审计分支：先小阻力试；胸托压迫或路径痛换支撑绳索，仍受限则暂用可接受划船参与。",
+          "avoidWhen": "机器路径痛、手臂起点不合适、胸托不适"
+        },
+        {
+          "id": "supported_db_reverse_fly",
+          "name": "胸托哑铃反向飞鸟",
+          "suitability": "机器不合适/不可用，胸托凳舒适，能用很轻哑铃",
+          "setup": "俯卧胸托凳的起落需能安全完成；不舒服则采用有支撑单臂坐姿绳索版本另行选型",
+          "cues": [
+            "肘微弯，手臂开到可控位置即可",
+            "不抬胸甩重、不抻脖子",
+            "控制回落，不追求重量数字"
+          ],
+          "regression": "更轻重量、更高凳角；上下凳困难换支撑绳索版本；审计分支：只有起落无困难、胸托舒适才选；不满足则另选坐位支撑版本或省略专项。",
+          "avoidWhen": "胸托呼吸受压/起落困难，肩部开臂痛"
+        }
+      ]
+    },
+    {
+      "id": "pair-biceps",
+      "title": "肱二头肌：A/B适配候选",
+      "topics": [
+        "二头",
+        "手臂",
+        "弯举"
+      ],
+      "category": "movement_pairs",
+      "summary": "肱二头肌的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：普通坐姿/站姿绳索弯举并试不同握把，优先无痛可控；持续肘肩痛则先评估。",
+        "大体型可能使上臂不能贴垫或肘被边缘顶住；最小档仍需可控。",
+        "需要肩后伸可接受、凳起落可完成；不能作上肢功能受限者普遍退阶。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S13",
+        "S17",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "直接研究显示近/远端适应不同，二者均保留；不因一个区域增长较小就删除某动作",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "supported_preacher_curl",
+          "name": "牧师凳弯举（优先轻阻力器械/可调握把）",
+          "suitability": "希望上臂支撑、少摆动，肘与凳高度匹配",
+          "setup": "腋下/上臂贴稳垫；肘关节不要被垫边硬顶；轻阻力起步",
+          "cues": [
+            "上臂不离垫抢重",
+            "伸肘回程受控，勿在底端反弹",
+            "手腕稳定，使用舒服的握把"
+          ],
+          "regression": "减重、减少不适终点、换握把；审计分支：调座/垫/握把；不适配可普通坐姿弯举，不硬压肘到垫边。",
+          "avoidWhen": "底端肘部疼痛；机器起始阻力/座垫不适"
+        },
+        {
+          "id": "incline_db_curl",
+          "name": "上斜哑铃弯举",
+          "suitability": "肩可无痛放在身体后侧，能安全上凳，接受较小绝对重量",
+          "setup": "坐靠凳、哑铃轻，凳角与手臂后伸程度按肩部舒适选择",
+          "cues": [
+            "上臂大致稳定，不向前抬肩抢最后几次",
+            "肩后伸只到无痛范围",
+            "受控伸肘回落，不追求比牧师凳相同重量"
+          ],
+          "regression": "提高凳角、减少肩后伸；肩后伸仍不适改普通坐姿弯举另行选型；审计分支：肩后伸受限改普通坐姿弯举，区域优势减少需如实说明。",
+          "avoidWhen": "肩部后伸痛；上下凳困难；肘部伸展痛"
+        }
+      ]
+    },
+    {
+      "id": "pair-triceps",
+      "title": "肱三头肌：A/B适配候选",
+      "topics": [
+        "三头",
+        "手臂",
+        "下压",
+        "伸肘",
+        "臂屈伸"
+      ],
+      "category": "movement_pairs",
+      "summary": "肱三头肌的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：无痛范围轻阻力伸肘并核查疼痛；不能以窄距卧推强行替代所有肘/肩限制。",
+        "过顶要求仍在；肩受限或需反复挺腰保持手臂位置时不选。",
+        "双手下压通常不能同时扶稳，站姿困难需真实坐位/支撑设备且拉力线正确。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S08",
+        "S17",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "A在直接试验中平均增长更大，但B仍有效且是肩受限者重要备选",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "overhead_cable_extension",
+          "name": "过顶绳索臂屈伸",
+          "suitability": "肩可无痛上举并保持，能控制躯干，目标包括长头",
+          "setup": "轻阻力；站/坐有支撑均可，起点上臂角按肩部可接受范围",
+          "cues": [
+            "腹部稳定，勿为了维持过顶而反复顶腰",
+            "主要伸肘，不用整条上臂摆动甩重",
+            "回程受控，肘部不适不硬追最大屈曲"
+          ],
+          "regression": "减重/减少过顶角度/采用支撑坐姿；审计分支：改身侧下压或其他无痛伸肘；不用研究平均优势要求人人过顶。",
+          "avoidWhen": "过顶受限或痛；肘部屈伸痛"
+        },
+        {
+          "id": "cable_pushdown",
+          "name": "绳索下压",
+          "suitability": "过顶动作不适，肩自然放在身侧无痛，能站稳/坐稳",
+          "setup": "选手腕舒服的绳/把手，轻负荷，躯干稳定",
+          "cues": [
+            "上臂基本在身侧，不靠身体往前压重",
+            "伸肘到可控位置，勿猛锁肘",
+            "回程不耸肩抬臂抢幅度"
+          ],
+          "regression": "减阻力/换握把/有支撑坐位；审计分支：减阻力、适配坐姿下压；不能虚构“坐下就一定可用”。",
+          "avoidWhen": "肩或肘在下压也痛；最小阻力过重"
+        }
+      ]
+    },
+    {
+      "id": "pair-quadriceps",
+      "title": "股四头肌：A/B适配候选",
+      "topics": [
+        "股四头",
+        "大腿前侧",
+        "腿举",
+        "腿屈伸",
+        "练腿",
+        "腿部"
+      ],
+      "category": "movement_pairs",
+      "summary": "股四头肌的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：高座椅、有扶手的起坐或无痛轻阻力膝伸动作另选；仍疼痛/不能承重先评估。",
+        "空载sled/器械起始阻力可能很大；上机、髋屈空间、腹部压迫和骨盆控制需检查。",
+        "应检查膝轴、踝垫、坐位空间和最小阻力；术后/既有医嘱限制须按真实信息。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S14",
+        "S17",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "两者总体股四头肌训练价值均有支持；腿屈伸更涉及股直肌，腿举还涉及臀/内收，不能当全下肢完全互换",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "leg_press",
+          "name": "坐姿/卧式腿举",
+          "suitability": "需要背部支撑、站姿蹲平衡/承重受限，机器起落与座位适配",
+          "setup": "靠背稳定、脚掌踩稳；调座使下放过程中骨盆不被挤得明显翻起",
+          "cues": [
+            "膝随脚的大致方向移动，不强扭膝",
+            "下放至可控深度；不把重量弹起",
+            "推起保持足底受力，不猛撞膝关节终点"
+          ],
+          "regression": "减重、减深度、调脚位/靠背，换轻阻力机器；审计分支：起始阻力过大不只是取掉杠铃片；改适配腿屈伸或高座起坐，不能保证等效臀刺激。",
+          "avoidWhen": "机器最小阻力太重；膝髋或腰疼；深屈髋受限"
+        },
+        {
+          "id": "leg_extension",
+          "name": "坐姿腿屈伸（伸膝）",
+          "suitability": "需要更小全身承重，坐位伸膝无痛，机器轴与膝位置适配",
+          "setup": "对齐设备转轴、调踝垫、坐稳",
+          "cues": [
+            "伸膝和回程都受控，勿踢甩配重",
+            "膝关节不适时不强求最末端和最大屈曲",
+            "躯干不离椅来抢重"
+          ],
+          "regression": "更低负荷、调整可接受幅度；非默认每组做到力竭；审计分支：轻阻力可接受范围；伸膝痛先停，不为凑全幅硬踢终点。",
+          "avoidWhen": "设备转轴/垫位置不合适；伸膝疼痛；已知术后限制未核清"
+        }
+      ]
+    },
+    {
+      "id": "pair-glute_max",
+      "title": "臀大肌：A/B适配候选",
+      "topics": [
+        "臀部",
+        "臀大肌",
+        "臀推",
+        "练臀",
+        "箱式深蹲"
+      ],
+      "category": "movement_pairs",
+      "summary": "臀大肌的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：可试床/地面可安全起落的自重臀桥；不能起落或动作疼痛则先评估，不能保证退阶仍同等增肌。",
+        "髋垫压迫、上背位置、起落及最小负荷可能不适合大体重/行动受限者。",
+        "高箱和扶手应固定；起步先无额外负重，杯式持重与双手扶稳不能同时默认成立。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S10",
+        "S17",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "杠铃臀推/深蹲的直接研究支持这两类模式；机器与箱式适配版本是助手外推，深度降低可能改变刺激",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "machine_hip_thrust",
+          "name": "器械臀推",
+          "suitability": "髋伸无痛，机器垫位置和承重适配，能安全起落",
+          "setup": "垫在设备规定髋部位置，脚踩稳，上背按设备支撑",
+          "cues": [
+            "髋向上/前伸，到躯干与大腿基本成线即可",
+            "末端不靠过度挺腰追更高",
+            "下降受控，膝和脚保持稳定"
+          ],
+          "regression": "减重；使用短幅度无痛版本；起落不便另选；审计分支：试适配高座起坐；只有能安全上下卧位才考虑自重臀桥。",
+          "avoidWhen": "髋垫压迫不适、起落困难、腰髋该轨迹痛"
+        },
+        {
+          "id": "supported_box_goblet_squat",
+          "name": "扶稳/杯式箱式深蹲（高箱起步）",
+          "suitability": "不适合髋部压垫或上下臀推机，能无痛站立和起坐",
+          "setup": "用固定椅/箱决定深度；体重大可先不额外负重、扶固定支撑",
+          "cues": [
+            "髋膝一起弯，足底稳定",
+            "坐到箱面轻触/受控起坐，勿向后跌坐",
+            "起身不刻意夹臀顶腰；深度按控制和舒适度"
+          ],
+          "regression": "提高箱面、去哑铃、增加扶手支撑；审计分支：先扶手高座起坐→减少手辅助→无扶手起坐→轻杯式负重，逐步选一变量；不是直接要求高体重先抱哑铃。",
+          "avoidWhen": "起坐膝髋疼痛、不能平衡/承重、支撑不稳"
+        }
+      ]
+    },
+    {
+      "id": "pair-hamstrings_knee_flexion",
+      "title": "腘绳肌（屈膝模式）：A/B适配候选",
+      "topics": [
+        "腘绳",
+        "大腿后侧",
+        "腿弯举",
+        "练腿",
+        "腿部"
+      ],
+      "category": "movement_pairs",
+      "summary": "腘绳肌（屈膝模式）的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：轻阻力站位屈膝或弹力带屈膝另行适配；腘绳肌完整训练还应考虑髋伸模式。",
+        "膝轴、大腿压垫、髋屈舒适度和最小阻力需适配。",
+        "俯卧可能腹胸压迫，起落和垫位可能更困难；不能自动作为坐姿做不了者的通用B。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S09",
+        "S17",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "A对双关节部分有更大增长的直接证据；B仍保留，不能称效果差而删",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "seated_leg_curl",
+          "name": "坐姿腿弯举",
+          "suitability": "坐位舒适、设备适配，能无痛屈膝",
+          "setup": "调膝轴、踝垫与大腿压垫，骨盆保持椅上稳定",
+          "cues": [
+            "屈膝拉回，不把臀部从座位抬起",
+            "回伸受控，勿被配重拉回",
+            "不为了所谓拉长而逼出神经牵拉或疼痛"
+          ],
+          "regression": "減阻力、减到可接受幅度、调座椅；审计分支：调座减负荷；受限可试适配站/卧位屈膝，不用拉长理论逼疼痛终点。",
+          "avoidWhen": "髋屈位不适；坐垫/轴位置不适；屈膝痛"
+        },
+        {
+          "id": "prone_leg_curl",
+          "name": "俯卧腿弯举",
+          "suitability": "坐位髋屈不适但俯卧舒适，能安全上下设备",
+          "setup": "按设备调膝/踝位置，腹部和骨盆支撑稳定",
+          "cues": [
+            "主要屈膝，不用挺腰抬臀帮助",
+            "回程受控",
+            "负荷不必照搬坐姿同重量"
+          ],
+          "regression": "更轻、较小可控幅度；俯卧压迫可改站姿单腿机器另选；审计分支：能舒适俯卧才用；否则另选站位轻屈膝设备，且确保扶稳是真的可做。",
+          "avoidWhen": "俯卧压迫/上下机困难；腰部挺起才可完成；屈膝痛"
+        }
+      ]
+    },
+    {
+      "id": "pair-posterior_chain_hip_hinge",
+      "title": "臀/腘绳肌（髋铰链模式）：A/B适配候选",
+      "topics": [
+        "髋铰链",
+        "罗马尼亚硬拉",
+        "RDL",
+        "硬拉",
+        "髋后移",
+        "后链"
+      ],
+      "category": "movement_pairs",
+      "summary": "臀/腘绳肌（髋铰链模式）的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：允许暂不做髋铰链专项；实际适配的腿弯举/臀推可覆盖部分后链训练，不能称等效RDL，症状持续或站立限制需先评估。",
+        "哑铃轻不等于动作要求低，须有髋后移/躯干控制和安全取放；不能作为所有新手即时必做。",
+        "双手可真实扶住固定支撑并避免绳索后拉，仍需安全站立/承重和无痛躯干控制；自重仍有实际负荷。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S18",
+        "S21",
+        "S17",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "A为负重髋铰链训练；B为助手提出的扶稳自重模式学习退阶，未直接验证具体口令，不宣称与A等效增肌。",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "db_rdl",
+          "name": "哑铃罗马尼亚硬拉",
+          "suitability": "能理解髋后移并控制躯干，握力足够，髋铰链无痛",
+          "setup": "轻哑铃贴近腿，膝微屈且角度变化不大",
+          "cues": [
+            "髋向后移，重量靠近身体",
+            "下放只到能保持躯干控制和腘绳可接受拉伸的位置，不必须到地",
+            "起身主要髋伸，不在顶端过度挺腰"
+          ],
+          "regression": "先无负荷髋后移练习、减重量/减深度；审计分支：先无负荷髋后移学模式；控制不了先用屈膝训练和可接受臀推覆盖部分后链，不宣称等效完整RDL。",
+          "avoidWhen": "持续腰髋痛、无法控制躯干、握持负担过大"
+        },
+        {
+          "id": "supported_bodyweight_hip_hinge",
+          "name": "扶固定支撑自重髋后移（学习退阶）",
+          "suitability": "可在可靠支撑旁稳定站立，髋后移和轻度前倾无痛；暂不能安全握持哑铃或尚未掌握髋铰链",
+          "setup": "双手可实际轻扶固定牢固的扶手/台沿，先检承载、位置、防滑与抗倾倒；不用滚动椅、可移动桌或松动家具；双脚稳定，先很小幅度试动作",
+          "cues": [
+            "膝微屈，髋缓慢后移；躯干随髋前倾，不反复弓腰去够低处",
+            "只到仍能控制站姿、躯干且无痛的深度，不追求触地",
+            "用腿臀控制站直，手扶稳不拉拽支撑把身体硬拽起，顶端不后仰"
+          ],
+          "regression": "减小后移与前倾幅度；站立仍无法安全控制时暂停该练习，另选实际适配的坐/卧位训练；审计分支：小幅度学习髋后移；不能计作等效RDL工作组。控制稳定后是否加载另评；两者都不适配可暂不做专项。",
+          "avoidWhen": "有支撑仍失衡；支撑不牢/无法可靠握扶；腰髋或扶撑部位疼痛；站立/躯干控制不够"
+        }
+      ]
+    },
+    {
+      "id": "pair-calves",
+      "title": "小腿：A/B适配候选",
+      "topics": [
+        "小腿",
+        "提踵"
+      ],
+      "category": "movement_pairs",
+      "summary": "小腿的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：坐位无负荷踝活动可用于功能起步，不能承诺等同增肌；疼痛/肿胀或承重受限需评估。",
+        "大体重本人重量就是较高负荷；手扶稳不必然足够卸载。不能从未加哑铃推断负荷轻。",
+        "坐姿减少站立平衡要求，但膝上压垫、脚踏高度和起始负荷仍需适配。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S11",
+        "S17",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "A平均更利于腓肠肌；B能训练比目鱼肌但不是A腓肠肌效果完全相同的替代",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "supported_straight_knee_calf_raise",
+          "name": "扶稳直膝提踵（体重/器械）",
+          "suitability": "能站立承重、踝部无痛，目标覆盖腓肠肌",
+          "setup": "扶固定支撑；先双脚，膝自然伸直但不猛锁；体重大时可从地面起步",
+          "cues": [
+            "脚跟受控上升和落下，不上下弹跳",
+            "踝与脚掌自然对齐，勿刻意大幅内外转脚追区域排名",
+            "可控幅度起步，台阶拉伸不是必要前提"
+          ],
+          "regression": "双脚、减少负重/幅度；有支撑直膝机器另选；审计分支：先双脚地面短幅度；承重仍不适时坐姿提踵，注明腓肠刺激可能减弱。",
+          "avoidWhen": "体重承重或踝跟腱痛；站姿平衡困难"
+        },
+        {
+          "id": "seated_calf_raise",
+          "name": "坐姿屈膝提踵",
+          "suitability": "站立不方便/平衡有限，想保留小腿训练，坐姿设备适配",
+          "setup": "膝屈约舒适坐位角度，前掌稳放，膝上垫/负荷不压迫",
+          "cues": [
+            "受控提踵和下降",
+            "不靠膝盖弹跳带起重量",
+            "负荷从轻开始，踝部幅度以可控为准"
+          ],
+          "regression": "减负荷/减幅度；普通椅上轻阻力版本另选；审计分支：普通稳定座椅轻阻力脚跟抬起另试；不在膝上堆难固定重物。",
+          "avoidWhen": "膝上压垫或踝动作痛，机器起始阻力太重"
+        }
+      ]
+    },
+    {
+      "id": "pair-core_anti_extension",
+      "title": "核心（抗伸展/躯干控制起步）：A/B适配候选",
+      "topics": [
+        "核心",
+        "死虫",
+        "平板",
+        "腹部",
+        "腹肌"
+      ],
+      "category": "movement_pairs",
+      "summary": "核心（抗伸展/躯干控制起步）的动作选择与可执行退阶",
+      "rules": [
+        "一个动作位在A/B中选适合本人者，不默认两者都做；另一项是条件替代。",
+        "两项都不合适：支撑坐位/卧位呼吸与轻躯干控制另行评估；不能因核心动作易就保证适合所有腰背疾病。",
+        "需要能安全仰卧起落；肥胖/行动受限者可能难做到，不能一概称低风险零门槛。",
+        "需要支撑牢固、站立稳定、肩腕能承重；高支撑可减负担但不保证适合全部腰/肩问题。"
+      ],
+      "conditions": [
+        "先检查实际器械、承载/尺寸、取放和起落、无痛可控范围；不只按体重选动作。"
+      ],
+      "sourceIds": [
+        "S20",
+        "S17",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "功能/动作控制候选，不是腹直肌最强增肌两动作，也不是完整核心（旋转/侧向/屈曲）计划",
+        "助手动作口令和替代方案未经真人适配验证；不是作者逐字教学。"
+      ],
+      "alternatives": [
+        {
+          "id": "dead_bug_regressed",
+          "name": "死虫（屈膝/单腿脚跟轻点地退阶）",
+          "suitability": "能安全仰卧起落，适合不想以大体重前臂支撑起步的人",
+          "setup": "仰卧、膝屈，先短杠杆；按腰背舒适建立躯干稳定，不强压到疼痛",
+          "cues": [
+            "缓慢移动一侧腿或对侧手腿，躯干保持控制",
+            "腿伸远就拱腰时收短动作",
+            "正常呼吸，不屏气忍痛"
+          ],
+          "regression": "只动腿、缩杠杆、缩幅度；需要起落帮助另选B；审计分支：可控短杠杆脚跟轻点地；起落困难改墙/固定高台平板，无痛控制优先。",
+          "avoidWhen": "仰卧不适/无法安全上下地，动作腰痛"
+        },
+        {
+          "id": "high_incline_plank",
+          "name": "高支撑平板（墙/固定高台）",
+          "suitability": "上下地困难、体重大，能站立扶稳支撑，肩腕可接受",
+          "setup": "固定高支撑，起点足够高；越低承重和核心要求通常越大",
+          "cues": [
+            "躯干保持整体，不塌腰、不探头",
+            "保持呼吸；结束在姿势还能控制时",
+            "无需一口气撑到很长时间或抖到极限"
+          ],
+          "regression": "更高支撑/更短持续时间；肩腕痛可试合适前臂支撑另选；审计分支：墙上起步、短时间、保持呼吸；站姿或上肢承重仍受限则选适配坐/卧位控制练习，不硬撑。",
+          "avoidWhen": "支撑不稳、肩腕承重痛、无法站稳"
+        }
+      ]
+    },
+    {
+      "id": "execution-eccentric-breathing",
+      "title": "离心、呼吸与肩胛：短执行提示",
+      "topics": [
+        "离心",
+        "呼吸",
+        "沉肩",
+        "肩胛",
+        "下放",
+        "动作细节"
+      ],
+      "category": "execution",
+      "summary": "离心与呼吸依动作和目标说明；沉肩不是全动作锁死肩胛。",
+      "rules": [
+        "离心是肌肉在张力下拉长的阶段；常见推/拉的回程先做到受控，不自由落重、猛弹或为秒数破坏轨迹。",
+        "不规定所有动作都必须3–5秒离心；越慢不代表越好。",
+        "普通轻中负荷练习可在发力时呼气、回程吸气，保持正常呼吸；这是一种新手执行提示，不是所有动作的唯一节奏。",
+        "需要较重负荷躯干支撑时呼吸策略要另教；不让未知健康情况的新手默认持续憋气。",
+        "卧推按版本建立稳定背部支撑；肩推/侧平举抬臂需肩胛上回旋，不能全程强压肩。下拉顶端与划船回程允许可控肩胛运动。"
+      ],
+      "conditions": [
+        "动作、负荷、目标和有无疼痛决定提示；看不到用户动作时不声称已纠正姿势。"
+      ],
+      "sourceIds": [
+        "S15",
+        "S17",
+        "S21"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "呼吸示例是助手教学适配，不假称这些独立来源验证了唯一呼吸周期。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "execution-chest-arms",
+      "title": "练胸手臂先酸：判断与调整",
+      "topics": [
+        "练胸手臂",
+        "手臂酸",
+        "胸没感觉",
+        "练胸",
+        "三头先",
+        "推胸"
+      ],
+      "category": "execution",
+      "summary": "推胸三头和肩前束本就参与，手臂疲劳不自动证明胸完全没练到。若手臂先限制动作，应核查负荷、握法、肘轨迹、幅度和动作熟悉程度；可换更稳定的推胸候选，或在目标适合时选内收类动作。",
+      "rules": [
+        "先区分肌肉疲劳与尖锐/关节疼痛；疼痛先停。",
+        "推胸本来同时用三头和肩前束；酸的位置不能直接判定胸有没有效果。",
+        "手臂反复先限制时，检查负荷、握持、肘轨迹和可控幅度；优先更稳定且无痛的推胸版本，必要时重新分配动作而非硬加重量。"
+      ],
+      "conditions": [],
+      "sourceIds": [
+        "S19",
+        "S17",
+        "X01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "不能仅凭酸在哪里判断增肌效果；尖锐痛与普通疲劳分开处理。",
+        "助手基于解剖与可执行性解释，非作者原话。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "warmup-purpose-flow",
+      "title": "热身：为什么及如何做",
+      "topics": [
+        "热身",
+        "练前",
+        "暖身",
+        "准备活动"
+      ],
+      "category": "warmup",
+      "summary": "通用轻活动→相关轻试做→首项逐级热身，确认当日能无痛控制。",
+      "rules": [
+        "热身用于进入活动状态、练习轨迹和确认当天负荷；可支持当次表现，不能保证不受伤。",
+        "按需要先轻活动约5–10分钟，不喘到影响工作组；已暖起来可缩短，体重大者不强制跑跳。",
+        "选与当天动作相关的1–3项轻试做；推日轻推胸/墙撑，拉日轻划船，腿日扶稳坐站或轻髋后移，按能力选择。",
+        "首个主要动作从轻阻力逐步接近计划工作重量，越重次数越少；热身远离力竭。空杆或最小机器负荷仍过重则换轻工具。",
+        "换到新模式、间隔久或上新负荷时补轻试做；热身组与工作组分开记，不全身十几项强制仪式。",
+        "疼痛/失控不靠拉伸忍过去；长时间强拉伸不作为力量热身主体。"
+      ],
+      "conditions": [
+        "数字是助手可调起点，按今日状态/时间缩放。"
+      ],
+      "sourceIds": [
+        "S05",
+        "S06",
+        "S18",
+        "HC02"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "不使用闭眼平衡、五指墙撑或全体重胸口泡沫轴作未知新手默认。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "progression-load",
+      "title": "加重、维持、减重与组间休息",
+      "topics": [
+        "加重量",
+        "加重",
+        "减重量",
+        "减重",
+        "负重",
+        "重量",
+        "进阶",
+        "次数掉",
+        "休息"
+      ],
+      "category": "progression",
+      "summary": "以同技术/幅度、目标次数、计划余力及恢复判断负荷，不以每次破纪录为目标。",
+      "rules": [
+        "在同一动作、同等器械设置/幅度/节奏和休息条件下，连续训练能完成规定工作组的次数上限，仍保有计划余力，技术稳定且无痛，再考虑加重",
+        "优先最小可调增量；器械一档跨度太大可先加次数、微配重或保持。ACSM2009给2–10%条件范围，但2026更新后不能冒称新版固定规定；上肢小肌群不硬套10%。",
+        "示例3组8–12次、留约2次余力，两次训练都稳定12/12/12再加最小一档；这是助手示例，不是作者固定规则。",
+        "次数仍在目标区间、计划余力和技术符合，尤其后组随疲劳下降但可控；12/10/8后组下降不自动减重。",
+        "足够休息后仍明显低于次数下限/比计划更接近失败；或为完成次数反复失去设定动作控制；当前失控组结束，先查设置/休息，下一组减小档至恢复控制。",
+        "疼痛先停并评估，不只减重继续拼。复合动作可先休2–3分钟，孤立动作约90秒；呼吸/动作未恢复可延长。",
+        "记录负荷/设置、次数、余力估计、休息与疼痛/技术失败；未经用户执行反馈不声称已经加重。"
+      ],
+      "conditions": [
+        "加重对比须保持同动作、设置、可控幅度和休息条件。"
+      ],
+      "sourceIds": [
+        "S01",
+        "S02",
+        "S17",
+        "S23"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "2–10%是2009历史条件范围；不是2026新版的统一增量。具体示例组次与两次达标为助手方案。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "progression-effort-failure",
+      "title": "力竭与大小重量选择",
+      "topics": [
+        "力竭",
+        "余力",
+        "RIR",
+        "RPE",
+        "大重量",
+        "小重量",
+        "努力程度"
+      ],
+      "category": "progression",
+      "summary": "负荷与努力程度分开；新手先学控制并保留余力，力竭不是统一必需。",
+      "rules": [
+        "力竭指在目标技术范围内无法再完整重复一次；明显失控时结束，不拿乱做凑数当有效次数。",
+        "熟悉阶段可先约3次余力，适应后约2次；估计有误差，不能为了校准余力每组强迫测试力竭。",
+        "较重复合动作、起落/失稳代价高动作不默认做到力竭；孤立动作也不是必须力竭。熟练者是否靠近失败按目标、器械和恢复决定。",
+        "力量目标可需要较高负荷；增肌不等于人人大重量。侧平举/弯举等先选能控制的较轻负荷，不用轻重本身排行效果。"
+      ],
+      "conditions": [
+        "大/小重量相对于本人能力和目标，不用固定公斤数作为统一标准。"
+      ],
+      "sourceIds": [
+        "S01",
+        "S17",
+        "S23"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "具体RIR默认是助手保守方案；研究不能保证新手精确识别余力。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "home-regression",
+      "title": "徒手/居家与大体重退阶",
+      "topics": [
+        "徒手",
+        "居家",
+        "在家",
+        "没有器械",
+        "大体重",
+        "下地困难",
+        "俯卧撑做不了"
+      ],
+      "category": "execution",
+      "summary": "可从墙推、稳定椅坐站、扶支撑浅蹲及提踵起步，按能力选择。",
+      "rules": [
+        "先用已知信息判断场地器材、能否下地起身及动作疼痛，只追问会改变动作的缺项。",
+        "地面俯卧撑做不了先试墙俯卧撑：手约胸高、躯干稳，控制靠近及推回；再进阶固定高台，不用不稳家具。",
+        "坐站用不滑、无轮、承载适合的稳定椅，脚稳、微前倾，控制站起和坐回；需要扶稳时允许扶。",
+        "扶支撑浅蹲深度以无痛可控为限，膝朝脚趾方向；提踵扶稳缓慢抬落，不弹跳抢次数。",
+        "自重也有负荷，大体重不自动适合所有徒手；下地困难不用仰卧/俯卧作默认替代。",
+        "完全无器械不能承诺等效完整背部拉训练；可说明需要适合的弹力带/器械，不建议门把或不稳桌子承重。",
+        "熟悉课每项可先1组，只做还能控制的次数，远离失控；适应后再加次数/组数/难度，不由出汗量判断力量训练质量。"
+      ],
+      "conditions": [
+        "选择墙/椅/器械前核稳定性、承载、空间及动作耐受。"
+      ],
+      "sourceIds": [
+        "HC01",
+        "HC02",
+        "X01",
+        "S17"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "居家可以有效不意味着每个徒手版本与负重动作等效；本退阶是助手适配而非新博主完整教程。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "split-days-principles",
+      "title": "每周天数、分化与训练量",
+      "topics": [
+        "每周",
+        "几天",
+        "三分化",
+        "四分化",
+        "五分化",
+        "七分化",
+        "一周",
+        "训练计划",
+        "排期"
+      ],
+      "category": "split",
+      "summary": "用户决定可训练天数；内容分组、肌群频率及训练量另外安排。",
+      "rules": [
+        "按实际每周时间、单次时长、经验、器械、目标和恢复选择方案，已知不重问。",
+        "三分化是三模块轮转，五分化是五模块；它们不等于每周必须练3/5天。七分化含义不统一，先分清七模块或每周七练。",
+        "胸推/肩推涉及三头，背拉涉及二头/后束；四练删独立手臂日仍应保留合理间接参与，不把手臂完全删没。",
+        "给计划写训练日/休息日、轮转、主目标与动作、工作组/次数/余力/休息及替代；同肌负荷重叠必须检查。",
+        "缺课或恢复不足则顺延，不隔天补双课；分化越多不保证更好。每周2–3练的新手可优先比较全身安排，主要肌群频率与计划如实匹配。"
+      ],
+      "conditions": [],
+      "sourceIds": [
+        "S01",
+        "S03",
+        "S04",
+        "HC01"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "作者五/七分化完整计划尚未核到；助手模板不能署为作者完整体系。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "split-3-days",
+      "title": "每周三练：PPL或全身备选",
+      "topics": [
+        "三练",
+        "3练",
+        "三天",
+        "3天",
+        "三分化"
+      ],
+      "category": "split",
+      "summary": "偏好三分化可推/拉/腿各一次；希望主要肌群更频繁则用全身备选。",
+      "rules": [
+        "三练PPL例：周一推（胸/肩中束/三头），周三拉（背/后束/二头），周五腿（股四头/臀/腘绳/小腿）；其他日恢复。每主模块每周一次。",
+        "新手或希望多次练同一模式时，可用周一/三/五全身：每课选一个适配推、拉、下肢模式，按疲劳轮换重点；不强迫增加到六练。",
+        "每动作最初1工作组熟悉，适配/恢复合适后可2组；复合8–12次，孤立10–15次，约3次余力。不能达到控制次数时退阶，不凑下限。"
+      ],
+      "conditions": [
+        "每周三次可坚持且动作已适配；完整个人计划再结合目标/时间落实。"
+      ],
+      "sourceIds": [
+        "S01",
+        "S03",
+        "S04",
+        "S17"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "此为助手草案；PPL三练不声称每主要肌群每周两次。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "split-4-days",
+      "title": "每周四练：四部位或上下肢",
+      "topics": [
+        "四练",
+        "4练",
+        "四天",
+        "4天",
+        "四分化"
+      ],
+      "category": "split",
+      "summary": "四练可保留胸背腿肩并取消独立手臂日，或选上下肢两轮。",
+      "rules": [
+        "按用户部位偏好可周一胸、周二背、周四腿、周六肩；二头由背日、三头由推日间接参与，确有目标再少量补孤立，不强凑手臂日。",
+        "希望主要模式一周两次可改周一上肢、周二下肢、周四上肢、周六下肢；上下肢内容仍按适配和单次时长落实。",
+        "单独肩日必须考虑胸日的前束/三头负荷；直接/间接工作量分开，恢复差时减少辅助动作或顺延。"
+      ],
+      "conditions": [],
+      "sourceIds": [
+        "S01",
+        "S03",
+        "S04",
+        "S17"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "四部位周计划每专项一次；上下肢与四部位不同，不能虚报频率。数字日程为助手适配。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "split-5-days",
+      "title": "每周五练：胸背肩腿手臂",
+      "topics": [
+        "五练",
+        "5练",
+        "五天",
+        "5天",
+        "五分化"
+      ],
+      "category": "split",
+      "summary": "偏好五练可胸/背/肩/腿/手臂分开，检查重叠与实际恢复。",
+      "rules": [
+        "可用周一胸、周二背、周三休、周四肩、周五腿、周六手臂、周日休；每专项模块每周一次。",
+        "先核胸/肩已给三头、背已给二头和后束的参与，再定独立手臂/后束组数；A/B是同动作位替代，不因五练自动把32动作全做。",
+        "每课起步选少量适配动作，先1组熟悉再按恢复约2组；恢复不足减辅助量或插休，五天难坚持可改三/四天。"
+      ],
+      "conditions": [
+        "能维持五次且动作有一定熟练度；不是零基础唯一方案。"
+      ],
+      "sourceIds": [
+        "S01",
+        "S03",
+        "S04",
+        "S17"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "不是谭/凯已核完整五分化；每部位频率和总量如实说明，不保证优于三练。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "split-seven-boundary",
+      "title": "七分化/七练的含义与恢复",
+      "topics": [
+        "七分化",
+        "七练",
+        "7练",
+        "七天",
+        "7天"
+      ],
+      "category": "split",
+      "summary": "七模块与每周七练是两件事，不默认新手连续七天高强度力量。",
+      "rules": [
+        "先核用户指七个轮转模块还是每周七天活动；七模块可以跨越十天并安排休息。",
+        "若用户想每天活动，可将部分日用于轻活动/恢复，不把每天都活动变为每天同等高强度力量。",
+        "模块过碎、肌群练习间隔过长或恢复差时合并模块；不为专业观感硬塞七分化。"
+      ],
+      "conditions": [],
+      "sourceIds": [
+        "S01",
+        "S03",
+        "S04",
+        "HC07"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "本库没有作者七分化完整课程；未明确含义时不能自动生成七个力量日。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "recovery-fatigue-adjustment",
+      "title": "疲劳、状态差与减量",
+      "topics": [
+        "疲劳",
+        "疲惫",
+        "太累",
+        "没睡好",
+        "状态差",
+        "恢复",
+        "减量",
+        "酸痛",
+        "训练下降"
+      ],
+      "category": "recovery",
+      "summary": "看轻热身与连续表现调整压力，减量不只有减重量。",
+      "rules": [
+        "单次睡差或乏力先看轻热身；明显异常吃力时取消冲重量/力竭，减少当日工作组、减轻负荷或改恢复活动。",
+        "连续几次同条件表现下降/恢复差，检查训练量、睡眠及生活压力，可减少辅助组、频率或增加休息；不从一天差状态诊断过度训练。",
+        "当天肌肉轻酸但活动可控与锐痛/关节痛分开；疼痛先停评估，不以无痛忍受或出汗证明可继续。",
+        "减量后看表现/精神和日常活动是否恢复，再逐项恢复训练，不一次补回所有欠课。",
+        "原因不明疲劳持续几周、影响日常或伴其他异常，建议医疗评估；不靠咖啡因/氮泵或自行补铁硬顶。"
+      ],
+      "conditions": [
+        "同条件比较训练记录；无实时动作观察时依据用户反馈。"
+      ],
+      "sourceIds": [
+        "HC06",
+        "HC03",
+        "HC05",
+        "S17"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "没有统一减50%、固定每4周减量或48小时必恢复的规则；执行分支为助手按共识适配。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "vitality-sleep-movement",
+      "title": "日常精力、睡眠与活动",
+      "topics": [
+        "精神状态",
+        "精力",
+        "低能量",
+        "没精神",
+        "睡眠",
+        "熬夜",
+        "久坐",
+        "提神",
+        "疲倦"
+      ],
+      "category": "vitality",
+      "summary": "改善可落实的作息/活动与恢复，不能把疲劳全部当缺训练。",
+      "rules": [
+        "先看近期睡眠、压力、活动量和训练是否过大；只补影响安排的缺项。",
+        "18–60岁成人每天至少7小时睡眠，也看醒来是否恢复；保持睡起时间，减少睡前屏幕和下午/晚间咖啡因。其他年龄按年龄建议。",
+        "久坐后起身活动、选可承受散步/轻活动，逐步增加；精神疲惫的日子可以降低训练要求，不因提神目标强上HIIT。",
+        "运动可以支持情绪和睡眠，但不承诺当天必提神、治好焦虑或慢性疲劳；异常持续按恢复边界评估。",
+        "日常餐食/营养缺口主要请柳智敏处理；陈年不诊断缺铁或开疾病补充方案。"
+      ],
+      "conditions": [],
+      "sourceIds": [
+        "HC03",
+        "HC04",
+        "HC05",
+        "HC07"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "独立官方资料支持，不冒充帅soserious完整教学或现实医学博士资质。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "supp-creatine",
+      "title": "一水肌酸：可选性与条件",
+      "topics": [
+        "肌酸",
+        "一水肌酸",
+        "补剂"
+      ],
+      "category": "supplement",
+      "summary": "对规律力量训练或反复高强度运动可考虑；不等于必需。",
+      "rules": [
+        "对规律力量训练或反复高强度运动可考虑；不等于必需。",
+        "初期体重增加可有水分因素，不能直接判成增脂。",
+        "每天补充用于积累储量，不宜承诺练前喝一次就立刻见效。",
+        "独立资料参考：常见每日3–5g；可直接连续补充。约0.3g/kg/天持续5–7天再3–5g/天是可选快速加载方法，不必强制加载。"
+      ],
+      "conditions": [
+        "既有肾病先由医生评估。",
+        "成人训练方案不直接套未成年人、孕哺期或疾病治疗。"
+      ],
+      "sourceIds": [
+        "issn-creatine-2017",
+        "ais-a",
+        "ods-performance"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "独立资料，不是凯圣王视频剂量；仅在适用成人条件下说明参考。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "supp-protein",
+      "title": "蛋白粉：可选性与条件",
+      "topics": [
+        "蛋白粉",
+        "蛋白质",
+        "补蛋白",
+        "补剂"
+      ],
+      "category": "supplement",
+      "summary": "饮食蛋白不足或吃饭不方便时补缺口；吃够后无需强制额外加粉。",
+      "rules": [
+        "饮食蛋白不足或吃饭不方便时补缺口；吃够后无需强制额外加粉。",
+        "先计算食物与补剂合计，再确定粉量。",
+        "训练前后都可安排，不把几分钟窗口当成错过就无效。",
+        "独立资料参考：多数健康运动者总蛋白约1.4–2.0g/kg/天；一餐常见20–40g高质量蛋白，均为总蛋白量，不是粉的重量。",
+        "蛋白目标指食物加补剂合计，不是粉重；完整饮食目标与柳智敏协调，不仅按实际高体重乘固定系数。"
+      ],
+      "conditions": [
+        "高体脂、疾病、未成年人等须另定体重口径与目标。",
+        "检查食物过敏、乳糖耐受和热量，不能只按宣传勺数。"
+      ],
+      "sourceIds": [
+        "issn-protein-2017",
+        "ais-a"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "独立资料，不是凯圣王视频剂量；仅在适用成人条件下说明参考。",
+        "高体脂体重口径、过敏和热量核对为助手后续个体化要求，不冒称原片口令。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "supp-caffeine",
+      "title": "咖啡因：可选性与条件",
+      "topics": [
+        "咖啡因",
+        "咖啡",
+        "提神",
+        "补剂"
+      ],
+      "category": "supplement",
+      "summary": "可改善部分运动表现，须以睡眠、敏感性和耐受为条件，不给所有新手默认使用。",
+      "rules": [
+        "可改善部分运动表现，须以睡眠、敏感性和耐受为条件，不给所有新手默认使用。",
+        "咖啡、茶、能量饮料和氮泵中的咖啡因合并计算。",
+        "高剂量不代表更好，可能影响睡眠或引发焦虑。",
+        "独立资料参考：研究常用3–6mg/kg，部分人约2mg/kg可有效；常见训练前约60分钟。FDA对多数成人全天合计400mg给出一般安全参考，此数不是人人目标量或保证线。",
+        "不将研究3–6mg/kg直接设为所有用户起始剂量；先核当前总摄入、睡眠/不适/用药和标签，晚间或敏感者优先不用。"
+      ],
+      "conditions": [
+        "敏感、失眠或不适者减量/停用，并按必要性评估。",
+        "疾病、用药、孕哺期和未成年人不直接套上述成人运动研究剂量。"
+      ],
+      "sourceIds": [
+        "issn-caffeine-2021",
+        "fda-caffeine",
+        "ais-a"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "独立资料，不是凯圣王视频剂量；仅在适用成人条件下说明参考。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "supp-preworkout",
+      "title": "氮泵/复合练前补剂：可选性与条件",
+      "topics": [
+        "氮泵",
+        "练前补剂",
+        "补剂"
+      ],
+      "category": "supplement",
+      "summary": "按每项成分和剂量评估，不把氮泵当成一种统一有效的物质。",
+      "rules": [
+        "按每项成分和剂量评估，不把氮泵当成一种统一有效的物质。",
+        "同品牌不同配方也可能咖啡因不同。",
+        "单成分证据不能自动证明整款混合配方有效、安全。"
+      ],
+      "conditions": [
+        "看不到每项剂量时无法给精确建议。",
+        "不叠加多个含兴奋成分的产品。"
+      ],
+      "sourceIds": [
+        "ods-performance",
+        "issn-caffeine-2021"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "独立资料，不是凯圣王视频剂量；仅在适用成人条件下说明参考。",
+        "不叠加为避免重复总量的助手操作规则；凯的氮泵原视频尚未核实。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "supp-bcaa",
+      "title": "BCAA支链氨基酸：可选性与条件",
+      "topics": [
+        "BCAA",
+        "支链氨基酸",
+        "补剂"
+      ],
+      "category": "supplement",
+      "summary": "蛋白已充足时不列为普通增肌者必买；AIS为Group C。",
+      "rules": [
+        "蛋白已充足时不列为普通增肌者必买；AIS为Group C。",
+        "完整高质量蛋白本就提供BCAA。",
+        "额外增肌或恢复优势的证据不一致。"
+      ],
+      "conditions": [
+        "不能把所有特定医疗场景也一概判无效。"
+      ],
+      "sourceIds": [
+        "ais-c",
+        "ods-performance"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "独立资料，不是凯圣王视频剂量；仅在适用成人条件下说明参考。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "supp-glutamine",
+      "title": "谷氨酰胺：可选性与条件",
+      "topics": [
+        "谷氨酰胺",
+        "补剂"
+      ],
+      "category": "supplement",
+      "summary": "普通健身者不默认购买；单独提高运动表现缺乏支持。",
+      "rules": [
+        "普通健身者不默认购买；单独提高运动表现缺乏支持。",
+        "不能由生理作用推导为额外补充必然有效。"
+      ],
+      "conditions": [
+        "临床营养用途另行评估。"
+      ],
+      "sourceIds": [
+        "ods-performance"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "独立资料，不是凯圣王视频剂量；仅在适用成人条件下说明参考。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "supp-fish-oil",
+      "title": "鱼油：可选性与条件",
+      "topics": [
+        "鱼油",
+        "EPA",
+        "DHA",
+        "补剂"
+      ],
+      "category": "supplement",
+      "summary": "按吃鱼与EPA+DHA摄入评估；AIS运动效果属Group B，不能宣传人人吃才能增肌。",
+      "rules": [
+        "按吃鱼与EPA+DHA摄入评估；AIS运动效果属Group B，不能宣传人人吃才能增肌。",
+        "看EPA+DHA合计含量，不用鱼油总克数替代。",
+        "补剂不是每个健身者的必需品。",
+        "独立资料参考：AIS文章以食物与补剂合计EPA+DHA 500–600mg/天作为基础摄入目标示例；更高训练应用须特定目的评估，不作通用处方。"
+      ],
+      "conditions": [
+        "使用抗凝药先核对相互作用。",
+        "高剂量长期使用不是普通新手方案；部分心血管高风险试验发现心房颤动风险增加。"
+      ],
+      "sourceIds": [
+        "ais-b",
+        "ais-fish-oil",
+        "ods-omega3"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "独立资料，不是凯圣王视频剂量；仅在适用成人条件下说明参考。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "supp-beta-alanine",
+      "title": "β-丙氨酸：可选性与条件",
+      "topics": [
+        "β-丙氨酸",
+        "丙氨酸",
+        "补剂"
+      ],
+      "category": "supplement",
+      "summary": "针对某些持续1–4分钟的高强度任务可考虑，不默认给普通力量新手。",
+      "rules": [
+        "针对某些持续1–4分钟的高强度任务可考虑，不默认给普通力量新手。",
+        "刺痒感不用于证明增肌效果。",
+        "不是训练前临时喝一次即可替代持续补充。",
+        "独立资料参考：研究常见4–6g/天，连续至少2–4周，分次可减轻刺痒。"
+      ],
+      "conditions": [
+        "最大力量和长时耐力收益仍有不足。"
+      ],
+      "sourceIds": [
+        "issn-beta-alanine-2015",
+        "ais-a"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "独立资料，不是凯圣王视频剂量；仅在适用成人条件下说明参考。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "supp-testosterone-products",
+      "title": "促睾产品/精氨酸/瓜氨酸：可选性与条件",
+      "topics": [
+        "促睾",
+        "精氨酸",
+        "瓜氨酸",
+        "ZMA",
+        "补剂"
+      ],
+      "category": "supplement",
+      "summary": "不建立通用促睾购物单；逐成分与缺乏状态核验。",
+      "rules": [
+        "不建立通用促睾购物单；逐成分与缺乏状态核验。",
+        "NIH对精氨酸运动表现支持有限，对瓜氨酸支持不足，对蒺藜未支持其运动表现效用。"
+      ],
+      "conditions": [
+        "第⑥集原作者提及的ZMA、土克甾酮、天门冬氨酸尚未独立充分核验。",
+        "异常睾酮属于医疗评估，不由教练补剂替代。"
+      ],
+      "sourceIds": [
+        "ods-performance"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "独立资料，不是凯圣王视频剂量；仅在适用成人条件下说明参考。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "supp-protein-bar",
+      "title": "蛋白棒：可选性与条件",
+      "topics": [
+        "蛋白棒",
+        "补剂"
+      ],
+      "category": "supplement",
+      "summary": "便携补蛋白选择；按实际蛋白、热量和食物耐受判断，不自动当减脂食品。",
+      "rules": [
+        "便携补蛋白选择；按实际蛋白、热量和食物耐受判断，不自动当减脂食品。",
+        "只写高蛋白不能判断整条热量。",
+        "独立资料参考：取决于总蛋白缺口与单条营养标签。"
+      ],
+      "conditions": [
+        "不能保证比普通食物更饱或更适合所有人。"
+      ],
+      "sourceIds": [
+        "issn-protein-2017"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "独立资料，不是凯圣王视频剂量；仅在适用成人条件下说明参考。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "supp-alcohol",
+      "title": "饮酒与训练恢复：可选性与条件",
+      "topics": [
+        "饮酒",
+        "酒精",
+        "喝酒",
+        "补剂"
+      ],
+      "category": "supplement",
+      "summary": "不把酒精作为促进训练的补剂；大剂量运动后饮酒可影响恢复。",
+      "rules": [
+        "不把酒精作为促进训练的补剂；大剂量运动后饮酒可影响恢复。",
+        "8名活跃男性的大剂量试验中，即使同饮蛋白，肌原纤维蛋白合成仍低于只补蛋白。",
+        "研究限制：此随机交叉研究使用酒精1.5g/kg，约12份标准酒；它是实验暴露量，不是饮酒建议或安全额度。"
+      ],
+      "conditions": [
+        "不能把该小样本高剂量结果直接外推成一杯酒使训练全部白费。"
+      ],
+      "sourceIds": [
+        "alcohol-rct-2014"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "独立资料，不是凯圣王视频剂量；仅在适用成人条件下说明参考。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L01",
+      "title": "上斜哑铃卧推：旧局部提示",
+      "topics": [
+        "上斜哑铃卧推"
+      ],
+      "category": "source_detail",
+      "summary": "握持和手腕稳定，头不主动抬起，下降保持控制。",
+      "rules": [
+        "握持和手腕稳定，头不主动抬起，下降保持控制。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L01-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "可补当前上斜哑铃的局部提示；不能把作者腰贴凳的表达改成所有人必须强压自然腰弧。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L02",
+      "title": "向下绳索夹胸：旧局部提示",
+      "topics": [
+        "向下绳索夹胸"
+      ],
+      "category": "source_detail",
+      "summary": "向大腿根附近合拢，避免前移身体改变夹胸方向。",
+      "rules": [
+        "向大腿根附近合拢，避免前移身体改变夹胸方向。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L02-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "能补下胸夹胸方向；高滑轮设置、可用坐姿支持、起始负荷仍不是旧摘要已核参数。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L03",
+      "title": "杠铃卧推：旧局部提示",
+      "topics": [
+        "杠铃卧推"
+      ],
+      "category": "source_detail",
+      "summary": "全握，臀部保持凳面接触，以前臂受力方向调整握距。",
+      "rules": [
+        "全握，臀部保持凳面接触，以前臂受力方向调整握距。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L03-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "原条目是杠铃卧推，不能升级为水平器械推胸或高台俯卧撑的作者专属操作。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L04",
+      "title": "技术停止条件：旧局部提示",
+      "topics": [
+        "技术停止条件"
+      ],
+      "category": "source_detail",
+      "summary": "躯干失稳、晃动时停止该组，不能靠顶臀或乱做凑次数。",
+      "rules": [
+        "躯干失稳、晃动时停止该组，不能靠顶臀或乱做凑次数。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L04-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "是该片停止提示；没有给统一减重百分比或降载周期。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L05",
+      "title": "后组疲劳与次数：旧局部提示",
+      "topics": [
+        "后组疲劳与次数"
+      ],
+      "category": "source_detail",
+      "summary": "后组少做几次是作者允许的示例，不必强凑首组次数。",
+      "rules": [
+        "后组少做几次是作者允许的示例，不必强凑首组次数。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L05-1",
+        "legacy-L05-2"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "不据此规定每次掉次数都减重；组间休息和强度仍有缺项。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L06",
+      "title": "上斜器械推胸：旧局部提示",
+      "topics": [
+        "上斜器械推胸"
+      ],
+      "category": "source_detail",
+      "summary": "躯干与靠背稳定，避免肋骨明显外翻，疲劳后不硬凑次数。",
+      "rules": [
+        "躯干与靠背稳定，避免肋骨明显外翻，疲劳后不硬凑次数。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L06-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "可补当前同名动作的局部控制提示；机器尺寸、路径和负荷仍须个人适配。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L07",
+      "title": "杠铃肩推：旧局部提示",
+      "topics": [
+        "杠铃肩推"
+      ],
+      "category": "source_detail",
+      "summary": "手腕和躯干保持稳定，不后仰代偿；稳定丢失时不继续加重，下降受控。",
+      "rules": [
+        "手腕和躯干保持稳定，不后仰代偿；稳定丢失时不继续加重，下降受控。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L07-1",
+        "legacy-L07-2"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "是杠铃版本，不直接核证当前中立握器械或坐姿哑铃版本；未给加重比例/周期。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L08",
+      "title": "过顶绳索伸肘：旧局部提示",
+      "topics": [
+        "过顶绳索伸肘"
+      ],
+      "category": "source_detail",
+      "summary": "记录滑轮起点、肘部位置控制和动作流畅的要求。",
+      "rules": [
+        "记录滑轮起点、肘部位置控制和动作流畅的要求。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L08-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "肩能无痛过顶等适配来自独立审计；本项旧摘要明确组次缺失，不补成完整处方。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L09",
+      "title": "坐姿器械反飞鸟：旧局部提示",
+      "topics": [
+        "坐姿器械反飞鸟"
+      ],
+      "category": "source_detail",
+      "summary": "调整座位使肩手位置合适，向外展开，胸廓稳定。",
+      "rules": [
+        "调整座位使肩手位置合适，向外展开，胸廓稳定。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L09-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "与反向蝴蝶机为近似器械模式；具体机型未确认，不把肘高和所有握法统一固定。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L10",
+      "title": "高位下拉：旧局部提示",
+      "topics": [
+        "高位下拉"
+      ],
+      "category": "source_detail",
+      "summary": "作者用介于对握和反握之间的斜握；躯干受控，区分下拉与过多后拉。",
+      "rules": [
+        "作者用介于对握和反握之间的斜握；躯干受控，区分下拉与过多后拉。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L10-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "斜45度指握法，不是凳角；不能称已核中立握或单臂下拉的完整版本。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L11",
+      "title": "坐姿绳索划船：旧局部提示",
+      "topics": [
+        "坐姿绳索划船"
+      ],
+      "category": "source_detail",
+      "summary": "脚踩稳、头不前探，前后倾幅度以可控为限，质量优先于重量。",
+      "rules": [
+        "脚踩稳、头不前探，前后倾幅度以可控为限，质量优先于重量。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L11-1",
+        "legacy-L11-2"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "允许自然肩胛运动的整理不能改写成完全禁止后缩；没有统一次数或工作重量。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L12",
+      "title": "有支撑单手绳索划船：旧局部提示",
+      "topics": [
+        "有支撑单手绳索划船"
+      ],
+      "category": "source_detail",
+      "summary": "另一手撑凳帮助稳定，避免侧屈、扭身抢次数。",
+      "rules": [
+        "另一手撑凳帮助稳定，避免侧屈、扭身抢次数。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L12-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "这是水平单手划船，不是单臂下拉，也不是胸托器械划船。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L13",
+      "title": "单腿哑铃硬拉：旧局部提示",
+      "topics": [
+        "单腿哑铃硬拉"
+      ],
+      "category": "source_detail",
+      "summary": "颈随躯干控制，难以平衡可单手持重、另手扶杆。",
+      "rules": [
+        "颈随躯干控制，难以平衡可单手持重、另手扶杆。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L13-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "与当前双腿RDL相近；不能声称旧课已核双腿RDL或扶稳自重髋后移的完整教学。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L14",
+      "title": "台阶站姿提踵：旧局部提示",
+      "topics": [
+        "台阶站姿提踵"
+      ],
+      "category": "source_detail",
+      "summary": "可扶稳；下放以足底仍可靠接触支撑为限，不为深度翘起前掌。",
+      "rules": [
+        "可扶稳；下放以足底仍可靠接触支撑为限，不为深度翘起前掌。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L14-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "当前地面双脚版是独立适配；旧片台阶深度和组数不直接复制给大体重者。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L15",
+      "title": "背部热身控制：旧局部提示",
+      "topics": [
+        "背部热身控制"
+      ],
+      "category": "source_detail",
+      "summary": "热身推撑或撑凳微动时，躯干控制丢失就减小幅度。",
+      "rules": [
+        "热身推撑或撑凳微动时，躯干控制丢失就减小幅度。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L15-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "支持控制优先原则，不能证明特定热身能诊断、治疗腰肩痛或必然防伤。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L16",
+      "title": "下肢热身退阶：旧局部提示",
+      "topics": [
+        "下肢热身退阶"
+      ],
+      "category": "source_detail",
+      "summary": "支撑腿激活及旋转可扶物，能力不足先用较容易姿势。",
+      "rules": [
+        "支撑腿激活及旋转可扶物，能力不足先用较容易姿势。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L16-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "闭眼站立仅是旧片示范；当前未知平衡能力者不沿用闭眼要求。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L17",
+      "title": "手腕热身负荷：旧局部提示",
+      "topics": [
+        "手腕热身负荷"
+      ],
+      "category": "source_detail",
+      "summary": "墙面手腕激活也要控制阻力，不能认为热身就没有负荷风险。",
+      "rules": [
+        "墙面手腕激活也要控制阻力，不能认为热身就没有负荷风险。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L17-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "不能从此推导人人要做五指墙撑、统一力度或组数。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L18",
+      "title": "杠铃弯举：旧局部提示",
+      "topics": [
+        "杠铃弯举"
+      ],
+      "category": "source_detail",
+      "summary": "作者强调握距和手腕控制，未给该项明确组次。",
+      "rules": [
+        "作者强调握距和手腕控制，未给该项明确组次。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L18-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "只能作一般弯举提示，不能核证牧师凳和上斜弯举的角度、区域效果与剂量。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L19",
+      "title": "胸部主动拉伸：旧局部提示",
+      "topics": [
+        "胸部主动拉伸"
+      ],
+      "category": "source_detail",
+      "summary": "墙面拉伸按能力控制幅度，避免主动顶肩。",
+      "rules": [
+        "墙面拉伸按能力控制幅度，避免主动顶肩。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L19-1"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "是拉伸不是高台俯卧撑；保持时间、对抗比例不全，不移作每次必做热身。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L20",
+      "title": "肌酸旧记录：旧局部提示",
+      "topics": [
+        "肌酸旧记录"
+      ],
+      "category": "source_detail",
+      "summary": "旧抽样核到每日3–5克和持续补充；饭后是本人习惯，储水可影响体重读数，片尾有赞助。",
+      "rules": [
+        "旧抽样核到每日3–5克和持续补充；饭后是本人习惯，储水可影响体重读数，片尾有赞助。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L20-1",
+        "legacy-L20-2",
+        "legacy-L20-3",
+        "legacy-L20-4",
+        "legacy-L20-5"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "仅旧作者记录；补剂可选，不能要求训练后额外加糖、购买品牌或保证解决减脂平台。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L21",
+      "title": "蛋白旧记录：旧局部提示",
+      "topics": [
+        "蛋白旧记录"
+      ],
+      "category": "source_detail",
+      "summary": "旧数字帧核到1.2–2.0g/kg/day及多数爱好者1.6参考，食物与蛋白粉区分，广告隔离。",
+      "rules": [
+        "旧数字帧核到1.2–2.0g/kg/day及多数爱好者1.6参考，食物与蛋白粉区分，广告隔离。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L21-1",
+        "legacy-L21-2",
+        "legacy-L21-3",
+        "legacy-L21-4",
+        "legacy-L21-5"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "实际目标须重新适配；标题提时间但旧可读内容没有具体时机规则，不补造窗口。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-legacy-L22",
+      "title": "训练反馈：旧局部提示",
+      "topics": [
+        "训练反馈"
+      ],
+      "category": "source_detail",
+      "summary": "结合训练表现、睡眠和形体等记录作反馈。",
+      "rules": [
+        "结合训练表现、睡眠和形体等记录作反馈。"
+      ],
+      "conditions": [
+        "仅对应原记录版本和动作；不同器械/握法需另适配。"
+      ],
+      "sourceIds": [
+        "legacy-L22-1",
+        "legacy-L22-2"
+      ],
+      "evidenceBasis": "legacy_partial",
+      "limitations": [
+        "力量提高不等于已证明增肌；该片不提供完整分化、动作处方或统一加减重量阈值。",
+        "局部抽帧不是完整教学；不补未核组次/负荷。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-tan-depression-01",
+      "title": "沉肩的作用，弊端以及如何做：tan-depression-01",
+      "topics": [
+        "沉肩",
+        "肩胛"
+      ],
+      "category": "source_detail",
+      "summary": "作者用手沿裤缝向下摸、伸肘的示范帮助体会沉肩，指出这一表现也会伴随胸背与三头肌用力。",
+      "rules": [
+        "作者用手沿裤缝向下摸、伸肘的示范帮助体会沉肩，指出这一表现也会伴随胸背与三头肌用力。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-tan-depression-01-1"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "这只是学习肩部动作感觉的示例；不能把肘锁直直接等同于所有训练的正确沉肩方式。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-tan-depression-02",
+      "title": "沉肩的作用，弊端以及如何做：tan-depression-02",
+      "topics": [
+        "沉肩",
+        "肩胛"
+      ],
+      "category": "source_detail",
+      "summary": "作者先谈沉肩帮助找到胸/背发力，随后提醒长期保持沉肩并结合孤立训练可能存在弊端。",
+      "rules": [
+        "作者先谈沉肩帮助找到胸/背发力，随后提醒长期保持沉肩并结合孤立训练可能存在弊端。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-tan-depression-02-1"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "作者使用关节间隙/撞击解释；本轮没有独立确认该简化因果，不能拿来诊断肩痛或断言必然受伤。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-tan-depression-03",
+      "title": "沉肩的作用，弊端以及如何做：tan-depression-03",
+      "topics": [
+        "沉肩",
+        "肩胛"
+      ],
+      "category": "source_detail",
+      "summary": "侧平举段落示范先整理肩部状态再抬臂，收尾强调呼吸准备与避免过度孤立地做动作。",
+      "rules": [
+        "侧平举段落示范先整理肩部状态再抬臂，收尾强调呼吸准备与避免过度孤立地做动作。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-tan-depression-03-1",
+        "local-tan-depression-03-2"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "抬臂时肩胛如何运动的连续口述、负重幅度和具体呼吸周期尚未完整核实，不补造固定角度/必须憋气规则。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-tan-warmup-01",
+      "title": "一次性看完三分化热身整套流程：tan-warmup-01",
+      "topics": [
+        "热身"
+      ],
+      "category": "source_detail",
+      "summary": "肩部环绕作为准备，随后进入胸部放松。",
+      "rules": [
+        "肩部环绕作为准备，随后进入胸部放松。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-tan-warmup-01-1"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "完整组次、周期和其他段落没有核全。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-tan-warmup-02",
+      "title": "一次性看完三分化热身整套流程：tan-warmup-02",
+      "topics": [
+        "热身"
+      ],
+      "category": "source_detail",
+      "summary": "胸部泡沫轴滚动时，用双手支撑身体，控制所压重量。",
+      "rules": [
+        "胸部泡沫轴滚动时，用双手支撑身体，控制所压重量。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-tan-warmup-02-1"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "不得将全体重压在胸口设成新手必做；本轮未核剂量和禁忌。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-tan-warmup-03",
+      "title": "一次性看完三分化热身整套流程：tan-warmup-03",
+      "topics": [
+        "热身"
+      ],
+      "category": "source_detail",
+      "summary": "弹力带前后展开及环绕时保持躯干稳定，强调身体配合。",
+      "rules": [
+        "弹力带前后展开及环绕时保持躯干稳定，强调身体配合。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-tan-warmup-03-1"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "不由画面补造固定握距、组次或无痛幅度。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-tan-warmup-04",
+      "title": "一次性看完三分化热身整套流程：tan-warmup-04",
+      "topics": [
+        "热身"
+      ],
+      "category": "source_detail",
+      "summary": "俯卧抬臂时不要靠抬腰完成；示范重点在肩臂控制。",
+      "rules": [
+        "俯卧抬臂时不要靠抬腰完成；示范重点在肩臂控制。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-tan-warmup-04-1"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "完整组次、周期和其他段落没有核全。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-tan-warmup-05",
+      "title": "一次性看完三分化热身整套流程：tan-warmup-05",
+      "topics": [
+        "热身"
+      ],
+      "category": "source_detail",
+      "summary": "靠墙斜向支撑段强调抵抗负荷别太大、身体不完全贴墙。",
+      "rules": [
+        "靠墙斜向支撑段强调抵抗负荷别太大、身体不完全贴墙。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-tan-warmup-05-1"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "原示范有五指支撑，不能直接设为手腕受限或大体重者默认热身；全掌墙撑是助手替代。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-tan-warmup-06",
+      "title": "一次性看完三分化热身整套流程：tan-warmup-06",
+      "topics": [
+        "热身"
+      ],
+      "category": "source_detail",
+      "summary": "腿日前安排足踝和平衡准备，示范站立约30秒。",
+      "rules": [
+        "腿日前安排足踝和平衡准备，示范站立约30秒。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-tan-warmup-06-1"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "作者原示范涉及闭眼；面向新手改为睁眼扶稳是助手安全适配，不能归因原片。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-tan-rdl-01",
+      "title": "罗马尼亚硬拉动作介绍：tan-rdl-01",
+      "topics": [
+        "RDL",
+        "罗马尼亚硬拉",
+        "髋铰链"
+      ],
+      "category": "source_detail",
+      "summary": "示范围绕髋铰链展开，强调骨盆中立、足下承重稳定，站起时臀部参与。",
+      "rules": [
+        "示范围绕髋铰链展开，强调骨盆中立、足下承重稳定，站起时臀部参与。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-tan-rdl-01-1",
+        "local-tan-rdl-01-2",
+        "local-tan-rdl-01-3"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "不解读为重心坐标绝对不动、膝盖必须锁死或人人同一站距。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-tan-rdl-02",
+      "title": "罗马尼亚硬拉动作介绍：tan-rdl-02",
+      "topics": [
+        "RDL",
+        "罗马尼亚硬拉",
+        "髋铰链"
+      ],
+      "category": "source_detail",
+      "summary": "作者把动作变形与控制问题提出，不能为了完成动作忽略原姿势。",
+      "rules": [
+        "作者把动作变形与控制问题提出，不能为了完成动作忽略原姿势。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-tan-rdl-02-1"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "原片固定减重量百分比与加重阈值未核。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-tan-rdl-03",
+      "title": "罗马尼亚硬拉动作介绍：tan-rdl-03",
+      "topics": [
+        "RDL",
+        "罗马尼亚硬拉",
+        "髋铰链"
+      ],
+      "category": "source_detail",
+      "summary": "下放幅度需有肌力和从该位置起身的能力支撑，不能只追求更大幅度。",
+      "rules": [
+        "下放幅度需有肌力和从该位置起身的能力支撑，不能只追求更大幅度。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-tan-rdl-03-1"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "完整组次、周期和其他段落没有核全。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-kai-rpe-01",
+      "title": "RM/RPE与训练计划实践③：kai-rpe-01",
+      "topics": [
+        "RPE",
+        "余力",
+        "加重"
+      ],
+      "category": "source_detail",
+      "summary": "卧推示例采用约8 RPE；后段示例约8–8.5 RPE，对应约剩1–2次余量。",
+      "rules": [
+        "卧推示例采用约8 RPE；后段示例约8–8.5 RPE，对应约剩1–2次余量。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-kai-rpe-01-1",
+        "local-kai-rpe-01-2"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "是本片示例，不表示所有训练组均须该RPE。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-kai-rpe-02",
+      "title": "RM/RPE与训练计划实践③：kai-rpe-02",
+      "topics": [
+        "RPE",
+        "余力",
+        "加重"
+      ],
+      "category": "source_detail",
+      "summary": "先把当前负荷完成到目标状态，再讨论加重；加重后变难，随后再次做到目标状态。",
+      "rules": [
+        "先把当前负荷完成到目标状态，再讨论加重；加重后变难，随后再次做到目标状态。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-kai-rpe-02-1",
+        "local-kai-rpe-02-2"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "屏幕+2.5/1.5仅为示例，目标组数与次数条件尚未完整核实，不设所有动作统一增量。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-kai-rpe-03",
+      "title": "RM/RPE与训练计划实践③：kai-rpe-03",
+      "topics": [
+        "RPE",
+        "余力",
+        "加重"
+      ],
+      "category": "source_detail",
+      "summary": "收尾图示讨论强度和容量如何配合调整。",
+      "rules": [
+        "收尾图示讨论强度和容量如何配合调整。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-kai-rpe-03-1"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "不能据此给新手自动生成未核实的周期数字。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-kai-incline-01",
+      "title": "上斜哑铃卧推详解：kai-incline-01",
+      "topics": [
+        "上斜哑铃",
+        "握持"
+      ],
+      "category": "source_detail",
+      "summary": "准备时先把哑铃握稳，作者示范握在把手中段；不要握持还未稳妥就继续起落准备。",
+      "rules": [
+        "准备时先把哑铃握稳，作者示范握在把手中段；不要握持还未稳妥就继续起落准备。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-kai-incline-01-1"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "尚未完整核实拿起、借腿上凳与安全放下顺序，不能仅凭这段组成完整起落教程。",
+        "作者局部示范不证明全人群有效。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-kai-decline-01",
+      "title": "器械技巧系列2——New tech下斜卧推：kai-decline-01",
+      "topics": [
+        "下斜器械",
+        "下胸"
+      ],
+      "category": "source_detail",
+      "summary": "作者把这一特定改装器械用于下胸侧重，示范推起与上臂内收配合，并提示呼吸建立胸廓支撑。",
+      "rules": [
+        "作者把这一特定改装器械用于下胸侧重，示范推起与上臂内收配合，并提示呼吸建立胸廓支撑。"
+      ],
+      "conditions": [
+        "只在已核局部及该具体动作版本使用。"
+      ],
+      "sourceIds": [
+        "local-kai-decline-01-1",
+        "local-kai-decline-01-2",
+        "local-kai-decline-01-3"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "肩胛的连续路线和呼吸完整条件未核；不等同所有下斜器械的通用口令或效果比较。",
+        "作者局部示范不证明全人群有效。",
+        "不得建议用户自行改装器械；效果翻倍宣传未独立证明。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-ep1-rir",
+      "title": "共创三分化①：首次上斜余力",
+      "topics": [
+        "上斜哑铃",
+        "余力",
+        "力竭",
+        "加重",
+        "三分化"
+      ],
+      "category": "source_detail",
+      "summary": "某阶段首次按该强度练上斜哑铃卧推，留2–3次余力。",
+      "rules": [
+        "某阶段首次按该强度练上斜哑铃卧推，留2–3次余力。"
+      ],
+      "conditions": [],
+      "sourceIds": [
+        "local-ep1-rir"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "不能升级为所有动作所有阶段固定2–3次余力。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-ep1-failure",
+      "title": "共创三分化①：力竭条件",
+      "topics": [
+        "上斜哑铃",
+        "余力",
+        "力竭",
+        "加重",
+        "三分化"
+      ],
+      "category": "source_detail",
+      "summary": "该讲解段后两组力竭以动作不变形为条件。",
+      "rules": [
+        "该讲解段后两组力竭以动作不变形为条件。"
+      ],
+      "conditions": [],
+      "sourceIds": [
+        "local-ep1-failure"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "阶段条件未完整核全，不要求每次固定两组力竭。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-ep1-progress",
+      "title": "共创三分化①：进阶变量",
+      "topics": [
+        "上斜哑铃",
+        "余力",
+        "力竭",
+        "加重",
+        "三分化"
+      ],
+      "category": "source_detail",
+      "summary": "该条件下考虑组间休息与适当加重。",
+      "rules": [
+        "该条件下考虑组间休息与适当加重。"
+      ],
+      "conditions": [],
+      "sourceIds": [
+        "local-ep1-progress"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "具体幅度和休息数字未核，不补成作者周期。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-shuaiso-7143145638266506537",
+      "title": "【高效休息】4个方法帮你缓解疲劳!：局部生活示例",
+      "topics": [
+        "低能量",
+        "精神状态",
+        "日常精力",
+        "休息",
+        "恢复"
+      ],
+      "category": "source_detail",
+      "summary": "作者局部画面展示：减少玩手机、接触日光和热水澡。",
+      "rules": [
+        "作者局部画面展示：减少玩手机、接触日光和热水澡。",
+        "只能说明个人示例和局部片段；具体适用做法以独立睡眠/活动指南及当前用户条件决定。"
+      ],
+      "conditions": [
+        "不能把热水澡/日晒/起床水强制为人人必做；不直视太阳。"
+      ],
+      "sourceIds": [
+        "shuaiso-7143145638266506537-1",
+        "shuaiso-7143145638266506537-2",
+        "shuaiso-7143145638266506537-3"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "只核局部烧录字幕，没有连续核听四方法完整上下文。",
+        "谷氨酸/褪黑素机制及饮食限制的局部字幕不支持因果结论或补剂处方；未导为运行知识。",
+        "日光不是直视太阳，不据片段指定日晒剂量；热水澡不列为人人必需。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-shuaiso-7526867477746289972",
+      "title": "健身博主低能量的一天（如何积极恢复）：局部生活示例",
+      "topics": [
+        "低能量",
+        "精神状态",
+        "日常精力",
+        "休息",
+        "恢复"
+      ],
+      "category": "source_detail",
+      "summary": "作者局部画面展示：起床喝水、户外拉伸和接触阳光。",
+      "rules": [
+        "作者局部画面展示：起床喝水、户外拉伸和接触阳光。",
+        "只能说明个人示例和局部片段；具体适用做法以独立睡眠/活动指南及当前用户条件决定。"
+      ],
+      "conditions": [
+        "不能把热水澡/日晒/起床水强制为人人必做；不直视太阳。"
+      ],
+      "sourceIds": [
+        "shuaiso-7526867477746289972-1",
+        "shuaiso-7526867477746289972-2",
+        "shuaiso-7526867477746289972-3"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "作者个人的一天与局部示例不是适用于所有人的恢复处方。",
+        "未核具体饮水量、运动强度、拉伸剂量与效果；个人产品展示不导为专业推荐。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "evidence-load-definition",
+      "title": "同一动作相对负荷与6–8/10–12次数口径",
+      "topics": [
+        "6-8次",
+        "10-12次",
+        "六到八",
+        "十到十二",
+        "大小重量区别",
+        "大重量和小重量",
+        "RM",
+        "相对负荷"
+      ],
+      "category": "progression",
+      "summary": "轻重按同一动作及本人能力理解；用户6–8对10–12可直接沿用作本题口径，不跨动作比公斤数，也不把主动停下次数当最大能力。",
+      "rules": [
+        "先理解用户是在同一动作内比较，别改问成不同动作是否都拿相同公斤数。",
+        "研究用可完成最大次数RM或%1RM定义相对负荷；做了6次但还可做很多次，不证明这是6RM。",
+        "Lopez的≤8RM/9–15RM分档较接近本题；其他研究low可能是20–35次，不能用它代替用户10–12次。"
+      ],
+      "conditions": [
+        "先匹配同一动作、相对负荷、目标、经验与实际训练安排；未知保持未知。"
+      ],
+      "sourceIds": [
+        "EVID-acsm_2026_position_stand",
+        "EVID-lopez_2021_network_load",
+        "EVID-refalo_2021_load_meta"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "研究群体平均结论不保证个体结果；处方选择不等于已证明增肌速度胜出。"
+      ],
+      "alternatives": null,
+      "adjudication": {
+        "question": "同一动作相对负荷与6–8/10–12次数口径",
+        "verdict": "supported",
+        "conclusion": "轻重按同一动作及本人能力理解；用户6–8对10–12可直接沿用作本题口径，不跨动作比公斤数，也不把主动停下次数当最大能力。",
+        "applicability": "健康成年人；在实际比较条件和证据范围内应用。"
+      }
+    },
+    {
+      "id": "evidence-bench-8-vs-12",
+      "title": "卧推8RM对12RM：胸肌体积和最大力量分开判断",
+      "topics": [
+        "卧推",
+        "6-8次",
+        "10-12次",
+        "增肌更快",
+        "长得快",
+        "大重量长肌肉",
+        "大重量增肌",
+        "小重量增肌",
+        "胸大肌",
+        "MRI"
+      ],
+      "category": "progression",
+      "summary": "现有证据未确立6–8次比10–12次增肌更快；有接近问题的8RM对12RM卧推直接试验，胸肌体积增长未检出显著差异，8RM最大力量增长更好。",
+      "rules": [
+        "先给可检验结论，既不顺从写成大重量一定增肌更快，也不把重训练说成无效。",
+        "Kubo：42男随机含对照，10周/每周2次；4RM×7组、8RM×4组、12RM×3组配平训练量；MRI胸大肌体积三训练组增幅未显著不同。",
+        "12RM卧推1RM增幅低于4RM(p=.029)及8RM(p=.021)；力量与胸肌体积不是同一指标。",
+        "Lopez高≤8RM对中9–15RM增肌SMD−.09，95%CI[−.33,.16]；未显著差异不证明完全等效。",
+        "问来源时可给论文题目、2021年、42人/10周/MRI及PMID32304514链接；没有核到增肌百分比或CI就不编数字。",
+        "实用上可按目标、控制、训练量和偏好选6–8或10–12并标清；选择某档不宣称已证明增长更快。"
+      ],
+      "conditions": [
+        "同动作相对负荷比较；须考虑努力程度、幅度、组数、休息、经验与恢复。",
+        "Kubo组数不同，不能冒充同组数6–8对10–12。"
+      ],
+      "sourceIds": [
+        "EVID-kubo_2021_bench_4_8_12rm",
+        "EVID-lopez_2021_network_load",
+        "EVID-acsm_2026_position_stand"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "研究群体平均结论不保证个体结果；处方选择不等于已证明增肌速度胜出。"
+      ],
+      "alternatives": null,
+      "adjudication": {
+        "question": "卧推8RM对12RM：胸肌体积和最大力量分开判断",
+        "verdict": "not_supported",
+        "conclusion": "现有证据未确立6–8次比10–12次增肌更快；有接近问题的8RM对12RM卧推直接试验，胸肌体积增长未检出显著差异，8RM最大力量增长更好。",
+        "applicability": "同动作相对负荷比较；须考虑努力程度、幅度、组数、休息、经验与恢复。；Kubo组数不同，不能冒充同组数6–8对10–12。"
+      }
+    },
+    {
+      "id": "evidence-strength-growth-path",
+      "title": "力量提高和逐步加重是否保证增肌效率更高",
+      "topics": [
+        "力量提升",
+        "逐步加重",
+        "进阶",
+        "力量和增肌",
+        "效率",
+        "重量上来了",
+        "加次数",
+        "渐进超负荷"
+      ],
+      "category": "progression",
+      "summary": "力量进步可支持后续训练，但不能据此保证6–8增肌效率高于10–12；后者同样可持续加重或增加次数。",
+      "rules": [
+        "肯定力量提高拓宽负荷进阶空间，不把缺比较证据说成力量训练对增肌无用。",
+        "Plotkin：43名有经验者、8周下肢，加重量或加次数均为可用进阶策略；不是卧推精确次数对照。",
+        "Morton：49训练男性、12周，重组卧推力量增长更多但肌肥大组间未显著不同，不能用力量变化替代肌肉增长测量。",
+        "效率若指时间、恢复成本或增长速度，应分清衡量指标，未测量的不保证。"
+      ],
+      "conditions": [
+        "先匹配同一动作、相对负荷、目标、经验与实际训练安排；未知保持未知。"
+      ],
+      "sourceIds": [
+        "EVID-plotkin_2022_progression",
+        "EVID-morton_2016_trained",
+        "EVID-kubo_2021_bench_4_8_12rm"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "研究群体平均结论不保证个体结果；处方选择不等于已证明增肌速度胜出。"
+      ],
+      "alternatives": null,
+      "adjudication": {
+        "question": "力量提高和逐步加重是否保证增肌效率更高",
+        "verdict": "insufficient_direct_evidence",
+        "conclusion": "力量进步可支持后续训练，但不能据此保证6–8增肌效率高于10–12；后者同样可持续加重或增加次数。",
+        "applicability": "健康成年人；在实际比较条件和证据范围内应用。"
+      }
+    },
+    {
+      "id": "evidence-muscle-size-prescription",
+      "title": "大肌群必须大重量、小肌群必须轻重量吗",
+      "topics": [
+        "大肌群",
+        "小肌群",
+        "不同部位",
+        "不同动作",
+        "胸重肩轻",
+        "大肌群用大重量",
+        "小肌群用小重量"
+      ],
+      "category": "execution",
+      "summary": "把肌群大小直接变成固定轻重规则不成立；应按具体动作、目标、控制、器械和训练量选择，并标清每个动作安排。",
+      "rules": [
+        "不再跨动作横比公斤数来回避用户当前同一动作的效果问题。",
+        "ACSM总体处方不能证明不同肌群分别采用哪档最优；不能把没有身体部位直接比较的综述用于该因果结论。",
+        "卧推偏重组和侧平举较轻多次可作有条件处方例子；不是大肌群低次、小肌群高次的生理定律。"
+      ],
+      "conditions": [
+        "先匹配同一动作、相对负荷、目标、经验与实际训练安排；未知保持未知。"
+      ],
+      "sourceIds": [
+        "EVID-acsm_2026_position_stand",
+        "EVID-kubo_2021_bench_4_8_12rm",
+        "EVID-larsen_2025_lateral_raise"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "研究群体平均结论不保证个体结果；处方选择不等于已证明增肌速度胜出。"
+      ],
+      "alternatives": null,
+      "adjudication": {
+        "question": "大肌群必须大重量、小肌群必须轻重量吗",
+        "verdict": "not_supported",
+        "conclusion": "把肌群大小直接变成固定轻重规则不成立；应按具体动作、目标、控制、器械和训练量选择，并标清每个动作安排。",
+        "applicability": "健康成年人；在实际比较条件和证据范围内应用。"
+      }
+    },
+    {
+      "id": "evidence-lateral-raise-load",
+      "title": "肩中束侧平举较轻多次：实用起点和比较证据",
+      "topics": [
+        "肩中束",
+        "侧平举",
+        "小重量多次数",
+        "12-16次",
+        "肩中束大重量",
+        "侧平举依据",
+        "轻重量更好"
+      ],
+      "category": "execution",
+      "summary": "侧平举可优先用较易控制的负荷、12–16次作为处方起点；这是实用选择，未证明它比6–8次增肌更好。",
+      "rules": [
+        "用户只说肩中束时说明是在按侧平举回答，不把所有练肩动作混为同一种。",
+        "Larsen2025：24人完成、8周，左右臂随机哑铃/绳索，12–16RM；比较的是器械形式，不是轻重负荷。",
+        "先选可控、无痛的负荷；后几次吃力但不以甩动硬凑次数；达到安排上限且控制恢复允许再小幅加重。",
+        "不能把这个单一有效次数范围宣传成唯一最优、轻重量已获比较优胜或所有小肌群通用规则。"
+      ],
+      "conditions": [
+        "先匹配同一动作、相对负荷、目标、经验与实际训练安排；未知保持未知。"
+      ],
+      "sourceIds": [
+        "EVID-larsen_2025_lateral_raise",
+        "EVID-acsm_2026_position_stand"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "研究群体平均结论不保证个体结果；处方选择不等于已证明增肌速度胜出。"
+      ],
+      "alternatives": null,
+      "adjudication": {
+        "question": "肩中束侧平举较轻多次：实用起点和比较证据",
+        "verdict": "conditional",
+        "conclusion": "侧平举可优先用较易控制的负荷、12–16次作为处方起点；这是实用选择，未证明它比6–8次增肌更好。",
+        "applicability": "健康成年人；在实际比较条件和证据范围内应用。"
+      }
+    },
+    {
+      "id": "evidence-heavy-favorable-studies",
+      "title": "确有重负荷占优研究：不能选择性引用或偷换比较",
+      "topics": [
+        "反例",
+        "大重量优势研究",
+        "重负荷占优",
+        "休息时间",
+        "20%",
+        "3-5次",
+        "科学争议",
+        "增肌效率更高"
+      ],
+      "category": "progression",
+      "summary": "保留有利重负荷的原试验，但须同时报告其休息、测量和负荷分档限制，不能由局部优势推出本题6–8优于10–12。",
+      "rules": [
+        "Mangine：重组3–5RM/休3分钟，对中组10–12RM/休1分钟，手臂瘦组织与卧推力量部分结果偏重；负荷和休息同时改变。",
+        "DXA手臂瘦组织不等于MRI胸大肌体积；不能由手臂增长替代卧推胸肌效果。",
+        "Lasevicius：80%对20%在部分肌群有优势；20%极轻负荷不是用户所说10–12RM。",
+        "有利或不利本回答的研究都保留，结合直接性、样本、方法和综述判断；不能只为证明陈年正确挑数据。"
+      ],
+      "conditions": [
+        "先匹配同一动作、相对负荷、目标、经验与实际训练安排；未知保持未知。"
+      ],
+      "sourceIds": [
+        "EVID-mangine_2015_heavy_advantage",
+        "EVID-lasevicius_2018_very_low",
+        "EVID-lopez_2021_network_load"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "研究群体平均结论不保证个体结果；处方选择不等于已证明增肌速度胜出。"
+      ],
+      "alternatives": null,
+      "adjudication": {
+        "question": "确有重负荷占优研究：不能选择性引用或偷换比较",
+        "verdict": "conditional",
+        "conclusion": "保留有利重负荷的原试验，但须同时报告其休息、测量和负荷分档限制，不能由局部优势推出本题6–8优于10–12。",
+        "applicability": "健康成年人；在实际比较条件和证据范围内应用。"
+      }
+    },
+    {
+      "id": "evidence-volume-frequency",
+      "title": "增肌训练安排：周组数、频率与负荷分开",
+      "topics": [
+        "周训练量",
+        "周组数",
+        "训练频率",
+        "几组",
+        "每周几练",
+        "增肌安排",
+        "多组"
+      ],
+      "category": "split",
+      "summary": "组织立场与综合研究强调足够的训练量；不能只按每组重轻或分化名字判断增肌质量。",
+      "rules": [
+        "ACSM2026为137系统综述、超过3万人，健康成年人范围；不是3万人直接比较某两个次数。",
+        "其增肌≥10组/周是群体参考，不等于新手每次10组或人人最低必需量；与既有按经验/恢复起步规则一起使用。",
+        "Currier2023高负荷多组处方排名高是组合结果，相对不训练对照的SMD不是单一负荷变量胜过另一档，更不是增长百分比。"
+      ],
+      "conditions": [
+        "先匹配同一动作、相对负荷、目标、经验与实际训练安排；未知保持未知。"
+      ],
+      "sourceIds": [
+        "EVID-acsm_2026_position_stand",
+        "EVID-currier_2023_prescription_network"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "研究群体平均结论不保证个体结果；处方选择不等于已证明增肌速度胜出。"
+      ],
+      "alternatives": null,
+      "adjudication": {
+        "question": "增肌训练安排：周组数、频率与负荷分开",
+        "verdict": "conditional",
+        "conclusion": "组织立场与综合研究强调足够的训练量；不能只按每组重轻或分化名字判断增肌质量。",
+        "applicability": "健康成年人；在实际比较条件和证据范围内应用。"
+      }
+    },
+    {
+      "id": "evidence-answering-citations",
+      "title": "用户质疑、科学依据与绝对正确的证据答复",
+      "topics": [
+        "科学依据",
+        "权威数据",
+        "有依据吗",
+        "有什么依据",
+        "研究",
+        "论文",
+        "证据",
+        "权威",
+        "绝对正确",
+        "数据",
+        "质疑",
+        "出处"
+      ],
+      "category": "progression",
+      "summary": "先回答当前具体结论，再给最相关的已核研究及实际条件；追求可复核和可修正，不以权威或数据数量保证绝对正确。",
+      "rules": [
+        "优先相关的组织立场/系统综述构建总框架，具体问题再用最直接的对照试验；PubMed/PMC是检索和阅读入口，不是其中每篇都正确的认证。",
+        "用户质疑或问依据时可报已核组织、论文题目、年份、样本、比较和结果及真实链接；日常仍短而直接讲知识，不主动抛博主姓名。",
+        "没有显著差异不是证明完全一样；排名第一不是证明统计优胜；SMD不是肌肉增长百分比。",
+        "来源只有摘要就如实说明，不编全文页码、原句、未核数字或亲自实验。",
+        "发现旧回答有错要改正；先判断支持/不支持/条件成立/缺直接证据，再给具体可执行建议，不能用空泛两种都行结尾。"
+      ],
+      "conditions": [
+        "先匹配同一动作、相对负荷、目标、经验与实际训练安排；未知保持未知。"
+      ],
+      "sourceIds": [
+        "EVID-acsm_2026_position_stand",
+        "EVID-kubo_2021_bench_4_8_12rm",
+        "EVID-lopez_2021_network_load",
+        "EVID-currier_2023_prescription_network"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "研究群体平均结论不保证个体结果；处方选择不等于已证明增肌速度胜出。"
+      ],
+      "alternatives": null,
+      "adjudication": {
+        "question": "用户质疑、科学依据与绝对正确的证据答复",
+        "verdict": "supported",
+        "conclusion": "先回答当前具体结论，再给最相关的已核研究及实际条件；追求可复核和可修正，不以权威或数据数量保证绝对正确。",
+        "applicability": "健康成年人；在实际比较条件和证据范围内应用。"
+      }
+    },
+    {
+      "id": "evidence-measurement-outcomes",
+      "title": "肌肉体积、力量、围度、肌电不能混为增肌速度",
+      "topics": [
+        "肌肉体积",
+        "肌厚",
+        "围度",
+        "肌电",
+        "最大力量",
+        "DXA",
+        "体成分",
+        "60天实验",
+        "对比实验"
+      ],
+      "category": "progression",
+      "summary": "判断增肌优劣先看测量对象和可比性，最大力量/围度/瘦组织/急性肌电不能直接替代胸肌体积或长期增长效率。",
+      "rules": [
+        "Kubo用MRI胸大肌体积与卧推1RM分别测量；同一试验可出现力量差异而体积差异未显著。",
+        "Morton的肌纤维横截面积、Mangine手臂瘦组织、Larsen侧平举肌厚各有测量范围，不混报成同一部位增长率。",
+        "个人左右侧60天展示须检查样本、原始测量、动作努力程度与训练总量；视频没有这些信息时只当观察线索。"
+      ],
+      "conditions": [
+        "先匹配同一动作、相对负荷、目标、经验与实际训练安排；未知保持未知。"
+      ],
+      "sourceIds": [
+        "EVID-kubo_2021_bench_4_8_12rm",
+        "EVID-morton_2016_trained",
+        "EVID-mangine_2015_heavy_advantage",
+        "EVID-larsen_2025_lateral_raise"
+      ],
+      "evidenceBasis": "independent_guidance",
+      "limitations": [
+        "研究群体平均结论不保证个体结果；处方选择不等于已证明增肌速度胜出。"
+      ],
+      "alternatives": null,
+      "adjudication": {
+        "question": "肌肉体积、力量、围度、肌电不能混为增肌速度",
+        "verdict": "supported",
+        "conclusion": "判断增肌优劣先看测量对象和可比性，最大力量/围度/瘦组织/急性肌电不能直接替代胸肌体积或长期增长效率。",
+        "applicability": "健康成年人；在实际比较条件和证据范围内应用。"
+      }
+    },
+    {
+      "id": "creator-synthesis-tan",
+      "title": "谭成义已核局部方法总结与缺口",
+      "topics": [
+        "谭成义",
+        "训练体系来源",
+        "沉肩",
+        "热身",
+        "RDL"
+      ],
+      "category": "source_detail",
+      "summary": "已核内容以具体动作控制、热身准备与髋铰链局部教学为主；完整课表及所有动作条件仍未核齐。",
+      "rules": [
+        "只沿用各已核片段支持的准备/控制点，不把沉肩套成全程固定肩胛。",
+        "完整作者三/五/七分化、其余动作课程和未知参数不能由助手拼成原课表。",
+        "旧55项库中的42个title_only仍仅目录，不因本次科学证据升级而变为已读教学。"
+      ],
+      "conditions": [
+        "仅已核局部；原条目的动作条件、时间定位和缺项仍须一并读取。"
+      ],
+      "sourceIds": [
+        "legacy-L04-1",
+        "local-tan-depression-01-1",
+        "local-tan-depression-03-1",
+        "local-tan-depression-03-2",
+        "local-tan-warmup-01-1",
+        "local-tan-rdl-01-1",
+        "local-tan-rdl-01-2",
+        "local-tan-rdl-01-3"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "这是局部来源导航总结，不是全部课程或独立科学验证；未核数字保持未知。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "creator-synthesis-kai",
+      "title": "凯圣王及共创三分化已核局部总结",
+      "topics": [
+        "凯圣王",
+        "三分化",
+        "训练计划",
+        "RPE",
+        "作者进阶"
+      ],
+      "category": "source_detail",
+      "summary": "已核内容含RM/RPE与进阶局部、上斜准备及共创三分化特定阶段的余力与动作不变形条件。",
+      "rules": [
+        "进阶与努力程度保留来源所指动作和阶段，不能删掉首次/后续组等适用条件。",
+        "完整周期、完整上斜动作及拿放细节、改装器械适配和完整课表仍有缺项。",
+        "共创来源不当作每位作者全体系；独立科学综述不伪装成作者原话。"
+      ],
+      "conditions": [
+        "仅已核局部；原条目的动作条件、时间定位和缺项仍须一并读取。"
+      ],
+      "sourceIds": [
+        "local-kai-rpe-01-1",
+        "local-kai-rpe-01-2",
+        "local-kai-incline-01-1",
+        "local-ep1-rir",
+        "local-ep1-failure",
+        "local-ep1-progress"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "这是局部来源导航总结，不是全部课程或独立科学验证；未核数字保持未知。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "creator-synthesis-shuaiso",
+      "title": "帅soserious已核生活恢复局部总结",
+      "topics": [
+        "帅soserious",
+        "日常精力",
+        "高效休息",
+        "积极恢复"
+      ],
+      "category": "source_detail",
+      "summary": "仅核两段生活恢复局部：少刷手机、接触日光、热水澡、饮水与轻活动等个人示例；不是完整恢复处方。",
+      "rules": [
+        "没有核实具体饮水、日光、运动及补剂剂量，不补成全人群处方或神经机制结论。",
+        "腹肌视频只打开而未提取动作，不能说已学会完整腹肌课。",
+        "可执行一般恢复建议沿已核独立指南；个人日程与产品展示不等于功效证明。"
+      ],
+      "conditions": [
+        "仅已核局部；原条目的动作条件、时间定位和缺项仍须一并读取。"
+      ],
+      "sourceIds": [
+        "shuaiso-7143145638266506537-1",
+        "shuaiso-7143145638266506537-2",
+        "shuaiso-7143145638266506537-3",
+        "shuaiso-7526867477746289972-1",
+        "shuaiso-7526867477746289972-2",
+        "shuaiso-7526867477746289972-3"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "这是局部来源导航总结，不是全部课程或独立科学验证；未核数字保持未知。"
+      ],
+      "alternatives": null
+    },
+    {
+      "id": "detail-facebook-load-experiment",
+      "title": "用户60天轻重实验视频：已见画面与研究边界",
+      "topics": [
+        "Facebook",
+        "60天",
+        "对比实验",
+        "3-6次",
+        "15-30次",
+        "视频证据"
+      ],
+      "category": "source_detail",
+      "summary": "已看公开播放器关键画面，3–6次对15–30次、Jeremy及Dennis左右侧结果；不等于本题6–8对10–12的对照研究。",
+      "rules": [
+        "只能报告已见范围和测量，不据标题猜视频支持哪档。",
+        "视频展示结果不能证明所有人大重量或小重量必胜；按权威负荷条目核验。",
+        "局部字幕提到力竭不升级为人人每组必须做到推不起来。"
+      ],
+      "conditions": [
+        "明确问这个视频时如实说明已核内容和未读完整字幕。"
+      ],
+      "sourceIds": [
+        "FB-820487497207816-partial"
+      ],
+      "evidenceBasis": "author_partial",
+      "limitations": [
+        "未核原始实验数据与完整方法；二次配音、字幕及展示可能有误。"
+      ],
+      "alternatives": null
+    }
+  ]
+}

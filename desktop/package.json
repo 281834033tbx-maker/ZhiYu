@@ -1,0 +1,37 @@
+{
+  "name": "zhiyu-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "智域桌面客户端（本地自用版）",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.zhiyu.desktop",
+    "productName": "智域",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "image-viewer.js",
+      "local-identity.cjs",
+      "package.json"
+    ],
+    "mac": {
+      "target": "dir",
+      "icon": "build/icon.icns",
+      "category": "public.app-category.social-networking",
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "智域需要使用麦克风录制并发送语音消息。"
+      }
+    }
+  }
+}

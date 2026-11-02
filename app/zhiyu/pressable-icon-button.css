@@ -1,0 +1,43 @@
+/* Pressure belongs to the glyph; its transparent hit target stays still. */
+html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press] {
+  transform:none;
+  animation:none;
+  box-shadow:none;
+  outline:none;
+  border:0;
+}
+html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press]>svg {
+  transform-box:fill-box;
+  transform-origin:center;
+  transition:transform 70ms ease-out;
+}
+/* Individual rotate composes with the existing pressure scale and spring keyframes. */
+html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press][data-icon-rotate='true']>svg {
+  rotate:var(--zy-icon-click-rotation,0deg);
+  transition:transform 70ms ease-out,rotate 220ms cubic-bezier(.22,.75,.25,1);
+}
+html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press='idle']>svg {
+  transform:scale(1);
+  animation:none;
+}
+html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press='pressed']>svg {
+  transform:scale(.96);
+  animation:none;
+}
+html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press='release']>svg {
+  animation:zy-icon-pressure-release 360ms cubic-bezier(.2,.75,.25,1) both;
+}
+@keyframes zy-icon-pressure-release {
+  0% { transform:scale(.96); }
+  42% { transform:scale(1.025); }
+  72% { transform:scale(.996); }
+  100% { transform:scale(1); }
+}
+@media(prefers-reduced-motion:reduce) {
+  html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press]>svg,
+  html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press][data-icon-rotate='true']>svg {
+    transform:none;
+    animation:none;
+    transition:none;
+  }
+}

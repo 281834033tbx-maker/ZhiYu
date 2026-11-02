@@ -1,0 +1,103 @@
+/* Keep the positioning box clear so the entire visible surface can shrink. */
+html[data-zy-theme] .zy-profile-popover.zy-dialog.zy-self-profile-popover { border-color: transparent; background: transparent; }
+.zy-self-profile-card {
+  --zy-ink: #fff;
+  --zy-secondary: #fff;
+  --zy-muted: #fff;
+  --zy-canvas: #fffaf7;
+  --zy-self-card-rotate-x: 0deg;
+  --zy-self-card-rotate-y: 0deg;
+  --zy-self-card-press-x: 50%;
+  --zy-self-card-press-y: 50%;
+  width: 100%;
+  min-width: 0;
+  border-radius: 10px;
+  color: #fff;
+  background: transparent;
+  text-align: left;
+}
+.zy-self-card-surface {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  /* Clip the photo and glow without letting focus scroll the card surface. */
+  overflow: clip;
+  border-radius: inherit;
+  background: #28333a;
+  transform: perspective(1000px) rotateX(var(--zy-self-card-rotate-x)) rotateY(var(--zy-self-card-rotate-y)) scale(1);
+  transform-origin: 50% 50%;
+  transition: transform 500ms cubic-bezier(.2, 1.3, .35, 1);
+}
+.zy-self-profile-card.is-pressed .zy-self-card-surface {
+  transform: perspective(1000px) rotateX(var(--zy-self-card-rotate-x)) rotateY(var(--zy-self-card-rotate-y)) scale(.98);
+  transition-duration: 110ms;
+  transition-timing-function: ease-out;
+}
+.zy-self-card-light {
+  position: absolute;
+  z-index: -1;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  filter: blur(32px);
+  opacity: 0;
+  transition: left 480ms cubic-bezier(.2, 1, .35, 1), top 480ms cubic-bezier(.2, 1, .35, 1), opacity 300ms ease;
+}
+.zy-self-card-light-mint { left: 18%; top: 20%; background: rgb(218 255 239 / 16%); }
+.zy-self-card-light-peach { left: 52%; top: 85%; background: rgb(255 241 220 / 23%); }
+.zy-self-card-light-lilac { left: 85%; top: 36%; background: rgb(255 237 255 / 18%); }
+.zy-self-profile-card.is-pressed .zy-self-card-light { left: var(--zy-self-card-press-x); top: var(--zy-self-card-press-y); opacity: .45; transition-duration: 180ms; }
+.zy-self-card-background { position: absolute; z-index: -3; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; pointer-events: none; }
+.zy-self-card-shade { position: absolute; z-index: -2; inset: 0; background: linear-gradient(180deg, rgb(9 18 24 / 36%), rgb(9 18 24 / 23%) 43%, rgb(9 18 24 / 74%)); pointer-events: none; }
+.zy-self-card-content { position: relative; display: flex; flex-direction: column; min-height: 190px; box-sizing: border-box; padding: 20px 22px 18px; }
+.zy-self-card-details { margin-top: auto; padding-top: 23px; min-width: 0; }
+.zy-self-card-background-edit { position: absolute; z-index: 2; top: 10px; right: 10px; display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 6px; background: transparent; color: #fff; cursor: pointer; }
+.zy-self-card-background-edit > svg { opacity: 0; transition: opacity 160ms ease; }
+.zy-self-card-background-edit:is(:hover,:focus-visible) { background: rgb(255 255 255 / 18%); }
+.zy-self-card-background-edit:is(:hover,:focus-visible) > svg { opacity: 1; }
+.zy-self-card-background-edit:focus-visible { outline: 2px solid #ed7b7b; outline-offset: 2px; }
+.zy-self-card-identity { display: flex; align-items: center; gap: 14px; }
+.zy-self-card-avatar { position: relative; flex: 0 0 56px; width: 56px; height: 56px; padding: 0; overflow: hidden; border: 2px solid rgb(255 255 255 / 65%); border-radius: 50%; background: rgb(255 255 255 / 22%); box-sizing: content-box; cursor: pointer; }
+.zy-self-card-avatar > .zy-avatar { display: block; }
+.zy-self-card-camera { position: absolute; inset: 0; display: grid; place-items: center; border-radius: 50%; background: rgb(28 50 47 / 28%); color: #fff; opacity: 0; transition: opacity 160ms ease; }
+.zy-self-card-avatar:hover .zy-self-card-camera, .zy-self-card-avatar:focus-visible .zy-self-card-camera { opacity: 1; }
+.zy-self-card-avatar:focus-visible { outline: 2px solid #ed628e; outline-offset: 3px; }
+.zy-self-card-copy { flex: 1; min-width: 0; }
+.zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-edit { display: block; padding: 0; --zy-inline-name-font-size: calc(16px + var(--zy-font-adjust, 0px)); }
+.zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-label { display: none; }
+html[data-zy-theme] .zy-profile-popover.zy-dialog .zy-self-profile-card .zy-self-card-name .zy-inline-name-value,
+.zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-value { min-height: 29px; width: max-content; max-width: calc(100% + 6px); margin-left: -6px; padding: 4px 6px; gap: 6px; color: #fff; font-size: calc(16px + var(--zy-font-adjust, 0px)); font-weight: 600; line-height: 21px; }
+.zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-value:hover:not(:disabled),
+.zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-value:focus-visible { background: rgb(255 255 255 / 28%); }
+.zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-value > span { flex: 0 1 auto; }
+.zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-value > svg { color: #fff; }
+.zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-input { font-weight: 600; color: #293334; }
+.zy-self-card-account { margin: 2px 0 0; color: rgb(255 255 255 / 88%); font-size: calc(11px + var(--zy-font-adjust, 0px)); line-height: 1.5; overflow-wrap: anywhere; user-select: text; }
+.zy-self-card-signature { min-width: 0; margin: 0; }
+.zy-self-card-signature-label { display: none; }
+.zy-self-card-signature-value { display: block; width: fit-content; max-width: calc(100% + 12px); min-height: 28px; margin-left: -6px; padding: 4px 6px; border: 0; border-radius: 6px; background: transparent; color: #fff; text-align: left; font: inherit; font-size: calc(12px + var(--zy-font-adjust, 0px)); line-height: 1.65; cursor: pointer; }
+.zy-self-card-signature-value > span { white-space: pre-wrap; overflow-wrap: anywhere; }
+.zy-self-card-signature-tail { white-space: nowrap; }
+.zy-self-card-signature-tail > svg { display: inline-block; margin-left: 6px; vertical-align: -2px; color: #fff; opacity: 0; }
+.zy-self-card-signature-value:hover, .zy-self-card-signature-value:focus-visible { background: rgb(255 255 255 / 28%); }
+.zy-self-card-signature-value:hover .zy-self-card-signature-tail > svg, .zy-self-card-signature-value:focus-visible .zy-self-card-signature-tail > svg { opacity: 1; }
+.zy-self-card-signature-value:focus-visible { outline: 2px solid #ed7b7b; outline-offset: 2px; }
+.zy-self-card-signature-value .is-placeholder { color: #fff; }
+.zy-self-card-signature-input-wrap { position: relative; }
+.zy-app .zy-self-profile-card .zy-self-card-signature-input { display: block; width: 100%; min-height: 55px; max-height: 140px; box-sizing: border-box; padding: 6px 8px; resize: vertical; border: 1px solid transparent; border-radius: 6px; background: linear-gradient(#fffaf7, #fffaf7) padding-box, linear-gradient(110deg, #ff946f, #ed628e) border-box; color: #344b4e; font: inherit; font-size: calc(12px + var(--zy-font-adjust, 0px)); line-height: 1.65; outline: none; box-shadow: none; }
+.zy-app .zy-self-profile-card .zy-self-card-signature-input:focus-visible { outline: none; box-shadow: 0 0 0 2px rgb(237 98 142 / 10%); }
+.zy-app .zy-self-profile-card .zy-self-card-signature-input:disabled { padding-right: 28px; opacity: .7; }
+.zy-self-card-saving { position: absolute; right: 8px; top: 10px; color: #ed628e; animation: zy-self-card-spin 1s linear infinite; }
+.zy-self-card-error { margin: 5px 0 0; color: #a73435; font-size: calc(11px + var(--zy-font-adjust, 0px)); line-height: 1.5; overflow-wrap: anywhere; }
+@keyframes zy-self-card-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .zy-self-profile-card .zy-self-card-surface, .zy-self-profile-card.is-pressed .zy-self-card-surface { transform: none; transition: none; }
+  .zy-self-profile-card .zy-self-card-light, .zy-self-profile-card.is-pressed .zy-self-card-light { transition: none; }
+  .zy-self-profile-card.is-pressed .zy-self-card-light-mint { left: 18%; top: 20%; }
+  .zy-self-profile-card.is-pressed .zy-self-card-light-peach { left: 52%; top: 85%; }
+  .zy-self-profile-card.is-pressed .zy-self-card-light-lilac { left: 85%; top: 36%; }
+  .zy-self-card-saving { animation: none; }
+  .zy-self-card-camera, .zy-self-card-background-edit > svg { transition: none; }
+}

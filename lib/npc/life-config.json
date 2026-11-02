@@ -1,0 +1,29 @@
+{
+  "timezone": "Asia/Shanghai",
+  "sleepStartHour": 3,
+  "wakeHour": 12,
+  "workStartHour": 14,
+  "workEndHour": 19,
+  "burstCount": 5,
+  "burstWindowMs": 120000,
+  "wakeForMs": 1200000,
+  "workReplyMinMs": 3000,
+  "workReplyMaxMs": 8000,
+  "proactiveMinMs": 1800000,
+  "proactiveMaxMs": 5400000,
+  "source": {
+    "sleepAndWakeBehavior": "user_required",
+    "wakeHour": "user_required: 2026-09-16 睡到中午12点",
+    "workIntermittentReplies": "user_required",
+    "idleProactiveSharing": "user_required",
+    "numericSchedulingParameters": "assistant_proposed: configurable provisional defaults",
+    "workReplyDelay": "user_required: 2026-09-18 工作回复只稍晚几秒，不以分钟等待；3–8秒为可调整实现值",
+    "proactivePolicy": "user_required: 2026-09-20 按个人作息；亲近每日晚间联系；忙碌仍可分享；明确免打扰才暂停；未回复1–2小时可跟问一次。现行调度在contact-life.ts",
+    "proactiveTimingAndThresholds": "legacy: 本文件主动计时字段仅供旧状态兼容；现行contact-life.ts使用亲近各60、90分钟跟问、3–5小时分享，不把旧30–90分钟当现行发送间隔"
+  },
+  "formalProactiveMinMs": 14400000,
+  "formalProactiveMaxMs": 28800000,
+  "closeFamiliarity": 60,
+  "closeAffection": 60,
+  "followUpAfterMs": 3600000
+}

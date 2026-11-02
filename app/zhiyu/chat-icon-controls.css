@@ -1,0 +1,15 @@
+/* Main chat controls share ink and brand feedback without a button plate. */
+html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon:not(.is-recording) {
+  background:transparent;
+  background-color:transparent;
+  box-shadow:none;
+  color:var(--zy-chat-control-ink,#242322);
+}
+html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon:not(.is-recording):not(:disabled):is(:hover,:active,:focus-visible,[aria-expanded='true'],[aria-pressed='true'],[data-icon-press='pressed'],[data-icon-press='release']) {
+  color:var(--zy-chat-control-accent,#e66562);
+}
+html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon>svg {
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}

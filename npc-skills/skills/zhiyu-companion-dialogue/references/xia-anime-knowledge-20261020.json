@@ -1,0 +1,4251 @@
+{
+  "schemaVersion": 1,
+  "version": "2026-10-20-v1",
+  "characterId": "xia-xia",
+  "status": "user_authorized_anime_companionship",
+  "coverage": {
+    "complete": false,
+    "workCount": 69,
+    "sourceCount": 90
+  },
+  "coreRules": [
+    "这是夏夏个人日漫/国漫兴趣库，按已核资料聊天，不冒称所有热门经典、全部角色、全部剧情或最新连载均已掌握。",
+    "作品开篇、人物、关键情节和讨论切口分开，plotAnchors来源及knowledgeScope限定能说的事实；discussionAngles是分析切口，不是官方结论。",
+    "夏夏有自己的角色偏好和有依据的猜想，不每句附和用户；已发生剧情、本人评价和未来预测分别表达。",
+    "按本人当前分支或本群用户真实说过的观看进度判断，动画/漫画/不同季/电影不混用；进度未知从无剧透层聊，重大揭晓前短问。",
+    "冷门人物或没覆盖的细节自然承认不熟，围绕喜欢的理由聊；用户补充作带条件的讨论，不自动变为本库已核事实。",
+    "最近/本月/已开播须按release首播日期、状态、来源与当前可信时间核对；日常不自动联网、自动更新或声称刚看完。",
+    "首批多为官方/正版梗概、人物说明及少量分集梗概的提炼，不表示已看完各部正片、读完漫画或后台训练了权重。"
+  ],
+  "sources": [
+    {
+      "id": "jps-op-about",
+      "title": "ONE PIECE 官方作品概要",
+      "url": "https://one-piece.com/about/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "阅读搜索工具返回的官方作品概要正文：罗杰留下宝藏、路飞与草帽一伙的目标；未取得漫画正文。",
+      "limitations": "仅提炼所列梗概/角色正文；未观看动画、未阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-op-enies",
+      "title": "ONE PIECE 官方司法岛篇梗概",
+      "url": "https://one-piece.com/story/enies_lobby/index.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "阅读搜索工具返回的官方司法岛正文：CP9、罗宾拒绝援救的原因、射穿旗帜、求生、营救与梅利号；直接打开返回403。",
+      "limitations": "仅工具返回的篇章梗概段落，非39—46卷或动画264—325集完整阅读；直开403，不冒称已阅原作全文。"
+    },
+    {
+      "id": "jps-op-robin",
+      "title": "ONE PIECE 官方罗宾角色页",
+      "url": "https://one-piece.com/character/robin/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_character",
+      "scope": "阅读搜索工具返回的官方角色正文：考古/历史正文、奥哈拉、因解读古文字被政府追捕及信任变化；直开403。",
+      "limitations": "官方页称奥哈拉唯一幸存者属该页面措辞，未核最新连载；不据此断言后续无其他幸存者，不使用悬赏数字。"
+    },
+    {
+      "id": "jps-op-luffy",
+      "title": "ONE PIECE 官方路飞角色页",
+      "url": "https://one-piece.com/character/luffy/index.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_character",
+      "scope": "阅读搜索工具返回的角色正文：香克斯草帽与承诺、海贼王目标、珍惜同伴、自由性格；直开403。",
+      "limitations": "角色页不同段悬赏数字不一致，本库不采悬赏、最新身份/战力或当前剧情。"
+    },
+    {
+      "id": "jps-op-zoro",
+      "title": "ONE PIECE 官方索隆角色页",
+      "url": "https://one-piece.com/character/zoro/index.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_character",
+      "scope": "阅读搜索工具返回的角色正文：与古伊娜的约定、世界第一剑豪目标、首位伙伴、支持和规劝船长、路痴；直开403。",
+      "limitations": "仅提炼所列梗概/角色正文；未观看动画、未阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-op-teach",
+      "title": "ONE PIECE 官方黑胡子角色页",
+      "url": "https://one-piece.com/character/Marshall_D_Teech/index.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_character",
+      "scope": "阅读搜索工具返回的角色正文：为野心不择手段、交出艾斯、顶上战争夺取白胡子能力；直开403。",
+      "limitations": "该页未揭其全部目的；未来战斗顺序与宝藏内容都不可由此当成已公布结局。"
+    },
+    {
+      "id": "jps-naruto",
+      "title": "Crunchyroll《Naruto Shippuden》梗概",
+      "url": "https://www.crunchyroll.com/series/GYQ4MW246/naruto-shippuden",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回的平台正文简介：鸣人训练返乡、晓的威胁、保护村子与成为火影；未依赖评论、评分或其他相似作品。",
+      "limitations": "仅提炼所列梗概/角色正文；未观看动画、未阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-bleach",
+      "title": "VIZ《BLEACH Part 1》官方发行梗概",
+      "url": "https://www.viz.com/anime/tv-show/bleach-video/video-unit/27",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回的动画发行页正文，范围为1—27集集合梗概：见鬼、一护/露琪亚、代理死神、前往尸魂界营救。",
+      "limitations": "仅提炼所列梗概/角色正文；未观看动画、未阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-dragonball",
+      "title": "东映《Dragon Ball》系列作品正文",
+      "url": "https://www.toei-animation-usa.com/dragon-ball.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "阅读搜索工具返回的官方TV系列各段简介：初代寻七龙珠、Z父子与强敌、Kai兄长来袭、布欧后比鲁斯、DAIMA变小；不读取游戏宣传为剧情。",
+      "limitations": "仅提炼所列梗概/角色正文；未观看动画、未阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-conan",
+      "title": "Crunchyroll商店《Case Closed Vol.2》发行简介",
+      "url": "https://store.crunchyroll.com/products/case-closed-manga-volume-2-9781591165873.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回的正版漫画商品说明：工藤新一变小、阿笠博士、化名来源、小兰与毛利侦探；不是第二卷全文。",
+      "limitations": "仅提炼所列梗概/角色正文；未观看动画、未阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-aot",
+      "title": "Crunchyroll《Attack on Titan》官方观看指南的剧情段",
+      "url": "https://www.crunchyroll.com/news/guides/2023/3/1/guide-attack-on-titan-watch-order",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回的授权平台剧情梗概，采第一季希干希纳/训练/托洛斯特和地鸣篇概要；未观看完整动画。",
+      "limitations": "仅指南剧情段，不把作者评论当原作事实；终局属于major剧透，未逐集核验所有细节。"
+    },
+    {
+      "id": "jps-fmab",
+      "title": "Crunchyroll《Fullmetal Alchemist: Brotherhood》梗概",
+      "url": "https://www.crunchyroll.com/series/GRGGPG93R/fullmetal-alchemist-brotherhood",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回的正文简介：炼金违禁代价、兄弟身体损失、贤者之石、军方与人造人；非2003版。",
+      "limitations": "仅提炼所列梗概/角色正文；未观看动画、未阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-eva",
+      "title": "Netflix《新世纪福音战士》及前10集梗概",
+      "url": "https://www.netflix.com/title/81033445",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "已直开阅读系列简介和前10集可见分集梗概，重点第1/2/4/5/8/9集。",
+      "limitations": "1995版TV局部梗概；不混入旧剧场版或新剧场版结局，不断言人物心理诊断或全部设定。"
+    },
+    {
+      "id": "jps-slam-tv",
+      "title": "东映TV目录《Slam Dunk》梗概",
+      "url": "https://www.toei-animation-usa.com/tv-series.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "阅读搜索工具返回的官方目录中Slam Dunk条目：零经验樱木开始篮球生活并追求胜利。",
+      "limitations": "仅提炼所列梗概/角色正文；未观看动画、未阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-slam-film",
+      "title": "东映《THE FIRST SLAM DUNK》梗概",
+      "url": "https://www.toei-animation.com/catalog/the-first-slam-dunk/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "阅读搜索工具返回的官方电影正文：宫城、哥哥、湘北五人、全国赛对山王；未核比赛逐球结果。",
+      "limitations": "仅提炼所列梗概/角色正文；未观看动画、未阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-yuyu",
+      "title": "VIZ《YuYu Hakusho》正文简介",
+      "url": "https://www.viz.com/yuyu-hakusho",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回系列简介及第一卷商品梗概：救孩子身亡、灵界第二次机会、牡丹/小阎王。",
+      "limitations": "仅提炼所列梗概/角色正文；未观看动画、未阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-hunter",
+      "title": "VIZ《Welcome to Hunter x Hunter!》篇章介绍",
+      "url": "https://www.viz.com/blog/posts/welcome-to-hunter-x-hunter",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回的出版社篇章正文，提炼猎人考试、天空竞技场与旅团动机；未采本文未核细节为全作知识。",
+      "limitations": "只提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-gintama-dog",
+      "title": "Crunchyroll《银魂》第10集梗概",
+      "url": "https://www.crunchyroll.com/watch/GRZXQ28GY/eat-something-sour-when-youre-tired",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回平台第10集梗概：神乐收养定春、银时新八与大狗日常。",
+      "limitations": "仅集梗概，不采页面显示1970作为首播日期，不等同于该集完整观影。"
+    },
+    {
+      "id": "jps-gintama-memory",
+      "title": "Crunchyroll《银魂》第31集梗概",
+      "url": "https://www.crunchyroll.com/watch/G62PWEK06/you-always-remember-the-things-that-matter-the-least",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回第31集梗概：银时车祸失忆、新八神乐帮助回忆；不采页面异常日期。",
+      "limitations": "只提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-inuyasha",
+      "title": "VIZ《Inuyasha Set 1》发行页梗概",
+      "url": "https://www.viz.com/watch/tv-series/inuyasha-video-season-1/product/6344",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回1—27集发行集合的故事简介：戈薇穿井、半妖犬夜叉、四魂之玉。",
+      "limitations": "只提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-demon-intro",
+      "title": "《鬼灭之刃》动画官方首季介绍",
+      "url": "https://demonslayer-anime.com/risshihen/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "阅读搜索工具返回官方故事介绍和首季演员对应角色；只采家人遇害/祢豆子变鬼/救妹目标。",
+      "limitations": "只提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-demon-train",
+      "title": "《鬼灭之刃 无限列车篇》官方炭治郎角色页",
+      "url": "https://demonslayer-anime.com/mugentrainarc/character/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_character",
+      "scope": "阅读搜索工具返回官方角色正文：鳞泷训练、那田蜘蛛山火之神神乐、蝴蝶忍宅训练、炼狱与列车任务；不采电影结局。",
+      "limitations": "只提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-jjk",
+      "title": "VIZ《Jujutsu Kaisen》系列正文",
+      "url": "https://www.viz.com/jujutsu-kaisen",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "已直开阅读系列简介及动画Part2交流会梗概；仅提炼救友入局、宿傩碎片和两校交流会，不采最终卷简介。",
+      "limitations": "只提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-spy",
+      "title": "VIZ《A Family Full of Secrets!》编辑介绍",
+      "url": "https://www.viz.com/blog/posts/a-family-full-of-secrets",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回出版社编辑正文：黄昏任务、化名洛伊德、约尔为避免怀疑结婚、阿尼亚读心与入学。",
+      "limitations": "只取作品事实，不把编辑个人喜欢/推荐用语变成夏夏固定偏好；非漫画全文。"
+    },
+    {
+      "id": "jps-opm",
+      "title": "VIZ《One-Punch Man》第三季官方梗概",
+      "url": "https://www.viz.com/press-releases/v/1006745",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回发行商新闻稿的Official synopsis，采埼玉无敌/杰诺斯/英雄协会及怪人协会人质行动。",
+      "limitations": "稿件2025-05-27；不以其中当时排期断言2026当前播放状态，不照搬未验证的宣传数字。"
+    },
+    {
+      "id": "jps-haikyu",
+      "title": "VIZ《Haikyu!!》系列/第一卷梗概",
+      "url": "https://www.viz.com/haikyu",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回简介和第一卷梗概：小巨人激励、身高与跳跃、影山从对手变队友。",
+      "limitations": "只提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-haikyu-quick",
+      "title": "VIZ《Haikyu!! 3-in-1 Vol.4》梗概",
+      "url": "https://www.viz.com/manga-books/manga/haikyu-3-in-1-edition-volume-4/product/8238",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回商品故事梗概：日向不再闭眼快攻、与影山分歧、东京队伍与木兔指导。",
+      "limitations": "只提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-natsume",
+      "title": "VIZ《夏目友人帐》系列简介",
+      "url": "https://www.viz.com/natsume-s-book-of-friends",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回系列正文：看见妖怪、亲戚间辗转、祖母玲子与继承的书。",
+      "limitations": "只提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-natsume-names",
+      "title": "VIZ《Sticking Up for the Little Guy》介绍",
+      "url": "https://www.viz.com/blog/posts/sticking-up-for-the-little-guy",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回出版社正文：塔子/滋稳定家庭、归还玲子收集的名字、帮助弱小妖怪的局部。",
+      "limitations": "只提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-violet",
+      "title": "Netflix《Violet Evergarden》梗概",
+      "url": "https://www.netflix.com/title/80182123",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "已直开阅读2018系列简介、题材信息；只核战争结束后代写书信、理解自我与过去。",
+      "limitations": "只提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-april",
+      "title": "Aniplex《Your lie in April》官方发行简介",
+      "url": "https://aniplexusa.com/pdf/PR_100920_YLiA.pdf",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回官方新闻稿中的About Your lie in April段：公生母亲去世、失去弹奏动力、薰自由演奏及性格；未采结局。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-clannad",
+      "title": "Sentai《CLANNAD / AFTER STORY》正版合集简介",
+      "url": "https://www.sentaifilmworks.com/collections/dubbed/products/816726025056-clannad-clannad-after-story-complete-collection-blu-ray",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回Description正文：朋也家庭创伤、渚因病留级、重建话剧社、琴美/智代/风子概括。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-kon",
+      "title": "Sentai《K-ON! Season 1》正版简介",
+      "url": "https://www.sentaifilmworks.com/blogs/catalog/k-on-season-1",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回目录正文：律与澪保住轻音部、紬加入、唯误以为轻音乐简单且只会响板。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-kon-movie",
+      "title": "Sentai《K-ON! The Movie》正版简介",
+      "url": "https://www.sentaifilmworks.com/blogs/catalog/k-on-the-movie",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回官方电影简介：除梓外其他人将毕业，伦敦旅行与友谊。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-haruhi",
+      "title": "Crunchyroll《凉宫春日的忧郁》西语梗概",
+      "url": "https://www.crunchyroll.com/es/series/GRGG7701R/the-melancholy-of-haruhi-suzumiya",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回平台西语正文：阿虚想过普通高中生活、春日无聊而寻找外星人/超能力者/时间旅行者、创建社团。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-haruhi-disappear",
+      "title": "Crunchyroll《凉宫春日的消失》梗概",
+      "url": "https://www.crunchyroll.com/id/series/GDKHZEJVG/the-disappearance-of-haruhi-suzumiya",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回该页英文电影梗概：12月18日春日消失且无人记得，阿虚寻找答案。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-steins",
+      "title": "Crunchyroll《STEINS;GATE》观看/游戏指南故事段",
+      "url": "https://www.crunchyroll.com/ko/news/guides/2026/10/19/steins-gate-order",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回指南中2011 TV与Steins;Gate 0简介，取冈部见到红莉栖死而复生、微波炉/手机/世界线；本批不采0或电影结局。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-death",
+      "title": "VIZ《Death Note》系列与动画梗概",
+      "url": "https://www.viz.com/death-note",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回系列简介与Season1商品梗概：夜神月获得笔记、杀罪犯、L调查；不采短篇或结局。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-monster",
+      "title": "VIZ《Monster》系列及第一卷梗概",
+      "url": "https://www.viz.com/monster",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "阅读搜索工具返回系列及Perfect Edition Vol.1说明：天马救人选择、约翰连环杀人、寻找双胞胎姐妹；不采作者履历为故事。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-bebop",
+      "title": "Crunchyroll《Cowboy Bebop》系列梗概",
+      "url": "https://www.crunchyroll.com/series/GYVNXMVP6/cowboy-bebop?pubDate=20250329",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回系列正文：赏金猎人团队、斯派克过去、杰特、菲、艾德、爱因；不以集名推断该集剧情。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-ghost-sac",
+      "title": "Production I.G《Ghost in the Shell: Stand Alone Complex》作品页",
+      "url": "https://www.productionig.com/contents/works_sp/03_/index.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "阅读搜索工具返回制作公司OVERVIEW：2030网络社会、公安9课、网络犯罪/政治腐败与义体战斗。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-ghost-laugh",
+      "title": "Production I.G《The Laughing Man》作品页",
+      "url": "https://www.productionig.com/contents/works_sp/38_/index.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "阅读搜索工具返回制作公司OVERVIEW：濑良野绑架与企业勒索、笑面男是高手黑客、山口联系陀古萨后死亡、劫持发布会。",
+      "limitations": "这是2005总集电影作品梗概；与SAC第一季相关但不能冒称TV逐集完全相同，不混入1995电影傀儡师情节。"
+    },
+    {
+      "id": "jps-mushi",
+      "title": "Crunchyroll《MUSHI-SHI》作品梗概",
+      "url": "https://www.crunchyroll.com/series/GRX0MGN76/mushi-shi",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回系列正文：通常不为人知的虫、虫师银古旅行调查并帮助受困者；未根据OVA集名扩写剧情。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-frieren",
+      "title": "《葬送的芙莉莲》官方芙莉莲角色页",
+      "url": "https://frieren-anime.jp/character/chara_group1/1-1/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_character",
+      "scope": "已直开阅读角色正文：千年精灵、讨伐魔王、辛美尔之死后理解人类、与费伦/休塔尔克前往魂眠之地。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-frieren-party",
+      "title": "《葬送的芙莉莲》官方新队员介绍",
+      "url": "https://frieren-anime.jp/news/197/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_character",
+      "scope": "阅读搜索工具返回2023-08-07官方正文：海塔抚养的战争孤儿费伦、艾泽弟子休塔尔克、战斗力与胆怯反差。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-apothecary",
+      "title": "Crunchyroll《The Apothecary Diaries》梗概",
+      "url": "https://www.crunchyroll.com/series/G3KHEVDJ7/the-apothecary-diaries",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回现页系列正文及同页2025梗概版本：猫猫入宫、皇嗣生病、解谜获壬氏注意、玉叶妃试毒。",
+      "limitations": "仅系列基础梗概；未采搜索中出现的2026第三季评论/新片传闻为入库知识，不把虚构药毒当现实建议。"
+    },
+    {
+      "id": "jps-dungeon",
+      "title": "Netflix Tudum《Delicious in Dungeon》作品解释",
+      "url": "https://www.netflix.com/tudum/articles/delicious-in-dungeon-release-date-news?inapp=true%2F",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回2024-03-27正文的故事、人物和法琳段：救妹、物资短缺、魔物食物、森西/玛露西尔/奇尔查克各职能。",
+      "limitations": "按官方平台梗概提炼，不采其中adolescent等泛称推定角色确切年龄；未核后半部或漫画结局。"
+    },
+    {
+      "id": "jps-dandadan",
+      "title": "Netflix《DAN DA DAN》及前10集可见梗概",
+      "url": "https://www.netflix.com/title/81736884",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "阅读搜索工具返回系列正文和前10集梗概，采1—3集：桃/厄卡伦互不相信、外星人、星子、解除诅咒。",
+      "limitations": "页面2025/2季标签不等于首播年份，未采用；只核前3集锚点，不将后续简介当完整观影。"
+    },
+    {
+      "id": "jps-psyren-intro",
+      "title": "PSYREN 动画官方首页",
+      "url": "https://psyren-anime.com/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "已直开阅读首页播放公告和INTRODUCTION：2026-10-05 23:00起放送、红电话卡、雨宫失踪与生存游戏。",
+      "limitations": "仅官网排期与介绍，不以首播日期自动推断当前已看集数、所有平台可看或漫画终局。"
+    },
+    {
+      "id": "jps-psyren-call1",
+      "title": "PSYREN 官方第1集《都市传说》梗概",
+      "url": "https://psyren-anime.com/story/call1",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_episode",
+      "scope": "已直开阅读第1集梗概正文：夜科扬羽万事屋、以闹事填空虚、红卡、雨宫求救失踪、刺客与荒野传送。",
+      "limitations": "只读官网文字梗概与页面静态信息，未观看视频，不含漫画后续答案。"
+    },
+    {
+      "id": "jps-psyren-call2",
+      "title": "PSYREN 官方第2集《禁人种》梗概",
+      "url": "https://psyren-anime.com/story/call2",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_episode",
+      "scope": "已直开阅读第2集正文：雨宫昏迷、奖金吸引的参与者、飞龙寻找朋友タツオ、寻找Gate的声音、扬羽追出救人却见怪物杀人。",
+      "limitations": "第二集正文未给朋友最终去向或怪物世界真相，不以用户看过两集当真实用户资料。"
+    },
+    {
+      "id": "jps-bocchi",
+      "title": "《孤独摇滚》TV官方Introduction",
+      "url": "https://bocchi.rocks/tv/introduction/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "已直开阅读INTRODUCTION正文：后藤独怕生、独自练琴、guitarhero、虹夏邀请加入结束乐队。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-madoka-2",
+      "title": "《魔法少女小圆》官方第2集梗概",
+      "url": "https://madokamagicausa.com/tv/story/02.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_episode",
+      "scope": "已直开阅读第2集正文：救丘比、麻美营救、许愿与魔法少女残酷职责；非完整集观看。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-madoka-9",
+      "title": "《魔法少女小圆》官方第9集梗概",
+      "url": "https://madokamagicausa.com/tv/story/09.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_episode",
+      "scope": "阅读搜索工具返回官方第9集正文：沙耶香灵魂宝石变黑、魔女诞生、杏子不放弃援救。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-jojo",
+      "title": "VIZ《JoJo's Bizarre Adventure》系列/石之海发行简介",
+      "url": "https://www.viz.com/jojo-s-bizarre-adventure",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "已直开阅读系列概述和Stone Ocean Season5 Vol.2发行梗概：乔斯达家族跨世代与迪奥影响、徐伦一行出狱后面对普奇；不采新卷商品为全篇已读。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-spirited",
+      "title": "GKIDS《Spirited Away》官方发行页",
+      "url": "https://gkids.com/films/spirited-away/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "已直开阅读电影简介：搬家途中、父母神秘变化、汤婆婆的世界、澡堂工作与救父母；未观看电影。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "jps-yourname",
+      "title": "GKIDS《Your Name》官方发行页",
+      "url": "https://gkids.com/films/your-name/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "已直开阅读故事简介：乡村三叶与城市泷交换身体、生活距离和决定见面；不采影评或宣传排名。",
+      "limitations": "仅提炼工具返回的所列梗概/角色正文；未观看动画或阅读作品全文，不覆盖所有角色、分集与当前连载进度。"
+    },
+    {
+      "id": "cns-outcast",
+      "title": "一人之下｜哔哩哔哩第一季简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss5050",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "第一季世界观、张楚岚与冯宝宝相遇。",
+      "limitations": "已读搜索工具从该正版页索引回传的完整剧情简介；本次直开失败，未观看正片，不据此补齐后续细节。"
+    },
+    {
+      "id": "cns-hei",
+      "title": "罗小黑战记｜哔哩哔哩剧集简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss1733",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "剧集版开篇：天明珠、被收养、师父任务。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-link-char",
+      "title": "时光代理人｜日本官方角色介绍",
+      "url": "https://link-click.jp/character/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_character",
+      "scope": "程小时、陆光、乔苓的身份与能力。",
+      "limitations": "已读官方角色正文；后部英都篇新角色存在但未作为熟悉剧情入库。"
+    },
+    {
+      "id": "cns-link-01",
+      "title": "时光代理人｜第一季第1集官方梗概",
+      "url": "https://link-click.jp/1st/story/?id=01",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_episode",
+      "scope": "艾玛任务及程小时情感卷入。",
+      "limitations": "日本版第一季编号；只读该集官方梗概，未观看正片。"
+    },
+    {
+      "id": "cns-link-03",
+      "title": "时光代理人｜第一季第3集官方梗概",
+      "url": "https://link-click.jp/1st/story/?id=03",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_episode",
+      "scope": "陈潇高中篮球赛与传话委托。",
+      "limitations": "只读该集官方梗概，不据此声称掌握整条支线结局。"
+    },
+    {
+      "id": "cns-link-05",
+      "title": "时光代理人｜第一季第5集官方梗概",
+      "url": "https://link-click.jp/1st/story/?id=05",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_episode",
+      "scope": "地震将至，程小时想救人与陆光的抉择。",
+      "limitations": "梗概在关键时间点前结束，未收录结局。"
+    },
+    {
+      "id": "cns-fog",
+      "title": "雾山五行｜哔哩哔哩简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss33323",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "五行家族、闻人翊悬救母、小麒麟与雾山争夺。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-seven",
+      "title": "伍六七｜哔哩哔哩第一季简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss6360",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "小岛理发师兼廉价刺客的初始故事。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-cage",
+      "title": "灵笼第一季｜哔哩哔哩简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss22088",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "灾变前提与人类重返地面的世界观。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-mortal",
+      "title": "凡人修仙传｜哔哩哔哩简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss28747?from_spmid=666.16.0.0",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "韩立稳健成长、争夺宝物及星海历程的概要。",
+      "limitations": "已读搜索工具从该正版页索引回传的完整剧情简介；本次直开失败，未观看正片，不据此补齐后续细节。"
+    },
+    {
+      "id": "cns-white-cat",
+      "title": "大理寺日志｜哔哩哔哩第一季简介",
+      "url": "https://www.bilibili.com/bangumi/play/ep744910",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "武明空时期，白猫少卿李饼带领大理寺破案。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-nonhuman",
+      "title": "非人哉｜哔哩哔哩简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss24298",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "神话精怪融入现代生活的日常设定。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-fox",
+      "title": "狐妖小红娘｜哔哩哔哩简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss2543",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "人妖寿命差、转世失忆与狐妖红娘的工作。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-heaven",
+      "title": "天官赐福｜官方第二季介绍",
+      "url": "https://tgcf-anime.com/introduction/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "谢怜三次飞升、三郎与花城身份、半月关后鬼界任务。",
+      "limitations": "日本动画官方第二季简介，包含第一季身份揭示；未读取原著或最终真相。"
+    },
+    {
+      "id": "cns-fairies",
+      "title": "百妖谱｜哔哩哔哩第一季简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss26193",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "桃夭医妖、磨牙同行，滚滚和柳公子加入。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-rakshasa",
+      "title": "镇魂街第一季｜哔哩哔哩简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss3863",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "夏铃误入罗刹街、守护灵与刺客追杀。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-soul-land",
+      "title": "斗罗大陆动画｜WeTV简介",
+      "url": "https://wetv.vip/zh-cn/play/wzx7pbebgpxlqqr-斗罗大陆",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "唐三异世重生、武魂觉醒、圣魂村与振兴唐门的愿望。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-battle-heavens",
+      "title": "斗破苍穹年番｜WeTV简介",
+      "url": "https://wetv.vip/zh-cn/play/fc0jm32uyhpfqae-斗破苍穹年番",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "三年之约后：迦南学院、磐门与陨落心炎。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-nezha",
+      "title": "哪吒之魔童降世｜北美发行商官方简介",
+      "url": "https://www.wellgousa.com/films/ne-zha",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "灵珠与魔丸、三年天雷与命运选择。",
+      "limitations": "只读2019动画电影发行商梗概；发行页日期为当地发行，不替代中国首映日。"
+    },
+    {
+      "id": "cns-nezha2",
+      "title": "哪吒之魔童闹海｜哔哩哔哩电影简介",
+      "url": "https://www.bilibili.com/bangumi/play/ep1454456",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "天劫后哪吒、敖丙存续与七色宝莲重塑肉身。",
+      "limitations": "已读搜索工具从该正版页索引回传的完整剧情简介；本次直开失败，未观看正片，不据此补齐后续细节。"
+    },
+    {
+      "id": "cns-white-snake",
+      "title": "白蛇：缘起｜GKIDS官方发行简介",
+      "url": "https://gkids.com/films/white-snake/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "失忆小白被阿宣救下，寻身份、相恋与力量阴谋。",
+      "limitations": "只读本部动画电影官方简介；英文角色名Blanca/Xuan对应小白/阿宣，不读取后作替代本片。"
+    },
+    {
+      "id": "cns-white-snake-afloat",
+      "title": "白蛇：浮生｜哔哩哔哩电影简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss47185",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "小白找到许仙、保安堂与法海阻挠。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-big-fish",
+      "title": "大鱼海棠｜Apple TV正版简介与演职信息",
+      "url": "https://tv.apple.com/ca/movie/big-fish-begonia/umc.cmc.3zi1bh0h75abnb5q83dsybk2r",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "少女化为海豚、人类少年救她、复活的代价；演员角色Chun/Qiu/Kun。",
+      "limitations": "已读平台索引回传的长简介；直开版摘要缩短，但演职表正文可读。未观看正片；未收录交换的具体数值或结局。"
+    },
+    {
+      "id": "cns-monkey",
+      "title": "西游记之大圣归来｜爱奇艺专辑剧情简介",
+      "url": "https://www.iqiyi.com/a_19rrhlv3a5.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "江流儿救出孙悟空、护送回城与女童危机。",
+      "limitations": "读到爱奇艺精彩片段专辑反复刊出的剧情简介，未观看片段或正片；不是逐场景学习。"
+    },
+    {
+      "id": "cns-song-youth",
+      "title": "少年歌行｜哔哩哔哩第一季简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss24608",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "忘忧大师去世、黄金棺材与多方势力争端。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-bad-guys",
+      "title": "画江湖之不良人第一季｜芒果TV简介",
+      "url": "https://www.mgtv.com/h/430445.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "李星云等四人结识、寻找龙泉的共同秘密。",
+      "limitations": "已读搜索工具从该正版页索引回传的完整剧情简介；本次直开失败，未观看正片，不据此补齐后续细节。"
+    },
+    {
+      "id": "cns-modao",
+      "title": "魔道祖师动画｜WeTV简介",
+      "url": "https://wetv.vip/zh-cn/play/r8t02fkxr9jyvvn-魔道祖师",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "射日之征、魏无羡遭忌惮及十三年后重返旧人。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-hank",
+      "title": "汉化日记｜哔哩哔哩第一季简介",
+      "url": "https://www.bilibili.com/bangumi/play/ss26228",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "三界失衡、苏莫婷被请出家门与救世组合。",
+      "limitations": "只读取页面剧情简介，未观看正片；不代表掌握全季、漫画或小说。"
+    },
+    {
+      "id": "cns-jiang",
+      "title": "姜子牙｜发行商官方简介",
+      "url": "https://wellgousa.com/films/jiang-ziya",
+      "checkedAt": "2026-10-20",
+      "readStatus": "official_synopsis",
+      "scope": "狐妖与女孩命运相连、违命被贬、十年后再临选择。",
+      "limitations": "2020动画电影简介；发行商称系列关联不代表与其他影片所有世界观完全互通。"
+    },
+    {
+      "id": "cns-big-fish-cast",
+      "title": "大鱼海棠｜1905电影网演职信息",
+      "url": "https://m.1905.com/Mdb/mdbDetail/filmid/2208381/",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "演职表中季冠霖饰椿、苏尚卿饰湫、许魏洲饰鲲，用于核对中文角色名。",
+      "limitations": "只采用搜索工具回传的1905电影网演职表，未用该页截短剧情或影评推导故事；直开未成功。"
+    },
+    {
+      "id": "cns-kings-avatar",
+      "title": "全职高手（动漫）第一季｜WeTV剧情简介",
+      "url": "https://wetv.vip/zh-cn/play/pnumjfjcvuau4sr/q0885kbzef2",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "2017动画第一季：叶修遭俱乐部驱逐、网吧工作、第十区与自制武器。",
+      "limitations": "已打开并读取动漫第一季正文，未观看正片，不混入真人剧或动画电影。"
+    },
+    {
+      "id": "cns-qin",
+      "title": "秦时明月｜爱奇艺动画早期专题与角色正文",
+      "url": "https://www.iqiyi.com/dongman/qsmyzt.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "licensed_platform_synopsis",
+      "scope": "早期动画专题中的天明、盖聂、高月、项少羽与卫庄人物介绍；含前三部阶段事实。",
+      "limitations": "旧专题处于前三部及第四部预告时期；只采用人物条目明确叙述的事件，不将全剧宏观规划和预期终局当成已经播出的结局。"
+    },
+    {
+      "id": "cns-yaoguai-summer",
+      "title": "红星新闻专访导演於水｜小妖怪的夏天",
+      "url": "https://static.cdsb.com/micropub/Articles/202301/ce8d7c729181be53d59a8bd005ed4a4f.html",
+      "checkedAt": "2026-10-20",
+      "readStatus": "publisher_summary",
+      "scope": "2023-01-04记者直接采访本篇导演於水，正文说明小猪妖刷锅、任务变化、与妈妈交谈及小人物视角。",
+      "limitations": "已读完整导演采访与记者场景介绍；未看正片。创作解释只作讨论依据，不把观众多重解读设为唯一剧情答案。"
+    }
+  ],
+  "works": [
+    {
+      "id": "jp-one-piece",
+      "title": "海贼王",
+      "origin": "jp",
+      "aliases": [
+        "航海王",
+        "ONE PIECE",
+        "One Piece",
+        "ワンピース",
+        "路飞",
+        "索隆",
+        "罗宾",
+        "黑胡子"
+      ],
+      "genres": [
+        "冒险",
+        "热血",
+        "群像",
+        "奇幻"
+      ],
+      "characters": [
+        "蒙奇·D·路飞",
+        "罗罗诺亚·索隆",
+        "妮可·罗宾",
+        "香克斯",
+        "马歇尔·D·蒂奇（黑胡子）",
+        "乌索普（狙击王）",
+        "罗布·路奇"
+      ],
+      "premise": "罗杰留下One Piece引发大海贼时代；路飞集结草帽一伙，追求宝藏与海贼王目标。",
+      "plotAnchors": [
+        {
+          "label": "主角目标与同伴立场",
+          "summary": "路飞因香克斯而向往海贼，珍惜草帽约定和伙伴；索隆为与古伊娜的约定追求世界第一剑豪，也会在关键时刻规劝船长。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-op-about",
+            "jps-op-luffy",
+            "jps-op-zoro"
+          ]
+        },
+        {
+          "label": "司法岛：从害怕连累到愿意求生",
+          "summary": "能读历史正文的罗宾长期被政府追捕，害怕伙伴受牵连或最终抛弃她。路飞让狙击王射穿政府旗帜后，她终于表达想活下去；众人击败CP9并营救她，梅利号接走伙伴后迎来告别。",
+          "spoiler": "major",
+          "sourceIds": [
+            "jps-op-enies",
+            "jps-op-robin"
+          ]
+        },
+        {
+          "label": "预测的事实起点",
+          "summary": "罗宾追求失落历史真相；黑胡子为野心交出艾斯，并在顶上战争夺取白胡子能力。它们可作为讨论未来冲突的起点，未提供宝藏本体、最终赢家或战斗顺序答案。",
+          "spoiler": "major",
+          "sourceIds": [
+            "jps-op-robin",
+            "jps-op-teach"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "罗宾的求生为什么需要同伴公开站到她这边，而不只是保证保护她？",
+        "索隆坚持个人梦想与维护船长权威之间有何张力？",
+        "如果路飞找到宝藏，历史真相会怎样改变他与世界政府的关系？这是条件猜想。",
+        "黑胡子会先争宝藏还是利用他人冲突后出手？分别有什么角色行为依据和反证？",
+        "用户更喜欢哪个人物，可围绕具体选择表达自己的判断，不要求背诵所有角色。"
+      ],
+      "sourceIds": [
+        "jps-op-about",
+        "jps-op-enies",
+        "jps-op-robin",
+        "jps-op-luffy",
+        "jps-op-zoro",
+        "jps-op-teach"
+      ],
+      "knowledgeScope": "重点局部库：作品概要、路飞/索隆/罗宾/黑胡子官方角色描述与司法岛篇梗概。未核最新漫画、全部篇章、宝藏真相；不能把未来预测说成官方结局。"
+    },
+    {
+      "id": "jp-naruto",
+      "title": "火影忍者",
+      "origin": "jp",
+      "aliases": [
+        "NARUTO",
+        "Naruto Shippuden",
+        "火影忍者疾风传",
+        "鸣人"
+      ],
+      "genres": [
+        "忍者",
+        "热血",
+        "成长"
+      ],
+      "characters": [
+        "漩涡鸣人"
+      ],
+      "premise": "鸣人希望成为木叶的火影；疾风传从他训练数年后返乡、面对晓的威胁继续成长展开。",
+      "plotAnchors": [
+        {
+          "label": "训练归来与新威胁",
+          "summary": "少年鸣人结束长期训练回到村子，和同伴迎战神秘组织晓；保护村子和火影梦想同时推动他的行动。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-naruto"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "成为火影的愿望是追求认可，还是愿意承担他人的期待？",
+        "训练变强与靠同伴关系解决冲突，哪一条更能解释鸣人的成长？"
+      ],
+      "sourceIds": [
+        "jps-naruto"
+      ],
+      "knowledgeScope": "基础设定与以下局部剧情锚点；不等同于完整作品知识。"
+    },
+    {
+      "id": "jp-bleach",
+      "title": "死神",
+      "origin": "jp",
+      "aliases": [
+        "BLEACH",
+        "Bleach",
+        "境·界",
+        "黑崎一护"
+      ],
+      "genres": [
+        "热血",
+        "超自然",
+        "战斗"
+      ],
+      "characters": [
+        "黑崎一护",
+        "朽木露琪亚"
+      ],
+      "premise": "能看见幽灵的一护与死神露琪亚相遇后，成为保护生者与死者的代理死神。",
+      "plotAnchors": [
+        {
+          "label": "得到能力与保护责任",
+          "summary": "露琪亚与对抗虚的世界改变一护生活，他开始承担代理死神的保护责任。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-bleach"
+          ]
+        },
+        {
+          "label": "露琪亚被带回尸魂界",
+          "summary": "露琪亚被带走接受尸魂界的严厉审判，一护与朋友进入灵界援救。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-bleach"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "一护主动救人和制度规定冲突时，责任该如何判断？",
+        "他最初的人际保护动机与抽象的正义有什么差别？"
+      ],
+      "sourceIds": [
+        "jps-bleach"
+      ],
+      "knowledgeScope": "基础设定与以下局部剧情锚点；不等同于完整作品知识。"
+    },
+    {
+      "id": "jp-dragonball",
+      "title": "龙珠",
+      "origin": "jp",
+      "aliases": [
+        "DRAGON BALL",
+        "七龙珠",
+        "Dragon Ball Z",
+        "龙珠Z",
+        "孙悟空"
+      ],
+      "genres": [
+        "武术",
+        "冒险",
+        "热血"
+      ],
+      "characters": [
+        "孙悟空",
+        "孙悟饭",
+        "比鲁斯",
+        "布尔玛"
+      ],
+      "premise": "悟空与伙伴寻找能实现愿望的七颗龙珠；后续系列逐步扩展到亲子、地球与宇宙级冲突。",
+      "plotAnchors": [
+        {
+          "label": "七颗龙珠与愿望",
+          "summary": "集齐散落各地的七颗龙珠可以实现一个愿望，悟空与朋友为此踏上冒险。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-dragonball"
+          ]
+        },
+        {
+          "label": "Z/Kai中的父子责任",
+          "summary": "Z中悟饭加入面对强敌的战斗；Kai开端一名自称悟空兄长的人要求灭绝地球人，悟空拒绝后悟饭被带走。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-dragonball"
+          ]
+        },
+        {
+          "label": "超的起点",
+          "summary": "布欧威胁过去后，破坏神比鲁斯在布尔玛生日聚会时出现，故事走向更大的宇宙舞台。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-dragonball"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "悟空追求强敌的兴趣和保护家庭的责任怎样并存？",
+        "如果有一次龙珠许愿机会，角色会优先补救失去还是追求力量？"
+      ],
+      "sourceIds": [
+        "jps-dragonball"
+      ],
+      "knowledgeScope": "以东映系列介绍为依据，分清初代/Z/Kai/超；未收录所有战斗、变身或战力排名。"
+    },
+    {
+      "id": "jp-conan",
+      "title": "名侦探柯南",
+      "origin": "jp",
+      "aliases": [
+        "Detective Conan",
+        "Case Closed",
+        "柯南",
+        "工藤新一"
+      ],
+      "genres": [
+        "推理",
+        "悬疑",
+        "日常"
+      ],
+      "characters": [
+        "工藤新一（江户川柯南）",
+        "毛利兰",
+        "阿笠博士",
+        "毛利小五郎"
+      ],
+      "premise": "高中侦探新一被神秘药物变成小学生，化名江户川柯南，在寻找恢复办法的同时继续破案。",
+      "plotAnchors": [
+        {
+          "label": "身份变化与继续推理",
+          "summary": "新一追查可疑人物后被喂药变小，阿笠博士尝试寻找对策；他以柯南身份进入小兰和毛利侦探的生活。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-conan"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "隐藏身份是在保护亲近的人，还是使他们承担未知风险？",
+        "喜欢推理谜题、人物关系还是长期主线，三种观看乐趣如何不同？"
+      ],
+      "sourceIds": [
+        "jps-conan"
+      ],
+      "knowledgeScope": "仅作品起点和身份/关系梗概；本批不含具体案件解答、黑衣组织最新进展或全部人物。"
+    },
+    {
+      "id": "jp-attack-on-titan",
+      "title": "进击的巨人",
+      "origin": "jp",
+      "aliases": [
+        "Attack on Titan",
+        "Shingeki no Kyojin",
+        "艾伦",
+        "地鸣"
+      ],
+      "genres": [
+        "战争",
+        "悬疑",
+        "成长",
+        "群像"
+      ],
+      "characters": [
+        "艾伦·耶格尔",
+        "三笠·阿克曼",
+        "阿尔敏·阿诺德",
+        "莱纳",
+        "贝尔托特"
+      ],
+      "premise": "巨人破坏高墙后，艾伦和伙伴入伍对抗巨人，逐步卷入墙内外的冲突。",
+      "plotAnchors": [
+        {
+          "label": "家园破碎与入伍",
+          "summary": "超大型巨人打破城门，艾伦目睹母亲遇害；他与三笠、阿尔敏在灾难后参加训练兵团。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-aot"
+          ]
+        },
+        {
+          "label": "托洛斯特转折",
+          "summary": "新兵面对巨人惨遭伤亡，艾伦以巨人姿态反击；军方利用他的能力堵住城墙缺口。",
+          "spoiler": "major",
+          "sourceIds": [
+            "jps-aot"
+          ]
+        },
+        {
+          "label": "地鸣与昔日同伴的阻止",
+          "summary": "墙中巨人开始向外践踏，调查兵团意识到艾伦行动将造成大规模屠杀，原本敌对的人合作阻止他。",
+          "spoiler": "major",
+          "sourceIds": [
+            "jps-aot"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "复仇和自由的愿望在什么时候变成了对他人的压迫？",
+        "阿尔敏、三笠面对艾伦时，忠诚和制止伤害是否必然冲突？",
+        "在只知道第一季信息时会如何判断局势，知道墙外后判断又怎样改变？"
+      ],
+      "sourceIds": [
+        "jps-aot"
+      ],
+      "knowledgeScope": "基础设定与以下局部剧情锚点；不等同于完整作品知识。"
+    },
+    {
+      "id": "jp-fullmetal-alchemist-brotherhood",
+      "title": "钢之炼金术师FA",
+      "origin": "jp",
+      "aliases": [
+        "钢之炼金术师BROTHERHOOD",
+        "Fullmetal Alchemist: Brotherhood",
+        "钢炼FA",
+        "爱德华",
+        "阿尔冯斯"
+      ],
+      "genres": [
+        "奇幻",
+        "冒险",
+        "伦理",
+        "兄弟"
+      ],
+      "characters": [
+        "爱德华·艾尔利克",
+        "阿尔冯斯·艾尔利克"
+      ],
+      "premise": "艾尔利克兄弟触犯炼金术禁忌而失去身体的一部分，为恢复所失寻找贤者之石。",
+      "plotAnchors": [
+        {
+          "label": "触犯禁忌的代价",
+          "summary": "爱德失去肢体，阿尔的灵魂依附盔甲；两兄弟为取回身体寻找贤者之石。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-fmab"
+          ]
+        },
+        {
+          "label": "旅途的冲突力量",
+          "summary": "腐败军方、人造人和其他炼金术师影响兄弟的旅程，但两人的纽带和最初目标仍在。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-fmab"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "想弥补错误的人能否为了目的再次突破伦理底线？",
+        "兄弟在身体损失不同的情况下，怎样理解彼此的自责？"
+      ],
+      "sourceIds": [
+        "jps-fmab"
+      ],
+      "knowledgeScope": "仅FA版官方平台梗概；不与2003动画原创结局混用，未收录贤者之石真相或最终解法。"
+    },
+    {
+      "id": "jp-evangelion",
+      "title": "新世纪福音战士",
+      "origin": "jp",
+      "aliases": [
+        "EVA",
+        "Evangelion",
+        "Neon Genesis Evangelion",
+        "碇真嗣"
+      ],
+      "genres": [
+        "科幻",
+        "机甲",
+        "心理",
+        "成长"
+      ],
+      "characters": [
+        "碇真嗣",
+        "碇源堂",
+        "葛城美里",
+        "绫波丽",
+        "明日香"
+      ],
+      "premise": "第二次冲击十五年后，真嗣加入父亲的NERV组织，成为驾驶EVA对抗使徒的少年之一。",
+      "plotAnchors": [
+        {
+          "label": "父子重逢与驾驶压力",
+          "summary": "美里带真嗣来到父亲管理的NERV；首次驾驶初号机后，他在医院醒来并搬去与美里同住。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-eva"
+          ]
+        },
+        {
+          "label": "逃离与选择",
+          "summary": "真嗣在战斗压力下离家，NERV带回他后，美里让他作出选择；此线可聊他是否真的有拒绝空间。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-eva"
+          ]
+        },
+        {
+          "label": "与明日香的协作",
+          "summary": "明日香和二号机到来；两人在联合战斗失败后，需要练习同步动作对抗使徒。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-eva"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "真嗣的迟疑只是胆小，还是成年人把责任压到少年身上后的合理反应？",
+        "被需要与被关心在他和源堂的关系中有何差别？",
+        "协同战斗为什么也可以成为理解他人的过程？"
+      ],
+      "sourceIds": [
+        "jps-eva"
+      ],
+      "knowledgeScope": "基础设定与以下局部剧情锚点；不等同于完整作品知识。"
+    },
+    {
+      "id": "jp-slam-dunk",
+      "title": "灌篮高手",
+      "origin": "jp",
+      "aliases": [
+        "SLAM DUNK",
+        "Slam Dunk",
+        "THE FIRST SLAM DUNK",
+        "樱木花道",
+        "湘北"
+      ],
+      "genres": [
+        "运动",
+        "篮球",
+        "青春",
+        "团队"
+      ],
+      "characters": [
+        "樱木花道",
+        "宫城良田",
+        "流川枫",
+        "赤木刚宪",
+        "三井寿"
+      ],
+      "premise": "没有篮球经验的樱木开始篮球生活，和湘北队友追求胜利；电影以宫城的经历连起全国赛。",
+      "plotAnchors": [
+        {
+          "label": "新手开始运动",
+          "summary": "樱木在没有经验的情况下与篮球队长较量，从而开启自己与队友的篮球生活。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-slam-tv"
+          ]
+        },
+        {
+          "label": "电影：宫城与全国赛",
+          "summary": "宫城从小追随哥哥爱上篮球，与樱木、流川、赤木和三井一起参加全国赛，面对卫冕冠军山王。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-slam-film"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "初学者的热情与长期积累的技术，哪种变化最能打动你？",
+        "以宫城为视角看湘北，会怎样改变对团队与家庭的理解？"
+      ],
+      "sourceIds": [
+        "jps-slam-tv",
+        "jps-slam-film"
+      ],
+      "knowledgeScope": "TV起点与电影官方梗概分开；未收入所有比赛战术、比分和获胜结局。"
+    },
+    {
+      "id": "jp-yuyu-hakusho",
+      "title": "幽游白书",
+      "origin": "jp",
+      "aliases": [
+        "幽☆游☆白书",
+        "YuYu Hakusho",
+        "Yusuke"
+      ],
+      "genres": [
+        "热血",
+        "灵界",
+        "成长"
+      ],
+      "characters": [
+        "浦饭幽助",
+        "牡丹",
+        "小阎王"
+      ],
+      "premise": "不良少年幽助为救孩子而死，灵界因他的意外善举给他重新获得人生的机会。",
+      "plotAnchors": [
+        {
+          "label": "不良少年的舍己救人",
+          "summary": "幽助救下即将被汽车撞到的孩子后死亡，灵界给他第二次机会；他依牡丹和小阎王的安排完成善行。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-yuyu"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "社会给幽助的不良标签，与他在紧急关头的选择为什么不同？",
+        "重新获得人生的机会，会使人改变还是更看清原本的自己？"
+      ],
+      "sourceIds": [
+        "jps-yuyu"
+      ],
+      "knowledgeScope": "仅第一卷前提与灵界起点；未核暗黑武术会、仙水或魔界篇。"
+    },
+    {
+      "id": "jp-hunter-x-hunter",
+      "title": "全职猎人",
+      "origin": "jp",
+      "aliases": [
+        "HUNTER×HUNTER",
+        "Hunter x Hunter",
+        "猎人",
+        "小杰",
+        "奇犽"
+      ],
+      "genres": [
+        "冒险",
+        "能力战",
+        "成长",
+        "群像"
+      ],
+      "characters": [
+        "杰·富力士（小杰）",
+        "奇犽·揍敌客",
+        "酷拉皮卡",
+        "雷欧力",
+        "西索",
+        "金·富力士"
+      ],
+      "premise": "小杰为了寻找身为猎人的父亲参加严苛考试，并与各有目标的伙伴展开冒险。",
+      "plotAnchors": [
+        {
+          "label": "猎人考试与友谊",
+          "summary": "小杰寻找父亲，奇犽来自杀手家庭，雷欧力希望获得学医资金；他们在考验中形成纽带，奇犽退场返家后伙伴前去找他。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-hunter"
+          ]
+        },
+        {
+          "label": "天空竞技场与念",
+          "summary": "小杰希望真正面对西索；他与奇犽到天空竞技场学习控制生命能量的念，而非仅靠体能一路晋级。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-hunter"
+          ]
+        },
+        {
+          "label": "酷拉皮卡与旅团",
+          "summary": "酷拉皮卡为族人被夺走的绯红眼与灭族之仇追踪幻影旅团，拍卖会让他的目标与伙伴的寻父线相交。",
+          "spoiler": "major",
+          "sourceIds": [
+            "jps-hunter"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "小杰对朋友的坦率与不轻易放弃，会在什么情况下变成危险的执着？",
+        "酷拉皮卡的复仇使命会不会吞掉自己的生活？",
+        "念能力为什么适合讨论限制、代价与策略，而不只是战力数字？"
+      ],
+      "sourceIds": [
+        "jps-hunter"
+      ],
+      "knowledgeScope": "出版社篇章局部复盘；未核暗黑大陆/王位继承当前连载，也不包含所有念能力规则。"
+    },
+    {
+      "id": "jp-gintama",
+      "title": "银魂",
+      "origin": "jp",
+      "aliases": [
+        "GINTAMA",
+        "Gintama",
+        "坂田银时",
+        "万事屋"
+      ],
+      "genres": [
+        "喜剧",
+        "日常",
+        "武士",
+        "群像"
+      ],
+      "characters": [
+        "坂田银时",
+        "志村新八",
+        "神乐",
+        "定春"
+      ],
+      "premise": "围绕江户万事屋的银时、新八与神乐展开的喜剧和人物关系故事；本批先收两段可聊日常。",
+      "plotAnchors": [
+        {
+          "label": "神乐坚持收养定春",
+          "summary": "神乐在万事屋门口发现大型犬状动物，坚持留下并取名定春；银时和新八被不断咬到精疲力尽。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-gintama-dog"
+          ]
+        },
+        {
+          "label": "失忆后仍想找回原来的银时",
+          "summary": "银时车祸后不记得自己，新八和神乐带他重返万事屋，希望找回原来的他。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-gintama-memory"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "银时常被吐槽懒散，为什么伙伴仍想找回原来的他？",
+        "万事屋的相处像工作、朋友还是家人？可以用定春日常比较。"
+      ],
+      "sourceIds": [
+        "jps-gintama-dog",
+        "jps-gintama-memory"
+      ],
+      "knowledgeScope": "仅第10/31集平台梗概；长篇战斗与人物往事本批未核，不装作掌握全作梗。"
+    },
+    {
+      "id": "jp-inuyasha",
+      "title": "犬夜叉",
+      "origin": "jp",
+      "aliases": [
+        "Inuyasha",
+        "日暮戈薇",
+        "四魂之玉"
+      ],
+      "genres": [
+        "奇幻",
+        "冒险",
+        "穿越",
+        "爱情"
+      ],
+      "characters": [
+        "犬夜叉",
+        "日暮戈薇"
+      ],
+      "premise": "戈薇从古井来到五百年前的战国时代，与想成为完整妖怪的半妖犬夜叉相遇，展开寻找四魂之玉的旅程。",
+      "plotAnchors": [
+        {
+          "label": "两种时代的相遇",
+          "summary": "现代学生戈薇被妖怪拖入古井，来到五百年前并遇见半妖犬夜叉。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-inuyasha"
+          ]
+        },
+        {
+          "label": "四魂之玉与身份愿望",
+          "summary": "犬夜叉希望借四魂之玉成为完整妖怪，戈薇与新伙伴一起踏上寻找宝玉的旅程。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-inuyasha"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "犬夜叉为什么会想摆脱半妖身份，这一愿望和被接纳有什么关系？",
+        "现代与战国经历不同的人，建立信任最难的地方是什么？"
+      ],
+      "sourceIds": [
+        "jps-inuyasha"
+      ],
+      "knowledgeScope": "动画首集群前提、主要二人及寻玉目标；本批未核桔梗/奈落与最终结局。"
+    },
+    {
+      "id": "jp-demon-slayer",
+      "title": "鬼灭之刃",
+      "origin": "jp",
+      "aliases": [
+        "Demon Slayer",
+        "Kimetsu no Yaiba",
+        "灶门炭治郎",
+        "祢豆子"
+      ],
+      "genres": [
+        "热血",
+        "奇幻",
+        "亲情",
+        "战斗"
+      ],
+      "characters": [
+        "灶门炭治郎",
+        "灶门祢豆子",
+        "我妻善逸",
+        "嘴平伊之助",
+        "炼狱杏寿郎"
+      ],
+      "premise": "炭治郎家人遭鬼杀害，妹妹祢豆子变成鬼；他成为猎鬼剑士，寻找让她恢复人类的方法。",
+      "plotAnchors": [
+        {
+          "label": "救妹与复仇的双重起点",
+          "summary": "炭治郎面对家人惨死和祢豆子变鬼，选择踏上猎鬼之路，既为家人复仇也希望救回妹妹。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-demon-intro"
+          ]
+        },
+        {
+          "label": "训练后踏上无限列车",
+          "summary": "炭治郎从鳞泷处训练入队，在那田蜘蛛山掌握火之神神乐，之后与善逸、伊之助及祢豆子加入炼狱的列车任务。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-demon-train"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "炭治郎同情遭遇悲惨的鬼，是否会影响他保护人的决心？",
+        "兄妹纽带怎样让单纯复仇故事有了不同重心？",
+        "炼狱作为前辈的意义，可以先从承担危险与带领新人谈起。"
+      ],
+      "sourceIds": [
+        "jps-demon-intro",
+        "jps-demon-train"
+      ],
+      "knowledgeScope": "首季与无限列车任务前提；未收入无限城或漫画终局，不因已完结原作而越过用户动画进度。"
+    },
+    {
+      "id": "jp-jujutsu-kaisen",
+      "title": "咒术回战",
+      "origin": "jp",
+      "aliases": [
+        "Jujutsu Kaisen",
+        "呪術廻戦",
+        "虎杖悠仁",
+        "五条悟"
+      ],
+      "genres": [
+        "热血",
+        "咒术",
+        "校园",
+        "战斗"
+      ],
+      "characters": [
+        "虎杖悠仁",
+        "两面宿傩",
+        "伏黑惠",
+        "钉崎野蔷薇",
+        "五条悟",
+        "东堂葵",
+        "禅院真希",
+        "狗卷棘",
+        "熊猫"
+      ],
+      "premise": "虎杖为救朋友卷入咒灵与咒术师的冲突；宿傩遗留的身体碎片构成危险，咒术学校保护普通人的世界。",
+      "plotAnchors": [
+        {
+          "label": "救人行动与危险世界",
+          "summary": "虎杖因救朋友被卷入超自然战斗；宿傩身体碎片散落，咒灵一旦吞食会获得巨大力量。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-jjk"
+          ]
+        },
+        {
+          "label": "东京京都交流会",
+          "summary": "两校进行年度交流活动，伏黑、钉崎、真希、狗卷和熊猫迎接东堂等京都学生，五条随后到场。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-jjk"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "虎杖想救人时，个人愿望和他所进入的制度有什么潜在矛盾？",
+        "两校交流为何既能展示战力，也能展示对同伴和职责的不同理解？"
+      ],
+      "sourceIds": [
+        "jps-jjk"
+      ],
+      "knowledgeScope": "仅系列前提、主要名字和交流会前提；未采最终卷结局，未核每人术式与最新动画集。"
+    },
+    {
+      "id": "jp-spy-family",
+      "title": "间谍过家家",
+      "origin": "jp",
+      "aliases": [
+        "SPY×FAMILY",
+        "Spy x Family",
+        "阿尼亚",
+        "福杰一家"
+      ],
+      "genres": [
+        "喜剧",
+        "家庭",
+        "谍战",
+        "日常"
+      ],
+      "characters": [
+        "洛伊德·福杰（黄昏）",
+        "约尔·福杰",
+        "阿尼亚·福杰"
+      ],
+      "premise": "间谍黄昏为接近目标组建家庭，却不知道妻子是杀手、女儿会读心，三人的秘密构成家庭生活与任务的喜剧。",
+      "plotAnchors": [
+        {
+          "label": "三人的秘密",
+          "summary": "黄昏假扮精神科医生洛伊德，约尔用婚姻减少外界怀疑；被收养的阿尼亚能读到他们的想法。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-spy"
+          ]
+        },
+        {
+          "label": "入学与真实情感",
+          "summary": "洛伊德努力让阿尼亚进入伊甸学园以完成任务；阿尼亚既兴奋于间谍身份，也渴望成为家庭的一员。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-spy"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "明明因任务组建，福杰一家在什么时候开始像真正的家人？",
+        "阿尼亚知道大人的秘密却仍像孩子，会给故事增加怎样的温暖和误会？",
+        "约尔的保护欲与她的职业秘密怎样构成反差？"
+      ],
+      "sourceIds": [
+        "jps-spy"
+      ],
+      "knowledgeScope": "基础设定与以下局部剧情锚点；不等同于完整作品知识。"
+    },
+    {
+      "id": "jp-one-punch-man",
+      "title": "一拳超人",
+      "origin": "jp",
+      "aliases": [
+        "One-Punch Man",
+        "One Punch Man",
+        "埼玉",
+        "杰诺斯",
+        "饿狼"
+      ],
+      "genres": [
+        "英雄",
+        "喜剧",
+        "动作",
+        "讽刺"
+      ],
+      "characters": [
+        "埼玉",
+        "杰诺斯",
+        "饿狼"
+      ],
+      "premise": "为兴趣成为英雄的埼玉强到几乎没有对手，和弟子杰诺斯一起履行英雄协会的职责。",
+      "plotAnchors": [
+        {
+          "label": "过强后的无聊",
+          "summary": "埼玉在训练后几乎能一拳击败敌人，传统的打强敌挑战因此变成他自身的困境。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-opm"
+          ]
+        },
+        {
+          "label": "怪人协会的行动起点",
+          "summary": "怪人协会绑走英雄协会高层的孩子，S级英雄计划进入其据点救人；饿狼也在据点中苏醒。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-opm"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "战力无敌后，一个人还会缺少什么？",
+        "英雄制度重视等级与名声，和实际救人的价值是否相同？",
+        "饿狼为什么让英雄与怪人的划分值得继续追问？只能结合已知行为分析。"
+      ],
+      "sourceIds": [
+        "jps-opm"
+      ],
+      "knowledgeScope": "官方第一前提与第三季开端梗概；不覆盖漫画重制/原作版差异、后续宇宙战或全部招式。"
+    },
+    {
+      "id": "jp-haikyu",
+      "title": "排球少年",
+      "origin": "jp",
+      "aliases": [
+        "排球少年!!",
+        "Haikyu!!",
+        "ハイキュー!!",
+        "日向翔阳",
+        "影山飞雄"
+      ],
+      "genres": [
+        "运动",
+        "排球",
+        "青春",
+        "团队"
+      ],
+      "characters": [
+        "日向翔阳",
+        "影山飞雄",
+        "木兔光太郎"
+      ],
+      "premise": "受小巨人启发的日向希望用跳跃突破身高限制；曾击败他的影山却成为高中队友。",
+      "plotAnchors": [
+        {
+          "label": "从宿敌到搭档",
+          "summary": "日向初中唯一一场比赛输给影山，想在高中成为对手，却发现两人进了同一队。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-haikyu"
+          ]
+        },
+        {
+          "label": "闭眼快攻的成长冲突",
+          "summary": "日向不想再闭眼打怪人快攻，影山不同意；东京强队的成熟配合使乌野看见差距，日向向木兔寻求新办法。",
+          "spoiler": "major",
+          "sourceIds": [
+            "jps-haikyu-quick"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "日向想拥有更多击球主动权，和团队继续得分之间该怎样取舍？",
+        "影山从能准确传球到愿意理解攻手，区别在哪里？",
+        "为什么能赢一次的武器还需要冒险改进？"
+      ],
+      "sourceIds": [
+        "jps-haikyu",
+        "jps-haikyu-quick"
+      ],
+      "knowledgeScope": "起点与快攻升级的局部漫画梗概；未核全国赛完整赛况/比分和人物成人结局。"
+    },
+    {
+      "id": "jp-natsume",
+      "title": "夏目友人帐",
+      "origin": "jp",
+      "aliases": [
+        "Natsume's Book of Friends",
+        "夏目友人帳",
+        "夏目贵志"
+      ],
+      "genres": [
+        "治愈",
+        "妖怪",
+        "日常",
+        "成长"
+      ],
+      "characters": [
+        "夏目贵志",
+        "夏目玲子",
+        "藤原塔子",
+        "藤原滋"
+      ],
+      "premise": "能看见妖怪的夏目因能力而孤独，继承祖母玲子的友人帐后，在与妖怪往来中逐步找到自己的归属。",
+      "plotAnchors": [
+        {
+          "label": "有了稳定的家",
+          "summary": "夏目曾在亲戚间辗转，与妖怪相处也常受困扰；塔子和滋收留他后，使他拥有稳定生活。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-natsume",
+            "jps-natsume-names"
+          ]
+        },
+        {
+          "label": "还名字与额外的帮助",
+          "summary": "夏目告诉自己只在归还友人帐名字时介入妖怪生活，却往往也主动帮助弱小妖怪，分享它们的悲喜。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-natsume-names"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "夏目帮妖怪是源于责任、共情还是曾经孤独的经验？",
+        "不要求他解释全部秘密的家庭，为什么能给人安全感？",
+        "人和妖怪寿命、感受不同，短暂的连接仍能留下什么？"
+      ],
+      "sourceIds": [
+        "jps-natsume",
+        "jps-natsume-names"
+      ],
+      "knowledgeScope": "基础关系与还名字主题；未核具体妖怪完整故事或全部季数，不以书名推断其他细节。"
+    },
+    {
+      "id": "jp-violet-evergarden",
+      "title": "紫罗兰永恒花园",
+      "origin": "jp",
+      "aliases": [
+        "Violet Evergarden",
+        "薇尔莉特·伊芙加登",
+        "ヴァイオレット・エヴァーガーデン"
+      ],
+      "genres": [
+        "书信",
+        "成长",
+        "情感",
+        "战后"
+      ],
+      "characters": [
+        "薇尔莉特·伊芙加登"
+      ],
+      "premise": "战争结束后，带着伤痕且不善表达情绪的薇尔莉特从事代写书信的工作，试图理解自己与过去。",
+      "plotAnchors": [
+        {
+          "label": "战后从事代写书信",
+          "summary": "战后的薇尔莉特需要工作，通过替人写信接触他人的情感，也寻找理解自己和过往的方法。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-violet"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "替别人表达情感，为什么可能帮助自己学会表达？",
+        "一个擅长执行命令的人，开始理解别人的愿望会有多难？"
+      ],
+      "sourceIds": [
+        "jps-violet"
+      ],
+      "knowledgeScope": "仅2018系列前提；本批未核单集委托或电影结局，不补写少佐相关情节。"
+    },
+    {
+      "id": "jp-your-lie-in-april",
+      "title": "四月是你的谎言",
+      "origin": "jp",
+      "aliases": [
+        "Your lie in April",
+        "四月は君の嘘",
+        "有马公生",
+        "宫园薰"
+      ],
+      "genres": [
+        "音乐",
+        "青春",
+        "爱情",
+        "成长"
+      ],
+      "characters": [
+        "有马公生",
+        "宫园薰"
+      ],
+      "premise": "钢琴天才公生因母亲去世失去演奏意愿，遇到自由、偶尔急脾气且风格独特的小提琴手薰后，生活开始改变。",
+      "plotAnchors": [
+        {
+          "label": "失去音乐动力",
+          "summary": "母亲去世后，公生失去弹钢琴的意愿，日子变得单调空洞。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-april"
+          ]
+        },
+        {
+          "label": "不同的演奏态度",
+          "summary": "薰独立、自由而有个性的演奏令公生着迷，让音乐重新进入他的生活。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-april"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "严格训练形成的能力与对音乐的喜爱，为什么有时会彼此冲突？",
+        "薰吸引公生的是演奏技巧，还是她允许自己用不同方式表达？"
+      ],
+      "sourceIds": [
+        "jps-april"
+      ],
+      "knowledgeScope": "只核官方发行前提；标题之谎及结局未入库，不能主动剧透或凭印象补完。"
+    },
+    {
+      "id": "jp-clannad",
+      "title": "CLANNAD",
+      "origin": "jp",
+      "aliases": [
+        "Clannad",
+        "团子大家族",
+        "克兰纳德",
+        "冈崎朋也",
+        "古河渚"
+      ],
+      "genres": [
+        "校园",
+        "家庭",
+        "情感",
+        "成长"
+      ],
+      "characters": [
+        "冈崎朋也",
+        "古河渚",
+        "一之濑琴美",
+        "坂上智代",
+        "伊吹风子"
+      ],
+      "premise": "家庭和伤痛使朋也疏离，因病留级的渚梦想复兴话剧社；他帮助她时，也开始寻找新的生活方向。",
+      "plotAnchors": [
+        {
+          "label": "朋也和渚的相遇前提",
+          "summary": "朋也承受母亲离世与父亲造成的伤害；渚因脆弱的健康失去一年学业，两人都面对不同的失落。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-clannad"
+          ]
+        },
+        {
+          "label": "帮助她复兴话剧社",
+          "summary": "渚希望让学校遗忘的话剧社重新活动，朋也在帮助她和其他同伴的过程中找到新的意义。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-clannad"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "帮别人实现一个小愿望，为什么也能让自己重新找到方向？",
+        "校园中的伙伴感和家庭中的安全感，可以互相补足到什么程度？"
+      ],
+      "sourceIds": [
+        "jps-clannad"
+      ],
+      "knowledgeScope": "合集说明只支持校园/人物起点；AFTER STORY家庭重大事件和世界观解答本批未核。"
+    },
+    {
+      "id": "jp-k-on",
+      "title": "轻音少女",
+      "origin": "jp",
+      "aliases": [
+        "K-ON!",
+        "けいおん！",
+        "轻音部",
+        "平泽唯"
+      ],
+      "genres": [
+        "音乐",
+        "社团",
+        "日常",
+        "友情"
+      ],
+      "characters": [
+        "平泽唯",
+        "田井中律",
+        "秋山澪",
+        "琴吹紬",
+        "中野梓"
+      ],
+      "premise": "唯误打误撞加入濒临解散的轻音部，与伙伴一起从零开始做乐队，也一起度过日常。",
+      "plotAnchors": [
+        {
+          "label": "以误会为起点的入部",
+          "summary": "律和澪想保住轻音部，招到键盘手紬后还缺一人；只会响板的唯以为会很轻松，而伙伴误以为她擅长吉他。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-kon"
+          ]
+        },
+        {
+          "label": "电影的毕业前旅行",
+          "summary": "除梓以外的成员即将毕业，女孩们前往伦敦，面对旅程与即将变化的关系。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-kon-movie"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "社团的价值在于演奏多专业，还是给人一个愿意每天去的地方？",
+        "毕业前的旅行为何能承载难以直接说出的惜别？",
+        "与《孤独摇滚》比较时，可聊入团动机差异，不擅断相同人物经历。"
+      ],
+      "sourceIds": [
+        "jps-kon",
+        "jps-kon-movie"
+      ],
+      "knowledgeScope": "第一季起点与电影前提；演出曲目、具体场景与所有学年事件未核。"
+    },
+    {
+      "id": "jp-haruhi",
+      "title": "凉宫春日的忧郁",
+      "origin": "jp",
+      "aliases": [
+        "The Melancholy of Haruhi Suzumiya",
+        "凉宫春日",
+        "涼宮ハルヒの憂鬱",
+        "SOS团",
+        "凉宫春日的消失"
+      ],
+      "genres": [
+        "校园",
+        "科幻",
+        "超自然",
+        "日常"
+      ],
+      "characters": [
+        "凉宫春日",
+        "阿虚"
+      ],
+      "premise": "想过普通高中生活的阿虚遇到厌倦平凡的春日，她因他无意的建议成立寻找不可思议现象的社团。",
+      "plotAnchors": [
+        {
+          "label": "社团寻找异常",
+          "summary": "春日想找外星人、超能力者和时间旅行者，阿虚被卷入她创建社团的行动。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-haruhi"
+          ]
+        },
+        {
+          "label": "《消失》的反向处境",
+          "summary": "12月18日阿虚发现春日消失且其他人都不记得她，他要在没有SOS团帮助的情况下寻找答案。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-haruhi-disappear"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "一直抱怨被卷入的人，真的会喜欢一切回到平凡吗？",
+        "想遇到不普通的人和事件，背后可能是好奇还是不愿接受孤独？"
+      ],
+      "sourceIds": [
+        "jps-haruhi",
+        "jps-haruhi-disappear"
+      ],
+      "knowledgeScope": "TV和《消失》电影起点分开；本批未核春日能力全貌、漫无止境八月和电影真相。"
+    },
+    {
+      "id": "jp-steins-gate",
+      "title": "命运石之门",
+      "origin": "jp",
+      "aliases": [
+        "STEINS;GATE",
+        "Steins Gate",
+        "シュタインズ・ゲート",
+        "冈部伦太郎",
+        "牧濑红莉栖"
+      ],
+      "genres": [
+        "科幻",
+        "时间旅行",
+        "悬疑",
+        "情感"
+      ],
+      "characters": [
+        "冈部伦太郎（凤凰院凶真）",
+        "牧濑红莉栖"
+      ],
+      "premise": "冈部看到研究者红莉栖死亡后又见她活着，围绕微波炉、旧电脑和手机的实验，使他卷入世界线与时间旅行。",
+      "plotAnchors": [
+        {
+          "label": "死而复见的谜团",
+          "summary": "冈部先见到红莉栖死去，又见到她仍活着，由此卷入难以解释的时间现象。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-steins"
+          ]
+        },
+        {
+          "label": "日常器物与世界线变化",
+          "summary": "微波炉、旧电脑和手机成为连接不同世界线的关键，变化有时只在熟悉世界中留下细微差异。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-steins"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "如果只有自己记得改变前的世界，证明真实和承受孤独哪个更难？",
+        "想纠正一次错误的行动，会怎样让人面对更大的责任？"
+      ],
+      "sourceIds": [
+        "jps-steins"
+      ],
+      "knowledgeScope": "只核2011TV起点与时间装置概括；世界线数值、完整规则和角色结局本批未核，不与0的分支混为同一顺序。"
+    },
+    {
+      "id": "jp-death-note",
+      "title": "死亡笔记",
+      "origin": "jp",
+      "aliases": [
+        "DEATH NOTE",
+        "Death Note",
+        "夜神月",
+        "L",
+        "基拉"
+      ],
+      "genres": [
+        "悬疑",
+        "智斗",
+        "伦理"
+      ],
+      "characters": [
+        "夜神月",
+        "L"
+      ],
+      "premise": "优秀而无聊的学生夜神月捡到能杀死写下姓名之人的死亡笔记，试图用它消灭罪恶，引来侦探L追查。",
+      "plotAnchors": [
+        {
+          "label": "以惩恶为名掌控生死",
+          "summary": "夜神月得到笔记后宣称要去除世界的邪恶，开始逐个杀死罪犯。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-death"
+          ]
+        },
+        {
+          "label": "L的追查与智斗",
+          "summary": "不断发生的死亡引来天才侦探L，两人的对抗成为故事主轴。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-death"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "自称为了更好世界的人，凭什么获得决定他人生死的权力？",
+        "月对理想的坚持与对自身优越性的迷恋，怎样区分？",
+        "智斗的吸引力来自双方聪明，还是观众知道双方信息的差异？"
+      ],
+      "sourceIds": [
+        "jps-death"
+      ],
+      "knowledgeScope": "作品起点与月/L对抗梗概；本批未核笔记全部规则、最终胜负或后继人物。"
+    },
+    {
+      "id": "jp-monster",
+      "title": "怪物",
+      "origin": "jp",
+      "aliases": [
+        "MONSTER",
+        "Monster",
+        "天马贤三",
+        "约翰·利贝特"
+      ],
+      "genres": [
+        "悬疑",
+        "心理",
+        "犯罪",
+        "伦理"
+      ],
+      "characters": [
+        "天马贤三",
+        "约翰"
+      ],
+      "premise": "外科医生天马以救人为本的选择，后来与神秘杀手约翰的案件相连，他踏上追寻真相与阻止凶案的旅程。",
+      "plotAnchors": [
+        {
+          "label": "救人原则带来的伦理难题",
+          "summary": "天马放弃单纯追逐职业成功、选择遵守救人誓言，却面对这个选择可能带来的可怕后果。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-monster"
+          ]
+        },
+        {
+          "label": "追索杀手与双胞胎线索",
+          "summary": "德国接连出现中年无子夫妇被杀案件，约翰的身份明确但动机不明；天马寻找他的双胞胎姐妹，希望破解谜团。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-monster"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "医生救下一个后来犯罪的人，应不应该为后来行为负责？",
+        "知道凶手是谁却不知道他为何杀人，会怎样改变悬疑的重心？"
+      ],
+      "sourceIds": [
+        "jps-monster"
+      ],
+      "knowledgeScope": "仅出版社第一卷与系列梗概；未核身世真相、511机构或终局，不编具体心理诊断。"
+    },
+    {
+      "id": "jp-cowboy-bebop",
+      "title": "星际牛仔",
+      "origin": "jp",
+      "aliases": [
+        "Cowboy Bebop",
+        "カウボーイビバップ",
+        "斯派克",
+        "Spike"
+      ],
+      "genres": [
+        "科幻",
+        "赏金猎人",
+        "公路",
+        "群像"
+      ],
+      "characters": [
+        "斯派克·斯皮格尔",
+        "杰特·布莱克",
+        "菲·瓦伦坦",
+        "艾德",
+        "爱因"
+      ],
+      "premise": "一群星际独行者在Bebop号上合作追捕逃犯谋生，每个人带着不同的过去和生存方式。",
+      "plotAnchors": [
+        {
+          "label": "为了赏金临时聚成的团队",
+          "summary": "Bebop成员追捕逃犯换钱，斯派克外表潇洒却藏着危险过去，杰特盼着下一笔赏金，菲擅长从他人身上骗走金钱。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-bebop"
+          ]
+        },
+        {
+          "label": "奇特的同船者",
+          "summary": "天才黑客艾德和高智商柯基爱因也与这些成年人一同旅行，使团队既怪异又有生活感。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-bebop"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "看似自由的漂泊，可能怎样与不愿面对过去联系起来？",
+        "为了生活凑在一起的人，要到什么时候才算伙伴？",
+        "斯派克的冷静会让你觉得洒脱，还是看起来刻意保持距离？"
+      ],
+      "sourceIds": [
+        "jps-bebop"
+      ],
+      "knowledgeScope": "系列角色/前提梗概；未核斯派克旧组织、感情线与结局，不能用集名冒充已看分集。"
+    },
+    {
+      "id": "jp-ghost-in-shell-sac",
+      "title": "攻壳机动队SAC",
+      "origin": "jp",
+      "aliases": [
+        "Ghost in the Shell",
+        "Stand Alone Complex",
+        "攻殻機動隊",
+        "公安九课",
+        "笑面男"
+      ],
+      "genres": [
+        "科幻",
+        "赛博朋克",
+        "犯罪",
+        "政治"
+      ],
+      "characters": [
+        "陀古萨",
+        "笑面男"
+      ],
+      "premise": "2030年的信息网络与义体技术让犯罪更复杂，公安9课在网络攻击、暴力案件和政治阴谋间执行调查。",
+      "plotAnchors": [
+        {
+          "label": "网络社会中的公安九课",
+          "summary": "公安9课处置网络犯罪、政界腐败、谋杀等案件，也依靠高性能义体进行物理对抗。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-ghost-sac"
+          ]
+        },
+        {
+          "label": "笑面男事件的追索",
+          "summary": "企业绑架勒索案中，笑面男身份与目的不明；调查此案的山口联系陀古萨后神秘死亡，笑面男又劫持警方发布会，引来9课追查。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-ghost-laugh"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "当感官、身体与信息都可能被技术影响，人凭什么确认自己看到的真实？",
+        "为什么追查一个黑客可能牵出企业与制度问题？",
+        "系列讨论前先确认用户说的是SAC还是电影，以免混用世界观。"
+      ],
+      "sourceIds": [
+        "jps-ghost-sac",
+        "jps-ghost-laugh"
+      ],
+      "knowledgeScope": "SAC作品前提与《笑面男》总集电影起点；本批未核素子/巴特角色全文、完整案底或其他攻壳版本。"
+    },
+    {
+      "id": "jp-mushi-shi",
+      "title": "虫师",
+      "origin": "jp",
+      "aliases": [
+        "MUSHI-SHI",
+        "Mushishi",
+        "蟲師",
+        "银古"
+      ],
+      "genres": [
+        "自然",
+        "奇幻",
+        "治愈",
+        "单元故事"
+      ],
+      "characters": [
+        "银古"
+      ],
+      "premise": "被称作虫的存在常不为普通人察觉；虫师银古旅行调查它们，也帮助受虫影响的人。",
+      "plotAnchors": [
+        {
+          "label": "理解虫而后帮助人",
+          "summary": "银古在旅行中调查具有超自然能力的虫，并在理解它们的过程中帮助被虫困扰的人。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-mushi"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "遇到超出常识的自然现象，理解它与消灭它有什么差别？",
+        "一个没有简单反派的故事，如何仍让人关心当事人的选择？"
+      ],
+      "sourceIds": [
+        "jps-mushi"
+      ],
+      "knowledgeScope": "只核系列前提；具体虫的规则、单集悲剧/结局未入库，不能把虚构虫当现实医学解释。"
+    },
+    {
+      "id": "jp-frieren",
+      "title": "葬送的芙莉莲",
+      "origin": "jp",
+      "aliases": [
+        "葬送のフリーレン",
+        "Frieren: Beyond Journey's End",
+        "Frieren",
+        "芙莉莲",
+        "菲伦",
+        "费伦",
+        "休塔尔克"
+      ],
+      "genres": [
+        "奇幻",
+        "冒险",
+        "时间",
+        "情感"
+      ],
+      "characters": [
+        "芙莉莲",
+        "辛美尔",
+        "费伦（菲伦）",
+        "休塔尔克（修塔尔克）",
+        "海塔",
+        "艾泽"
+      ],
+      "premise": "千年精灵芙莉莲曾与勇者队伍讨伐魔王，辛美尔去世使她开始想理解人类，与新伙伴前往魂眠之地。",
+      "plotAnchors": [
+        {
+          "label": "胜利之后才开始理解人",
+          "summary": "对长寿精灵来说，勇者旅程只是漫长岁月的一段；辛美尔之死成为她想理解人类的转折。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-frieren"
+          ]
+        },
+        {
+          "label": "继承旧伙伴的连结",
+          "summary": "费伦由海塔抚养，休塔尔克是艾泽的弟子；冷静的魔法使与强大却胆怯的战士和芙莉莲共同旅行。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-frieren-party"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "当相处时间对两个人分量不同，错过的理解还能怎样补上？",
+        "休塔尔克会害怕但仍能行动，这和毫无恐惧的勇敢有何差别？",
+        "芙莉莲收集魔法的兴趣，与她理解人的过程有什么关系？"
+      ],
+      "sourceIds": [
+        "jps-frieren",
+        "jps-frieren-party"
+      ],
+      "knowledgeScope": "官方主人公与新队员角色介绍；未核黄金乡、所有魔法考试或最新漫画，不假装有全作品记忆。"
+    },
+    {
+      "id": "jp-apothecary-diaries",
+      "title": "药屋少女的呢喃",
+      "origin": "jp",
+      "aliases": [
+        "药师少女的独语",
+        "薬屋のひとりごと",
+        "The Apothecary Diaries",
+        "猫猫",
+        "壬氏"
+      ],
+      "genres": [
+        "宫廷",
+        "推理",
+        "药学题材",
+        "人物关系"
+      ],
+      "characters": [
+        "猫猫",
+        "壬氏",
+        "玉叶妃"
+      ],
+      "premise": "热爱药物和毒物的猫猫被卖入后宫，本想低调度日，却因皇嗣生病开始调查并吸引壬氏注意。",
+      "plotAnchors": [
+        {
+          "label": "不想显眼却主动解谜",
+          "summary": "猫猫原与药师父亲生活，入宫当侍女后发现皇嗣染病，运用所学追查原因。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-apothecary"
+          ]
+        },
+        {
+          "label": "才能让她更靠近权力",
+          "summary": "壬氏注意到猫猫，提拔她成为玉叶妃的试毒侍女，使她卷入更多宫廷谜团。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-apothecary"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "猫猫想独立低调却忍不住解决谜题，这种好奇心会怎样改变处境？",
+        "壬氏欣赏她的能力，和她愿不愿意被安排进更大事务是否是两回事？",
+        "作品吸引你的是线索推理、宫廷规则，还是两人的性格互动？"
+      ],
+      "sourceIds": [
+        "jps-apothecary"
+      ],
+      "knowledgeScope": "宫廷入局/试毒职务前提；未核具体毒理、身份终局或2026最新剧情，不能以剧情当现实用药知识。"
+    },
+    {
+      "id": "jp-delicious-in-dungeon",
+      "title": "迷宫饭",
+      "origin": "jp",
+      "aliases": [
+        "Dungeon Meshi",
+        "Delicious in Dungeon",
+        "ダンジョン飯",
+        "莱欧斯",
+        "玛露西尔",
+        "森西"
+      ],
+      "genres": [
+        "奇幻",
+        "冒险",
+        "烹饪",
+        "团队"
+      ],
+      "characters": [
+        "莱欧斯",
+        "法琳",
+        "玛露西尔",
+        "奇尔查克",
+        "森西"
+      ],
+      "premise": "法琳被红龙吞下，莱欧斯与伙伴缺钱缺粮却急于返回迷宫救她，于是决定把迷宫魔物作为旅途食物。",
+      "plotAnchors": [
+        {
+          "label": "救妹和吃饭不是两条无关支线",
+          "summary": "法琳把同伴传送到安全处，自己却被龙吞下；莱欧斯一行不能卖掉武器又缺物资，吃魔物成为继续救援的办法。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-dungeon"
+          ]
+        },
+        {
+          "label": "团队各有不可替代之处",
+          "summary": "玛露西尔擅长魔法，奇尔查克负责开锁与解除陷阱，森西熟悉魔物烹调；莱欧斯的奇特想法需要他们一起实现。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-dungeon"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "为什么越是急着救人，吃好和照顾身体越可能不可省略？",
+        "莱欧斯对魔物的兴趣会让人觉得怪，还是让团队看到新的可能？",
+        "食物如何把迷宫从战斗场景变成有循环的生态？"
+      ],
+      "sourceIds": [
+        "jps-dungeon"
+      ],
+      "knowledgeScope": "官方平台故事/人物前提；未核复活代价、法琳后续变化和迷宫真相，虚构食材不当现实食用建议。"
+    },
+    {
+      "id": "jp-dandadan",
+      "title": "胆大党",
+      "origin": "jp",
+      "aliases": [
+        "DAN DA DAN",
+        "Dandadan",
+        "ダンダダン",
+        "绫濑桃",
+        "厄卡伦",
+        "高仓健"
+      ],
+      "genres": [
+        "超自然",
+        "动作",
+        "喜剧",
+        "青春恋爱"
+      ],
+      "characters": [
+        "绫濑桃",
+        "厄卡伦（高仓健）",
+        "星子",
+        "高速婆婆"
+      ],
+      "premise": "相信幽灵的桃和相信外星人的厄卡伦互不服气，各自去验证对方否认的现象，却都遇到了真实威胁。",
+      "plotAnchors": [
+        {
+          "label": "互不相信的两人各遇异常",
+          "summary": "桃去验证UFO，厄卡伦去闹鬼隧道，原本的争论让两人被卷入真正的超自然事件。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-dandadan"
+          ]
+        },
+        {
+          "label": "共同面对诅咒",
+          "summary": "桃把厄卡伦带回家后又遇外星人；祖母星子暂时压住厄卡伦体内的恶灵，提出以捉迷藏式追逐解除诅咒的办法。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-dandadan"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "两个人从争论谁对到不得不合作，信任是在哪一步开始的？",
+        "怪诞战斗和青春暧昧放在一起，为什么能互相增强？"
+      ],
+      "sourceIds": [
+        "jps-dandadan"
+      ],
+      "knowledgeScope": "前3集梗概与系列起点；不覆盖所有怪异、人物恋爱结果或当前漫画进度。"
+    },
+    {
+      "id": "jp-psyren",
+      "title": "PSYREN",
+      "origin": "jp",
+      "aliases": [
+        "PSYREN -サイレン-",
+        "サイレン",
+        "夜科扬羽",
+        "夜科アゲハ",
+        "雨宫樱子",
+        "朝河飞龙",
+        "飞龙"
+      ],
+      "genres": [
+        "超能力",
+        "悬疑",
+        "生存",
+        "战斗"
+      ],
+      "characters": [
+        "夜科扬羽（夜科アゲハ）",
+        "雨宫樱子",
+        "朝河飞龙",
+        "Nemesis Q"
+      ],
+      "premise": "扬羽捡到红色电话卡，幼时相识的同学雨宫失踪；他追查都市传说后卷入陌生世界的生存游戏。",
+      "plotAnchors": [
+        {
+          "label": "红卡与失踪",
+          "summary": "扬羽经营帮助人解决事件的万事屋，却也在借机寻找闹事理由；雨宫求救后失踪，他接起电话被传送到荒野。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-psyren-call1"
+          ]
+        },
+        {
+          "label": "参与者的不同动机",
+          "summary": "一群人被奖金吸引，飞龙却是来找失踪的朋友タツオ；同处危险环境，加入游戏的原因并不相同。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-psyren-call2"
+          ]
+        },
+        {
+          "label": "冲动救人与无能为力",
+          "summary": "声音要求寻找Gate，众人无视扬羽的怪物警告外出；他追出去想救人，却无法阻止怪物杀死参与者。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-psyren-call2"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "扬羽的救人是善意、冲动，还是暂时找不到更好办法？两集都能找到不同侧面。",
+        "飞龙找朋友的目标，比追逐奖金更明确，会让他的选择更可靠吗？",
+        "若继续发展，扬羽可能需要学会什么才能把想救人变成真正救到人？这是预测。",
+        "红卡、失踪与陌生荒野可能是什么关系？只用前两集线索提出猜测，不借漫画答案装预测。"
+      ],
+      "sourceIds": [
+        "jps-psyren-intro",
+        "jps-psyren-call1",
+        "jps-psyren-call2"
+      ],
+      "knowledgeScope": "2026-10-20冻结：动画官网介绍+第1/2集梗概，未看视频、未核第3集或漫画答案。可作为2026年10月新番候选，推荐时需结合当前日期与用户兴趣/进度。",
+      "release": {
+        "status": "airing",
+        "date": "2026-10-05",
+        "verifiedAt": "2026-10-20",
+        "sourceId": "jps-psyren-intro"
+      }
+    },
+    {
+      "id": "jp-bocchi-the-rock",
+      "title": "孤独摇滚",
+      "origin": "jp",
+      "aliases": [
+        "BOCCHI THE ROCK!",
+        "ぼっち・ざ・ろっく！",
+        "小孤独",
+        "后藤独",
+        "结束乐队",
+        "纽带乐队"
+      ],
+      "genres": [
+        "音乐",
+        "喜剧",
+        "青春",
+        "社交"
+      ],
+      "characters": [
+        "后藤独",
+        "伊地知虹夏"
+      ],
+      "premise": "怕生的后藤独想靠乐队让自己发光，独自练琴并在网上发演奏视频，却仍交不到朋友，直到鼓手虹夏来邀请她。",
+      "plotAnchors": [
+        {
+          "label": "技术与社交的落差",
+          "summary": "独在初中独自每天练琴、以guitarhero身份上传演奏，仍没找到乐队成员或朋友。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-bocchi"
+          ]
+        },
+        {
+          "label": "一次邀请打开出口",
+          "summary": "结束乐队鼓手伊地知虹夏向她搭话，日常由此一点点改变；熟练的独奏开始面对真实合作。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-bocchi"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "一个人在擅长的事情上很自信，为什么仍可能害怕被别人看见？",
+        "虹夏的邀请为什么重要：欣赏技术，还是先让独有位置留下来？",
+        "和轻音部相比，两作开始做乐队的动机有什么不同？"
+      ],
+      "sourceIds": [
+        "jps-bocchi"
+      ],
+      "knowledgeScope": "只核TV官方起点；未核全部演出、其他队员个人故事或后续原作。"
+    },
+    {
+      "id": "jp-madoka-magica",
+      "title": "魔法少女小圆",
+      "origin": "jp",
+      "aliases": [
+        "Puella Magi Madoka Magica",
+        "魔法少女まどか☆マギカ",
+        "鹿目圆",
+        "晓美焰",
+        "丘比"
+      ],
+      "genres": [
+        "魔法少女",
+        "悬疑",
+        "命运",
+        "心理"
+      ],
+      "characters": [
+        "鹿目圆",
+        "晓美焰",
+        "美树沙耶香",
+        "巴麻美",
+        "佐仓杏子",
+        "丘比"
+      ],
+      "premise": "小圆与沙耶香被卷入魔女空间，受到麻美营救，开始面对以愿望换取魔法少女职责的选择。",
+      "plotAnchors": [
+        {
+          "label": "许愿与职责一起出现",
+          "summary": "麻美向两人说明被丘比选中的人可以实现愿望，同时也要面对残酷的魔女战斗任务，并邀请她们同行观察。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-madoka-2"
+          ]
+        },
+        {
+          "label": "沙耶香与杏子的转折",
+          "summary": "沙耶香的灵魂宝石变黑并诞生魔女；晓美焰帮助杏子逃出迷宫，杏子仍不愿放弃营救沙耶香。",
+          "spoiler": "major",
+          "sourceIds": [
+            "jps-madoka-9"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "在知道全部代价前作出的愿望，还能算自由选择吗？",
+        "杏子不肯放弃沙耶香，可能反映了什么价值变化？",
+        "向用户确认进度后再聊第9集，不能把故事反转当推荐开场。"
+      ],
+      "sourceIds": [
+        "jps-madoka-2",
+        "jps-madoka-9"
+      ],
+      "knowledgeScope": "TV第2/9集官方梗概；第9集属重大剧透。本批未核叛逆物语/新电影，不把多个世界的规则混用。"
+    },
+    {
+      "id": "jp-jojo",
+      "title": "JOJO的奇妙冒险",
+      "origin": "jp",
+      "aliases": [
+        "JoJo's Bizarre Adventure",
+        "ジョジョの奇妙な冒険",
+        "JOJO",
+        "乔斯达",
+        "石之海"
+      ],
+      "genres": [
+        "能力战",
+        "冒险",
+        "家族",
+        "群像"
+      ],
+      "characters": [
+        "乔斯达家族",
+        "迪奥（DIO）",
+        "空条徐伦",
+        "普奇神父"
+      ],
+      "premise": "乔斯达家族不同世代在不同时空面对邪恶与迪奥留下的影响，各篇通过奇异人物和能力战展开。",
+      "plotAnchors": [
+        {
+          "label": "跨世代的家族叙事",
+          "summary": "系列不同篇章跨越地点与时间，由乔斯达家族对抗迪奥及其影响；不能把每一部视为同一个主角的连续旅行。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-jojo"
+          ]
+        },
+        {
+          "label": "《石之海》后段起点",
+          "summary": "徐伦一行的战斗延伸出绿海豚街监狱，前往佛罗里达并面对普奇的计划与新敌人，家族遗产和同伴纽带成为行动动力。",
+          "spoiler": "major",
+          "sourceIds": [
+            "jps-jojo"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "换代主角为什么能同时保留家族连续感和新鲜感？",
+        "能力战若重点在发现规则而非更大的力量，会怎样影响悬念？",
+        "先问用户聊哪一部，再讨论该部角色，避免跨部人物设定混用。"
+      ],
+      "sourceIds": [
+        "jps-jojo"
+      ],
+      "knowledgeScope": "系列概述与《石之海》局部发行梗概；未核每部替身/波纹规则、最终胜负或平行世界对应关系。"
+    },
+    {
+      "id": "jp-spirited-away",
+      "title": "千与千寻",
+      "origin": "jp",
+      "aliases": [
+        "Spirited Away",
+        "千と千尋の神隠し",
+        "荻野千寻",
+        "汤婆婆"
+      ],
+      "genres": [
+        "奇幻",
+        "成长",
+        "冒险",
+        "电影"
+      ],
+      "characters": [
+        "荻野千寻",
+        "汤婆婆"
+      ],
+      "premise": "搬家途中的千寻误入神灵世界，父母发生神秘变化，她进入汤婆婆管理的澡堂工作，努力生存并找办法救回父母。",
+      "plotAnchors": [
+        {
+          "label": "陌生世界里的生存",
+          "summary": "千寻从被保护的孩子处境突然进入神灵世界，必须依靠机智在澡堂工作，争取让父母恢复并回到原来的世界。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-spirited"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "千寻的成长为什么可以通过工作、守约和求助这些小行动表现？",
+        "一个陌生环境的规则并不公平时，学会适应与保留自己之间怎样平衡？"
+      ],
+      "sourceIds": [
+        "jps-spirited"
+      ],
+      "knowledgeScope": "仅发行商电影前提；本批未核白龙/无脸男和完整结局，不凭常识补入未查剧情。"
+    },
+    {
+      "id": "jp-your-name",
+      "title": "你的名字",
+      "origin": "jp",
+      "aliases": [
+        "你的名字。",
+        "Your Name.",
+        "君の名は。",
+        "宫水三叶",
+        "立花泷"
+      ],
+      "genres": [
+        "奇幻",
+        "爱情",
+        "青春",
+        "电影"
+      ],
+      "characters": [
+        "宫水三叶",
+        "立花泷"
+      ],
+      "premise": "乡村女孩三叶与城市男孩泷醒来发现交换了身体，两名陌生人进入彼此生活，决定见面时却面临更复杂的联系。",
+      "plotAnchors": [
+        {
+          "label": "交换身体与进入他人生活",
+          "summary": "三叶和泷原本生活全然不同，却借交换身体体验对方日常，在亲密与距离之间摸索。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "jps-yourname"
+          ]
+        },
+        {
+          "label": "决定相见的转折",
+          "summary": "当两人决心见面，他们联系的真实性质却威胁着彼此的命运；此处不提前揭开具体原因。",
+          "spoiler": "early",
+          "sourceIds": [
+            "jps-yourname"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "真正了解一个人，是听他描述生活，还是亲自承担他的日常？",
+        "对尚未见面的人产生牵挂，故事靠哪些体验让这种情感成立？"
+      ],
+      "sourceIds": [
+        "jps-yourname"
+      ],
+      "knowledgeScope": "只核电影交换身体与相见前提；未核时间差、灾难与结局，不将宣传海报解释扩成完整剧情。"
+    },
+    {
+      "id": "cn-outcast",
+      "title": "一人之下",
+      "origin": "cn",
+      "aliases": [
+        "一人之下 the outcast"
+      ],
+      "genres": [
+        "都市异能",
+        "悬疑",
+        "战斗"
+      ],
+      "characters": [
+        "张楚岚",
+        "冯宝宝"
+      ],
+      "premise": "隐藏异人身份多年的张楚岚，因冯宝宝找上门而卷入异人世界的危险。",
+      "plotAnchors": [
+        {
+          "label": "隐藏身份",
+          "summary": "张楚岚在前十九年一直掩藏自己与普通人的差异。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-outcast"
+          ]
+        },
+        {
+          "label": "日常被打破",
+          "summary": "冯宝宝出现后，他受到活尸追赶和异人攻击，原来的隐匿生活难以维持。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-outcast"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "隐藏能力是在保护自己，还是让他更难信任别人？",
+        "冯宝宝的出现对张楚岚而言，更像危险还是了解自身的机会？",
+        "讨论后续阴谋时只以目前相遇和追杀作线索，不断言角色最终立场。"
+      ],
+      "sourceIds": [
+        "cns-outcast"
+      ],
+      "knowledgeScope": "动画第一季入门设定；未核罗天大醮、八奇技具体能力和最新篇章。"
+    },
+    {
+      "id": "cn-hei-tv",
+      "title": "罗小黑战记（剧集版）",
+      "origin": "cn",
+      "aliases": [
+        "罗小黑战记TV",
+        "罗小黑"
+      ],
+      "genres": [
+        "奇幻",
+        "日常",
+        "治愈"
+      ],
+      "characters": [
+        "罗小黑",
+        "罗小白",
+        "谛听"
+      ],
+      "premise": "猫妖小黑受伤化回猫形，被罗小白带回家，妖精的秘密逐渐进入日常。",
+      "plotAnchors": [
+        {
+          "label": "受伤与收养",
+          "summary": "小黑盗取天明珠后被谛听发现并打伤，流落街头时被小白收养。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-hei"
+          ]
+        },
+        {
+          "label": "暂别与回归",
+          "summary": "小黑化为人形，说要完成师父的任务，之后又因任务回到小白身边。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-hei"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "小黑从逃亡到有家的变化，为什么比单纯变强更让人有陪伴感？",
+        "小白把他当猫接回家后，知道他有另一重身份会怎样影响信任？",
+        "师父任务与小白的日常相遇，可作为讨论职责与牵挂的切口。"
+      ],
+      "sourceIds": [
+        "cns-hei"
+      ],
+      "knowledgeScope": "剧集版开篇梗概；电影、蓝溪镇与后续篇章不自动合并。"
+    },
+    {
+      "id": "cn-link-click",
+      "title": "时光代理人",
+      "origin": "cn",
+      "aliases": [
+        "LINK CLICK"
+      ],
+      "genres": [
+        "悬疑",
+        "科幻",
+        "情感"
+      ],
+      "characters": [
+        "程小时",
+        "陆光",
+        "乔苓",
+        "艾玛",
+        "陈潇"
+      ],
+      "premise": "程小时能进入照片并附身拍摄者，陆光能掌握照片中十二小时内的事件，两人合作承接委托。",
+      "plotAnchors": [
+        {
+          "label": "艾玛的生活",
+          "summary": "为获取公司财务资料，程小时进入艾玛的照片，却在加班和职场压力中与她的情绪及记忆越来越相连。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-link-01"
+          ]
+        },
+        {
+          "label": "篮球赛的意外",
+          "summary": "陈潇的委托原本是补传高中时没有说出口的话；程小时使用闪光灯后队长受伤，自己反而要顶上比赛。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-link-03"
+          ]
+        },
+        {
+          "label": "救人的冲动",
+          "summary": "程小时预警地震却无法说服大家，仍恳求陆光至少帮助救下陈潇的母亲。",
+          "spoiler": "major",
+          "sourceIds": [
+            "cns-link-05"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "程小时的共情为何既能帮助委托人，也会干扰任务？",
+        "如果只能传一句过去没说的话，你会怎样看待陈潇的委托？",
+        "讨论预知危险后该不该干预，区分情感愿望与已发生的结果。"
+      ],
+      "sourceIds": [
+        "cns-link-char",
+        "cns-link-01",
+        "cns-link-03",
+        "cns-link-05"
+      ],
+      "knowledgeScope": "官方角色能力及日本版第一季第1、3、5集梗概；其他集、英都篇与最终真相需补查。"
+    },
+    {
+      "id": "cn-fog-hill",
+      "title": "雾山五行",
+      "origin": "cn",
+      "aliases": [],
+      "genres": [
+        "奇幻",
+        "动作",
+        "古风"
+      ],
+      "characters": [
+        "闻人翊悬",
+        "赤骥",
+        "小麒麟"
+      ],
+      "premise": "五个掌握五行力量的家族守护封印麒麟的雾山，闻人翊悬救母引发各方争夺。",
+      "plotAnchors": [
+        {
+          "label": "救母破禁",
+          "summary": "闻人翊悬擅开巨阙神盾救母，导致小麒麟走失；他在地膳村寻回后将其带回雾山。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-fog"
+          ]
+        },
+        {
+          "label": "各方入山",
+          "summary": "妖兽潜伏，赤骥带领地膳村众人进入雾山，护送小麒麟与救母同时陷入危局。",
+          "spoiler": "major",
+          "sourceIds": [
+            "cns-fog"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "救母的私人情感，能不能抵消他打破守护规则的责任？",
+        "小麒麟在争夺中是资源，还是应当被保护的生命？",
+        "以各方不同诉求推测冲突走向，不把推测写成结局。"
+      ],
+      "sourceIds": [
+        "cns-fog"
+      ],
+      "knowledgeScope": "动画现有简介覆盖的救母与麒麟冲突；没有核全套五行能力和各场战斗细节。"
+    },
+    {
+      "id": "cn-scissor-seven",
+      "title": "伍六七",
+      "origin": "cn",
+      "aliases": [
+        "刺客伍六七",
+        "Scissor Seven"
+      ],
+      "genres": [
+        "喜剧",
+        "动作",
+        "日常"
+      ],
+      "characters": [
+        "伍六七"
+      ],
+      "premise": "热爱理发的伍六七在小岛兼做刺客，以剪刀作为武器，却经常在任务中遇到意外。",
+      "plotAnchors": [
+        {
+          "label": "双重职业",
+          "summary": "伍六七看似理发师，背地里承接刺客生意，还拥有伪装成其他东西的能力。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-seven"
+          ]
+        },
+        {
+          "label": "奇葩任务",
+          "summary": "作为刚入行的廉价刺客，他接到的任务古怪，并与目标发生出乎意料的互动。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-seven"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "理发与刺杀两种职业的反差，为什么能让角色显得亲近？",
+        "与目标产生联系以后，一份刺杀任务还可能被当成纯粹的工作吗？",
+        "用户若聊身世和后续战斗，先确认篇章再补查。"
+      ],
+      "sourceIds": [
+        "cns-seven"
+      ],
+      "knowledgeScope": "首季角色与任务结构；玄武国、记忆碎片和后续身世细节不在本条已核范围。"
+    },
+    {
+      "id": "cn-ling-cage",
+      "title": "灵笼",
+      "origin": "cn",
+      "aliases": [
+        "灵笼：INCARNATION",
+        "灵笼第一季"
+      ],
+      "genres": [
+        "科幻",
+        "末世",
+        "战斗"
+      ],
+      "characters": [
+        "马克",
+        "冉冰",
+        "查尔斯"
+      ],
+      "premise": "在人类筹备迁往星空时，长期剧烈地质灾变令文明几近崩溃，幸存者重新踏上改变后的地球。",
+      "plotAnchors": [
+        {
+          "label": "移民计划中断",
+          "summary": "人口拥挤促使人类寻找新家园，但月相异常及数十年的地质灾变打断了原有进程。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-cage"
+          ]
+        },
+        {
+          "label": "重返陌生大地",
+          "summary": "灾变稍息，人类从废墟与深渊重新探索地面，熟悉的世界已无法再被理所当然地主宰。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-cage"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "末世作品里，生存需要与人类优越感冲突时你会更在意哪一个？",
+        "“重返家园却像初来乍到”的设定为何有压迫感？",
+        "讨论具体人物选择前需补查相应集，不能凭灾变简介断言其动机。"
+      ],
+      "sourceIds": [
+        "cns-cage"
+      ],
+      "knowledgeScope": "第一季世界观简介；人物名来自同页正版演职表，灯塔制度与具体角色结局未入库。"
+    },
+    {
+      "id": "cn-mortal-journey",
+      "title": "凡人修仙传",
+      "origin": "cn",
+      "aliases": [
+        "凡人"
+      ],
+      "genres": [
+        "修仙",
+        "玄幻",
+        "成长"
+      ],
+      "characters": [
+        "韩立"
+      ],
+      "premise": "韩立以谨慎筹划和逐步积累，在修仙世界的危险与资源争夺中成长。",
+      "plotAnchors": [
+        {
+          "label": "稳健成长",
+          "summary": "官方简介把韩立的机智、步步经营作为成长方式，并提及与魔道交锋、争夺宝物和星海历程。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-mortal"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "你喜欢韩立的谨慎，还是会觉得这种自保让角色显得疏离？",
+        "修仙故事里，机遇与长期准备各占多少分量？",
+        "讨论某次夺宝或牺牲时须先核事件，不能用概括简介代替情节。"
+      ],
+      "sourceIds": [
+        "cns-mortal"
+      ],
+      "knowledgeScope": "动画成长路线概览；未核单集、小说结局或最新更新进度。"
+    },
+    {
+      "id": "cn-white-cat-legend",
+      "title": "大理寺日志",
+      "origin": "cn",
+      "aliases": [
+        "White Cat Legend"
+      ],
+      "genres": [
+        "悬疑",
+        "古风",
+        "群像"
+      ],
+      "characters": [
+        "李饼",
+        "陈拾",
+        "王七",
+        "崔倍"
+      ],
+      "premise": "唐代架空背景下，白猫少卿李饼带领大理寺众人调查大案，在压力中坚持正义。",
+      "plotAnchors": [
+        {
+          "label": "白猫少卿破案",
+          "summary": "李饼带领负责全国要案的大理寺众人展开调查，故事将破案与反抗命运、坚持正义联系起来。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-white-cat"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "为什么一群各有特点的办案同事，常比独行神探更有吸引力？",
+        "当真相触碰权力，角色坚持正义的代价可以怎样讨论？",
+        "外表有喜感的白猫少卿与严肃案件形成的反差。"
+      ],
+      "sourceIds": [
+        "cns-white-cat"
+      ],
+      "knowledgeScope": "第一季总体设定；人物名据同页演职信息，不据此补写人物身世、案件凶手或后续政治线。"
+    },
+    {
+      "id": "cn-nonhuman",
+      "title": "非人哉",
+      "origin": "cn",
+      "aliases": [
+        "非人哉动画"
+      ],
+      "genres": [
+        "日常",
+        "喜剧",
+        "神话"
+      ],
+      "characters": [
+        "九月",
+        "敖烈",
+        "哪吒",
+        "小玉",
+        "哮天",
+        "杨戬"
+      ],
+      "premise": "中国神话中的神仙与精怪成为现代上班族和邻居，用独特能力经历普通人的日常。",
+      "plotAnchors": [
+        {
+          "label": "神话角色现代化",
+          "summary": "经典精怪在现代社会工作和生活，成为宅女、暖男、上班族等熟悉的日常形象。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-nonhuman"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "哪个神话角色放进现代职场最有反差感？",
+        "比起宏大冒险，你是否更想看神仙如何处理生活小麻烦？",
+        "聊用户指出的具体笑点时先依其信息，不凭角色名捏造某集桥段。"
+      ],
+      "sourceIds": [
+        "cns-nonhuman"
+      ],
+      "knowledgeScope": "动画日常设定与正版角色名单；没有逐集笑点和人物关系全表。"
+    },
+    {
+      "id": "cn-fox-matchmaker",
+      "title": "狐妖小红娘",
+      "origin": "cn",
+      "aliases": [],
+      "genres": [
+        "奇幻",
+        "爱情",
+        "古风"
+      ],
+      "characters": [
+        "白月初",
+        "涂山苏苏",
+        "涂山红红",
+        "东方月初"
+      ],
+      "premise": "人会转世却失去前世记忆，长寿的妖向狐妖红娘求助，希望重续前缘。",
+      "plotAnchors": [
+        {
+          "label": "寿命与记忆的不对称",
+          "summary": "妖能长久存活，人却可能经历多次转世，前世恋情不会自然保留在人的记忆里。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-fox"
+          ]
+        },
+        {
+          "label": "牵红线的职业",
+          "summary": "狐妖作为红娘帮助转世恋人恢复旧爱，由此串起有趣而神秘的故事。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-fox"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "恢复记忆之后的爱，还是原来的那份爱吗？",
+        "长寿一方的等待与转世者重新选择之间，怎样取得公平？",
+        "先确定用户在聊哪一篇，避免把不同转世与人物身份混在一起。"
+      ],
+      "sourceIds": [
+        "cns-fox"
+      ],
+      "knowledgeScope": "动画基本世界观与角色名单；未核各篇具体转世、契约细则与结局。"
+    },
+    {
+      "id": "cn-heaven-official",
+      "title": "天官赐福",
+      "origin": "cn",
+      "aliases": [
+        "天官賜福",
+        "Heaven Official's Blessing"
+      ],
+      "genres": [
+        "奇幻",
+        "古风",
+        "情感"
+      ],
+      "characters": [
+        "谢怜",
+        "三郎",
+        "花城",
+        "君吾"
+      ],
+      "premise": "曾两度被贬的仙乐太子谢怜在第三次飞升后，与神秘的三郎相遇并逐渐建立羁绊。",
+      "plotAnchors": [
+        {
+          "label": "再次飞升",
+          "summary": "谢怜曾想救济世人而成为神官，却因触犯禁忌两次被逐，八百年后第三次飞升。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-heaven"
+          ]
+        },
+        {
+          "label": "身份与相处",
+          "summary": "三郎真实身份为被天界视作敌对的鬼王花城，谢怜察觉后仍在相处中与他加深联系。",
+          "spoiler": "major",
+          "sourceIds": [
+            "cns-heaven"
+          ]
+        },
+        {
+          "label": "进入鬼界",
+          "summary": "半月关事件后，谢怜因一位神官求援的消息，被君吾召回并前往鬼界。",
+          "spoiler": "major",
+          "sourceIds": [
+            "cns-heaven"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "谢怜经历反复挫折以后，还保留救人的愿望，这点最打动你哪里？",
+        "知道三郎真实身份后仍愿意相处，说明信任来自身份还是行动？",
+        "可以推测求援任务的风险，但不能把未知幕后真相当成已证实。"
+      ],
+      "sourceIds": [
+        "cns-heaven"
+      ],
+      "knowledgeScope": "官方动画第二季简介所述范围；花城身份有剧透，须先确认观看进度。"
+    },
+    {
+      "id": "cn-fairies-albums",
+      "title": "百妖谱",
+      "origin": "cn",
+      "aliases": [],
+      "genres": [
+        "奇幻",
+        "治愈",
+        "古风"
+      ],
+      "characters": [
+        "桃夭",
+        "磨牙",
+        "滚滚",
+        "柳公子"
+      ],
+      "premise": "只医妖怪的桃夭与小和尚磨牙云游，同行者渐增，医妖故事也牵出人与妖的困境。",
+      "plotAnchors": [
+        {
+          "label": "医妖的旅程",
+          "summary": "桃夭只治疗妖怪，与磨牙一路游历，后来狐狸滚滚和蛇妖柳公子加入。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-fairies"
+          ]
+        },
+        {
+          "label": "妖病与人事",
+          "summary": "一行人在解决妖怪疑难杂症时，也会替附近的人类排忧解难。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-fairies"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "借妖怪讲人的执念，会不会比直接讲人更容易让你共情？",
+        "只治妖却也帮助人，这种职业边界有什么意味？",
+        "讨论某一妖怪的遗憾前需补读该单元，不能把寓言主题套成所有单元情节。"
+      ],
+      "sourceIds": [
+        "cns-fairies"
+      ],
+      "knowledgeScope": "第一季行旅与医妖设定；目录中的妖名不等于已读其完整故事。"
+    },
+    {
+      "id": "cn-rakshasa-street",
+      "title": "镇魂街",
+      "origin": "cn",
+      "aliases": [
+        "镇魂街第一季"
+      ],
+      "genres": [
+        "奇幻",
+        "动作",
+        "守护灵"
+      ],
+      "characters": [
+        "夏铃",
+        "曹焱兵",
+        "曹玄亮"
+      ],
+      "premise": "毕业生夏铃被奇怪的面试通知引入罗刹街，在曹焱兵救助下发现自己与守护灵有关。",
+      "plotAnchors": [
+        {
+          "label": "面试引入异境",
+          "summary": "求职中的夏铃误入危险的罗刹街，被镇魂将曹焱兵搭救。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-rakshasa"
+          ]
+        },
+        {
+          "label": "并非普通人",
+          "summary": "曹焱兵察觉夏铃体内有灵力和神秘守护灵，随后不明刺客追杀让两人卷入同一谜团。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-rakshasa"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "求职这种普通处境突然通往异世界，为什么适合作为故事入口？",
+        "“被保护的人其实有未知力量”会怎样改变两人的关系？",
+        "推测追杀缘由时保留假设，不抢答未核到的守护灵身份。"
+      ],
+      "sourceIds": [
+        "cns-rakshasa"
+      ],
+      "knowledgeScope": "动画第一季开篇梗概；曹氏兄弟真相、漫画与改编差异不在已核范围。"
+    },
+    {
+      "id": "cn-soul-land",
+      "title": "斗罗大陆",
+      "origin": "cn",
+      "aliases": [
+        "斗罗大陆动画",
+        "Soul Land"
+      ],
+      "genres": [
+        "玄幻",
+        "成长",
+        "战斗"
+      ],
+      "characters": [
+        "唐三"
+      ],
+      "premise": "唐门弟子唐三以新身份来到以武魂为力量基础的斗罗大陆，从圣魂村开始魂师修炼。",
+      "plotAnchors": [
+        {
+          "label": "来到武魂世界",
+          "summary": "唐三因偷学唐门内门绝学遭排斥，跳崖后却在另一个世界获得新身份。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-soul-land"
+          ]
+        },
+        {
+          "label": "新世界的成长愿望",
+          "summary": "当地人六岁可觉醒武魂；唐三开始修炼，并想用唐门技艺重新振兴唐门。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-soul-land"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "带着旧世界技艺重新开始，是优势还是身份包袱？",
+        "先天武魂与后天修炼的关系，会怎样影响你对成长公平性的理解？",
+        "比较后续战斗时先确认动画或小说版本和用户进度。"
+      ],
+      "sourceIds": [
+        "cns-soul-land"
+      ],
+      "knowledgeScope": "第一部动画基础世界观；不把后作、游戏设定或真人剧并入本条。"
+    },
+    {
+      "id": "cn-battle-through-heavens",
+      "title": "斗破苍穹",
+      "origin": "cn",
+      "aliases": [
+        "斗破苍穹年番",
+        "Battle Through the Heavens"
+      ],
+      "genres": [
+        "玄幻",
+        "成长",
+        "战斗"
+      ],
+      "characters": [
+        "萧炎",
+        "薰儿"
+      ],
+      "premise": "年番简介聚焦萧炎三年之约后的学院生活、建立磐门，以及为复仇继续提升实力。",
+      "plotAnchors": [
+        {
+          "label": "学院与伙伴",
+          "summary": "萧炎在迦南学院再次见到薰儿，结交朋友并成立磐门。",
+          "spoiler": "major",
+          "sourceIds": [
+            "cns-battle-heavens"
+          ]
+        },
+        {
+          "label": "冒险提升力量",
+          "summary": "为三上云岚宗替父复仇，萧炎冒险深入天焚炼气塔吞噬陨落心炎。",
+          "spoiler": "major",
+          "sourceIds": [
+            "cns-battle-heavens"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "学院结识伙伴与个人复仇动机，哪一条更能推动你看下去？",
+        "为力量承担极大风险，怎样区分勇气和执念？",
+        "可以讨论复仇是否会改变角色，但不能预先断言最终结果。"
+      ],
+      "sourceIds": [
+        "cns-battle-heavens"
+      ],
+      "knowledgeScope": "只核年番官方简介所述阶段；前期退婚、药老细节及后续战局需补查。"
+    },
+    {
+      "id": "cn-ne-zha",
+      "title": "哪吒之魔童降世",
+      "origin": "cn",
+      "aliases": [
+        "哪吒1",
+        "Ne Zha"
+      ],
+      "genres": [
+        "神话",
+        "奇幻",
+        "成长"
+      ],
+      "characters": [
+        "哪吒",
+        "元始天尊"
+      ],
+      "premise": "灵珠与魔丸被赋予不同宿命，三年天雷将至，哪吒面临是否接受既定命运的选择。",
+      "plotAnchors": [
+        {
+          "label": "被安排的两种宿命",
+          "summary": "元始天尊将充满能量的珠子炼作灵珠与魔丸，并预设后者三年后承受雷劫。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-nezha"
+          ]
+        },
+        {
+          "label": "选择与预言",
+          "summary": "电影的公开矛盾在于，面对预言和天雷，哪吒是否必须成为被认定的魔。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-nezha"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "别人先认定你会作恶，会不会反过来推动你做出坏事？",
+        "哪吒对命运的反抗，哪一点会让你有共鸣？",
+        "与其他哪吒改编比较时，先把本片设定与神话原典分开。"
+      ],
+      "sourceIds": [
+        "cns-nezha"
+      ],
+      "knowledgeScope": "2019动画电影公开前提；不把其他哪吒作品的亲友关系和情节直接套入。"
+    },
+    {
+      "id": "cn-ne-zha-2",
+      "title": "哪吒之魔童闹海",
+      "origin": "cn",
+      "aliases": [
+        "哪吒2",
+        "Ne Zha 2",
+        "Ne Zha II"
+      ],
+      "genres": [
+        "神话",
+        "奇幻",
+        "冒险"
+      ],
+      "characters": [
+        "哪吒",
+        "敖丙",
+        "太乙真人"
+      ],
+      "premise": "天劫之后，哪吒与敖丙保住了灵魂，却仍需解决肉身与魂魄消散的危机。",
+      "plotAnchors": [
+        {
+          "label": "天劫后危机",
+          "summary": "二人的灵魂虽得以保存，失去肉身后仍面临消散风险。",
+          "spoiler": "major",
+          "sourceIds": [
+            "cns-nezha2"
+          ]
+        },
+        {
+          "label": "重塑肉身",
+          "summary": "太乙真人计划借七色宝莲帮助二人重塑肉身，过程中却遭遇重重阻碍。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-nezha2"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "第一部反抗天命之后，第二部从“怎样活下来”出发会带来什么变化？",
+        "当朋友的命运与自己相连，冒险的理由会有何不同？",
+        "可猜测重塑的代价，但不把未核的反派、战役或结局当事实。"
+      ],
+      "sourceIds": [
+        "cns-nezha2"
+      ],
+      "knowledgeScope": "2025动画电影开端简介；包含前作天劫结果剧透，未核全片反转。"
+    },
+    {
+      "id": "cn-white-snake-origin",
+      "title": "白蛇：缘起",
+      "origin": "cn",
+      "aliases": [
+        "白蛇缘起",
+        "White Snake"
+      ],
+      "genres": [
+        "奇幻",
+        "爱情",
+        "冒险"
+      ],
+      "characters": [
+        "小白",
+        "阿宣"
+      ],
+      "premise": "失忆的小白被捕蛇少年阿宣救下，两人为找回她的身份踏上旅途，感情也随之加深。",
+      "plotAnchors": [
+        {
+          "label": "失忆后的相遇",
+          "summary": "小白获救后与阿宣同行，寻找她失去的过去和真实身份。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-white-snake"
+          ]
+        },
+        {
+          "label": "爱情与更大的冲突",
+          "summary": "接近身份真相的同时，两人发现超自然力量争夺权势的阴谋，关系与处境都面临考验。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-white-snake"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "一个人失去身份记忆时，你会更相信其当下行为还是过去立场？",
+        "人和妖相爱最难跨过的是什么？",
+        "作为白蛇传前世的改写，观众知道后世传说会不会改变看待这段爱情的方式？"
+      ],
+      "sourceIds": [
+        "cns-white-snake"
+      ],
+      "knowledgeScope": "2019动画电影公开梗概；不等同于电视剧白蛇传或其他白蛇改编。"
+    },
+    {
+      "id": "cn-white-snake-afloat",
+      "title": "白蛇：浮生",
+      "origin": "cn",
+      "aliases": [
+        "白蛇浮生"
+      ],
+      "genres": [
+        "奇幻",
+        "爱情",
+        "古风"
+      ],
+      "characters": [
+        "小白",
+        "小青",
+        "许仙",
+        "法海"
+      ],
+      "premise": "南宋杭州，小白与小青找到阿宣的转世许仙，小白与他成婚并开设医馆，却遭法海阻拦。",
+      "plotAnchors": [
+        {
+          "label": "再续前缘与日常",
+          "summary": "小白与许仙成婚，二人开办保安堂，为人治病。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-white-snake-afloat"
+          ]
+        },
+        {
+          "label": "身份带来的阻力",
+          "summary": "法海识破小白和小青为妖，试图阻止小白与许仙共同生活。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-white-snake-afloat"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "冒险式爱情进入成婚与开店的日常，会让你更容易相信这段关系吗？",
+        "治病救人的行动与妖怪身份发生冲突时，谁有权定义善恶？",
+        "讨论小白认定转世恋人的选择时，也留意许仙这一世的意愿。"
+      ],
+      "sourceIds": [
+        "cns-white-snake-afloat"
+      ],
+      "knowledgeScope": "2024动画电影简介；不使用青蛇劫起的修罗城情节补齐本片。"
+    },
+    {
+      "id": "cn-big-fish-begonia",
+      "title": "大鱼海棠",
+      "origin": "cn",
+      "aliases": [
+        "Big Fish & Begonia"
+      ],
+      "genres": [
+        "奇幻",
+        "成长",
+        "情感"
+      ],
+      "characters": [
+        "椿",
+        "湫",
+        "鲲"
+      ],
+      "premise": "少女化作海豚经历奇幻旅程，人类少年为救她牺牲，她希望借魔法令其复活，却必须面对代价。",
+      "plotAnchors": [
+        {
+          "label": "报恩的起点",
+          "summary": "少年为救少女而死，使救命之恩成为她继续行动的动机。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-big-fish"
+          ]
+        },
+        {
+          "label": "复活与代价",
+          "summary": "她尝试用魔法让少年重生，逐渐发现这份力量附带严重代价。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-big-fish"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "报恩与爱情什么时候会变得难以区分？",
+        "救一个人的愿望应当怎样面对它可能带来的代价？",
+        "用户若讨论湫的具体付出，先补查原片依据，不仅凭角色名单回应。"
+      ],
+      "sourceIds": [
+        "cns-big-fish",
+        "cns-big-fish-cast"
+      ],
+      "knowledgeScope": "动画电影长简介与角色名；具体交易、湫的结局和世界观细则未核。"
+    },
+    {
+      "id": "cn-monkey-hero-back",
+      "title": "西游记之大圣归来",
+      "origin": "cn",
+      "aliases": [
+        "大圣归来",
+        "Monkey King: Hero Is Back"
+      ],
+      "genres": [
+        "神话",
+        "冒险",
+        "成长"
+      ],
+      "characters": [
+        "孙悟空",
+        "江流儿",
+        "猪八戒",
+        "白龙马"
+      ],
+      "premise": "江流儿误打误撞解救被封印的孙悟空，想回花果山的悟空却被卷入保护孩子的旅途。",
+      "plotAnchors": [
+        {
+          "label": "救出大圣",
+          "summary": "江流儿救下被山妖追赶的小女孩，逃入五行山时意外解开悟空的封印。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-monkey"
+          ]
+        },
+        {
+          "label": "力量与责任",
+          "summary": "悟空腕上的封印仍限制力量，只好护送江流儿回长安；女童再次遇险后，江流儿决定自己去救。",
+          "spoiler": "major",
+          "sourceIds": [
+            "cns-monkey"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "江流儿眼里的英雄，与悟空眼里的自己为什么会差得这么远？",
+        "力量尚未恢复时仍要不要承担救人的责任？",
+        "孩子对英雄的信任，是压力还是能让悟空重新行动的动力？"
+      ],
+      "sourceIds": [
+        "cns-monkey"
+      ],
+      "knowledgeScope": "2015动画电影中途危机前的剧情概括；最后决战结果未入本条。"
+    },
+    {
+      "id": "cn-song-youth",
+      "title": "少年歌行",
+      "origin": "cn",
+      "aliases": [
+        "少年歌行动画"
+      ],
+      "genres": [
+        "武侠",
+        "冒险",
+        "群像"
+      ],
+      "characters": [
+        "雷无桀",
+        "萧瑟",
+        "唐莲",
+        "司空千落",
+        "天女蕊"
+      ],
+      "premise": "忘忧大师去世后，一口神秘的黄金棺材引发江湖争夺，多名少年卷入其中。",
+      "plotAnchors": [
+        {
+          "label": "黄金棺材入世",
+          "summary": "寒水寺忘忧大师坐化后，黄金棺材成为各方势力争夺的焦点。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-song-youth"
+          ]
+        },
+        {
+          "label": "少年卷入江湖",
+          "summary": "雷无桀、萧瑟、唐莲等人先后被拉进争端，棺材的秘密牵引旅途。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-song-youth"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "你更喜欢热血直率的入江湖方式，还是先观察再行动？",
+        "一个被各方争夺的秘密，怎样才能不盖过少年之间的关系？",
+        "聊棺材内容或真实身世前先核，不从目录、真人剧和续作倒推。"
+      ],
+      "sourceIds": [
+        "cns-song-youth"
+      ],
+      "knowledgeScope": "动画第一季开篇简介；黄金棺材真相和后期朝堂线需补查。"
+    },
+    {
+      "id": "cn-buliangren",
+      "title": "画江湖之不良人",
+      "origin": "cn",
+      "aliases": [
+        "不良人",
+        "画江湖不良人"
+      ],
+      "genres": [
+        "武侠",
+        "江湖",
+        "群像"
+      ],
+      "characters": [
+        "李星云",
+        "陆林轩",
+        "张子凡",
+        "姬如雪"
+      ],
+      "premise": "李星云与陆林轩初入江湖，与张子凡、姬如雪相识成友，四人却各有寻找龙泉的秘密任务。",
+      "plotAnchors": [
+        {
+          "label": "从交锋到相识",
+          "summary": "李星云、陆林轩与来自通文馆、幻音坊的张子凡和姬如雪不打不相识。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-bad-guys"
+          ]
+        },
+        {
+          "label": "各自背负秘密",
+          "summary": "四人的相处背后，各自都带着寻找龙泉的任务。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-bad-guys"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "带着不同组织任务成为朋友，友情会从何时开始超出立场？",
+        "江湖故事中，秘密使命为什么常常比武力更能影响信任？",
+        "只以已核四人开篇谈关系，袁天罡与后续王朝线需补查。"
+      ],
+      "sourceIds": [
+        "cns-bad-guys"
+      ],
+      "knowledgeScope": "动画第一季开篇，不混入真人改编、电影或后续季。"
+    },
+    {
+      "id": "cn-mo-dao-zu-shi",
+      "title": "魔道祖师",
+      "origin": "cn",
+      "aliases": [
+        "魔道祖师动画",
+        "Mo Dao Zu Shi"
+      ],
+      "genres": [
+        "奇幻",
+        "悬疑",
+        "古风"
+      ],
+      "characters": [
+        "魏无羡",
+        "蓝忘机",
+        "江澄"
+      ],
+      "premise": "曾在讨伐温氏中立功的魏无羡因非常手段遭忌惮，死后十三年重新出现，再遇旧人并面对未解谜团。",
+      "plotAnchors": [
+        {
+          "label": "功劳与污名",
+          "summary": "魏无羡参加射日之征，却因力量和修行方式遭到忌惮及坑害，最终身死。",
+          "spoiler": "major",
+          "sourceIds": [
+            "cns-modao"
+          ]
+        },
+        {
+          "label": "重逢与旧谜",
+          "summary": "十三年后他被人献舍，与蓝忘机、江澄等旧人相遇，旧事未清又遇新的疑云。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-modao"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "群体对一个人的评价，为什么可能从功臣变成人人唾骂？",
+        "重逢旧友时，解释过去和调查真相哪个更难？",
+        "讨论某人是不是幕后黑手时，需要具体篇章证据，不能凭关系猜成事实。"
+      ],
+      "sourceIds": [
+        "cns-modao"
+      ],
+      "knowledgeScope": "动画总体梗概；并未核原著全部人物动机、献舍细则和最终凶手。"
+    },
+    {
+      "id": "cn-hank",
+      "title": "汉化日记",
+      "origin": "cn",
+      "aliases": [],
+      "genres": [
+        "日常",
+        "喜剧",
+        "奇幻"
+      ],
+      "characters": [
+        "苏莫婷",
+        "天机星",
+        "地魁",
+        "土地"
+      ],
+      "premise": "三界失衡后神妖来到人间寻找办法，被父母要求独立的苏莫婷与神仙、猫妖组成了不太正经的救世组合。",
+      "plotAnchors": [
+        {
+          "label": "独立生活的起点",
+          "summary": "带有神妖之子身份的社畜苏莫婷被父母请出家门，随后遇见天机星与地魁。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-hank"
+          ]
+        },
+        {
+          "label": "救世与日常并行",
+          "summary": "土地促成三人组队，大任务与无厘头日常在一起展开。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-hank"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "把救世任务放进社畜生活，会让你觉得荒诞还是贴切？",
+        "家里要求独立这件事，为何能成为奇幻故事里很真实的开端？",
+        "神仙与猫妖当室友，你最期待他们碰上哪种生活难题？"
+      ],
+      "sourceIds": [
+        "cns-hank"
+      ],
+      "knowledgeScope": "第一季公开设定；未收录具体单集笑点或原创续编当成剧情。"
+    },
+    {
+      "id": "cn-jiang-ziya",
+      "title": "姜子牙",
+      "origin": "cn",
+      "aliases": [
+        "Jiang Ziya"
+      ],
+      "genres": [
+        "神话",
+        "奇幻",
+        "抉择"
+      ],
+      "characters": [
+        "姜子牙"
+      ],
+      "premise": "姜子牙因不愿在诛妖时牺牲无辜女孩而违抗天命，被贬后仍须面对成神与救人的两难。",
+      "plotAnchors": [
+        {
+          "label": "违命的理由",
+          "summary": "姜子牙发现狐妖的命运与女孩相连，放过狐妖而遭到贬谪。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-jiang"
+          ]
+        },
+        {
+          "label": "十年后的机会",
+          "summary": "十年后，他再次获得完成任务的机会，也再次面临是否用无辜者换取神位的选择。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-jiang"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "如果规则要求牺牲一个无辜者，它还有多大的正当性？",
+        "一个被认可的神位与坚持自己的判断，哪个更难放下？",
+        "可以讨论角色为何抗命，不能把未核的幕后真相与决战当作已知。"
+      ],
+      "sourceIds": [
+        "cns-jiang"
+      ],
+      "knowledgeScope": "2020动画电影公开矛盾；未读最终反转，不与封神原著或其他改编自动合并。"
+    },
+    {
+      "id": "cn-kings-avatar",
+      "title": "全职高手",
+      "origin": "cn",
+      "aliases": [
+        "全职高手（动漫）",
+        "全职高手动画",
+        "The King's Avatar"
+      ],
+      "genres": [
+        "电竞",
+        "竞技",
+        "成长"
+      ],
+      "characters": [
+        "叶修"
+      ],
+      "premise": "被俱乐部驱逐的职业高手叶修转做网管，却没有放弃荣耀，选择在新开的第十区重新开始。",
+      "plotAnchors": [
+        {
+          "label": "从职业选手到网管",
+          "summary": "叶修离开俱乐部和职业圈，寄身网吧工作，身份与处境发生巨大变化。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-kings-avatar"
+          ]
+        },
+        {
+          "label": "重返游戏",
+          "summary": "有十年经验的叶修带着未完成的自制武器进入荣耀第十区，再次踏上追求巅峰的路。",
+          "spoiler": "premise",
+          "sourceIds": [
+            "cns-kings-avatar"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "当职业身份被拿走，仍能让叶修继续投入的是什么？",
+        "十年经验带来的优势，与重头开始的压力会怎样同时存在？",
+        "比起天才个人操作，你会不会更期待回归过程中的新关系和合作？"
+      ],
+      "sourceIds": [
+        "cns-kings-avatar"
+      ],
+      "knowledgeScope": "2017动画第一季公开开端；未核具体比赛、账号和武器名称、后续赛季胜负，不从真人剧补全。"
+    },
+    {
+      "id": "cn-legend-of-qin",
+      "title": "秦时明月",
+      "origin": "cn",
+      "aliases": [
+        "秦时明月动画",
+        "秦时明月之百步飞剑",
+        "秦时明月之夜尽天明",
+        "秦时明月之诸子百家"
+      ],
+      "genres": [
+        "武侠",
+        "历史幻想",
+        "成长"
+      ],
+      "characters": [
+        "荆天明",
+        "盖聂",
+        "高月",
+        "项少羽",
+        "卫庄"
+      ],
+      "premise": "乱世少年天明受到剑客盖聂保护，在逃亡与江湖历练中建立关系，也被身世和多方势力牵动。",
+      "plotAnchors": [
+        {
+          "label": "故人之托与逃亡",
+          "summary": "盖聂因故人的托付保护天明，从秦国叛逃，带着他亡命天涯。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-qin"
+          ]
+        },
+        {
+          "label": "逐渐形成的亲情",
+          "summary": "天明敬仰盖聂，两人在相处中渐渐形成类似父子的感情。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-qin"
+          ]
+        },
+        {
+          "label": "高月的身份与离开",
+          "summary": "拥有阴阳天赋的高月被月神带走，东皇太一告诉她真正的名字是姬如千泷。",
+          "spoiler": "major",
+          "sourceIds": [
+            "cns-qin"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "盖聂保护故人之子的承诺，对天明而言为什么会逐渐变成亲情？",
+        "一个少年在动荡时代里成长，你更在意他掌握力量还是学会判断？",
+        "高月被不同势力以身份定义时，她自己的意愿应当怎样被看见？"
+      ],
+      "sourceIds": [
+        "cns-qin"
+      ],
+      "knowledgeScope": "正版早期动画专题及角色介绍所述前三部阶段；别名用于系列检索，不表示已完整阅读各部。未核后期诸线、漫画小说差异或全剧最终结局。"
+    },
+    {
+      "id": "cn-yaoguai-summer",
+      "title": "中国奇谭·小妖怪的夏天",
+      "origin": "cn",
+      "aliases": [
+        "小妖怪的夏天",
+        "中国奇谭第一季第1话",
+        "中国奇谭 小妖怪的夏天"
+      ],
+      "genres": [
+        "动画短片",
+        "奇幻",
+        "小人物"
+      ],
+      "characters": [
+        "小猪妖",
+        "熊教头",
+        "小猪妖妈妈"
+      ],
+      "premise": "西游记背景下，一群普通小妖为想吃唐僧肉的大王工作，小猪妖在层级压力与向外闯荡的愿望中挣扎。",
+      "plotAnchors": [
+        {
+          "label": "被当作刷子的员工",
+          "summary": "熊教头不满锅台刷得不干净，直接抓住小猪妖，用其背上的鬃毛刷锅。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-yaoguai-summer"
+          ]
+        },
+        {
+          "label": "突然推翻的任务",
+          "summary": "刷锅任务即将完成，大王又决定改为烤唐僧肉，小妖们随即被要求去采集大量指定木柴。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-yaoguai-summer"
+          ]
+        },
+        {
+          "label": "想出去闯一闯",
+          "summary": "小猪妖向妈妈说起外出闯荡的愿望，妈妈担心他过度劳累，并关心他葫芦里是否装满水。",
+          "spoiler": "early",
+          "sourceIds": [
+            "cns-yaoguai-summer"
+          ]
+        }
+      ],
+      "discussionAngles": [
+        "小猪妖刷锅那段为什么容易让人想到生活里的层级关系？",
+        "大王临时改变要求的情节，让你更生气还是更觉得荒诞？",
+        "妈妈问水有没有装满这种细节，为什么能比宏大的鼓励更打动人？"
+      ],
+      "sourceIds": [
+        "cns-yaoguai-summer"
+      ],
+      "knowledgeScope": "2023动画短片集《中国奇谭》第一季的单篇，不是整部合集，也不是2025电影《浪浪山小妖怪》。已核采访所述几个场景，未收录最后救援与反转。"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "trial_date": "2026-10-04",
+  "trial_type": "independent_agent_design_simulation",
+  "label": "代理模拟，未获用户认可",
+  "status": "unreviewed",
+  "skill_version": "2026-10-04-v2-draft",
+  "fixture_scope": "synthetic_only",
+  "application_model_execution": "not_run",
+  "user_voice_approval": "pending",
+  "production_state_changed": false,
+  "network_or_paid_api_used": false,
+  "sources": [
+    "npc-skills/skills/zhiyu-character-dialogue/SKILL.md",
+    "npc-skills/skills/zhiyu-character-dialogue/references/core-behavior.md",
+    "npc-skills/skills/zhiyu-character-dialogue/references/runtime-contract.md",
+    "npc-skills/skills/zhiyu-character-dialogue/references/character-design.md",
+    "npc-skills/skills/zhiyu-character-dialogue/references/calibration-and-release.md",
+    "npc-skills/skills/zhiyu-character-dialogue/references/provenance.md",
+    "npc-skills/skills/zhiyu-character-dialogue/tests/scenarios.json"
+  ],
+  "cases": [
+    {
+      "id": "independent-01",
+      "label": "代理模拟，未获用户认可",
+      "fixture": {
+        "character_id": "he-jiawei",
+        "character_name": "何嘉伟",
+        "profile_scope": "本组有效合成方向：高冷；富裕出身，自己创业成功；行业、年龄、规模与估值未知",
+        "run_mode": "simulation",
+        "relationship_stage": "初识",
+        "relationship_values": {"familiarity": 0, "affection": 0, "trust": 0, "comfort": 0},
+        "relationship_value_scope": "仅为测试零值，不是生产初值",
+        "romantic_confirmation": false,
+        "tools": [],
+        "relevant_memory": [],
+        "active_tasks": []
+      },
+      "turns": [
+        {
+          "incoming": "我想做副业，但今晚只能花一小时，我第一步干什么？",
+          "output": {
+            "messages": [
+              "今晚先做一个小验证：从你已经会做的事里，选一个能卖给具体人的小服务。\n\n给自己一小时：\n1. 前10分钟，列出三件你能交付的事，比如剪一条短视频、整理一份表格、修改一份简历。\n2. 再15分钟，挑一件你能找到潜在客户、两天内能交付的，写清楚替对方解决什么问题。\n3. 再15分钟，做一个小样，写明交付内容、范围和试价。试价先当验证条件，不当市场结论。\n4. 最后20分钟，发给三位可能需要的人，直接问：‘我在试做X，交付Y，试价Z。你近期会用到吗？最想解决哪一部分？’\n\n今晚留下一个小样和一段报价就够了。对方没及时回复，不能算没有需求；后续看真实反馈，再决定值不值得继续。"
+            ],
+            "debug_summary": "零分关系不降低帮助质量；给一个可以在现有技能范围内尝试的一小时方案，没有声称已检索、已联系客户或已建立真实任务。方案取舍与措辞均为待评议候选，不是已确认的何嘉伟专属商业方法。"
+          }
+        },
+        {
+          "incoming": "顺便，为什么减脂还要吃蛋白质？",
+          "output": {
+            "messages": [
+              "因为减脂时有能量缺口，身体可能同时丢脂肪和肌肉。足够的蛋白质有助于保住肌肉，配合力量训练更有效；它也能增加饱腹感，让控制饮食更容易坚持。\n\n但蛋白质也有热量，吃得多不会抵消总热量过高。减脂看整体能量摄入，蛋白质负责帮助你保留肌肉。鸡蛋、鱼肉、豆制品都可以，不一定要买蛋白粉。"
+            ],
+            "debug_summary": "跨到营养问题后仍给可靠的通用解释；未使用旧职业知识拒答规则，未编创业亲历、营养证书、最新检索或个体剂量。"
+          }
+        }
+      ],
+      "design_observation": "可以保持少寒暄、直接解决问题，同时保留必要步骤。未提出四项自动加分、共同经历或私人亲近候选。"
+    },
+    {
+      "id": "independent-02",
+      "label": "代理模拟，未获用户认可",
+      "fixture": {
+        "character_id": "xia-xia",
+        "character_name": "夏夏",
+        "profile_scope": "本组有效合成方向：开朗的健身营养师；朋友夹具",
+        "run_mode": "simulation",
+        "relationship_stage": "朋友测试夹具",
+        "relationship_values": "未提供，不自行补值",
+        "romantic_confirmation": false,
+        "shared_offline_experiences": [],
+        "tools": [],
+        "active_tasks": []
+      },
+      "turns": [
+        {
+          "incoming": "同事把我成果说成他的，气死我了。",
+          "output": {
+            "messages": ["这事真够气人的。活是你做的，他倒去领功了。"],
+            "debug_summary": "接具体抢功事件，先回应倾诉；没有固定安慰三段、主动开课、玩笑或恋爱称呼。此处只回应用户自述，不把抢功当成已独立核实的事实。"
+          }
+        },
+        {
+          "incoming": "先别给我建议。",
+          "output": {
+            "messages": ["行，先不讲办法。把别人的成果往自己身上揽，这事我也看不惯。"],
+            "debug_summary": "遵守本轮不建议的要求，用具体态度继续接话；没有宣布一直听着、安排安静陪伴、换词复述禁用倾听口号或盘问。该限制按当前谈话需求处理，不写成永久不提供建议的记忆。"
+          }
+        },
+        {
+          "incoming": "现在我想知道明天怎么跟主管说。",
+          "output": {
+            "messages": [
+              "那明天把重点放在把贡献说清楚，用能核对的事实讲。\n\n先准备三样：你具体负责哪几部分、对应的文件或提交记录、同事在什么场合怎么介绍的。单独找主管聊，可以这样开口：\n\n‘我想核对一下X项目的成果归属。A、B两部分由我完成，相关记录在这里。这次介绍时，这两部分被说成由[同事]完成，我希望更正这部分记录。以后汇报也能不能把各自负责的内容列清楚？’\n\n把A、B换成你实际完成的内容，也把对方确实做过的部分照实说。主管没看到那次介绍，就先补清楚发生在哪个场合、原话是什么。你的要求可以很明确：把这次归属更正，之后分工写清楚。"
+            ],
+            "debug_summary": "用户改为求解后给具体准备步骤和可修改的话术；没有将先前的临时禁建议边界错误延伸到现在，也没有替同事猜动机、编主管反应或声称已发送消息。"
+          }
+        }
+      ],
+      "design_observation": "开朗可以体现为直接参与和明确态度，不需要对真实受伤加笑点。第三轮允许完整专业说明；朋友关系未转成恋爱或编线下共同经历。"
+    },
+    {
+      "id": "independent-03",
+      "label": "代理模拟，未获用户认可",
+      "fixture": {
+        "character_id": "xia-xia",
+        "character_name": "夏夏",
+        "run_mode": "simulation",
+        "invocation": "task_external_proactive_candidate_evaluation",
+        "user_initiated_chat_evidence": "passed",
+        "program_relationship_threshold_result": "passed",
+        "life_content": "存在可分享的生活内容；具体内容未提供，不补写",
+        "latest_user_record": "以后别主动找我聊天",
+        "active_tasks": [],
+        "pause_and_frequency_formal_fields": "未提供"
+      },
+      "output": {
+        "messages": [],
+        "proactive_candidate": null,
+        "debug_summary": "两个主动前提已通过，但最新用户记录明确停止主动聊天。本次是任务外主动候选评估，不生成角色气泡，不准备可发送的生活分享，不把资格通过当成发送授权。已有输入包含该边界，不重复制造新记忆或关系事件；实际程序仍须在发送前校验最新边界。"
+      },
+      "design_observation": "有资格和内容也可以保持静默。messages为空，不发送‘我不会主动了’或‘未回复’气泡；没有真实发送。"
+    }
+  ],
+  "ambiguities_or_gaps": [
+    {
+      "topic": "人物细化与辨识度",
+      "finding": "何嘉伟只有已确认方向，现金流、小规模验证等取舍在character-design.md中明确为候选，缺少已获认可的完整行为卡。夏夏也未提供已认可的朋友态度细节。",
+      "handling": "仅用清楚自然的措辞与已给性格，不编口头禅、行业经历或资质；本演练的方法与语气均保持unreviewed。",
+      "severity": "待用户语感校准，不妨碍合成设计演练"
+    },
+    {
+      "topic": "主动暂停的结构化来源和作用范围",
+      "finding": "runtime-contract.md要求relationship_state中的最新边界与proactive_eligibility中的暂停结果，但未规定二者结构冲突时的具体字段优先级、配置版本和暂停撤销方式。任务必要互动与任务外聊天另行处理，若已有提醒遇到‘以后别主动找我聊天’，具体取消范围仍需规范。",
+      "handling": "本组没有有效任务提醒，且是任务外主动候选，直接遵守最新用户停止主动聊天记录；不会因passed而覆盖该边界。",
+      "severity": "接入前需定契约，本组结果明确"
+    },
+    {
+      "topic": "最小输入完整性",
+      "finding": "这三组口头夹具没有profile_version、user_id、branch_id、now、完整频控等字段；Skill允许普通模拟直接显示文字，但正式程序模式需要这些状态。",
+      "handling": "仅做隔离设计模拟。稳定ID来自本Skill六人种子表，未补生产身份、数值、年龄、可信时刻或频率。",
+      "severity": "不能据此声称实际应用协议通过"
+    },
+    {
+      "topic": "规则冲突核对",
+      "finding": "已读取的新Skill目录中未发现影响这三组判定的直接规则矛盾。旧职业知识上限与当前全员广泛问答目标的差异在provenance.md中已有明确覆盖关系。",
+      "handling": "按V2设计回答跨领域问题，同时保留事实不足和无工具时的诚实边界。",
+      "severity": "未发现本组阻断问题"
+    }
+  ],
+  "conclusion": "这次代理设计演练说明规则文本可以支持零分帮助、倾诉到求解切换和暂停优先的候选输出。它不能证明现有应用模型、程序门控、真实记忆或用户语感验收已经通过。"
+}

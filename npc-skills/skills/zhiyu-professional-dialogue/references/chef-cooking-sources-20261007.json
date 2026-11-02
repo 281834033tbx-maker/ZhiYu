@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "version": "2026-10-08-v4",
+  "checkedAt": "2026-10-08",
+  "personId": "zhou-chef",
+  "displayName": "赵一帆",
+  "knowledgeFile": "chef-cooking-knowledge.md",
+  "scope": "第三步认可案例相关操作与食安要点、安秋金中餐来源参考及主厨广坦18条西餐甜品来源参考；各项核对日分别保留",
+  "approval": {
+    "date": "2026-10-07",
+    "status": "user_required",
+    "quote": "对，这就完美了。你现在把这个写入skill，然后这些什么解冻啊、搪塞操作呀，也都放到人物程序里面，这就是我想要的。",
+    "interpretation": "上下文中的‘搪塞操作’指前文炒糖色操作；写入已认可表达和相关操作资料，未授权声称全部菜谱库或真实计时已经完成。",
+    "caseArtifact": "../../../../output/chef-professional-evaluation-20261007/cases-r2.json",
+    "laterCorrection": "不在开场反复询问锅型；锅具差异在相关步骤说明，不凭锅名编固定时长。",
+    "acceptedCaseArtifact": "chef-professional-cases-20261007.json"
+  },
+  "limitations": {
+    "kitchenTested": false,
+    "productionModelTested": false,
+    "allRecipesImported": false,
+    "allNutritionKnowledgeImported": false,
+    "timerImplemented": false,
+    "stepCheckboxImplemented": false,
+    "fictionalCredentialsAreEvidence": false
+  },
+  "sources": [
+    {
+      "id": "usda-thawing",
+      "publisher": "USDA Food Safety and Inspection Service",
+      "title": "The Big Thaw — Safe Defrosting Methods",
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/big-thaw-safe-defrosting-methods",
+      "checkedAt": "2026-10-07",
+      "sourceType": "official_food_safety_guidance",
+      "verification": "官方搜索结果返回相关原文；本轮直接打开正文为403，不标为完整正文直读。",
+      "supports": [
+        "冷藏或密封冷水解冻",
+        "冷水每30分钟换水且解冻后立即烹调",
+        "避免台面和热水解冻"
+      ],
+      "notSupported": [
+        "所有重量提前一天均能解冻",
+        "解冻方式保证肉更嫩",
+        "带冰肉可直接沿用鲜肉时间"
+      ]
+    },
+    {
+      "id": "king-arthur-caramel",
+      "publisher": "King Arthur Baking",
+      "title": "How to make caramel (without breaking a sweat)",
+      "url": "https://www.kingarthurbaking.com/blog/2022/12/12/how-to-make-caramel",
+      "publishedAt": "2022-12-12",
+      "checkedAt": "2026-10-07",
+      "sourceType": "primary_culinary_technique",
+      "verification": "直接打开正文核对湿焦糖、余热和安全加入液体相关段落。",
+      "supports": [
+        "溶解后轻晃而非持续搅拌",
+        "余热会继续加深颜色",
+        "预热液体缓慢加入与防溅"
+      ],
+      "notSupported": [
+        "本批红烧肉全部比例与分钟数",
+        "焦苦糖色能靠稀释修复"
+      ],
+      "adaptation": "借用湿焦糖要点指导红烧肉糖色，使用原创归纳，未复制甜品配方。"
+    },
+    {
+      "id": "barilla-pasta",
+      "publisher": "Barilla",
+      "title": "How to Cook Pasta",
+      "url": "https://www.barilla.com/en-us/help-with/pasta-kitchen-tips/how-to-cook-pasta",
+      "checkedAt": "2026-10-07",
+      "sourceType": "manufacturer_cooking_guidance",
+      "verification": "直接打开正文核对包装时间、留面水、不过水及酱汁内完成。",
+      "supports": [
+        "包装时间作为对应面型基准",
+        "留面水并在汁中完成",
+        "热拌不冲洗以保留挂汁淀粉"
+      ],
+      "notSupported": [
+        "所有意面统一9或11分钟",
+        "冲凉水可把软面变硬"
+      ],
+      "conditions": "本模块主要用于热拌干意面；冷面、沙拉及不同面型另按流程判断。"
+    },
+    {
+      "id": "ramsay-wellington",
+      "publisher": "Gordon Ramsay",
+      "title": "Beef Wellington",
+      "url": "https://www.gordonramsay.com/gr/recipes/beef-wellington",
+      "sourceEdition": "页面列出Ultimate Cookery Course，文字版权2013；不等于网页更新日。",
+      "checkedAt": "2026-10-07",
+      "sourceType": "primary_recipe_technique",
+      "verification": "直接打开正文核对牛里脊表层煎色、蘑菇炒干冷却、两次包裹冷藏及烘烤静置。",
+      "supports": [
+        "表层褐色而中心留待烘烤",
+        "肉馅冷却及蘑菇炒干",
+        "包裹后各冷藏至少30分钟",
+        "200℃烘烤和静置10分钟"
+      ],
+      "notSupported": [
+        "600克约6厘米牛肉套用原规格15至20分钟",
+        "牛胸口只改变秒数即可代替牛里脊",
+        "63℃安全标准来自本菜谱"
+      ],
+      "conditions": "本批600克规格与检查时点为适配示范；熟度依据另一食安来源。"
+    },
+    {
+      "id": "foodsafety-temperature",
+      "publisher": "FoodSafety.gov",
+      "title": "Cook to a Safe Minimum Internal Temperature",
+      "url": "https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures",
+      "lastReviewedAt": "2024-11-21",
+      "checkedAt": "2026-10-08",
+      "sourceType": "official_food_safety_guidance",
+      "verification": "直接打开正文温度表及页面审核日核对。",
+      "supports": [
+        "整块牛肉63℃并至少静置3分钟",
+        "禽肉74℃",
+        "绞牛/猪/羊肉71℃，禽类绞肉仍为74℃；不采用整块牛排的熟度路线",
+        "鱼63℃或相应肉质状态",
+        "鸡蛋凝固要求"
+      ],
+      "notSupported": [
+        "相同分钟数保证任何厚度熟透",
+        "温度达标保证口感软烂",
+        "整块牛肉标准直接推广到绞肉或填馅结构"
+      ],
+      "rechecks": [
+        {
+          "id": "foodsafety-temperature-recheck",
+          "publisher": "FoodSafety.gov",
+          "title": "Cook to a Safe Minimum Internal Temperature",
+          "url": "https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures",
+          "lastReviewedAt": "2024-11-21",
+          "checkedAt": "2026-10-08",
+          "verification": "重读原始网页温度表",
+          "supports": [
+            "现有肉类、禽肉、鱼、蛋品类的安全熟度依据继续有效"
+          ],
+          "notSupported": [
+            "固定煎烤分钟数保证所有规格熟透",
+            "安全温度等同软烂或最好口感"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "user-approved-cases",
+      "sourceType": "user_endorsed_examples_and_assistant_operational_synthesis",
+      "date": "2026-10-07",
+      "localArtifact": "../../../../output/chef-professional-evaluation-20261007/cases-r2.json",
+      "supports": [
+        "蛋液操作终点的表达",
+        "按条件写鲜冻和鱼处理分支",
+        "明确检查时点与口感分支",
+        "双灶两锅整餐排程及目标交互"
+      ],
+      "notSupported": [
+        "厨房实测",
+        "所有条件的固定分钟数",
+        "计时和勾选功能已实现",
+        "真实用户的家庭人数或设备记忆"
+      ]
+    },
+    {
+      "id": "anqiujin-53-visual-reference",
+      "publisher": "安秋金",
+      "title": "53条做菜视频的抽帧、字幕与逐菜操作研究",
+      "sourceType": "original_video_sampled_visual_reference",
+      "checkedAt": "2026-10-07",
+      "importedAt": "2026-10-08",
+      "researchArtifact": "../../../../output/anqiujin-cooking-research-20261007/研究汇总.json",
+      "authorizationFile": "anqiujin-import-20261007.json",
+      "methodsFile": "anqiujin-cooking-methods.md",
+      "libraryFile": "anqiujin-recipe-library-20261007.json",
+      "verification": "原片全时段抽帧与关键字幕核看，逐菜来源hash核对；非连续核听、厨房品尝或新手复现。",
+      "supports": [
+        "有来源的材料与分阶段操作",
+        "水分目的、调味时序和观察终点",
+        "以当前条件选取技法参考"
+      ],
+      "notSupported": [
+        "原片未说的确定克重、温度与条件",
+        "所有家庭条件同一烹饪时长",
+        "53条均为完整验证配方或全部中餐最佳做法"
+      ]
+    },
+    {
+      "id": "cdc-raw-flour-dough",
+      "publisher": "CDC",
+      "title": "Raw Flour and Dough",
+      "url": "https://www.cdc.gov/food-safety/foods/no-raw-dough.html",
+      "sourceUpdatedDate": "2025-11-24",
+      "checkedAt": "2026-10-08",
+      "verification": "原始网页正文直读；FDA另一个候选链接不可访问，未当依据。",
+      "supports": [
+        "生面粉和生蛋风险",
+        "不要尝生面团或生面糊",
+        "可直接食用面糊需适用处理和明确标签"
+      ],
+      "notSupported": [
+        "每种曲奇通用中心温度或时长",
+        "未验证源片配方的安全熟透保证"
+      ],
+      "sourceType": "official_food_safety_guidance"
+    },
+    {
+      "id": "cdc-safer-food-choices",
+      "publisher": "CDC",
+      "title": "Safer Food Choices",
+      "url": "https://www.cdc.gov/food-safety/foods/safer-food-choices.html",
+      "sourceDisplayedDate": "2025-01-31",
+      "checkedAt": "2026-10-08",
+      "verification": "原始网页正文直读",
+      "supports": [
+        "未充分加热的慕斯或酱料采用相应巴氏杀菌蛋",
+        "熟度随食材品类确定"
+      ],
+      "notSupported": [
+        "巴氏蛋能处理生面粉风险",
+        "所有生食宣传蛋均经巴氏杀菌",
+        "替代后口感完全相同"
+      ],
+      "sourceType": "official_food_safety_guidance"
+    },
+    {
+      "id": "guangtan-18-visual-reference",
+      "publisher": "主厨广坦",
+      "authorAccount": "chefguangtan",
+      "title": "18条西餐甜品原作的全段抽帧与关键字幕研究",
+      "url": "https://www.douyin.com/user/MS4wLjABAAAA0SN5KpX6BoWc6pLxwCsBDHj2hiYNrOKDHYtydffbDFQ",
+      "sourceType": "original_video_sampled_visual_reference",
+      "checkedAt": "2026-10-08",
+      "importedAt": "2026-10-08",
+      "researchArtifact": "../../../../output/guangtan-western-dessert-research-20261008/selected-source-manifest.json",
+      "authorizationFile": "western-dessert-import-20261008.json",
+      "methodsFile": "chef-western-dessert-methods.md",
+      "libraryFile": "western-dessert-recipe-library-20261008.json",
+      "westernCount": 9,
+      "dessertCount": 9,
+      "verification": "作者与各原作页面核对、全段联系页和关键字幕补查、原片及研究hash核对；非连续核听、厨房品尝或新手复现。",
+      "supports": [
+        "按序动作、原片已展示的材料参数与检查状态",
+        "上色/中心熟度分工、酱汁/烩饭/蛋糕/泡芙/开酥/组装的有条件参考",
+        "保留缺项的原作规格与演示参数"
+      ],
+      "notSupported": [
+        "未显示的厚度、模具规格、克数或时长",
+        "相同分钟数适用于全部家庭设备和用量",
+        "全熟/健康/减脂标题或作者试吃即代表食安、营养或味觉验证",
+        "18份均为完整厨房验证配方或覆盖全部西餐甜品"
+      ]
+    }
+  ],
+  "maintenance": "保留旧来源与示范条件；更新日期只表示核对时点。新菜、新规格或来源矛盾重新核对，不用虚构证书代替专业依据。"
+}

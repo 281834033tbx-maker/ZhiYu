@@ -1,0 +1,4 @@
+interface:
+  display_name: "zhiyu_shengtu Skill"
+  short_description: "生成、编辑并验收智域 NPC 的日常与人物图片"
+  default_prompt: "Use $zhiyu-imagegen to create or edit an NPC image from an already-decided image task."

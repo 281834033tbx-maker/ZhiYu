@@ -1,0 +1,4 @@
+.zy-chat>.zy-thread { position:relative; }
+.zy-local-location-highlight { position:absolute; z-index:0; left:0; right:0; background:rgb(0 0 0 / 6%); pointer-events:none; }
+html[data-zy-theme='dark'] .zy-local-location-highlight { background:rgb(255 255 255 / 9%); }
+.zy-thread-inner { position:relative; z-index:1; }

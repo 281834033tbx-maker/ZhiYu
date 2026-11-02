@@ -1,0 +1,591 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-10",
+  "characterId": "zhou-chef",
+  "status": "assistant_authored_regression_candidates",
+  "source": "interactive-task-feedback-20261010.json",
+  "protocolMapping": "expectedDecision 是语义测试标签。普通 continue/clarify/none 对应 task.decision=none；明确恢复已有暂停任务对应 resume；create/update/pause/cancel 对应同名正式协议操作。",
+  "decisions": {
+    "create": "创建新的一次执行任务",
+    "continue": "继续现有任务，不新建",
+    "update": "修改现有任务",
+    "cancel": "结束/撤销现有任务，不删除历史",
+    "pause": "暂停现有任务",
+    "clarify": "自然询问实际目标或关键缺口，不生成任务",
+    "none": "普通回答，不生成任务"
+  },
+  "cases": [
+    {
+      "id": "explicit_task_goal",
+      "userText": "给我一个地三鲜任务，把步骤安排好。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "create",
+      "expectedGoal": "地三鲜",
+      "why": "明确任务委托且目标确定"
+    },
+    {
+      "id": "explicit_task_missing_goal",
+      "userText": "交给你一个任务。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "clarify",
+      "why": "显式委托不允许凭空编造目标"
+    },
+    {
+      "id": "direct_execution",
+      "userText": "我要做地三鲜。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "create",
+      "expectedGoal": "地三鲜",
+      "why": "用户指定的明确执行例子"
+    },
+    {
+      "id": "scheduled_execution",
+      "userText": "今晚就做地三鲜，你帮我安排步骤。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "create",
+      "expectedGoal": "地三鲜",
+      "why": "具体执行计划；不因此自动开启计时"
+    },
+    {
+      "id": "recipe_question",
+      "userText": "地三鲜怎么做？",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "做法咨询，不证明用户要执行"
+    },
+    {
+      "id": "full_recipe_consultation",
+      "userText": "给我看看地三鲜的完整做法。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "完整教程也可能只是知识请求"
+    },
+    {
+      "id": "wish",
+      "userText": "最近挺想吃地三鲜的。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "想吃不等于决定做"
+    },
+    {
+      "id": "hypothetical",
+      "userText": "要是周末有空，我就做地三鲜。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "条件愿望尚未承诺执行"
+    },
+    {
+      "id": "quotation",
+      "userText": "我朋友说“我要做地三鲜”，你觉得他会做吗？",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "引用他人语言不等于当前用户执行"
+    },
+    {
+      "id": "explicit_no_task",
+      "userText": "我要做地三鲜，但不要建任务，直接讲做法。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "用户当前明确否定任务创建"
+    },
+    {
+      "id": "past_completion",
+      "userText": "昨天我做了地三鲜。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "过去事实不新建任务"
+    },
+    {
+      "id": "accept_specific_plan",
+      "userText": "就做这个。",
+      "context": [
+        {
+          "role": "user",
+          "text": "晚上做什么？我只有土豆、茄子、青椒。"
+        },
+        {
+          "role": "assistant",
+          "text": "做地三鲜吧，我一步步带你做。"
+        }
+      ],
+      "activeTasks": [],
+      "expectedDecision": "create",
+      "expectedGoal": "地三鲜",
+      "why": "接受唯一具体执行方案"
+    },
+    {
+      "id": "accept_unknown_reference",
+      "userText": "就做这个。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "clarify",
+      "why": "没有可解析的具体指代"
+    },
+    {
+      "id": "repeat_existing",
+      "userText": "我要做地三鲜。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 0,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "continue",
+      "expectedTaskId": "task_dsx_1",
+      "why": "对应未完成任务应继续，不重复创建"
+    },
+    {
+      "id": "in_task_question",
+      "userText": "茄子这一步要去皮吗？",
+      "context": [
+        {
+          "role": "assistant",
+          "text": "接下来处理地三鲜里的土豆和茄子。"
+        }
+      ],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 1,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "continue",
+      "expectedTaskId": "task_dsx_1",
+      "why": "解决当前任务内疑问"
+    },
+    {
+      "id": "replace_ingredient",
+      "userText": "这个地三鲜里我想把青椒换成彩椒。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 0,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "update",
+      "expectedTaskId": "task_dsx_1",
+      "why": "改原方案，保留适用进度"
+    },
+    {
+      "id": "report_finished_step",
+      "userText": "地三鲜的食材都切好了。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "currentStep": "食材准备",
+          "completedSteps": 0,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "continue",
+      "expectedTaskId": "task_dsx_1",
+      "why": "步骤反馈是已有任务推进，不是创建"
+    },
+    {
+      "id": "cancel_current",
+      "userText": "取消这次地三鲜任务，我不做了。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 1,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "cancel",
+      "expectedTaskId": "task_dsx_1",
+      "why": "明确结束原任务"
+    },
+    {
+      "id": "pause_current",
+      "userText": "地三鲜先暂停，等我忙完再继续。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 1,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "pause",
+      "expectedTaskId": "task_dsx_1",
+      "why": "保留进度，停止推进"
+    },
+    {
+      "id": "resume_current",
+      "userText": "继续刚才那个地三鲜。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "paused",
+          "completedSteps": 1,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "continue",
+      "expectedTaskId": "task_dsx_1",
+      "why": "恢复已有任务"
+    },
+    {
+      "id": "task_keyword_question",
+      "userText": "你说的任务卡是什么意思？",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "任务一词是咨询对象而非执行委托"
+    },
+    {
+      "id": "quoted_assignment",
+      "userText": "帮我润色“给我一个地三鲜任务”这句话。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "文本编辑不执行引用中的任务"
+    },
+    {
+      "id": "explicit_delegation",
+      "userText": "交给你一个任务，安排我现在做地三鲜。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "create",
+      "expectedGoal": "地三鲜",
+      "why": "明确委托且目标和执行已确定"
+    },
+    {
+      "id": "new_repeat_execution",
+      "userText": "地三鲜今天再做一次，另开一份任务。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 1,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "create",
+      "expectedGoal": "地三鲜",
+      "why": "明确新的执行，不覆盖旧进度"
+    },
+    {
+      "id": "undo_task",
+      "userText": "撤销刚建的地三鲜任务。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 0,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "cancel",
+      "expectedTaskId": "task_dsx_1",
+      "why": "撤销指向已有任务"
+    },
+    {
+      "id": "just_asking",
+      "userText": "地三鲜怎么做？我只是问问，今天不做。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "明确只咨询"
+    },
+    {
+      "id": "missing_menu",
+      "userText": "帮我安排今天做一顿饭。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "clarify",
+      "why": "执行意图明确但具体菜单尚未确定"
+    },
+    {
+      "id": "short_acceptance",
+      "userText": "行。",
+      "context": [
+        {
+          "role": "user",
+          "text": "今晚想自己做饭，你推荐一道吧。"
+        },
+        {
+          "role": "assistant",
+          "text": "做地三鲜吧，我带你一步步做。"
+        }
+      ],
+      "activeTasks": [],
+      "expectedDecision": "create",
+      "expectedGoal": "地三鲜",
+      "why": "在具体执行提议后的同意"
+    },
+    {
+      "id": "finished_existing",
+      "userText": "地三鲜任务做完了。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 2,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "continue",
+      "expectedTaskId": "task_dsx_1",
+      "why": "完成报告对应原任务，由程序核验完成状态"
+    },
+    {
+      "id": "completed_old_new_intent",
+      "userText": "我要再做一次地三鲜。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_old",
+          "title": "地三鲜",
+          "status": "completed",
+          "completedSteps": 3,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "create",
+      "expectedGoal": "地三鲜",
+      "why": "旧任务已结束，新的执行有明确意图"
+    },
+    {
+      "id": "different_new_goal",
+      "userText": "另外帮我安排现在做番茄炒蛋的步骤。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 1,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "create",
+      "expectedGoal": "番茄炒蛋",
+      "why": "另一个明确执行目标，可与原任务并存"
+    },
+    {
+      "id": "deny_create_step_format",
+      "userText": "分三步告诉我地三鲜怎么做，只讲解，不建立任务。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "步骤形式不覆盖明确否定"
+    },
+    {
+      "id": "negation_of_quotation",
+      "userText": "我不是说“我要做地三鲜”，我是问饭店怎么做的。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "否定及引用优先，属于做法咨询"
+    },
+    {
+      "id": "general_cooking_intent",
+      "userText": "我要做饭。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "clarify",
+      "why": "不能从泛化意图擅自敲定菜名"
+    },
+    {
+      "id": "complete_step_event",
+      "event": {
+        "kind": "task_step_completion",
+        "taskId": "task_dsx_1",
+        "stepId": "prep",
+        "completed": true,
+        "version": 2,
+        "persisted": true
+      },
+      "userText": null,
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 1,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "continue",
+      "expectedTaskId": "task_dsx_1",
+      "why": "持久完成事件触发下一步提示，不伪造成用户聊天"
+    },
+    {
+      "id": "undo_step_event",
+      "event": {
+        "kind": "task_step_completion",
+        "taskId": "task_dsx_1",
+        "stepId": "prep",
+        "completed": false,
+        "version": 3,
+        "persisted": true
+      },
+      "userText": null,
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 0,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "continue",
+      "expectedTaskId": "task_dsx_1",
+      "why": "撤销同一步，不新建且取消未发过时提示"
+    },
+    {
+      "id": "evidence_cannot_strip_negative_suffix",
+      "userText": "我要做地三鲜，但不要建任务，直接讲做法。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "adversarialEvidence": "我要做地三鲜",
+      "why": "正面证据片段不能抹去完整消息的任务否定"
+    },
+    {
+      "id": "reported_clause_after_comma",
+      "userText": "我朋友说，今晚要做地三鲜。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "adversarialEvidence": "今晚要做地三鲜",
+      "why": "逗号分句仍属于转述，不能当当前用户委托"
+    },
+    {
+      "id": "quoted_cancel",
+      "userText": "我朋友说“取消地三鲜任务”。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 1,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "none",
+      "why": "状态变更也须是真实用户委托，不能执行引用"
+    },
+    {
+      "id": "negated_cancel",
+      "userText": "不要取消地三鲜任务，等我回来继续。",
+      "context": [],
+      "activeTasks": [
+        {
+          "id": "task_dsx_1",
+          "title": "地三鲜",
+          "status": "active",
+          "completedSteps": 1,
+          "totalSteps": 3
+        }
+      ],
+      "expectedDecision": "none",
+      "why": "明确反对取消，不按取消关键词操作"
+    },
+    {
+      "id": "named_plan_acceptance",
+      "userText": "那就地三鲜吧。",
+      "context": [
+        {
+          "role": "user",
+          "text": "今晚想自己做饭，帮我定一道。"
+        },
+        {
+          "role": "assistant",
+          "text": "就做地三鲜吧，我一步步带你做。"
+        }
+      ],
+      "activeTasks": [],
+      "expectedDecision": "create",
+      "expectedGoal": "地三鲜",
+      "why": "有真实具体方案后的自然敲定"
+    },
+    {
+      "id": "named_plan_acceptance_with_ok",
+      "userText": "好，就做地三鲜。",
+      "context": [
+        {
+          "role": "assistant",
+          "text": "今晚做地三鲜吧，我带你做。"
+        }
+      ],
+      "activeTasks": [],
+      "expectedDecision": "create",
+      "expectedGoal": "地三鲜",
+      "why": "接受具体执行提议不必限定为固定确认词"
+    },
+    {
+      "id": "ok_is_not_any_old_plan_acceptance",
+      "userText": "好。",
+      "context": [
+        {
+          "role": "assistant",
+          "text": "地三鲜可以分三步做。"
+        },
+        {
+          "role": "user",
+          "text": "我只是了解做法，今天不做。"
+        },
+        {
+          "role": "assistant",
+          "text": "生抽主要用来调味，老抽更偏向上色。"
+        }
+      ],
+      "activeTasks": [],
+      "expectedDecision": "none",
+      "why": "当前应答针对知识说明，不能指代前面的过期执行建议"
+    },
+    {
+      "id": "affirmed_desire_to_execute",
+      "userText": "我想做地三鲜，带我一步一步做吧。",
+      "context": [],
+      "activeTasks": [],
+      "expectedDecision": "create",
+      "expectedGoal": "地三鲜",
+      "why": "带做委托把想做落实为当前具体执行意图"
+    }
+  ]
+}

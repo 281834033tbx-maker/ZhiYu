@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "characterId": "zhou-chef",
+  "clientDate": "2026-10-18",
+  "status": "user_required_installed",
+  "sourceSession": "output/chef-dialogue-training-20261018/session.json",
+  "topicId": "CHEF-TRAIN-20261018-02",
+  "originalContext": [
+    {
+      "id": "turn-01",
+      "rawUserPrefix": "-",
+      "userText": "行 我现在去买",
+      "messages": [
+        "好，回家了叫我。"
+      ],
+      "answerStatus": "criticized",
+      "userFeedback": [
+        "CHEF-TRAIN-20261018-02-F01"
+      ],
+      "knowledgeRead": [
+        {
+          "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-guidance.md",
+          "scope": "已接受菜单后简短承接当前采购阶段，不重复清单；准备去买不当已买齐。"
+        }
+      ],
+      "externalLookup": false,
+      "extraModelInvoked": false,
+      "productionWrites": false
+    }
+  ],
+  "priorCorrection": {
+    "id": "CHEF-TRAIN-20261018-02-F01",
+    "status": "user_required",
+    "operatorText": "不对 不是回家了叫我 是开始做的时候叫我！",
+    "scope": "用户已接受菜单并准备采购后的接续时点",
+    "rule": "让用户实际开始做饭时再叫赵一帆，不把回家当成准备执行或需要接续指导的时点。",
+    "preferredWording": "好，开始做的时候叫我。"
+  },
+  "latestAuthorization": {
+    "id": "CHEF-TRAIN-20261018-02-F02",
+    "status": "user_required",
+    "operatorText": "这点很重要，不要只表面答应，现在把它写入skill，不是回家了叫我，是开始做的时候，就用户当你跟你说他要做饭，但是他现在在买菜或者是忙别的的时候，结束语问的是，你要开始做的时候，你就叫我一声。",
+    "scope": "已确定要做饭但此刻尚在采购或忙其他事务的收尾",
+    "requirement": "接续时点是准备开始做饭；当前明确授权立即写入本人Skill。"
+  },
+  "latestClarification": {
+    "id": "CHEF-TRAIN-20261018-02-F03",
+    "status": "user_required",
+    "operatorText": "但你注意，我说的这个开始做的时候就叫我一声，不是你固定按照这个模板，而是是这个意思，就是开始做就叫。",
+    "scope": "覆盖将前述示意句固化为模板的理解",
+    "requirement": "保存开始做时再接续的语义判断，措辞按场景自然生成，不固定照抄句子。"
+  },
+  "adoptedMeaning": "用户仍需厨师指导但尚在采购或忙其他事时，结束语自然约在开始做饭时再联系。",
+  "phrasesAreExamplesOnly": true,
+  "fixedReplyRequired": false,
+  "scope": "仅厨师本人进度判断与自然收尾；普通买菜闲聊、拒绝带做及已开做状态分别判断。",
+  "regressionScenarios": [
+    {
+      "id": "CHEF-START-T01",
+      "context": "用户已接受菜单和当前指导，尚未采购",
+      "input": "行，我现在去买",
+      "expectedIntent": "自然收尾，在开始做饭时接上指导",
+      "mustNotImply": [
+        "只是到家就必须报告",
+        "已经买齐或开做"
+      ]
+    },
+    {
+      "id": "CHEF-START-T02",
+      "context": "菜已买完，但用户还有工作",
+      "input": "我先忙一会儿，晚点做",
+      "expectedIntent": "等准备开做再接续",
+      "mustNotImply": [
+        "忙完必然立即开做"
+      ]
+    },
+    {
+      "id": "CHEF-START-T03",
+      "context": "已到家但明确未开做",
+      "input": "我到家了，先歇一会儿",
+      "expectedIntent": "不把到家当开始；需要收尾时以开做为接续点",
+      "mustNotImply": [
+        "已经开始处理食材"
+      ]
+    },
+    {
+      "id": "CHEF-START-T04",
+      "context": "菜单与必要条件已有",
+      "input": "我现在准备开始做了",
+      "expectedIntent": "直接接当前操作",
+      "mustNotImply": [
+        "还要等回家",
+        "必须再报告同一个开始"
+      ]
+    },
+    {
+      "id": "CHEF-START-T05",
+      "context": "用户明确拒绝继续带做",
+      "input": "我自己做就行，不用带我",
+      "expectedIntent": "尊重拒绝并自然收住",
+      "mustNotImply": [
+        "仍必须开做时报到"
+      ]
+    },
+    {
+      "id": "CHEF-START-T06",
+      "context": "用户在别处做饭",
+      "input": "买好了，我去朋友家做",
+      "expectedIntent": "接续点仍为准备做饭，地点沿用实际情况",
+      "mustNotImply": [
+        "需要先回自己家"
+      ]
+    }
+  ],
+  "verificationLimit": "场景描述用于检查意图，不是固定模型答案；本次不冒称真实模型逐场景语感已验收。",
+  "toolBoundary": "用户报告准备做或开始做不自动启动计时、主动消息或后台任务。",
+  "installedFiles": [
+    "npc-skills/skills/zhiyu-professional-dialogue/references/chef-guidance.md",
+    "npc-skills/skills/zhiyu-professional-dialogue/references/chef-condition-routing.md"
+  ]
+}

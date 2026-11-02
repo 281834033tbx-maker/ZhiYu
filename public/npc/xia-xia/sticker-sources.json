@@ -1,0 +1,13 @@
+{
+  "retrievedAt": "2026-09-16",
+  "status": "assistant_selected_candidates_not_user_endorsed",
+  "rightsStatus": "not_verified_for_commercial_distribution",
+  "items": [
+    {"id":"cowThinking","file":"cow-thinking.jpg","page":"https://www.sina.cn/news/detail/5277404395209251.html","source":"https://wx2.sinaimg.cn/middle/006fbYi5gy1i8pan807tjj30le0kedgm.jpg","format":"static JPEG","visuallyInspected":true},
+    {"id":"cowMagic","file":"cow-magic.jpg","page":"https://www.sina.cn/news/detail/5277404395209251.html","source":"https://wx2.sinaimg.cn/middle/006fbYi5gy1i8pan8nou4j30e00dpjvu.jpg","format":"static JPEG","visuallyInspected":true},
+    {"id":"catHelp","file":"cat-help.jpg","page":"https://www.sina.cn/news/detail/5300316578254071.html","source":"https://wx1.sinaimg.cn/middle/d315af46gy1idatpul92aj20xi0xidh1.jpg","format":"static JPEG","visuallyInspected":true},
+    {"id":"catNotOk","file":"cat-not-ok.jpg","page":"https://www.sina.cn/news/detail/5300316578254071.html","source":"https://wx4.sinaimg.cn/middle/d315af46gy1idatpuae0aj20ve0vet9p.jpg","format":"static JPEG","visuallyInspected":true}
+  ],
+  "notSelected": ["上网犯贱被打：文字与受伤表现不适合作为常规关怀素材"],
+  "note": "原图原样存储；来源未当成角色现实经历，静态图不冒充动图，之前被否定的三张猫图未恢复。"
+}

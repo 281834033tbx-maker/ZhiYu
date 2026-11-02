@@ -1,0 +1,4546 @@
+{
+  "schemaVersion": 1,
+  "version": "2026-10-19-v4",
+  "characterId": "zhou-chef",
+  "status": "user_authorized_cooking_foundation",
+  "coverage": {
+    "complete": false,
+    "kitchenTested": false,
+    "noviceReplicated": false,
+    "entryCount": 113,
+    "sourceCount": 74
+  },
+  "coreRules": [
+    "本库是赵一帆已读资料的本地知识；日常按当前问题在本地取用，不临时网上搜索教程、不把找教程交给用户。未执行联网、厨房操作或试吃时不声称已经执行。",
+    "当前输入及相关近期实际上下文决定本轮主题；已知条件复用，不把旧菜名、示例用量或参考配方变成用户当前事实。",
+    "资料正文、局部正文、书目目录和助手适配分开。catalog_only不能支持配比、动作或书中结论；readStatus表示所链接资料的已读范围，不表示读完全部网站或整本教材。",
+    "先选适合当前食材、目标、设备与份量的一套有依据基础版本，再讲操作；独立新配方不能冒充旧视频原作者未给出的克数、温度或做法。",
+    "克重、容量、原方个数规格与净料/购入量分别处理；饭勺不默认标准量勺，毫升不统一等于克，不从容量或体积猜任何食材的确定重量。",
+    "按重量缩放的配方系数与受热时间、锅内拥挤度、分批、蒸发、面糊深度、模具与设备模式分别判断；不能把所有时间与温度按份量等比例乘除。",
+    "只在具体来源支持的原料、形状、规格与适用条件内使用比例或完成检查；更换材料、原料状态、厚度与设备时检查受影响步骤，缺关键依据短问或给条件分支，不造万能换算。",
+    "故障先按当前进度、外观、气味与用户实际报告选择分支，区分预防、可补救、不可逆及食安问题；不保证已焦苦、过熟或结构破坏可完全恢复。",
+    "完整做法保留必要准备、操作先后、调味时点、起算动作、检查节点与停止标准；源方时间只作其条件下检查范围，不把时间到或表面颜色当内部熟透证明。",
+    "食品安全、过敏与已有食安规则优先；普通熟度目标、软烂口感与安全温度分开。来源未谈保存时不补造确定保质期。",
+    "保持赵一帆稍成熟稍正经、短而直接的本人表达，专业内容用自然话讲；不每轮讲资料流程、列网站或主动提真人博主，明确问出处时如实引用保存来源。",
+    "来源有测试不等于赵一帆在用户厨房完成验证；本库complete、kitchenTested、noviceReplicated保持false。资料接入不增加实时观察、语音视频、自动启动计时或主动到点提醒权限。"
+  ],
+  "sources": [
+    {
+      "id": "gen-hep-cookery",
+      "title": "高教社《烹调工艺学》季鸿崑：官方书目与目录",
+      "url": "https://xuanshu.hep.com.cn/front/book/findBookDetails?bookId=59cc2696ba9eb884cf815e08",
+      "readStatus": "catalog_only",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-hep-cookery.md",
+      "supports": [
+        "仅确认书目和主题覆盖，不支持任何烹调操作事实"
+      ],
+      "limitations": [
+        "未获得可读样章或正文；全书学习未完成；不得把目录当作书中方法。"
+      ]
+    },
+    {
+      "id": "gen-hep-ingredients",
+      "title": "高教社《烹饪原料学（第五版）》王向阳：官方书目与目录",
+      "url": "https://xuanshu.hep.com.cn/front/h5Mobile/bookDetails?bookId=67323863e4efbc722ba48674",
+      "readStatus": "catalog_only",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-hep-ingredients.md",
+      "supports": [
+        "仅确认版本、ISBN 和原料主题，不支持任何原料处理事实"
+      ],
+      "limitations": [
+        "未获得可读样章或正文；不可宣称已学习此书。"
+      ]
+    },
+    {
+      "id": "gen-bc-units",
+      "title": "BCcampus：Units of Measurement",
+      "url": "https://opentextbc.ca/basickitchenandfoodservicemanagement/chapter/units-of-measurement/",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-bc-units.md",
+      "supports": [
+        "统一计量体系",
+        "质量、体积、长度和温度的区分"
+      ],
+      "limitations": [
+        "实读计量原则及公制表；未使用全章各换算表。没有具体食材密度表，不能把毫升直接当克。"
+      ]
+    },
+    {
+      "id": "gen-bc-conversion",
+      "title": "BCcampus：Converting and Adjusting Recipes and Formulas",
+      "url": "https://opentextbc.ca/basickitchenandfoodservicemanagement/chapter/convert-and-adjust-recipes-and-formulas/",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-bc-conversion.md",
+      "supports": [
+        "份量换算系数",
+        "尽可能先称重",
+        "放大后的调味、设备和试做边界"
+      ],
+      "limitations": [
+        "只实读本章；原文个别示例的份数文字与算式不一致，未导入这些示例。换算不等于实做成功。"
+      ]
+    },
+    {
+      "id": "gen-cia-yield",
+      "title": "CIA Technique of the Quarter：Kitchen Calculations",
+      "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/kitchen-calculations.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-cia-yield.md",
+      "supports": [
+        "采购重与净料重",
+        "净料率公式和变异"
+      ],
+      "limitations": [
+        "实读 PDF 第 1–3 页相关正文；不是所有热学或配方原理的来源。近似净料率表不作为中国食材固定常数。"
+      ]
+    },
+    {
+      "id": "gen-cia-stir-fry",
+      "title": "CIA Technique of the Quarter：Stir-Fry",
+      "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/stir-fry.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-cia-stir-fry.md",
+      "supports": [
+        "炒制原料切配和表面水分",
+        "下锅顺序与末段薄芡"
+      ],
+      "limitations": [
+        "实读 PDF 第 1–2 页技法正文；后面示例菜未整体导入。外观和嫩度不是肉类安全熟度的唯一保证。此段没有全菜通用浆料克数。"
+      ]
+    },
+    {
+      "id": "gen-cia-foundations",
+      "title": "CIA Consulting：Essential Foundations of Culinary Supplemental Chef Lecture Notes",
+      "url": "https://www.ciaconsulting.org/wp-content/uploads/2025/06/Supplemental-Chef-Lecture-Notes-Essential-Foundations-of-Culinary-CP.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-cia-foundations.md",
+      "supports": [
+        "浅锅排汽与满锅",
+        "大块煎后继续加热",
+        "炖煮的液体和质地终点",
+        "炖后单独整理酱汁"
+      ],
+      "limitations": [
+        "只实读 PDF 第 7–10、26–29 页，未读全书。讲义部分温度表不作为本库食品安全标准；叉签检查只判断软烂，不替代安全要求。"
+      ]
+    },
+    {
+      "id": "gen-gisslen-heat",
+      "title": "Wayne Gisslen《Professional Cooking》Chapter 6：Basic Principles of Cooking and Food Science（Escoffier 官方教学资源）",
+      "url": "https://resources.escoffier.edu/textbooks/gisslen/professional_cooking_06.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-gisslen-heat.md",
+      "supports": [
+        "干湿热区分",
+        "时间取决于传热和原料条件",
+        "加盖与蒸发",
+        "中心熟度和目标质地分别检查"
+      ],
+      "limitations": [
+        "只实读印刷页 116–119 的相关正文；旧教材其他食安数值不导入。无需全书全文复制。"
+      ]
+    },
+    {
+      "id": "gen-gisslen-meat",
+      "title": "Wayne Gisslen《Professional Cooking》Chapter 16：Understanding Meats and Game（Escoffier 官方教学资源）",
+      "url": "https://resources.escoffier.edu/textbooks/gisslen/professional_cooking_16.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-gisslen-meat.md",
+      "supports": [
+        "结缔组织与长时烹调",
+        "过熟失水不能靠封汁修复",
+        "冷冻肉需重新设计步骤"
+      ],
+      "limitations": [
+        "只实读印刷页 476–480 及关联结缔组织说明。不同部位仍有例外；原文冷冻所需倍数不转成通用时间。安全熟度另遵循当前本地安全资料。"
+      ]
+    },
+    {
+      "id": "gen-bc-meatcuts",
+      "title": "BCcampus：Introduction to Cutting and Processing Meats",
+      "url": "https://opentextbc.ca/meatcutting/chapter/introduction-to-cutting-and-processing-meats/",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-bc-meatcuts.md",
+      "supports": [
+        "部位和组织影响技法选择",
+        "肉类切法与商品名差异"
+      ],
+      "limitations": [
+        "实读的是本章，不是全书。原文将胶原变化简写为单一温度，本库不用它作精确软化阈值。区域商品名不能机械一一对应。"
+      ]
+    },
+    {
+      "id": "gen-cia-sauces",
+      "title": "CIA Technique of the Quarter：Examining Sauces",
+      "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/examining-sauces.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-cia-sauces.md",
+      "supports": [
+        "分次加淀粉浆",
+        "按实际批次和挂汁目标调浓稠",
+        "浓稀的不同修正路径"
+      ],
+      "limitations": [
+        "只实读 PDF 第 4、7、16 页及关联说明；不把西式酱汁时间或配方比例当中式上浆万能比例。来源未给所有中餐芡型参数。"
+      ]
+    },
+    {
+      "id": "gen-bc-thickener",
+      "title": "BCcampus：Types of Thickening Agents",
+      "url": "https://opentextbc.ca/ingredients/chapter/types-of-thickening-agents/",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-bc-thickener.md",
+      "supports": [
+        "普通玉米淀粉与预糊化淀粉差异",
+        "糖酸等配方条件影响增稠"
+      ],
+      "limitations": [
+        "本章是烘焙原料语境，不将水果馅淀粉用量用于中餐薄芡。未导入胶体数值，也未宣称玉米/土豆/木薯淀粉可一比一互换。"
+      ]
+    },
+    {
+      "id": "gen-ice-pan-sauce",
+      "title": "Institute of Culinary Education：Sauce-Making 102 — How to Make a Pan Sauce to Pair with Any Protein",
+      "url": "https://www.ice.edu/blog/chicken-pan-sauce-recipe",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-ice-pan-sauce.md",
+      "supports": [
+        "焦香锅底与烧焦锅底区别",
+        "收浓按风味和稠度停止"
+      ],
+      "limitations": [
+        "文章及其鸡肉锅底酱配方正文已读；不是所有烧糊菜肴的救场试验。配方不含鸡肉本身的烹制步骤。"
+      ]
+    },
+    {
+      "id": "gen-escoffier-flavor",
+      "title": "Auguste Escoffier School of Culinary Arts：The Four Elements of Flavor — Balancing Salt, Fat, Acid, and Heat",
+      "url": "https://www.escoffier.edu/blog/recipes/four-elements-of-flavor-salt-fat-acid-and-heat/",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-general/gen-escoffier-flavor.md",
+      "supports": [
+        "过咸以无盐基底稀释",
+        "少量调整后复尝",
+        "拥挤与表面水分妨碍褐变"
+      ],
+      "limitations": [
+        "实读盐味纠正、Heat、口感诊断相关段落；未采用原文“土豆吸盐”建议。酸甜脂肪可改变感受，不能当成消除盐分。"
+      ]
+    },
+    {
+      "id": "bake-success-guide",
+      "title": "Recipe Success Guide — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/recipes/resources/recipe-success-guide",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/success-guide.md",
+      "supports": [
+        "称量与用料规格",
+        "配方温度术语",
+        "烤箱预热"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "这是 King Arthur 配方的默认约定；不能据此宣布所有其他作者配方也采用同一规格。"
+      ]
+    },
+    {
+      "id": "bake-professional-reference",
+      "title": "Professional Baker's Reference — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/pro/reference",
+      "readStatus": "catalog_only",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/professional-reference.md",
+      "supports": [
+        "专业参考目录：烘焙百分比、面温、酵母等"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "bake-bakers-percentage",
+      "title": "Baker's Percentage — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/pro/reference/bakers-percentage",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/bakers-percentage.md",
+      "supports": [
+        "面粉基准百分比",
+        "按目标面团重缩放",
+        "酵种中的面粉水应计入总量"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "bake-pan-sizes",
+      "title": "The essential alternative baking pan sizes — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2019/04/23/the-essential-alternative-baking-pan-sizes",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/pan-sizes.md",
+      "supports": [
+        "底面积与面糊深度",
+        "不同模具的限制"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "正文主要讨论蛋糕与条状点心，不是所有面包、戚风或器具的换模通则。"
+      ]
+    },
+    {
+      "id": "bake-dough-temperature",
+      "title": "Dough Temperature — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/pro/reference/dough-temperature",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/dough-temperature.md",
+      "supports": [
+        "揉后目标面温",
+        "水温与摩擦升温"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "专业生产的目标面温经验值有例外；摩擦因子须按本人机器、速度、时长及装载量试算。"
+      ]
+    },
+    {
+      "id": "bake-yeast",
+      "title": "Yeast — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/pro/reference/yeast",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/yeast.md",
+      "supports": [
+        "盐糖对发酵",
+        "鲜酵母与干酵母规格"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "换算是一般指南，包装制造商要求优先；不把一种 active dry 产品的处理方式覆盖全部产品。"
+      ]
+    },
+    {
+      "id": "bake-choux-base",
+      "title": "Pâte à Choux — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/recipes/pate-a-choux-recipe",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/choux-base.md",
+      "supports": [
+        "泡芙面糊配方",
+        "炒面团、降温、逐个加蛋"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "此页只给面糊，烘烤尺寸与温度另用已完整阅读的 Cream Puffs and Éclairs；不移植到广坦原方。"
+      ]
+    },
+    {
+      "id": "bake-cream-puffs",
+      "title": "Cream Puffs and Éclairs — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/recipes/cream-puffs-and-eclairs-recipe",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/cream-puffs.md",
+      "supports": [
+        "12个奶油泡芙原方基线",
+        "分段烘烤、排湿与装馅"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "正文还含闪电泡芙及其馅料变体；本次基线仅选12个奶油泡芙，不称已取得完整卡仕达馅原方。"
+      ]
+    },
+    {
+      "id": "bake-choux-science",
+      "title": "What is pâte à choux? Why we love this versatile French dough — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2022/10/24/what-is-pate-a-choux-why-we-love-this-versatile-french-dough",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/choux-science.md",
+      "supports": [
+        "蒸汽膨胀与结构",
+        "湿壁塌陷",
+        "延迟装馅",
+        "空壳冷冻复脆"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "文章转述 Paula Figoni 的说明；未阅读该教材全文，不能称已读 How Baking Works。"
+      ]
+    },
+    {
+      "id": "bake-white-bread",
+      "title": "King Arthur's Classic White Sandwich Bread — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/recipes/king-arthurs-classic-white-sandwich-bread-recipe",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/white-bread.md",
+      "supports": [
+        "一大条白吐司原方基线",
+        "水量区间",
+        "发酵与熟度终点"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "此版是未漂白中筋面粉配方，不能直接承诺适用任意国产高筋粉或450g带盖吐司盒。"
+      ]
+    },
+    {
+      "id": "bake-shortbread",
+      "title": "Shortbread Cookies — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/recipes/shortbread-cookies-recipe",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/shortbread.md",
+      "supports": [
+        "shortbread原方基线",
+        "整盘与小饼厚度变化"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "2026-06-25更新页面；基线选择无巧克力装饰的原味主配方。"
+      ]
+    },
+    {
+      "id": "bake-birthday-cake",
+      "title": "Classic Birthday Cake — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/recipes/classic-birthday-cake-recipe",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/birthday-cake.md",
+      "supports": [
+        "热牛奶黄蛋糕蛋糕体基线",
+        "8/9英寸双层模具差异",
+        "熟度检查"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "本次只存蛋糕体完整基线；巧克力糖霜未纳入条目，不称整套生日蛋糕已经家庭验证。"
+      ]
+    },
+    {
+      "id": "bake-curdled-batter",
+      "title": "A pastry chef’s trick for preventing curdled cake batter — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2021/08/11/preventing-curdled-cake-batter-emulsions",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/curdled-batter.md",
+      "supports": [
+        "黄油打发类蛋糕乳化",
+        "加蛋时轻微分离的处理边界"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "适用黄油糖打发后加蛋的做法，不能套到泡芙或把泡芙加蛋初期的分散当同类故障。"
+      ]
+    },
+    {
+      "id": "bake-creaming",
+      "title": "Creaming butter and sugar: How to get it right — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2015/04/27/creaming-butter-sugar",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/creaming.md",
+      "supports": [
+        "软化黄油状态",
+        "打发不足与过度"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "针对 creaming method；不要强制要求融化黄油配方也使用打发法。"
+      ]
+    },
+    {
+      "id": "bake-cake-foam",
+      "title": "How to bake high-rising cakes — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2019/03/26/how-to-bake-high-rising-cakes",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/cake-foam.md",
+      "supports": [
+        "打发头选择",
+        "全蛋/蛋白泡沫终点",
+        "合粉后保留空气"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "文章使用美国蛋糕分类术语；本次不把其分类翻译成中国配方的统一戚风定义。"
+      ]
+    },
+    {
+      "id": "bake-whipped-cream",
+      "title": "How to fix whipped cream — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2019/06/04/fix-whipped-cream",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/whipped-cream.md",
+      "supports": [
+        "打发奶油状态控制",
+        "过打可救与不可恢复边界"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "适用于动物性 heavy/whipping cream；不外推植物脂打发奶油、已经加胶或复配乳化产品。"
+      ]
+    },
+    {
+      "id": "bake-cake-flat",
+      "title": "Help! Why did my cake fall flat? — King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2025/05/22/why-did-my-cake-fall-flat",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/cake-flat.md",
+      "supports": [
+        "蛋糕出炉后塌陷的两类排查"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "是排查方向，不是照片单凭一个症状即可确诊；未覆盖全部塌陷原因。"
+      ]
+    },
+    {
+      "id": "bake-bechamel",
+      "title": "Béchamel Sauce — Culinary Institute of America / CIA Foodies",
+      "url": "https://www.ciafoodies.com/bechamel-sauce/",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-baking/bechamel.md",
+      "supports": [
+        "白酱原方体积基线",
+        "渐加温牛奶去结块",
+        "煨至去生粉味"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "网页只用美式杯勺与按口味调味，未给全部克重或最终产率；不能冒充已量化的克重白酱。"
+      ]
+    },
+    {
+      "id": "follow-lau-tomato-eggs",
+      "title": "Daddy Lau / Made With Lau：Tomato & Eggs（番茄炒蛋，红糖番茄酱薄芡版本）",
+      "url": "https://www.madewithlau.com/recipes/tomato-and-eggs",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/followup/follow-lau-tomato-eggs.md",
+      "supports": [
+        "独立番茄炒蛋基础配方及其原美制用量",
+        "蛋和番茄分段烹调",
+        "番茄去皮与成品质地",
+        "水淀粉重新搅匀后渐加并按稠度停止"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝、专业厨师复审或新手复现验收；来源作者经验不等于赵一帆的实际验证。",
+        "实读本网页配方、操作和相关问答；未连续观看配套视频或阅读作者全部课程。",
+        "本版偏酸甜且有红糖、番茄酱和水淀粉；不是所有中式家庭番茄炒蛋的唯一标准，也不是安秋金原方补数。",
+        "网页以 US 模式提供量勺和 lb；油列 2 Tbsp，但步骤另写少量补油而未量化。鸡蛋大小、姜片厚度和番茄成熟度也非完全定量；不宣称全项精确克重。"
+      ]
+    },
+    {
+      "id": "follow-lau-ginger-scallion-fish",
+      "title": "Daddy Lau / Made With Lau：Steamed Fish with Ginger & Scallion（姜葱蒸整鱼版本）",
+      "url": "https://www.madewithlau.com/recipes/steamed-fish-ginger-scallion",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/followup/follow-lau-ginger-scallion-fish.md",
+      "supports": [
+        "独立姜葱蒸整罗非鱼的原美制基础配方",
+        "厚鱼背开口及沸水上锅起算",
+        "蒸后倒去汁液再加新姜葱和调味",
+        "整鱼与鱼片及不同大小需要调整检查时点"
+      ],
+      "limitations": [
+        "尚无本项目厨房实做、品尝、专业厨师复审或新手复现验收；来源作者经验不等于赵一帆的实际验证。",
+        "实读本网页配方、操作和相关问答；未连续观看配套视频或阅读作者全部课程。",
+        "原方 1½ lb 罗非鱼示范已去鳞去内脏，但网页未明确 1½ lb 是清理前还是清理后称重，不能从中导出固定净料率。",
+        "原文把鱼眼变白用作指标；本库不把它或时间到当作中心安全熟度证明。",
+        "原方成品淋酱含料酒且未另加热；不可宣称无酒精，不适合要求完全避酒的情形。"
+      ]
+    },
+    {
+      "id": "measure-nist-household",
+      "title": "NIST SP 430：Household Weights and Measures（2004）及 Metric Household 容量表",
+      "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication430e2004.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/followup/measurement-source-notes.md",
+      "supports": [
+        "公制量茶匙5mL和量汤匙15mL",
+        "美式常用杯约237mL、厨房近似240mL与公制杯250mL的区分",
+        "容量不是食材重量"
+      ],
+      "limitations": [
+        "只核PDF第1页厨房容量/质量单位及第2页The Metric System in the Kitchen相关段落，并交叉读NIST网页容量表；未使用食材每杯近似克重表。",
+        "美式传统量具与公制量具存在小幅差异；5mL/15mL不等于所有国家、年代及家用餐具的容量。"
+      ]
+    },
+    {
+      "id": "measure-donna-hay-australian",
+      "title": "Donna Hay 官方：Conversions 的 volume measures",
+      "url": "https://www.donnahay.com.au/recipes/conversion",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/followup/measurement-source-notes.md",
+      "supports": [
+        "该澳大利亚配方体系的量茶匙5mL、量汤匙20mL及量杯250mL"
+      ],
+      "limitations": [
+        "仅核volume measures的茶匙、汤匙和整杯行；未采用页面其他重量、鸡蛋、食品安全或杯分数行。",
+        "这是作者明确的配方计量体系，不能推成在澳大利亚售卖的所有量具都为20mL汤匙。"
+      ]
+    },
+    {
+      "id": "measure-argo-gravy-one-cup",
+      "title": "Argo Foodservice 官方：Gravy 的单杯版本",
+      "url": "https://www.argofoodservice.com/recipe/Gravy",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/followup/measurement-source-notes.md",
+      "supports": [
+        "该肉汁单杯版本使用1杯总水、1茶匙汤底和1汤匙Argo玉米淀粉",
+        "总水的四分之一用于冷调浆，其余用于加热汤底",
+        "该配方加浆后充分煮沸并维持1分钟"
+      ],
+      "limitations": [
+        "完整阅读本页配方和Directions，但仅导入单杯版本；quart/gallon行未当作精确线性换算依据。",
+        "这是普通玉米淀粉肉汁的来源基线；未测中国品牌淀粉，未定义所有菜共用的薄芡、浓芡阈值，也不提供淀粉确定克重。"
+      ]
+    },
+    {
+      "id": "measure-argo-cornstarch-faq",
+      "title": "Argo 官方FAQ：玉米淀粉的烹调技法及变稀原因",
+      "url": "https://argostarch.com/faqs/",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-17",
+      "localEvidencePath": "output/chef-local-foundation-20261017/followup/measurement-source-notes.md",
+      "supports": [
+        "玉米淀粉先用冷液体调匀，温和持续搅动加热",
+        "酸、过量糖脂与液体不足可能降低增稠效果",
+        "长时煮沸或猛烈搅动可能使已稠混合物变稀"
+      ],
+      "limitations": [
+        "只读Cooking/Preparation中基础技法及冷却后变稀的相关问答；不导入家用非食品用途、医疗说法、全淀粉互换或烤箱通用转换。",
+        "品牌对普通玉米淀粉的指导不能扩成土豆淀粉、木薯粉、即溶淀粉及全部蛋奶酱汁的统一加热要求。"
+      ]
+    },
+    {
+      "id": "audit-chef-cia-stock",
+      "title": "A No-Rules Guide for Rich Chicken Stock",
+      "url": "https://www.ciafoodies.com/a-no-rules-guide-for-rich-chicken-stock/",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-cia-stock.md",
+      "supports": [
+        "清高汤的温和煨煮、撇沫、作为浓缩基底时通常不放盐、浅容器快速冷却"
+      ],
+      "limitations": [
+        "CIA这一鸡高汤参考，不把4–5小时推广为鱼汤/蔬菜汤通用时长；原冲洗禽骨步骤不照抄为家庭必须洗生禽。"
+      ]
+    },
+    {
+      "id": "audit-chef-cia-sauces",
+      "title": "CIA Technique of the Quarter: Examining Sauces",
+      "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/examining-sauces.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-cia-sauces.md",
+      "supports": [
+        "Espagnole/demi-glace/jus lié的机制区分；荷兰酱渐加黄油与破乳补救"
+      ],
+      "limitations": [
+        "同URL已是旧gen-cia-sauces来源，本轮扩读与落为新条目，不谎称首次找到；只保存事实摘要，不复制讲义或完整配方；乳化成功不代表鸡蛋杀菌完成。"
+      ]
+    },
+    {
+      "id": "audit-chef-kab-swiss",
+      "title": "Swiss Meringue — Recipe by Lasheeda Perry",
+      "url": "https://www.kingarthurbaking.com/recipes/swiss-meringue-recipe",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-kab-swiss.md",
+      "supports": [
+        "本版瑞士蛋白霜先蛋白与糖隔水加热，再打至medium-stiff peaks"
+      ],
+      "limitations": [
+        "King Arthur测试厨房/作者配方，非法规或全部蛋白霜统一标准；未复制全配方；不得用意式糖浆温度替代蛋白整体温度。"
+      ]
+    },
+    {
+      "id": "audit-chef-kab-gelatin",
+      "title": "From jiggly cakes to fluffy marshmallows, here’s how to use gelatin",
+      "url": "https://www.kingarthurbaking.com/blog/2022/02/16/how-to-use-gelatin-in-baking-and-desserts",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-kab-gelatin.md",
+      "supports": [
+        "吉利丁冷水预吸水、充分溶解后冷却定形；粉片/品牌强度不同，不作万能等量替换"
+      ],
+      "limitations": [
+        "此文部分理论引述其他作者，本条只用King Arthur明确写出的实用操作；不采用文内通用杯数比作所有甜点定量公式。"
+      ]
+    },
+    {
+      "id": "audit-chef-kab-lamination",
+      "title": "Intro to Laminated Baking: Bake Your Best Palmiers, Danish, and Croissants — Workbook",
+      "url": "https://shop.kingarthurbaking.com/content/class-pdfs/Laminated-Baking-Workbook-King-Arthur-Baking.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-kab-lamination.md",
+      "supports": [
+        "包油时面团与油块可塑性匹配；过冷断油；发酵环境过暖或烤温过低会漏油"
+      ],
+      "limitations": [
+        "家庭开酥教学，不替代某厂家片状黄油的技术规格；断油和漏油不是只凭一张照片即可唯一诊断。"
+      ]
+    },
+    {
+      "id": "audit-chef-callebaut-curves",
+      "title": "Guide to Different Tempering Methods",
+      "url": "https://www.callebaut.com/en-US/guide-different-tempering-methods",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-callebaut-curves.md",
+      "supports": [
+        "811的冷却27℃与工作31–32℃；823/W2各自融化、降温、回温工作区；开始制作前做小样检验"
+      ],
+      "limitations": [
+        "厂商具体产品曲线，不是所有品牌/复合巧克力通用温度；Ruby华氏栏出现单位排版异常，本条不用该行。",
+        "源表811的融化栏为40–50℃/113–122℉，但113℉换算为45℃，℃/℉不一致；前文概述40–45℃又与表中范围不同。因此不将该页811融化区作为教学参数，须按实际包装或该具体产品技术单确认。"
+      ]
+    },
+    {
+      "id": "audit-chef-callebaut-fluidity",
+      "title": "Choosing the right chocolate for the right application",
+      "url": "https://www.callebaut.com/en/callebaut-chocolate-academy/tutorials/fluidity",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-callebaut-fluidity.md",
+      "supports": [
+        "该品牌流动性与可可脂、薄壳/厚壳用途和包装水滴标识有关"
+      ],
+      "limitations": [
+        "品牌技术资料，不能由可可百分比一项推算任意巧克力流动性；不用该页推广行业统一水滴制度。"
+      ]
+    },
+    {
+      "id": "audit-chef-valrhona-emulsion",
+      "title": "Chocolate emulsion",
+      "url": "https://www.valrhona.com/en/l-ecole-valrhona/discover-l-ecole-valrhona/chocolate-terminology/chocolate-emulsion",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-valrhona-emulsion.md",
+      "supports": [
+        "甘纳许中水相逐渐加入脂相、起初黏弹中心、温度与搅拌决定乳化"
+      ],
+      "limitations": [
+        "厂商术语/技法说明，不提供任意巧克力与奶油的万能比例；早期暂时分离不能泛化为任何阶段油水分离都正常。"
+      ]
+    },
+    {
+      "id": "audit-chef-kab-starter",
+      "title": "Ripe sourdough starter: Here’s what that means",
+      "url": "https://www.kingarthurbaking.com/blog/2016/05/17/ripe-sourdough-starter",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-kab-starter.md",
+      "supports": [
+        "喂养后体积与活动变化判断成熟、不能只数小时；酵种按重量更稳定"
+      ],
+      "limitations": [
+        "文内示例6–8小时受环境及酵种影响，不作统一闹钟；外观成熟不用于判断污染或食用安全。"
+      ]
+    },
+    {
+      "id": "audit-chef-kab-overproof",
+      "title": "Over-proofed bread dough: How to save your loaf",
+      "url": "https://www.kingarthurbaking.com/blog/2018/02/21/over-proofed-bread?page=0",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-kab-overproof.md",
+      "supports": [
+        "普通活性干酵母/非单次快速发酵即发酵母面团，过发可尝试排气重整再醒"
+      ],
+      "limitations": [
+        "原文明确通常不适合长发酵酸种；本例英寸高度和20分钟不是所有模具与面团统一值。"
+      ]
+    },
+    {
+      "id": "audit-chef-usda-leftovers",
+      "title": "How do I handle leftovers safely?",
+      "url": "https://ask.fsis.usda.gov/article/How-do-I-handle-leftovers-safely",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-usda-leftovers.md",
+      "supports": [
+        "剩食浅容器分装尽快冷藏；两小时/高温一小时；冷藏3–4天"
+      ],
+      "limitations": [
+        "美国面向消费者的剩食建议，不是全部食品保质期；不适用于超过时限后再冷藏就恢复安全。"
+      ]
+    },
+    {
+      "id": "audit-chef-usda-temps",
+      "title": "Safe Minimum Internal Temperature Chart",
+      "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-usda-temps.md",
+      "supports": [
+        "用食品温度计测中心安全温度；整块红肉145°F+3分钟静置、红肉绞肉160°F、禽165°F"
+      ],
+      "limitations": [
+        "美国消费者最低安全温度建议，不等同餐厅喜欢的几分熟；不是受控低温长时杀菌工艺表。"
+      ]
+    },
+    {
+      "id": "audit-chef-fda-allergens",
+      "title": "Food Allergies",
+      "url": "https://www.fda.gov/food/nutrition-food-labeling-and-critical-foods/food-allergies?lv=true",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-20261019/audit-chef-fda-allergens.md",
+      "supports": [
+        "美国九大过敏原、复杂原料标签、交叉接触与非穷尽性"
+      ],
+      "limitations": [
+        "美国标签框架，不冒充中国法律；九类不是所有可能的食物过敏原；不承担诊断/脱敏或个人安全阈值制定。"
+      ]
+    },
+    {
+      "id": "chef-import-source-cia-prochef10-sample",
+      "title": "The Professional Chef, 10th ed. — Chapter 1 official excerpt",
+      "institution": "CIA / Wiley",
+      "url": "https://catalogimages.wiley.com/images/db/pdf/9781119490951.excerpt.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-cia-prochef10-sample.md",
+      "supports": [
+        "16页样章；精读印刷页7–15安全/HACCP。"
+      ],
+      "readScope": "16页样章；精读印刷页7–15安全/HACCP。",
+      "limitations": [
+        "仅本样章；个别持温/冷却叙述不一，不用作现行法规阈值。"
+      ]
+    },
+    {
+      "id": "chef-import-source-cia-calculations",
+      "title": "Technique of the Quarter: Kitchen Calculations",
+      "institution": "CIA",
+      "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/kitchen-calculations.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-cia-calculations.md",
+      "supports": [
+        "印刷页5–8单位/净料成本、11–14配方成本。"
+      ],
+      "readScope": "印刷页5–8单位/净料成本、11–14配方成本。",
+      "limitations": [
+        "不用有排版/算术错误的个别算例。"
+      ]
+    },
+    {
+      "id": "chef-import-source-cia-eggs",
+      "title": "Technique of the Quarter: Egg Cookery",
+      "institution": "CIA",
+      "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/egg-cookery.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-cia-eggs.md",
+      "supports": [
+        "印刷页1–2带壳蛋、8–9卷蛋、12–14乳蛋派/舒芙蕾。"
+      ],
+      "readScope": "印刷页1–2带壳蛋、8–9卷蛋、12–14乳蛋派/舒芙蕾。",
+      "limitations": [
+        "口感技法不代替蛋类安全温度。"
+      ]
+    },
+    {
+      "id": "chef-import-source-cia-sauces-extra",
+      "title": "Technique of the Quarter: Examining Sauces — additional sections",
+      "institution": "CIA",
+      "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/examining-sauces.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-cia-sauces-extra.md",
+      "supports": [
+        "印刷页12–15 beurre blanc及搭配/淋酱；其余已读部分保留原库。"
+      ],
+      "readScope": "印刷页12–15 beurre blanc及搭配/淋酱；其余已读部分保留原库。",
+      "limitations": [
+        "同URL本轮只追加此前未结构化的这两项。"
+      ]
+    },
+    {
+      "id": "chef-import-source-cia-poach-lesson",
+      "title": "High School Lesson Plan: Shallow Poaching",
+      "institution": "CIA",
+      "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/shallow-poaching.pdf",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-cia-poach-lesson.md",
+      "supports": [
+        "3页教学计划第1页明确poaching低于simmering。"
+      ],
+      "readScope": "3页教学计划第1页明确poaching低于simmering。",
+      "limitations": [
+        "主体是教学目标；没有给实际温度区间和完整操作。"
+      ]
+    },
+    {
+      "id": "chef-import-source-kab-preferments",
+      "title": "Baking with preferments",
+      "institution": "King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2020/02/05/baking-with-preferments",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-kab-preferments.md",
+      "supports": [
+        "2020-02-05正文四类预发酵物与实例。"
+      ],
+      "readScope": "2020-02-05正文四类预发酵物与实例。",
+      "limitations": [
+        "仅对应本文条件，不是全领域标准。"
+      ]
+    },
+    {
+      "id": "chef-import-source-kab-pastry-cream",
+      "title": "Pastry Cream (Crème Pâtissière)",
+      "institution": "King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/recipes/pastry-cream-creme-patissiere-recipe",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-kab-pastry-cream.md",
+      "supports": [
+        "更新2026-10-08；主配方步骤3–7及奶油混合说明。"
+      ],
+      "readScope": "更新2026-10-08；主配方步骤3–7及奶油混合说明。",
+      "limitations": [
+        "该版含玉米淀粉，不套无淀粉英式蛋奶酱。"
+      ]
+    },
+    {
+      "id": "chef-import-source-kab-leaveners",
+      "title": "What’s the difference between baking soda and baking powder?",
+      "institution": "King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2021/09/10/baking-soda-vs-baking-powder-substitutions",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-kab-leaveners.md",
+      "supports": [
+        "2021-09-10正文原理与双效泡打粉；不用全文通用替代倍数。"
+      ],
+      "readScope": "2021-09-10正文原理与双效泡打粉；不用全文通用替代倍数。",
+      "limitations": [
+        "仅对应本文条件，不是全领域标准。"
+      ]
+    },
+    {
+      "id": "chef-import-source-kab-cocoa",
+      "title": "Dutch-process vs. natural cocoa",
+      "institution": "King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2020/07/15/dutch-process-vs-natural-cocoa",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-kab-cocoa.md",
+      "supports": [
+        "2020-07-15正文酸碱与膨松关联；不采通用替代倍数。"
+      ],
+      "readScope": "2020-07-15正文酸碱与膨松关联；不采通用替代倍数。",
+      "limitations": [
+        "仅对应本文条件，不是全领域标准。"
+      ]
+    },
+    {
+      "id": "chef-import-source-kab-caramel",
+      "title": "How to make caramel (without breaking a sweat)",
+      "institution": "King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2022/12/12/how-to-make-caramel",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-kab-caramel.md",
+      "supports": [
+        "2022-12-12正文干/湿法、晶种与清锅；旧库已有热糖防溅不重复。"
+      ],
+      "readScope": "2022-12-12正文干/湿法、晶种与清锅；旧库已有热糖防溅不重复。",
+      "limitations": [
+        "仅对应本文条件，不是全领域标准。"
+      ]
+    },
+    {
+      "id": "chef-import-source-kab-glutenfree",
+      "title": "Which gluten-free flour should I use?",
+      "institution": "King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2023/05/04/which-gluten-free-flour-should-i-use",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-kab-glutenfree.md",
+      "supports": [
+        "2023-05-04正文四种面粉用途/小麦淀粉说明。"
+      ],
+      "readScope": "2023-05-04正文四种面粉用途/小麦淀粉说明。",
+      "limitations": [
+        "仅该品牌配方与产品；无麸质并不自动无小麦。"
+      ]
+    },
+    {
+      "id": "chef-import-source-kab-sorbet",
+      "title": "Strawberry Sorbet",
+      "institution": "King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/recipes/strawberry-sorbet-recipe",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-kab-sorbet.md",
+      "supports": [
+        "更新2022-09-21；两种方法步骤1–14。"
+      ],
+      "readScope": "更新2022-09-21；两种方法步骤1–14。",
+      "limitations": [
+        "未复制整份配方，不把草莓版本换成果冻/乳冰淇淋。"
+      ]
+    },
+    {
+      "id": "chef-import-source-kab-prebake",
+      "title": "How to prebake pie crust — and why you should",
+      "institution": "King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/blog/2021/05/24/prebake-pie-crust",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-kab-prebake.md",
+      "supports": [
+        "2021-05-24正文全烤/半烤与冷藏加重物。"
+      ],
+      "readScope": "2021-05-24正文全烤/半烤与冷藏加重物。",
+      "limitations": [
+        "仅对应本文条件，不是全领域标准。"
+      ]
+    },
+    {
+      "id": "chef-import-source-cal-under",
+      "title": "Tempering — How to remedy undercrystallised chocolate",
+      "institution": "Callebaut / Chocolate Academy",
+      "url": "https://www.callebaut.com/en/callebaut-chocolate-academy/tutorials/tempering/undercrystallised",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-cal-under.md",
+      "supports": [
+        "公开网页症状段；完整视频需免费注册，未观看。"
+      ],
+      "readScope": "公开网页症状段；完整视频需免费注册，未观看。",
+      "limitations": [
+        "只录公开症状，不冒称已学到视频补救步骤。"
+      ]
+    },
+    {
+      "id": "chef-import-source-cal-over",
+      "title": "Tempering — How to remedy overcrystallised chocolate",
+      "institution": "Callebaut / Chocolate Academy",
+      "url": "https://www.callebaut.com/en/callebaut-chocolate-academy/tutorials/tempering/overcrystallised",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-cal-over.md",
+      "supports": [
+        "公开网页症状段；完整视频需免费注册，未观看。"
+      ],
+      "readScope": "公开网页症状段；完整视频需免费注册，未观看。",
+      "limitations": [
+        "只录公开症状，不补造视频方法。"
+      ]
+    },
+    {
+      "id": "chef-import-source-cal-bloom",
+      "title": "Troubleshooting: Chocolate Bloom",
+      "institution": "Callebaut / Chocolate Academy",
+      "url": "https://www.callebaut.com/en-AU/callebaut-chocolate-academy/troubleshooting/chocolate-bloom",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-cal-bloom.md",
+      "supports": [
+        "公开网页第1–2类起霜原因和处理。"
+      ],
+      "readScope": "公开网页第1–2类起霜原因和处理。",
+      "limitations": [
+        "不用该页晶型编号的宽泛表述。"
+      ]
+    },
+    {
+      "id": "chef-import-source-cal-storage",
+      "title": "Storing — How to store chocolate products",
+      "institution": "Callebaut / Chocolate Academy",
+      "url": "https://www.callebaut.com/en/callebaut-chocolate-academy/tutorials/storing/how-to-store",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-cal-storage.md",
+      "supports": [
+        "公开网页Good to Know正文；未观看嵌入视频。"
+      ],
+      "readScope": "公开网页Good to Know正文；未观看嵌入视频。",
+      "limitations": [
+        "未提供本条所需统一保质期。"
+      ]
+    },
+    {
+      "id": "chef-import-source-val-ganache",
+      "title": "Chocolate Ganache",
+      "institution": "L’École Valrhona",
+      "url": "https://www.valrhona.com/en/l-ecole-valrhona/discover-l-ecole-valrhona/chocolate-terminology/chocolate-ganache",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-val-ganache.md",
+      "supports": [
+        "公开主文经典/打发甘纳许及过稀处理。"
+      ],
+      "readScope": "公开主文经典/打发甘纳许及过稀处理。",
+      "limitations": [
+        "不用文内把过稀单因归为未乳化的概括。"
+      ]
+    },
+    {
+      "id": "chef-import-source-val-anglaise",
+      "title": "Crème anglaise",
+      "institution": "L’École Valrhona",
+      "url": "https://www.valrhona.com/en/l-ecole-valrhona/discover-l-ecole-valrhona/chocolate-terminology/creme-anglaise",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-val-anglaise.md",
+      "supports": [
+        "主文步骤6–9及与卡仕达差异。"
+      ],
+      "readScope": "主文步骤6–9及与卡仕达差异。",
+      "limitations": [
+        "未采用原页蛋黄糖静置3–4小时的无冷链说明。"
+      ]
+    },
+    {
+      "id": "chef-import-source-val-mousse",
+      "title": "Chocolate Mousse",
+      "institution": "L’École Valrhona",
+      "url": "https://www.valrhona.com/en/l-ecole-valrhona/discover-l-ecole-valrhona/chocolate-terminology/chocolate-mousse",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-val-mousse.md",
+      "supports": [
+        "公开主文蛋白型/英式蛋奶酱型构成。"
+      ],
+      "readScope": "公开主文蛋白型/英式蛋奶酱型构成。",
+      "limitations": [
+        "原页生蛋版本无完整克数及杀菌工艺，不直接导成可执行生蛋配方。"
+      ]
+    },
+    {
+      "id": "chef-import-source-fda-eggs",
+      "title": "What You Need to Know About Egg Safety",
+      "institution": "FDA",
+      "url": "https://www.fda.gov/food/buy-store-serve-safe-food/what-you-need-know-about-egg-safety",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-fda-eggs.md",
+      "supports": [
+        "公开正文Storing/Preparing。"
+      ],
+      "readScope": "公开正文Storing/Preparing。",
+      "limitations": [
+        "美国消费者建议；不扩成全甜品保存期。"
+      ]
+    },
+    {
+      "id": "chef-import-source-fda-seafood",
+      "title": "Selecting and Serving Fresh and Frozen Seafood Safely",
+      "institution": "FDA",
+      "url": "https://www.fda.gov/food/buy-store-serve-safe-food/selecting-and-serving-fresh-and-frozen-seafood-safely",
+      "readStatus": "partial_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-fda-seafood.md",
+      "supports": [
+        "公开正文Selecting Shellfish及Eating Raw Seafood。"
+      ],
+      "readScope": "公开正文Selecting Shellfish及Eating Raw Seafood。",
+      "limitations": [
+        "美国消费者指南；本条不提供家庭生食杀虫工艺。"
+      ]
+    },
+    {
+      "id": "chef-import-source-kab-salt",
+      "title": "Salt — Professional Baker’s Reference",
+      "institution": "King Arthur Baking",
+      "url": "https://www.kingarthurbaking.com/pro/reference/salt",
+      "readStatus": "full_text",
+      "reviewedAt": "2026-10-19",
+      "localEvidencePath": "output/chef-local-foundation-20261017/research-source-import-20261019/chef-import-source-kab-salt.md",
+      "supports": [
+        "公开正文盐对面筋和发酵作用。"
+      ],
+      "readScope": "公开正文盐对面筋和发酵作用。",
+      "limitations": [
+        "不采品牌偏好与所有面包强制盐比例。"
+      ]
+    }
+  ],
+  "entries": [
+    {
+      "id": "chef-gen-measure-system",
+      "title": "用量先分清克、毫升和标准量勺",
+      "topics": [
+        "配比",
+        "用量",
+        "重量",
+        "克数",
+        "勺",
+        "量勺",
+        "一勺",
+        "毫升",
+        "称重"
+      ],
+      "category": "ratio",
+      "summary": "一份配方采用统一计量体系；体积与重量分别标明。",
+      "rules": [
+        "优先给克和毫升；使用勺时标清量勺容量，不把家庭餐勺当标准。",
+        "未知食材密度时，不把相同毫升与克数画等号。"
+      ],
+      "conditions": [
+        "用户需要完整材料用量或要求把“适量/一勺”具体化。"
+      ],
+      "sourceIds": [
+        "gen-bc-units"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "这是计量表达规则，不能凭空补齐某道菜缺失的克数。"
+      ]
+    },
+    {
+      "id": "chef-gen-edible-weight",
+      "title": "采购重、净料重与熟重分清",
+      "topics": [
+        "配比",
+        "用量",
+        "重量",
+        "克数",
+        "净重",
+        "净料",
+        "去皮",
+        "去骨",
+        "带骨",
+        "采购"
+      ],
+      "category": "ingredient",
+      "summary": "用于菜谱的净料重不同于买回来的整件重量。",
+      "rules": [
+        "材料表说明是否为去皮、去骨、清理后的净重；净料率为净料量÷采购量。",
+        "需要采购多少时考虑真实损耗，不把表中近似率当每次固定值。"
+      ],
+      "conditions": [
+        "整鱼、带骨肉、未剥蔬菜与菜谱净料规格不一致。"
+      ],
+      "sourceIds": [
+        "gen-cia-yield"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "生料净重也不等于烹调后熟重；本条未给任何食材固定净料率。"
+      ]
+    },
+    {
+      "id": "chef-gen-scale-amount",
+      "title": "份量改变先算总产量系数",
+      "topics": [
+        "配比",
+        "份量",
+        "翻倍",
+        "加倍",
+        "放大",
+        "缩小",
+        "两人份",
+        "四人份",
+        "一半",
+        "换算"
+      ],
+      "category": "scaling",
+      "summary": "先用目标产量÷原产量换算原料量，再检查操作。",
+      "rules": [
+        "每份大小相同才可直接按份数求系数；每份大小也变化时按总产量计算。",
+        "干料尽可能用重量换算；香辛料和最终调味预留复尝调整。",
+        "原料条件和目标比例保持相同时，亦可用目标净主料重÷原方净主料重求同版配方的起算系数；不能把带骨采购重与去骨净料重混算，或只凭肉重生成不存在的菜谱。",
+        "算术示例（不是任何菜的推荐配比）：原方4份、每份200g，目标6份、每份250g；总产量由800g变1500g，系数1.875；原方某配料20g的等比例起点为37.5g。不能只按6÷4算1.5。",
+        "同一基准若原净主料500g改为750g且其他条件不变，系数为1.5；原方10g配料的等比例起点为15g。这只演示已有配方换算，不代表所有盐、香料或水量最终照搬，也不改变受热终点。"
+      ],
+      "conditions": [
+        "已有明确基准配方，需要调整份数或份量。"
+      ],
+      "sourceIds": [
+        "gen-bc-conversion"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "比例换算只产生起点，不能证明放大后的成品已验证。"
+      ]
+    },
+    {
+      "id": "chef-gen-scale-process",
+      "title": "用量翻倍不等于时间翻倍",
+      "topics": [
+        "翻倍",
+        "加倍",
+        "放大",
+        "缩小",
+        "时间",
+        "多久",
+        "分批",
+        "锅小",
+        "烤箱",
+        "份量"
+      ],
+      "category": "scaling",
+      "summary": "产量和设备改变会影响传热、搅拌与制作时间。",
+      "rules": [
+        "换算后复查容量、层厚、分批与设备；不把全部加热或搅拌时间乘同一系数。",
+        "常用不同份量应单独留版本并标明试做状态。"
+      ],
+      "conditions": [
+        "份量或设备与基准版本不同。"
+      ],
+      "sourceIds": [
+        "gen-bc-conversion",
+        "gen-gisslen-heat"
+      ],
+      "evidenceBasis": "cross_source_synthesis",
+      "limitations": [
+        "具体新增多少时间需按食材和终点检查，不编通用增时百分比。"
+      ]
+    },
+    {
+      "id": "chef-gen-cut-consistency",
+      "title": "快炒先处理部位、切法和大小",
+      "topics": [
+        "牛肉",
+        "猪肉",
+        "炒肉",
+        "肉丝",
+        "肉片",
+        "切法",
+        "部位",
+        "厚度",
+        "筋",
+        "嚼不动"
+      ],
+      "category": "ingredient",
+      "summary": "快炒需要适合的原料与相近的小块切形。",
+      "rules": [
+        "修去不适用的筋膜与硬组织，按所选配方切成大小相近的条或片。",
+        "只说“牛肉”而部位会改变做法时，简短确认部位或包装用途。"
+      ],
+      "conditions": [
+        "准备快炒，原料部位或厚薄未明确。"
+      ],
+      "sourceIds": [
+        "gen-cia-stir-fry",
+        "gen-bc-meatcuts"
+      ],
+      "evidenceBasis": "cross_source_synthesis",
+      "limitations": [
+        "切小能改善咀嚼和加热，但不能让所有炖煮部位变成同一种嫩肉。"
+      ]
+    },
+    {
+      "id": "chef-gen-surface-water",
+      "title": "煎炒前控制多余表面水分",
+      "topics": [
+        "出水",
+        "水多",
+        "湿",
+        "炒肉",
+        "上色",
+        "煎",
+        "腌料",
+        "上浆",
+        "溅油"
+      ],
+      "category": "heat",
+      "summary": "表面游离水会影响上色并增加热油飞溅。",
+      "rules": [
+        "未裹浆的原料先处理多余表面水，再进入适合的热锅。",
+        "按配方裹浆的肉控制多余游离液，不把配方要求的浆擦掉。"
+      ],
+      "conditions": [
+        "目标为煎香、快炒；原料刚洗过、解冻后或带很多液体。"
+      ],
+      "sourceIds": [
+        "gen-cia-stir-fry"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "控表面水不是让所有食材脱水；不同浆法沿用具体配方。"
+      ]
+    },
+    {
+      "id": "chef-gen-batch-crowding",
+      "title": "锅里太挤应分批",
+      "topics": [
+        "翻倍",
+        "加倍",
+        "分批",
+        "挤",
+        "满锅",
+        "堆",
+        "出水",
+        "炒不香",
+        "不上色",
+        "锅小"
+      ],
+      "category": "scaling",
+      "summary": "煎炒需要留排汽空间，过满会妨碍褐变。",
+      "rules": [
+        "食材叠挤、明显积水且目标为煎炒时，调整单批量；份量增加可分批。",
+        "分批时同时安排已熟部分与末段调味，不只叫用户一直加大火。"
+      ],
+      "conditions": [
+        "煎炒上色；同一口锅的份量明显增加。"
+      ],
+      "sourceIds": [
+        "gen-cia-foundations",
+        "gen-escoffier-flavor"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "分批为家庭带做适配；不能据此给任意锅固定最大克数。"
+      ]
+    },
+    {
+      "id": "chef-gen-stir-fry-sequence",
+      "title": "快炒按成熟速度安排顺序",
+      "topics": [
+        "炒菜",
+        "下锅",
+        "先放",
+        "后放",
+        "硬",
+        "软",
+        "配菜",
+        "夹生",
+        "炒过头"
+      ],
+      "category": "heat",
+      "summary": "快熟和慢熟原料应按成熟需要安排先后。",
+      "rules": [
+        "所需加热更久的先处理，快熟部分后下；必要时分开处理再合锅。",
+        "酱汁和必要薄芡在适当后段完成，避免全程把快炒变成长时间泡煮。"
+      ],
+      "conditions": [
+        "一锅有肉、蔬菜等多种不同成熟速度的食材。"
+      ],
+      "sourceIds": [
+        "gen-cia-stir-fry"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "原料组合仍需具体判断；不是所有菜都固定先肉后菜。"
+      ]
+    },
+    {
+      "id": "chef-gen-heat-medium",
+      "title": "煎炒和水煮的受热方式不同",
+      "topics": [
+        "油",
+        "水",
+        "火候",
+        "热",
+        "煎",
+        "炒",
+        "炸",
+        "蒸",
+        "煮",
+        "烧",
+        "盖盖"
+      ],
+      "category": "heat",
+      "summary": "水、蒸汽、热空气和油传热不同，成品目标也不同。",
+      "rules": [
+        "要焦香脆壳时控制表面水和排汽；要煨软或温和加热时按相应湿热方法。",
+        "不能只因炉火同样是“大火”，就把煎、蒸、煮的时间互换。"
+      ],
+      "conditions": [
+        "用户换烹调方式，或问为什么加水后不再煎香。"
+      ],
+      "sourceIds": [
+        "gen-gisslen-heat"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "本条是方法原则，不给海拔、压力和各油种的通用温度。"
+      ]
+    },
+    {
+      "id": "chef-gen-thickness-time",
+      "title": "厚度、初温和设备改变检查方式",
+      "topics": [
+        "厚度",
+        "厚",
+        "薄",
+        "冰",
+        "冷藏",
+        "初温",
+        "夹生",
+        "外熟内生",
+        "时间",
+        "多久"
+      ],
+      "category": "heat",
+      "summary": "食物大小、初温和传热效率会改变达到目标的时间。",
+      "rules": [
+        "更厚或初温更低的食材不可套薄片的固定秒数；给合适检查时点和终点。",
+        "分别核对中心是否达到该食物需要的熟度，以及目标口感和上色；不把这句话当成先熟透再上色的固定工序。"
+      ],
+      "conditions": [
+        "同一道菜改了厚度、大小、初始状态或设备。"
+      ],
+      "sourceIds": [
+        "gen-gisslen-heat"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "不能以表面上色或计时结束单独判肉已安全熟透。"
+      ]
+    },
+    {
+      "id": "chef-gen-frozen-state",
+      "title": "有冰心与已解冻不能用同一流程",
+      "topics": [
+        "鲜冻",
+        "冷冻",
+        "解冻",
+        "冰心",
+        "没化透",
+        "冻肉",
+        "夹生",
+        "外熟内冻"
+      ],
+      "category": "ingredient",
+      "summary": "冻态会增加受热不均风险，步骤需按实际状态调整。",
+      "rules": [
+        "用户说冻肉或外熟内冷，先核对是否仍有硬冰心和厚度。",
+        "正常解冻后的肉可沿鲜肉方法处理；冻态直做必须有适用于该做法的版本。"
+      ],
+      "conditions": [
+        "肉类由鲜改冻、尚未完全解冻或询问直接下锅。"
+      ],
+      "sourceIds": [
+        "gen-gisslen-meat"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "不编冻肉统一多煮几分钟或统一倍数；具体安全解冻另用安全资料。"
+      ]
+    },
+    {
+      "id": "chef-gen-cut-method-match",
+      "title": "换部位可能需要换技法",
+      "topics": [
+        "牛肉",
+        "牛腩",
+        "牛腱",
+        "里脊",
+        "肩",
+        "部位",
+        "换肉",
+        "替代",
+        "煎不嫩",
+        "炖不烂"
+      ],
+      "category": "ingredient",
+      "summary": "部位的结缔组织和天然嫩度影响适用技法。",
+      "rules": [
+        "筋膜多、适合长时软化的部位与嫩部位分别选技法，不只改调味。",
+        "商品名有地区差异，必要时结合部位、包装说明和切形核对。"
+      ],
+      "conditions": [
+        "用户拿不同牛肉部位替代基准菜谱。"
+      ],
+      "sourceIds": [
+        "gen-bc-meatcuts",
+        "gen-gisslen-meat"
+      ],
+      "evidenceBasis": "cross_source_synthesis",
+      "limitations": [
+        "这是选择方法的方向，不把部位划成绝无例外的两类。"
+      ]
+    },
+    {
+      "id": "chef-gen-tough-meat-diagnosis",
+      "title": "肉硬先辨筋未软还是过熟",
+      "topics": [
+        "肉硬",
+        "柴",
+        "老",
+        "嚼不动",
+        "炖不烂",
+        "牛肉",
+        "补救",
+        "继续炖"
+      ],
+      "category": "troubleshooting",
+      "summary": "结缔组织未软与嫩肉过熟失水的处理不同。",
+      "rules": [
+        "先核对部位、当前做法、液体和质地；适合炖的筋多肉可继续温和加热并观察软化。",
+        "嫩肉已明显过熟发干时，停止无意义的加热；不能承诺继续炖或重新煎会恢复原状。"
+      ],
+      "conditions": [
+        "用户说肉硬、老或炖不烂。"
+      ],
+      "sourceIds": [
+        "gen-gisslen-meat",
+        "gen-cia-foundations"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "挽救剩余食用价值不等于恢复原有嫩度；本条没有实做救场结果。"
+      ]
+    },
+    {
+      "id": "chef-gen-braise-before-reduce",
+      "title": "炖软与收汁分成两个目标",
+      "topics": [
+        "红烧肉",
+        "炖",
+        "焖",
+        "炖不烂",
+        "肉硬",
+        "汤快干",
+        "水少",
+        "收汁",
+        "补水"
+      ],
+      "category": "troubleshooting",
+      "summary": "肉未软时要保留继续温和炖煮的条件，软后再整理汁。",
+      "rules": [
+        "汤快干先判断肉是否已软和锅底是否焦；肉还硬且未焦，恢复适合该菜继续炖的液体和火力。",
+        "肉已软而汤多，可先保留主料，再单独将汁调至目标；无需让肉全程陪着猛收。"
+      ],
+      "conditions": [
+        "适合炖煮的肉，当前汤量与软烂程度不匹配。"
+      ],
+      "sourceIds": [
+        "gen-cia-foundations",
+        "gen-gisslen-meat"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "这是对中餐带做的适配，不引用西式讲义液肉比例作为红烧肉固定配方。"
+      ]
+    },
+    {
+      "id": "chef-gen-lid-evaporation",
+      "title": "加盖炖煮与开盖收浓分清",
+      "topics": [
+        "锅盖",
+        "盖盖",
+        "开盖",
+        "水干",
+        "蒸发",
+        "收汁",
+        "炖",
+        "煨",
+        "火候"
+      ],
+      "category": "heat",
+      "summary": "加盖减少蒸发；需要收浓时应允许水分离开。",
+      "rules": [
+        "炖煮阶段按具体菜控制盖盖和缓煨，定时检查液体。",
+        "收浓阶段按需要开盖并观察浓度，不能只盯炉火档位。"
+      ],
+      "conditions": [
+        "汤汁蒸发过快或久收不浓。"
+      ],
+      "sourceIds": [
+        "gen-gisslen-heat",
+        "gen-cia-foundations"
+      ],
+      "evidenceBasis": "cross_source_synthesis",
+      "limitations": [
+        "开盖后热量损失也会改变沸腾状态；不对所有菜固定全程盖或全程开。"
+      ]
+    },
+    {
+      "id": "chef-gen-slurry-control",
+      "title": "勾芡先搅匀，再按汤汁分次加",
+      "topics": [
+        "勾芡",
+        "水淀粉",
+        "淀粉",
+        "沉淀",
+        "疙瘩",
+        "稠",
+        "挂汁",
+        "汤多",
+        "比例"
+      ],
+      "category": "ratio",
+      "summary": "芡量随当前汤汁和目标状态调整，不能只按肉重套勺数。",
+      "rules": [
+        "普通淀粉浆放置后先搅匀，再逐步加入适合的热汁；达到目标挂汁状态便停。",
+        "用已知淀粉和基础配方作为起点，检查加热后的实际浓度再补。"
+      ],
+      "conditions": [
+        "中式勾芡或其他淀粉增稠；汤量已改变。"
+      ],
+      "sourceIds": [
+        "gen-cia-sauces",
+        "gen-bc-thickener"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "不是完整上浆配方；本条不提供所有淀粉统一的粉水比或每斤肉用量。"
+      ]
+    },
+    {
+      "id": "chef-gen-starch-identity",
+      "title": "普通淀粉和即溶增稠剂不能盲换",
+      "topics": [
+        "淀粉",
+        "玉米淀粉",
+        "生粉",
+        "太白粉",
+        "替代",
+        "不稠",
+        "即溶",
+        "预糊化",
+        "糖",
+        "酸"
+      ],
+      "category": "ingredient",
+      "summary": "淀粉类型与糖酸等配料会改变增稠表现。",
+      "rules": [
+        "先确认产品类型；普通玉米淀粉需受热糊化，预糊化产品按产品说明处理。",
+        "换淀粉或加入大量糖酸后，重新检查配方与浓度，不默认为等重效果相同。"
+      ],
+      "conditions": [
+        "换增稠材料、芡不稠、甜酸馅料或酱汁。"
+      ],
+      "sourceIds": [
+        "gen-bc-thickener"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "来源为烘焙增稠语境；不将水果馅用量套到中式薄芡。"
+      ]
+    },
+    {
+      "id": "chef-gen-sauce-consistency",
+      "title": "汁太稀与太稠分别处理",
+      "topics": [
+        "稀",
+        "稠",
+        "糊",
+        "勾芡",
+        "汤多",
+        "收汁",
+        "补救",
+        "挂勺",
+        "挂汁"
+      ],
+      "category": "troubleshooting",
+      "summary": "先判断要浓缩风味还是只改变稠度，再选路径。",
+      "rules": [
+        "太稀且需要浓缩风味时适度收浓；风味已足可用适合的增稠方式。",
+        "太稠分次补与原汁匹配的液体，搅匀复查味道；不能一次灌水到失去风味。"
+      ],
+      "conditions": [
+        "主料状态可保留，问题集中在酱汁稠度。"
+      ],
+      "sourceIds": [
+        "gen-cia-sauces",
+        "gen-ice-pan-sauce"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "乳化、蛋奶等酱汁需另按自身体系处理；这不是全部酱汁的统一救法。"
+      ]
+    },
+    {
+      "id": "chef-gen-burnt-fond",
+      "title": "焦香与焦苦分开，烧焦不能承诺无损恢复",
+      "topics": [
+        "焦",
+        "糊锅",
+        "焦苦",
+        "苦",
+        "黑底",
+        "锅底",
+        "红烧肉",
+        "收汁",
+        "补救"
+      ],
+      "category": "troubleshooting",
+      "summary": "烧焦锅底的苦味会进入汁，不能当作更浓的焦香。",
+      "rules": [
+        "出现明显烧焦迹象先停止继续加热，核对锅底颜色和焦苦是否已进入食物。",
+        "不要把焦黑锅底刮进汁；明显焦苦不能用“加水即可恢复”作保证。"
+      ],
+      "conditions": [
+        "煎后做锅底酱、红烧收汁或汤汁烧干。"
+      ],
+      "sourceIds": [
+        "gen-ice-pan-sauce"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "原文直接证据为锅底酱；迁移到红烧故障属保守适配，未实测所有烧糊程度。"
+      ]
+    },
+    {
+      "id": "chef-gen-salty-correction",
+      "title": "过咸优先考虑无盐基底稀释",
+      "topics": [
+        "咸",
+        "盐多",
+        "酱油多",
+        "收汁",
+        "过咸",
+        "补救",
+        "糖",
+        "醋",
+        "加水"
+      ],
+      "category": "troubleshooting",
+      "summary": "酸甜能改变咸味感受，不能把已有盐消掉。",
+      "rules": [
+        "能接受总量增加时，分次加适合的无盐汤、基底或配料，搅匀再尝。",
+        "已经偏咸时慎继续收浓；不要把加糖醋说成去盐。"
+      ],
+      "conditions": [
+        "可尝味的熟汤、酱汁或成菜偏咸。"
+      ],
+      "sourceIds": [
+        "gen-escoffier-flavor",
+        "gen-cia-sauces"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "稀释会改总量和浓度，需要重新平衡；严重过咸不能保证恢复原菜。"
+      ]
+    },
+    {
+      "id": "chef-gen-rescue-diagnosis",
+      "title": "补救先分清当前状态和可逆范围",
+      "topics": [
+        "翻车",
+        "补救",
+        "怎么办",
+        "救",
+        "出水",
+        "夹生",
+        "炖不烂",
+        "焦苦",
+        "咸",
+        "太稠"
+      ],
+      "category": "troubleshooting",
+      "summary": "同一个症状可有不同原因，先取能改变下一步的关键状态。",
+      "rules": [
+        "按当前菜、已做步骤、火力、液体、主料熟度/质地定位；只补问决定下一步的缺失项。",
+        "给一个立即动作和检查终点，区分还能调整的汁量稠度、仍需炖软的组织与已焦苦/过熟的限制。"
+      ],
+      "conditions": [
+        "用户在烹调中报告失败或不确定状态。"
+      ],
+      "sourceIds": [
+        "gen-cia-foundations",
+        "gen-gisslen-meat",
+        "gen-cia-sauces",
+        "gen-ice-pan-sauce"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "这是跨来源整理的带教流程，不是新增厨房试验结论，也不承诺所有错误都能救。"
+      ]
+    },
+    {
+      "id": "chef-bake-weigh",
+      "title": "烘焙称量：杯勺不是任意家用勺",
+      "topics": [
+        "烘焙",
+        "用量",
+        "克数",
+        "配比",
+        "勺",
+        "一杯",
+        "面粉",
+        "称重"
+      ],
+      "category": "ratio",
+      "summary": "可称重时优先使用原方克数；体积量必须保留量杯与原料装填方法。",
+      "rules": [
+        "King Arthur 未漂白中筋粉1杯为120g；不得套成所有原料1杯120g。",
+        "干料轻舀入干量杯再刮平，液体用刻度杯并平视读数；先切后量和先量后切也要分清。"
+      ],
+      "conditions": [
+        "当前参考为 King Arthur 配方；其他来源按其自身定义。"
+      ],
+      "sourceIds": [
+        "bake-success-guide"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-ingredient-spec",
+      "title": "烘焙原料规格与替代先核对",
+      "topics": [
+        "蛋糕",
+        "泡芙",
+        "面包",
+        "黄油",
+        "奶油",
+        "鸡蛋",
+        "替代",
+        "低脂",
+        "咸黄油",
+        "无盐",
+        "规格"
+      ],
+      "category": "ingredient",
+      "summary": "原料名字相同不代表脂肪、盐度与颗粒规格相同。",
+      "rules": [
+        "该站默认Large鸡蛋、无盐美式黄油、细粒食盐、双效泡打粉；heavy/whipping cream至少30%乳脂。",
+        "粗盐与细盐不能直接按相同体积互换；非脂酸奶或酸奶油也不能默认为低脂/全脂产品的等效替代。"
+      ],
+      "conditions": [
+        "具体原方另有说明时优先原方，例如本库shortbread明确用咸黄油。"
+      ],
+      "sourceIds": [
+        "bake-success-guide"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-temperature-words",
+      "title": "配方说室温、微温要有范围",
+      "topics": [
+        "室温",
+        "微温",
+        "黄油",
+        "温度",
+        "摄氏",
+        "华氏",
+        "发酵",
+        "规格"
+      ],
+      "category": "ingredient",
+      "summary": "温度术语来自原方约定；炎热厨房不能自动叫适合打发的室温。",
+      "rules": [
+        "该站室温68–75°F≈20–23.9°C；凉室温60–67°F≈15.6–19.4°C；微温98–110°F≈36.7–43.3°C。",
+        "所有摄氏值用(°F−32)×5÷9计算并四舍五入，不代表每个配方都应使用微温水。"
+      ],
+      "conditions": [
+        "温度范围为该站术语标准，不是食品安全温区。"
+      ],
+      "sourceIds": [
+        "bake-success-guide"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-oven-preheat",
+      "title": "烤箱预热与热区：先确认实际炉温",
+      "topics": [
+        "烤箱",
+        "预热",
+        "火力",
+        "温度",
+        "上色",
+        "生",
+        "湿芯",
+        "焦",
+        "热风"
+      ],
+      "category": "heat",
+      "summary": "原方温度先建立在充分预热和对应设备条件下。",
+      "rules": [
+        "可用独立炉温计检查是否充分预热；面板提示到温不等于腔体已稳定。",
+        "默认中层，需转盘时按原方及成品结构判断；泡芙等有明确不开门要求的原方优先。"
+      ],
+      "conditions": [
+        "热风/上下火转换和具体家庭烤箱偏差尚未标定。"
+      ],
+      "sourceIds": [
+        "bake-success-guide",
+        "bake-cream-puffs"
+      ],
+      "evidenceBasis": "cross_source_synthesis",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-bakers-percent",
+      "title": "配方翻倍减半：用面粉100%的烘焙百分比",
+      "topics": [
+        "配比",
+        "比例",
+        "面包",
+        "用量",
+        "克数",
+        "份量",
+        "翻倍",
+        "加倍",
+        "减半",
+        "面粉",
+        "含水量"
+      ],
+      "category": "scaling",
+      "summary": "烘焙百分比的分母是面粉重量，全部百分数相加通常超过100%。",
+      "rules": [
+        "某原料%=该原料重÷总面粉重×100；新原料重=新面粉重×该原料%÷100。",
+        "给定总面团重时，新面粉重=目标面团重÷(全部原料百分比之和÷100)。例：面粉100%、水66%、盐2%、酵母1.2%，总169.2%；目标846g得面粉500g、水330g、盐10g、酵母6g。"
+      ],
+      "conditions": [
+        "例子仅演示换算，酵母类型与发酵流程须另按具体配方；烘烤时间和揉面时长不随材料等倍。"
+      ],
+      "sourceIds": [
+        "bake-bakers-percentage"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-preferment-count",
+      "title": "酵种不能漏算其中的粉和水",
+      "topics": [
+        "面包",
+        "酵种",
+        "波兰种",
+        "poolish",
+        "含水量",
+        "配比",
+        "水量",
+        "计算"
+      ],
+      "category": "ratio",
+      "summary": "计算整份面团含水量时，预发酵种的粉、水也要拆入总量。",
+      "rules": [
+        "总粉包括主面团粉与酵种粉；总水同理。等粉水poolish应按其组成拆分后再算总体比例。",
+        "只看主面团中额外加入的水与粉会误判含水量和盐百分比。"
+      ],
+      "conditions": [
+        "须先知道酵种自身配方与含水量，不能把所有酵种默认为100%含水。"
+      ],
+      "sourceIds": [
+        "bake-bakers-percentage"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-pan-area",
+      "title": "蛋糕换6寸8寸：先看面积和面糊深度",
+      "topics": [
+        "蛋糕",
+        "布朗尼",
+        "模具",
+        "6寸",
+        "8寸",
+        "六寸",
+        "八寸",
+        "换模",
+        "份量",
+        "加倍",
+        "减半",
+        "厚度"
+      ],
+      "category": "scaling",
+      "summary": "相同形状、相同装糊深度可按底面积估算材料倍率，但烘烤时长仍要重新检查。",
+      "rules": [
+        "矩形面积=长×宽，圆形面积=π×半径²；同深圆模6英寸改8英寸，材料倍率=(8÷6)²≈1.78，反向约0.5625，均为几何推算。",
+        "先量实际内尺寸与模深；原方糊量不变而面积变小，面糊会更厚，可能更久或溢出。"
+      ],
+      "conditions": [
+        "原文主要蛋糕/条形点心且以约2英寸深模为条件；6→8英寸是本次计算，未进行该尺寸实烤。",
+        "这是材料几何估算，不是把烘烤分钟数也乘1.78。"
+      ],
+      "sourceIds": [
+        "bake-pan-sizes"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-pan-limits",
+      "title": "面积相同也不代表所有蛋糕模可替换",
+      "topics": [
+        "蛋糕",
+        "模具",
+        "戚风",
+        "蛋糕卷",
+        "中空",
+        "活底",
+        "不粘",
+        "玻璃",
+        "陶瓷",
+        "换模",
+        "溢出"
+      ],
+      "category": "scaling",
+      "summary": "换模还涉及形状、深度、材质、支撑和脱模。",
+      "rules": [
+        "8英寸方模约等于9英寸圆模底面积，但需有足够高度；高膨胀蛋糕不能装满至边缘。",
+        "蛋糕卷的薄片形状、springform活扣模的深度/脱模需求不能靠面积随意替代；泡沫类蛋糕不直接套Bundt模方案。",
+        "玻璃或陶瓷替代金属时受热不同，需重新观察并可能调整温度/时间；本库没有统一补偿数值。"
+      ],
+      "conditions": [
+        "这里不新增统一装糊几分满的数值，应优先具体配方。"
+      ],
+      "sourceIds": [
+        "bake-pan-sizes"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-dough-temp",
+      "title": "面包发酵节奏：先看揉后面温",
+      "topics": [
+        "面包",
+        "发酵",
+        "太快",
+        "太慢",
+        "室温",
+        "面温",
+        "揉面",
+        "水温",
+        "夏天",
+        "冬天",
+        "翻倍"
+      ],
+      "category": "heat",
+      "summary": "酵母活跃最快的温度不等于面包风味和生产节奏最合适的面温。",
+      "rules": [
+        "该专业参考的一般小麦面团揉后目标75–78°F≈23.9–25.6°C，摄氏=(华氏−32)×5÷9；酸种/高黑麦及冷藏流程有例外。",
+        "室温、粉温、预发酵种温度及机器揉面升温都影响成团温度；换机器/速度/时长/面团量后应测量，不套固定水温。"
+      ],
+      "conditions": [
+        "目标范围是一般参考，不能覆盖每一种面包，也不为本项目家用机器虚构摩擦因子。"
+      ],
+      "sourceIds": [
+        "bake-dough-temperature"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-yeast-spec",
+      "title": "鲜酵母、即发与活性干酵母不按同克数替换",
+      "topics": [
+        "面包",
+        "酵母",
+        "鲜酵母",
+        "干酵母",
+        "即发",
+        "耐高糖",
+        "替代",
+        "发酵",
+        "糖",
+        "盐"
+      ],
+      "category": "ingredient",
+      "summary": "先确认酵母类型、制造商用法及配方糖盐。",
+      "rules": [
+        "制造商换算优先；一般鲜酵母重量×0.4为活性干酵母、×0.33为即发干酵母参考，保留原料类型。",
+        "盐与较高糖量会减慢发酵；本参考指出糖超过粉重10%可见发酵速率下降，不能把慢发一律认定酵母已死。",
+        "即发通常可直接混粉；活性干酵母的复水与温度应查该产品说明，不把所有包装视为同一种。"
+      ],
+      "conditions": [
+        "只提供一般参考，不保证任何品牌或高糖配方在固定分钟数内涨到指定体积。"
+      ],
+      "sourceIds": [
+        "bake-yeast"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-cream-puff-baseline",
+      "title": "原方基线：12个奶油泡芙",
+      "topics": [
+        "泡芙",
+        "奶油泡芙",
+        "配方",
+        "克数",
+        "用量",
+        "配比",
+        "烤箱",
+        "做法",
+        "蛋",
+        "黄油",
+        "面粉"
+      ],
+      "category": "recipe",
+      "summary": "独立的King Arthur原方参考，包含面糊、尺寸、分段烘烤与奶油馅；不是广坦配方的补缺克数。",
+      "rules": [
+        "壳：水227g、无盐黄油113g、细盐3/8茶匙、未漂白中筋粉150g、Large鸡蛋4个。馅：动物奶油454g、砂糖50g或按口味、香草精1茶匙。",
+        "烤箱预热425°F≈218.3°C。水/黄油/盐煮沸，离火一次入粉搅匀，中火炒至团状光滑、随勺移动；降至125°F以下≈51.7°C再逐个加蛋，每个混匀再加下个，末蛋后继续搅至光滑。",
+        "分12堆，每堆3–4美式汤匙，间隔约3英寸(7.62cm)；先425°F烤15分钟，降350°F≈176.7°C再约25分钟至中金黄，中途按原方不开门。",
+        "烤后顶部割缝再回炉5分钟排湿，架上冷却并剖开；奶油边打边加糖至挺立且仍光滑，壳冷却后临吃装馅。"
+      ],
+      "conditions": [
+        "摄氏按(°F−32)×5÷9换算；分钟是上述尺寸与原方条件的检查基线。",
+        "原文鸡蛋与少量调味未给克重，保留Large和标准量匙，不能宣称全配方每项均已精确到克。"
+      ],
+      "sourceIds": [
+        "bake-choux-base",
+        "bake-cream-puffs"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "风炉换算、其他尺寸、液体替换及蛋大小变化尚未厨房验证；不能用增加生粉随意修复过稀面糊。"
+      ]
+    },
+    {
+      "id": "chef-bake-choux-mixing",
+      "title": "泡芙加蛋初期分散，不等于已经乳化失败",
+      "topics": [
+        "泡芙",
+        "油水分离",
+        "乳化",
+        "漏油",
+        "出油",
+        "加蛋",
+        "结块",
+        "面糊",
+        "补救"
+      ],
+      "category": "troubleshooting",
+      "summary": "先区分正常加蛋过渡阶段和温度/计量不对的面糊。",
+      "rules": [
+        "泡芙加蛋起初可能散开、黏滑；按原方逐个混匀后应回到光滑有光泽。先确认是否仍在混合过程中，不直接照搬黄油蛋糕的加粉办法。",
+        "炒面团要达到离锅壁、底部薄膜等原方终点并降温再加蛋；若已漏油且长时间不融合，核对量、粉种、面温和加蛋阶段，现有资料不足以承诺任何漏油都可救回。"
+      ],
+      "conditions": [
+        "症状描述不足时先补问当前阶段、原料用量与状态。"
+      ],
+      "sourceIds": [
+        "bake-choux-science",
+        "bake-choux-base"
+      ],
+      "evidenceBasis": "cross_source_synthesis",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-choux-collapse",
+      "title": "泡芙出炉塌陷：外面金黄仍可能内壁未干",
+      "topics": [
+        "泡芙",
+        "塌",
+        "塌陷",
+        "湿芯",
+        "湿",
+        "出水",
+        "回缩",
+        "没熟",
+        "救场",
+        "补救"
+      ],
+      "category": "troubleshooting",
+      "summary": "未干的壳壁在蒸汽冷凝后支撑不足，是塌陷的一类原因。",
+      "rules": [
+        "临近原方完成点检查代表性空壳，剖开看内壁是否干燥、拿出后是否保持形状；不能只凭上色认定烤透。",
+        "已烤好但仍需排湿的空壳按原方割缝、再烘干并敞开冷却；严重塌成湿团的本批不能保证回到原本空心高度。"
+      ],
+      "conditions": [
+        "这不是唯一塌陷原因；尺寸、原料与实际炉温都需一起核对。"
+      ],
+      "sourceIds": [
+        "bake-choux-science"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-choux-crisp",
+      "title": "泡芙回软：空壳与湿馅分开处理",
+      "topics": [
+        "泡芙",
+        "软了",
+        "回软",
+        "不脆",
+        "出水",
+        "装馅",
+        "奶油",
+        "冷冻",
+        "提前做",
+        "补救"
+      ],
+      "category": "storage",
+      "summary": "湿馅会让壳吸湿，临吃装馅更利于保脆。",
+      "rules": [
+        "可提前烤空壳，等临吃再装奶油/卡仕达等湿馅。",
+        "该文允许空壳包好冷冻，未解冻摊单层，用约400°F≈204.4°C短烘至解冻复脆；无统一分钟数，观察为准。",
+        "已装奶油的泡芙不能直接套空壳高温复脆方案。"
+      ],
+      "conditions": [
+        "存储安全期限需另循食品安全规则；本条只谈质地，不自定含乳馅常温可放多久。"
+      ],
+      "sourceIds": [
+        "bake-choux-science"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-white-bread-baseline",
+      "title": "原方基线：一大条白吐司",
+      "topics": [
+        "面包",
+        "白吐司",
+        "吐司",
+        "配方",
+        "克数",
+        "用量",
+        "发酵",
+        "模具",
+        "烤箱",
+        "做法"
+      ],
+      "category": "recipe",
+      "summary": "中筋粉版本的一大条白吐司，不直接承诺适用于450g带盖盒。",
+      "rules": [
+        "材料：微温水284–340g、蜂蜜32g、即发酵母2¼茶匙、细盐11g、软化黄油28g、未漂白中筋粉480g、脱脂奶粉37g。水先用低端，依面团再补。",
+        "揉至光滑有弹性；盖好一发约60–90分钟至明显蓬松，原方不要求一定翻倍；轻排气整约9英寸长条。",
+        "入抹油9×5或10×5英寸吐司模(约22.86×12.7或25.4×12.7cm)，二发约60–90分钟至高出边1–1½英寸(2.54–3.81cm)。",
+        "350°F≈176.7°C烤20分钟后松盖锡纸，再约15–20分钟至金黄、中心195–200°F≈90.6–93.3°C；出模架冷，完全凉后包装。"
+      ],
+      "conditions": [
+        "温度换算=(°F−32)×5÷9；时间为原方范围，按体积与熟度终点判断。",
+        "原文酵母只给标准量匙；非任意家用勺。"
+      ],
+      "sourceIds": [
+        "bake-white-bread"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。",
+        "不同面粉、带盖/更小模具、热风、家用机器装载量需重新适配；不把原方中心温度覆盖所有面包。"
+      ]
+    },
+    {
+      "id": "chef-bake-bread-hydration",
+      "title": "面团太干/太湿：本方水量有区间",
+      "topics": [
+        "面包",
+        "面团",
+        "太干",
+        "太湿",
+        "粘手",
+        "水量",
+        "含水量",
+        "夏天",
+        "冬天",
+        "换面粉",
+        "补救"
+      ],
+      "category": "troubleshooting",
+      "summary": "同一吐司配方的水量仍会随测粉方法、季节和粉的含水状态变化。",
+      "rules": [
+        "本库白吐司从284g水起，必要时逐步增加至原方340g范围；目标揉后光滑、柔和有弹性，避免见粘就无上限加粉。",
+        "该范围仅属于这480g粉原方；不能把284–340g抄给任意面包，换粉后需观察和记录。"
+      ],
+      "conditions": [
+        "该配方起初略粘，揉后应改善；未给可通用的每次补水克数。"
+      ],
+      "sourceIds": [
+        "bake-white-bread"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-shortbread-baseline",
+      "title": "原方基线：原味shortbread酥饼",
+      "topics": [
+        "曲奇",
+        "饼干",
+        "酥饼",
+        "shortbread",
+        "配方",
+        "克数",
+        "用量",
+        "黄油",
+        "做法",
+        "模具"
+      ],
+      "category": "recipe",
+      "summary": "一盘约16块的无蛋酥饼；主配方按咸黄油规格。",
+      "rules": [
+        "材料：凉室温咸黄油227g、糖粉113g、香草精2茶匙、细盐¼茶匙、未漂白中筋粉240g；杏仁精¼茶匙可选。若改无盐黄油，盐总量改½茶匙。",
+        "预热325°F≈162.8°C；用9英寸圆或8英寸方模，抹油铺纸。打匀黄油/糖粉/调味后拌入粉成硬面团，必要时最多补1汤匙水。",
+        "压平入模，叉子扎孔排汽；约35–40分钟至表面浅金黄、边更深。模内凉5–10分钟，仍微温时切块，再架凉。"
+      ],
+      "conditions": [
+        "摄氏=(°F−32)×5÷9；1英寸=2.54cm。",
+        "此版糖粉/咸黄油用量不能冒充所有曲奇通用比例。"
+      ],
+      "sourceIds": [
+        "bake-shortbread"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-shortbread-thickness",
+      "title": "同一饼干面团改小份，温度与时间也可能变",
+      "topics": [
+        "曲奇",
+        "饼干",
+        "酥饼",
+        "厚度",
+        "薄",
+        "分量",
+        "小份",
+        "模具",
+        "烤多久",
+        "调整"
+      ],
+      "category": "scaling",
+      "summary": "整盘酥饼与独立小饼的厚度/边缘暴露不同，不能只除以块数来算分钟。",
+      "rules": [
+        "上述shortbread原方另给小饼法：茶匙分团压约3/8英寸厚(约0.95cm)，300°F≈148.9°C约25分钟，至凝固而尚未明显上色。",
+        "这是该原方变体，和整盘325°F、35–40分钟分开使用。"
+      ],
+      "conditions": [
+        "没有依据保证任意厚薄饼干都适用同一温度分钟。"
+      ],
+      "sourceIds": [
+        "bake-shortbread"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-yellow-cake-baseline",
+      "title": "原方基线：双层热牛奶黄蛋糕蛋糕体",
+      "topics": [
+        "蛋糕",
+        "黄蛋糕",
+        "热牛奶",
+        "配方",
+        "克数",
+        "用量",
+        "8寸",
+        "9寸",
+        "模具",
+        "打发",
+        "做法"
+      ],
+      "category": "recipe",
+      "summary": "完整蛋糕体基线，未包含装饰糖霜；采用全蛋打发并有泡打粉。",
+      "rules": [
+        "材料：未漂白中筋粉240g、细盐1¼茶匙、泡打粉2茶匙、室温Large蛋4个、砂糖397g、香草精14g、牛奶227g(优先全脂)、黄油57g、中性油67g；杏仁精⅛茶匙可选。",
+        "烤箱325°F≈162.8°C中层；两只8×2或9×2英寸圆模，抹油底铺纸。蛋/糖/香草打至浓稠浅金、提起落厚带；低速/手拌入预混粉/盐/泡打粉，仅至混合并刮底。",
+        "牛奶加热至刚微沸，离火拌黄油和油至融化；缓慢低速拌入蛋糊至匀。按实际总面糊等分两模；原文估计约580g/模，不据此丢弃余糊或改变原配方。",
+        "9英寸双模约26–30分钟、8英寸双模约38–42分钟；边缘微离模、中心定型、签子无湿糊，原方中心205°F≈96.1°C。模内凉15分钟后脱模架凉。"
+      ],
+      "conditions": [
+        "摄氏按(°F−32)×5÷9；8英寸模至少2英寸深(约5.08cm)，否则不能硬装全部面糊。",
+        "这是原方糖量，减糖后结构与烤时需另验证；未给小号6英寸的实烤分钟。"
+      ],
+      "sourceIds": [
+        "bake-birthday-cake"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-creaming-temperature",
+      "title": "黄油打发需要软而有阻力，不能融化出油",
+      "topics": [
+        "黄油",
+        "打发",
+        "软化",
+        "乳化",
+        "油水分离",
+        "出油",
+        "蛋糕",
+        "曲奇",
+        "补救"
+      ],
+      "category": "ingredient",
+      "summary": "需要creaming的配方依靠可塑黄油包入空气。",
+      "rules": [
+        "手指能压凹但仍微凉有阻力、没有油腻液层，才接近适合打发的状态。太冷时结团难进气；太暖/融化时泡沫难保持。",
+        "先核对原方是否本来要求融化黄油；融化黄油法和黄油糖打发法不能随意互换。"
+      ],
+      "conditions": [
+        "不设适用所有黄油品牌的单一软化分钟数。"
+      ],
+      "sourceIds": [
+        "bake-creaming"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-creaming-stop",
+      "title": "黄油糖不是越白、越久越好",
+      "topics": [
+        "黄油",
+        "糖",
+        "打发",
+        "发白",
+        "太久",
+        "蛋糕",
+        "曲奇",
+        "失败",
+        "补救"
+      ],
+      "category": "troubleshooting",
+      "summary": "打发终点看浅黄、轻盈蓬松，过度打发也可能使蛋糕出现黏实纹路。",
+      "rules": [
+        "中速打发并刮盆，观察体积/颜色与手感，不把机器档位与分钟跨设备照搬。",
+        "明显过度发白并失去合适结构时，原文不承诺恢复成原样；可转作甜抹酱，但不承诺本批继续做能得到预期轻盈蛋糕。"
+      ],
+      "conditions": [
+        "转用属于食物用途改变，不能表述为原糕点已经救回。"
+      ],
+      "sourceIds": [
+        "bake-creaming"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-cake-emulsion",
+      "title": "黄油蛋糕加蛋后油水分离：在早期处理",
+      "topics": [
+        "蛋糕",
+        "磅蛋糕",
+        "油水分离",
+        "乳化",
+        "结块",
+        "加蛋",
+        "黄油",
+        "补救"
+      ],
+      "category": "troubleshooting",
+      "summary": "冷蛋或加蛋过快可能破坏黄油打发类面糊的乳化。",
+      "rules": [
+        "用原方要求的室温材料，加蛋要逐个充分拌匀再加；轻微开始分离时，可从原配方预留粉中取几汤匙随蛋加入帮助稳定。",
+        "这部分粉计入原配方总量，不是在完整配方外额外增加；待所有原料都加完再长时间猛打，可能因过混使成品变韧。"
+      ],
+      "conditions": [
+        "只限该方法的黄油蛋糕；不能用于泡芙、无粉慕斯或任何一切油水分离。"
+      ],
+      "sourceIds": [
+        "bake-curdled-batter"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-cream-stages",
+      "title": "奶油打到几分：用目标状态判断",
+      "topics": [
+        "奶油",
+        "打发",
+        "软尖",
+        "硬尖",
+        "出水",
+        "消泡",
+        "蛋糕",
+        "裱花",
+        "多久"
+      ],
+      "category": "heat",
+      "summary": "量、工具、速度、奶油和盆温都会改变打发时间。",
+      "rules": [
+        "先明确需要软尖还是较挺状态；出现打蛋头纹路后更频繁停机检查，达到用途就停。",
+        "软尖到过打可能很快，不能离开运行中的机器或只给统一打几分钟。"
+      ],
+      "conditions": [
+        "此条没有规定所有装饰都应打到同一硬度；需依具体甜品。"
+      ],
+      "sourceIds": [
+        "bake-whipped-cream"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-overwhipped-cream",
+      "title": "奶油轻度过打：可尝试低速补冷液态奶油",
+      "topics": [
+        "奶油",
+        "打过头",
+        "打发",
+        "颗粒",
+        "油水分离",
+        "出水",
+        "补救",
+        "结块"
+      ],
+      "category": "troubleshooting",
+      "summary": "轻度过打起颗粒和已经成黄油应分开处理。",
+      "rules": [
+        "轻微颗粒或失去蓬松时，低速缓慢加入冷的未打发奶油，边加边检查，恢复后停；所需量取决于过打程度。",
+        "原文重些的案例可需原奶油量25%–50%，并非必须一次倒入。若已明显淡黄、乳清分离成黄油，不能保证重回原本打发态，可转制黄油。"
+      ],
+      "conditions": [
+        "动物性奶油条件；恢复后的体积与轻盈度也不保证等同初次打好。"
+      ],
+      "sourceIds": [
+        "bake-whipped-cream"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-foam-folding",
+      "title": "蛋糕消泡：打发与合粉是两种动作",
+      "topics": [
+        "蛋糕",
+        "消泡",
+        "蛋白",
+        "全蛋",
+        "打发",
+        "翻拌",
+        "结块",
+        "塌",
+        "搅拌",
+        "湿芯"
+      ],
+      "category": "troubleshooting",
+      "summary": "泡沫需要充分形成，再在合粉时保留；不能全程高速。",
+      "rules": [
+        "黄油糖常用扁桨，全蛋/蛋白与糖常用打蛋笼；工具换了达到同样状态的时间会不同。",
+        "蛋白要到原方要求的有光泽状态，干燥颗粒状可能已过打；全蛋糖糊常看浓稠落带，底部不留黏糖浆层。",
+        "合入粉/液体后轻柔但充分混合、刮底检查，不继续长时间高速打；否则可能消泡并增加筋性。"
+      ],
+      "conditions": [
+        "按具体配方要求的峰形执行，不把所有戚风/海绵/黄油蛋糕都归一个峰形。"
+      ],
+      "sourceIds": [
+        "bake-cake-foam"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-cake-collapse",
+      "title": "蛋糕出炉塌：先查用量和结构有没有定型",
+      "topics": [
+        "蛋糕",
+        "塌",
+        "塌陷",
+        "回缩",
+        "湿芯",
+        "没熟",
+        "泡打粉",
+        "失败",
+        "救场",
+        "补救"
+      ],
+      "category": "troubleshooting",
+      "summary": "膨松剂过量与出炉过早都是可能原因，不能凭塌陷单症状确诊。",
+      "rules": [
+        "核对泡打粉的规格、量匙是否平匙和原方用量；活性正常不代表加得越多越好。",
+        "临近原方终点结合中心轻按回弹、边缘微离模和切签等判断；若尚未定型不能只看表面漂亮就出炉。",
+        "已冷却严重塌陷不能许诺重烤恢复原高度；先查配方、模具、实际炉温与过程，下次只改可解释的变量。"
+      ],
+      "conditions": [
+        "最后一句为基于来源的带教适配；原文不是完整故障因果树。"
+      ],
+      "sourceIds": [
+        "bake-cake-flat"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-bake-bechamel-baseline",
+      "title": "白酱基础：CIA原方体积基线与去结块",
+      "topics": [
+        "西餐",
+        "白酱",
+        "贝夏梅尔",
+        "bechamel",
+        "酱汁",
+        "配比",
+        "勺",
+        "结块",
+        "奶",
+        "生粉味",
+        "补救"
+      ],
+      "category": "recipe",
+      "summary": "此来源提供完整体积配方与工艺，未给全套克重，不能标称精确克重版。",
+      "rules": [
+        "材料：无盐黄油3汤匙、中筋粉½杯、植物油2茶匙、碎黄洋葱¼杯、温牛奶5杯，盐/胡椒与可选肉豆蔻按口味；杯勺为美式标准量具。",
+        "中火油/黄油炒软洋葱至透明，拌粉做浅色roux；温牛奶渐加且不断搅开结团。煮开后降小火，常搅/必要时撇沫，约30分钟至稠且无生粉淀粉感，再调味过滤。",
+        "结块先在加奶时搅开，最后细筛辅助；不能只追求稠度而遗漏粉的熟化。"
+      ],
+      "conditions": [
+        "原文未给最终产率、家用锅具蒸发速度及所有食材克重。",
+        "此为CIA版本；不同白酱稠度用途和其他作者原方不能合并为唯一通用比例。"
+      ],
+      "sourceIds": [
+        "bake-bechamel"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验证；资料适用条件不等于家庭设备已标定。"
+      ]
+    },
+    {
+      "id": "chef-follow-lau-tomato-eggs-baseline",
+      "title": "独立原方：番茄炒蛋的红糖番茄酱薄芡版本",
+      "topics": [
+        "番茄炒蛋",
+        "西红柿炒鸡蛋",
+        "西红柿鸡蛋",
+        "配比",
+        "用量",
+        "材料",
+        "做法",
+        "鸡蛋",
+        "番茄",
+        "西红柿",
+        "一勺"
+      ],
+      "category": "recipe",
+      "summary": "以 1½ lb 番茄和 4 个蛋为基准的 Daddy Lau 独立版本，先炒蛋再炒番茄；保留其偏酸甜薄芡风味，不冒充旧视频原方。",
+      "rules": [
+        "原方 4 人配菜份：番茄 1½ lb、鸡蛋 4 个、姜 5 薄片切丝；食用油 2 Tbsp。蛋中盐 ½ tsp；炒番茄另用盐 ½ tsp、红糖 2 Tbsp、番茄酱 2 Tbsp、清水 3 Tbsp。水淀粉单独备玉米淀粉 1 Tbsp＋水 4 Tbsp，依稠度使用，未必全加。",
+        "番茄可去皮：浅划十字，沸水浸约 2 分钟至切口皮卷起，取出剥皮；去蒂硬芯后切瓣，保留籽和汁。蛋加其份内盐打匀，水淀粉预先混好。",
+        "锅按原方先预热至热但不冒烟，加油铺开，倒蛋液轻推成块；大部分凝固时盛入干净熟食碗，稍后还需回锅煮熟，不把此阶段当可直接食用的终点。余热锅炒姜丝和番茄，原步骤另写少量补油但未量化；约 30 秒后加那 3 Tbsp 清水、番茄用盐与红糖，继续煮约 2½ 分钟，难维持沸腾时可加盖。",
+        "水淀粉重新搅匀，边少量加入边搅拌并检查浓度；再回锅鸡蛋，原方续煮约 50 秒，仍须确认蛋已全熟，再关火拌番茄酱并试味。番茄特别酸时糖量按口味微调，不能把本版糖量当所有番茄固定需求。"
+      ],
+      "conditions": [
+        "Tbsp/tsp 为原网页 US 模式的标准量勺，lb 为重量；不能用日常汤匙随意替代，也不凭密度改写成确定克数。",
+        "时间只为该版本下的检查基线；不同锅灶、番茄块大小、成熟度和鸡蛋大小会改变过程。"
+      ],
+      "sourceIds": [
+        "follow-lau-tomato-eggs"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "尚无本项目厨房实做、品尝、专业厨师复审或新手复现验收。",
+        "干净熟食碗和最终全熟为本地食安规则约束；原网页中复用生蛋碗的建议未导入。",
+        "原方补油量未明确；此条是可执行的原方基线，不是每项精确到克、口味已由本项目验收的配方。"
+      ]
+    },
+    {
+      "id": "chef-follow-tomato-texture-and-ratio",
+      "title": "番茄炒蛋先按要的质地调整，而非固定蛋番茄比例",
+      "topics": [
+        "番茄炒蛋",
+        "西红柿炒鸡蛋",
+        "西红柿鸡蛋",
+        "配比",
+        "比例",
+        "去皮",
+        "出水",
+        "太稀",
+        "番茄",
+        "西红柿"
+      ],
+      "category": "ingredient",
+      "summary": "保留具体版本的基准后，区分蛋番茄占比、番茄成熟度和去皮带来的不同口感。",
+      "rules": [
+        "此来源基准是 4 蛋配 1½ lb 番茄，不是全国统一比例。增加番茄通常带来更多汁水和更明显的番茄酸甜，增加蛋则蛋味更重、整体口味较温和；按偏好选择，不能只按“几个番茄”推定重量。",
+        "想更软、更成汁可以去掉全部或部分皮；想留较完整块状可以留皮。同样炒制时间不代表这两种处理会软到一样。",
+        "选原方推荐的中等成熟番茄；偏生、很硬的番茄更酸，过熟的更容易散。调整甜度先结合成熟度和试味，不给跨所有番茄的固定加糖公式。"
+      ],
+      "conditions": [
+        "用户问蛋番茄比例、去不去皮，或同样用量但成品口感不同。"
+      ],
+      "sourceIds": [
+        "follow-lau-tomato-eggs"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验收。",
+        "此条没有推导任何通用酸碱度、克数糖补偿量或减脂营养比例。"
+      ]
+    },
+    {
+      "id": "chef-follow-tomato-slurry-control",
+      "title": "番茄炒蛋汁太稀：先看当前状态，再渐加重搅后的薄芡",
+      "topics": [
+        "番茄炒蛋",
+        "西红柿炒鸡蛋",
+        "西红柿鸡蛋",
+        "水淀粉",
+        "淀粉",
+        "勾芡",
+        "出水",
+        "太稀",
+        "太稠",
+        "补救"
+      ],
+      "category": "troubleshooting",
+      "summary": "水淀粉是这个薄芡版本的浓度控制工具；沉淀后重搅，逐量加到需要的状态。",
+      "rules": [
+        "先分清是番茄还没炒软、额外水加多了，还是本来就想做有汁版本；避免为收汁一直把已经回锅的鸡蛋煮老。",
+        "仅使用这一基础版本时，预混比例为玉米淀粉 1 Tbsp＋水 4 Tbsp；静置会沉淀，用前重新搅匀，边少量加边搅，不默认一次倒完。",
+        "汁达到自己要的挂附程度就停止加芡；原方明确未必需要全部水淀粉。不要把这个稀释比例改称所有汤、炒菜或淀粉品种的通用比例。"
+      ],
+      "conditions": [
+        "采用该薄芡版本，用户报告汁水多、要更浓或询问水淀粉怎么加。"
+      ],
+      "sourceIds": [
+        "follow-lau-tomato-eggs"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验收。",
+        "现有来源没有已过度勾芡后的准确补水量，也不支持保证已老的蛋能恢复嫩度。"
+      ]
+    },
+    {
+      "id": "chef-follow-lau-ginger-scallion-fish-baseline",
+      "title": "独立原方：姜葱蒸整罗非鱼与自配淋酱",
+      "topics": [
+        "姜葱蒸鱼",
+        "清蒸鱼",
+        "蒸鱼",
+        "罗非鱼",
+        "配比",
+        "材料",
+        "用量",
+        "做法",
+        "姜",
+        "葱",
+        "酱汁"
+      ],
+      "category": "recipe",
+      "summary": "Daddy Lau 的整鱼版本：姜葱分两段使用，沸水上锅，蒸后倒掉汁液再淋热油及自配酱。",
+      "rules": [
+        "原方 4 人配菜份：整罗非鱼 1½ lb，开做前去鳞去内脏清净；姜 1 oz、葱 5 根、中性油 2 Tbsp，香菜 5 小枝可选。淋酱：生抽 2 Tbsp、老抽 ½ tsp、料酒 ½ Tbsp、白胡椒粉 ¼ tsp、水 1 Tbsp、糖 ½ tsp、盐 ½ tsp；最后芝麻油 1 Tbsp 为原方量，可按口味控制，不冒充清淡少盐版本。",
+        "鱼身和腹腔清理掉残血、清洗擦干；原方去两侧鱼鳍，沿较厚鱼背开一条长口帮助受热。姜一半切细丝留出锅用，另一半切片放鱼身；葱绿段垫鱼下，葱白和中段切细丝留用。酱汁按表混匀备用。",
+        "锅中水先完全沸腾，鱼盘上架后加盖、大火保持足够蒸汽。此 1½ lb 整鱼原方从上锅后约 12 分钟开始检查，小鱼原文约 10 分钟；实际要检查最厚处熟度，不能把鱼眼变白或计时到点当作熟透证明。",
+        "鱼熟后小心移盘，倒去蒸出汁并移走旧姜片；铺新姜丝葱丝。把 2 Tbsp 中性油加热至出现油波纹，谨慎淋向姜葱，最后加香菜、芝麻油和预混淋酱。"
+      ],
+      "conditions": [
+        "保留原方 US 标准量勺 Tbsp/tsp、重量 lb/oz；原文未给全部克重，也没明确鱼的称重处于清理前后。",
+        "原方淋酱含未另加热的料酒；需要完全避酒时不能照搬并声称无酒精，应另选无酒版本。"
+      ],
+      "sourceIds": [
+        "follow-lau-ginger-scallion-fish"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "尚无本项目厨房实做、品尝、专业厨师复审或新手复现验收。",
+        "来源时间和鱼种是原方条件，变更鱼背厚度、形态、鲜冻状态和蒸汽强度时要重新适配；安全熟度遵从现有食安规则。",
+        "此版本用老抽、额外盐和芝麻油；不同酱油咸度或口味目标下须试味调整，不保证原量适合每个用户。"
+      ]
+    },
+    {
+      "id": "chef-follow-fish-size-steam-start",
+      "title": "蒸鱼改大小或改鱼片：先改规格与检查时点，不套重量乘法",
+      "topics": [
+        "清蒸鱼",
+        "蒸鱼",
+        "鱼片",
+        "整鱼",
+        "大鱼",
+        "小鱼",
+        "鱼背",
+        "厚度",
+        "大小",
+        "时间",
+        "换条件",
+        "熟度"
+      ],
+      "category": "scaling",
+      "summary": "蒸鱼先确认整鱼或鱼片、厚处与蒸汽起点，调检查时点而非把重量系数直接乘分钟。",
+      "rules": [
+        "原方沿厚鱼背开口，是因为背部比腹部厚；不能只报总重量忽略厚度，也不要求薄鱼片复制整鱼开背步骤。",
+        "先把水烧到完全沸腾再上鱼并起算；冷水开始计时与此原方的条件不同。",
+        "以原方 1½ lb 整罗非鱼约 12 分钟、小整鱼约 10 分钟作为其条件下的初次检查线索；换更大鱼或鱼片按实际厚度与状态重新检查，来源未给鱼片统一减几分钟或重量翻倍的算法。",
+        "蒸后本版先倒去蒸汁、换新姜葱再加热油和淋酱；若忘了倒汁而味道偏淡，先判断是否多了液体，不盲目继续加大量酱油。"
+      ],
+      "conditions": [
+        "用户改变鱼大小、改用鱼片，或问一条鱼到底蒸几分钟。"
+      ],
+      "sourceIds": [
+        "follow-lau-ginger-scallion-fish"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "尚无本项目厨房实做、品尝或新手复现验收。",
+        "本来源不支持未解冻冻鱼直接照时蒸，也不支持把眼睛颜色、筷子穿透或表面颜色作为唯一安全证明。"
+      ]
+    },
+    {
+      "id": "chef-measure-standard-spoon-volume",
+      "title": "明确量勺容量：5mL茶匙、15mL汤匙与澳式20mL",
+      "topics": [
+        "配比",
+        "一勺",
+        "勺",
+        "量勺",
+        "茶匙",
+        "汤匙",
+        "大勺",
+        "小勺",
+        "tsp",
+        "tbsp",
+        "毫升",
+        "容量"
+      ],
+      "category": "ratio",
+      "summary": "给出勺数时附容量；不同配方体系的大勺不可直接混用。",
+      "rules": [
+        "自行给公制用量时可明确写量茶匙1平匙=5mL、量汤匙1平匙=15mL；在这个体系中，1汤匙=3茶匙。",
+        "Donna Hay明确采用澳式量汤匙20mL、量茶匙5mL，即1汤匙=4茶匙；其1汤匙不能直接用15mL量勺代替。",
+        "沿用外来配方先查其单位定义；用户只说家里的一勺时，不默认它是15mL。数字表示体积，15mL盐、油、酱油不统一换成15g。"
+      ],
+      "conditions": [
+        "回答材料表、量勺换算，或把一勺具体化；已有来源单位体系优先。"
+      ],
+      "sourceIds": [
+        "measure-nist-household",
+        "measure-donna-hay-australian"
+      ],
+      "evidenceBasis": "cross_source_synthesis",
+      "limitations": [
+        "这是明确约定的量具体系；不能用此条补造旧视频作者未说明的勺容量或确定克重。"
+      ]
+    },
+    {
+      "id": "chef-measure-cup-origin",
+      "title": "一杯先确认是美式杯还是250mL公制杯",
+      "topics": [
+        "配比",
+        "一杯",
+        "量杯",
+        "杯",
+        "cup",
+        "毫升",
+        "容量",
+        "换算",
+        "美式",
+        "公制"
+      ],
+      "category": "ratio",
+      "summary": "整份配方保持同一容量体系，并优先标出来源定义的毫升数。",
+      "rules": [
+        "NIST所列美式常用杯约237mL，家庭厨房可见近似240mL；公制量杯可为250mL。Donna Hay的配方明确1杯=250mL。",
+        "配方中若既有杯又有毫升，按其明确对应关系；不能把原来的美式1杯在同一道配方中悄悄改成250mL。",
+        "以上都是容量；一杯面粉、一杯米和一杯水不等重，食材克重仍按该配方或相应食材的可靠称量资料。"
+      ],
+      "conditions": [
+        "来源只写cup、用户换量杯，或要将容量版配方改写为毫升。"
+      ],
+      "sourceIds": [
+        "measure-nist-household",
+        "measure-donna-hay-australian"
+      ],
+      "evidenceBasis": "cross_source_synthesis",
+      "limitations": [
+        "不把所有标cup的电饭煲杯、咖啡杯及普通杯子视为237/240/250mL之一；先看量具刻度。"
+      ]
+    },
+    {
+      "id": "chef-measure-cornstarch-gravy-baseline",
+      "title": "玉米淀粉增稠的数值起点：只限单杯肉汁示例",
+      "topics": [
+        "配比",
+        "勾芡",
+        "水淀粉",
+        "玉米淀粉",
+        "淀粉",
+        "芡",
+        "比例",
+        "汤汁",
+        "多少",
+        "汤匙",
+        "冷水",
+        "肉汁"
+      ],
+      "category": "ratio",
+      "summary": "Argo有可核对的单杯肉汁基线；不能按每斤肉或所有菜套同一勺数。",
+      "rules": [
+        "原方单杯肉汁：总水1美式杯、鸡或牛汤底1茶匙、Argo普通玉米淀粉1平汤匙，盐胡椒按需。厨房近似表示为总水约240mL、汤底约5mL、淀粉体积约15mL，不编淀粉克重。",
+        "把总水分出四分之一作冷调浆水，其余四分之三加汤底煮开；即约60mL冷水调1汤匙淀粉，另约180mL水煮汤底。调浆水属于总液体，不再额外加一整杯。",
+        "搅匀淀粉浆加入热汤，持续搅动；该来源要求充分煮沸后维持1分钟，再降火调味。其目标是可浇淋的肉汁，不是凉后切块馅或所有中餐薄芡。"
+      ],
+      "conditions": [
+        "用户明确要普通玉米淀粉肉汁增稠的用量示例，且目标、淀粉类型及液体体系接近原方。"
+      ],
+      "sourceIds": [
+        "measure-argo-gravy-one-cup",
+        "measure-nist-household"
+      ],
+      "evidenceBasis": "cross_source_synthesis",
+      "limitations": [
+        "本条是有来源的数值示例，尚未厨房试做或新手复现；不能宣传为所有中国菜的万能芡汁比例。",
+        "汤汁原有稠度、糖酸脂肪、食材出水和淀粉产品改变时要另作判断；炒菜上浆、挂糊不套本比例。",
+        "来源大批次行不完全按单杯勺数线性表达，未导入其大批次用量，也不将单杯示例当成已验证放大量产配方。"
+      ]
+    },
+    {
+      "id": "chef-measure-cornstarch-cold-slurry",
+      "title": "玉米淀粉先冷调匀再进热汁，检查充分增稠",
+      "topics": [
+        "勾芡",
+        "水淀粉",
+        "玉米淀粉",
+        "疙瘩",
+        "结块",
+        "不稠",
+        "生粉味",
+        "冷水",
+        "热水",
+        "加热",
+        "多久"
+      ],
+      "category": "heat",
+      "summary": "普通玉米淀粉先分散于冷液，再加热糊化；计时条件必须保留。",
+      "rules": [
+        "普通玉米淀粉先与冷液体搅到无干粉团，再加入热汁温和持续搅动；不要把干粉直接倒进热汁后再试图搅散。",
+        "上述Argo肉汁版本从加入淀粉后再次充分煮沸才开始数1分钟；不是冷调浆后等待1分钟，也不是把锅刚加热1分钟就判定糊化完成。",
+        "达到该配方状态后停止长时间猛煮；用户报告已有结团时，先核对是否直接加了干粉、冷浆是否搅匀及受热是否过猛，不只继续加粉。"
+      ],
+      "conditions": [
+        "普通玉米淀粉增稠，或用户遇到干粉团和增稠不足；1分钟仅用于所述来源条件。"
+      ],
+      "sourceIds": [
+        "measure-argo-gravy-one-cup",
+        "measure-argo-cornstarch-faq"
+      ],
+      "evidenceBasis": "cross_source_synthesis",
+      "limitations": [
+        "不把玉米淀粉的煮沸要求套成所有淀粉、即溶增稠剂、乳化汁或含蛋酱的统一步骤；其他产品和完整配方按其说明。"
+      ]
+    },
+    {
+      "id": "chef-measure-cornstarch-thinning-branches",
+      "title": "玉米淀粉芡变稀，先分糖酸、缺液与过煮",
+      "topics": [
+        "勾芡",
+        "水淀粉",
+        "玉米淀粉",
+        "补救",
+        "不稠",
+        "变稀",
+        "返稀",
+        "酸",
+        "醋",
+        "柠檬",
+        "糖",
+        "脂肪",
+        "久煮",
+        "搅拌"
+      ],
+      "category": "troubleshooting",
+      "summary": "玉米淀粉不稠和先稠后稀可能由不同条件造成，不能统一回答再加一勺。",
+      "rules": [
+        "先问当前是从未增稠还是先稠后稀，并核对糖酸脂肪比例、液体量、加热和搅动过程；液体不足或糖脂过高都可能妨碍淀粉吸水膨胀。",
+        "高酸会减弱增稠；若菜的做法允许，酸性材料可在淀粉完成加热后再加入。已定糖醋风味不能随意删醋，需针对其完整配方调整，不能承诺少加一点粉便一定恢复。",
+        "已稠后长期煮沸或猛烈搅动也可能变稀；先避免继续同样处理。需要补液或重新增稠时分次检查味道与稠度，不把原因未明的返稀当成固定缺粉。"
+      ],
+      "conditions": [
+        "普通玉米淀粉芡或相关酱汁不稠、返稀；缺条件时用短追问补齐。"
+      ],
+      "sourceIds": [
+        "measure-argo-cornstarch-faq"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "来源未给通用酸度阈值、糖脂百分比或返稀补粉克数；不编这些数值，也不承诺不可逆结构破坏可完全恢复。"
+      ]
+    },
+    {
+      "id": "chef-audit-stock-clear-base",
+      "title": "西式高汤作浓缩基底：轻煨、撇沫与盐量",
+      "topics": [
+        "高汤",
+        "鸡高汤",
+        "stock",
+        "清汤",
+        "浓缩",
+        "咸"
+      ],
+      "category": "heat",
+      "summary": "清澈与浓缩用途影响高汤的煮法和盐量。",
+      "rules": [
+        "希望清澈时用温和煨煮并撇沫；大滚会让颗粒更多、汤更浑。",
+        "后续还要收浓做酱的高汤通常先不加盐，最终再调味。"
+      ],
+      "conditions": [
+        "制作西式鸡高汤或准备用它浓缩做酱。"
+      ],
+      "sourceIds": [
+        "audit-chef-cia-stock"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不等于中餐奶白浓汤必须避免滚煮；不套用鸡汤时长到鱼汤。"
+      ]
+    },
+    {
+      "id": "chef-audit-brown-sauce-family",
+      "title": "Espagnole、demi-glace和jus lié的增稠路线",
+      "topics": [
+        "褐色酱",
+        "棕色酱",
+        "demi-glace",
+        "espagnole",
+        "jus lie",
+        "西餐酱汁"
+      ],
+      "category": "ingredient",
+      "summary": "三种褐色酱不能仅按颜色互换。",
+      "rules": [
+        "Espagnole以褐高汤和油面糊构成；传统demi-glace由Espagnole与褐高汤结合收浓。",
+        "jus lié用收浓褐高汤与纯淀粉浆增稠。"
+      ],
+      "conditions": [
+        "选牛肉或其他西式主菜的褐色酱底。"
+      ],
+      "sourceIds": [
+        "audit-chef-cia-sauces"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "仅机制分类，非完整定量菜谱或唯一现代命名标准。"
+      ]
+    },
+    {
+      "id": "chef-audit-hollandaise-broken",
+      "title": "荷兰酱破乳的有限补救",
+      "topics": [
+        "荷兰酱",
+        "hollandaise",
+        "乳化",
+        "破乳",
+        "油水分离",
+        "补救"
+      ],
+      "category": "troubleshooting",
+      "summary": "荷兰酱需要温和加热、慢慢加黄油；破乳可有限补救。",
+      "rules": [
+        "先少量补水并搅打；无效时可用另一个温和加热至稠的蛋黄逐渐接入破酱。",
+        "救回的酱体积和持稳能力可能较差。"
+      ],
+      "conditions": [
+        "刚制作的荷兰酱出现分离，需要判断补救。"
+      ],
+      "sourceIds": [
+        "audit-chef-cia-sauces"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不保证已经完全凝固的蛋黄可逆；乳化终点不是食安温度，不能据本条给生蛋保存承诺。"
+      ]
+    },
+    {
+      "id": "chef-audit-swiss-meringue",
+      "title": "瑞士蛋白霜：先加热溶糖，再打发",
+      "topics": [
+        "瑞士蛋白霜",
+        "蛋白霜",
+        "Swiss meringue",
+        "打发",
+        "蛋白"
+      ],
+      "category": "heat",
+      "summary": "本版瑞士蛋白霜把加热溶糖和打发分为两阶段。",
+      "rules": [
+        "依King Arthur此版，蛋白与糖隔水搅动至糖溶且混合物160–180°F（约71–82℃），再转搅拌机。",
+        "打至中偏硬峰，按提起打蛋头的形态判断，不只按分钟。"
+      ],
+      "conditions": [
+        "采用该版瑞士蛋白霜方法。"
+      ],
+      "sourceIds": [
+        "audit-chef-kab-swiss"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "非全部法式/意式蛋白霜的统一温度；不从表面烤色推定整批温度。"
+      ]
+    },
+    {
+      "id": "chef-audit-gelatin-bloom",
+      "title": "吉利丁先冷吸水，粉片替换核对强度",
+      "topics": [
+        "吉利丁",
+        "明胶",
+        "gelatin",
+        "慕斯",
+        "奶冻",
+        "凝固",
+        "粉片替换"
+      ],
+      "category": "ingredient",
+      "summary": "吉利丁应先预吸水再溶解；不同粉片不可按片数盲换。",
+      "rules": [
+        "粉状吉利丁均匀撒在冷液体表面吸水后溶解；片状先冷水泡软，依配方沥去多余水。",
+        "充分溶解再加入体系并冷却定形；替换时核对克重与品牌凝胶强度。"
+      ],
+      "conditions": [
+        "含吉利丁慕斯、奶冻或其他凝胶甜品。"
+      ],
+      "sourceIds": [
+        "audit-chef-kab-gelatin"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "没有提供所有Bloom强度的换算表；不能将琼脂按同克数当完全等效。"
+      ]
+    },
+    {
+      "id": "chef-audit-lamination-fracture",
+      "title": "开酥断油：先匹配油块与面团可塑性",
+      "topics": [
+        "开酥",
+        "起酥",
+        "断油",
+        "黄油碎",
+        "可颂",
+        "丹麦面包"
+      ],
+      "category": "troubleshooting",
+      "summary": "油块过硬或与面团软硬不匹配会擀碎。",
+      "rules": [
+        "包油前两者应有相近可塑性；折叠间冷藏过久，油块过冷也可能断裂。",
+        "检查柔韧状态后再擀，不能只因刚出冰箱就视为可用。"
+      ],
+      "conditions": [
+        "包油或擀折时看到黄油碎成块。"
+      ],
+      "sourceIds": [
+        "audit-chef-kab-lamination"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不提供所有黄油产品的统一温度；需结合面团/油块实际状态。"
+      ]
+    },
+    {
+      "id": "chef-audit-lamination-leak",
+      "title": "开酥烤时漏油：区分醒发过暖和炉温偏低",
+      "topics": [
+        "开酥",
+        "漏油",
+        "可颂",
+        "丹麦面包",
+        "醒发",
+        "烤箱"
+      ],
+      "category": "troubleshooting",
+      "summary": "漏油可能在入炉前或烘烤初段形成。",
+      "rules": [
+        "醒发环境过热会提前融化层间黄油；烤箱实际温度偏低也可能让油先融流而未充分撑层。",
+        "分别核对醒发条件和实际炉温，调整下一批。"
+      ],
+      "conditions": [
+        "开酥面包烤盘出现大量流油。"
+      ],
+      "sourceIds": [
+        "audit-chef-kab-lamination"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "这两项不是所有漏油原因；不能承诺已破坏的层次烤后恢复。"
+      ]
+    },
+    {
+      "id": "chef-audit-chocolate-product-curve",
+      "title": "巧克力调温按具体产品曲线",
+      "topics": [
+        "巧克力",
+        "调温",
+        "预结晶",
+        "811",
+        "823",
+        "W2",
+        "温度"
+      ],
+      "category": "heat",
+      "summary": "黑、奶、白巧克力回温工作区不同，先确认产品。",
+      "rules": [
+        "Callebaut 811此页一致可核的冷却节点为27℃、回温工作区31–32℃；其融化温度须先依当前具体包装或技术单确认。823表列45℃融化→27℃→29–30℃；W2为45℃→27℃→28–29℃。",
+        "正式使用前取小样检查结晶表现。"
+      ],
+      "conditions": [
+        "使用对应型号Callebaut巧克力做需要调温的装饰/模壳。"
+      ],
+      "sourceIds": [
+        "audit-chef-callebaut-curves"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "只限所列型号，包装技术要求更新时以当前具体产品为准；不作复合巧克力万能曲线。",
+        "源页811融化温度的摄氏/华氏对应不一致，且前文概述与表格范围不同；本条不录其融化区，不用猜测消解源内矛盾。"
+      ]
+    },
+    {
+      "id": "chef-audit-chocolate-fluidity",
+      "title": "巧克力薄壳与大型空心件需要不同流动性",
+      "topics": [
+        "巧克力",
+        "流动性",
+        "可可脂",
+        "薄壳",
+        "模具",
+        "水滴"
+      ],
+      "category": "ingredient",
+      "summary": "选择巧克力除味道也看厂家标示的流动性。",
+      "rules": [
+        "在Callebaut体系，流动性更高的产品可形成更薄的壳；较低流动性更适合较厚的大型空心件。",
+        "按包装水滴和用途选择，不只看可可含量。"
+      ],
+      "conditions": [
+        "为模制巧克力壳或包覆选择原料。"
+      ],
+      "sourceIds": [
+        "audit-chef-callebaut-fluidity"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "该水滴分级属该品牌；正确调温仍是外观和脱模的重要条件。"
+      ]
+    },
+    {
+      "id": "chef-audit-ganache-emulsion",
+      "title": "甘纳许：把水相逐步乳化进巧克力",
+      "topics": [
+        "甘纳许",
+        "ganache",
+        "巧克力",
+        "乳化",
+        "油水分离",
+        "慕斯"
+      ],
+      "category": "ingredient",
+      "summary": "甘纳许的光滑结构来自水相和脂相乳化。",
+      "rules": [
+        "将水相逐步接入融化巧克力，充分搅拌形成黏弹、光泽的中心，再继续加液。",
+        "初期暂时分离可能是过程现象；同时核对温度和最终是否均匀。"
+      ],
+      "conditions": [
+        "制作采用Valrhona此乳化法的甘纳许或巧克力基底。"
+      ],
+      "sourceIds": [
+        "audit-chef-valrhona-emulsion"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不代表成品持续出油正常；原料更换需匹配配方，不提供任意巧克力/奶油万能比。"
+      ]
+    },
+    {
+      "id": "chef-audit-starter-maturity",
+      "title": "酸种成熟看增长轨迹，酵种称重",
+      "topics": [
+        "酸种",
+        "天然酵种",
+        "sourdough",
+        "酵种成熟",
+        "发酵"
+      ],
+      "category": "ingredient",
+      "summary": "有气泡不一定已经到配方需要的成熟点。",
+      "rules": [
+        "该教学以喂养后涨到约2–3倍、增长放缓为成熟窗口；明显回落说明已越过峰值。",
+        "起泡程度会影响一杯酵种的实际重量，按克称取更稳定。"
+      ],
+      "conditions": [
+        "使用要求ripe/fed starter的酸种面包配方。"
+      ],
+      "sourceIds": [
+        "audit-chef-kab-starter"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "发酵时间受温度与酵种影响；本条不用于判断污染、霉变或是否安全可食。"
+      ]
+    },
+    {
+      "id": "chef-audit-yeast-overproof-rescue",
+      "title": "普通酵母面团过发：有条件重整再醒",
+      "topics": [
+        "面包",
+        "过度发酵",
+        "过发",
+        "塌陷",
+        "补救",
+        "酵母"
+      ],
+      "category": "troubleshooting",
+      "summary": "部分普通酵母面团过发仍可尝试重整。",
+      "rules": [
+        "活性干酵母或非单次快速发酵即发酵母配方，可尝试排气、重新整形、再醒后烘烤。",
+        "第二次重新醒发可能更快，按原配方形态与体积观察。"
+      ],
+      "conditions": [
+        "普通酵母吐司面团膨胀过头且无污染或超时食安问题。"
+      ],
+      "sourceIds": [
+        "audit-chef-kab-overproof"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "原法通常不适用长时间发酵的酸种；不承诺所有高糖高油/已崩坏面团可恢复。"
+      ]
+    },
+    {
+      "id": "chef-audit-leftover-cooling",
+      "title": "剩菜与高汤不要大锅放到自然凉透",
+      "topics": [
+        "剩菜",
+        "高汤",
+        "冷却",
+        "冷藏",
+        "保存",
+        "分装"
+      ],
+      "category": "storage",
+      "summary": "浅容器分装并尽快冷藏，避免长时间停在室温。",
+      "rules": [
+        "USDA消费者建议易腐剩食离开冷/热保存后不要在外超过2小时；环境高于约32℃时1小时。",
+        "分浅容器冷藏在不高于约4℃，一般剩食3–4天内用完。"
+      ],
+      "conditions": [
+        "普通家庭熟食、肉汁或高汤需要留存。"
+      ],
+      "sourceIds": [
+        "audit-chef-usda-leftovers"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "个别食品可能要求更短；超时后冷藏不使它重新安全；不是所有奶油甜点统一保质期。"
+      ]
+    },
+    {
+      "id": "chef-audit-allergen-label-contact",
+      "title": "过敏替代先查标签与交叉接触",
+      "topics": [
+        "过敏",
+        "过敏原",
+        "无奶",
+        "无蛋",
+        "无麸质",
+        "芝麻",
+        "替代"
+      ],
+      "category": "ingredient",
+      "summary": "改掉一种表面食材不等于整道菜已避开过敏原。",
+      "rules": [
+        "核对复合调料、巧克力、预拌粉等完整标签；FDA美国九大类含奶、蛋、鱼、甲壳、树坚果、花生、小麦、大豆、芝麻。",
+        "交叉接触还可能来自共用设备/清洁不足；不确定的原料向生产商核实。"
+      ],
+      "conditions": [
+        "已知过敏者需要选料或替代。"
+      ],
+      "sourceIds": [
+        "audit-chef-fda-allergens"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "美国九类非全球法律或全部过敏原清单；本条不给个人安全阈值或诊疗意见。"
+      ]
+    },
+    {
+      "id": "chef-audit-safety-temperature-cut",
+      "title": "牛排口感熟度与分类安全中心温度分开",
+      "topics": [
+        "牛排",
+        "绞肉",
+        "鸡肉",
+        "熟度",
+        "中心温度",
+        "温度计",
+        "汉堡"
+      ],
+      "category": "heat",
+      "summary": "不同肉的安全检查不能共用一套几分熟。",
+      "rules": [
+        "USDA消费者最低建议：整块牛/猪/羊/犊牛排块或烤肉145°F（约63℃）并静置至少3分钟；红肉绞肉160°F（约71℃）。",
+        "禽肉及其绞肉165°F（约74℃）；用食品温度计核查，不靠颜色或煎制分钟。"
+      ],
+      "conditions": [
+        "家庭常规烹调牛排、肉饼或禽肉时需要安全熟度依据。"
+      ],
+      "sourceIds": [
+        "audit-chef-usda-temps"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "这是结构化整理旧库已分散引用的食安依据；不是首次补出整个食安领域。美国消费者建议不等于所有地区法规或低温长时杀菌工艺。"
+      ]
+    },
+    {
+      "id": "chef-import-hazard-classes",
+      "title": "厨房危害的三类来源",
+      "topics": [
+        "食品危害",
+        "食安",
+        "食品异物",
+        "清洁剂残留"
+      ],
+      "category": "ingredient",
+      "summary": "食安危害包括生物、化学和物理三类。",
+      "rules": [
+        "病原体、清洁剂残留、玻璃等异物分别处理，不能只靠加热。"
+      ],
+      "conditions": [
+        "核对厨房风险。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cia-prochef10-sample"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不凭此诊断食物中毒。"
+      ]
+    },
+    {
+      "id": "chef-import-haccp-control",
+      "title": "食品流程中的关键控制点",
+      "topics": [
+        "HACCP",
+        "食品流程",
+        "食安控制点"
+      ],
+      "category": "storage",
+      "summary": "HACCP按食品从接收到食用的流程分析风险。",
+      "rules": [
+        "在能预防、消除或降低危害的步骤设控制点，配关键限值、监测及纠偏。"
+      ],
+      "conditions": [
+        "设计食品处理流程。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cia-prochef10-sample"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "具体限值另核现行要求。"
+      ]
+    },
+    {
+      "id": "chef-import-edible-unit-cost",
+      "title": "净料单价应计入加工损耗",
+      "topics": [
+        "净料单价",
+        "食材采购",
+        "净料率",
+        "食材成本",
+        "食材预算"
+      ],
+      "category": "ratio",
+      "summary": "采购单价和净料单价不同。",
+      "rules": [
+        "统一单位后，净料单价=采购单价÷净料率的小数；不能仍按带皮带骨单价计净料。"
+      ],
+      "conditions": [
+        "估算食材成本。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cia-calculations"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "净料率用对应原料实测。"
+      ]
+    },
+    {
+      "id": "chef-import-recipe-portion-cost",
+      "title": "每份食材成本怎么算",
+      "topics": [
+        "做饭预算",
+        "配方成本",
+        "每份食材成本",
+        "菜单预算"
+      ],
+      "category": "ratio",
+      "summary": "配方成本按实际用掉的材料累加。",
+      "rules": [
+        "各材料用量×对应净料单价后相加，再除以实际出品份数。"
+      ],
+      "conditions": [
+        "比较菜单食材预算。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cia-calculations"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不包含人工等全部经营成本。"
+      ]
+    },
+    {
+      "id": "chef-import-shell-egg-simmer",
+      "title": "带壳蛋计时从水恢复微沸算",
+      "topics": [
+        "鸡蛋",
+        "煮蛋",
+        "煮蛋计时",
+        "微沸"
+      ],
+      "category": "heat",
+      "summary": "滚得很猛不等于煮蛋更均匀。",
+      "rules": [
+        "此法保持微沸；下蛋后水重新微沸再计时，剧烈沸腾易撞裂蛋壳。"
+      ],
+      "conditions": [
+        "使用CIA带壳蛋方法。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cia-eggs"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不将文中分钟套所有蛋规格。"
+      ]
+    },
+    {
+      "id": "chef-import-omelet-hot-filling",
+      "title": "卷蛋馅料先熟且保持适温",
+      "topics": [
+        "鸡蛋",
+        "欧姆蛋",
+        "卷蛋",
+        "馅料"
+      ],
+      "category": "heat",
+      "summary": "卷蛋的短暂受热不承担把生馅煮熟的任务。",
+      "rules": [
+        "馅料按需要先熟制并保持适合出菜的温度，蛋形成薄皮后再包入。"
+      ],
+      "conditions": [
+        "做带馅卷蛋。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cia-eggs"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "生肉不靠卷蛋余热判熟。"
+      ]
+    },
+    {
+      "id": "chef-import-souffle-soft-peak",
+      "title": "此版舒芙蕾用软峰并即时出菜",
+      "topics": [
+        "舒芙蕾",
+        "蛋白",
+        "软峰",
+        "甜品"
+      ],
+      "category": "heat",
+      "summary": "这版舒芙蕾不把蛋白打得越硬越好。",
+      "rules": [
+        "蛋白打至软峰，先少量拌轻基底再折拌其余；烤好趁蓬松立即上桌。"
+      ],
+      "conditions": [
+        "采用CIA此类舒芙蕾基底。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cia-eggs"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不套入所有舒芙蕾配方。"
+      ]
+    },
+    {
+      "id": "chef-import-beurre-blanc-control",
+      "title": "白黄油汁出油先离热",
+      "topics": [
+        "白黄油汁",
+        "beurre blanc",
+        "酱汁",
+        "破乳"
+      ],
+      "category": "troubleshooting",
+      "summary": "白黄油汁靠逐渐混入冷黄油形成乳化。",
+      "rules": [
+        "酸香浓缩液转小火逐块加冷黄油；变油亮分离时先离热，再搅入少量冷黄油。"
+      ],
+      "conditions": [
+        "刚制作的白黄油汁开始分离。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cia-sauces-extra"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不是荷兰酱同一配方。"
+      ]
+    },
+    {
+      "id": "chef-import-sauce-crisp-under",
+      "title": "脆皮食物的酱放下面",
+      "topics": [
+        "酱汁",
+        "脆皮",
+        "炸物",
+        "摆盘"
+      ],
+      "category": "ingredient",
+      "summary": "淋酱位置会影响脆皮质地。",
+      "rules": [
+        "希望保留脆层时可把酱铺在食物下面，份量够搭配又不淹没主料。"
+      ],
+      "conditions": [
+        "给脆皮主菜配酱。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cia-sauces-extra"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "依菜式目标选择。"
+      ]
+    },
+    {
+      "id": "chef-import-poach-vs-simmer",
+      "title": "西式poach与simmer火候不同",
+      "topics": [
+        "鱼肉",
+        "水煮",
+        "poach",
+        "simmer",
+        "微沸"
+      ],
+      "category": "heat",
+      "summary": "两者都是湿热法，poach温度较低。",
+      "rules": [
+        "不能把poach直接翻成持续大滚煮；实际液温依具体食材及已核配方。"
+      ],
+      "conditions": [
+        "辨别西式煮鱼技法。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cia-poach-lesson"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "本讲义未提供数值温区。"
+      ]
+    },
+    {
+      "id": "chef-import-preferment-four-groups",
+      "title": "预发酵种先分含水与发酵来源",
+      "topics": [
+        "面包",
+        "预发酵",
+        "poolish",
+        "biga",
+        "levain"
+      ],
+      "category": "ingredient",
+      "summary": "稠/稀与天然酵种/商业酵母是两条分类轴。",
+      "rules": [
+        "poolish通常为液态商业酵母种，biga通常偏硬；levain可稀可硬，不只按名字猜含水。"
+      ],
+      "conditions": [
+        "选择面包预发酵物。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-preferments"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "以具体配方含水为准。"
+      ]
+    },
+    {
+      "id": "chef-import-poolish-extensibility",
+      "title": "Poolish有助法棍面团延展",
+      "topics": [
+        "面包",
+        "poolish",
+        "法棍",
+        "延展性"
+      ],
+      "category": "ingredient",
+      "summary": "液态预发酵物除风味也可影响操作手感。",
+      "rules": [
+        "King Arthur法棍实例中poolish帮助提高延展性，便于面团伸长。"
+      ],
+      "conditions": [
+        "采用相应法棍配方。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-preferments"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不保证所有配方加种更好。"
+      ]
+    },
+    {
+      "id": "chef-import-pastry-cream-boil",
+      "title": "淀粉卡仕达需中心冒泡后续煮",
+      "topics": [
+        "卡仕达",
+        "蛋奶馅",
+        "淀粉",
+        "泡芙馅"
+      ],
+      "category": "heat",
+      "summary": "看见变稠并非此版卡仕达的终点。",
+      "rules": [
+        "持续搅打至中心鼓泡并破泡，再搅煮1分钟；本版目标190–200°F（约88–93℃）。"
+      ],
+      "conditions": [
+        "采用此版含淀粉卡仕达。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-pastry-cream"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不是全部蛋奶酱通用温度。"
+      ]
+    },
+    {
+      "id": "chef-import-diplomat-cream",
+      "title": "外交官奶油是卡仕达混打发奶油",
+      "topics": [
+        "外交官奶油",
+        "diplomat",
+        "卡仕达",
+        "奶油"
+      ],
+      "category": "ingredient",
+      "summary": "拌入打发奶油可让卡仕达馅更轻软。",
+      "rules": [
+        "先把卡仕达充分冷却，再轻拌打发奶油；不能把热馅直接混进泡沫。"
+      ],
+      "conditions": [
+        "制作泡芙或其他轻软馅。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-pastry-cream"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "比例和保存另依选定配方。"
+      ]
+    },
+    {
+      "id": "chef-import-soda-acid-timing",
+      "title": "小苏打需要酸并注意入炉时间",
+      "topics": [
+        "小苏打",
+        "酸",
+        "烘焙",
+        "膨松"
+      ],
+      "category": "ingredient",
+      "summary": "小苏打遇酸产生二氧化碳。",
+      "rules": [
+        "依赖这一反应的面糊混合后应按配方及时入炉，别任意久放。"
+      ],
+      "conditions": [
+        "制作以小苏打膨松的面糊。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-leaveners"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不用于推断所有配方零等待。"
+      ]
+    },
+    {
+      "id": "chef-import-double-acting-powder",
+      "title": "双效泡打粉有两段反应",
+      "topics": [
+        "泡打粉",
+        "双效",
+        "小苏打",
+        "膨松"
+      ],
+      "category": "ingredient",
+      "summary": "双效泡打粉同时带有碱和酸性成分。",
+      "rules": [
+        "遇液开始反应，受热再反应；它和单独小苏打不能按同克数盲换。"
+      ],
+      "conditions": [
+        "核对烘焙膨松剂。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-leaveners"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "具体酸盐与用量看产品/配方。"
+      ]
+    },
+    {
+      "id": "chef-import-cocoa-acid-balance",
+      "title": "天然与碱化可可会改变膨松平衡",
+      "topics": [
+        "可可粉",
+        "碱化可可",
+        "天然可可",
+        "小苏打"
+      ],
+      "category": "ingredient",
+      "summary": "碱化处理降低可可酸度，也改变颜色风味。",
+      "rules": [
+        "把天然可可换碱化可可前核查是否靠其酸度激活小苏打，不能只按颜色选。"
+      ],
+      "conditions": [
+        "替换烘焙可可粉。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-cocoa"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不据此硬改全部配方。"
+      ]
+    },
+    {
+      "id": "chef-import-caramel-crystal-seed",
+      "title": "湿焦糖返砂先防锅壁晶种",
+      "topics": [
+        "焦糖",
+        "糖浆",
+        "返砂",
+        "结晶"
+      ],
+      "category": "troubleshooting",
+      "summary": "锅壁糖晶落回糖液可能带起更多结晶。",
+      "rules": [
+        "糖完全溶解后少搅动，可转锅；按配方用湿刷清锅壁糖粒或短暂盖盖让蒸汽溶晶。"
+      ],
+      "conditions": [
+        "做湿法焦糖。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-caramel"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不是所有糖果都禁止搅拌。"
+      ]
+    },
+    {
+      "id": "chef-import-caramel-pot-clean",
+      "title": "焦糖凝在锅里可用水煮化",
+      "topics": [
+        "焦糖",
+        "糖锅",
+        "清洗",
+        "糖浆"
+      ],
+      "category": "troubleshooting",
+      "summary": "硬糖残留可先溶于水再清洗。",
+      "rules": [
+        "锅冷却到可安全操作后加水，加热使残糖溶解；避免直接硬刮伤锅。"
+      ],
+      "conditions": [
+        "清理做焦糖后的锅。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-caramel"
+      ],
+      "evidenceBasis": "assistant_adaptation",
+      "limitations": [
+        "热糖锅不骤加冷水。"
+      ]
+    },
+    {
+      "id": "chef-import-glutenfree-blend-choice",
+      "title": "无麸质通用粉与等量替换粉不同",
+      "topics": [
+        "无麸质",
+        "面粉",
+        "黄原胶",
+        "替代"
+      ],
+      "category": "ingredient",
+      "summary": "不同无麸质混合粉的功能配方不同。",
+      "rules": [
+        "该品牌All-Purpose无黄原胶，配专用无麸质食谱；Measure for Measure含胶，主要替换非酵母配方。"
+      ],
+      "conditions": [
+        "选King Arthur无麸质粉。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-glutenfree"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不按同名套其他品牌。"
+      ]
+    },
+    {
+      "id": "chef-import-glutenfree-not-wheatfree",
+      "title": "无麸质不等于小麦过敏可用",
+      "topics": [
+        "无麸质",
+        "小麦过敏",
+        "面包粉",
+        "小麦淀粉"
+      ],
+      "category": "ingredient",
+      "summary": "部分无麸质粉仍含处理过的小麦淀粉。",
+      "rules": [
+        "该品牌无麸质面包粉含无麸质小麦淀粉，小麦过敏者不适用。"
+      ],
+      "conditions": [
+        "为小麦过敏者选粉。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-glutenfree"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "需看当前完整产品标签。"
+      ]
+    },
+    {
+      "id": "chef-import-sorbet-machine-vs-pan",
+      "title": "雪葩机器搅冻与浅盘冷冻质地不同",
+      "topics": [
+        "雪葩",
+        "sorbet",
+        "冰淇淋机",
+        "冷冻甜品"
+      ],
+      "category": "heat",
+      "summary": "该草莓配方的浅盘法偏冰粒感，机器法更细滑。",
+      "rules": [
+        "无机器版用浅盘冷冻并定期把冻结边缘拌回中心；不是原封不动冻成块。"
+      ],
+      "conditions": [
+        "选择该草莓雪葩路线。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-sorbet"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "仍需匹配所选版本用量。"
+      ]
+    },
+    {
+      "id": "chef-import-sorbet-chill-before-churn",
+      "title": "雪葩入机前先把基底冷透",
+      "topics": [
+        "雪葩",
+        "sorbet",
+        "冰淇淋机",
+        "基底"
+      ],
+      "category": "heat",
+      "summary": "机器搅冻不替代基底预冷。",
+      "rules": [
+        "该版果泥过筛后与糖浆混合，冷到冰箱温度再依机器说明搅冻；出机后可再冷冻变硬。"
+      ],
+      "conditions": [
+        "做该机器版雪葩。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-sorbet"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不承诺任何机器固定分钟。"
+      ]
+    },
+    {
+      "id": "chef-import-pie-full-partial",
+      "title": "派皮全盲烤还是半盲烤看馅",
+      "topics": [
+        "派皮",
+        "盲烤",
+        "预烤",
+        "挞壳"
+      ],
+      "category": "heat",
+      "summary": "不再进炉的馅与还要烘烤的馅不同。",
+      "rules": [
+        "不需烤的馅配全烤熟壳；低温短烤蛋奶馅可先半烤壳，再一起完成。"
+      ],
+      "conditions": [
+        "为单层派选择预烤路线。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-prebake"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "双层派封边另选配方。"
+      ]
+    },
+    {
+      "id": "chef-import-pie-chill-weight",
+      "title": "盲烤前冷藏并用重物支撑",
+      "topics": [
+        "派皮",
+        "盲烤",
+        "缩边",
+        "重石"
+      ],
+      "category": "troubleshooting",
+      "summary": "冷藏休整和重物有不同作用。",
+      "rules": [
+        "该法整形后先冷藏，使面筋放松、脂肪变硬；衬烘焙纸加重物防鼓包，再按半/全烤阶段移除。"
+      ],
+      "conditions": [
+        "派皮预烤时防缩和鼓泡。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-prebake"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不保证任何面团不缩。"
+      ]
+    },
+    {
+      "id": "chef-import-chocolate-undercrystal",
+      "title": "巧克力结晶不足的常见表现",
+      "topics": [
+        "巧克力",
+        "结晶不足",
+        "不凝固",
+        "脱模"
+      ],
+      "category": "troubleshooting",
+      "summary": "凝固慢、暗斑及难脱模可能与结晶不足有关。",
+      "rules": [
+        "先核对调温和小样结果，不能单凭一项外观确定唯一原因。"
+      ],
+      "conditions": [
+        "检查模制巧克力。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cal-under"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "此页未公开补救全过程。"
+      ]
+    },
+    {
+      "id": "chef-import-chocolate-overcrystal",
+      "title": "巧克力结晶过多的常见表现",
+      "topics": [
+        "巧克力",
+        "结晶过多",
+        "厚壳",
+        "气孔"
+      ],
+      "category": "troubleshooting",
+      "summary": "壳过厚、气孔和暗斑可能与结晶过多有关。",
+      "rules": [
+        "把它与原料流动性、工作温度和调温状态一并排查。"
+      ],
+      "conditions": [
+        "检查模制巧克力厚壳。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cal-over"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不凭外观单因诊断。"
+      ]
+    },
+    {
+      "id": "chef-import-sugar-bloom",
+      "title": "巧克力糖霜与冷凝水有关",
+      "topics": [
+        "巧克力",
+        "糖霜",
+        "起霜",
+        "冷凝水",
+        "巧克力从冰箱",
+        "巧克力表面发白",
+        "巧克力凝露"
+      ],
+      "category": "troubleshooting",
+      "summary": "潮气可溶解表面糖，干后再结晶。",
+      "rules": [
+        "从冷区移到暖区时先保持包装让温度适应，避免冷凝水直接沾壳。"
+      ],
+      "conditions": [
+        "巧克力表面粗糙发白。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cal-bloom"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不等于所有白点都是糖霜。"
+      ]
+    },
+    {
+      "id": "chef-import-fat-bloom",
+      "title": "巧克力脂霜要查调温和储温",
+      "topics": [
+        "巧克力",
+        "脂霜",
+        "起霜",
+        "发白"
+      ],
+      "category": "troubleshooting",
+      "summary": "调温不当和储温偏高都可能导致脂霜。",
+      "rules": [
+        "检查预结晶与储存温度，而非见发白就只补糖。"
+      ],
+      "conditions": [
+        "巧克力出现灰白膜。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cal-bloom"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "外观不替代食安判断。"
+      ]
+    },
+    {
+      "id": "chef-import-chocolate-storage-odour",
+      "title": "巧克力保存注意串味与温度波动",
+      "topics": [
+        "巧克力",
+        "保存",
+        "串味",
+        "温差"
+      ],
+      "category": "storage",
+      "summary": "巧克力易吸收周围强烈气味。",
+      "rules": [
+        "避开强气味物品，并保持稳定温度；潮湿或温度骤变会增加表面问题。"
+      ],
+      "conditions": [
+        "储存巧克力制品。"
+      ],
+      "sourceIds": [
+        "chef-import-source-cal-storage"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "含易腐馅料另按冷链要求。"
+      ]
+    },
+    {
+      "id": "chef-import-whipped-ganache-cold",
+      "title": "打发甘纳许先冷藏再慢打",
+      "topics": [
+        "甘纳许",
+        "打发",
+        "奶油",
+        "颗粒"
+      ],
+      "category": "heat",
+      "summary": "打发甘纳许与刚做好的温热甘纳许不同。",
+      "rules": [
+        "按对应版本先冷藏数小时，基底够冷后低速打发；过快或过久可能变颗粒、分离。"
+      ],
+      "conditions": [
+        "做打发甘纳许。"
+      ],
+      "sourceIds": [
+        "chef-import-source-val-ganache"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "奶油比例依具体版本。"
+      ]
+    },
+    {
+      "id": "chef-import-ganache-runny-cooling",
+      "title": "甘纳许太稀先确认冷却结晶",
+      "topics": [
+        "甘纳许",
+        "太稀",
+        "凝固",
+        "补救"
+      ],
+      "category": "troubleshooting",
+      "summary": "热时流动不能立刻判配方失败。",
+      "rules": [
+        "先给基底足够冷却时间，再核对目标用途、巧克力和奶油比例。"
+      ],
+      "conditions": [
+        "判断甘纳许质地。"
+      ],
+      "sourceIds": [
+        "chef-import-source-val-ganache"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "本条不保证加巧克力能救所有分离。"
+      ]
+    },
+    {
+      "id": "chef-import-anglaise-temp",
+      "title": "英式蛋奶酱不用淀粉卡仕达的煮沸法",
+      "topics": [
+        "英式蛋奶酱",
+        "creme anglaise",
+        "蛋黄",
+        "温度"
+      ],
+      "category": "heat",
+      "summary": "这版英式蛋奶酱靠蛋黄增稠。",
+      "rules": [
+        "搅拌加热到82–84℃后过筛，需保存时迅速降温冷藏；不能照淀粉卡仕达持续煮沸。"
+      ],
+      "conditions": [
+        "采用Valrhona此版英式蛋奶酱。"
+      ],
+      "sourceIds": [
+        "chef-import-source-val-anglaise"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "并非所有蛋奶馅统一温度。"
+      ]
+    },
+    {
+      "id": "chef-import-anglaise-vs-patissiere",
+      "title": "英式蛋奶酱与卡仕达不是同一种馅",
+      "topics": [
+        "英式蛋奶酱",
+        "卡仕达",
+        "淀粉",
+        "奶油馅"
+      ],
+      "category": "ingredient",
+      "summary": "卡仕达通常加淀粉/面粉获得更稠结构。",
+      "rules": [
+        "选酱汁型或可填馅型基底时，先确定是否依赖淀粉，不只按中文奶油馅名称互换。"
+      ],
+      "conditions": [
+        "选甜品蛋奶基底。"
+      ],
+      "sourceIds": [
+        "chef-import-source-val-anglaise"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "这里不提供随意加粉转换方。"
+      ]
+    },
+    {
+      "id": "chef-import-mousse-family",
+      "title": "巧克力慕斯要分基底家族",
+      "topics": [
+        "巧克力",
+        "慕斯",
+        "蛋白",
+        "英式蛋奶酱"
+      ],
+      "category": "ingredient",
+      "summary": "蛋白型、英式蛋奶酱型与无蛋奶油型不同。",
+      "rules": [
+        "先认定基底及充气来源，再选择对应温度/混合流程；不能在旧无蛋慕斯里凭菜名添生蛋。"
+      ],
+      "conditions": [
+        "选择巧克力慕斯路线。"
+      ],
+      "sourceIds": [
+        "chef-import-source-val-mousse"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "完整配方另核。"
+      ]
+    },
+    {
+      "id": "chef-import-hard-cooked-egg-storage",
+      "title": "熟鸡蛋冷藏保存不同于生鸡蛋",
+      "topics": [
+        "鸡蛋",
+        "熟鸡蛋",
+        "冷藏",
+        "保存"
+      ],
+      "category": "storage",
+      "summary": "煮熟的带壳或剥壳鸡蛋应及时安全冷藏，并在1周内用完。",
+      "rules": [
+        "煮熟的带壳或剥壳蛋及时冷藏，1周内用；不能沿用生蛋最佳品质周数。"
+      ],
+      "conditions": [
+        "存放熟鸡蛋。"
+      ],
+      "sourceIds": [
+        "chef-import-source-fda-eggs"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "要求一直安全冷藏。"
+      ]
+    },
+    {
+      "id": "chef-import-freeze-egg-without-shell",
+      "title": "冷冻鸡蛋先去壳",
+      "topics": [
+        "鸡蛋",
+        "冷冻",
+        "蛋白",
+        "保存"
+      ],
+      "category": "storage",
+      "summary": "带壳鸡蛋不直接冷冻。",
+      "rules": [
+        "冻全蛋先把蛋黄和蛋白打匀，蛋白也可单独冻存。"
+      ],
+      "conditions": [
+        "准备冷冻蛋液。"
+      ],
+      "sourceIds": [
+        "chef-import-source-fda-eggs"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "解冻后依需充分熟制。"
+      ]
+    },
+    {
+      "id": "chef-import-shellfish-buy-check",
+      "title": "活双壳贝选购要查标签和活性",
+      "topics": [
+        "贝类",
+        "牡蛎",
+        "贻贝",
+        "蛤蜊",
+        "选购"
+      ],
+      "category": "ingredient",
+      "summary": "合规来源信息和活性都要检查。",
+      "rules": [
+        "选有采收/处理信息的贝类；弃裂壳，活贝轻敲不闭合的不选。"
+      ],
+      "conditions": [
+        "选购活蛤蜊、牡蛎、贻贝。"
+      ],
+      "sourceIds": [
+        "chef-import-source-fda-seafood"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "熟贝和冻结贝不能套活贝敲击法。"
+      ]
+    },
+    {
+      "id": "chef-import-seafood-freezing-not-sterile",
+      "title": "冷冻海鲜不等于全部杀菌",
+      "topics": [
+        "海鲜",
+        "冷冻",
+        "生食",
+        "寄生虫"
+      ],
+      "category": "storage",
+      "summary": "控制寄生虫与杀灭细菌不是一回事。",
+      "rules": [
+        "冷冻可用于控制部分寄生虫，但不能杀掉所有有害微生物；不能因此承诺生食安全。"
+      ],
+      "conditions": [
+        "有人以冻过为由判断生海鲜安全。"
+      ],
+      "sourceIds": [
+        "chef-import-source-fda-seafood"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "未给具体鱼种杀虫时温参数。"
+      ]
+    },
+    {
+      "id": "chef-import-bread-salt-function",
+      "title": "面包里的盐还影响面筋与发酵",
+      "topics": [
+        "面包",
+        "盐",
+        "发酵",
+        "面筋"
+      ],
+      "category": "ingredient",
+      "summary": "盐不只提供咸味。",
+      "rules": [
+        "盐可加强面筋持气并减慢酵母活动；随意大减/漏盐会同时改变手感和发酵节奏。"
+      ],
+      "conditions": [
+        "调整面包盐量。"
+      ],
+      "sourceIds": [
+        "chef-import-source-kab-salt"
+      ],
+      "evidenceBasis": "source_summary",
+      "limitations": [
+        "不能只靠加盐控制发酵。"
+      ]
+    }
+  ]
+}

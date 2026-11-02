@@ -1,0 +1,188 @@
+/* 副本 · 电子书架
+   面板本身跟「动态」一样是一整块（占满板块2+板块3的位置），里面是一排排书。
+   颜色、圆角、间距沿用 pets.css / zhiyu.css 的既有数值，不引入新色板。 */
+
+.zy-dungeons {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  background: #fff;
+  color: #25282c;
+  scrollbar-width: thin;
+}
+
+.zy-dungeons-inner {
+  width: min(100% - 64px, 900px);
+  margin: 0 auto;
+  padding: 22px 0 72px;
+}
+
+.zy-dungeons-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 31px;
+  padding: 5px 11px;
+  border: 1px solid #eceef0;
+  border-radius: 10px;
+  background: #f7f7f8;
+  color: #282b2f;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.zy-dungeons-back:hover { background: #f0f1f2; }
+
+.zy-dungeons-head { margin: 24px 0 30px; }
+.zy-dungeons-head h1 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  font-size: 25px;
+  line-height: 1.25;
+  font-weight: 560;
+  letter-spacing: -.025em;
+}
+.zy-dungeons-head p { margin: 8px 0 0; color: #72777d; font-size: 13px; line-height: 1.6; }
+
+/* ---- 书架 ---- */
+
+.zy-shelf { display: flex; flex-direction: column; gap: 40px; }
+.zy-shelf-row { display: flex; flex-direction: column; }
+.zy-shelf-books {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  padding: 0 4px;
+}
+.zy-shelf-plank {
+  height: 9px;
+  margin: 10px -10px 0;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #ececeb, #f7f7f6);
+  box-shadow: 0 7px 14px #2025300f;
+}
+
+.zy-book {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 11px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.zy-book-cover {
+  position: relative;
+  display: block;
+  aspect-ratio: 2 / 3;
+  border: 1px solid #e7e8eb;
+  border-radius: 4px 10px 10px 4px;
+  background: #fdfdfc;
+  box-shadow: 0 10px 24px #2025300d;
+  transition: transform .16s, box-shadow .16s, border-color .16s;
+  overflow: hidden;
+}
+/* 书脊：左侧一条浅阴影，让正面看起来像一本书 */
+.zy-book-cover::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 15px;
+  background: linear-gradient(90deg, #00000012, #00000000);
+}
+/* 内页边：封面内侧一圈极淡的线 */
+.zy-book-cover::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border: 1px solid #00000008;
+  border-radius: 2px 7px 7px 2px;
+}
+.zy-book-cover.is-blank { background: #fbfbfa; }
+
+.zy-book:hover .zy-book-cover {
+  transform: translateY(-5px);
+  border-color: #d5d7da;
+  box-shadow: 0 16px 30px #2025301a;
+}
+.zy-book:focus-visible .zy-book-cover { border-color: #41474d; }
+
+.zy-book-title { color: #30343a; font-size: 13px; font-weight: 560; line-height: 1.4; }
+.zy-book-title.is-dim { color: #9a9ea3; font-weight: 400; }
+
+/* ---- 详情卡 ---- */
+
+.zy-dungeon-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: #161b2491;
+}
+.zy-dungeon-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+  width: min(100%, 520px);
+  padding: 24px;
+  border: 1px solid #e5e6e8;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--zy-popup-shadow,0 9px 28px #0002);
+}
+.zy-dungeon-cover .zy-book-cover { box-shadow: 0 12px 26px #20253014; }
+.zy-dungeon-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #6c7176;
+  cursor: pointer;
+}
+.zy-dungeon-close:hover { background: #f0f1f2; }
+.zy-dungeon-genre {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 15px;
+  background: #f5f6f6;
+  color: #71777c;
+  font-size: 11px;
+}
+.zy-dungeon-info h2 { margin: 11px 0 0; font-size: 18px; font-weight: 600; }
+.zy-dungeon-info p { margin: 9px 0 0; color: #72777d; font-size: 13px; line-height: 1.65; }
+.zy-dungeon-enter {
+  margin-top: 20px;
+  min-height: 35px;
+  padding: 0 14px;
+  border: 1px solid #e1e3e5;
+  border-radius: 9px;
+  background: #f7f7f8;
+  color: #92979c;
+  font: inherit;
+  font-size: 12px;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .zy-dungeons-inner { width: min(100% - 36px, 900px); }
+  .zy-shelf-books { gap: 16px; }
+  .zy-dungeon-card { grid-template-columns: 110px minmax(0, 1fr); }
+}

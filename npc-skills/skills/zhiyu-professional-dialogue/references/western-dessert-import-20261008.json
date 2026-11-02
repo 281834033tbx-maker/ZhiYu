@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "version": "2026-10-08-v1",
+  "date": "2026-10-08",
+  "personId": "zhou-chef",
+  "displayName": "赵一帆",
+  "author": {
+    "name": "主厨广坦",
+    "account": "chefguangtan",
+    "verified": true
+  },
+  "status": "user_authorized_source_reference_import",
+  "authorization": {
+    "date": "2026-10-08",
+    "quote": "这个是西餐，一个做抖音的博主。然后你参考他的这些视频来完善我的西餐和甜品。然后完善好了之后告诉我还缺什么。",
+    "sharedLink": "https://v.douyin.com/P02QRI0cYyA/",
+    "scope": "赵一帆西餐甜品有证据方法、逐菜资料及读取链路；不借用博主身份，不改变其他人物与工具权限。"
+  },
+  "selection": {
+    "basis": "根据现有知识缺口选择18条代表原作，非按热度排序、全作者作品或全领域覆盖",
+    "statistics": {
+      "videoCount": 18,
+      "westernCount": 9,
+      "dessertCount": 9,
+      "orderedSourceActionsAndObservations": 169,
+      "recipesRequiringSafetyRewrite": 18,
+      "blockedSourceActions": 67,
+      "fullSpanContactPages": 151,
+      "detailContactPages": 96
+    },
+    "indexMeaning": "episode是本次研究条目顺序，不冒称作者的作品集数",
+    "manifest": "../../../../output/guangtan-western-dessert-research-20261008/selected-source-manifest.json"
+  },
+  "methodsFile": "chef-western-dessert-methods.md",
+  "recipeReferenceFile": "western-dessert-recipe-library-20261008.json",
+  "librarySha256": "a825c760e68f41e985b68987e79465654b13033add00f965901f165a85cee1a2",
+  "sourcesFile": "chef-cooking-sources-20261007.json",
+  "programIntegration": {
+    "version": "runtime-v22",
+    "loader": "server/npc/dialogue-skill.ts",
+    "selectionHelper": "server/npc/chef-western-dessert-library.ts",
+    "retrieval": "server/npc/codex.ts",
+    "scope": "只为zhou-chef常载专属方法；两套厨师来源库在原检索调用中合计选0至3条，冻结资料连同缺项与安全提示交生成/技术复核/最终复核。旧安秋金53库独立保留，陈年并行健身分支保留。",
+    "checksStatus": "source_and_runtime_offline_regressions_passed",
+    "verificationReport": "../../../../output/western-dessert-runtime-integration-20261008/library-validation.json",
+    "finalCodeVerificationReport": "../../../../output/western-dessert-runtime-integration-20261008/final-code-validation.json"
+  },
+  "verification": {
+    "sourceReviewMethod": "full-span_sampled_visual_review_with_subtitle_supplement",
+    "authorAndOriginalPagesVerified": true,
+    "sourceAndResearchHashesVerified": true,
+    "continuousAudioVideoWatched": false,
+    "fullTranscriptsAvailable": false,
+    "kitchenTested": false,
+    "noviceReplicated": false,
+    "allRecipesComplete": false,
+    "productionModelTested": false,
+    "appChefBackendConnected": false,
+    "timersImplementedByImport": false
+  },
+  "limitations": [
+    "用量、厚度、初温、烤箱模式、模具和冷链未明确的地方保留缺项，不补成作者参数。",
+    "视频位置是证据定位；作者时间是对应未知或已给规格的示范，不是普适熟度保证。",
+    "保留原片危险动作供追溯，实际指导须有核验依据的安全适配；安全改写不代表全部缺项已补。",
+    "标题、作者解释或试吃不等于科学、营养、安全或口味比较验证。",
+    "本次未导入营养手册，不部署/重启服务、不发真实角色消息或修改用户状态。",
+    "源码与离线测试不等于厨师App后端、实时视频带做、勾选或提醒送达已完成。"
+  ],
+  "safetyRewriteSelection": "取原研究显式拦截序号与结构化安全说明需改写序号并集，保留原研究快照与sourceBlockedSourceStepOrders"
+}

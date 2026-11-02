@@ -1,0 +1,109 @@
+/* 2026-10-10: approved r10 sidebar material and r11 neutral chat colors.
+   This layer changes paint only. Bubble geometry, motion and hit areas remain
+   in their existing component styles. Native desktop blur comes from macOS. */
+html[data-zy-theme='light'] .zy-app.zy-desktop {
+  --zy-selected:linear-gradient(110deg,rgb(123 185 182 / 48%),rgb(173 149 208 / 52%));
+  --zy-selected-accent:#35a7b0;
+  --zy-selected-badge:rgb(244 246 250 / 62%);
+  --zy-pinned:rgb(216 211 225 / 40%);
+  --zy-row-badge:rgb(246 248 251 / 72%);
+}
+
+/* 2026-10-14: keep the existing mist-teal / cool-grey colors and stops.
+   Match the NPC profile's 48% base tint so the background shows through.
+   Paint the plate once; icons and text keep their full opacity.
+   macOS supplies the desktop blur; the browser keeps an opaque fallback. */
+html[data-zy-theme='light'] .zy-desktop-stage {
+  background:#eef1f5;
+}
+html[data-zy-theme='light'][data-zy-native-material='macos'] .zy-desktop-stage {
+  background:transparent;
+}
+/* 2026-10-21 板块1 透明：参考 Hermes「窗口透明」的数值（色调 96% → 只留 4% 底色），
+   颜色与渐变停点原样不动，只把不透明度 48% 改成 4%（96% 透出桌面）。
+   图标/logo/文字各自不透明，不受影响；磨砂模糊由 macOS 原生材质提供。 */
+html[data-zy-theme='light'] .zy-desktop-slot>.zy-app.zy-desktop {
+  background:linear-gradient(180deg,
+    rgb(139 179 178 / 4%) 0%,
+    rgb(171 195 200 / 4%) 48%,
+    rgb(211 220 232 / 4%) 100%);
+}
+html[data-zy-theme='light'] .zy-app.zy-desktop .zy-base {
+  background:transparent;
+}
+html[data-zy-theme='light'] .zy-app.zy-desktop :is(.zy-rail,.zy-directory) {
+  position:relative;
+  isolation:isolate;
+  --zy-ink:#252628;
+  --zy-secondary:#596575;
+  --zy-muted:#677486;
+  --zy-hover:rgb(215 227 237 / 42%);
+}
+html[data-zy-theme='light'] .zy-app.zy-desktop .zy-rail {
+  background:transparent;
+}
+html[data-zy-theme='light'] .zy-app.zy-desktop .zy-directory {
+  --directory-background:transparent;
+  background:rgb(246 247 251 / 42%);
+}
+/* The directory keeps its horizontal teal/purple gradient, distinct from
+   the vertical base plate. Icons, logos and text retain full opacity. */
+html[data-zy-theme='light'] .zy-app.zy-desktop .zy-directory::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  border-radius:inherit;
+  background:linear-gradient(90deg,#7fb5ae 0%,#b4bfbc 48%,#b2a0ca 100%);
+  -webkit-mask-image:linear-gradient(180deg,rgb(0 0 0 / 78%) 0%,rgb(0 0 0 / 55%) 28%,rgb(0 0 0 / 25%) 65%,rgb(0 0 0 / 4%) 100%);
+  mask-image:linear-gradient(180deg,rgb(0 0 0 / 78%) 0%,rgb(0 0 0 / 55%) 28%,rgb(0 0 0 / 25%) 65%,rgb(0 0 0 / 4%) 100%);
+}
+html[data-zy-theme='light'] .zy-app.zy-desktop .zy-rail::before {
+  content:none;
+}
+html[data-zy-theme='light'] .zy-app.zy-desktop .zy-sliding-navigation .zy-nav-highlight {
+  background:linear-gradient(110deg,#add0ca,#b4aed0);
+}
+
+/* White chat, reference grey incoming messages and slightly greyer near-black
+   outgoing messages. Group, NPC and local chats share the existing tokens. */
+html[data-zy-theme='light'] .zy-app.zy-desktop:is(.zy-page-chat,.zy-page-pets) {
+  --zy-canvas:#fff;
+  --zy-incoming:#f0f1f5;
+  --zy-outgoing:#35373f;
+  --zy-on-outgoing:#fafafc;
+  --zy-ink:#252628;
+  --zy-secondary:#626469;
+  --zy-muted:#717378;
+  --zy-line:#eaebef;
+}
+
+/* Keep the exact same hover/press/expanded states and animation definitions;
+   replace their color and the existing one-pixel composer edge only. */
+html[data-zy-theme] .zy-app.zy-desktop {
+  --zy-interaction-ink:#527b98;
+  --zy-composer-edge:#83a9c5;
+}
+html[data-zy-theme='dark'] .zy-app.zy-desktop {
+  --zy-interaction-ink:#83a9c5;
+}
+html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon {
+  --zy-chat-control-accent:var(--zy-interaction-ink);
+}
+html[data-zy-theme] .zy-app.zy-desktop .zy-directory .zy-search:focus-within {
+  border-color:var(--zy-composer-edge);
+}
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-text-entry {
+  background:linear-gradient(var(--zy-canvas),var(--zy-canvas)) padding-box,
+    linear-gradient(var(--zy-composer-edge),var(--zy-composer-edge)) border-box;
+}
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-compose-row>button:hover {
+  color:var(--zy-interaction-ink);
+}
+html[data-zy-theme] .zy-app.zy-desktop .chat-send-plane stop:first-child {
+  stop-color:var(--zy-interaction-ink);
+}
+html[data-zy-theme] .zy-app.zy-desktop .chat-send-plane stop:last-child {
+  stop-color:var(--zy-composer-edge);
+}

@@ -1,0 +1,7 @@
+.zy-chat-add-trigger { display:flex; align-items:center; justify-content:center; flex-shrink:0; align-self:center; width:32px; height:32px; padding:0; border:0; border-radius:50%; background:transparent; color:var(--zy-secondary,#62665d); cursor:pointer; }
+.zy-chat-add-trigger:hover,.zy-chat-add-trigger[aria-expanded='true'] { background:transparent; color:var(--zy-ink,#252723); }
+.zy-chat-add-trigger:focus-visible { outline:2px solid #ee827d; outline-offset:2px; }
+.zy-chat-add-menu { position:fixed; z-index:110; box-sizing:border-box; width:184px; max-width:calc(100vw - 16px); padding:6px; border:1px solid var(--zy-line,#e3e5dd); border-radius:9px; background:var(--zy-canvas,#fafaf8); color:var(--zy-ink,#252723); box-shadow:var(--zy-popup-shadow,0 9px 28px #0002); font:13px 'PingFang SC','Microsoft YaHei',sans-serif; }
+.zy-chat-add-menu>button { display:flex; align-items:center; gap:11px; box-sizing:border-box; width:100%; padding:11px 12px; border:0; border-radius:5px; background:transparent; color:inherit; font:inherit; text-align:left; white-space:nowrap; cursor:pointer; }
+.zy-chat-add-menu>button>svg { flex-shrink:0; }
+.zy-chat-add-menu>button:hover,.zy-chat-add-menu>button:focus-visible { outline:none; background:var(--zy-hover,#e8eae2); }

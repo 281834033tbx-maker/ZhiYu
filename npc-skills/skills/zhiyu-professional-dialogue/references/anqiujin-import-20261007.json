@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-07",
+  "personId": "zhou-chef",
+  "displayName": "赵一帆",
+  "author": "安秋金",
+  "status": "user_authorized_source_reference_import",
+  "authorization": {
+    "quote": "现在把这个东西写进去。我想知道，他这个研究资料是写进这个人物的程序中，还是写入到Skill当中？",
+    "scope": "将既有53条做菜研究导入赵一帆Skill及实际读取链路；授权导入来源参考，不等于用户逐道验收配方或厨房验证。",
+    "supersedes": "此前先交文字审阅、暂不导入的执行阶段。原研究文件保持当时状态快照，不倒改原始观察或验证。"
+  },
+  "researchArtifact": "../../../../output/anqiujin-cooking-research-20261007/研究汇总.json",
+  "selectedCookingVideos": 53,
+  "excludedAppendixEpisode": 411,
+  "methodsFile": "anqiujin-cooking-methods.md",
+  "recipeReferenceFile": "anqiujin-recipe-library-20261007.json",
+  "programIntegration": {
+    "loader": "server/npc/dialogue-skill.ts",
+    "selectionHelper": "server/npc/chef-recipe-library.ts",
+    "retrieval": "server/npc/codex.ts",
+    "scope": "仅zhou-chef，常载技法与来源状态，原检索调用选择0至3条逐菜参考，同请求生成复核使用同快照。"
+  },
+  "verification": {
+    "sourceMethod": "全时段抽帧、关键动作与烧录字幕核看",
+    "continuousAudioVideoWatched": false,
+    "fullTranscriptsAvailable": false,
+    "kitchenTested": false,
+    "noviceReplicated": false,
+    "allRecipesComplete": false
+  },
+  "limitations": [
+    "原片未说明的用量、温度、厚度、处理状态或设备条件不凭空补成作者配方。",
+    "视频时间戳只定位证据；作者口述烹饪时间也不覆盖任意条件。",
+    "危险段保存研究事实供追溯，实际指导须用有依据的安全路线替代。",
+    "本次没有导入营养教材、部署厨师AI后端、创建真实计时或完成厨房验收。"
+  ],
+  "importedAt": "2026-10-08"
+}

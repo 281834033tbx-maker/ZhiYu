@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import {EventEmitter} from 'node:events';
+import {mkdirSync} from 'node:fs';
+import {join} from 'node:path';
+import {randomUUID} from 'node:crypto';
+import {isolatedNpcRuntime} from './npc-test-runtime.mjs';
+const runtime=isolatedNpcRuntime();let db,transport;
+try{
+ const {yuanLocal}=await runtime.load('server/npc/yuan-plugin');
+ const {createYuan}=await runtime.load('lib/npc/yuan-xiaoman');
+ const {ensureYuanProactive}=await runtime.load('lib/npc/yuan-proactive');
+ const {observeGroupActivity,recordGroupSocialExpressions}=await runtime.load('server/npc/social-continuity');
+ mkdirSync(join(runtime.root,'.npc-runtime'),{recursive:true});db=new DatabaseSync(join(runtime.root,'.npc-runtime/state.sqlite'));
+ db.exec('CREATE TABLE yuan_sessions(id TEXT PRIMARY KEY,data TEXT)');
+ const now=Date.parse('2026-10-16T04:00:00Z'),owner=randomUUID(),key=owner+':yuan-xiaoman',state=createYuan(now-7200000);
+ state.values.familiarity=70;state.values.affection=70;
+ state.messages=[{id:'u',turnId:'u-turn',role:'user',at:new Date(now-7200000).toISOString(),part:{type:'text',text:'合成旧私聊'}},{id:'a',turnId:'a-turn',role:'assistant',at:new Date(now-95*60000).toISOString(),part:{type:'text',text:'今天过得怎么样？'}}];
+ ensureYuanProactive(state,now);state.contactLife.nextAt=now-1;state.proactive.nextAt=now-1;
+ db.prepare('INSERT INTO yuan_sessions VALUES(?,?)').run(key,JSON.stringify(state));
+ let release,startedResolve;const started=new Promise(r=>startedResolve=r),held=new Promise(r=>release=r);
+ transport=new EventEmitter();yuanLocal({now:()=>now,available:()=>true,generate:async()=>{startedResolve();await held;return {action:'reply',messages:[{type:'text',text:'STALE_PRIVATE_FOLLOWUP_MUST_NOT_SEND'}],event:null,memories:[]};}}).configureServer({config:{root:runtime.root},middlewares:{use(){}},httpServer:transport});
+ await Promise.race([started,new Promise((_,reject)=>setTimeout(()=>reject(Error('isolated scheduler did not start')),4000))]);
+ const member=id=>({id,name:id,role:id==='user'?'user':'npc',joinedAt:new Date(now-86400000).toISOString(),order:1});
+ const incoming={id:'current-group-input',senderId:'user',senderName:'合成用户',type:'text',text:'合成群活动',at:new Date(now).toISOString()};
+ const group={id:'group-'+randomUUID(),name:'合成群',goal:'合成',members:[member('user'),member('yuan-xiaoman')],messages:[incoming]};
+ const context=observeGroupActivity(db,owner,group,incoming,now)[0];assert.ok(context.incident);
+ recordGroupSocialExpressions(db,owner,group.id,incoming.id,{messages:[{senderId:'yuan-xiaoman'}],socialExpressions:[{characterId:'yuan-xiaoman',eventId:context.incident.id,expression:'expressed',feeling:'hurt'}]},now);
+ release();await new Promise(r=>setTimeout(r,80));
+ const fresh=JSON.parse(db.prepare('SELECT data FROM yuan_sessions WHERE id=?').get(key).data);
+ assert.equal(fresh.socialContinuity.incidents[0].status,'expressed');assert.equal(fresh.socialContinuity.incidents[0].feeling,'hurt');
+ assert.equal(fresh.contactLife.waiting.followedUp,true);
+ assert.ok(!fresh.messages.some(m=>m.part.text==='STALE_PRIVATE_FOLLOWUP_MUST_NOT_SEND'),'late private generation sees fresh group expression and aborts duplicate follow-up');
+ assert.equal(fresh.messages.length,2,'group observation does not inject group text into private history');
+ console.log('PASS real yuanLocal scheduler race: group social write during awaited private generation survives fresh reload; previously generated duplicate follow-up not sent; no HTTP/model/production state');
+}finally{transport?.emit('close');db?.close();runtime.cleanup();}

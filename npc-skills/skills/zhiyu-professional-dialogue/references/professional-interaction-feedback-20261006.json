@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-06",
+  "timezone": "Asia/Shanghai",
+  "source": "当前聊天的用户原话与已展示助手候选；不是App生产会话",
+  "records": [
+    {
+      "id": "CHEF-RECIPE-READABILITY-20261006",
+      "scope": "zhou-chef；两人番茄炒蛋、尖椒土豆片与米饭的合成示范",
+      "context": "用户先要求一轮问人数和菜单、统一备料并规划整餐工序。简略七步被指出新手不易理解，展开版仍因文字堆叠被批评。",
+      "previous_answer_excerpt": "第三步：烧水，同时切菜。锅里加水烧开。趁这时候，土豆削皮，切成约3毫米厚的薄片，清水冲洗一下；番茄洗净切块，尖椒去蒂切片。鸡蛋打进碗里，把蛋清和蛋黄搅匀。葱蒜切碎（可省略）。",
+      "feedback": "你这样还是把文字堆成了一大堆，我想要的是，在分清步骤的同时，每一步要做什么都非常的清晰。比如说换行，比如说清晰的标点。还有时间，有一些要严格把控时间的，你大约给他一个时间的范围，比如说30秒到1分钟左右",
+      "revised_answer_excerpt": "第四步：焯土豆片。\n\n水烧开后，下土豆片。\n等水重新沸腾，再煮30秒～1分钟。\n捞出，沥干水。\n倒掉锅里的水，把锅擦干。",
+      "endorsement": "我觉得这样是非常OK的。",
+      "status": "user_endorsed_format",
+      "accepted_range": "步骤清楚；一步内按动作换行；清晰标点；关键时间范围与完成状态；保留新手必要细节",
+      "not_accepted_as": "全部医学/烹饪能力验收、用户真实家庭人数、所有菜谱固定七步、永久固定台词",
+      "regression_id": "CHEF-RECIPE-READABILITY-20261006"
+    },
+    {
+      "id": "PROFESSIONAL-CHECKLIST-20261006",
+      "scope": "专业型步骤聊天产品要求",
+      "user_request": "就是你同时发送这7步，然后每一步后面都会有一个小勾。比如说他完成了这一步，打一个小勾，然后这一步就变暗，然后依次，每一步完成之后，打完勾之后都会变暗。它依旧是聊天，但是它属于那种可以添加完成度的那种聊天。",
+      "assistant_restatement": "赵一帆一次发出完整的7步，每一步都保留刚才那种清楚的换行、动作和时间说明，并在这一步后面放一个勾选框。用户做完一步，就点一下：勾选框打上勾；这一整步的文字变暗，但仍然能看清；没完成的步骤保持正常显示。完整的7步始终留在聊天里。",
+      "endorsement": "对对对，就是这样。",
+      "status": "user_required_feature",
+      "accepted_range": "完整步骤留在聊天；每步勾选；用户自报完成；整步变暗但可读",
+      "implementation_status": "规则和需求已记录；可点击控件、完成度保存未接入",
+      "regression_id": "scripts/test-npc-skill-integration.mjs:professional-interaction-isolation"
+    },
+    {
+      "id": "LIU-SKIN-AND-CHOICES-20261006",
+      "scope": "liu职业；专业型选择交互",
+      "context": "用户认可步骤勾选聊天，继续确定柳智敏职业并提出通过选项了解情况。",
+      "user_request": "然后我现在想把柳智敏变成一个皮肤管理专家，就是她会什么美白祛痘这种，像皮肤科医生一样的。然后像类似于这种专业型的，我觉得每一个专业型都会给用户建议，这种时候可以有那种多选项的，比如说你是什么皮肤，有的是干皮、混油皮和混合皮，类似这种，它可以让用户去选择，就像是有的时候你也会给我一些选择，问我哪一个。选择是我想要的，耶。",
+      "status": "user_required_direction",
+      "accepted_range": "皮肤管理职业；美白祛痘专长；类似皮肤科医生的专业质量目标；专业型在必要时给可选择的选项",
+      "assistant_proposed": "肤质单选干皮/油皮/混合偏油/混合偏干/中性/不确定；改善目标可多选；具体文案尚未逐项认可",
+      "pending": "具体资历和机构；具体护肤案例与专业效果验收；可点击选项控件接入",
+      "not_inferred": "现实执业医生身份、医生证书、用户真实肤质或已作出任何选择",
+      "regression_id": "scripts/test-npc-skill-integration.mjs:liu-skin-isolation; scripts/test-npc-dialogue-parsers.mjs:liu-current-career"
+    }
+  ]
+}

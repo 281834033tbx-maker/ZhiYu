@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-29",
+  "appPath": "/Users/boxuantong/智域大文件/home/Documents/ChatGPT/全民智敏/desktop-mobile/dist/mac-arm64/智域手机版.app",
+  "bundleId": "com.zhiyu.mobile-preview",
+  "contentSize": {
+    "width": 426,
+    "height": 900
+  },
+  "entry": "http://localhost:3100/mobile",
+  "profile": "Application Support/智域手机版",
+  "launched": true,
+  "sourceMatches": [
+    "main.js",
+    "preload.js",
+    "image-viewer.js",
+    "service-runtime.js"
+  ],
+  "asarEntries": [
+    "/image-viewer.js",
+    "/main.js",
+    "/package.json",
+    "/preload.js",
+    "/service-runtime.js"
+  ],
+  "iconHash": "e12261516bbca93635831073ab8ee3094009ed6075b456fd3e43dc768fc89203",
+  "signature": "codesign --verify --deep --strict: passed",
+  "backend": "Existing localhost:3100 API; separate Chromium profile and localStorage",
+  "nativeMobileFlag": true,
+  "testsPassed": 7,
+  "launchObserved": "CUA: 智域手机版 native window, localhost:3100/mobile, original login form; no credential entry by agent"
+}

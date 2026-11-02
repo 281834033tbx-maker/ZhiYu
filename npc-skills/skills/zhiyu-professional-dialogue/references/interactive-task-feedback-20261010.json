@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-10",
+  "scope": "专业型共享任务意图判断；赵一帆 zhou-chef 聊天任务接入与完成一步后的提醒",
+  "sourceKind": "current_user_request",
+  "userStatements": [
+    {
+      "text": "现在把这个东西放入到程序里，首先有一点你需要非常的确认，就是哪一条算是任务，别用户说一句话，他就给弄一个任务。",
+      "status": "user_required"
+    },
+    {
+      "text": "我的想法是，如果用户主动说交任务，他就一定是任务。然后如果用户不主动说，那么怎么来评判呢？",
+      "status": "user_proposed_judgment_under_discussion"
+    },
+    {
+      "text": "赵一帆说好的，要把它弄成一个任务吗？我觉得这样太蠢了吧！这样的话，用户以后不管说什么，赵一帆都这样讲，用户会有疲惫感。",
+      "status": "user_rejected_repeated_abstract_confirmation"
+    },
+    {
+      "text": "比如说我跟赵一帆说，我说我要做一个地三鲜，那么左上角就是地三鲜",
+      "status": "user_required_example"
+    },
+    {
+      "text": "比如我勾选了步骤一，意味着步骤一已经完成，步骤二的一些注意事项，赵一帆会主动给我发消息来提醒我。",
+      "status": "user_required_progress_trigger"
+    },
+    {
+      "text": "食材准备，土豆与茄子熟化，这里要和正常的聊天字体大小一样，只不过是再加粗一点。然后勾选对号的那个小圆圈小一点，别太大。",
+      "status": "user_required_visual_revision"
+    }
+  ],
+  "derivedRules": [
+    {
+      "status": "implementation_interpretation",
+      "rule": "显式任务委托，或已确定目标加执行意图/对具体执行方案的接受，可以创建；纯咨询、愿望、假设、引用、否定、过去完成不自动创建。"
+    },
+    {
+      "status": "implementation_interpretation",
+      "rule": "模糊时问实际目标或必要条件，不在每次专业回复后询问是否建任务。"
+    },
+    {
+      "status": "implementation_interpretation",
+      "rule": "已有任务优先继续、修改、暂停或结束；只有明确新的一次执行才创建新的任务。"
+    },
+    {
+      "status": "implementation_interpretation",
+      "rule": "用户手动完成事件保存成功后按最新版本提示下一可执行步骤；撤销及连续操作撤销未发过时提示，避免重复消息。"
+    }
+  ],
+  "supersedes": [
+    "旧专业交互把分步骤排版容易解释为执行任务的宽泛理解；新规则区分知识回答与实际执行。"
+  ],
+  "preserves": [
+    "共享短消息与自然表达规则",
+    "赵一帆实际开始后才计时的规则",
+    "最多两次到点提醒的已有规则",
+    "正式历史与数据、已完成状态和来源边界"
+  ],
+  "capabilityStatus": "本记录保存最新授权与判定规则。规则写入不是功能验收；UI、消息协议、持久任务、模型稳定判断、进度触发和计时送达分别以本轮实际程序验证结果为准。",
+  "examplesStatus": "interactive-task-intent-cases-20261010.json 是助手依据本轮要求整理的隔离测试候选，不是用户逐例认可，不形成真实用户事实。",
+  "productionActions": "本规则整理未调用真实模型、发送正式消息、改生产任务/历史/关系或重启程序。"
+}

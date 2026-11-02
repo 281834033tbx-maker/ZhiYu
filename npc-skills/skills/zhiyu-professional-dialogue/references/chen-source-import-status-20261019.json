@@ -1,0 +1,1106 @@
+{
+  "date": "2026-10-19",
+  "characterId": "chen-nian",
+  "knowledgeLibrary": "chen-acsm-foundation-20261017.json",
+  "sourceAccess": {
+    "checkedAt": "2026-10-19",
+    "stage": "ready_for_root_integration",
+    "scope": "读取指定来源的可获取专业正文并增量整理；不表示上述机构全部资料或付费教材全部读完。",
+    "sourceCount": 22,
+    "entryCount": 36,
+    "manifest": [
+      {
+        "sourceId": "acsm-import-src-issn-creatine2017",
+        "title": "ISSN position stand: safety and efficacy of creatine supplementation in exercise, sport, and medicine",
+        "requestedUrl": "https://link.springer.com/article/10.1186/s12970-017-0173-z",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "Metabolic role",
+          "Supplementation protocols",
+          "Bioavailability",
+          "Position statement",
+          "Safety与Competing interests局部"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-creatine-form",
+          "acsm-import-creatine-cessation"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-issn-protein2017",
+        "title": "ISSN Position Stand: protein and exercise",
+        "requestedUrl": "https://link.springer.com/article/10.1186/s12970-017-0177-8",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "Position statement",
+          "Protein timing",
+          "Pre-sleep protein intake",
+          "Protein quality",
+          "Competing interests局部"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-protein-distribution",
+          "acsm-import-protein-presleep"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-issn-caffeine2021",
+        "title": "ISSN position stand: caffeine and exercise performance",
+        "requestedUrl": "https://link.springer.com/article/10.1186/s12970-020-00383-4",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "Position statement",
+          "Alternative forms",
+          "Habitual caffeine intake",
+          "Exercise in heat/hydration",
+          "Sleep与Side effects"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-caffeine-form-timing",
+          "acsm-import-caffeine-hydration"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-issn-beta2015",
+        "title": "ISSN position stand: Beta-Alanine",
+        "requestedUrl": "https://link.springer.com/article/10.1186/s12970-015-0090-y",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "Dosing strategies",
+          "Beta-alanine safety",
+          "Consensus",
+          "Conclusions",
+          "Competing interests局部"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-beta-taurine",
+          "acsm-import-beta-washout"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-issn-bicarbonate2021",
+        "title": "ISSN position stand: sodium bicarbonate and exercise performance",
+        "requestedUrl": "https://link.springer.com/article/10.1186/s12970-021-00458-w",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "Position statement",
+          "Combined supplementation",
+          "Single-dose与Multiple-day protocols",
+          "Competing interests"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-bicarbonate-combination",
+          "acsm-import-bicarbonate-repeated-trial"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-ais-glycerol",
+        "title": "AIS Sports Supplement Framework — Glycerol",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_a/performance-supplements2/glycerol",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "What is it",
+          "How and when do I use it",
+          "Is it ergogenic",
+          "Concerns",
+          "Ice-slurry considerations"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-glycerol-context",
+          "acsm-import-glycerol-cost"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-ais-sports-drink",
+        "title": "AIS — Sports Drinks",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_a/sports-foods2/sports-drink",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "What is it",
+          "What does it look like",
+          "How and when do I use it",
+          "Table 1运动时长与碳水目标"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-carbohydrate-during-exercise",
+          "acsm-import-carbohydrate-transporter"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-ais-vitamin-d",
+        "title": "AIS — Vitamin D",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_a/medical-supplements2/vitamin-d",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "What is it",
+          "What does it look like",
+          "How and when do I use it",
+          "Concerns"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-vitamin-d-lab-units",
+          "acsm-import-vitamin-d-risk-sun"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-ais-collagen",
+        "title": "AIS — Collagen Support",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_b/other/collagen-support",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "What does it do",
+          "Collagen ingestion and exercise",
+          "Current evidence",
+          "Bone broth",
+          "Concerns"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-collagen-adjunct",
+          "acsm-import-collagen-broth"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-ais-ketones",
+        "title": "AIS — Ketone Supplements",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_b/other/ketone-supplements",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "Forms",
+          "Acute performance",
+          "Chronic/periodic use",
+          "Recovery",
+          "Concerns"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-ketones-efficacy"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-ais-polyphenol-concerns",
+        "title": "AIS Fruit-derived Polyphenols — Concerns",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_b/food-polyphenols/fruit-derived-polyphenols/are-there-any-concerns-or-considerations",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "Specific fruit variants",
+          "Gastrointestinal distress",
+          "Adaptation concerns"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-polyphenol-specificity"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-nsca-nordic-excerpt",
+        "title": "NSCA Exercise Technique Manual 4e — Nordic Hamstring Curl（官方样章）",
+        "requestedUrl": "https://us.humankinetics.com/blogs/excerpt/nordic-hamstring-curl",
+        "readStatus": "full_text",
+        "sectionsRead": [
+          "Starting position",
+          "Downward movement",
+          "Upward movement"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-nordic-setup-execution"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-nsca-kb-press-excerpt",
+        "title": "NSCA Exercise Technique Manual 4e — One-arm Kettlebell Press（官方样章）",
+        "requestedUrl": "https://us.humankinetics.com/blogs/excerpt/one-arm-kettlebell-press",
+        "readStatus": "full_text",
+        "sectionsRead": [
+          "Starting-position cross-reference",
+          "Upward",
+          "Downward"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-kettlebell-press-control"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-nsca-db-clean-excerpt",
+        "title": "NSCA Exercise Technique Manual 4e — Dumbbell Hang Power Clean to Push Press（官方样章）",
+        "requestedUrl": "https://us.humankinetics.com/blogs/excerpt/dumbbell-hang-power-clean-to-push-press",
+        "readStatus": "full_text",
+        "sectionsRead": [
+          "Starting",
+          "Upward movement",
+          "Downward movement"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-db-clean-pushpress-sequence"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-nsca-older2019",
+        "title": "NSCA Position Statement — Resistance Training for Older Adults",
+        "requestedUrl": "https://www.nsca.com/contentassets/2a4112fb355a4a48853bbafbe070fb8e/resistance_training_for_older_adults__position.1.pdf",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "PDF第1页11条声明",
+          "第4–7页处方与表1",
+          "第17页进阶段"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-older-starting-load",
+          "acsm-import-older-power-prescription"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-nsca-youth2009",
+        "title": "NSCA Updated Position Statement — Youth Resistance Training",
+        "requestedUrl": "https://www.nsca.com/globalassets/about/position-statements/position_stand_youth_resistance_training---2009.pdf",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "PDF第1–3页风险与监督",
+          "第11页Table 1一般训练",
+          "Program design段"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-youth-supervised-not-adult-copy",
+          "acsm-import-youth-general-dosage"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-ods-performance2024",
+        "title": "NIH ODS — Dietary Supplements for Exercise and Athletic Performance (Health Professional Fact Sheet)",
+        "requestedUrl": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "Introduction",
+          "Table 1全部列项",
+          "Beetroot",
+          "Protein",
+          "Quercetin",
+          "Ribose",
+          "Sodium bicarbonate",
+          "Tart cherry",
+          "Safety considerations与Medication interactions"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-quercetin-ribose-evidence",
+          "acsm-import-supplement-medication-interactions"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-ioc-supplements2018",
+        "title": "IOC consensus statement: dietary supplements and the high-performance athlete",
+        "requestedUrl": "https://www.ostrc.no/link/1f89391a5db74b909c6fcbb074a89a07.aspx",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "原PDF第1–3页定义、证据层级与营养评估",
+          "第5–7页Tables 2–3",
+          "Table 4局部",
+          "第10–11页Table 5–6相关项",
+          "第12–14页决策正文及利益披露"
+        ],
+        "notRead": [
+          "未逐项核查全部参考文献；Table 4–5未逐行通读；决策流程图未逐节点人工识图。"
+        ],
+        "newEntryIds": [
+          "acsm-import-supplement-research-relevance",
+          "acsm-import-fat-burner-evidence"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-issn-antioxidants2026",
+        "title": "ISSN position stand: effects of dietary antioxidants on exercise and sports performance",
+        "requestedUrl": "https://www.tandfonline.com/doi/full/10.1080/15502783.2026.2629828",
+        "readStatus": "full_text_sections_in_search",
+        "sectionsRead": [
+          "出版社搜索返回全文Section 5.1–5.3、Section 6.1及8",
+          "PubMed完整摘要和利益披露"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-antioxidant-biomarker"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-ais-electrolytes",
+        "title": "AIS — Electrolyte supplement",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_a/sports-foods2/electrolyte-supplement2",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "What is it",
+          "What does it look like",
+          "Table 1",
+          "How and when do I use it",
+          "Concerns"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-electrolyte-overdrinking",
+          "acsm-import-electrolyte-not-fuel"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-ais-multivitamin",
+        "title": "AIS — Multivitamin",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_b/other/multivitamin",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "Main body What is it",
+          "How and when do I use it",
+          "Concerns，网页第72–102行"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-multivitamin-stacking"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-import-src-ais-probiotics",
+        "title": "AIS — Probiotics",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_b/other/probiotics",
+        "readStatus": "full_text_sections",
+        "sectionsRead": [
+          "Main body第72–101行：菌株/活性、胃肠/呼吸证据、使用与Concerns"
+        ],
+        "notRead": [
+          "文献列表中的每项原始研究未全部单独打开核查。"
+        ],
+        "newEntryIds": [
+          "acsm-import-probiotic-strain-specific"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-ais-a-20261019",
+        "title": "AIS Sports Supplement Framework — Group A（本轮已核网页）",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_a",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：Group A Evidence level / Use within Supplement Programs / Sports Foods及Performance Supplements；未逐份读链接PDF",
+          "网页未显示统一修订日期；以本轮可读页面为准。旧ABCD图表与当前网页存在成分归类差异，不能把旧表当永久不变。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-ais-a-b-context"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-ais-b-20261019",
+        "title": "AIS Sports Supplement Framework — Group B（本轮已核网页）",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_b",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：Evidence level / Use within Supplement Programs，及当前网页列项Multivitamin、Probiotics、Prebiotics",
+          "本轮不读每种B组成分PDF；不由生理机制推导必有运动收益。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-ais-a-b-context"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-ais-c-20261019",
+        "title": "AIS Sports Supplement Framework — Group C（本轮已核网页）",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_c",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：Evidence level / Use within Supplement Programs / 当前分类说明"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-ais-c-evidence"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-ais-d-20261019",
+        "title": "AIS Sports Supplement Framework — Group D（本轮已核网页）",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_d",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：Evidence level；Use within Supplement Programs；Prohormones and hormone boosters；页尾星号说明",
+          "不能把Group D与WADA禁用清单逐项画等号；实际禁用状态查生效年份WADA清单。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-ais-d-banned-versus-risk"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-ais-nitrate-20261019",
+        "title": "AIS Dietary Nitrate / Beetroot Juice",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_a/performance-supplements2/beetroot-juicenitrate",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：What is it? / What does it look like? / Are there any concerns or considerations?",
+          "只复述已核官方建议，不提供工业/化肥/腌制盐的自配方法。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-nitrate-context-dose",
+          "acsm-supp-nitrate-quality-nitrite"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-ais-nitrate-how-20261019",
+        "title": "AIS Dietary Nitrate / Beetroot Juice — How and when do I use it?",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_a/performance-supplements2/beetroot-juicenitrate/how-and-when-do-i-use-it",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：首段场景、6–8 mmol及2–3小时段落；不复制具体商业品牌试用示例",
+          "不是所有项目/所有运动者都受益；研究参考不等于个人起始处方。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-nitrate-context-dose"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-issn-bicarbonate-2021",
+        "title": "International Society of Sports Nutrition position stand: sodium bicarbonate and exercise performance",
+        "requestedUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8427947/",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：全文可读，重点Position of ISSN条1、4、5、8；Dose；Funding与Competing interests",
+          "是ISSN学会立场，非政府机构批准。论文声明本稿无研究/写作/出版资助，但多名作者披露补剂相关行业研究、咨询或顾问关系；应与AIS/IOC独立判断交叉看。",
+          "未逐项核查该文全部原始试验；无通用个体安全保证。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-bicarbonate-performance",
+          "acsm-supp-bicarbonate-gi-timing"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-ais-bicarbonate-concerns-20261019",
+        "title": "AIS Sodium Bicarbonate — Are there any concerns or considerations?",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_a/performance-supplements2/bicarbonate/are-there-any-concerns-or-considerations",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：正文胃肠风险与分散摄入/随餐等研究讨论",
+          "不把单项研究最优时间机械套所有产品或所有运动者。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-bicarbonate-gi-timing"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-ais-sports-gels-20261019",
+        "title": "AIS Sports Gels",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_a/sports-foods2/sports-gels",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：What is it? / What does it look like?，特别是most should be consumed with water与20–30 g段落",
+          "本次只补能量胶性质和配水边界；每小时碳水目标、长距离肠道训练尚未据此完整入库。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-sports-gel-water"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-issn-antioxidants-2026",
+        "title": "International Society of Sports Nutrition position stand: effects of dietary antioxidants on exercise and sports performance",
+        "requestedUrl": "https://pubmed.ncbi.nlm.nih.gov/41701327/",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：PubMed完整摘要与Conflict of interest statement；未通读全文/592项引用",
+          "电子发表于2026-02-17，PubMed期刊卷期标签2026-12-31不误当尚未发表。",
+          "作者披露补剂行业资助、咨询、雇佣及顾问关系；ISSN声明亦说明学会偶有补剂企业资助。",
+          "本轮不采纳摘要所列具体抗氧化补剂剂量或排行为人人常规建议。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-antioxidants-context"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-sia-risk-20261019",
+        "title": "Supplements in sport",
+        "requestedUrl": "https://www.sportintegrity.gov.au/what-we-do/anti-doping/substances/supplements-sport",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：No supplement is 100% safe / Check if a supplement is batch-tested / Know the risks / Keep evidence",
+          "本轮不使用页面动态图表返回0%的占位数，不把特定抽检样本比例外推全市场。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-hidden-ingredients-risk",
+          "acsm-supp-batch-testing-boundary"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-sia-batch-20261019",
+        "title": "Supplement risk analysis",
+        "requestedUrl": "https://www.sportintegrity.gov.au/what-we-do/anti-doping/substance-education/supplement-risk-analysis",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：Batch-tested products以及Non batch-tested, non AUST-L products；本次只用跨地区通用检测边界",
+          "澳洲TGA等级为澳洲监管情境，不直接当中国产品准入规定。",
+          "批次检测证明范围是检测项目与受检批次，不证明所有临床疗效。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-batch-testing-boundary"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-wada-code-2021",
+        "title": "World Anti-Doping Code 2021 — Article 2.1.1",
+        "requestedUrl": "https://www.wada-ama.org/sites/default/files/resources/files/2021_code.pdf",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：PDF第13页（零基页12），Article 2.1.1及脚注7；未逐字通读全部96页",
+          "只用于受相应反兴奋剂规则约束的运动员情境，不替代具体案件的法律判断。",
+          "官网另列2027 Code自2027-01-01生效，本轮2026-10-19不提前套用。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-strict-liability"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-wada-list-2026",
+        "title": "WADA The Prohibited List — 2026生效清单及监测计划说明",
+        "requestedUrl": "https://www.wada-ama.org/en/prohibited-list",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：2026 S6 Stimulants脚注：caffeine等在Monitoring Program且not considered Prohibited Substances",
+          "清单按年份、赛内/赛外、项目、剂量/给药途径等条件变化；不把2027已发布清单当2026生效。",
+          "不对未知配方出具整体“合规/无兴奋剂”保证。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-caffeine-monitoring-not-banned-2026"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-ioc-consensus-2018",
+        "title": "IOC consensus statement: dietary supplements and the high-performance athlete",
+        "requestedUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5867441/",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：原始论文搜索返回完整摘要和开头定义；PMC直开为reCAPTCHA，未全文通读",
+          "面向高水平运动员的共识，不是人人买补剂的指引；摘要不是每种成分完整处方。",
+          "原文CC BY-NC 4.0，不复制全文或表格；这里只保存独立中文事实摘要和可追溯链接。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-ioc-assess-before-compete"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "acsm-supp-ais-iron-20261019",
+        "title": "AIS Iron — How and when do I use it?",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_a/medical-supplements2/iron/how-and-when-do-i-use-it",
+        "readStatus": "already_imported_prior_verified_sections",
+        "sectionsRead": [
+          "本轮实际读取：How and when do I use it?：blood screening、integrated iron management和subsequent blood test段落",
+          "不将运动员血清铁蛋白阈值和治疗剂量套所有一般人群；本次不写入100 mg治疗处方或静脉治疗。"
+        ],
+        "notRead": [
+          "不声称本次重新完整通读；上一轮已核范围保留。"
+        ],
+        "existingEntryIds": [
+          "acsm-supp-iron-not-fatigue-diagnosis"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "audit-acsm-getp12",
+        "title": "ACSM’s Guidelines for Exercise Testing and Prescription, 12th edition",
+        "requestedUrl": "https://acsm.org/education-resources/books/guidelines-exercise-testing-prescription/",
+        "readStatus": "catalog_only_preview_unavailable",
+        "sectionsRead": [
+          "ACSM官方书目、Wolters Kluwer出版社第12版元数据、ISBN9781975219208、出版2025-03-24、680页。"
+        ],
+        "notRead": [
+          "整本正文与具体测试流程未读；出版社Preview link点击失败。"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "audit-nsca-technique4",
+        "title": "Exercise Technique Manual for Resistance Training, Fourth Edition",
+        "requestedUrl": "https://us.humankinetics.com/products/exercise-technique-manual-for-resistance-training-4th-edition-with-hkpropel-online-video",
+        "readStatus": "catalog_plus_three_public_excerpts",
+        "sectionsRead": [
+          "出版社书目及三个公开动作样章，分别见acsm-import-src-nsca-*-excerpt。"
+        ],
+        "notRead": [
+          "教材其余章节、其他动作与HKPropel付费视频未取得。"
+        ],
+        "newEntryIds": [
+          "acsm-import-nordic-setup-execution",
+          "acsm-import-kettlebell-press-control",
+          "acsm-import-db-clean-pushpress-sequence"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "audit-nsca-older",
+        "title": "Resistance Training for Older Adults — NSCA Position Statement",
+        "requestedUrl": "https://www.nsca.com/about-us/position-statements/resistance-training-for-older-adults/",
+        "readStatus": "full_text_selected_sections_imported",
+        "sectionsRead": [
+          "改读NSCA官方34页PDF，已核范围见acsm-import-src-nsca-older2019。"
+        ],
+        "notRead": [
+          "未逐字通读所有病种与引用。"
+        ],
+        "newEntryIds": [
+          "acsm-import-older-starting-load",
+          "acsm-import-older-power-prescription"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "audit-nsca-youth",
+        "title": "Youth Resistance Training: Updated Position Statement Paper From the NSCA",
+        "requestedUrl": "https://www.nsca.com/globalassets/about/position-statements/position_stand_youth_resistance_training---2009.pdf",
+        "readStatus": "full_text_selected_sections_imported",
+        "sectionsRead": [
+          "NSCA官方20页PDF风险与监督、一般处方Table 1、Program design，见新增source。"
+        ],
+        "notRead": [
+          "未逐字通读其余全部引用。"
+        ],
+        "newEntryIds": [
+          "acsm-import-youth-supervised-not-adult-copy",
+          "acsm-import-youth-general-dosage"
+        ],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "audit-acog-pregnancy",
+        "title": "Physical Activity and Exercise During Pregnancy and the Postpartum Period — Committee Opinion No.804",
+        "requestedUrl": "https://www.acog.org/clinical/clinical-guidance/committee-opinion/articles/2020/04/physical-activity-and-exercise-during-pregnancy-and-the-postpartum-period",
+        "readStatus": "prior_audit_scope_only_not_reingested_in_this_batch",
+        "sectionsRead": [
+          "官方原页搜索返回目录、推荐范围和来源；未逐条核禁忌/警示框"
+        ],
+        "notRead": [
+          "本批负责补剂/ACSM/NSCA；该妇产/损伤指南保留上一轮阅读状态，未新增正文知识，仍待专门采集。"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "audit-ankle-cpg2021",
+        "title": "Ankle Stability and Movement Coordination Impairments: Lateral Ankle Ligament Sprains Revision 2021",
+        "requestedUrl": "https://doi.org/10.2519/jospt.2021.0302",
+        "readStatus": "prior_audit_scope_only_not_reingested_in_this_batch",
+        "sectionsRead": [
+          "原期刊页面检索返回分类与个体干预适用段，未通读CPG1–CPG80"
+        ],
+        "notRead": [
+          "本批负责补剂/ACSM/NSCA；该妇产/损伤指南保留上一轮阅读状态，未新增正文知识，仍待专门采集。"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "audit-acl-aspetar2023",
+        "title": "Aspetar clinical practice guideline on rehabilitation after anterior cruciate ligament reconstruction",
+        "requestedUrl": "https://pubmed.ncbi.nlm.nih.gov/36731908/",
+        "readStatus": "prior_audit_scope_only_not_reingested_in_this_batch",
+        "sectionsRead": [
+          "PubMed摘要及原始元数据；未核全文具体进阶/返跑/返场阈值"
+        ],
+        "notRead": [
+          "本批负责补剂/ACSM/NSCA；该妇产/损伤指南保留上一轮阅读状态，未新增正文知识，仍待专门采集。"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "audit-return-sport2016",
+        "title": "2016 Consensus statement on return to sport from the First World Congress in Sports Physical Therapy, Bern",
+        "requestedUrl": "https://pubmed.ncbi.nlm.nih.gov/27226389/",
+        "readStatus": "prior_audit_scope_only_not_reingested_in_this_batch",
+        "sectionsRead": [
+          "PubMed完整摘要；未全文"
+        ],
+        "notRead": [
+          "本批负责补剂/ACSM/NSCA；该妇产/损伤指南保留上一轮阅读状态，未新增正文知识，仍待专门采集。"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "audit-ioc-load2016",
+        "title": "How much is too much? (Part 1) IOC consensus statement on load in sport and risk of injury",
+        "requestedUrl": "https://pubmed.ncbi.nlm.nih.gov/27535989/",
+        "readStatus": "prior_audit_scope_only_not_reingested_in_this_batch",
+        "sectionsRead": [
+          "PubMed原始摘要搜索返回负荷定义与风险范围，未全文"
+        ],
+        "notRead": [
+          "本批负责补剂/ACSM/NSCA；该妇产/损伤指南保留上一轮阅读状态，未新增正文知识，仍待专门采集。"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "manifest-acsm2026-position",
+        "title": "ACSM Position Stand — Resistance Training Prescription for Muscle Function, Hypertrophy, and Physical Performance in Healthy Adults: An Overview of Reviews",
+        "requestedUrl": "https://journals.lww.com/acsm-msse/fulltext/2026/04000/american_college_of_sports_medicine_position.21.aspx",
+        "doi": "10.1249/MSS.0000000000003897",
+        "pmid": "41843416",
+        "readStatus": "publisher_unavailable_pmc_verification_page_existing_entries_retained",
+        "sectionsRead": [
+          "本轮PMC验证页和原期刊访问错误，未取得新的完整正文；此前已导入的ACSM2026条目保留其原已核范围。",
+          "另核ACSM官方2026公开发布解读。"
+        ],
+        "notRead": [
+          "本轮不能把官方解读说成全文复核；不重复生成已有力量/肌肥大/功率结论。"
+        ],
+        "newEntryIds": [],
+        "alternativeUrl": "https://acsm.org/resistance-training-guidelines-update-2026/",
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "manifest-nsca-dynamic-warmup",
+        "title": "NSCA — Introduction to Dynamic Warm-Up (2017 public excerpt)",
+        "requestedUrl": "https://www.nsca.com/education/articles/kinetic-select/introduction-to-dynamic-warm-up/",
+        "readStatus": "public_excerpt_read_already_covered",
+        "sectionsRead": [
+          "公开引言、一般/专项热身区别、5–10分钟低中等强度热身、避免无谓疲劳。"
+        ],
+        "notRead": [
+          "NSCA Guide to Program Design整章、整书未读。"
+        ],
+        "newEntryIds": [],
+        "reasonNoNewEntry": "现库已有渐进、专项热身与非练累原则，未换名重复。",
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "manifest-ais-isolated-protein",
+        "title": "AIS — Isolated protein supplement",
+        "requestedUrl": "https://www.ais.gov.au/__data/assets/pdf_file/0003/1000488/Sport-supplement-fact-sheets-Isolated-protein-supplement-v3.pdf",
+        "readStatus": "indexed_pdf_sections_only_download_unavailable",
+        "sectionsRead": [
+          "搜索可见乳清浓缩/分离的组成比较片段。"
+        ],
+        "notRead": [
+          "旧PDF直开、当前Group A签名资产链接未成功完整读取；未据片段新增知识。"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "manifest-nsca-essentials5",
+        "title": "NSCA Essentials of Strength Training and Conditioning 5th edition",
+        "requestedUrl": "https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-5th-edition-with-hkpropel-access",
+        "readStatus": "catalog_and_toc_only",
+        "sectionsRead": [
+          "NSCA/出版社官方书目和目录；ISBN9781718216273、864页、版权标©2027。"
+        ],
+        "notRead": [
+          "整本正文和付费附属资源未取得；版权年份不等于当前不可取得或尚未发布。"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "ais-fish-oil",
+        "title": "AIS鱼油使用依据",
+        "requestedUrl": "https://www.ausport.gov.au/ais/nutrition/supplements/group_b/other/fish-oils/how-and-when-do-i-use-it",
+        "readStatus": "existing_library_verified_scope_retained_not_reopened",
+        "sectionsRead": [
+          "保留旧知识库原source的reviewedAt和阅读限制。"
+        ],
+        "notRead": [
+          "本批未重新取得整页全文；鱼油与Omega-3既有条目不重复导入。"
+        ],
+        "existingEntryIds": [
+          "supp-fish-oil"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      },
+      {
+        "sourceId": "ods-omega3",
+        "title": "NIH ODS Omega-3专业资料",
+        "requestedUrl": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/",
+        "readStatus": "existing_library_verified_scope_retained_not_reopened",
+        "sectionsRead": [
+          "保留旧知识库原source的reviewedAt和阅读限制。"
+        ],
+        "notRead": [
+          "本批未重新取得整页全文；鱼油与Omega-3既有条目不重复导入。"
+        ],
+        "existingEntryIds": [
+          "supp-fish-oil"
+        ],
+        "newEntryIds": [],
+        "notInstitutionWideIngestion": true
+      }
+    ],
+    "ingestionBoundary": "36条为本批新增，22个证据source；已存在的条目及来源单列保留。书目、目录、无法取得正文的来源不伪装成已学完整知识。",
+    "derivativeProseControl": {
+      "policy": "按同URL合计重复回答字段，简短中文改写；零逐字英文引文。每源知识正文控制在约400汉字以内，不复制文献全文。",
+      "cjkCharacterCountPerRuntimeSource": {
+        "acsm-import-src-issn-creatine2017": 351,
+        "acsm-import-src-issn-protein2017": 366,
+        "acsm-import-src-issn-caffeine2021": 349,
+        "acsm-import-src-issn-beta2015": 351,
+        "acsm-import-src-issn-bicarbonate2021": 367,
+        "acsm-import-src-ais-glycerol": 350,
+        "acsm-import-src-ais-sports-drink": 340,
+        "acsm-import-src-ais-vitamin-d": 304,
+        "acsm-import-src-ais-collagen": 341,
+        "acsm-import-src-ais-ketones": 191,
+        "acsm-import-src-ais-polyphenol-concerns": 201,
+        "acsm-import-src-nsca-nordic-excerpt": 196,
+        "acsm-import-src-nsca-kb-press-excerpt": 188,
+        "acsm-import-src-nsca-db-clean-excerpt": 168,
+        "acsm-import-src-nsca-older2019": 356,
+        "acsm-import-src-nsca-youth2009": 352,
+        "acsm-import-src-ods-performance2024": 364,
+        "acsm-import-src-ioc-supplements2018": 380,
+        "acsm-import-src-issn-antioxidants2026": 191,
+        "acsm-import-src-ais-electrolytes": 376,
+        "acsm-import-src-ais-multivitamin": 200,
+        "acsm-import-src-ais-probiotics": 205
+      },
+      "maxCjkCharacters": 380,
+      "excludedFromCount": "URL/ID、一般QA提示语、内部增量说明、书目与阅读范围元数据。"
+    },
+    "naturalQueries": [
+      {
+        "query": "一水肌酸比缓冲肌酸差吗？",
+        "expectedNewEntryId": "acsm-import-creatine-form"
+      },
+      {
+        "query": "北欧腿弯举怎么固定身体、怎么往下放？",
+        "expectedNewEntryId": "acsm-import-nordic-setup-execution"
+      },
+      {
+        "query": "我长跑吃了盐丸，是不是就可以随便多喝水？",
+        "expectedNewEntryId": "acsm-import-electrolyte-overdrinking"
+      },
+      {
+        "query": "我每天吃左甲状腺素，铁剂能跟它一块吃吗？",
+        "expectedNewEntryId": "acsm-import-supplement-medication-interactions"
+      }
+    ],
+    "duplicatesReviewedAgainst": {
+      "scientificEntriesAtRead": 136,
+      "coachEntriesAtRead": 97,
+      "method": "逐模块比对旧题名和内容；既有肌酸/蛋白/咖啡因剂量、AIS框架、硝酸盐、碳酸氢钠单用、补剂污染/认证/责任均不重复。"
+    },
+    "validation": {
+      "runtimeParser": "parseChenAcsmFoundation via scripts/npc-test-runtime.mjs",
+      "passed": true,
+      "parsedEntryCount": 36,
+      "parsedSourceCount": 22,
+      "stagedLibraryOnly": true,
+      "naturalQueriesAllMatchedExpected": true,
+      "mergedRuntimeValidationOwner": "root"
+    }
+  },
+  "teachingSourceIdsAdded": [
+    "acsm-import-src-issn-creatine2017",
+    "acsm-import-src-issn-protein2017",
+    "acsm-import-src-issn-caffeine2021",
+    "acsm-import-src-issn-beta2015",
+    "acsm-import-src-issn-bicarbonate2021",
+    "acsm-import-src-ais-glycerol",
+    "acsm-import-src-ais-sports-drink",
+    "acsm-import-src-ais-vitamin-d",
+    "acsm-import-src-ais-collagen",
+    "acsm-import-src-ais-ketones",
+    "acsm-import-src-ais-polyphenol-concerns",
+    "acsm-import-src-nsca-nordic-excerpt",
+    "acsm-import-src-nsca-kb-press-excerpt",
+    "acsm-import-src-nsca-db-clean-excerpt",
+    "acsm-import-src-nsca-older2019",
+    "acsm-import-src-nsca-youth2009",
+    "acsm-import-src-ods-performance2024",
+    "acsm-import-src-ioc-supplements2018",
+    "acsm-import-src-issn-antioxidants2026",
+    "acsm-import-src-ais-electrolytes",
+    "acsm-import-src-ais-multivitamin",
+    "acsm-import-src-ais-probiotics",
+    "acsm-import-fda-supplements",
+    "acsm-import-usada-certification"
+  ],
+  "entryIdsAdded": [
+    "acsm-import-creatine-form",
+    "acsm-import-creatine-cessation",
+    "acsm-import-protein-distribution",
+    "acsm-import-protein-presleep",
+    "acsm-import-caffeine-form-timing",
+    "acsm-import-caffeine-hydration",
+    "acsm-import-beta-taurine",
+    "acsm-import-beta-washout",
+    "acsm-import-bicarbonate-combination",
+    "acsm-import-bicarbonate-repeated-trial",
+    "acsm-import-glycerol-context",
+    "acsm-import-glycerol-cost",
+    "acsm-import-carbohydrate-during-exercise",
+    "acsm-import-carbohydrate-transporter",
+    "acsm-import-vitamin-d-lab-units",
+    "acsm-import-vitamin-d-risk-sun",
+    "acsm-import-collagen-adjunct",
+    "acsm-import-collagen-broth",
+    "acsm-import-ketones-efficacy",
+    "acsm-import-polyphenol-specificity",
+    "acsm-import-nordic-setup-execution",
+    "acsm-import-kettlebell-press-control",
+    "acsm-import-db-clean-pushpress-sequence",
+    "acsm-import-older-starting-load",
+    "acsm-import-older-power-prescription",
+    "acsm-import-youth-supervised-not-adult-copy",
+    "acsm-import-youth-general-dosage",
+    "acsm-import-quercetin-ribose-evidence",
+    "acsm-import-supplement-medication-interactions",
+    "acsm-import-supplement-research-relevance",
+    "acsm-import-fat-burner-evidence",
+    "acsm-import-antioxidant-biomarker",
+    "acsm-import-electrolyte-overdrinking",
+    "acsm-import-electrolyte-not-fuel",
+    "acsm-import-multivitamin-stacking",
+    "acsm-import-probiotic-strain-specific",
+    "acsm-import-fda-approval-boundary",
+    "acsm-import-supplement-serving-label",
+    "acsm-import-usada-globaldro-boundary"
+  ],
+  "unreadMaterialsSupportTeaching": false
+}

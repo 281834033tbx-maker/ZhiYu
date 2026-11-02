@@ -1,0 +1,54 @@
+.zy-app .chat-composer-shell{position:relative;flex-shrink:0;margin:8px 20px 16px;color:#242322}
+.zy-app .chat-compose-row{display:flex;align-items:center;gap:10px}
+.zy-app .chat-compose-row>button,.zy-app .chat-composer-shell button{display:flex;align-items:center;justify-content:center;background:transparent;border:0;box-shadow:none;color:#242322;padding:6px;cursor:pointer;flex-shrink:0}
+.zy-app .chat-composer-shell button:hover{color:#e66562}
+.zy-app .chat-composer-shell button:disabled{opacity:.35;cursor:default}
+.zy-app .chat-text-entry{position:relative;display:flex;align-items:center;flex:1;min-width:0;min-height:40px;padding:0 4px 0 0;border:1px solid transparent;border-radius:10px;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(110deg,#ff946f,#ed628e) border-box}
+.zy-app.zy-desktop .chat-text-entry{box-shadow:var(--zy-composer-shadow,0 2px 8px rgb(31 39 34 / 5%))}
+.zy-app .chat-text-entry-body{display:flex;align-items:center;flex-wrap:wrap;flex:1;min-width:0}
+.zy-app .chat-text-entry-body textarea{flex:1 1 100px;width:0}
+.zy-app .chat-pet-horizon{position:absolute;z-index:2;left:8px;right:34px;bottom:calc(100% - 1px);height:46px;overflow:visible;pointer-events:none}
+.zy-app .chat-pet-walker{position:absolute;left:0;bottom:0;width:44px;height:46px;animation:zhiyu-pet-travel 18s linear infinite}
+.zy-app .chat-pet-walker img{position:absolute;left:0;bottom:0;display:block;width:44px;height:44px;object-fit:contain;image-rendering:pixelated;transform-origin:50% 100%;animation:zhiyu-pet-hop .56s steps(2,end) infinite}
+@keyframes zhiyu-pet-travel{0%,100%{left:0;transform:scaleX(1)}49%{left:calc(100% - 44px);transform:scaleX(1)}50%{left:calc(100% - 44px);transform:scaleX(-1)}99%{left:0;transform:scaleX(-1)}}
+@keyframes zhiyu-pet-hop{0%,100%{transform:translateY(0)}42%{transform:translateY(-6px)}58%{transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.zy-app .chat-pet-walker{left:calc(50% - 22px);animation:none}.zy-app .chat-pet-walker img{animation:none;transform:none}}
+.zy-app .chat-text-entry textarea{box-sizing:border-box;flex:1;min-width:0;resize:none;height:38px;min-height:38px;max-height:130px;field-sizing:content;padding:8px 13px;font-weight:400;font-family:inherit;font-size:14px;line-height:20px;border:0;border-radius:9px;background:transparent;color:#242322;outline:none;box-shadow:none}
+.zy-app .chat-text-entry textarea:focus-visible{outline:none;box-shadow:none}
+.zy-app .chat-text-entry>button[type=submit]{width:32px;height:32px;padding:0;color:#111;border-radius:7px}
+.zy-app .chat-text-entry>button[type=submit]:hover{color:#111;background:transparent}
+.zy-app .chat-text-entry>button[type=submit]:hover .chat-send-plane path{stroke:url(#zy-paper-plane-hover)}
+.zy-app .chat-text-entry>button[type=submit]:disabled{color:#111;opacity:1}
+.zy-app .chat-send-plane{display:block;flex:0 0 19px}
+.zy-app .chat-compose-row>button.is-recording{border-radius:50%;background:linear-gradient(135deg,#f49373,#e47a96);color:#fff;box-shadow:0 0 0 4px rgb(228 122 150 / 12%);}
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-compose-row>button.is-recording,html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat .chat-compose-row>button.is-recording:hover{border-radius:50%;background:linear-gradient(135deg,#f49373,#e47a96);color:#fff;box-shadow:0 0 0 4px rgb(228 122 150 / 12%);}
+.zy-app .chat-recording-bar{box-sizing:border-box;display:flex;align-items:center;flex:1;min-width:0;height:40px;padding:4px 7px 4px 13px;gap:8px;border-radius:22px;background:#f0f1f0;transform-origin:left center;animation:chat-recording-pop .2s cubic-bezier(.2,.8,.2,1) both;}
+.zy-app .chat-recording-info{white-space:nowrap;color:#746d69;font-size:11px;flex:none}
+.zy-app .chat-recording-wave,.zy-app .chat-recording-dots{display:flex;align-items:center;justify-content:center;flex:1;min-width:0;height:24px;gap:3px;}
+.zy-app .chat-recording-wave i{display:block;width:2px;min-height:4px;border-radius:3px;background:linear-gradient(180deg,#f49373,#e47a96);transition:height .08s linear;}
+.zy-app .chat-recording-dots i{display:block;width:3px;height:3px;border-radius:50%;background:#e47a96;}
+.zy-app .chat-recording-bar>button{display:grid;width:30px;height:30px;place-items:center;padding:0;border:0;border-radius:50%;background:linear-gradient(135deg,#f49373,#e47a96);color:#fff;cursor:pointer;}
+.zy-app .chat-recording-bar>button:hover{filter:brightness(.96);color:#fff;}
+@keyframes chat-recording-pop{from{opacity:0;transform:translateX(-10px) scaleX(.94)}to{opacity:1;transform:translateX(0) scaleX(1)}}
+@media(prefers-reduced-motion:reduce){.zy-app .chat-recording-bar{animation:none}}
+.zy-app .chat-compose-row textarea:focus-visible{outline:none;box-shadow:none}
+.chat-attachment{display:flex;align-items:center;gap:12px;padding:10px;margin-bottom:10px;background:#f3f1ef;border-radius:10px;font-size:12px}
+.chat-attachment>img{width:64px;height:64px;object-fit:cover;border-radius:7px}.chat-attachment>span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.chat-attachment small{display:block;color:#86817c;margin-top:5px}
+.chat-sticker-panel{position:absolute;z-index:20;bottom:58px;left:0;display:flex;flex-direction:column;box-sizing:border-box;width:288px;max-width:min(100%,calc(100vw - 40px));max-height:min(490px,70vh);padding:10px;border:1px solid #eee9e5;background:#fff;border-radius:14px;box-shadow:var(--zy-popup-shadow,0 9px 28px #0002);overflow:hidden}
+.chat-sticker-panel>div:first-child{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#888}.chat-sticker-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}.chat-sticker-grid img{width:76px;height:76px;object-fit:contain;border-radius:7px}
+.chat-compose-error{display:flex;justify-content:space-between;font-size:12px;color:#b84040;margin-bottom:8px}.xx-media.upload img{max-width:300px;max-height:340px;object-fit:contain}.xx-media.upload p{font-size:14px;margin-top:6px;white-space:pre-wrap}
+.zy-composer-area>.chat-composer-shell{margin:0}
+.chat-sticker-panel .emoji-picker-tabs{display:flex;flex:none;align-items:center;gap:8px;border-bottom:1px solid #eeebe7;padding-bottom:9px;margin-bottom:8px}
+.emoji-picker-tabs button{padding:7px;border:0;border-radius:8px;background:none;color:#777;cursor:pointer}
+.emoji-picker-tabs button[aria-selected=true]{background:#fff0e8;color:#ef7b67}
+.emoji-picker-tabs span{flex:1;font-size:12px;color:#8b8580}
+.chat-sticker-panel>[role=tabpanel]{display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+.emoji-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));grid-auto-rows:34px;flex:1 1 auto;min-width:0;min-height:0;max-height:240px;container-type:inline-size;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;row-gap:2px;column-gap:1px}
+.emoji-grid>button,.zy-app .chat-composer-shell .emoji-grid>button{display:flex;align-items:center;justify-content:center;box-sizing:border-box;min-width:0;width:100%;height:34px;padding:3px 0;border:0;background:none;font:24px/1 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;font-size:clamp(16px,9cqi,24px);cursor:pointer;border-radius:7px;overflow:hidden}
+.emoji-grid>button:hover{background:#f3efeb}
+.saved-sticker-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;flex:1 1 auto;min-height:0;max-height:250px;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
+.saved-sticker-grid>div{position:relative;min-width:0}
+.saved-sticker-grid button{border:0;background:#f8f7f5;border-radius:9px;cursor:pointer;width:100%;height:70px;padding:6px}
+.saved-sticker-grid img{width:100%;height:100%;object-fit:contain}
+.saved-sticker-grid .remove-sticker{position:absolute;right:0;top:0;width:20px;height:20px;border-radius:50%;padding:3px;background:#eee9e4;color:#6e625b}
+.saved-sticker-empty{flex:none;font-size:12px;color:#98918b;line-height:1.6;padding:10px 0;margin:0}

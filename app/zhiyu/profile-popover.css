@@ -1,0 +1,14 @@
+/* Only avatar profile cards use viewport coordinates; ordinary dialogs stay centered. */
+.zy-dialog.zy-profile-popover.zy-anchored-profile-popover,
+html[data-zy-theme] .zy-app.zy-desktop .zy-dialog.zy-profile-popover.zy-anchored-profile-popover {
+  position:fixed;
+  inset:auto;
+  margin:0;
+  box-sizing:border-box;
+  padding:0;
+  overflow:auto;
+  overscroll-behavior:contain;
+  outline:none;
+}
+.zy-anchored-profile-popover:not(:popover-open) { display:none; }
+.zy-anchored-profile-popover::backdrop { background:transparent; pointer-events:none; }

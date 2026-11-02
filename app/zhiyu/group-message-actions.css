@@ -1,0 +1,11 @@
+.zy-group-message-block .xx-message { flex-direction:column;gap:5px; }
+.zy-group-message-block .message-actions { width:fit-content;max-width:100%; }
+.zy-group-message-quote { max-width:100%; }
+.zy-group-message-quote>span { overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%; }
+.zy-group-event>.message-actions { display:flex;align-items:center;gap:8px; }
+.zy-group-quote-draft>span { flex:1;min-width:0; }
+.zy-group-quote-draft :is(strong,small) { display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+.zy-group-quote-draft small { margin-top:3px;color:var(--zy-muted,#73776d);font-size:11px; }
+.zy-group-quote-draft>button { flex-shrink:0;padding:3px;border:0;background:transparent;color:inherit;cursor:pointer; }
+.zy-group-quote-draft>button:disabled { opacity:.5;cursor:wait; }
+html[data-zy-theme='dark'] .zy-group-chat :is(.zy-group-message-quote,.zy-group-quote-draft) { background:#303032;color:var(--zy-secondary,#aaa9ac); }

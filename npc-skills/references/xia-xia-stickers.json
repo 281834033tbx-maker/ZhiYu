@@ -1,0 +1,171 @@
+{
+  "character": "xia-xia",
+  "searched_at": "2026-09-16",
+  "status": "user_reference_with_unreviewed_candidates",
+  "note": "网络候选索引；预览为搜索工具返回PNG，非本地素材或已验证动画。来源页面为GIF/Sticker页面；不冒称图片已获认可、授权或集成到产品。",
+  "items": [
+    {
+      "id": "XX-ST01",
+      "label": "害羞开心",
+      "source_url": "https://tenor.com/view/shy-shy-smile-blushing-im-blushing-flattered-gif-4962198560608745374",
+      "preview_url": "https://media.tenor.com/RN1FTM4J954AAAAe/shy-shy-smile.png",
+      "visible_description": "白色卡通猫前爪合拢、脸红微笑",
+      "candidate_use": "被夸开心、表白后的害羞",
+      "approval_status": "rejected",
+      "rights_status": "not_verified"
+    },
+    {
+      "id": "XX-ST02",
+      "label": "偷笑得意",
+      "source_url": "https://tenor.com/view/mischievous-sly-ironic-smile-smirk-wry-smiles-gif-6331565535810767552",
+      "preview_url": "https://media.tenor.com/V949TwobSsAAAAAe/mischievous-sly.png",
+      "visible_description": "白色卡通猫坐在桌前，眯眼带笑",
+      "candidate_use": "熟人轻度逗弄、偷偷得意",
+      "approval_status": "rejected",
+      "rights_status": "not_verified"
+    },
+    {
+      "id": "XX-ST03",
+      "label": "无言以对",
+      "source_url": "https://tenor.com/view/peach-cat-cute-adorable-shrug-gif-16367742",
+      "preview_url": "https://media.tenor.com/hEyUeOi10NMAAAAe/peach-cat.png",
+      "visible_description": "白色卡通猫摊手，配字無言以對",
+      "candidate_use": "游戏翻车、对熟人的无奈反应",
+      "approval_status": "rejected",
+      "rights_status": "not_verified"
+    },
+    {
+      "id": "XX-ST04",
+      "family": "奶牛",
+      "label": "卖萌wink静态图",
+      "source_url": "https://www.sina.cn/news/detail/5232799472943432.html",
+      "preview_url": "https://wx4.sinaimg.cn/middle/008nK7qely1i7bfsk35y9j30y30y3aek.jpg",
+      "media_status": "static_preview",
+      "candidate_use": "亲近时卖萌；图中文字wink/卖萌、爱心",
+      "verification": "image_search_visual_description",
+      "animation_verified": false,
+      "approval_status": "unreviewed",
+      "rights_status": "not_verified",
+      "searched_at": "2026-09-16"
+    },
+    {
+      "id": "XX-ST05",
+      "family": "奶牛",
+      "label": "拦路不许走静态图",
+      "source_url": "https://www.sina.cn/news/detail/5232799472943432.html",
+      "preview_url": "https://wx3.sinaimg.cn/middle/008nK7qely1i7bfsi2tb8j31jk1jkgvj.jpg",
+      "media_status": "static_preview",
+      "candidate_use": "熟人玩笑候选；不用于真实限制离开或冷却施压",
+      "verification": "image_search_visual_description",
+      "animation_verified": false,
+      "approval_status": "unreviewed",
+      "rights_status": "not_verified",
+      "searched_at": "2026-09-16"
+    },
+    {
+      "id": "XX-ST06",
+      "family": "奶牛",
+      "label": "草地牛搞怪GIF",
+      "source_url": "https://m.soogif.com/materialPage/zT0hd1tkBos",
+      "preview_url": "https://img.soogif.com/tr85VP8pbTA8ch8k7cn18ieXMKmEybqS.gif_s200x0",
+      "media_status": "gif_source",
+      "candidate_use": "搞怪候选，须看实际动态再确定具体台词场景",
+      "verification": "page_metadata_and_gif_content_type; frames_not_inspected",
+      "animation_verified": false,
+      "approval_status": "unreviewed",
+      "rights_status": "not_verified",
+      "searched_at": "2026-09-16"
+    },
+    {
+      "id": "XX-ST07",
+      "family": "小狗",
+      "label": "狗狗抱抱蹭蹭",
+      "source_url": "https://www.soogif.com/materialPage/ft1zxQep53w",
+      "preview_url": null,
+      "media_status": "gif_page",
+      "candidate_use": "恋人亲近候选，不能仅按标签宣布合适",
+      "verification": "page_metadata_only",
+      "animation_verified": false,
+      "approval_status": "unreviewed",
+      "rights_status": "not_verified",
+      "searched_at": "2026-09-16"
+    },
+    {
+      "id": "XX-ST08",
+      "family": "小猫",
+      "label": "要抱抱小奶猫",
+      "source_url": "https://www.soogif.com/materialPage/W3UsZebokzk",
+      "preview_url": null,
+      "media_status": "gif_page",
+      "candidate_use": "撒娇候选，等待实际图像复核",
+      "verification": "search_metadata_only",
+      "animation_verified": false,
+      "approval_status": "unreviewed",
+      "rights_status": "not_verified",
+      "searched_at": "2026-09-16"
+    },
+    {
+      "id": "XX-ST09",
+      "family": "龙图",
+      "label": "龙图搞笑",
+      "source_url": "https://m.soogif.com/materialPage/BpLimgNeyxk",
+      "preview_url": null,
+      "media_status": "gif_page",
+      "candidate_use": "熟人抽象玩笑候选；需核对文字和动作，不默认无冒犯",
+      "verification": "page_metadata_only",
+      "animation_verified": false,
+      "approval_status": "unreviewed",
+      "rights_status": "not_verified",
+      "searched_at": "2026-09-16"
+    },
+    {
+      "id": "XX-ST10",
+      "family": "抽象人物",
+      "label": "抽象人物/龙图合集线索",
+      "source_url": "https://www.sohu.com/a/583402003_121123955",
+      "preview_url": null,
+      "media_status": "collection_page",
+      "candidate_use": "搜索线索，不是已选定的可发素材",
+      "verification": "page_metadata_only",
+      "animation_verified": false,
+      "approval_status": "unreviewed",
+      "rights_status": "not_verified",
+      "searched_at": "2026-09-16"
+    }
+  ],
+  "feedback": "用户：nonono 不是这种 这种不可爱 需要我给你上传么？",
+  "next_step": "以用户奶牛截图为审美参考；新候选逐项看内容，不恢复旧三张已拒绝图片。",
+  "prior_collection_status": "user_rejected_style",
+  "selection_rules": {
+    "source": "C33/F30",
+    "recent_favorite": "奶牛/草地牛风格",
+    "allowed_families": [
+      "奶牛",
+      "小猫",
+      "小狗",
+      "抽象人物",
+      "龙图"
+    ],
+    "romantic": "一般偏甜、亲近、撒娇；玩笑时可抽象",
+    "friends": "一般偏抽象、逗趣、互损；仍可温暖，不默认情侣称谓或亲吻",
+    "context_override": "先看当下情绪和交流意愿；生气、严肃修复不因恋人身份硬塞甜图",
+    "format": "静态和动态均可；不得把截图/缩略图冒称动图，也不根据GIF扩展名编造动作",
+    "frequency": "按需选择文字、emoji、图片或组合，不每句加，不机械轮换"
+  },
+  "user_reference": {
+    "id": "XX-REF01",
+    "path": "../assets/xia-xia/cow-user-reference.png",
+    "format": "PNG",
+    "animation_verified": false,
+    "approval_status": "user_provided_style_reference",
+    "visible_description": "绿色草地背景，黑白奶牛，夸张眉眼、粉红腮红和拟人嘴部；截图只能确认此静态画面",
+    "not_implied": "不凭单张图推断原动画动作、出处真人、整套素材均已认可"
+  },
+  "collections": [
+    {
+      "label": "草地牛GIF专题",
+      "url": "https://www.soogif.com/theme/bgyD4rSY3nk",
+      "status": "source_located_not_bulk_downloaded"
+    }
+  ]
+}

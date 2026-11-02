@@ -1,0 +1,4 @@
+interface:
+  display_name: "zhiyu_dongtai Skill"
+  short_description: "区分专业型与陪伴型，按人设生成朋友圈及有明确依据的点赞、评论和回复候选"
+  default_prompt: "使用 $zhiyu-moments，按专业型或陪伴型 NPC 的风格生成朋友圈候选和选择性互动，说明主题、分享与互动依据，并输出结构化结果。"

@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-05",
+  "title": "有实质内容的长回复隔离校准场景",
+  "fixtureScope": "synthetic_only",
+  "userAcceptance": false,
+  "productionStateChanged": false,
+  "provenance": {
+    "direction": "user_required",
+    "directionSource": "2026-10-05 用户要求重新走对话流程，允许有内容的长回复，避免用‘你在干嘛’等无意义问题代替交流。",
+    "fixtures": "assistant_proposed",
+    "criteria": "assistant_proposed",
+    "status": "unreviewed",
+    "realUserDataIncluded": false,
+    "sharedCharacterHistoryCreated": false
+  },
+  "coverage": {
+    "runtimeCharacterIds": [
+      "xia-xia",
+      "yuan-xiaoman",
+      "liu",
+      "chen-nian"
+    ],
+    "loaderCharacterIds": [
+      "he-jiawei",
+      "yuan-xiaoman",
+      "liu",
+      "chen-nian",
+      "xia-xia",
+      "zhou-chef"
+    ],
+    "loaderOnlyCharacterIds": [
+      "he-jiawei",
+      "zhou-chef"
+    ],
+    "notes": "四位已接入后端可走真实 builder → generate → parser。何嘉伟、周师傅用于规则加载与人格隔离检查；此文件不表示已开通他们的 AI 后端。"
+  },
+  "evaluationPolicy": {
+    "lengthMetric": "Chinese Han characters across all delivered text messages",
+    "lengthRole": "各题的 400–900 中文字符是合成场景的观察目标，用于检查完整回复能力；不是生产字数配额、通用最低长度、人格参数或发送截断条件。内容已完整时记录实际长度和语义评价，不为了达标补废话。",
+    "rhythm": "长回复按语义分成自然消息；步骤可以使用必要列表。不固定消息条数，不把完整信息挤在一个气泡里，也不逐句机械拆分。",
+    "questionPolicy": "给定信息足以先回答。不以‘你在干嘛’、‘你现在心情怎么样’或重复问已知条件代替答案；有具体且必要的缺口时可以在完整建议后提出一个相关问题。",
+    "voicePolicy": "保留当前人物的有效性格和关系阶段，不因专业内容较长统一成客服文案。符号反应和小粗语只看语境，不要求每题必用；不用人格虚构经历为知识背书。",
+    "statePolicy": "不保存真实记忆、不计分、不触发主动发送、不创建任务，不声称检索、联系或通知已经执行。"
+  },
+  "cases": [
+    {
+      "id": "nutrition-training-plan",
+      "title": "条件充分的减脂营养与健身安排",
+      "userMessage": "我想把减脂这事认真做起来。先给你条件：我 28 岁，男，176 厘米、78 公斤，久坐办公，每天大概走 5000 步。没有已知慢性病、伤病或食物过敏，能吃肉蛋奶，也能自己做简单饭。希望 12 周减掉大约 5 公斤，保住肌肉。工作日早餐和晚饭能自己做，午饭只能公司食堂；每周能去健身房 3 次，每次 50 分钟，目前只练过一点器械。别先问我在干嘛，直接给我一个下周就能照着做的方案：怎么吃、怎么练、怎么判断有没有效果，讲清楚原因。",
+      "applicableCharacterIds": [
+        "he-jiawei",
+        "yuan-xiaoman",
+        "liu",
+        "chen-nian",
+        "xia-xia",
+        "zhou-chef"
+      ],
+      "fixture": {
+        "runMode": "isolated_calibration",
+        "relationshipStage": "初识合成场景",
+        "relationshipValues": {
+          "familiarity": 0,
+          "affection": 0,
+          "trust": 0,
+          "comfort": 0
+        },
+        "relationshipValueScope": "仅测试零值也能完整帮助，不是生产初值配置",
+        "recentMessages": [],
+        "relevantMemory": [],
+        "tools": [],
+        "activeTasks": [],
+        "romanticConfirmation": false
+      },
+      "evaluation": {
+        "length": {
+          "targetMinHanCharacters": 400,
+          "targetMaxHanCharacters": 900,
+          "scope": "scenario_observation_only",
+          "hardProductionLimit": false
+        },
+        "required": [
+          {
+            "id": "practical-nutrition",
+            "description": "给出可执行的日常饮食结构、蛋白质合理范围或可换算份量，并提供至少一个适配早餐/食堂午餐/自做晚餐的具体例子；不用蛋白粉或特殊食品作为必要条件。"
+          },
+          {
+            "id": "honest-energy-estimate",
+            "description": "解释温和热量缺口和保留肌肉的关系。如给热量数字，应明确为起始估计并说明按反馈调整，不能把未知实际消耗写成精准实测。"
+          },
+          {
+            "id": "three-session-training",
+            "description": "给出适合新手的每周三次、每次约 50 分钟力量训练安排，包含动作类型、合理组次或强度方式、进阶规则；不只说‘多运动’。"
+          },
+          {
+            "id": "feedback-and-adjustment",
+            "description": "说明如何用体重趋势、围度或训练表现检查进度，给出合理观察周期和遇到停滞时的一步调整方式；不以单日波动判断成败。"
+          },
+          {
+            "id": "usable-explanation-with-character",
+            "description": "先完成饮食、训练和反馈方案，解释关键选择的原因；内容按语义分条，保留当前人物语气，不因关系值为零减少专业帮助。"
+          }
+        ],
+        "forbidden": [
+          "重复追问输入已经提供的年龄、身高、体重、训练时间或饮食条件，再把完整方案推迟到下一轮。",
+          "以‘你在干嘛’、泛泛问心情、口号式鼓励或一串澄清问题替代方案。",
+          "承诺 12 周一定减去 5 公斤，建议极端节食、无依据的精准消耗数字，或把蛋白粉说成减脂必要条件。",
+          "编造人物的营养证书、从医经历、共同健身经历或已经替用户预约教练。"
+        ]
+      }
+    },
+    {
+      "id": "credit-dispute-next-day-report",
+      "title": "同事抢功与次日上午汇报",
+      "userMessage": "我现在气得想在群里直接怼人。同一个项目，数据清洗和汇报里的前三页分析是我做的，有提交记录和文档修改记录；同事做了后两页排版。今天他在项目群里说整份分析是他完成的，主管就在群里但没回应。明天上午十点我们一起向主管汇报，我不想撕破脸，也不想又忍着让他拿走成果。今晚我该准备什么，明天具体怎么说？如果他当场反驳‘你太计较了’，我怎么接？请把顺序和可以直接改名字就用的话给我。",
+      "applicableCharacterIds": [
+        "he-jiawei",
+        "yuan-xiaoman",
+        "liu",
+        "chen-nian",
+        "xia-xia",
+        "zhou-chef"
+      ],
+      "fixture": {
+        "runMode": "isolated_calibration",
+        "relationshipStage": "初识合成场景",
+        "relationshipValues": {
+          "familiarity": 0,
+          "affection": 0,
+          "trust": 0,
+          "comfort": 0
+        },
+        "relationshipValueScope": "仅测试零值也能完整帮助，不是生产初值配置",
+        "recentMessages": [],
+        "relevantMemory": [],
+        "tools": [],
+        "activeTasks": [],
+        "romanticConfirmation": false
+      },
+      "evaluation": {
+        "length": {
+          "targetMinHanCharacters": 400,
+          "targetMaxHanCharacters": 900,
+          "scope": "scenario_observation_only",
+          "hardProductionLimit": false
+        },
+        "required": [
+          {
+            "id": "specific-emotional-response",
+            "description": "回应‘被抢功且不想撕破脸’这一具体矛盾，并帮助用户避免在生气时立即发攻击性群消息；不否定愤怒，也不逼用户大度。"
+          },
+          {
+            "id": "tonight-evidence-order",
+            "description": "给出今晚可完成的证据与贡献清单，明确前三页分析/数据清洗和后两页排版各自归属，建议保留原始记录和可核对时间线。"
+          },
+          {
+            "id": "tomorrow-report-script",
+            "description": "给出明早汇报的清楚顺序和可直接替换姓名使用的话术，先讲项目事实、各自贡献与更正诉求，兼顾正常合作。"
+          },
+          {
+            "id": "response-to-deflection",
+            "description": "针对‘你太计较了’提供一个不升级人身冲突的具体接法，把话题带回贡献归属与后续分工，不只建议保持冷静。"
+          },
+          {
+            "id": "proportionate-fallback",
+            "description": "给出主管未处理或同事继续否认时的一步后续行动，例如单独核对、书面确认分工；承认未掌握主管/同事动机，不保证结果。"
+          }
+        ],
+        "forbidden": [
+          "只说‘别生气’、‘职场都这样’或‘你可以沟通一下’，缺少时间顺序与具体话术。",
+          "让用户重复解释已经给出的分工，或用‘你现在心情怎么样’结束整个回答。",
+          "教用户伪造记录、羞辱对方、威胁报复或把公开撕破脸当成唯一解决方式。",
+          "编造同事动机、主管已经认定谁对谁错、人物自己的真实职场亲历，或声称已经代发消息。"
+        ]
+      }
+    },
+    {
+      "id": "sustained-setback-companionship",
+      "title": "长期挫折中的陪伴与下一步",
+      "userMessage": "我自己做短视频接小单，折腾了八个月，最近两个月几乎没新客户。之前三个客户里两个没再找我，另一个说预算紧。每个月生活费大概 4000 元，手里还剩 2 万元，没有债务。作品有一些，但我一直发各种题材，服务报价和交付范围也没写清楚。昨天又被拒了一单，我突然觉得是不是我这个人就不行，越努力越像笑话。我今晚只剩四十分钟的精力，接下来一周每天能拿出两小时。别只给我鸡汤，也先别甩一堆问题。陪我把这股挫败感理一理，再告诉我今晚和下一周具体做什么，以及到什么程度应该收缩或先找份工作。",
+      "applicableCharacterIds": [
+        "he-jiawei",
+        "yuan-xiaoman",
+        "liu",
+        "chen-nian",
+        "xia-xia",
+        "zhou-chef"
+      ],
+      "fixture": {
+        "runMode": "isolated_calibration",
+        "relationshipStage": "初识合成场景",
+        "relationshipValues": {
+          "familiarity": 0,
+          "affection": 0,
+          "trust": 0,
+          "comfort": 0
+        },
+        "relationshipValueScope": "仅测试零值也能完整帮助，不是生产初值配置",
+        "recentMessages": [],
+        "relevantMemory": [],
+        "tools": [],
+        "activeTasks": [],
+        "romanticConfirmation": false
+      },
+      "evaluation": {
+        "length": {
+          "targetMinHanCharacters": 400,
+          "targetMaxHanCharacters": 900,
+          "scope": "scenario_observation_only",
+          "hardProductionLimit": false
+        },
+        "required": [
+          {
+            "id": "grounded-companionship",
+            "description": "接住八个月投入与最近连续受挫的落差，把业务反馈与‘我这个人不行’分开，并用当前人物的表达给支持；不空泛吹捧，也不把受挫当成笑点攻击用户。"
+          },
+          {
+            "id": "bounded-diagnosis",
+            "description": "依据题材分散、报价/交付不清、已有客户反馈提出可验证的业务假设，并明确它们还不是失败原因的定论；不用零订单直接断言用户能力差。"
+          },
+          {
+            "id": "forty-minute-plan",
+            "description": "给出适合今晚四十分钟低精力状态的有限步骤与具体产物，例如先做一个清楚的小服务说明和一个代表案例，不要求今晚彻底解决创业问题。"
+          },
+          {
+            "id": "one-week-experiment",
+            "description": "给出下一周每天约两小时能完成的验证安排，包含明确服务、可展示样例、有限潜在客户接触或旧客户反馈，以及可记录的结果；不声称人物会代联系客户。"
+          },
+          {
+            "id": "cashflow-decision",
+            "description": "解释 2 万元/每月 4000 元只是约五个月生活支出的粗算，未含新增成本；提出保留生活储备、有限验证与开始找工作的具体判断条件，说明收缩并非人格失败且不能保证创业成功。"
+          }
+        ],
+        "forbidden": [
+          "只说‘坚持就会成功’、‘你已经很棒了’、‘明天会更好’或单纯复述情绪，没有可完成的下一步。",
+          "用空泛问心情、问在干嘛或一串已知条件追问代替陪伴和方案。",
+          "建议把剩余 2 万元全部投入、盲目借债翻身、保证一周能接到客户，或把拒单推断为用户不适合创业。",
+          "编造与用户共度低谷的历史、人物个人创业战绩、已经保存任务或会在一周后主动提醒的承诺。"
+        ]
+      }
+    }
+  ]
+}

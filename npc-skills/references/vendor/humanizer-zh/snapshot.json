@@ -1,0 +1,15 @@
+{
+  "fetched_at": "2026-09-18",
+  "source": "https://github.com/syw2039/humanizer-zh",
+  "files": {
+    "SKILL.md": {
+      "url": "https://raw.githubusercontent.com/syw2039/humanizer-zh/main/SKILL.md",
+      "sha256": "171758fed76b0c5f70ff5e2284bf2bd951749ff097ddd05f33e94597f52434f5"
+    },
+    "references/chinese-ai-patterns.md": {
+      "url": "https://raw.githubusercontent.com/syw2039/humanizer-zh/main/references/chinese-ai-patterns.md",
+      "sha256": "f015ba94551a339bf114895bede410013540f059a42c230a15670ffc44c94103"
+    }
+  },
+  "note": "Local snapshot; no automatic updates. Upstream attribution retained. NPC adapter takes precedence."
+}

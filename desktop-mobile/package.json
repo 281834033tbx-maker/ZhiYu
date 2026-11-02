@@ -1,0 +1,29 @@
+{
+  "name": "zhiyu-mobile-preview",
+  "version": "0.1.0",
+  "private": true,
+  "description": "智域手机版：电脑上的独立 iPhone 样式预览窗口",
+  "main": "main.js",
+  "scripts": {
+    "start": "../desktop/node_modules/.bin/electron .",
+    "pack": "node build/prepare-runtime.cjs && ../desktop/node_modules/.bin/electron-builder --dir --mac --arm64",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "build": {
+    "appId": "com.zhiyu.mobile-preview",
+    "productName": "智域手机版",
+    "electronVersion": "33.4.11",
+    "electronDist": "build/electron-runtime",
+    "directories": { "output": "dist" },
+    "files": ["main.js", "preload.js", "image-viewer.js", "service-runtime.js", "package.json"],
+    "mac": {
+      "target": "dir",
+      "icon": "build/icon.icns",
+      "category": "public.app-category.social-networking",
+      "identity": null,
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "智域手机版需要使用麦克风录制并发送语音消息。"
+      }
+    }
+  }
+}

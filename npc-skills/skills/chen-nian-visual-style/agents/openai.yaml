@@ -1,0 +1,9 @@
+interface:
+  display_name: "陈年的视觉风格"
+  short_description: "锁定陈年的脸、身材、低清自拍与半失败朋友圈视觉语言"
+  icon_small: "./assets/identity/chen-nian-face-reference.png"
+  icon_large: "./assets/identity/chen-nian-face-reference.png"
+  brand_color: "#2F3439"
+  default_prompt: "Use $chen-nian-visual-style to create or revise a 陈年 image while preserving his established identity, body, selfie style, and Moments style."
+policy:
+  allow_implicit_invocation: true

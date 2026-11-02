@@ -1,0 +1,194 @@
+/* Approved 2026-10-10: pearl / grey-green frosted surfaces with a little
+   peach, mint and lilac reflection. This is a CSS glass approximation.
+   Keep geometry, top-layer behavior and the user's photo profile card intact. */
+:root {
+  --zy-glass-fill:
+    radial-gradient(ellipse at 100% 0%,rgb(255 218 192 / 30%),transparent 52%),
+    radial-gradient(ellipse at 0% 100%,rgb(159 218 199 / 30%),transparent 56%),
+    radial-gradient(ellipse at 100% 100%,rgb(204 184 230 / 24%),transparent 54%),
+    linear-gradient(135deg,rgb(255 255 255 / 12%),rgb(255 255 255 / 3%)),
+    rgb(219 230 220 / 48%);
+  --zy-glass-border:rgb(255 255 255 / 72%);
+  --zy-glass-highlight:rgb(255 255 255 / 48%);
+  --zy-glass-secondary:#46564b;
+  --zy-glass-muted:#526258;
+  --zy-glass-accent-ink:#943b36;
+  --zy-glass-inner:rgb(255 255 255 / 12%);
+  --zy-glass-hover:rgb(255 255 255 / 22%);
+  --zy-glass-line:rgb(73 98 79 / 17%);
+  --zy-glass-backdrop:rgb(33 47 38 / 8%);
+}
+:root[data-zy-theme='dark'] {
+  --zy-glass-fill:
+    radial-gradient(ellipse at 100% 0%,rgb(227 173 139 / 18%),transparent 52%),
+    radial-gradient(ellipse at 0% 100%,rgb(103 191 164 / 15%),transparent 56%),
+    radial-gradient(ellipse at 100% 100%,rgb(164 138 207 / 19%),transparent 54%),
+    linear-gradient(135deg,rgb(255 255 255 / 7%),rgb(255 255 255 / 2%)),
+    rgb(67 83 73 / 52%);
+  --zy-glass-border:rgb(231 248 235 / 38%);
+  --zy-glass-highlight:rgb(243 255 246 / 24%);
+  --zy-glass-secondary:#e0eae3;
+  --zy-glass-muted:#cbdacf;
+  --zy-glass-accent-ink:#ffc5b7;
+  --zy-glass-inner:rgb(235 251 240 / 4%);
+  --zy-glass-hover:rgb(235 251 240 / 9%);
+  --zy-glass-line:rgb(225 246 231 / 18%);
+  --zy-glass-backdrop:rgb(14 26 18 / 14%);
+}
+
+/* body portals and native dialog/popover top layers share the same material.
+   Scope to actual App windows, never generic HTML dialogs or the old Studio. */
+html[data-zy-theme]:has(:is(.zy-app.zy-desktop,.zy-character-window,.image-viewer)) body :is(
+  .zy-dialog:not(.zy-self-profile-popover),
+  .zy-settings-dialog,.zy-logout-dialog,.zy-pets-dialog,.zy-dungeon-card,
+  .zy-menu,.zy-chat-more-menu,.zy-chat-context,.message-context-menu,
+  .message-language-menu,.zy-chat-add-menu,.chat-sticker-panel,
+  .zy-moments-notifications,.zy-group-mention-menu,.zy-professional-task-picker,
+  .zy-private-drawer,.zy-group-drawer,.zy-toast,.zy-group-creation-status,
+  .viewer-menu,.viewer-forward,.viewer-notice
+) {
+  --zy-secondary:var(--zy-glass-secondary);
+  --zy-muted:var(--zy-glass-muted);
+  --detail-ink:var(--zy-ink);
+  --detail-secondary:var(--zy-glass-secondary);
+  --detail-muted:var(--zy-glass-muted);
+  --zy-line:var(--zy-glass-line);
+  --zy-profile-divider:var(--zy-glass-line);
+  --zy-soft-divider:var(--zy-glass-line);
+  background:var(--zy-glass-fill);
+  border-color:var(--zy-glass-border);
+  color:var(--zy-ink);
+  -webkit-backdrop-filter:blur(24px) saturate(125%);
+  backdrop-filter:blur(24px) saturate(125%);
+  box-shadow:var(--zy-popup-shadow),inset 0 1px 0 var(--zy-glass-highlight);
+}
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(
+  .zy-dialog:not(.zy-profile-popover),.zy-settings-dialog,.zy-logout-dialog
+)::backdrop,
+html[data-zy-theme] .viewer-forward::backdrop {
+  background:var(--zy-glass-backdrop);
+  -webkit-backdrop-filter:blur(5px);
+  backdrop-filter:blur(5px);
+}
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-pets-dialog-backdrop,.zy-dungeon-backdrop) {
+  background:var(--zy-glass-backdrop);
+  -webkit-backdrop-filter:blur(5px);
+  backdrop-filter:blur(5px);
+}
+
+/* Inner cards remain a weak tint, not another opaque layer of the dialog. */
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-today-tasks,.zy-professional-task-dialog) {
+  --zy-task-surface:var(--zy-glass-inner);
+  --zy-pt-surface:var(--zy-glass-inner);
+  --zy-pt-current:var(--zy-glass-hover);
+}
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-task-stat,.zy-task-card) {
+  background:var(--zy-glass-inner);
+  border-color:var(--zy-glass-line);
+}
+/* Text accents need more contrast on tinted glass than on the flat canvas;
+   completed-circle fills and brand gradients retain their existing colors. */
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-professional-task-dialog :is(.zy-professional-task-count:not(.is-complete),.zy-professional-task-end,.zy-professional-task-dialog-notice,.zy-professional-task-error) { color:var(--zy-glass-accent-ink); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-professional-task-dialog button:hover:not(:disabled) { color:var(--zy-glass-accent-ink); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(
+  .zy-contact-create-contacts,.zy-settings-button,.zy-theme-option,
+  .zy-contact-create-search,.zy-contact-create-goal>textarea,
+  .zy-dialog .zy-realtime-input,.zy-dialog .zy-search,
+  .zy-dialog .zy-comment-context,.zy-dialog .zy-settings>button,
+  .zy-dialog .zy-comment-form input,.zy-dialog .zy-publish-editor>textarea,
+  .zy-dialog .zy-photo-add,.zy-dungeon-enter,
+  .zy-pets-dialog>input,.viewer-forward>label input
+) {
+  background:var(--zy-glass-inner);
+  border-color:var(--zy-glass-line);
+  color:var(--zy-ink);
+}
+/* Inputs with their own outline disabled retain a visible coral focus edge. */
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-contact-create-search:focus-within,.zy-contact-create-goal>textarea:focus) {
+  border-color:var(--zy-chat-control-accent,#e66562);
+  box-shadow:0 0 0 1px var(--zy-chat-control-accent,#e66562);
+}
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-comment-form input,.zy-publish-editor>textarea,.zy-pets-dialog>input)::placeholder { color:var(--zy-glass-muted); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-comment-form { border-color:var(--zy-glass-line); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-comment time { color:var(--zy-glass-muted); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-publish-location input { color:var(--zy-ink); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-publish-location input::placeholder { color:var(--zy-glass-muted); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-publish-editor footer,.zy-publish-dialog footer) { border-color:var(--zy-glass-line); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-dungeon-close,.zy-pets-dialog-heading button) { color:var(--zy-glass-secondary); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-dungeon-close,.zy-pets-dialog-heading button):hover { background:var(--zy-glass-hover); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-settings-dialog>header,.zy-settings-section,.zy-theme-settings,.zy-dialog-head) { border-color:var(--zy-glass-line); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(
+  .zy-settings-section h3,.zy-theme-settings legend,.zy-theme-option-label,
+  .zy-settings-font-select>select,.zy-pets-dialog-heading h2,
+  .zy-npc-identity h3,.zy-friend-details dd,.zy-friend-details input,
+  .zy-dungeon-info h2,.zy-dialog .zy-settings>button,.zy-dialog .zy-settings>a
+) { color:var(--zy-ink); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(
+  .zy-npc-identity p,.zy-friend-source,.zy-profile-moments,
+  .zy-molly-profile-bio,.zy-settings-account>div>span,
+  .zy-settings-version>div>span,.zy-settings-version>output,
+  .zy-theme-settings>p,.zy-pets-dialog>p,.zy-pets-dialog label,
+  .zy-dungeon-info p,.zy-dialog .zy-call p,.zy-dialog .zy-person-option small,
+  .zy-dialog .zy-comment-context p,.zy-publish-hint,.zy-publish-person small,
+  .zy-publish-editor footer small,.zy-publish-dialog footer small,.zy-publish-location
+) { color:var(--zy-glass-secondary); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-settings-font-select>select { background:var(--zy-glass-inner); border-color:var(--zy-glass-line); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-settings-font-select option { background:var(--zy-canvas); color:var(--zy-ink); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-settings-button,.zy-theme-option,.zy-logout-dialog>footer>button:not(.zy-logout-confirm)):hover { background:var(--zy-glass-hover); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-logout-dialog>footer>button:not(.zy-logout-confirm) { background:var(--zy-glass-inner); color:var(--zy-ink); }
+
+/* Menus inherit theme ink, while destructive actions keep their coral/red. */
+html[data-zy-theme]:has(:is(.zy-app.zy-desktop,.zy-character-window,.image-viewer)) body :is(.zy-menu,.zy-chat-more-menu,.zy-chat-context,.message-context-menu,.message-language-menu,.zy-chat-add-menu,.viewer-menu) button:not(.message-action-delete) { color:var(--zy-ink); }
+html[data-zy-theme]:has(:is(.zy-app.zy-desktop,.zy-character-window,.image-viewer)) body :is(.zy-menu,.zy-chat-more-menu,.zy-chat-context,.message-context-menu,.message-language-menu,.zy-chat-add-menu,.viewer-menu) button:is(:hover,:focus-visible) { background:var(--zy-glass-hover); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-moments-notification { background:transparent; color:var(--zy-ink); border-color:var(--zy-glass-line); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-moments-notification:hover { background:var(--zy-glass-hover); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-moments-notification small,.zy-moments-notification time,.zy-moments-notifications-empty) { color:var(--zy-glass-secondary); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-moments-notifications>header,.zy-dungeon-genre) { border-color:var(--zy-glass-line); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-dungeon-genre { background:var(--zy-glass-inner); color:var(--zy-glass-secondary); }
+
+/* The date control keeps its agreed white capsule and black content. Only
+   the opened date list gets a light pearl glass surface in either theme. */
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-task-date-popup {
+  background:linear-gradient(135deg,rgb(236 247 239 / 12%),rgb(236 225 246 / 12%)),rgb(255 255 255 / 76%);
+  border-color:rgb(255 255 255 / 75%);
+  color:#000;
+  -webkit-backdrop-filter:blur(24px);
+  backdrop-filter:blur(24px);
+}
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-npc-type-badge::after {
+  background:var(--zy-glass-fill);
+  border-color:var(--zy-glass-border);
+  color:var(--zy-ink);
+  -webkit-backdrop-filter:blur(24px);
+  backdrop-filter:blur(24px);
+  box-shadow:var(--zy-popup-shadow);
+}
+
+/* Appearance thumbnails show the actual new palette in both modes. */
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-theme-preview { background:#f1f4f0; }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-theme-preview>i { background:#e5ebe4; border-color:#d5ded5; }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-theme-preview b { background:#e5ebe4; }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-theme-preview em { background:#2e3a32; }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-theme-preview.dark { background:#232b28; }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-theme-preview.dark>i { background:#313b35; border-color:#435047; }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-theme-preview.dark :is(b,em) { background:#37423b; }
+
+/* Popovers in the separate image viewer use the same material; media stays
+   unfiltered. Its toolbar and frame follow the shared palette as well. */
+html[data-zy-theme] :is(.image-viewer,.image-viewer-empty,.image-viewer .viewer-stage,.image-viewer .viewer-loading,.image-viewer .viewer-error) { background:var(--zy-canvas); color:var(--zy-ink); }
+html[data-zy-theme] .image-viewer :is(.viewer-toolbar,.viewer-history) { background:var(--zy-sidebar); color:var(--zy-ink); border-color:var(--zy-line); }
+html[data-zy-theme] .image-viewer .viewer-toolbar button:not(.close):not(.minimize):not(.maximize):hover { background:var(--zy-hover); }
+html[data-zy-theme] .viewer-forward :is(label,header button) { color:var(--zy-ink); }
+html[data-zy-theme] .viewer-forward>label input { background:var(--zy-glass-inner); color:var(--zy-ink); border-color:var(--zy-glass-line); }
+html[data-zy-theme] .viewer-forward footer { border-color:var(--zy-glass-line); }
+
+@supports not (backdrop-filter:blur(1px)) {
+  html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-task-date-popup { background:#fff; }
+  html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-npc-type-badge::after { background:var(--zy-canvas); }
+  html[data-zy-theme]:has(:is(.zy-app.zy-desktop,.zy-character-window,.image-viewer)) body :is(.zy-dialog:not(.zy-self-profile-popover),.zy-settings-dialog,.zy-logout-dialog,.zy-pets-dialog,.zy-dungeon-card,.zy-menu,.zy-chat-more-menu,.zy-chat-context,.message-context-menu,.message-language-menu,.zy-chat-add-menu,.chat-sticker-panel,.zy-moments-notifications,.zy-group-mention-menu,.zy-professional-task-picker,.zy-private-drawer,.zy-group-drawer,.zy-toast,.zy-group-creation-status,.viewer-menu,.viewer-forward,.viewer-notice) { background:var(--zy-canvas); }
+}
+@media(prefers-reduced-transparency:reduce) {
+  html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-task-date-popup { background:#fff; -webkit-backdrop-filter:none; backdrop-filter:none; }
+  html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-npc-type-badge::after { background:var(--zy-canvas); -webkit-backdrop-filter:none; backdrop-filter:none; }
+  html[data-zy-theme]:has(:is(.zy-app.zy-desktop,.zy-character-window,.image-viewer)) body :is(.zy-dialog:not(.zy-self-profile-popover),.zy-settings-dialog,.zy-logout-dialog,.zy-pets-dialog,.zy-dungeon-card,.zy-menu,.zy-chat-more-menu,.zy-chat-context,.message-context-menu,.message-language-menu,.zy-chat-add-menu,.chat-sticker-panel,.zy-moments-notifications,.zy-group-mention-menu,.zy-professional-task-picker,.zy-private-drawer,.zy-group-drawer,.zy-toast,.zy-group-creation-status,.viewer-menu,.viewer-forward,.viewer-notice) { background:var(--zy-canvas); -webkit-backdrop-filter:none; backdrop-filter:none; }
+}

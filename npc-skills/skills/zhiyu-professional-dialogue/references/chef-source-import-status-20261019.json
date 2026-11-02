@@ -1,0 +1,514 @@
+{
+  "date": "2026-10-19",
+  "characterId": "zhou-chef",
+  "knowledgeLibrary": "chef-foundation-knowledge-20261017.json",
+  "sourceAccess": {
+    "schemaVersion": 1,
+    "characterId": "zhou-chef",
+    "version": "2026-10-19-v1",
+    "status": "specified_source_access_audited_and_public_facts_ready",
+    "requestedScope": "把本轮第二点明确资料的可获正文摘要纳入个人知识；商业全书与目录分开。",
+    "baselineEntryCountAtRead": 73,
+    "newEntryCount": 40,
+    "newRuntimeSourceCount": 23,
+    "commercialBooks": [
+      {
+        "id": "cia-prochef10",
+        "title": "The Professional Chef, 10th Edition",
+        "url": "https://bcs.wiley.com/he-bcs/Books?action=index&bcsId=12785&itemId=1119498805",
+        "isbn": "9781119490951",
+        "requestedVersion": "10th, 2024",
+        "status": "official_excerpt_partially_read",
+        "bodyUrl": "https://catalogimages.wiley.com/images/db/pdf/9781119490951.excerpt.pdf",
+        "bodyExtent": "官方16页Chapter 1样章可读；精读食安/HACCP印刷页7–15；不是其余西餐技法章节或整书。",
+        "runtimeSourceId": "chef-import-source-cia-prochef10-sample",
+        "fullBookObtained": false,
+        "accessAttempts": [
+          "官方Wiley教师配套站与产品书目核验",
+          "官方ISBN excerpt.pdf成功"
+        ],
+        "nextLegalAccess": "购买/租阅该版正版电子书、纸书或学校授权图书馆。"
+      },
+      {
+        "id": "cia-baking3",
+        "title": "Baking and Pastry: Mastering the Art and Craft, 3rd Edition",
+        "url": "https://www.wiley.com/en-jp/baking-and-pastry-mastering-the-art-and-craft-3rd-edition-p-9780470928653",
+        "isbn": "9780470928653",
+        "requestedVersion": "3rd, 2015-02",
+        "status": "catalog_only_excerpt_access_failed",
+        "bodyExtent": "官方搜索可读书目与目录，页内列4个Excerpt按钮；本轮未取得任何该版样章正文，新增教学条目0。",
+        "fullBookObtained": false,
+        "accessAttempts": [
+          "产品页直接open返回403/cache miss",
+          "ISBN excerpt.pdf及excerpt1–4.pdf均不可访问",
+          "Wiley-VCH该ISBN页超时"
+        ],
+        "nextLegalAccess": "正版电子书/纸书/授权书库；不改用第二版或第四版冒充本次第3版。"
+      },
+      {
+        "id": "lcb-larousse2021",
+        "title": "Le Cordon Bleu — L’École de la pâtisserie",
+        "url": "https://www.editions-larousse.fr/livre/le-cordon-bleu-lecole-de-la-patisserie-9782036009905/",
+        "isbn": "9782036009905",
+        "requestedVersion": "Larousse, 2021-11-03",
+        "status": "catalog_only_official_reader_failed",
+        "bodyExtent": "出版社可读书目、512页/EAN。Feuilleter官方阅读器入口工具无法访问；新增教学条目0。",
+        "fullBookObtained": false,
+        "accessAttempts": [
+          "出版社页Feuilleter点击返回Internal Error",
+          "官方liseuse-hachette公开入口不可访问"
+        ],
+        "nextLegalAccess": "从出版社购买纸/电子版或授权图书馆；不把2016学校页的400页旧版混入本版。"
+      },
+      {
+        "id": "ferrandi-patisserie2017",
+        "title": "Pâtisserie de FERRANDI Paris",
+        "url": "https://www.ferrandi-paris.com/fr/nos-ouvrages/patisserie/livre-recettes-et-techniques-patisserie",
+        "requestedVersion": "Flammarion, 2017-10-25法文原版",
+        "status": "catalog_only_no_readable_official_excerpt_obtained",
+        "bodyExtent": "已读学校书目；Flammarion旧目录与ISBN产品入口不可访问，未获得官方可读样章，新增教学条目0。",
+        "fullBookObtained": false,
+        "accessAttempts": [
+          "FERRANDI官方书目成功",
+          "Flammarion原目录入口不可访问",
+          "Flammarion ISBN产品入口不可访问"
+        ],
+        "nextLegalAccess": "正版书/授权电子书或学校图书馆；译本按真实ISBN核版本，不使用不明扫描件。"
+      }
+    ],
+    "publicReadings": [
+      {
+        "sourceId": "chef-import-source-cia-prochef10-sample",
+        "url": "https://catalogimages.wiley.com/images/db/pdf/9781119490951.excerpt.pdf",
+        "readStatus": "partial_text",
+        "readScope": "16页样章；精读印刷页7–15安全/HACCP。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-cia-calculations",
+        "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/kitchen-calculations.pdf",
+        "readStatus": "partial_text",
+        "readScope": "印刷页5–8单位/净料成本、11–14配方成本。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-cia-eggs",
+        "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/egg-cookery.pdf",
+        "readStatus": "partial_text",
+        "readScope": "印刷页1–2带壳蛋、8–9卷蛋、12–14乳蛋派/舒芙蕾。",
+        "newEntryCount": 3
+      },
+      {
+        "sourceId": "chef-import-source-cia-sauces-extra",
+        "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/examining-sauces.pdf",
+        "readStatus": "partial_text",
+        "readScope": "印刷页12–15 beurre blanc及搭配/淋酱；其余已读部分保留原库。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-cia-poach-lesson",
+        "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/shallow-poaching.pdf",
+        "readStatus": "partial_text",
+        "readScope": "3页教学计划第1页明确poaching低于simmering。",
+        "newEntryCount": 1
+      },
+      {
+        "sourceId": "chef-import-source-kab-preferments",
+        "url": "https://www.kingarthurbaking.com/blog/2020/02/05/baking-with-preferments",
+        "readStatus": "full_text",
+        "readScope": "2020-02-05正文四类预发酵物与实例。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-kab-pastry-cream",
+        "url": "https://www.kingarthurbaking.com/recipes/pastry-cream-creme-patissiere-recipe",
+        "readStatus": "full_text",
+        "readScope": "更新2026-10-08；主配方步骤3–7及奶油混合说明。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-kab-leaveners",
+        "url": "https://www.kingarthurbaking.com/blog/2021/09/10/baking-soda-vs-baking-powder-substitutions",
+        "readStatus": "full_text",
+        "readScope": "2021-09-10正文原理与双效泡打粉；不用全文通用替代倍数。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-kab-cocoa",
+        "url": "https://www.kingarthurbaking.com/blog/2020/07/15/dutch-process-vs-natural-cocoa",
+        "readStatus": "full_text",
+        "readScope": "2020-07-15正文酸碱与膨松关联；不采通用替代倍数。",
+        "newEntryCount": 1
+      },
+      {
+        "sourceId": "chef-import-source-kab-caramel",
+        "url": "https://www.kingarthurbaking.com/blog/2022/12/12/how-to-make-caramel",
+        "readStatus": "full_text",
+        "readScope": "2022-12-12正文干/湿法、晶种与清锅；旧库已有热糖防溅不重复。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-kab-glutenfree",
+        "url": "https://www.kingarthurbaking.com/blog/2023/05/04/which-gluten-free-flour-should-i-use",
+        "readStatus": "full_text",
+        "readScope": "2023-05-04正文四种面粉用途/小麦淀粉说明。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-kab-sorbet",
+        "url": "https://www.kingarthurbaking.com/recipes/strawberry-sorbet-recipe",
+        "readStatus": "full_text",
+        "readScope": "更新2022-09-21；两种方法步骤1–14。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-kab-prebake",
+        "url": "https://www.kingarthurbaking.com/blog/2021/05/24/prebake-pie-crust",
+        "readStatus": "full_text",
+        "readScope": "2021-05-24正文全烤/半烤与冷藏加重物。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-cal-under",
+        "url": "https://www.callebaut.com/en/callebaut-chocolate-academy/tutorials/tempering/undercrystallised",
+        "readStatus": "partial_text",
+        "readScope": "公开网页症状段；完整视频需免费注册，未观看。",
+        "newEntryCount": 1
+      },
+      {
+        "sourceId": "chef-import-source-cal-over",
+        "url": "https://www.callebaut.com/en/callebaut-chocolate-academy/tutorials/tempering/overcrystallised",
+        "readStatus": "partial_text",
+        "readScope": "公开网页症状段；完整视频需免费注册，未观看。",
+        "newEntryCount": 1
+      },
+      {
+        "sourceId": "chef-import-source-cal-bloom",
+        "url": "https://www.callebaut.com/en-AU/callebaut-chocolate-academy/troubleshooting/chocolate-bloom",
+        "readStatus": "full_text",
+        "readScope": "公开网页第1–2类起霜原因和处理。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-cal-storage",
+        "url": "https://www.callebaut.com/en/callebaut-chocolate-academy/tutorials/storing/how-to-store",
+        "readStatus": "partial_text",
+        "readScope": "公开网页Good to Know正文；未观看嵌入视频。",
+        "newEntryCount": 1
+      },
+      {
+        "sourceId": "chef-import-source-val-ganache",
+        "url": "https://www.valrhona.com/en/l-ecole-valrhona/discover-l-ecole-valrhona/chocolate-terminology/chocolate-ganache",
+        "readStatus": "full_text",
+        "readScope": "公开主文经典/打发甘纳许及过稀处理。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-val-anglaise",
+        "url": "https://www.valrhona.com/en/l-ecole-valrhona/discover-l-ecole-valrhona/chocolate-terminology/creme-anglaise",
+        "readStatus": "partial_text",
+        "readScope": "主文步骤6–9及与卡仕达差异。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-val-mousse",
+        "url": "https://www.valrhona.com/en/l-ecole-valrhona/discover-l-ecole-valrhona/chocolate-terminology/chocolate-mousse",
+        "readStatus": "partial_text",
+        "readScope": "公开主文蛋白型/英式蛋奶酱型构成。",
+        "newEntryCount": 1
+      },
+      {
+        "sourceId": "chef-import-source-fda-eggs",
+        "url": "https://www.fda.gov/food/buy-store-serve-safe-food/what-you-need-know-about-egg-safety",
+        "readStatus": "full_text",
+        "readScope": "公开正文Storing/Preparing。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-fda-seafood",
+        "url": "https://www.fda.gov/food/buy-store-serve-safe-food/selecting-and-serving-fresh-and-frozen-seafood-safely",
+        "readStatus": "partial_text",
+        "readScope": "公开正文Selecting Shellfish及Eating Raw Seafood。",
+        "newEntryCount": 2
+      },
+      {
+        "sourceId": "chef-import-source-kab-salt",
+        "url": "https://www.kingarthurbaking.com/pro/reference/salt",
+        "readStatus": "full_text",
+        "readScope": "公开正文盐对面筋和发酵作用。",
+        "newEntryCount": 1
+      }
+    ],
+    "lessonPlansReadWithoutOperationalImport": [
+      {
+        "title": "CIA High School Lesson Plan: Knife Skills",
+        "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/knife-skills.pdf",
+        "status": "public_lesson_plan_read_no_new_instruction",
+        "scope": "已读公开3–4页教学计划；主要为目标/词汇/练习，不是完整技法正文。",
+        "newEntryCount": 0
+      },
+      {
+        "title": "CIA High School Lesson Plan: Roasting",
+        "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/roasting.pdf",
+        "status": "public_lesson_plan_read_no_new_instruction",
+        "scope": "已读公开3–4页教学计划；主要为目标/词汇/练习，不是完整技法正文。",
+        "newEntryCount": 0
+      },
+      {
+        "title": "CIA High School Lesson Plan: Sautéing",
+        "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/sauteing.pdf",
+        "status": "public_lesson_plan_read_no_new_instruction",
+        "scope": "已读公开3–4页教学计划；主要为目标/词汇/练习，不是完整技法正文。",
+        "newEntryCount": 0
+      },
+      {
+        "title": "CIA High School Lesson Plan: Stewing",
+        "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/stewing.pdf",
+        "status": "public_lesson_plan_read_no_new_instruction",
+        "scope": "已读公开3–4页教学计划；主要为目标/词汇/练习，不是完整技法正文。",
+        "newEntryCount": 0
+      }
+    ],
+    "priorPublicSourcesRetained": [
+      {
+        "id": "audit-chef-cia-stock",
+        "url": "https://www.ciafoodies.com/a-no-rules-guide-for-rich-chicken-stock/",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "full_text",
+        "entryIds": [
+          "chef-audit-stock-clear-base"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      },
+      {
+        "id": "audit-chef-cia-sauces",
+        "url": "https://www.ciachef.edu/wp-content/uploads/2024/07/examining-sauces.pdf",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "partial_text",
+        "entryIds": [
+          "chef-audit-brown-sauce-family",
+          "chef-audit-hollandaise-broken"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      },
+      {
+        "id": "audit-chef-kab-swiss",
+        "url": "https://www.kingarthurbaking.com/recipes/swiss-meringue-recipe",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "full_text",
+        "entryIds": [
+          "chef-audit-swiss-meringue"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      },
+      {
+        "id": "audit-chef-kab-gelatin",
+        "url": "https://www.kingarthurbaking.com/blog/2022/02/16/how-to-use-gelatin-in-baking-and-desserts",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "full_text",
+        "entryIds": [
+          "chef-audit-gelatin-bloom"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      },
+      {
+        "id": "audit-chef-kab-lamination",
+        "url": "https://shop.kingarthurbaking.com/content/class-pdfs/Laminated-Baking-Workbook-King-Arthur-Baking.pdf",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "partial_text",
+        "entryIds": [
+          "chef-audit-lamination-fracture",
+          "chef-audit-lamination-leak"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      },
+      {
+        "id": "audit-chef-callebaut-curves",
+        "url": "https://www.callebaut.com/en-US/guide-different-tempering-methods",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "full_text",
+        "entryIds": [
+          "chef-audit-chocolate-product-curve"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      },
+      {
+        "id": "audit-chef-callebaut-fluidity",
+        "url": "https://www.callebaut.com/en/callebaut-chocolate-academy/tutorials/fluidity",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "full_text",
+        "entryIds": [
+          "chef-audit-chocolate-fluidity"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      },
+      {
+        "id": "audit-chef-valrhona-emulsion",
+        "url": "https://www.valrhona.com/en/l-ecole-valrhona/discover-l-ecole-valrhona/chocolate-terminology/chocolate-emulsion",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "full_text",
+        "entryIds": [
+          "chef-audit-ganache-emulsion"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      },
+      {
+        "id": "audit-chef-kab-starter",
+        "url": "https://www.kingarthurbaking.com/blog/2016/05/17/ripe-sourdough-starter",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "full_text",
+        "entryIds": [
+          "chef-audit-starter-maturity"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      },
+      {
+        "id": "audit-chef-kab-overproof",
+        "url": "https://www.kingarthurbaking.com/blog/2018/02/21/over-proofed-bread?page=0",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "full_text",
+        "entryIds": [
+          "chef-audit-yeast-overproof-rescue"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      },
+      {
+        "id": "audit-chef-usda-leftovers",
+        "url": "https://ask.fsis.usda.gov/article/How-do-I-handle-leftovers-safely",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "partial_text",
+        "entryIds": [
+          "chef-audit-leftover-cooling"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      },
+      {
+        "id": "audit-chef-usda-temps",
+        "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "partial_text",
+        "entryIds": [
+          "chef-audit-safety-temperature-cut"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      },
+      {
+        "id": "audit-chef-fda-allergens",
+        "url": "https://www.fda.gov/food/nutrition-food-labeling-and-critical-foods/food-allergies?lv=true",
+        "status": "retained_existing_20261019_audit_ingestion",
+        "readStatusAtPreviousBatch": "full_text",
+        "entryIds": [
+          "chef-audit-allergen-label-contact"
+        ],
+        "action": "根代理此前已将对应15条并入73条基础库，本轮保留，不改名重收、不冒称本轮又读整源。"
+      }
+    ],
+    "additionalSourceReadWithoutDuplicateImport": [
+      {
+        "title": "Flour Is a Raw Food and Other Safety Facts",
+        "url": "https://www.fda.gov/consumers/consumer-updates/flour-raw-food-and-other-safety-facts",
+        "status": "public_main_text_read",
+        "action": "生面粉风险旧厨师方法已有CDC依据，不为凑数重复收录。"
+      }
+    ],
+    "sourceConflictsRetained": [
+      "原Callebaut 811融化栏℃/℉与概述不一致，旧15条中的限制保留；本轮不新增其融化参数。",
+      "CIA样章持温/冷却局部措辞不同及旧法规引用不作新数值阈值；Kitchen Calculations个别例题单位/算术排版错误不复制。",
+      "Valrhona anglaise页面蛋黄糖静置3–4小时未标冷链，不采为家庭指令；mousse生蛋版本不导作完整执行方。"
+    ],
+    "retrievalChecksForParent": [
+      {
+        "question": "卡仕达已经变稠了，还要继续煮吗？",
+        "expectedNewEntryId": "chef-import-pastry-cream-boil"
+      },
+      {
+        "question": "无麸质面粉，小麦过敏的人也能用吗？",
+        "expectedNewEntryId": "chef-import-glutenfree-not-wheatfree"
+      },
+      {
+        "question": "巧克力从冰箱拿出来马上拆包装，表面发白是怎么回事？",
+        "expectedNewEntryId": "chef-import-sugar-bloom"
+      },
+      {
+        "question": "打发甘纳许为什么起颗粒了？",
+        "expectedNewEntryId": "chef-import-whipped-ganache-cold"
+      }
+    ],
+    "verification": {
+      "jsonValid": true,
+      "entrySourceReferencesValid": true,
+      "oldEntryIdsUnchanged": true,
+      "factsDuplicatedUnderNewIds": false,
+      "runtimeParserAndActualMatcher": "由根代理整合验证；此输出不自称已加载。"
+    },
+    "completionBoundary": "完成本批23项明确可读正文的选定事实提炼及四教材访问/范围核验；保留13项先前来源。3本商业教材仍无样章正文，CIA10只有16页公开样章的已读部分，任何一本均未全文导入。未扩大为整个机构网站抓取或所有烹饪学科完成。"
+  },
+  "teachingSourceIdsAdded": [
+    "chef-import-source-cia-prochef10-sample",
+    "chef-import-source-cia-calculations",
+    "chef-import-source-cia-eggs",
+    "chef-import-source-cia-sauces-extra",
+    "chef-import-source-cia-poach-lesson",
+    "chef-import-source-kab-preferments",
+    "chef-import-source-kab-pastry-cream",
+    "chef-import-source-kab-leaveners",
+    "chef-import-source-kab-cocoa",
+    "chef-import-source-kab-caramel",
+    "chef-import-source-kab-glutenfree",
+    "chef-import-source-kab-sorbet",
+    "chef-import-source-kab-prebake",
+    "chef-import-source-cal-under",
+    "chef-import-source-cal-over",
+    "chef-import-source-cal-bloom",
+    "chef-import-source-cal-storage",
+    "chef-import-source-val-ganache",
+    "chef-import-source-val-anglaise",
+    "chef-import-source-val-mousse",
+    "chef-import-source-fda-eggs",
+    "chef-import-source-fda-seafood",
+    "chef-import-source-kab-salt"
+  ],
+  "entryIdsAdded": [
+    "chef-import-hazard-classes",
+    "chef-import-haccp-control",
+    "chef-import-edible-unit-cost",
+    "chef-import-recipe-portion-cost",
+    "chef-import-shell-egg-simmer",
+    "chef-import-omelet-hot-filling",
+    "chef-import-souffle-soft-peak",
+    "chef-import-beurre-blanc-control",
+    "chef-import-sauce-crisp-under",
+    "chef-import-poach-vs-simmer",
+    "chef-import-preferment-four-groups",
+    "chef-import-poolish-extensibility",
+    "chef-import-pastry-cream-boil",
+    "chef-import-diplomat-cream",
+    "chef-import-soda-acid-timing",
+    "chef-import-double-acting-powder",
+    "chef-import-cocoa-acid-balance",
+    "chef-import-caramel-crystal-seed",
+    "chef-import-caramel-pot-clean",
+    "chef-import-glutenfree-blend-choice",
+    "chef-import-glutenfree-not-wheatfree",
+    "chef-import-sorbet-machine-vs-pan",
+    "chef-import-sorbet-chill-before-churn",
+    "chef-import-pie-full-partial",
+    "chef-import-pie-chill-weight",
+    "chef-import-chocolate-undercrystal",
+    "chef-import-chocolate-overcrystal",
+    "chef-import-sugar-bloom",
+    "chef-import-fat-bloom",
+    "chef-import-chocolate-storage-odour",
+    "chef-import-whipped-ganache-cold",
+    "chef-import-ganache-runny-cooling",
+    "chef-import-anglaise-temp",
+    "chef-import-anglaise-vs-patissiere",
+    "chef-import-mousse-family",
+    "chef-import-hard-cooked-egg-storage",
+    "chef-import-freeze-egg-without-shell",
+    "chef-import-shellfish-buy-check",
+    "chef-import-seafood-freezing-not-sterile",
+    "chef-import-bread-salt-function"
+  ],
+  "unreadMaterialsSupportTeaching": false
+}
