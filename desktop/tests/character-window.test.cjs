@@ -59,6 +59,7 @@ const ratioOK = win => assert.ok(Math.abs((win.size[1] - win.aspect.extra.height
   assert.equal(win.aspect.ratio, 16 / 9);
   assert.equal(win.options.fullscreenable, true);
   assert.equal(win.options.frame, false);
+  assert.equal(win.options.webPreferences.autoplayPolicy,'no-user-gesture-required');
   assert.equal(handlers.get('zhiyu:character-fullscreen-get')({sender:win.webContents}),false);
   assert.equal(handlers.get('zhiyu:character-fullscreen-set')({sender:{}},true),false);
   assert.equal(handlers.get('zhiyu:character-fullscreen-set')({sender:win.webContents},true),true);
@@ -83,6 +84,17 @@ const ratioOK = win => assert.ok(Math.abs((win.size[1] - win.aspect.extra.height
   assert.equal(chrome({sender:win.webContents},NaN),false);
   assert.equal(chrome({sender:win.webContents},174),true); ratioOK(win);
   assert.equal(chrome({sender:win.webContents},82),true); ratioOK(win);
+  await handlers.get('zhiyu:character-open')(event,'yuan-xiaoman');
+  const callSize=[...win.size],callAspect=win.aspect;
+  assert.equal(chrome({sender:win.webContents},0),true);
+  assert.equal(chrome({sender:win.webContents},240),true);
+  assert.deepEqual(win.size,callSize,'call overlays never resize the native window');
+  assert.equal(win.aspect,callAspect,'composer visibility cannot alter the call geometry');
+  assert.equal(win.options.frame,false);
+  assert.equal(win.options.titleBarStyle,'hidden');
+  assert.equal(win.options.trafficLightPosition.x,12);
+  assert.equal(win.options.trafficLightPosition.y,7);
+  await handlers.get('zhiyu:character-open')(event,'chen-nian');
   win.fullscreen = true; win.size = [1440,1080]; win.emit('resize');
   assert.deepEqual(win.size,[1440,1080]);
   win.fullscreen = false; win.emit('leave-full-screen'); ratioOK(win);
@@ -93,5 +105,5 @@ const ratioOK = win => assert.ok(Math.abs((win.size[1] - win.aspect.extra.height
   assert.deepEqual(main.size,[1060,720]);
   assert.equal(handlers.get('zhiyu:character-close')(event),true);
   assert.equal(context.getCharacter(),null);
-  console.log('PASS: 16:9 coupled resize, frameless controls, fullscreen restore, dynamic footer, small screen, IPC isolation, main window unchanged.');
+  console.log('PASS: 16:9 coupled resize, native traffic lights, fullscreen restore, legacy dynamic footer, call overlay geometry preserved, small screen, IPC isolation, main window unchanged.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

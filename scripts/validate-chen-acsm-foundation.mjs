@@ -2,7 +2,7 @@ import {readFileSync} from 'node:fs';
 import {isolatedNpcRuntime} from './npc-test-runtime.mjs';
 
 // Offline fail-fast validation only. No App/API/model or production state access.
-const input = process.argv[2] || 'npc-skills/skills/zhiyu-professional-dialogue/references/chen-acsm-foundation-20261017.json';
+const input = process.argv[2] || 'npc-skills/knowledge/professional/chen-acsm-foundation-20261017.json';
 const raw = readFileSync(input, 'utf8');
 const runtime = isolatedNpcRuntime();
 try {

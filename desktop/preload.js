@@ -9,6 +9,8 @@ contextBridge.exposeInMainWorld('zhiyuDesktop', {
   revealTaskCalendarWindow: expectedURL => ipcRenderer.invoke('zhiyu:task-calendar-reveal', expectedURL),
   requestMicrophoneAccess: () => ipcRenderer.invoke('zhiyu:microphone-request'),
   openMicrophoneSettings: () => ipcRenderer.invoke('zhiyu:microphone-settings'),
+  requestCameraAccess: () => ipcRenderer.invoke('zhiyu:camera-request'),
+  openCameraSettings: () => ipcRenderer.invoke('zhiyu:camera-settings'),
   openImageViewer: payload => ipcRenderer.invoke('zhiyu:image-open', payload),
   updateImageViewer: payload => ipcRenderer.invoke('zhiyu:image-update', payload),
   getImageViewer: () => ipcRenderer.invoke('zhiyu:image-get'),

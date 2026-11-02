@@ -1,0 +1,12 @@
+{
+  "main": {},
+  "secondary": [],
+  "contrast": null,
+  "shortVideo": [],
+  "stances": {},
+  "circles": {
+    "levels": {},
+    "defaultKnownCategories": [],
+    "otherwise": "不知道"
+  }
+}

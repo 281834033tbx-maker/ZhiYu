@@ -9,6 +9,6 @@ export const dialoguePurposeByCharacter: Record<string, DialoguePurpose> = Objec
 );
 
 export const dialogueSkillPaths = {
-  companion: 'npc-skills/skills/zhiyu-companion-dialogue',
-  professional: 'npc-skills/skills/zhiyu-professional-dialogue',
+  companion: 'npc-skills/skills/zhiyu-dialogue',
+  professional: 'npc-skills/skills/zhiyu-dialogue',
 } as const satisfies Record<DialoguePurpose, string>;

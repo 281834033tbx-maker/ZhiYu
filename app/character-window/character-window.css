@@ -185,3 +185,23 @@
 .zy-character-window .voice-recording span { flex: 1; }
 .zy-character-window .voice-recording audio { max-width: 230px; height: 30px; }
 
+/* Native macOS controls remain real NSWindow buttons above this WebView.
+   Only the realtime-supported character uses the full-scene call layout. */
+.zy-character-window.has-realtime-layout .zy-character-window-titlebar {
+  position: absolute;
+  z-index: 20;
+  inset: 0 0 auto;
+  height: 28px;
+  flex: none;
+  background: transparent;
+  border: 0;
+}
+.zy-character-window.has-realtime-layout .zy-character-window-stage { flex: 1 1 auto; }
+.zy-character-window.has-realtime-layout.is-call-active .zy-character-window-chat,
+.zy-character-window.has-realtime-layout.is-call-active .zy-character-window-composer { display: none; }
+.zy-character-window.has-realtime-layout .zy-character-window-stage { --zy-call-camera-top: 48px; }
+.zy-character-window.has-realtime-layout .zy-character-window-titlebar .zy-character-window-exit-fullscreen {
+  color: rgb(255 255 255 / 85%);
+  text-shadow: 0 1px 4px #000;
+}
+

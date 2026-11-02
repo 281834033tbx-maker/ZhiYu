@@ -1,97 +1,144 @@
 .zy-realtime-scene {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  color: #fff;
-  pointer-events: none;
-  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
-  -webkit-app-region: no-drag;
+  position:absolute;
+  inset:0;
+  z-index:5;
+  color:#fff;
+  pointer-events:none;
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+  -webkit-app-region:no-drag;
 }
-.zy-realtime-scene-tools {
-  position: absolute;
-  top: 9px;
-  right: 9px;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  pointer-events: auto;
+.zy-realtime-scene::before,.zy-realtime-scene::after { content:''; position:absolute; right:0; left:0; pointer-events:none; }
+.zy-realtime-scene::before { top:0; height:110px; background:linear-gradient(180deg,rgba(8,8,12,.45) 0%,rgba(8,8,12,0) 100%); }
+.zy-realtime-scene::after { bottom:0; height:300px; max-height:100%; background:linear-gradient(180deg,rgba(8,8,12,0) 0%,rgba(8,8,12,.45) 55%,rgba(8,8,12,.7) 100%); }
+.zy-call-timer {
+  position:absolute;
+  z-index:2;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:9px;
+  height:36px;
+  padding:0 16px 0 14px;
+  border-radius:18px;
+  background:rgba(255,255,255,.14);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  font-size:17px;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.5px;
+  white-space:nowrap;
 }
-.zy-realtime-scene-tools button {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: #fff;
-  cursor: pointer;
-  filter: drop-shadow(0 1px 3px rgb(0 0 0 / 65%));
-  transition: color 140ms ease, opacity 140ms ease;
+.zy-call-timer-dot { flex:0 0 8px; width:8px; height:8px; border-radius:50%; background:#4cd47a; animation:zy-call-timer-breathe 1.6s ease-in-out infinite; }
+.zy-call-timer.is-connecting { font-size:15px; font-weight:500; }
+.zy-call-timer.is-connecting .zy-call-timer-dot { background:rgba(255,255,255,.5); animation:none; }
+.zy-call-camera {
+  position:absolute;
+  z-index:2;
+  top:var(--zy-call-camera-top,18px);
+  left:18px;
+  width:min(384px,calc(50% - 84px));
+  aspect-ratio:8/5;
+  overflow:hidden;
+  border-radius:16px;
+  background:linear-gradient(135deg,#3a3f4a,#22252c);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),0 8px 24px rgba(0,0,0,.35);
+  opacity:0;
+  visibility:hidden;
+  transform:scale(.96);
+  transform-origin:top left;
+  transition:opacity 200ms ease-out,transform 200ms ease-out,visibility 0s 200ms;
 }
-.zy-realtime-scene-tools button:hover { opacity: .78; }
-.zy-realtime-scene-tools button:focus-visible { outline: 2px solid #fff; outline-offset: -3px; border-radius: 6px; }
-.zy-realtime-scene-tools button.is-active { color: #b4f3d5; }
-.zy-realtime-scene-tools .zy-realtime-scene-mute { width: 34px; color: rgb(255 255 255 / 75%); }
-.zy-realtime-scene-tools .zy-realtime-scene-mute[aria-pressed='true'] { color: #ffc4b9; }
-.zy-realtime-scene-status {
-  position: absolute;
-  top: 54px;
-  right: 17px;
-  width: min(330px, calc(100% - 34px));
-  text-align: right;
-  text-shadow: 0 1px 4px #000, 0 0 12px rgb(0 0 0 / 70%);
+.zy-call-camera[data-camera-visible='true'] { opacity:1; visibility:visible; transform:scale(1); transition-delay:0s; }
+.zy-call-camera::after { content:''; position:absolute; inset:0; border-radius:inherit; box-shadow:inset 0 0 0 1px rgba(255,255,255,.22); pointer-events:none; }
+.zy-call-camera video { display:block; width:100%; height:100%; object-fit:cover; transform:scaleX(-1); opacity:1; transition:opacity 200ms ease-out; }
+.zy-call-camera[data-camera-pending='true'] video { opacity:0; }
+.zy-call-camera-placeholder { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; color:rgba(255,255,255,.75); opacity:0; visibility:hidden; transition:opacity 200ms ease-out,visibility 0s 200ms; }
+.zy-call-camera[data-camera-pending='true'] .zy-call-camera-placeholder { opacity:1; visibility:visible; transition-delay:0s; }
+.zy-call-camera-placeholder output { display:block; margin:0; font-size:13px; font-weight:400; line-height:20px; text-align:center; }
+.zy-call-controls {
+  position:absolute;
+  z-index:2;
+  bottom:max(32px,env(safe-area-inset-bottom));
+  left:50%;
+  transform:translateX(-50%);
+  display:grid;
+  grid-template-columns:repeat(3,76px);
+  column-gap:56px;
+  align-items:start;
+  pointer-events:auto;
 }
-.zy-realtime-scene-status p { margin: 0; font-size: 11px; line-height: 1.7; overflow-wrap: anywhere; }
-.zy-realtime-scene-error { margin-top: 7px; color: #ffc8bd; }
-.zy-realtime-scene-error button {
-  padding: 0;
-  margin-top: 5px;
-  border: 0;
-  background: transparent;
-  color: #fff;
-  font: inherit;
-  font-size: 11px;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-shadow: inherit;
-  cursor: pointer;
-  pointer-events: auto;
+.zy-call-control { display:flex; flex-direction:column; align-items:center; gap:8px; width:76px; margin:0; padding:0; border:0; background:transparent; color:#fff; font:inherit; cursor:pointer; touch-action:manipulation; }
+.zy-call-control-disc { display:grid; place-items:center; flex:0 0 64px; width:64px; height:64px; border-radius:32px; background:rgba(255,255,255,.16); box-shadow:inset 0 0 0 1px rgba(255,255,255,.24); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); transition:background 200ms ease,transform 150ms ease,filter 150ms ease; }
+.zy-call-control-disc svg { display:block; flex:none; overflow:visible; }
+.zy-call-control-label { font-size:12px; font-weight:400; line-height:16px; color:rgba(255,255,255,.78); white-space:nowrap; }
+.zy-call-control.is-lit .zy-call-control-disc { background:rgba(255,255,255,.94); color:#1c1c20; box-shadow:none; }
+.zy-call-control.is-hangup .zy-call-control-disc { background:#f04b4b; box-shadow:0 8px 22px rgba(240,75,75,.32); color:#fff; }
+.zy-call-control:hover:not(:disabled) .zy-call-control-disc { filter:brightness(1.12); }
+.zy-call-control:active:not(:disabled) .zy-call-control-disc { transform:scale(.95); }
+.zy-call-control:focus-visible { outline:none; }
+.zy-call-control:focus-visible .zy-call-control-disc { outline:2px solid #fff; outline-offset:3px; }
+.zy-call-control:disabled { opacity:.5; cursor:default; }
+.zy-call-captions {
+  position:absolute;
+  z-index:2;
+  bottom:150px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  gap:6px;
+  width:min(760px,calc(100% - 48px));
+  height:96px;
+  text-align:center;
+  opacity:1;
+  transition:opacity 500ms ease;
 }
-.zy-realtime-scene-status .zy-realtime-scene-notice { margin-top: 7px; }
-.zy-realtime-scene-captions {
-  position: absolute;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(560px, calc(100% - 36px));
-  max-height: 30%;
-  overflow: auto;
-  scrollbar-width: none;
-  pointer-events: auto;
-  text-align: center;
-  text-shadow: 0 1px 4px #000, 0 0 14px rgb(0 0 0 / 85%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12px, #000);
-  mask-image: linear-gradient(to bottom, transparent, #000 12px, #000);
+.zy-call-captions.is-hidden { opacity:0; pointer-events:none; }
+.zy-caption-line { margin:0; overflow:hidden; scrollbar-width:none; flex:0 0 auto; min-height:0; }
+.zy-caption-line::-webkit-scrollbar { display:none; }
+.zy-caption-line>p { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; font-weight:400; }
+.zy-caption-current { max-height:56px; font-size:18px; font-weight:400; line-height:28px; color:rgba(246,240,234,.9); text-shadow:0 1px 10px rgba(0,0,0,.45); animation:zyCaptionIn .32s cubic-bezier(.2,.8,.2,1) both; }
+.zy-caption-current.is-user { font-size:15px; color:rgba(255,255,255,.62); }
+.zy-caption-prev { max-height:44px; font-size:15px; font-weight:400; line-height:22px; color:rgba(255,255,255,.62); text-shadow:0 1px 8px rgba(0,0,0,.4); animation:zyCaptionUp .32s cubic-bezier(.2,.8,.2,1) both; }
+.zy-caption-waiting { display:flex; align-items:center; justify-content:center; flex:0 0 28px; min-height:28px; gap:4px; }
+.zy-caption-waiting i { width:5px; height:5px; border-radius:50%; background:rgba(246,240,234,.9); animation:zy-caption-dot-breathe 1.2s ease-in-out infinite; }
+.zy-caption-waiting i:nth-child(2) { animation-delay:.2s; }
+.zy-caption-waiting i:nth-child(3) { animation-delay:.4s; }
+.zy-caption-message { display:flex; flex-direction:column; align-items:center; gap:12px; font-size:15px; font-weight:400; line-height:28px; color:rgba(255,255,255,.62); text-shadow:0 1px 10px rgba(0,0,0,.45); }
+.zy-caption-message>output { display:block; max-height:84px; overflow:auto; scrollbar-width:none; overflow-wrap:anywhere; }
+.zy-caption-message>output::-webkit-scrollbar { display:none; }
+.zy-caption-message.is-error { color:#ffc8bd; }
+.zy-call-glass-button { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:0 22px; border:0; border-radius:22px; background:rgba(255,255,255,.18); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); color:#fff; font:inherit; font-size:15px; font-weight:400; cursor:pointer; pointer-events:auto; transition:background 200ms ease,transform 150ms ease; }
+.zy-call-glass-button:hover { background:rgba(255,255,255,.25); }
+.zy-call-glass-button:active { transform:scale(.95); }
+.zy-call-glass-button:focus-visible { outline:2px solid #fff; outline-offset:3px; }
+.zy-call-settings-button { min-height:36px; border-radius:18px; }
+.zy-call-ended { position:fixed; z-index:6; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; width:100vw; height:100dvh; max-width:none; max-height:none; box-sizing:border-box; margin:0; padding:24px; border:0; background:rgba(8,8,12,.62); color:#fff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; text-align:center; pointer-events:auto; -webkit-app-region:no-drag; }
+.zy-call-ended:not([open]) { display:none; }
+.zy-call-ended::backdrop { background:transparent; }
+.zy-call-ended h2 { margin:0; font-size:20px; font-weight:500; line-height:30px; }
+@keyframes zy-call-timer-breathe { 0%,100% { opacity:.55; } 50% { opacity:1; } }
+@keyframes zy-caption-dot-breathe { 0%,100% { opacity:.25; } 50% { opacity:.9; } }
+@keyframes zyCaptionIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+@keyframes zyCaptionUp { from { transform:translateY(30px); } to { transform:none; } }
+@container (max-width: 560px) {
+  .zy-call-controls { column-gap:28px; }
+  .zy-call-camera { width:min(384px,calc(50% - 76px)); left:14px; border-radius:12px; }
+  .zy-call-camera-placeholder { gap:5px; }
+  .zy-call-camera-placeholder svg { width:28px; height:28px; }
+  .zy-call-camera-placeholder output { font-size:11px; line-height:16px; }
+  .zy-call-captions { width:calc(100% - 32px); }
 }
-.zy-realtime-scene-captions::-webkit-scrollbar { display: none; }
-.zy-realtime-scene-caption {
-  margin: 0;
-  padding-top: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.6;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
+@container (max-height: 360px) {
+  .zy-call-controls { bottom:18px; }
+  .zy-call-captions { bottom:132px; }
 }
-.zy-realtime-scene-caption span { margin-right: 9px; font-size: 11px; font-weight: 400; opacity: .72; }
-.zy-realtime-scene-caption.user { color: #d3e7dd; }
-.zy-character-window.is-mac-fullscreen .zy-realtime-scene-tools { top: 37px; }
-.zy-character-window.is-mac-fullscreen .zy-realtime-scene-status { top: 82px; }
-@media (max-height: 440px) {
-  .zy-realtime-scene-captions { bottom: 10px; max-height: 26%; }
-  .zy-realtime-scene-caption { font-size: 12px; }
+@media (prefers-reduced-motion:reduce) {
+  .zy-call-timer-dot,.zy-caption-waiting i,.zy-caption-current,.zy-caption-prev { animation:none; }
+  .zy-call-camera,.zy-call-camera video,.zy-call-camera-placeholder,.zy-call-control-disc,.zy-call-captions,.zy-call-glass-button { transition:none; }
 }
-@media (prefers-reduced-motion: reduce) { .zy-realtime-scene-tools button { transition: none; } }

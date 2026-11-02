@@ -86,6 +86,57 @@ function isTrustedWindow(event) {
     event.senderFrame?.url.startsWith(URL));
 }
 
+// Camera capture is local preview only. A shared Electron session must not
+// turn a grant for the character page into access for other sites or frames.
+function trustedMediaPage(contents, requestingURL) {
+  try {
+    const win = [mainWindow, characterWindow].find(value => value && !value.isDestroyed() && value.webContents === contents);
+    if (!win) return null;
+    const base = new globalThis.URL(URL);
+    const top = new globalThis.URL(contents.getURL());
+    const requested = new globalThis.URL(requestingURL || top.href);
+    if ([top, requested].some(value => value.origin !== base.origin || value.username || value.password)
+      || requested.pathname !== top.pathname || requested.search !== top.search) return null;
+    if (win === mainWindow && top.pathname === '/') return 'main';
+    if (win === characterWindow && top.pathname === '/character-window'
+      && characterIds.has(characterPersonId) && top.searchParams.get('npc') === characterPersonId)
+      return characterPersonId;
+  } catch { /* Invalid, detached or navigating frames receive no grant. */ }
+  return null;
+}
+
+function trustedCameraSender(event) {
+  return !!characterWindow && event.sender === characterWindow.webContents
+    && !!event.senderFrame && event.senderFrame === event.sender.mainFrame
+    && trustedMediaPage(event.sender, event.senderFrame?.url) === 'yuan-xiaoman';
+}
+
+const protectedMediaSessions = new WeakSet();
+function configureMediaPermissions(mediaSession) {
+  if (!mediaSession || typeof mediaSession.setPermissionRequestHandler !== 'function'
+    || typeof mediaSession.setPermissionCheckHandler !== 'function' || protectedMediaSessions.has(mediaSession)) return;
+  const allowedOrigin = value => {
+    try { return new globalThis.URL(value).origin === new globalThis.URL(URL).origin; }
+    catch { return false; }
+  };
+  const mediaAllowed = (page, types) => !!page && Array.isArray(types) && types.length > 0
+    && types.every(type => type === 'audio' || (type === 'video' && page === 'yuan-xiaoman'));
+  mediaSession.setPermissionRequestHandler((contents, permission, callback, details = {}) => {
+    const page = details.isMainFrame === true ? trustedMediaPage(contents, details.requestingUrl) : null;
+    const originOK = !details.securityOrigin || allowedOrigin(details.securityOrigin);
+    // Preserve the App's existing explicit Copy action without allowing reads.
+    if (permission === 'clipboard-sanitized-write') return callback(!!page && originOK);
+    callback(permission === 'media' && originOK && mediaAllowed(page, details.mediaTypes));
+  });
+  mediaSession.setPermissionCheckHandler((contents, permission, requestingOrigin, details = {}) => {
+    const page = details.isMainFrame === true ? trustedMediaPage(contents, details.requestingUrl) : null;
+    if (!page || !allowedOrigin(requestingOrigin) || (details.securityOrigin && !allowedOrigin(details.securityOrigin))) return false;
+    if (permission === 'clipboard-sanitized-write') return true;
+    return permission === 'media' && mediaAllowed(page, [details.mediaType]);
+  });
+  protectedMediaSessions.add(mediaSession);
+}
+
 function taskCalendarURL(value) {
   if (typeof value !== 'string') return null;
   try {
@@ -154,6 +205,25 @@ ipcMain.handle('zhiyu:microphone-settings', async event => {
   if (!isTrustedWindow(event) || process.platform !== 'darwin') return false;
   await shell.openExternal('x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone');
   return true;
+});
+
+ipcMain.handle('zhiyu:camera-request', async event => {
+  if (!trustedCameraSender(event)) return 'denied';
+  if (process.platform !== 'darwin') return 'unknown';
+  const status = systemPreferences.getMediaAccessStatus('camera');
+  if (status === 'granted' || status === 'denied' || status === 'restricted') return status;
+  try { return await systemPreferences.askForMediaAccess('camera') ? 'granted' : 'denied'; }
+  catch { return 'unknown'; }
+});
+
+ipcMain.handle('zhiyu:camera-settings', async event => {
+  if (!trustedCameraSender(event)) return false;
+  const target = process.platform === 'darwin'
+    ? 'x-apple.systempreferences:com.apple.preference.security?Privacy_Camera'
+    : process.platform === 'win32' ? 'ms-settings:privacy-webcam' : null;
+  if (!target) return false;
+  try { await shell.openExternal(target); return true; }
+  catch { return false; }
 });
 
 function characterContentSize(requestedWidth, workArea) {
@@ -241,11 +311,15 @@ ipcMain.handle('zhiyu:character-open', async (event, personId) => {
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
+      // Opening the trusted character window is the user's call action.
+      // This relaxes playback activation only; media capture stays gated above.
+      autoplayPolicy: 'no-user-gesture-required',
       preload: path.join(__dirname, 'preload.js'),
     },
   });
   characterWindow = win;
   characterPersonId = personId;
+  configureMediaPermissions(win.webContents.session);
   if (process.platform === 'darwin') win.setWindowButtonVisibility(true);
   const notifyFullScreen = () => {
     if (win.isDestroyed()) return;
@@ -307,6 +381,9 @@ ipcMain.handle('zhiyu:character-close', (event) => {
 ipcMain.handle('zhiyu:character-chrome-height', (event, height) => {
   const win = characterWindow;
   if (!win || win.isDestroyed() || event.sender !== win.webContents || !Number.isFinite(height)) return false;
+  // Call controls overlay the scene. Hiding/showing its composer must never
+  // resize the existing native window or change its aspect-ratio allowance.
+  if (characterPersonId === 'yuan-xiaoman') return true;
   const next = Math.max(CHARACTER_DEFAULT_CHROME_HEIGHT, Math.min(320, Math.ceil(height)));
   if (next === characterChromeHeight) return true;
   characterChromeHeight = next;
@@ -451,6 +528,7 @@ app.whenReady().then(async () => {
     },
   });
   mainWindow = win;
+  configureMediaPermissions(win.webContents.session);
   win.webContents.on('did-create-window', (child, details) => trackTaskCalendarWindow(child, details.url));
   win.setMenuBarVisibility(false);
   win.loadURL(URL);

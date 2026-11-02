@@ -48,6 +48,7 @@ export default function CharacterWindowClient() {
   const [macFullscreen, setMacFullscreen] = useState(false);
   const [authChanged, setAuthChanged] = useState(false);
   const [syncError, setSyncError] = useState<{ key: string; text: string } | null>(null);
+  const [callPresentation,setCallPresentation]=useState<{key:string;active:boolean}|null>(null);
   const titlebar = useRef<HTMLDivElement>(null);
   const composer = useRef<HTMLElement>(null);
   const chatBox = useRef<HTMLDivElement>(null);
@@ -142,6 +143,9 @@ export default function CharacterWindowClient() {
   }, []);
 
   useEffect(() => {
+    // This layout overlays the scene without changing the native window's
+    // established outer geometry, including after hangup restores the composer.
+    if(!personId||personId==='yuan-xiaoman')return;
     const updateChromeHeight = () => {
       if (!titlebar.current || !composer.current) return;
       const height = titlebar.current.getBoundingClientRect().height + composer.current.getBoundingClientRect().height;
@@ -152,7 +156,7 @@ export default function CharacterWindowClient() {
     if (composer.current) observer.observe(composer.current);
     updateChromeHeight();
     return () => observer.disconnect();
-  }, []);
+  }, [personId]);
 
   useEffect(() => {
     const requested = new URLSearchParams(window.location.search).get('npc');
@@ -239,6 +243,9 @@ export default function CharacterWindowClient() {
     ? data?.messages.map(message=>({id:message.id,mine:message.role==='user',text:messageText(message.part)})) || null
     : localMessages?.map(message=>({id:message.id,mine:message.mine,text:message.text|| (message.image?'[图片]':message.audio?'[语音]':'[消息]')})) || null;
   const visibleMessages=floatingChat?.key===chatKey?floatingChat.messages:[];
+  const realtimeLayout=personId==='yuan-xiaoman';
+  const callActive=realtimeLayout&&(callPresentation?.key!==chatKey||callPresentation.active);
+  const onCallActiveChange=useCallback((active:boolean)=>setCallPresentation(previous=>previous?.key===chatKey&&previous.active===active?previous:{key:chatKey,active}),[chatKey]);
 
   useEffect(()=>{
     const box=chatBox.current;
@@ -319,7 +326,7 @@ export default function CharacterWindowClient() {
 
   if(authChanged)return <main className="zy-app zy-character-window" aria-label="正在刷新登录状态"><p role="status" style={{padding:20}}>正在刷新登录状态…</p></main>;
 
-  return <main className={`zy-app zy-character-window${macFullscreen?' is-mac-fullscreen':''}`} aria-label="桌面人物窗口">
+  return <main className={`zy-app zy-character-window${macFullscreen?' is-mac-fullscreen':''}${realtimeLayout?' has-realtime-layout':''}${callActive?' is-call-active':''}`} aria-label="桌面人物窗口">
     <div ref={titlebar} className="zy-character-window-titlebar" aria-label={macFullscreen?'全屏窗口控制':undefined}>
       {macFullscreen&&<button type="button" className="zy-character-window-exit-fullscreen" onClick={()=>void window.zhiyuDesktop?.setCharacterFullScreen?.(false)}>退出全屏 <kbd>Esc</kbd></button>}
     </div>
@@ -342,7 +349,7 @@ export default function CharacterWindowClient() {
         </div>
       </aside>}
       {personId==='yuan-xiaoman'&&person&&<RealtimeVoiceCall key={chatKey}
-        name={person.nickname||person.name} character="yuan-xiaoman" authorize={verifyAuthentication}/>}
+        name={person.nickname||person.name} character={person.id} gender={person.gender} authorize={verifyAuthentication} onCallActiveChange={onCallActiveChange}/>}
     </div>
     <section ref={composer} className="zy-character-window-composer" aria-label="发送消息">
       {syncError?.key===chatKey&&<div className="chat-compose-error" role="alert">{syncError.text}</div>}
@@ -351,7 +358,7 @@ export default function CharacterWindowClient() {
         onChange={setDraft}
         onSend={send}
         allowImages={!personId || !textOnlyCharacters.has(personId)}
-        allowVoice={!personId || !textOnlyCharacters.has(personId)}
+        allowVoice={false}
         disabled={!personId || (isLive&&!data?.available) || (!isLive&&!localMessages)}
         label={`给${person?.realName || person?.name || 'NPC'}的消息`}
         placeholder={`和${person?.realName || person?.name || 'NPC'}说点什么…`}

@@ -1,0 +1,30 @@
+{
+  "id": "",
+  "name": "",
+  "aliases": [],
+  "mode": "companion | professional | secretary",
+  "traits": [],
+  "title": "（专业型填智域头衔）",
+  "identity": {
+    "job": "",
+    "oneLine": ""
+  },
+  "selfIntro": [],
+  "knowledgeScope": {
+    "decide": [],
+    "referDoctor": [],
+    "referColleague": {}
+  },
+  "addressing": {
+    "default": ""
+  },
+  "swearing": false,
+  "romance": "open | closed",
+  "coaxFactor": 1.0,
+  "temper": {
+    "first": [],
+    "close": "",
+    "afterMakeUp": ""
+  },
+  "boundaries": []
+}

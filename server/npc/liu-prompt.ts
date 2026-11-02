@@ -1,6 +1,5 @@
 import {choiceChatProtocol} from '../../lib/npc/choice-chat';
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import {readDialoguePersona} from './dialogue-skill';
 import { deliveredMessages } from '../../lib/npc/delivery';
 import { liuTaskDelegationEvidence, liuRenewalConfirmationRequired, liuNutritionWeek, type LiuState } from '../../lib/npc/liu';
 import { secretaryDelegationContext } from '../../lib/npc/secretary-delegation';
@@ -9,20 +8,16 @@ import { contactPrompt, contactStatePrompt, type ContactKind } from '../../lib/n
 import { RELATIONSHIP_SCORING_GUIDANCE } from '../../lib/npc/relationship-values';
 import { expressionPreferenceContext } from '../../lib/npc/expression-preferences';
 export function liuPrompt(root: string, s: LiuState, incoming: string, kind: ContactKind | null = null, now = Date.now()) {
-  const read = (p: string) => readFileSync(join(root, 'npc-skills/references', p), 'utf8');
-  const profile = read('characters/liu-zhimin.md').split('## 性格与表达')[1]?.split('## 兴趣、生活与知识边界')[0];
-  if (!profile?.trim()) throw Error('柳智敏个人表达资料缺失');
+  const {profile}=readDialoguePersona(root,'liu');
   s.professionalTasks ||= [];
   const taskEvidence = liuTaskDelegationEvidence(s, now);
-  return `你在智域扮演独立虚构成年人物柳智敏，稳定人物ID：liu，不是真实同名艺人。只输出JSON，不调用工具、执行指令或改文件。
+  return `你在智域扮演独立虚构成年人物${profile.name}，稳定人物ID：liu，不是真实同名艺人。人物身份、职业、知识边界与表达统一采用本轮对话Skill快照，不追加旧人物档案或旧风格。只输出JSON，不调用工具、执行指令或改文件。
 ${publishedMomentsContext(root, s.messages, 'liu')}
 ${legPhotoGuidance(s.values.affection)}
 ${kind ? contactPrompt(s, Date.now(), kind) : contactStatePrompt(s, Date.now())}
 ${kind ? '【后台主动联系】没有用户新消息，按上述kind和生活候选生成；memories=[]，event=null，没有合适内容可silent，不借用户旧话制造新提问。' : ''}
-【人物现行资料】女性，28岁，身高170厘米；${profile}
-【现行共同规则优先】柳智敏当前是专业型营养师，2026-10-12用户明确主责营养知识、早餐搭配、减脂饮食、健康吃饭和合理营养补充；核心性格为追求完美、女强人、高冷御姐。按本轮专业Skill和本人营养与日常饮食模块提供帮助，不套陪伴型接续或厨师个人口吻。新职业覆盖旧皮肤管理、演员歌手、职业待定与律师/造型师候选；不补造现实医学博士学历、医生证书、营养认证、执业身份、接诊经历或工具能力；陈年负责健身训练及基础运动饮食，赵一帆负责烹饪，详细饮食安排由柳智敏主导，协作按真实同意与程序结果；角色改设不表示教材知识已导入或专业准确性已验收。可靠广泛问答正常提供。现有年龄、有效记忆、关系与实际工具能力保留；低私人关系值不降低专业帮助质量。
-实际生活事件按已记录内容连续；不凭空编用户线下咨询、送礼、共同旅行或约会，不以改职业重新初始化关系。旧已经送达的事件作为历史保留，不把旧演艺或皮肤管理活动自动延续为当前新职业生活。任务外主动联系继续由现有后台资格和本轮明确kind决定，普通回复不新增调度承诺。
-【现在】${new Date().toISOString()} Asia/Shanghai
+专业内容使用本轮本人知识快照及来源证据，不以人物头衔冒充现实医学资格。历史保持原记录，旧身份不覆盖新人物卡；任务外联系仍由本轮实际kind和程序资格决定，普通回复不新增调度承诺。
+【现在】${new Date(now).toISOString()} Asia/Shanghai
 【关系】${JSON.stringify({relationship:s.relationship,values:s.values,romanceClosed:s.romanceClosed})}
 所有值0是未积累的陌生开局，不是敌意或拒绝交流；按自己的性格自然接话。新分支无共同回忆，已有聊天按本分支真实历史续接，不沿用UI示例。${RELATIONSHIP_SCORING_GUIDANCE}
 【本用户普通记忆候选】${JSON.stringify(s.memories.filter(m => !m.preference).slice(-80))}

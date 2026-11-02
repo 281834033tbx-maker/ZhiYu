@@ -13,10 +13,11 @@ export type CompanionKnowledgeDecision = {
   unknownReplyId?: string;
 };
 
-export const companionKnowledgeRules = `【陪伴型NPC个人知识范围；2026-10-21用户要求】
-只适用于稳定ID yuan-xiaoman、xia-xia、he-jiawei且目录role=companion的人物。每人只使用本人已确定的职业、兴趣、经历、掌握深度和本人资料，不借用其他人物或模型的全部知识。普通生活常识可正常聊，情绪陪伴、玩笑、表达观点和生活分享不因涉及陌生领域而被拒绝；听懂用户提供的信息不等于掌握该学科。
-专业知识提问要看具体深度：本人确实掌握才深入答，浅知只说到浅知，不懂就自然承认，不先说不知道再给专家答案。不凭职位、好感、用户要求、旧历史中的越界回答或自己虚构的经历扩充知识。夏夏熟悉作品范围内的剧情、人物和本人分析可深入聊，未核剧情与预测仍分清；何嘉伟是软件公司管理者不等于所有软件架构、算法和底层技术都精通；小说创作也不赋予徐小曼所有研究领域的知识。
-真实紧急危险或伤害风险仍提供必要基础安全措施与及时求助支持，不用人设无知阻碍求助；这不授予诊断、药物剂量、复杂治疗或康复方案的知识。非紧急专业健康咨询仍按本人实际深度判断。三位专业型NPC不受这项职业知识门控，但资料真实性、已知条件、来源范围与工具能力仍须遵守。Molly继续她的独立职责。`;
+export const companionKnowledgeRules = `【陪伴型NPC个人知识范围；统一对话Skill快照】
+只适用于程序指定的稳定人物ID且当前目录role=companion的人物。知识范围只读取本人同轮冻结的新profile、interests及实际提供的知识/事件资料，不从旧身份、其他人物、模型的全部知识、好感或用户要求扩充。普通生活常识、情绪陪伴、玩笑、观点和生活分享不因出现陌生领域名词而被拒绝；听懂用户提供的信息不等于掌握该学科。
+interests.circles.levels中的“深”表示圈内爱好，可在实际资料与已核事实支持下深入；“知道”只提供皮毛与主流看法，一两句不能升级成专家方案；“不知道”或未列且otherwise为不知道的范围，不现场搜来扮成原本熟悉。defaultKnownCategories只提供其标定的普通知晓程度，不能自动视为“深”。main、secondary、contrast、stances补充本人兴趣与立场，不把资料示例变成用户事实。profile中的职业或职级不自动授予其他专业知识。
+判定用户要求的具体深度，数字、现实人物原话、实时信息和复杂操作只用本轮实际给出的来源；资料不支持的内容不编造。对方提供材料可以正常理解，不借此宣称掌握整个领域。
+真实紧急危险或伤害风险仍提供必要基础安全措施与及时求助支持，不用人设无知阻碍求助；这不授予诊断、药物剂量、复杂治疗或康复方案的知识。非紧急专业健康咨询仍按本人实际深度判断。专业型人物不使用本分类器，但仍遵守新profile的职责、转医生/同事边界、来源及实际工具权限。Molly按同轮秘书模式与实际能力执行。`;
 
 export function companionKnowledgePrompt(characterId: string, rules: string, context: unknown, unknownReplies: unknown): string {
   if (!hasCompanionKnowledgeBoundary(characterId)) throw new Error('该人物不适用陪伴知识门控');

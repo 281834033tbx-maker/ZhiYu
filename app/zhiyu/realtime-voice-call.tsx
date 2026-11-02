@@ -1,12 +1,15 @@
 'use client';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Mic, MicOff } from 'lucide-react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { RealtimePcmPlayer } from './realtime-voice-audio';
+import RealtimeVoiceControls from './realtime-voice-controls';
+import type { RealtimeCaption } from '../../lib/npc/realtime-transcript';
+import {callCaptionWindowReducer,createCallCaptionWindow,getCallCaptionFrame,callElapsedMs} from '../../lib/npc/realtime-call-presentation';
+import {LocalCameraPreview,RealtimeCallCaptions,RealtimeCallEnd,RealtimeCallTimer,type RealtimeCaptionMessage} from './realtime-call-captions';
 import './desktop-bridge';
 import './realtime-voice-call.css';
 
 type CallState = 'idle' | 'connecting' | 'listening' | 'thinking' | 'speaking' | 'ended' | 'error';
-type Transcript = { id: string; role: 'user' | 'assistant'; text: string; final: boolean; interrupted?: boolean };
+type Transcript = RealtimeCaption;
 type Session = {
   closed: boolean;
   ready: boolean;
@@ -27,18 +30,10 @@ type Session = {
 
 export type RealtimeVoiceCallProps = {
   name: string;
-  character: 'yuan-xiaoman';
+  character: string;
+  gender?: 'female'|'male';
   authorize: () => Promise<boolean>;
-};
-
-const descriptions: Record<CallState, string> = {
-  idle: '开启后，直接说话就可以聊天',
-  connecting: '正在连接语音服务…',
-  listening: '正在听你说话',
-  thinking: '正在准备回复',
-  speaking: '正在说话，你可以插话',
-  ended: '通话已结束',
-  error: '通话暂时无法继续',
+  onCallActiveChange?: (active: boolean) => void;
 };
 
 function microphoneError(cause: unknown) {
@@ -61,19 +56,41 @@ function safeError(message: string) {
     .replace(/\b[A-Za-z0-9_+/=-]{32,}\b/g, '[已隐藏]');
 }
 
-export default function RealtimeVoiceCall({ name, character, authorize }: RealtimeVoiceCallProps) {
+export default function RealtimeVoiceCall({ name, character, gender='female', authorize, onCallActiveChange }: RealtimeVoiceCallProps) {
   const [state, setState] = useState<CallState>('idle');
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [muted, setMuted] = useState(false);
-  const [transcripts, setTranscripts] = useState<Transcript[]>([]);
+  const [captionWindow, updateCaptions] = useReducer(callCaptionWindowReducer,undefined,createCallCaptionWindow);
   const [microphoneDenied, setMicrophoneDenied] = useState(false);
+  const [readyAt,setReadyAt]=useState<number|null>(null);
+  const [endedAt,setEndedAt]=useState<number|null>(null);
+  const [now,setNow]=useState(()=>Date.now());
+  const [cameraEnabled,setCameraEnabled]=useState(false);
+  const [cameraPending,setCameraPending]=useState(false);
+  const [cameraError,setCameraError]=useState('');
+  const [cameraDenied,setCameraDenied]=useState(false);
   const mounted = useRef(false);
   const sessionRef = useRef<Session | null>(null);
   const mutedRef = useRef(false);
   const nextTranscriptId = useRef(0);
   const currentTranscript = useRef<Record<'user' | 'assistant', string | null>>({ user: null, assistant: null });
-  const captions = useRef<HTMLDivElement>(null);
+  const cameraVideo=useRef<HTMLVideoElement>(null);
+  const cameraStream=useRef<MediaStream|null>(null);
+  const cameraRequest=useRef(0);
+  const cameraOpening=useRef(false);
+  const startRef=useRef<()=>Promise<void>>(async()=>{});
+  const active=state==='connecting'||state==='listening'||state==='thinking'||state==='speaking';
+  const ready=active&&state!=='connecting';
+
+  const stopCamera=useCallback(()=>{
+    cameraRequest.current++;
+    cameraOpening.current=false;
+    cameraStream.current?.getTracks().forEach(track=>{track.onended=null;track.stop();});
+    cameraStream.current=null;
+    if(cameraVideo.current)cameraVideo.current.srcObject=null;
+    if(mounted.current){setCameraPending(false);setCameraEnabled(false);}
+  },[]);
 
   const release = useCallback((session: Session, notify = false) => {
     if (session.closed) return;
@@ -106,21 +123,71 @@ export default function RealtimeVoiceCall({ name, character, authorize }: Realti
       session.context.onstatechange = null;
       void session.context.close().catch(() => {});
     }
-    if (sessionRef.current === session) sessionRef.current = null;
-  }, []);
+    if (sessionRef.current === session) {sessionRef.current = null;stopCamera();}
+  }, [stopCamera]);
 
   useEffect(() => {
     mounted.current = true;
     return () => {
       mounted.current = false;
       if (sessionRef.current) release(sessionRef.current, true);
+      stopCamera();
     };
-  }, [release]);
+  }, [release,stopCamera]);
 
   useEffect(() => {
-    const element = captions.current;
-    if (element) element.scrollTop = element.scrollHeight;
-  }, [transcripts]);
+    // Defer past StrictMode's setup/cleanup probe. The surviving mount starts
+    // exactly one session; auth checks and native permission gates still run.
+    const timer=setTimeout(()=>void startRef.current(),0);
+    return()=>clearTimeout(timer);
+  }, []);
+
+  useEffect(()=>{onCallActiveChange?.(state==='idle'||active);},[active,state,onCallActiveChange]);
+  useEffect(()=>{
+    if(!active)return;
+    const timer=setInterval(()=>{const time=Date.now();setNow(time);updateCaptions({type:'tick',now:time});},250);
+    return()=>clearInterval(timer);
+  },[active]);
+  useEffect(()=>{
+    if(state==='listening'||state==='thinking'||state==='speaking')updateCaptions({type:'phase',phase:state,now:Date.now()});
+  },[state]);
+  useEffect(()=>{
+    if(!notice)return;
+    const timer=setTimeout(()=>setNotice(''),3000);
+    return()=>clearTimeout(timer);
+  },[notice]);
+  useEffect(()=>{
+    if(cameraVideo.current&&cameraStream.current){cameraVideo.current.srcObject=cameraStream.current;void cameraVideo.current.play().catch(()=>{});}
+  },[cameraEnabled,cameraPending]);
+
+  async function toggleCamera() {
+    if(!active||!sessionRef.current||sessionRef.current.closed)return;
+    if(cameraStream.current||cameraOpening.current){stopCamera();return;}
+    const request=++cameraRequest.current;
+    const session=sessionRef.current;
+    const current=()=>mounted.current&&request===cameraRequest.current&&sessionRef.current===session&&!session.closed;
+    cameraOpening.current=true;setCameraPending(true);setCameraError('');setCameraDenied(false);
+    try {
+      if(!navigator.mediaDevices?.getUserMedia)throw new Error('当前环境不支持摄像头，请使用智域桌面程序。');
+      const permission=await window.zhiyuDesktop?.requestCameraAccess?.();
+      if(!current())return;
+      if(permission==='denied'||permission==='restricted')throw new DOMException('camera permission denied','NotAllowedError');
+      // Camera tracks never enter the audio capture graph or WebSocket. This
+      // stream is solely attached to the muted, local mirror preview.
+      const stream=await navigator.mediaDevices.getUserMedia({video:{width:1280,height:720},audio:false});
+      if(!current()){stream.getTracks().forEach(track=>track.stop());return;}
+      cameraStream.current=stream;
+      stream.getVideoTracks().forEach(track=>{track.onended=()=>{if(current()){stopCamera();setCameraError('摄像头连接已中断，请检查设备后重试。');}};});
+      cameraOpening.current=false;setCameraPending(false);setCameraEnabled(true);
+      if(cameraVideo.current){cameraVideo.current.srcObject=stream;void cameraVideo.current.play().catch(()=>{});}
+    }catch(cause){
+      if(!current())return;
+      stopCamera();
+      const denied=cause instanceof DOMException&&['NotAllowedError','PermissionDeniedError','SecurityError'].includes(cause.name);
+      setCameraDenied(denied);
+      setCameraError(denied?'智域没有摄像头权限，请在系统设置里允许后重试':cause instanceof DOMException&&cause.name==='NotFoundError'?'没有找到摄像头，请检查设备连接。':'摄像头无法打开，请关闭占用摄像头的程序后重试。');
+    }
+  }
 
   async function start() {
     if (sessionRef.current) return;
@@ -132,6 +199,7 @@ export default function RealtimeVoiceCall({ name, character, authorize }: Realti
     const fail = (message: string) => {
       if (!current()) return;
       release(session);
+      setEndedAt(Date.now());
       setNotice('');
       setError(safeError(message));
       setState('error');
@@ -148,7 +216,9 @@ export default function RealtimeVoiceCall({ name, character, authorize }: Realti
     setError('');
     setNotice('');
     setMicrophoneDenied(false);
-    setTranscripts([]);
+    updateCaptions({type:'reset'});
+    setReadyAt(null);setEndedAt(null);setNow(Date.now());
+    setCameraError('');setCameraDenied(false);stopCamera();
     setMuted(false);
     mutedRef.current = false;
     currentTranscript.current = { user: null, assistant: null };
@@ -156,15 +226,15 @@ export default function RealtimeVoiceCall({ name, character, authorize }: Realti
     try {
       if (!navigator.mediaDevices?.getUserMedia || typeof AudioContext === 'undefined' || typeof AudioWorkletNode === 'undefined')
         throw new Error('当前环境不支持实时语音，请使用智域桌面程序或最新版浏览器。');
-      // Construct and resume synchronously in the button's user gesture.
+      // Electron permits automatic playback for this trusted character window.
+      // A browser with stricter autoplay still receives the existing error path.
       const context = new AudioContext({ latencyHint: 'interactive' });
       session.context = context;
       const resumed = context.resume().then(() => true, () => false);
-      // Resume while the microphone button still owns the user gesture, then
-      // verify that this window still belongs to the currently signed-in user.
+      // Verify that this window still belongs to the currently signed-in user.
       const authorized = await authorize();
       if (!current()) return;
-      if (!authorized) throw new Error('暂时无法确认登录状态，请稍后再点击麦克风。');
+      if (!authorized) throw new Error('暂时无法确认登录状态，请稍后重试通话。');
       const controller = new AbortController();
       session.prepareAbort = controller;
       const configurationTimeout = setTimeout(() => controller.abort(), 10000);
@@ -175,7 +245,7 @@ export default function RealtimeVoiceCall({ name, character, authorize }: Realti
         const configuration = await response.json() as { configured?: boolean; error?: string };
         if (!current()) return;
         if (!response.ok) throw new Error(response.status === 401 ? '请先登录智域，再开启通话。' : configuration.error || '无法读取语音设置，请重试。');
-        if (!configuration.configured) throw new Error('实时语音尚未配置，请先完成开发者连接配置，再点击麦克风。');
+        if (!configuration.configured) throw new Error('实时语音尚未配置，请先完成开发者连接配置，再重试通话。');
       } catch (cause) {
         if (cause instanceof DOMException && cause.name === 'AbortError' && current())
           throw new Error('读取语音配置超时，请检查本机服务后重试。');
@@ -190,7 +260,7 @@ export default function RealtimeVoiceCall({ name, character, authorize }: Realti
       }
       const audioReady = await resumed;
       if (!current()) return;
-      if (!audioReady || context.state !== 'running') throw new Error('声音播放未能开启，请重新点击开启通话。');
+      if (!audioReady || context.state !== 'running') throw new Error('声音播放未能开启，请挂断后重新开启通话。');
       await context.audioWorklet.addModule('/realtime-voice-pcm-worklet.js');
       if (!current()) return;
       const stream = await navigator.mediaDevices.getUserMedia({ audio: {
@@ -259,6 +329,7 @@ export default function RealtimeVoiceCall({ name, character, authorize }: Realti
             fail('语音服务的音频格式与当前通话不兼容。'); return;
           }
           if (session.timeout) clearTimeout(session.timeout);
+          if(!session.ready){const time=Date.now();setReadyAt(time);setNow(time);}
           session.ready = true;
           setState('listening');
         } else if (message.type === 'state' && ['listening', 'thinking', 'speaking'].includes(String(message.state))) {
@@ -276,11 +347,7 @@ export default function RealtimeVoiceCall({ name, character, authorize }: Realti
           session.outputTurnId = undefined;
           session.serverState = 'listening';
           setState('listening');
-          const id = currentTranscript.current.assistant;
-          if (wasSpeaking || id) setTranscripts(items => {
-            const interruptedId = id || [...items].reverse().find(item => item.role === 'assistant')?.id;
-            return items.map(item => item.id === interruptedId ? { ...item, final: true, interrupted: true } : item);
-          });
+          if (wasSpeaking || currentTranscript.current.assistant) updateCaptions({type:'interrupt',now:Date.now()});
           currentTranscript.current.assistant = null;
         } else if (message.type === 'transcript' && (message.role === 'user' || message.role === 'assistant') && typeof message.text === 'string') {
           const role = message.role;
@@ -289,16 +356,14 @@ export default function RealtimeVoiceCall({ name, character, authorize }: Realti
           const id = turnId ? `${role}-${turnId}` : currentTranscript.current[role] || `${role}-local-${++nextTranscriptId.current}`;
           currentTranscript.current[role] = message.final === true ? null : id;
           const line: Transcript = { id, role, text: message.text.slice(0, 10000), final: message.final === true };
-          setTranscripts(items => {
-            const exists = items.some(item => item.id === id);
-            return (exists ? items.map(item => item.id === id ? { ...item, ...line } : item) : [...items, line]).slice(-80);
-          });
+          updateCaptions({type:'transcript',line,now:Date.now()});
         } else if (message.type === 'error') {
           fail(typeof message.message === 'string' ? message.message : '语音服务连接失败，请检查配置后重试。');
         } else if (message.type === 'notice' && typeof message.message === 'string') {
           setNotice(safeError(message.message));
         } else if (message.type === 'ended') {
           release(session);
+          setEndedAt(Date.now());
           setState('ended');
         }
       };
@@ -312,6 +377,8 @@ export default function RealtimeVoiceCall({ name, character, authorize }: Realti
       }
     }
   }
+
+  useEffect(()=>{startRef.current=start;});
 
   function toggleMute() {
     const session = sessionRef.current;
@@ -328,41 +395,28 @@ export default function RealtimeVoiceCall({ name, character, authorize }: Realti
 
   function close() {
     if (sessionRef.current) release(sessionRef.current, true);
+    stopCamera();setEndedAt(Date.now());
     mutedRef.current = false;
     setMuted(false);
     setNotice('');
     setState('ended');
   }
 
-  const active = state === 'connecting' || state === 'listening' || state === 'thinking' || state === 'speaking';
-  const ready = active && state !== 'connecting';
-  const microphoneLabel = active ? state === 'connecting' ? '取消语音连接' : '结束语音互动' : '开始语音互动';
-  return <section className="zy-realtime-scene" aria-label={`与${name}语音互动`}>
-    <div className="zy-realtime-scene-tools">
-      {ready && <button type="button" className="zy-realtime-scene-mute" onClick={toggleMute}
-        aria-pressed={muted} aria-label={muted ? '取消麦克风静音' : '麦克风静音'} title={muted ? '取消静音' : '静音'}>
-        <MicOff size={19} aria-hidden="true"/>
-      </button>}
-      <button type="button" className={`zy-realtime-scene-microphone${active ? ' is-active' : ''}`}
-        aria-label={microphoneLabel} title={microphoneLabel} aria-pressed={active}
-        onClick={() => { if (sessionRef.current) close(); else void start(); }}>
-        <Mic size={23} aria-hidden="true"/>
-      </button>
-    </div>
-    {state !== 'idle' && <div className="zy-realtime-scene-status">
-      <p role="status">{muted && ready ? '麦克风已静音' : descriptions[state]}{active ? ' · 点击麦克风结束' : ''}</p>
-      {error && <div className="zy-realtime-scene-error" role="alert">
-        <p>{error}</p>
-        {microphoneDenied && window.zhiyuDesktop?.openMicrophoneSettings && <button type="button"
-          onClick={() => void window.zhiyuDesktop?.openMicrophoneSettings?.()}>打开系统麦克风设置</button>}
-      </div>}
-      {notice && <p className="zy-realtime-scene-notice" role="status">{notice}</p>}
-    </div>}
-    {active && transcripts.length > 0 && <div className="zy-realtime-scene-captions" ref={captions}
-      role="log" aria-label="双方语音字幕" aria-live="polite" aria-relevant="additions text">
-      {transcripts.slice(-4).map(line => <p className={`zy-realtime-scene-caption ${line.role}`} key={line.id}>
-        <span>{line.role === 'user' ? '我' : name}{line.interrupted ? ' · 已打断' : ''}</span>{line.text || '…'}
-      </p>)}
-    </div>}
+  const elapsedMs=callElapsedMs(readyAt,now,endedAt);
+  const frame=getCallCaptionFrame(captionWindow);
+  let message:RealtimeCaptionMessage|undefined;
+  if(error)message={text:error,tone:'error',...(microphoneDenied?{action:{label:'打开系统麦克风设置',onClick:()=>void window.zhiyuDesktop?.openMicrophoneSettings?.()}}:{})};
+  else if(cameraError)message={text:cameraError,tone:'error',...(cameraDenied?{action:{label:'打开系统摄像头设置',onClick:()=>void window.zhiyuDesktop?.openCameraSettings?.()}}:{})};
+  else if(notice)message={text:notice,tone:'notice'};
+  else if(state==='idle'||state==='connecting')message={text:'正在接通…',tone:'notice'};
+  return <section className="zy-realtime-scene" aria-label={`与${name}语音互动`} data-call-state={state}>
+    {state!=='ended'&&<>
+      {(state==='idle'||active)&&<RealtimeCallTimer elapsedMs={elapsedMs} connecting={readyAt===null}/>}
+      <LocalCameraPreview visible={cameraEnabled||cameraPending} pending={cameraPending} videoRef={cameraVideo}/>
+      <RealtimeCallCaptions {...frame} hidden={message?false:frame.hidden} message={message}/>
+      <RealtimeVoiceControls muted={muted} microphoneReady={ready} cameraEnabled={cameraEnabled} cameraPending={cameraPending}
+        onToggleMute={toggleMute} onHangup={close} onToggleCamera={()=>void toggleCamera()}/>
+    </>}
+    <RealtimeCallEnd visible={state==='ended'} elapsedMs={elapsedMs} reconnectLabel={`再打给${gender==='male'?'他':'她'}`} onReconnect={()=>void start()}/>
   </section>;
 }

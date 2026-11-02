@@ -22,7 +22,6 @@
       "main.js",
       "preload.js",
       "image-viewer.js",
-      "local-identity.cjs",
       "package.json"
     ],
     "mac": {
@@ -30,7 +29,8 @@
       "icon": "build/icon.icns",
       "category": "public.app-category.social-networking",
       "extendInfo": {
-        "NSMicrophoneUsageDescription": "智域需要使用麦克风录制并发送语音消息。"
+        "NSMicrophoneUsageDescription": "智域需要使用麦克风录制并发送语音消息。",
+        "NSCameraUsageDescription": "智域需要使用摄像头，在视频通话时显示你自己的画面"
       }
     }
   }

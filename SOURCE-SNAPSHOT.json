@@ -1,6 +1,6 @@
 {
   "date": "2026-11-02",
-  "description": "Independent source baseline; original local history retained separately. Hashes exclude this manifest and the final snapshot note.",
+  "description": "Current source after desktop call redesign and unified user-provided dialogue Skill; private runtime and rollback data excluded.",
   "files": [
     {
       "path": ".env.example",
@@ -104,13 +104,13 @@
     },
     {
       "path": "app/character-window/character-window-client.tsx",
-      "bytes": 18886,
-      "sha256": "1fe4c9cd554efea33d6b4cad25ab946b2b88a1c271bb73ed70f6123741f03ad3"
+      "bytes": 19620,
+      "sha256": "e69b0fe1b6c8f9929fd11c983c643da6333c67032900a99cd6224242f9e9a22c"
     },
     {
       "path": "app/character-window/character-window.css",
-      "bytes": 6026,
-      "sha256": "2f9c70dc981c748fc73e444504e598c3ac08f90f0f95c1d14cbd01ca20604390"
+      "bytes": 6931,
+      "sha256": "779086f7c77f9f62535d4676d46af601b726bf06a4b5246fb5ccac96deb0f243"
     },
     {
       "path": "app/character-window/page.tsx",
@@ -374,13 +374,13 @@
     },
     {
       "path": "app/zhiyu/data.ts",
-      "bytes": 8649,
-      "sha256": "fcbb7945062cc5f0bb5a04dbb2161085c18bb8a76aad1ca1a426f93d7c1fcb57"
+      "bytes": 8652,
+      "sha256": "d0813a5e620fc7174865ee3272fd2a17f2d6fc8ed9b8d81cedd71f7e6801e619"
     },
     {
       "path": "app/zhiyu/desktop-bridge.ts",
-      "bytes": 2031,
-      "sha256": "8d576ca0d9cab8cb069f7a62211e12c7233164a99424f1c3b60d0e3746380177"
+      "bytes": 2160,
+      "sha256": "7f661d5abd23319db6768d5ee5b9146232127e275933a9fb7f60a617f7a44d17"
     },
     {
       "path": "app/zhiyu/directory-divider.tsx",
@@ -669,8 +669,8 @@
     },
     {
       "path": "app/zhiyu/professional-profiles.ts",
-      "bytes": 7849,
-      "sha256": "3a6ec659104ec5b11488a140870557e97d410c822443970e61a1903aa453bf21"
+      "bytes": 8097,
+      "sha256": "76e6c9f4ada5910b1452598eb2e32f0070775d2d833e1bc4ee502c9733b53e2e"
     },
     {
       "path": "app/zhiyu/professional-task-store.ts",
@@ -713,6 +713,11 @@
       "sha256": "f952d0329a57ee6a7057f65d47ed16477046ca5a1e3a1ca6963b9b4b9953aaac"
     },
     {
+      "path": "app/zhiyu/realtime-call-captions.tsx",
+      "bytes": 4651,
+      "sha256": "05fba955231aee8d0ec37631ff1e126167318c5c17abc2113a73770890f33247"
+    },
+    {
       "path": "app/zhiyu/realtime-speech-settings.css",
       "bytes": 4963,
       "sha256": "fefea4cf4e5a5db8687f93078f0270620ab5cc937d6139a0f054832b1e9e1333"
@@ -729,13 +734,18 @@
     },
     {
       "path": "app/zhiyu/realtime-voice-call.css",
-      "bytes": 3121,
-      "sha256": "bd3dca69456f76f6da537c8509a9742448ddac0f5c03b79b41f40a75676b4be0"
+      "bytes": 9114,
+      "sha256": "e82e0ce832c4d19bf3d4b538b39061026e53c174506c64ee3e403004d61c2646"
     },
     {
       "path": "app/zhiyu/realtime-voice-call.tsx",
-      "bytes": 19187,
-      "sha256": "3bfe09ed85e592ee843d7cdee53c72e2ea9183a0a1ae3bfd4292c1875a580627"
+      "bytes": 22862,
+      "sha256": "833ea5b5b366960adc844075a7776ea908dbbd6e908fd914946c10eaf8f1f01f"
+    },
+    {
+      "path": "app/zhiyu/realtime-voice-controls.tsx",
+      "bytes": 3471,
+      "sha256": "6160877722c2cbc6b66d3406427d16af82f332b576e3f37e72e821476f090452"
     },
     {
       "path": "app/zhiyu/refinements.css",
@@ -1459,8 +1469,8 @@
     },
     {
       "path": "desktop/main.js",
-      "bytes": 18066,
-      "sha256": "eb2887ab6a44c6abaf0887ed4aaae0fe5df1e6e4ca758b284683fe017e3b6701"
+      "bytes": 22573,
+      "sha256": "b95ba5c986ea29d20a711b8552255a57f095bf8b3a3e61a6747e91f2f651e391"
     },
     {
       "path": "desktop/package-lock.json",
@@ -1469,18 +1479,23 @@
     },
     {
       "path": "desktop/package.json",
-      "bytes": 857,
-      "sha256": "631a30f58b0c26eb0eb6d6b5ebf62a8204ebb3f6ebf12b90f76dd763c5ebbed2"
+      "bytes": 941,
+      "sha256": "9cfd770c028932e063e353090c31d7164cbac50de9d43a092b57ed8e8008e7b7"
     },
     {
       "path": "desktop/preload.js",
-      "bytes": 2503,
-      "sha256": "6c1f92e633afb2b381b5ae13fa00574ba50c59768052a3c780446c920a0e5062"
+      "bytes": 2649,
+      "sha256": "afdfd470494ba13a695c65c94139075a0292c9ae478b3f60c034183942dbb396"
+    },
+    {
+      "path": "desktop/tests/camera-permissions.test.cjs",
+      "bytes": 9147,
+      "sha256": "3b86421b46f4df0e49cca7837599d29f6855ef6c7e36df06c7d8c16688631d6a"
     },
     {
       "path": "desktop/tests/character-window.test.cjs",
-      "bytes": 5960,
-      "sha256": "b90aa3cb2f4e492906fd7e2262e423e54ac10909757572ce35bb8c7412d05b3e"
+      "bytes": 6772,
+      "sha256": "b78f069d6155ef1a0072de0dd27368b803751d4ea11c7f657d1bde9a1e38244c"
     },
     {
       "path": "desktop/tests/image-viewer-native-fixture.cjs",
@@ -1524,8 +1539,8 @@
     },
     {
       "path": "distribution/使用说明.md",
-      "bytes": 4743,
-      "sha256": "9a4a45b3f154249291c899b6252f483bfe99a6b0c67ae8e0494014b7d9a75857"
+      "bytes": 5190,
+      "sha256": "49f273ebaeb44af64759cb3d8e5f25c4a8f8b680357d7a7547e640ae8803f142"
     },
     {
       "path": "docs/history/README-prototype-20260910.md",
@@ -1538,14 +1553,19 @@
       "sha256": "b7b36d0184b9dd058de0c555c0f4a0dfd3a6112efcfbb3f19bfbf2ae4b95ddcc"
     },
     {
+      "path": "docs/video-call/requirements-20261102.md",
+      "bytes": 17143,
+      "sha256": "b06165a4791c7631c0e67f13713f5d661dbbc174417ca47e585ce737d9dfe531"
+    },
+    {
       "path": "hooks/use-mobile.ts",
       "bytes": 585,
       "sha256": "82bff42ff087bd5dc90a5d17609cc428b8688de92d1333073a839af5ad3c9cbd"
     },
     {
       "path": "lib/npc/character-directory.ts",
-      "bytes": 6891,
-      "sha256": "73a53059f4be19fa5cc487b72b5d1dbe02530d2026239e52cad311393114d0ff"
+      "bytes": 4410,
+      "sha256": "de0bfafe8ac2c382ffe89499c9ed83d215e5600087f19a9bdacbc9f214db87cf"
     },
     {
       "path": "lib/npc/character-output-policy.ts",
@@ -1579,8 +1599,8 @@
     },
     {
       "path": "lib/npc/dialogue-purpose.ts",
-      "bytes": 662,
-      "sha256": "773a2c32341f7262db916974115f64a814d49c8f784e2daf7249785fa1213b17"
+      "bytes": 639,
+      "sha256": "97cb45e890e8d5c9832f641c530c209eda47ec5b308906a365c3089c3bb03e5c"
     },
     {
       "path": "lib/npc/engine.ts",
@@ -1658,6 +1678,16 @@
       "sha256": "5fef6d4dd269be2f643088c728ccfdcd7ce404b52046a6f43c12476b734a4f04"
     },
     {
+      "path": "lib/npc/realtime-call-presentation.ts",
+      "bytes": 5077,
+      "sha256": "b772376aaaaafc7129712ca4568e65345579cbf55925493f91262277a9a65109"
+    },
+    {
+      "path": "lib/npc/realtime-transcript.ts",
+      "bytes": 6812,
+      "sha256": "e11380a16ee88cf9cb274d29521b26c360f28425c5470f7ea2d597e02aa3dee8"
+    },
+    {
       "path": "lib/npc/realtime/locked-frame-compositor.ts",
       "bytes": 3451,
       "sha256": "3cd9876a6c441c15b2a769cfa0e66a2d43002a91a12045c3d3f7c3ea640658f0"
@@ -1733,11 +1763,6 @@
       "sha256": "ba5838ccb2d64a30a465490e5d5487f1587fb724f625eca9664bba4897e82b98"
     },
     {
-      "path": "npc-skills/SKILL.md",
-      "bytes": 22257,
-      "sha256": "13101a44cdf45781ca4642d3d83c432a1946118487c8bd458db16460792d45ce"
-    },
-    {
       "path": "npc-skills/assets/calibration/xia-knowledge-overreach.png",
       "bytes": 127983,
       "sha256": "af643ffeea8f7119c8cfbe2c7a6ffa8580c65fd82234b728172634aefd6c770a"
@@ -1778,304 +1803,104 @@
       "sha256": "00694d4470912e3bb3b1c1e9efd5943dc2eb85fee78a8a0ffeaf84f606f6de46"
     },
     {
-      "path": "npc-skills/references/accepted-examples.json",
-      "bytes": 21487,
-      "sha256": "565d24eec0365f1cf93d634fdc5e932cb3b636672db21a39dc1fab63d4c6b8c9"
+      "path": "npc-skills/knowledge/companion/xia-anime-knowledge-20261020.json",
+      "bytes": 162303,
+      "sha256": "79ea07cd727b2175a848a0a1e46af3ea38a6f395d9e814a10f722cc7ec11c31b"
     },
     {
-      "path": "npc-skills/references/character-compile.md",
-      "bytes": 5796,
-      "sha256": "e5999fcf0b0b7000999b8b4f29857c42eb0cef52185408d13b82686ecb8197b9"
+      "path": "npc-skills/knowledge/professional/anqiujin-cooking-methods.md",
+      "bytes": 7237,
+      "sha256": "665ca9934a8f54509a3259d6b6295564b878415815883361ce8cab4b522c647e"
     },
     {
-      "path": "npc-skills/references/character-primary-experiences.md",
-      "bytes": 11075,
-      "sha256": "f329956bd1ef753af6f215e5bffac2e7d3259a31f0864f02441ccd2540227018"
+      "path": "npc-skills/knowledge/professional/anqiujin-import-20261007.json",
+      "bytes": 2009,
+      "sha256": "01df2876be87d4edcfbc2a881222dc7ed6d09913f9fb545efb192cda4494c599"
     },
     {
-      "path": "npc-skills/references/character-template.md",
-      "bytes": 44667,
-      "sha256": "941b2bbb2f1e553e120570d7d65010d53f6458ae47365c2232061faf0564fe7d"
+      "path": "npc-skills/knowledge/professional/anqiujin-recipe-library-20261007.json",
+      "bytes": 592490,
+      "sha256": "ec6bd40b366e52cec998a7b0b2ee0ff4eacd0e902f4f69220c4feda8e5a0e260"
     },
     {
-      "path": "npc-skills/references/characters/chen-nian.md",
-      "bytes": 49407,
-      "sha256": "4f7fef9124964b7ccc0f744162273fa25907ce46cec9ac1382ec341338894f27"
+      "path": "npc-skills/knowledge/professional/chef-cooking-knowledge.md",
+      "bytes": 14669,
+      "sha256": "887e540e4fe53f1678539e8672706e12596772e4880ab0a2eaa686d06eb1b7e1"
     },
     {
-      "path": "npc-skills/references/characters/huang-zongze.md",
-      "bytes": 5052,
-      "sha256": "e04c88ae6867a78de839ee8a9f84784fe7143afedaf67406485f52cd926f615e"
+      "path": "npc-skills/knowledge/professional/chef-cooking-sources-20261007.json",
+      "bytes": 11400,
+      "sha256": "f4250d3192e0b6530998280c11d727804deb305c3de13df37003b6b2238a1431"
     },
     {
-      "path": "npc-skills/references/characters/huo-tingze.md",
-      "bytes": 6100,
-      "sha256": "9ecfc5a82c57748e362ba76c2bd6374c90393ce9f27926c7904b7f34870e4716"
+      "path": "npc-skills/knowledge/professional/chef-foundation-knowledge-20261017.json",
+      "bytes": 175465,
+      "sha256": "07182a6c5f7199eb3deea36f8520192b1fbd98413cc961efbc95049737239f7a"
     },
     {
-      "path": "npc-skills/references/characters/liu-zhimin.md",
-      "bytes": 8269,
-      "sha256": "7110316fd73b23fabae41d37891152467be5c03b100965d6456dc4fcf5dbbfcf"
+      "path": "npc-skills/knowledge/professional/chef-source-import-status-20261019.json",
+      "bytes": 24038,
+      "sha256": "2f84e32534cf6cfed14a4c32d97fbb7cded30422ea91b9e9d83c82aa9a4222d3"
     },
     {
-      "path": "npc-skills/references/characters/molly-system-secretary.md",
-      "bytes": 13366,
-      "sha256": "ee72313a82763b9cf1d3f776ead122d8faf7a778b2a0279340aa44c6c5abeb56"
+      "path": "npc-skills/knowledge/professional/chef-western-dessert-methods.md",
+      "bytes": 9670,
+      "sha256": "dd9432a4b0e474a0062a619efe49098fce246c8052237f6165357a6ecabd2ded"
     },
     {
-      "path": "npc-skills/references/characters/shen-zhiyao.md",
-      "bytes": 4352,
-      "sha256": "b183c106e862f5ec68794ac9d96e1bcc7c45270bd7a675b1dfee837ef0836265"
+      "path": "npc-skills/knowledge/professional/chen-acsm-foundation-20261017.json",
+      "bytes": 621647,
+      "sha256": "3675726283281ff7134d9c35d709da668d47ab0bf34ca12d293ffcbdec69e6b3"
     },
     {
-      "path": "npc-skills/references/characters/xia-xia.md",
-      "bytes": 23149,
-      "sha256": "d044d6dde28d989dfcc85e90bb80ba026373993acdc6bb9b84af19bf09a056e9"
+      "path": "npc-skills/knowledge/professional/chen-coach-knowledge-20261013.json",
+      "bytes": 257776,
+      "sha256": "4b501ac32ee6c435a7b3f80c2e6d84a1524df411dce4494d6cadcc56d8eabde6"
     },
     {
-      "path": "npc-skills/references/characters/xu-xiaoman.md",
-      "bytes": 2717,
-      "sha256": "bb6d2fd3c7e952154fc621253b025e2756a7474d782430cdf16e4716c946d808"
+      "path": "npc-skills/knowledge/professional/chen-fitness-source-library-20261008.json",
+      "bytes": 131850,
+      "sha256": "f581bf4447054c5858727380c4bcf8790067689ec552047e4fc3d7fe9a01af12"
     },
     {
-      "path": "npc-skills/references/characters/yuan-xiaoman.md",
-      "bytes": 25400,
-      "sha256": "593efcfccf5295c9b91cb06ac8a5abbf1def5ce23bec867c95654ca220e7dd4d"
+      "path": "npc-skills/knowledge/professional/chen-source-import-status-20261019.json",
+      "bytes": 48245,
+      "sha256": "5ec746859241c58c142a7b5be14948e09c6658e226b206cfddd26e784031826a"
     },
     {
-      "path": "npc-skills/references/characters/zhou-chef.md",
-      "bytes": 14758,
-      "sha256": "2075865baf639348d6e77069ef2719e4202f07c54c37718746a805b97e07af7f"
+      "path": "npc-skills/knowledge/professional/chen-training-20261007.json",
+      "bytes": 5745,
+      "sha256": "8eb99b90d9b24239eb8e05d4280eabd393d657595be98282d305352136b019eb"
     },
     {
-      "path": "npc-skills/references/chat-moments.md",
-      "bytes": 8277,
-      "sha256": "3753d42c4fa217813be5d68b280ac7deaa2f7a53121b9e789c39303ed6afb124"
+      "path": "npc-skills/knowledge/professional/interactive-task-intent-cases-20261010.json",
+      "bytes": 17036,
+      "sha256": "bb4846bf9638c9702123f97113ba930d3e5acd5bc7f6b7a31253ea760c8e9dda"
     },
     {
-      "path": "npc-skills/references/chen-nian-examples.json",
-      "bytes": 13291,
-      "sha256": "a9b1e793ca7d30a169391fc247cb8e9196e7c2e01109d0f77518469a5dbce0fc"
+      "path": "npc-skills/knowledge/professional/liu-clinical-knowledge-20261015.json",
+      "bytes": 153224,
+      "sha256": "2afc1584d4d65c0d7303a0786e4e86399ff2151ccbccbfdad21ec0b4badbf05a"
     },
     {
-      "path": "npc-skills/references/chen-nian-relational-examples-20260922.md",
-      "bytes": 9395,
-      "sha256": "13ab608ea4a94bdcb6798061005acbbfa94f834d62f6fb60aa00f107a23e6e7b"
+      "path": "npc-skills/knowledge/professional/liu-source-import-status-20261019.json",
+      "bytes": 57920,
+      "sha256": "4fb43742600f91adebf0eab415e477262a731f705450ef75f7e1c08d2be99513"
     },
     {
-      "path": "npc-skills/references/common-rules.md",
-      "bytes": 22500,
-      "sha256": "3614020da419cf79dfc7499752526cc91180bfeacd74c405f7bdfffa3b8dd1de"
+      "path": "npc-skills/knowledge/professional/western-dessert-import-20261008.json",
+      "bytes": 3776,
+      "sha256": "cf356b9940e4a5faef3d6ec936583ec794571b5ff5057f1210cffde5d3333e01"
     },
     {
-      "path": "npc-skills/references/conversation-realism.md",
-      "bytes": 10772,
-      "sha256": "3024bd22dc21691c434602e498b9b91015f8fa9ba8a1ea1193aa6ba6d032e038"
+      "path": "npc-skills/knowledge/professional/western-dessert-recipe-library-20261008.json",
+      "bytes": 250342,
+      "sha256": "a825c760e68f41e985b68987e79465654b13033add00f965901f165a85cee1a2"
     },
     {
-      "path": "npc-skills/references/corrections.md",
-      "bytes": 64873,
-      "sha256": "9dee6c5bb9e378adf631eca75472055eb635067a40129149db174042b78a9c4a"
-    },
-    {
-      "path": "npc-skills/references/dialogues.json",
-      "bytes": 51809,
-      "sha256": "ad59d7c75c7ac41f15d0d9e81bdfed2911f84e349c0acb009df3684882f7bada"
-    },
-    {
-      "path": "npc-skills/references/humanizer-npc.md",
-      "bytes": 10710,
-      "sha256": "a64f7cd116b01de711abe48487e0002f057c32fbaf658a3e2fbb2c9e976632c8"
-    },
-    {
-      "path": "npc-skills/references/integration-contract.md",
-      "bytes": 4081,
-      "sha256": "112a656a2b32f4e5e13266b69e96ce3e50c8088826fe0c2d5f46092d6fe3c6e9"
-    },
-    {
-      "path": "npc-skills/references/lively-density-examples.json",
-      "bytes": 21822,
-      "sha256": "3b17821e8a320de60c5a755dbf737a50ecd6f7c59260457db394681e31b167ab"
-    },
-    {
-      "path": "npc-skills/references/lively-density.md",
-      "bytes": 2002,
-      "sha256": "3fe90f3011b401d09f8d39b88ea26625c91411cb54e9bc8f7b0693c505199e76"
-    },
-    {
-      "path": "npc-skills/references/living-contact.md",
-      "bytes": 4998,
-      "sha256": "69b129b6de42ac6cedfa092c570a8b4d365beab4e2e970b24f12442b059548b1"
-    },
-    {
-      "path": "npc-skills/references/npc-age-and-roster-20261004.md",
-      "bytes": 9121,
-      "sha256": "e97685b8682d13a71401474dc7c965c5910797c8762fa9df5f9f3bef6764ab81"
-    },
-    {
-      "path": "npc-skills/references/npc-companionship-and-access.md",
-      "bytes": 6606,
-      "sha256": "1db1d9f6fc0791341d580b985df50f0310a37b812c77c151892df4350f5d80e2"
-    },
-    {
-      "path": "npc-skills/references/npc-purpose-types.md",
-      "bytes": 6380,
-      "sha256": "c674f14ac7372042717d0b6927662c0faaaf013afb1201f3d698bccf51d0f0a0"
-    },
-    {
-      "path": "npc-skills/references/open-questions.md",
-      "bytes": 15031,
-      "sha256": "589c27e20a28a4f7e427ff4eec673f55f0f9c719afbc755aff8c019721456c3b"
-    },
-    {
-      "path": "npc-skills/references/personality-chat.md",
-      "bytes": 8404,
-      "sha256": "e08eb9058711caf92a38c402974cccb8d41a33d2f95932daf01298fe84ff67fb"
-    },
-    {
-      "path": "npc-skills/references/proactive-chat-intent.md",
-      "bytes": 5711,
-      "sha256": "a3686fbfb6961e8baa4b08600ef30fc8a6dbf4f4402df60a644a3c08281e50fe"
-    },
-    {
-      "path": "npc-skills/references/professional-knowledge.md",
-      "bytes": 9035,
-      "sha256": "939ba697f54d7ff32189b10b81f326791bc13b86cb57179d6e94d2b23d9cddb1"
-    },
-    {
-      "path": "npc-skills/references/relationship-help-and-romance.md",
-      "bytes": 11516,
-      "sha256": "6d1aaab501c8509110cd7e8b44458bc47e631ddcc59aaef8cccb39b61cc9fe6e"
-    },
-    {
-      "path": "npc-skills/references/scalable-dialogue-training.md",
-      "bytes": 13274,
-      "sha256": "ecf497174bfab6905ef7dcd8e1a7a92719c58751222e2b873108126e004b95e5"
-    },
-    {
-      "path": "npc-skills/references/sources/character-design-v2-20261004-v1.txt",
-      "bytes": 4845,
-      "sha256": "7b52dc1cbc1bee1564ca8e0d1f97226393a4049bc1345e0f119ea87a9732e880"
-    },
-    {
-      "path": "npc-skills/references/sources/character-design-v2-20261004-v2-before-tags.txt",
-      "bytes": 8510,
-      "sha256": "96cd1a495bdf5de7ecfdce71398e24bdf9a445acb1938081d0ed1e0fa28870a4"
-    },
-    {
-      "path": "npc-skills/references/sources/character-primary-experiences-20261004-v1.md",
-      "bytes": 5011,
-      "sha256": "e0faa2ff72ec3681f4dc4ff1802b3edf829b634a5914663210bb317b894f71c9"
-    },
-    {
-      "path": "npc-skills/references/sources/character-template-20260916.md",
-      "bytes": 2892,
-      "sha256": "bf1d2d2d591872904ae5dd310d010d550a9d7f0cd2980eb7df1285cccaaffcdc"
-    },
-    {
-      "path": "npc-skills/references/sources/chen-nian-20260919.txt",
-      "bytes": 30631,
-      "sha256": "817c60fdc5e2c75a070177dfdf53fd63c14cd1ffcb689859d6eab329295a2752"
-    },
-    {
-      "path": "npc-skills/references/sources/chen-nian-template-20260919.txt",
-      "bytes": 31216,
-      "sha256": "fe18f69ccf6e81e73bb34051011ce16dfe6aa8419f9f60801db2785221446583"
-    },
-    {
-      "path": "npc-skills/references/sources/dialogue-ten-candidates-20261004.txt",
-      "bytes": 3036,
-      "sha256": "b5caf67750b874a8ca1da99eddf8909b53977e6be61ea090681825591f8500f4"
-    },
-    {
-      "path": "npc-skills/references/sources/expressive-modules-20260923/dialogue-routing.md.txt",
-      "bytes": 5698,
-      "sha256": "7df70cfecb35f8c658b2f6342265aac13703b38484a7000d19c7fdbc7683de9b"
-    },
-    {
-      "path": "npc-skills/references/sources/expressive-modules-20260923/profanity-context.md.txt",
-      "bytes": 2322,
-      "sha256": "464fc9e198a1d2ab9f96f5fbc7435d9321c26531ec2aeb2819fd326232a505fa"
-    },
-    {
-      "path": "npc-skills/references/sources/expressive-modules-20260923/reaction-markers.md.txt",
-      "bytes": 2104,
-      "sha256": "7aed3beda37ed5d31cf496cbdebf28df07d3c9c137cfa77d5ffbba494ea4e66a"
-    },
-    {
-      "path": "npc-skills/references/sources/proactive-chat-intent-20261004-v1.md",
-      "bytes": 7029,
-      "sha256": "640c458dec886dbfeff22e52fef5ed410e6045451b3c2826c6082309c21e8186"
-    },
-    {
-      "path": "npc-skills/references/sources/professional-knowledge-20261004-v1.md",
-      "bytes": 9505,
-      "sha256": "4266b1d2e17c3e7b7f0173f0c74bbc263fa1060c1324ddcb6e27ce174587067b"
-    },
-    {
-      "path": "npc-skills/references/sources/relationship-help-and-romance-20261004-v1.md",
-      "bytes": 7929,
-      "sha256": "907ab5ae917cd100db1c4e8cd7cdf37f96f38b1a1ffdaa87333e8c0c072c8887"
-    },
-    {
-      "path": "npc-skills/references/sources/scalable-dialogue-training-20261004-v1.txt",
-      "bytes": 12646,
-      "sha256": "32447b909930721c53599514042e6b7e1056c7831450df5156d48926d4faae0c"
-    },
-    {
-      "path": "npc-skills/references/sources/yuan-xiaoman-initial-20260917.txt",
-      "bytes": 27297,
-      "sha256": "fdcf8b0ee492cad09beb598c228e171c42c34fb3b3318ff911f46f35b6b96968"
-    },
-    {
-      "path": "npc-skills/references/state-history.md",
-      "bytes": 9886,
-      "sha256": "7e74b9c19f21189989797aebb929d89c8f558163d7eaeb5fe00a7f9f724f2060"
-    },
-    {
-      "path": "npc-skills/references/time-context.md",
-      "bytes": 6201,
-      "sha256": "86102e77ddbe6b2f9fbe7dc1ee67c274f6c22e2621018d815e589eaf763860dc"
-    },
-    {
-      "path": "npc-skills/references/user-feedback.json",
-      "bytes": 24781,
-      "sha256": "a59cf471fc3d9d786de2104867b346122ca657c19d05241ae84d444452a80521"
-    },
-    {
-      "path": "npc-skills/references/vendor/humanizer-zh/SKILL.md",
-      "bytes": 6058,
-      "sha256": "171758fed76b0c5f70ff5e2284bf2bd951749ff097ddd05f33e94597f52434f5"
-    },
-    {
-      "path": "npc-skills/references/vendor/humanizer-zh/references/chinese-ai-patterns.md",
-      "bytes": 11904,
-      "sha256": "f015ba94551a339bf114895bede410013540f059a42c230a15670ffc44c94103"
-    },
-    {
-      "path": "npc-skills/references/vendor/humanizer-zh/snapshot.json",
-      "bytes": 653,
-      "sha256": "5092c214bbd4e8f48db4cdc985e32199066d3d89b3e28ee75618cdc27c93bade"
-    },
-    {
-      "path": "npc-skills/references/xia-xia-relationship-model.md",
-      "bytes": 7680,
-      "sha256": "f581ac5be396f452ac08b53eaa4a6bca8e215f03ae8b61a88a42188f265fc988"
-    },
-    {
-      "path": "npc-skills/references/xia-xia-stickers.json",
-      "bytes": 7186,
-      "sha256": "09313052c91d79048dc63b2bee3dbe72fa444addba1f84d7712c6ef9793657de"
-    },
-    {
-      "path": "npc-skills/scripts/form_examples_to_json.py",
-      "bytes": 6164,
-      "sha256": "b2e82518e0b47960a291a86e3c775eee5cbe0c40d1baa66428342b841cc23b15"
-    },
-    {
-      "path": "npc-skills/scripts/validate_package.py",
-      "bytes": 6633,
-      "sha256": "41ab8d421c87057c104daa529d15feee0fc1c63931211ea9d3bb6522116636b6"
+      "path": "npc-skills/protocols/group-collaboration.md",
+      "bytes": 5059,
+      "sha256": "efc7280219665892fca0295bb98ebf905c777f493cfe1fe41a5f74fc1ce2ae93"
     },
     {
       "path": "npc-skills/skills/chen-nian-visual-style/SKILL.md",
@@ -2163,21 +1988,6 @@
       "sha256": "f069554290254b6070b02fe203f96792cd071de437039dbee8b4496fd7f46069"
     },
     {
-      "path": "npc-skills/skills/molly-dialogue/SKILL.md",
-      "bytes": 16862,
-      "sha256": "0fa4dec3924e93ec1948ceea474e9aa1df39f0d30283c509851cf4245bb5f1e3"
-    },
-    {
-      "path": "npc-skills/skills/molly-dialogue/references/examples.json",
-      "bytes": 40580,
-      "sha256": "f459807214090270574ca770cbb12656b2387b319a1acee6008dacaf37ad10b9"
-    },
-    {
-      "path": "npc-skills/skills/molly-dialogue/references/secretary-feedback-20261015.json",
-      "bytes": 5203,
-      "sha256": "99e964e0b696d8070128ddaac603401269e7e8bb9d414b86093171f8ebf093ad"
-    },
-    {
       "path": "npc-skills/skills/npc-candid-photo/SKILL.md",
       "bytes": 6677,
       "sha256": "245aed89a3c23e0653fc961e7158f9483435d5f14edda3d29c1cb97c8e097de8"
@@ -2193,269 +2003,314 @@
       "sha256": "62ee4fc938a18c7001f5363f9b7d4434c6dcb0a78ed901f935a5779330555c1f"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/SKILL.md",
-      "bytes": 5019,
-      "sha256": "93f4980e3db251fcb594660faa4ce8503a0bfdaea6a5e8d3ea7a8ce569b3dbc5"
+      "path": "npc-skills/skills/zhiyu-dialogue/SKILL.md",
+      "bytes": 2969,
+      "sha256": "85ec2bc05ec5530847a8ee394e0d50529b60260995d6a1d98e7234f332ff69a3"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/calibration-and-release.md",
-      "bytes": 13544,
-      "sha256": "6792675ba49985516ed48a9f670d204d45a3c33f406c26383390fc3e8078fc41"
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/README.md",
+      "bytes": 2182,
+      "sha256": "c8a4d03900c82ebab29dfaa37e61f6e8a4b48b724fb4c421f449ff6e6bd5a1b4"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/character-design.md",
-      "bytes": 17369,
-      "sha256": "cdb691f7ed46f1de391b5b6b0e8b3503f7d4b06a3a7774a303f8429470aa4bd2"
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/molly-codex-training.txt",
+      "bytes": 319386,
+      "sha256": "9b19cd0a2abfe51f0c95a7ca033b60d5b4d1462cb12560e8931e6c65797a535b"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/core-behavior.md",
-      "bytes": 18400,
-      "sha256": "5dc6a5898ecdfbdc120f93e20735c18bfa1d74550bb1523d540f1ea097e64661"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/01-说话立场.md",
+      "bytes": 6299,
+      "sha256": "8c20389e898170af5d5d9ab4d7944c9feed7323bbb9f5c3f7e7b897416dcce43"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/expression-media.md",
-      "bytes": 2771,
-      "sha256": "1a8426b63e14ac406773729ccad54e7cf9a2bdd75a098e9f88108c5ff5157785"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/02-标点语气表情.md",
+      "bytes": 2086,
+      "sha256": "ca92b623db00211348bd06c29d363a3325cee6da85ab5237f79591d8df1cfe6e"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/full-skill-friend-teaching-feedback-20261010.json",
-      "bytes": 2935,
-      "sha256": "f270031c444a89b12c1279a3c29cde64f2ad696d7fe7514275297d90d28685a9"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/03-梗与俗语.md",
+      "bytes": 3439,
+      "sha256": "00864fc29de99dadea20f5692293b995d98efb5cba698f7e95c708fc76ef2a4a"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/he-jiawei-base-continuation-20261005-r5.json",
-      "bytes": 13739,
-      "sha256": "cde04c47d51e80a553a7c6a4f0650dcae02cde9c965796682d60b9c16b65e5f2"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/04-安慰.md",
+      "bytes": 1644,
+      "sha256": "e12af1cc3257e0aed980f4d4520f7d5dd338ebe7b8950a5b8ba2ac24fba2a342"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/he-jiawei-base-final-cases-20261005-r4.json",
-      "bytes": 10706,
-      "sha256": "cf1847baba0ffd9b3b4fc3885c1ae4c23de28cfe702b27037223d4729524c2e0"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/05-记忆与连续性.md",
+      "bytes": 1170,
+      "sha256": "89dc2d9a5945688ec47698e584bbcb2f7b1d5e750af607b88d6cb135fe782010"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/he-jiawei-calibration-20261005-r2.json",
-      "bytes": 6185,
-      "sha256": "7b63e2bfea0e844727264f1a9c6c4869a44a4f8a5336a0cdd31a128bdb916611"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/06-时间与作息.md",
+      "bytes": 1648,
+      "sha256": "621b8546aff5fe29fb5f6a6fa134ae33cde7902d39f55ee4dfca45162885f51c"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/he-jiawei-calibration-20261005-r3.json",
-      "bytes": 15339,
-      "sha256": "768f3cb2a72be8c26df19ff632c25eeb468129b90ca091e2573b9d220e5f66c5"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/07-知识与事实边界.md",
+      "bytes": 4160,
+      "sha256": "8d3e3736ea360bf797a7f33b006d74aa14c002aa55c93f77505fb7fc2509d383"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/interaction-preferences.md",
-      "bytes": 4913,
-      "sha256": "d34617f24c2a8475b891fb985f7371ca16c4e55e1de77ab21f4b8dd78aca0a0c"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/08-智域世界观.md",
+      "bytes": 3264,
+      "sha256": "127c141c5c4c9f4508a32dfcde27628370280b425b139e1e494747a42e508c2c"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/knowledge-expression.md",
-      "bytes": 2621,
-      "sha256": "343d517288acb8f1264547df62bf4bd3fa4d518ce3fe851cf33b3b330a3cd63f"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/09-图片与语音.md",
+      "bytes": 1811,
+      "sha256": "2b825be0ec32cdbd116956dbab8b7b281ca5c96614e21db285d8df143e69b1bc"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/message-rhythm.md",
-      "bytes": 3509,
-      "sha256": "973ccebf1810ead9e9c7e13176686dea225dc4ced1ccd6fed4ae5e9c7a36ed10"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/10-群聊.md",
+      "bytes": 5015,
+      "sha256": "b5ed2acd01ad699d83ab7c76f2d3cc9814fd6d8544319d382dbdd570911457a9"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/personality-modules.md",
-      "bytes": 10696,
-      "sha256": "7661c0532827b50d713003229b5b7467ef0907d4e5e057ad2c0aca2368956635"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/11-主动消息与动态.md",
+      "bytes": 3670,
+      "sha256": "c3da1328aff549fb02188504d814cd36e13785231d21cc3e3237c138e51f7c1b"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/plain-speaking-feedback-20261008.json",
-      "bytes": 3798,
-      "sha256": "48c4a477eb49eec927b892fdf68422a51a100dd341842d9f7f6570b473c81390"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/12-危机.md",
+      "bytes": 1234,
+      "sha256": "4d92b32f87c26f5a8357fed950c31833bf789bf37c2381c5a5af9427037f5b3f"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/profanity-context.md",
-      "bytes": 2168,
-      "sha256": "77f30e8588893bb74fad025fd39ae8f6d828c9c77b7cea1e0460ff5965ed4dc8"
+      "path": "npc-skills/skills/zhiyu-dialogue/core/成品复核清单.md",
+      "bytes": 5108,
+      "sha256": "417d3c31c9b534a6bc5006f95fbceb28e61f28b20eaaed27c53ee8a9e29bf999"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/provenance.md",
-      "bytes": 19717,
-      "sha256": "c4096827289652d4373c0ad52b39192ed2911859cbd2a6296b060027f1d0384e"
+      "path": "npc-skills/skills/zhiyu-dialogue/modes/companion.md",
+      "bytes": 3018,
+      "sha256": "daf5a8a40ed720db64007a358cce9c9a3bb3e7c7126b212552170c741bdac82b"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/reaction-markers.md",
-      "bytes": 2060,
-      "sha256": "dbcba6add7ddb9ccd9ac11f1e29c38af373ae2eafa8aad027b61edb9d18793c1"
+      "path": "npc-skills/skills/zhiyu-dialogue/modes/professional.md",
+      "bytes": 7007,
+      "sha256": "9dabef3f006e6194cf1822dbfdc4c12133670086adb675c1bb6c898729979243"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/runtime-contract.md",
-      "bytes": 18376,
-      "sha256": "7306499a29017688e3babc2ed09a5fb16810883d5eb7e847752ad944611240f8"
+      "path": "npc-skills/skills/zhiyu-dialogue/modes/secretary.md",
+      "bytes": 7830,
+      "sha256": "dc6b47f0685f27b4c88f96ad93dfb933a8006ca70e06177607c3cef0d86bf0c3"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/six-character-comparison-20261005-v2.json",
-      "bytes": 20584,
-      "sha256": "18cde8cc494508f1501f39a81efa5b845e9a3689f71949c316b2077d37b1de71"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/_template/examples.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/six-character-comparison-20261005.json",
-      "bytes": 17736,
-      "sha256": "80595f1a819a7ff8fe9cb878e3367ddd7f6014d9d3a27998c5431ca14f37073a"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/_template/interests.json",
+      "bytes": 193,
+      "sha256": "0678df00d89d7bf02eddb30f853cf04843310e9d9702c73a1c4685278a9b9e72"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/social-continuity-20261016.md",
-      "bytes": 5176,
-      "sha256": "d84547f98c705dc399a38527aff1ab657a15a8c4657cd09926bd4bd13735b199"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/_template/profile.json",
+      "bytes": 530,
+      "sha256": "73b3606c16e445726fe07436c4b784c991f71533338986022430ccf3d8880c76"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/social-continuity-feedback-20261016.json",
-      "bytes": 1987,
-      "sha256": "b5a22cfed216fece6315c4f13cf23a0dede01af9b9bca8e297ac8af311b56d23"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/_template/style.md",
+      "bytes": 128,
+      "sha256": "7625d0fe5c4f95bfef7800ee53386b5f63234727317a19e2fa824c1a71ae764a"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/text-readability-feedback-20261018.json",
-      "bytes": 1604,
-      "sha256": "4b18126620ead62ae0fd747274c8a7deec1a11b160dcd034c960da58883280a6"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/chen-nian/examples.json",
+      "bytes": 1599,
+      "sha256": "9fc1be3844c232e6456092374a85c2664c259b077ecbaf2cbb87477345c8b2fb"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/text-readability.md",
-      "bytes": 1878,
-      "sha256": "913456b5a1973357fd658e473ac0140a95276ef650279ddaf8aa5607f6854d7f"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/chen-nian/interests.json",
+      "bytes": 1314,
+      "sha256": "c8f5b72b321d3ab845584f66f0834a63a77856eeb6dd1a36e7ed4c2c5b71d6b7"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/xiaoman-base-cases-20261005-r3.json",
-      "bytes": 23191,
-      "sha256": "89f1457b6f6f03c53b3fbd1aedcf4f0de8f536453a9b157ebc832b90dc56ea89"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/chen-nian/profile.json",
+      "bytes": 1497,
+      "sha256": "e47e626d9037462600f892c1f8c52f19a27149865c55eb844561284226e12ef2"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/xiaoman-base-cases-20261005-r4.json",
-      "bytes": 23726,
-      "sha256": "7c7981502f7632537dded879d538abc867b0f3300071030d75f2155a1c5c0f6e"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/chen-nian/style.md",
+      "bytes": 684,
+      "sha256": "099f002ab370e542f04864df755fae7d918f574d24d81e0f1e20bc778148add4"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/xiaoman-base-cases-20261005-r5.json",
-      "bytes": 22076,
-      "sha256": "baec68a4da72ad47523f314a3b988ee2e8f8aab20b773087ecc3803333b840ee"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/he-jiawei/examples.json",
+      "bytes": 1518,
+      "sha256": "5d1e7e094e8737f55d1443c91e30e943a0847f8fdd4e96b19f5a32a3f9229b99"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/xiaoman-base-cases-20261005-r6.json",
-      "bytes": 26765,
-      "sha256": "40c594545e62b39ec9221d383a9c72622d564b51e6408eb116ca7663ad253727"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/he-jiawei/interests.json",
+      "bytes": 1053,
+      "sha256": "4d18c4bc096060bd2ee85597d3b6af0fa20243efd4bc10a2e5347338bdb22ccf"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/xiaoman-base-cases-20261005-r7.json",
-      "bytes": 13848,
-      "sha256": "80d9ba47930255c3734be8b1582cb82b06bc0ef5e983a780398f9d8c1bcd2a8b"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/he-jiawei/profile.json",
+      "bytes": 941,
+      "sha256": "67ab52ca8cfffb9087e7dfa082eff68e39a3afa8f85d7a8926cd28824567f496"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/xiaoman-companionship.md",
-      "bytes": 11218,
-      "sha256": "f29693b0805e32113a58cfd3ff44ad41676d69d5df5788302417e3b6851885a4"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/he-jiawei/style.md",
+      "bytes": 470,
+      "sha256": "e2b3fdfaa8fa4d8cc9651b9ca77f8e0fade4d5963f6352af935b55e5f2d80930"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/references/zhou-chef-base-cases-20261005-r1.json",
-      "bytes": 5165,
-      "sha256": "b5b656a3bb2932c0261e76b19fd555d83a0f8a8afca554dd8c41edf2ce2cb5a5"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/liu/examples.json",
+      "bytes": 1118,
+      "sha256": "59c0054f04ad6fd59e58c4f6c4fa8e79f064675198ac32311d69d6e60d8805dc"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/tests/design-trial-20261004.json",
-      "bytes": 10472,
-      "sha256": "f813dff743ad566d7f38fa7558fcf5e384542434015e780e8dee3f7858c1ba2a"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/liu/interests.json",
+      "bytes": 1025,
+      "sha256": "ebbdf2b9576aded45f004ad4e5adc2a78e384518052ec9a65bbcc7b2f50905d0"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/tests/long-reply-cases-20261005.json",
-      "bytes": 13195,
-      "sha256": "a86c1ea649206dfe9e8d4d82bf54a6da71e38185cd1c06d20e890d2ae2498501"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/liu/profile.json",
+      "bytes": 1477,
+      "sha256": "1c065813b3f6c0e123bd192aa4a64974c1d5e8ae9fee7c24127bae30689d471b"
     },
     {
-      "path": "npc-skills/skills/zhiyu-character-dialogue/tests/scenarios.json",
-      "bytes": 6606,
-      "sha256": "a068cc62004e723977507eda9666c6342535c3347a34bdabc2b96bd480f954eb"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/liu/style.md",
+      "bytes": 351,
+      "sha256": "674cace515e8f8e8af42edd8c5e0b14e626d3cff7538af9eb225d4c4bddb7df1"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/SKILL.md",
-      "bytes": 7611,
-      "sha256": "5e2f0f193120def1ae2edd7ed9f65771579d8c220bdcda5d7de1a3af84f0b284"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/molly/examples.json",
+      "bytes": 5875,
+      "sha256": "e296e16ab441b2ad0aede4557256f35ba2c1685e98efcfacbb95367e06d54962"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/he-jiawei-companionship.md",
-      "bytes": 9315,
-      "sha256": "a893df45639c0e195cfef209f6c5cea3ab6541e810965017d53f85c58a87d289"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/molly/profile.json",
+      "bytes": 1174,
+      "sha256": "6098fa719fc409c80ce9341e31171473c9ff93060873e6c24013e81b8987e7ca"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/he-jiawei-emotional-cases-20261005-r1.json",
-      "bytes": 24800,
-      "sha256": "9642cf4b225c0b298d64c70105f67f31b67b43226fa64bc227ca1d591e99e98f"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/molly/style.md",
+      "bytes": 249,
+      "sha256": "c4a1e5c03de738f62eb1883371bdd8161ccf26db300e56cda94db642438fffbe"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/he-jiawei-emotional-cases-20261006-r2.json",
-      "bytes": 39109,
-      "sha256": "458dbf9fc0a375508c540d4341147e399dcd330a34147040f10697368fc0a7d9"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/xia-xia/examples.json",
+      "bytes": 2494,
+      "sha256": "0220cd8fce14ac1e00306c066e3aa0c635d7678cec56fe66e44bc6307538ff83"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/he-jiawei-emotional-cases-20261007-r3.json",
-      "bytes": 17109,
-      "sha256": "7a8582ac8ed6e76e17a1b9cf1980f76fd107d7a66e79e3d5b5b4ab1e5df9e209"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/xia-xia/interests.json",
+      "bytes": 1964,
+      "sha256": "7d423aa3830c85dc516c3217d36ab6d738d3cee567f8b7902a20313e886d8a32"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/he-jiawei-emotional-cases-20261007-r5.json",
-      "bytes": 15207,
-      "sha256": "6c4527507f3f411ec6e90287d83f2b0e8b080ff77c260fe992a53cf84e06fc44"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/xia-xia/profile.json",
+      "bytes": 978,
+      "sha256": "ec8a9f4c810c05cac5cdca231dccf1cf40b3d2d01f8527f983f79c50c95bac23"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/he-jiawei-emotional-feedback-20261006-r2.json",
-      "bytes": 12342,
-      "sha256": "79c7a002dd2ace60cae51e321fafadee5402b2549c04134ec4f47df87e26d725"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/xia-xia/style.md",
+      "bytes": 667,
+      "sha256": "878736c09ea148974c8a2f9e04e9ac211da06823b827d9b6481c11c79146ecc6"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/he-jiawei-emotional-feedback-20261007-r4.json",
-      "bytes": 5241,
-      "sha256": "90adb017c09461823871c30df15f9830da8252afafbd69fbe6e805c92192543f"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/yuan-xiaoman/examples.json",
+      "bytes": 1671,
+      "sha256": "6ffa68ed2bb078ff80ff62ec899dc181694abd20081f9b3e2db996e12d45fc3e"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/interaction.md",
-      "bytes": 20539,
-      "sha256": "49aa3ce8045598bca073b998e8158b683877dc6e56618d6050cc23da7f0d6692"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/yuan-xiaoman/interests.json",
+      "bytes": 1481,
+      "sha256": "fa01986b6bd1ace53af538ea6fde153ec784343d6725ec028ee70447e3f24dca"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/sources/character-skill-before-split-20261005.md",
-      "bytes": 12260,
-      "sha256": "57c18ecd9097c917b4f75c1e0f7d1c51c4e85f566c20daa62ab94f1f080290ff"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/yuan-xiaoman/profile.json",
+      "bytes": 997,
+      "sha256": "dee0c3ae26bc96ba1b4873c58d6253db7d5380390dd195fc12abe27bcaaf5a23"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/sources/core-behavior-before-split-20261005.md",
-      "bytes": 17336,
-      "sha256": "2c380bd57ba23bb8e243a8781c4058333dc37f9b16e63607d7251ba459ab5220"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/yuan-xiaoman/style.md",
+      "bytes": 516,
+      "sha256": "e69adfb7b86c6cdc1d320611551823a712b01168b78d3887bc0c8fbbb2b43e06"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/xia-anime-accepted-20261020.json",
-      "bytes": 7036,
-      "sha256": "bcbc4c3bc7a5b05ea8fc430f0581fa127434b56aae2d69f9bb983c636e4ed2b2"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/zhou-chef/examples.json",
+      "bytes": 822,
+      "sha256": "4d06b4f97addaa35dd7b1f16a0a1351d879afb66356e4d65258e5c04c0a1d34f"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/xia-anime-companionship.md",
-      "bytes": 6604,
-      "sha256": "b74c92e8628047440e4e52dcbb649945d03f9403a67c17af74f7da0452e1ea8e"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/zhou-chef/interests.json",
+      "bytes": 967,
+      "sha256": "0141a0b47b4d3a5918917d8c4aafe97f4f281ad8b8d3e2be63883a2f14c3d33d"
     },
     {
-      "path": "npc-skills/skills/zhiyu-companion-dialogue/references/xia-anime-knowledge-20261020.json",
-      "bytes": 162303,
-      "sha256": "79ea07cd727b2175a848a0a1e46af3ea38a6f395d9e814a10f722cc7ec11c31b"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/zhou-chef/profile.json",
+      "bytes": 1280,
+      "sha256": "87d1925ee83d5707755286b62fa8da6be2338629913c5161863fe63f5303129d"
     },
     {
-      "path": "npc-skills/skills/zhiyu-group-dialogue/SKILL.md",
-      "bytes": 18137,
-      "sha256": "bf2649263bb20e0ed0e8d96eb70c06ef88711dc87d82a91b4263b4ec6aa6cae2"
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/zhou-chef/style.md",
+      "bytes": 324,
+      "sha256": "de4ce9e1d723edcc976bb2899ed2cfaac9f327e05c043bae081e910d9f7a1683"
     },
     {
-      "path": "npc-skills/skills/zhiyu-group-dialogue/references/current-feedback-20261007.md",
-      "bytes": 7246,
-      "sha256": "15102df9a241db82ac436867e29dfb38acfca658eb5ccf588ee193c293dd8ff7"
+      "path": "npc-skills/skills/zhiyu-dialogue/systems/事件与八卦.md",
+      "bytes": 3210,
+      "sha256": "81111aeae4787c73b09bfa500ad5f5132f8b33cd1c32e326f208caffcfaa26ed"
     },
     {
-      "path": "npc-skills/skills/zhiyu-group-dialogue/references/history/group-opening-cases-r1.json",
-      "bytes": 4128,
-      "sha256": "54bbf2511b92eb500447cbeb3829d3ecde1b580a5247dde3597c056701a667e3"
+      "path": "npc-skills/skills/zhiyu-dialogue/systems/实时知识与兴趣圈.md",
+      "bytes": 2863,
+      "sha256": "8a410ddd326fed9bbc7d1510706f82f3bf5b3ffbfb267d75d81d51a9d34faf5f"
     },
     {
-      "path": "npc-skills/skills/zhiyu-group-dialogue/references/participation-feedback-20261017.json",
-      "bytes": 1514,
-      "sha256": "3fa3a06042ae62c1f9e6350ca4cafdb3d9c4393f19ab56f9e602e17ffd7eb4d0"
+      "path": "npc-skills/skills/zhiyu-dialogue/systems/情绪与关系.md",
+      "bytes": 5894,
+      "sha256": "e0c28e994508721e8ba8f81cff2e6a0d75f48690d0a7013b3bc5e2c5ed1772ed"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/systems/程序功能清单.md",
+      "bytes": 2088,
+      "sha256": "19d4f3b619be8e3ebe9c5e72861e14e1e342c524750cbc987d7ef3061bb6f6ac"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/systems/群聊玩法.md",
+      "bytes": 2893,
+      "sha256": "15a708164b2ea1ee5a0ea74d4582467c8a9d2a9b5a6b8943c97f2f0bf319d12c"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/tests/测试题.md",
+      "bytes": 7008,
+      "sha256": "0e2f3fe5ac7a8ac6ac4ab619b5c6ea20f00570dd3f9da24bc73929fa9d86f2dc"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/traits/嘴贱疼人.md",
+      "bytes": 781,
+      "sha256": "0f7e3e04780eada6cd7c948d510e91b03959c0d7702ae8ff32011a09be1b99c9"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/traits/正经直男.md",
+      "bytes": 498,
+      "sha256": "02772e31718503c3450314600400f56102777866bd51ce89ff2c0e406f809469"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/traits/活泼开朗.md",
+      "bytes": 752,
+      "sha256": "cc45167c3eacd0753aa63e3957cbb4d3cf0d2e8551ff36d8390ef61ca553c46d"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/traits/清冷严谨.md",
+      "bytes": 504,
+      "sha256": "ac5e6de3b5a100a182b8e75c87d2636707ecb0d3504ffc8821764c2d0dce1d77"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/traits/温柔知性.md",
+      "bytes": 456,
+      "sha256": "c3659f58ac094a9dc82fca4691aef9deb398baf2d9173049aacc943e1154a358"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/traits/高冷克制.md",
+      "bytes": 919,
+      "sha256": "7bdcc1cf44664c05a49e8c4bf120972da70c43d39906b722b420a8d380502132"
     },
     {
       "path": "npc-skills/skills/zhiyu-imagegen/SKILL.md",
@@ -2546,256 +2401,6 @@
       "path": "npc-skills/skills/zhiyu-moments/scripts/validate_payload.py",
       "bytes": 17025,
       "sha256": "48bbbedc7d5b4028439782d33ca21857d6686dc20b86eb2c465713106ff6afc5"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/SKILL.md",
-      "bytes": 25448,
-      "sha256": "2fc1d9f34b0707e053864c0b507d0f1203423cfbe12fcde22b54a306a07dd542"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/anqiujin-cooking-methods.md",
-      "bytes": 7237,
-      "sha256": "665ca9934a8f54509a3259d6b6295564b878415815883361ce8cab4b522c647e"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/anqiujin-import-20261007.json",
-      "bytes": 2009,
-      "sha256": "01df2876be87d4edcfbc2a881222dc7ed6d09913f9fb545efb192cda4494c599"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/anqiujin-recipe-library-20261007.json",
-      "bytes": 592490,
-      "sha256": "ec6bd40b366e52cec998a7b0b2ee0ff4eacd0e902f4f69220c4feda8e5a0e260"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-condition-routing.md",
-      "bytes": 14039,
-      "sha256": "2d97145264814d647e3ef2153a3d566dee5cf5030403fcc3dc08a5392cfe235f"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-cooking-knowledge.md",
-      "bytes": 14669,
-      "sha256": "887e540e4fe53f1678539e8672706e12596772e4880ab0a2eaa686d06eb1b7e1"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-cooking-sources-20261007.json",
-      "bytes": 11400,
-      "sha256": "f4250d3192e0b6530998280c11d727804deb305c3de13df37003b6b2238a1431"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-cooking-start-feedback-20261018.json",
-      "bytes": 4928,
-      "sha256": "b31b87b458bbb94d2608eed7cacf56fa4bc903d087c6da27fcce20cdf9d6744d"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-dialogue-training-feedback-20261018.json",
-      "bytes": 16613,
-      "sha256": "c9e33c421af3316c23ae20581ce8230957a326be2320e2a0ef5b7000c8b9ef2f"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-final-gap-feedback-20261007.json",
-      "bytes": 8563,
-      "sha256": "7dc933d3d868d4925c361a210e6f959ebbac5aaedaf6637d928302dc563189fd"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-foundation-knowledge-20261017.json",
-      "bytes": 175465,
-      "sha256": "07182a6c5f7199eb3deea36f8520192b1fbd98413cc961efbc95049737239f7a"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-guidance.md",
-      "bytes": 39082,
-      "sha256": "1ae63b9c90fc1047ba20c80ab347ade24f8f9ceecf9ac7daeecd66cbac3e15fc"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-interaction-feedback-20261007.json",
-      "bytes": 9915,
-      "sha256": "e4a5084a84455cd4490923f04b33d5e7773a5ba9537e845ffa6447a0edeaee30"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-professional-cases-20261007.json",
-      "bytes": 45036,
-      "sha256": "52191ccd5255d19f68e8f9bd41f04d8434ef9d52418ba46da982e0c70f59c09b"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-reminder-feedback-20261007.json",
-      "bytes": 4064,
-      "sha256": "63d4d2caa3a12310c06114472cf2fb8417333ca013de40ac4beb0ce875e6ec4f"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-source-import-status-20261019.json",
-      "bytes": 24038,
-      "sha256": "2f84e32534cf6cfed14a4c32d97fbb7cded30422ea91b9e9d83c82aa9a4222d3"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chef-western-dessert-methods.md",
-      "bytes": 9670,
-      "sha256": "dd9432a4b0e474a0062a619efe49098fce246c8052237f6165357a6ecabd2ded"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-acsm-foundation-20261017.json",
-      "bytes": 621647,
-      "sha256": "3675726283281ff7134d9c35d709da668d47ab0bf34ca12d293ffcbdec69e6b3"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-barbecue-dialogue-feedback-20261012.json",
-      "bytes": 4747,
-      "sha256": "ba0701a07f9f7cf367c0dbc38b1cffdde98c1f2a2d203a8020ad1c8c1925802c"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-coach-knowledge-20261013.json",
-      "bytes": 257776,
-      "sha256": "4b501ac32ee6c435a7b3f80c2e6d84a1524df411dce4494d6cadcc56d8eabde6"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-cortisol-accepted-dialogue-20261018.json",
-      "bytes": 2470,
-      "sha256": "cf04f27622a485964b3cafd537774acc66d944cb08fdac28f613c116552da079"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-cortisol-dialogue-feedback-20261018.json",
-      "bytes": 2983,
-      "sha256": "51723cf49b48834e4f253efa36ec75800c040617428a3a474dc0e0fff2f498e4"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-fitness-guidance.md",
-      "bytes": 39484,
-      "sha256": "8bebcd603f3eeb33d29abcd2bee2f975ceb6e4bda8a4e2bacfc197c7aa442c17"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-fitness-source-library-20261008.json",
-      "bytes": 131850,
-      "sha256": "f581bf4447054c5858727380c4bcf8790067689ec552047e4fc3d7fe9a01af12"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-fitness-task-feedback-20261011.json",
-      "bytes": 8477,
-      "sha256": "08a8f1dbd830818c1948bc3144186a16b027e4d9b3a48c3237f9db1430dece7b"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-handwritten-dialogue-feedback-20261011.json",
-      "bytes": 14467,
-      "sha256": "2ae119e9bb03d29d136176b174b2031e94577da070301159bb93f488693b110f"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-private-interaction.md",
-      "bytes": 2309,
-      "sha256": "1c3f6a1d43b08bc92fbaba228fcd8a8c403d76875fd7ab37cac7bece688669a7"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-source-import-status-20261019.json",
-      "bytes": 48245,
-      "sha256": "5ec746859241c58c142a7b5be14948e09c6658e226b206cfddd26e784031826a"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-training-20261007.json",
-      "bytes": 5745,
-      "sha256": "8eb99b90d9b24239eb8e05d4280eabd393d657595be98282d305352136b019eb"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/chen-training-replan-accepted-20261018.json",
-      "bytes": 2880,
-      "sha256": "d9d6d9df719d5e16402f00d3b68b2a3dee436431e3ad3b063ecdb92f8b5eff9b"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/interaction.md",
-      "bytes": 13640,
-      "sha256": "0e6348360ba82c0b81a8bc6b10a6233782532c8e8582a81e9e50b46d07f7b099"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/interactive-guidance.md",
-      "bytes": 24585,
-      "sha256": "df6ae15ccd7986f6243ecf545b20d46470166909629f6d0e2eb3cd037f86cb7a"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/interactive-task-feedback-20261010.json",
-      "bytes": 3401,
-      "sha256": "484b19f635a96a0ec893edb9bfe78b27a8b401b58b808bd4562250fd948b2aee"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/interactive-task-intent-cases-20261010.json",
-      "bytes": 17036,
-      "sha256": "bb4846bf9638c9702123f97113ba930d3e5acd5bc7f6b7a31253ea760c8e9dda"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/interactive-task-layout-feedback-20261010.json",
-      "bytes": 2839,
-      "sha256": "1460bc691beed3a372dc04b1649b7d3ad73e64917ba3eed013c3c8321508836e"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/liu-clinical-knowledge-20261015.json",
-      "bytes": 153224,
-      "sha256": "2afc1584d4d65c0d7303a0786e4e86399ff2151ccbccbfdad21ec0b4badbf05a"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/liu-nutrition-guidance.md",
-      "bytes": 10897,
-      "sha256": "47db1484a510b2c1877843944f34fa714572746efbffd05f16228ae5ffa984ec"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/liu-source-import-status-20261019.json",
-      "bytes": 57920,
-      "sha256": "4fb43742600f91adebf0eab415e477262a731f705450ef75f7e1c08d2be99513"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/professional-human-expert-feedback-20261018.json",
-      "bytes": 2693,
-      "sha256": "317105294457d6da1ba71f7cc76160b6011ae766a88044d74bb3d4eecb0b7453"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/professional-interaction-feedback-20261006.json",
-      "bytes": 4430,
-      "sha256": "9e02b0e08f89d2613358b857d054443fea335f562cc25bcd59b414ba7aa88504"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/quoted-task-resend-feedback-20261010.json",
-      "bytes": 1743,
-      "sha256": "24be1e39730c3508a92ed391a42999c03fda6795a034e7f443a59aad8b6c72b0"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/skin-guidance.md",
-      "bytes": 3607,
-      "sha256": "c4ecf7431e062cc422fcf447970be1eab86403286be1a02e6921df21e9d3744f"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/task-auto-skip-feedback-20261018.json",
-      "bytes": 1075,
-      "sha256": "f86ded8cf6955f44cd92a28fa0d277a92e833563d61422633bc239636a4454ff"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/task-media-rest-plan-feedback-20261011.json",
-      "bytes": 3134,
-      "sha256": "ab510071c446594e3ab6b2f6515445a363e3f5b83f3c494dc8e56598a2040bd5"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/task-planning-invitation-feedback-20261013.json",
-      "bytes": 3067,
-      "sha256": "cd0817be60089c3c191cb7cf3352c98e89f1073a4f309cdfc975bd306821bec2"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/western-dessert-import-20261008.json",
-      "bytes": 3776,
-      "sha256": "cf356b9940e4a5faef3d6ec936583ec794571b5ff5057f1210cffde5d3333e01"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/western-dessert-recipe-library-20261008.json",
-      "bytes": 250342,
-      "sha256": "a825c760e68f41e985b68987e79465654b13033add00f965901f165a85cee1a2"
-    },
-    {
-      "path": "npc-skills/skills/zhiyu-professional-dialogue/references/zhou-chef-base-cases-20261005-r2.json",
-      "bytes": 6461,
-      "sha256": "b2b6bca6dd5b89be3067c728521a084927b819ae915a94dc5c72cffd5f175f60"
-    },
-    {
-      "path": "npc-skills/tests/cases.json",
-      "bytes": 74484,
-      "sha256": "7befbaf3c7d792949d3149eb0d1e693bd7204cdf512d0e657071fa811b4ab70e"
-    },
-    {
-      "path": "npc-skills/tests/evaluation.md",
-      "bytes": 16832,
-      "sha256": "0c2a339c897db81816941cace167a90fe03d5bd0b3afe59e179db806c506ec8b"
     },
     {
       "path": "package-lock.json",
@@ -3748,11 +3353,6 @@
       "sha256": "6c1e8641c6514b0f41cf982e815a17adda1a59610128cd6f0d40d92add77daaf"
     },
     {
-      "path": "scripts/check-naturalness-runtime.mjs",
-      "bytes": 2429,
-      "sha256": "d9bfb4a428cf36cc57a545e0a36d06bf318ad2fb53f52393ec686478301ba57a"
-    },
-    {
       "path": "scripts/check-npc-density-live.mjs",
       "bytes": 2703,
       "sha256": "5a3c5bf42965670575308f210bcf5603263db2e091f468a8c13df0c69e5e8c5a"
@@ -3781,11 +3381,6 @@
       "path": "scripts/com.zhiyu.local-preview.plist",
       "bytes": 939,
       "sha256": "534451193fa6c9ff69b18b2368f98faef1bf7ad6b1e5776f10c99bb745851ca9"
-    },
-    {
-      "path": "scripts/diagnose-npc-style.mjs",
-      "bytes": 4424,
-      "sha256": "ffc612b14c3e1a1b6bcecb550530f20efe847f249a58caa200d2d3901eb65ebd"
     },
     {
       "path": "scripts/download-stitch-assets.py",
@@ -3839,13 +3434,8 @@
     },
     {
       "path": "scripts/npc-test-runtime.mjs",
-      "bytes": 1191,
-      "sha256": "d9f6d297a56bbbd2a3a3cdd4b447343cd62b82bd0b76c2b55fafabdc4e425d89"
-    },
-    {
-      "path": "scripts/package-friends.py",
-      "bytes": 9100,
-      "sha256": "5365a46972e28db102b7069b74222d866141ccf935fb9f29f59c1eb5171be639"
+      "bytes": 2578,
+      "sha256": "7d907235aeed1e2601326d20cd8ccb5f5f3e74d3166a0de4f34fa49aeebf2b20"
     },
     {
       "path": "scripts/prepare-xiaoman-desktop-videos.py",
@@ -3871,6 +3461,11 @@
       "path": "scripts/qwen3-tts-server.py",
       "bytes": 3307,
       "sha256": "64ad2d4bf6c17e3bd15ef75bbe532f7482d6c64985bd8f8f6cc956a5151df939"
+    },
+    {
+      "path": "scripts/realtime-call-browser-fixture.mjs",
+      "bytes": 6316,
+      "sha256": "e1e2d3234fe10f75116c0346683aeb9026b9ddf88e67118275a99a82a775f1cb"
     },
     {
       "path": "scripts/recheck-long-content-results-20261005.mjs",
@@ -3904,8 +3499,8 @@
     },
     {
       "path": "scripts/task-page-ui-fixture.mjs",
-      "bytes": 17037,
-      "sha256": "a6b51f272acdda0138245e307d1a3ba9e3d96e2ce4aa67ab22b0daa423399558"
+      "bytes": 17689,
+      "sha256": "58e7d399ecaec05fb8de570d9c89d6f1eb1155b0547a82af9367ac3563ecbb24"
     },
     {
       "path": "scripts/test-all-npc-capabilities.mjs",
@@ -4026,6 +3621,16 @@
       "path": "scripts/test-contact-life.mjs",
       "bytes": 10806,
       "sha256": "3fa59759360cbf844c8badb26e778040d8f02a62707b8ca4b71bae1a27aedad0"
+    },
+    {
+      "path": "scripts/test-dialogue-prompts.mjs",
+      "bytes": 12313,
+      "sha256": "5e42f45249f621fe68ea58b8b71f7f18c4b8a59c62969a1515fb552e87086aef"
+    },
+    {
+      "path": "scripts/test-dialogue-unified-surfaces.mjs",
+      "bytes": 6995,
+      "sha256": "d8a2f96e39d855bd1c630fe1b3df9d644cc4f4591a676c6c5b7b488567e1469d"
     },
     {
       "path": "scripts/test-fitness-demonstrations.mjs",
@@ -4333,6 +3938,11 @@
       "sha256": "2b3b89e6c26501b0d36d42445163e593b40f62bba4400ff203b151bc09a4f3d9"
     },
     {
+      "path": "scripts/test-npc-test-runtime.mjs",
+      "bytes": 2965,
+      "sha256": "b21c6c8749303660a30a11415aa4d62593ced1e39f75409ea61d474d2f2ae7f2"
+    },
+    {
       "path": "scripts/test-private-chat-history.mjs",
       "bytes": 8116,
       "sha256": "a6cbe3b7864063d8426a3000d733476256184a8758b35173f8564d32501c041b"
@@ -4411,6 +4021,16 @@
       "path": "scripts/test-profile-popover-layout.mjs",
       "bytes": 17497,
       "sha256": "94a557d915ce49a21c6a048b7ed4f07fefd8e46d5e3bdaf461a9d24c1c54adf5"
+    },
+    {
+      "path": "scripts/test-realtime-call-presentation.mjs",
+      "bytes": 7662,
+      "sha256": "04a95abf7a3887e1600e27d17882519bd88fa7a7af5b2a0de6ee362eb9c0721f"
+    },
+    {
+      "path": "scripts/test-realtime-transcript.mjs",
+      "bytes": 14608,
+      "sha256": "f77ee6ed223111e8a916827f89d790386a684a3de08281f8fe107966ac0abb2c"
     },
     {
       "path": "scripts/test-reply-context.mjs",
@@ -4498,6 +4118,11 @@
       "sha256": "7c56f17f6023a7642be0f270b4d1cfb3b58d2601b975a47e125c432f1bfb3289"
     },
     {
+      "path": "scripts/test-unified-dialogue-package.mjs",
+      "bytes": 8611,
+      "sha256": "f0ca8d1cc500a2a944372d2641a47edd55156fee0d5914d6f347f08f2658beea"
+    },
+    {
       "path": "scripts/test-voice-review.mjs",
       "bytes": 4088,
       "sha256": "cb328d1c0e5bf3dec6d9c524322a6b5283f1760fa392db8254e895a72dbcd1c3"
@@ -4568,9 +4193,14 @@
       "sha256": "b7cfd791e59fcae66df653480fe75013685784c1e4cbd3c56f7928c5c2962347"
     },
     {
+      "path": "scripts/ui-only.vite.config.mjs",
+      "bytes": 707,
+      "sha256": "692d9e684990373bf20a375abe7e075b0a9f79aff4e055ff79abac54c0b7a868"
+    },
+    {
       "path": "scripts/validate-chen-acsm-foundation.mjs",
-      "bytes": 1086,
-      "sha256": "4310f5a1d6ff9ff8987fc5908951947411de48a921b2b6a79004df1348894ff3"
+      "bytes": 1063,
+      "sha256": "1cdf206b6e5e4693c5748cba6fbce45c446b6419fe3c6804443b3e47b0d41740"
     },
     {
       "path": "scripts/verify-dialogue-pipeline-20261005.mjs",
@@ -4679,8 +4309,8 @@
     },
     {
       "path": "server/npc/chen-prompt.ts",
-      "bytes": 17232,
-      "sha256": "8c3be0c1ba3a84066e13891504506aff00d2d6daaf89bb7bdf11c38f4f87873f"
+      "bytes": 13044,
+      "sha256": "ce0d0b3ae7c49e74d25d3d65b22d10d73a673775435d07b2c545ce2affa7b8fc"
     },
     {
       "path": "server/npc/chen-task-repair.test.ts",
@@ -4704,13 +4334,13 @@
     },
     {
       "path": "server/npc/codex.ts",
-      "bytes": 131400,
-      "sha256": "7198c514528165dc67d107f8100eddc913b77bb2d9c6645e9836f32a32f9801b"
+      "bytes": 112270,
+      "sha256": "c19f5b8f5027415741e6270fe7386a07ee1d96fbd6f52d4774516b0e8ad72323"
     },
     {
       "path": "server/npc/companion-knowledge.ts",
-      "bytes": 5209,
-      "sha256": "631394630c2c09fea19f1eb246a2a990a50f6cf0696f87f48ca61209a7a392e4"
+      "bytes": 5525,
+      "sha256": "d87f4990b9e15ac7cad16b9f45c757e14b57cf85e8bb7c0496b04b5e7d1e2d01"
     },
     {
       "path": "server/npc/deepseek.ts",
@@ -4719,13 +4349,13 @@
     },
     {
       "path": "server/npc/dialogue-health.ts",
-      "bytes": 4587,
-      "sha256": "c0ff33acb26bd14bd4f537cb89211ac2bca5cb3649d2ba81a5306bb6b34c1e57"
+      "bytes": 4758,
+      "sha256": "072974d6230e9b95b2f11329d48ca692e9931f490cf4efde806b4434d0a29d38"
     },
     {
       "path": "server/npc/dialogue-skill.ts",
-      "bytes": 40932,
-      "sha256": "8633bbdc25b30b7a295c625cad5f33fac50b7c93adede924f4d5c13b64c193c8"
+      "bytes": 14465,
+      "sha256": "ab415f2afb0ad1f498c308fc3420ba22e25d40005d2ee100d2154af69f2debb9"
     },
     {
       "path": "server/npc/doubao-audio.ts",
@@ -4734,8 +4364,8 @@
     },
     {
       "path": "server/npc/group-dialogue.ts",
-      "bytes": 52869,
-      "sha256": "1326586ef0caf4834da9586087721ea57c9a485f6cfae493b52d8815331f8396"
+      "bytes": 47681,
+      "sha256": "e7a3f201d01af1258015830353f6aae9d20a4ed6f4035cda782d5d9469259057"
     },
     {
       "path": "server/npc/group-media.ts",
@@ -4754,8 +4384,8 @@
     },
     {
       "path": "server/npc/group-routing.ts",
-      "bytes": 10112,
-      "sha256": "3d145cc3c8bc3610f598b78c7be340335592badd4c2da28a762984be81cd3475"
+      "bytes": 8278,
+      "sha256": "fa4f1c7f88ab08fdd518812943062feec8153f4f40ee770e35fdbc87e44d95e8"
     },
     {
       "path": "server/npc/group-task-expiry.ts",
@@ -4784,8 +4414,8 @@
     },
     {
       "path": "server/npc/he-prompt.ts",
-      "bytes": 7718,
-      "sha256": "f6f52799d7c60c9a4c77b5def9614769a2cb2f5b5627da0132a9dd69829e6d35"
+      "bytes": 5762,
+      "sha256": "b32c40df3357c9ee8e24250144495c4e5585de8829ee25b4f9f25a21c63892b9"
     },
     {
       "path": "server/npc/he.test.ts",
@@ -4814,8 +4444,8 @@
     },
     {
       "path": "server/npc/liu-prompt.ts",
-      "bytes": 8765,
-      "sha256": "b0271377fbdb9c3eb62cf2533cf2346698d9c35a0a53df90aaa592b43664d9c9"
+      "bytes": 7518,
+      "sha256": "d7b56a044a0f57902648fe1628fb7fc28a910eec955cc362ae36dd33e82f2261"
     },
     {
       "path": "server/npc/local-asr.py",
@@ -4839,8 +4469,8 @@
     },
     {
       "path": "server/npc/molly-prompt.ts",
-      "bytes": 9608,
-      "sha256": "b5623bf8a94342042c60711c784a297ee73defd30b7b96f7616570b2d259ab45"
+      "bytes": 9066,
+      "sha256": "817a86892ec79ca3945c9b5ed1bf37b66151f612ebe3b6772df07efaeb6a32b3"
     },
     {
       "path": "server/npc/moment-interactions.ts",
@@ -4854,8 +4484,8 @@
     },
     {
       "path": "server/npc/moment-policy.ts",
-      "bytes": 19829,
-      "sha256": "df76937ad94f6be6b3316206b553fdf7cf2973b6bd802b533add18783ed580b9"
+      "bytes": 19664,
+      "sha256": "f8ba80f2d69bb7e553d055bf31468d9dac048c1155c4848c893f177063fb94ac"
     },
     {
       "path": "server/npc/moment-relationships.ts",
@@ -4919,8 +4549,8 @@
     },
     {
       "path": "server/npc/prompt.ts",
-      "bytes": 10776,
-      "sha256": "edea861d5a4b2f281d004de8b7e6d81b24fa8c60a430834c1a20b1177c2ac232"
+      "bytes": 6736,
+      "sha256": "0e2a2dff8a18c78db273fe526f160befb35a3d3361ecde0c80be09001ab1fc27"
     },
     {
       "path": "server/npc/qwen-audio.ts",
@@ -4939,13 +4569,13 @@
     },
     {
       "path": "server/npc/realtime-speech-context.ts",
-      "bytes": 11791,
-      "sha256": "782972c67617d2e5579b612b545c49ade2d3367a9b705cac94487af5dc8ec0ba"
+      "bytes": 11542,
+      "sha256": "87cf3ad1efc5eedfd55e0d72e3cd1b1e6e7550af4f8ddf2057bba0201916c305"
     },
     {
       "path": "server/npc/realtime-speech-gateway.ts",
-      "bytes": 25772,
-      "sha256": "cc624055c92d711ed884004257718deec0c233cc316242b6ee0c8982fb0cd82f"
+      "bytes": 26365,
+      "sha256": "e4f423745090c546569080eae5af91b7aecb7d6c78513fcae6a315e06260339b"
     },
     {
       "path": "server/npc/realtime-speech-settings.ts",
@@ -4999,8 +4629,8 @@
     },
     {
       "path": "server/npc/style-catalog.ts",
-      "bytes": 6100,
-      "sha256": "87ed863571b6426458dca8bf0f5e30b895e7751b976dfd49f8f41f5797338b56"
+      "bytes": 1704,
+      "sha256": "b1a8a5268b1dc12ea09a237399e13aa50ffef78f00c78d852a3be682d0b6663d"
     },
     {
       "path": "server/npc/task-calendar-reader.ts",
@@ -5034,8 +4664,8 @@
     },
     {
       "path": "server/npc/yuan-prompt.ts",
-      "bytes": 7634,
-      "sha256": "d13418f7c176b3a97549a30da05bcdf3a85ef16c24c1648c85b6ceb1e8049308"
+      "bytes": 4840,
+      "sha256": "067962c7f70b6fa2869d543e05e0bc7d3dfb76de3babbbe85f060e9c32853008"
     },
     {
       "path": "server/npc/zhou-chef-auth.test.ts",
@@ -5049,8 +4679,8 @@
     },
     {
       "path": "server/npc/zhou-chef-prompt.ts",
-      "bytes": 17969,
-      "sha256": "31ca3dcc6655c7c4a6f1a9cba764006b070d1d69be3479e49097fe5267b00563"
+      "bytes": 17423,
+      "sha256": "d794a26bbea8885d4dd34f41188301a41e8aa35a106c45c0e19df977a271bdf5"
     },
     {
       "path": "server/npc/zhou-chef-task-repair.test.ts",

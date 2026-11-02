@@ -1,10 +1,14 @@
 import {createServer, request as proxyRequest} from 'node:http';
+import {realtimeCallFixtureScript} from './realtime-call-browser-fixture.mjs';
 
 // A read-only UI fixture. No NPC/auth plugins, databases, credentials, or models
 // are loaded. The real App supplies GET UI assets only; every API stays here.
 // This opt-in creates only in-memory ProfessionalTask-shaped source snapshots.
 // It does not enable API writes, execute task commands, or send chat messages.
 const taskBoardImportFixture = process.env.ZHIYU_TASK_BOARD_IMPORT_FIXTURE === '1';
+const realtimeCallFixture=process.env.ZHIYU_REALTIME_CALL_FIXTURE==='1';
+const requestedAssetPort=Number(process.env.ZHIYU_FIXTURE_ASSET_PORT||3100);
+if(!Number.isInteger(requestedAssetPort)||requestedAssetPort<1024||requestedAssetPort>65535)throw new Error('Invalid isolated asset port');
 const fixtureStartedAt = new Date(Date.now() - process.uptime() * 1000).toISOString();
 const oldImportTaskAt = new Date(Date.parse(fixtureStartedAt) - 60_000).toISOString();
 const accounts = {
@@ -220,6 +224,7 @@ const server = createServer((req, res) => {
       return json(res, 403, {error: '隔离预览阻止所有 API 写入'});
     }
     if (path === '/api/auth/session') return json(res, 200, {authenticated: true, account: accounts[key]});
+    if(realtimeCallFixture&&path==='/api/npc/realtime-speech/settings')return json(res,200,{configured:true});
     if (path === '/api/npc/groups') {
       if (req.headers['x-zhiyu-account'] !== accounts[key].id) return json(res, 409, {error: '隔离预览账号不匹配'});
       return json(res, 200, {groups: groupsByAccount[key]});
@@ -246,23 +251,24 @@ const server = createServer((req, res) => {
   if (path === '/__open-in-editor') return json(res, 404, {error: '隔离预览不打开外部编辑器'});
   counters.assetReads++;
   const proxy = proxyRequest({
-    hostname: '127.0.0.1', port: 3100, method: 'GET',
+    hostname: '127.0.0.1', port: requestedAssetPort, method: 'GET',
     // Security checks use the canonical route above. Preserve the original
     // encoded Vite module IDs when forwarding allowed UI asset GET requests.
     path: req.url,
-    headers: {host: '127.0.0.1:3100', accept: req.headers.accept || '*/*'},
+    headers: {host: `127.0.0.1:${requestedAssetPort}`, accept: req.headers.accept || '*/*'},
   }, upstream => {
     // Production auth cookies must not enter the isolated browser origin.
     const {'set-cookie': _cookies, ...headers} = upstream.headers;
     const optics = path === '/' && new URL(req.url, 'http://127.0.0.1').searchParams.get('liquidOptics') === '1';
-    if (optics && String(headers['content-type']).includes('text/html')) {
+    const callFixture=realtimeCallFixture&&path==='/character-window';
+    if ((optics||callFixture) && String(headers['content-type']).includes('text/html')) {
       delete headers['content-length'];
       delete headers.etag;
       res.writeHead(upstream.statusCode || 502, headers);
       let html='';
       upstream.setEncoding('utf8');
       upstream.on('data', chunk => {html+=chunk;});
-      upstream.on('end', () => res.end(html.replace('</head>', liquidOpticsProof+'</head>')));
+      upstream.on('end', () => res.end(html.replace('</head>', (optics?liquidOpticsProof:'')+(callFixture?realtimeCallFixtureScript:'')+'</head>')));
       upstream.on('error', () => res.end());
       return;
     }

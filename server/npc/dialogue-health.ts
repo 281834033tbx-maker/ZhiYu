@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { npcSkillVersion, mollySkillVersion, timeRules } from './codex';
-import { loadDialogueSkill } from './dialogue-skill';
+import { loadDialogueSkill, loadMollyDialogueSkill, type DialogueCharacterId } from './dialogue-skill';
 import { isProfessionalTaskMutation } from './professional-task-mutation';
 import { PROFESSIONAL_TASK_SESSION_COMPLETE_VERSION, PROFESSIONAL_TASK_SESSION_VERSION } from '../../lib/npc/professional-task-session';
 import { groupParticipationVersion } from './group-routing';
@@ -25,7 +25,7 @@ export function dialogueHealth(): Plugin {
         if (req.method !== 'GET') { res.statusCode = 405; res.end('{}'); return; }
         const names = {
           'he-jiawei':'何嘉伟', 'yuan-xiaoman':'徐小曼', liu:'柳智敏',
-          'chen-nian':'陈年', 'xia-xia':'夏夏', 'zhou-chef':'赵一帆',
+          'chen-nian':'陈年', 'xia-xia':'夏夏', 'zhou-chef':'赵一帆', molly:'Molly',
         } as const;
         const requested = new URL(req.url || '/', 'http://127.0.0.1').searchParams.getAll('characterId');
         if (requested.length && (requested.length !== 1 || !Object.hasOwn(names, requested[0]))) {
@@ -36,16 +36,17 @@ export function dialogueHealth(): Plugin {
         try {
           const temporal = timeRules(root);
           if (!temporal.trim()) throw Error('通用时间规则为空');
-          const groupSources = ['SKILL.md', 'references/current-feedback-20261007.md'].map(path => ({
-            path: 'npc-skills/skills/zhiyu-group-dialogue/' + path,
-            sha256: createHash('sha256').update(readFileSync(join(root, 'npc-skills/skills/zhiyu-group-dialogue', path))).digest('hex'),
+          const groupSources = ['npc-skills/protocols/group-collaboration.md','npc-skills/skills/zhiyu-dialogue/core/10-群聊.md'].map(path => ({
+            path,
+            sha256: createHash('sha256').update(readFileSync(join(root,path))).digest('hex'),
           }));
-          const connected = new Set(['xia-xia', 'yuan-xiaoman', 'liu', 'chen-nian', 'he-jiawei', 'zhou-chef']);
+          const connected = new Set(['xia-xia', 'yuan-xiaoman', 'liu', 'chen-nian', 'he-jiawei', 'zhou-chef', 'molly']);
           const characters = Object.entries(names).filter(([id]) => !requested.length || id === requested[0]).map(([id, name]) => {
-            const loaded = loadDialogueSkill(root, '你是' + name)!;
+            const loaded = id==='molly'?loadMollyDialogueSkill(root):loadDialogueSkill(root, '你是' + name,id as DialogueCharacterId)!;
             return {
               characterId:id, backendConnected:connected.has(id),
               skillVersion:loaded.metadata.skillVersion, rulesHash:loaded.metadata.rulesHash,
+              dialogueMode:loaded.profile.mode,traits:loaded.profile.traits,
               outputPolicy:{companionNaturalDialogueOnly:!allowsCharacterChoice(id),choiceMessages:allowsCharacterChoice(id)},
               momentRulesHash:createHash('sha256').update(loadMomentRules(root,id)).digest('hex'),
               momentInteractionRulesHash:createHash('sha256').update(loadMomentRules(root,id,'interaction')).digest('hex'),

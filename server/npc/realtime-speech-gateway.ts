@@ -9,6 +9,7 @@ import NodeWebSocket, { WebSocketServer, type RawData } from 'ws';
 import { readRealtimeSpeechConfig, type RealtimeSpeechConfig } from './realtime-speech-settings';
 import { readXiaomanRealtimeVoiceSettings, RealtimeVoiceConfigError } from './realtime-speech-voice';
 import { REALTIME_INITIAL_PAYLOAD_BYTES, REALTIME_PROVIDER_CONTEXT_TOKENS, realtimeHistoryBudget, realtimeInstructions } from './realtime-speech-budget';
+import { RealtimeInputTranscriptAssembler } from '../../lib/npc/realtime-transcript';
 
 const CALL_PATH = '/api/npc/realtime-speech/call';
 const LOCAL_PROTOCOL = 'vite-zhiyu-realtime-v1';
@@ -186,8 +187,10 @@ function attachCall(client: NodeWebSocket, root: string, ownerId: string, config
   let messageWindow = Date.now();
   let messageCount = 0;
   let state: 'listening' | 'thinking' | 'speaking' = 'listening';
-  let userText = '';
-  let userTurnId: string | undefined;
+  // The provider's delta label does not distinguish every interim hypothesis
+  // shape. Use conservative three-hypothesis compatibility for unmarked input;
+  // explicit whole-text fields/results remain authoritative snapshots.
+  const inputTranscripts=new RealtimeInputTranscriptAssembler(randomUUID,'auto');
   let assistantText = '';
   let responseId: string | undefined;
   let audioDelivered = false;
@@ -195,7 +198,6 @@ function attachCall(client: NodeWebSocket, root: string, ownerId: string, config
   const canceledResponses = new Set<string>();
   let dropPendingResponse = false;
   let finishTimer: ReturnType<typeof setTimeout> | undefined;
-  let startupTimer: ReturnType<typeof setTimeout> | undefined;
   let endedRecorded = false;
   let historyWarningSent = false;
   let historyQueue = Promise.resolve();
@@ -263,7 +265,7 @@ function attachCall(client: NodeWebSocket, root: string, ownerId: string, config
     }
     try { client.ping(); } catch { finish(); }
   }, 15000);
-  startupTimer = setTimeout(() => finish('通话启动超时，请重新开始。'), 15000);
+  const startupTimer = setTimeout(() => finish('通话启动超时，请重新开始。'), 15000);
 
   const updateAssistant = (text: string, final: boolean, turnId?: string) => {
     if (turnId && canceledResponses.has(turnId)) return;
@@ -315,8 +317,8 @@ function attachCall(client: NodeWebSocket, root: string, ownerId: string, config
       return finish(failure.message);
     }
     if (type === 'conversation.item.input_audio_transcription.started') {
-      userText = '';
-      userTurnId = identifier(event.item_id) ?? randomUUID();
+      const started=inputTranscripts.start(identifier(event.item_id),identifier(event.event_id));
+      if(!started.fresh)return;
       if (state === 'speaking' || state === 'thinking') {
         if (responseId) canceledResponses.add(responseId);
         if (canceledResponses.size > 64) canceledResponses.delete(canceledResponses.values().next().value!);
@@ -329,23 +331,24 @@ function attachCall(client: NodeWebSocket, root: string, ownerId: string, config
       setState('listening');
       return;
     }
-    if (type === 'conversation.item.input_audio_transcription.delta') {
-      const itemId = identifier(event.item_id);
-      if (itemId && itemId !== userTurnId) { userText = ''; userTurnId = itemId; }
-      if (typeof event.delta === 'string') userText = (userText + event.delta).slice(0, 12000);
-      send({ type: 'transcript', role: 'user', text: userText, final: false, turnId: userTurnId });
+    if (type === 'conversation.item.input_audio_transcription.delta' || type === 'conversation.item.input_audio_transcription.result') {
+      const snapshot=typeof event.transcript==='string'?event.transcript:typeof event.text==='string'?event.text:undefined;
+      const partial=inputTranscripts.update({kind:snapshot!==undefined||type.endsWith('.result')?'snapshot':'delta',
+        itemId:identifier(event.item_id),eventId:identifier(event.event_id),text:snapshot??(typeof event.delta==='string'?event.delta:undefined)});
+      if(partial)send(partial);
       return;
     }
     if (type === 'conversation.item.input_audio_transcription.completed') {
-      if (typeof event.transcript === 'string') userText = event.transcript.slice(0, 12000);
-      userTurnId = identifier(event.item_id) ?? userTurnId ?? randomUUID();
-      const completed = { type: 'transcript', role: 'user', text: userText, final: true, turnId: userTurnId };
+      const completed=inputTranscripts.update({kind:'complete',itemId:identifier(event.item_id),eventId:identifier(event.event_id),
+        text:typeof event.transcript==='string'?event.transcript:typeof event.text==='string'?event.text:undefined});
+      if(!completed)return;
       send(completed);
       record(completed);
-      if (state !== 'speaking') setState('thinking');
+      if (state !== 'speaking'&&completed.turnId===inputTranscripts.currentTurnId) setState('thinking');
       return;
     }
     if (type === 'conversation.item.input_audio_transcription.failed') {
+      inputTranscripts.fail(identifier(event.item_id));
       send({ type: 'notice', message: '这句话没听清，请再说一次。' });
       setState('listening');
       return;

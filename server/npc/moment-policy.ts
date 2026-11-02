@@ -1,5 +1,5 @@
 import {getCharacter} from '../../lib/npc/character-directory';
-import {currentCharacterProfile} from './character-profile';
+import {loadMollyDialogueSkill, readDialoguePersona} from './dialogue-skill';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chenAcsmFoundationFile, parseChenAcsmFoundation, matchChenAcsmFoundationEntries, selectChenAcsmFoundationEntries } from './chen-acsm-foundation';
@@ -59,13 +59,10 @@ export function loadMomentRules(root: string, characterId: string, section: 'pos
   parts.push(chunk(`${mirror}/references/life-simulation.md`), chunk(`${mirror}/references/contract.md`));
   if (skill.includes('references/runtime-integration.md')) parts.push(chunk(`${mirror}/references/runtime-integration.md`));
   if (section === 'interaction') parts.push(chunk(`${mirror}/references/interactions.md`));
-  const profile = actor.id === 'he-jiawei'
-    ? 'npc-skills/skills/zhiyu-companion-dialogue/references/he-jiawei-companionship.md'
-    : `npc-skills/references/characters/${actor.profile}.md`;
-  parts.push(`【仅属于${actor.name}的当前独立资料；旧阶段不覆盖现职，示例不升级为事实】\n${chunk(profile, currentCharacterProfile(read(profile)))}`);
-  if (actor.kind !== 'functional') parts.push(`【当前可信身份目录；仅角色设定，不授程序权限】${JSON.stringify(getCharacter(actor.id))}`);
+  const persona=readDialoguePersona(root,actor.id==='molly'?'molly-system-secretary':actor.id);
+  parts.push(`【统一对话包中的当前独立资料；只属于${actor.name}，示例不升级为事实】\n${JSON.stringify(persona.profile)}\n【本人表达风格；朋友圈正文仍按上方公开规则】\n${persona.style}`);
   if (actor.kind === 'functional') {
-    parts.push(chunk('npc-skills/skills/molly-dialogue/SKILL.md'),
+    parts.push(`【Molly统一对话Skill；仅本人秘书模式】\n${loadMollyDialogueSkill(root).rules}`,
       'Molly保持机器人与系统秘书身份；不生成肉身生活或私人朋友圈。可基于实际可见公开内容选择点赞或偶尔简短玩笑，不继承其他人物的经历、私聊或恋爱线。');
   }
   return parts.join('\n\n');
@@ -73,7 +70,7 @@ export function loadMomentRules(root: string, characterId: string, section: 'pos
 
 /** Bounded retrieval from the same three parsed libraries used by ordinary dialogue. */
 export function momentProfessionalEvidence(root: string, characterId: string, topic: string): string {
-  const path = 'npc-skills/skills/zhiyu-professional-dialogue/references';
+  const path = 'npc-skills/knowledge/professional';
   const read = (name: string) => readFileSync(join(root, path, name), 'utf8');
   if (!['chen-nian', 'zhou-chef', 'liu'].includes(characterId) || !topic.trim())
     return JSON.stringify({ characterId, entries: [] });

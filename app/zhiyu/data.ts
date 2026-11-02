@@ -1,6 +1,6 @@
 import assets from './assets.json';
 import zhouChefProfile from '../../npc-skills/data/zhou-chef-profile.json';
-import { chenFitnessProfile, liuNutritionProfile } from './professional-profiles';
+import { chenFitnessProfile, liuNutritionProfile, chefCookingProfile } from './professional-profiles';
 import type { DialoguePurpose } from '../../lib/npc/dialogue-purpose';
 import { enabledCharacterDirectory, publicCharacterDirectoryVersion } from '../../lib/npc/character-directory';
 
@@ -112,7 +112,7 @@ const peoplePresentation: Person[] = [
     bio: '', account: 'he_jiawei', region: '成都', added: '2026-09-26', letter: 'H' },
   { id: 'zhou-chef', name: '赵一帆', realName: '赵一帆', nickname: '赵一帆', gender: 'male', color: '#8a745f',
     avatar: zhouChefProfile.visual.scene, desktopImage: zhouChefProfile.visual.scene,
-    professionalProfile: zhouChefProfile.professionalProfile,
+    professionalProfile: chefCookingProfile,
     bio: '把饭做好，把日子过好。', account: 'zhou_chef', region: '广州', added: '2026-10-04', letter: 'Z' },
   { id: 'yuan-xiaoman', cover: '/npc/covers/yuan-xiaoman.png', coverAlt: '海风吹过咖啡馆的窗帘', name: '徐小曼', realName: '徐小曼', nickname: '徐小曼', gender: 'female', avatar: '/npc/yuan-xiaoman/avatar.png',
     desktopImage: '/desktop-npc/scenes/xu-xiaoman-20260926.png',

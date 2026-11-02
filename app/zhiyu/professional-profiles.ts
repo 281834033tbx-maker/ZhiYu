@@ -1,4 +1,8 @@
 import type { ProfessionalProfile } from './data';
+import chenCard from '../../npc-skills/skills/zhiyu-dialogue/npcs/chen-nian/profile.json';
+import liuCard from '../../npc-skills/skills/zhiyu-dialogue/npcs/liu/profile.json';
+import chefCard from '../../npc-skills/skills/zhiyu-dialogue/npcs/zhou-chef/profile.json';
+import chefLegacyAssets from '../../npc-skills/data/zhou-chef-profile.json';
 
 // Display-only character setting, completed under the user's 2026-10-10
 // authorization, with current identity and role scope updated on 2026-10-21. These are fictional Zhiyu qualifications, not real-world
@@ -6,7 +10,7 @@ import type { ProfessionalProfile } from './data';
 type FictionalProfessionalProfile = ProfessionalProfile & {
   fictional: true;
   scope: 'zhiyu-fictional-world';
-  authoredAt: '2026-10-10' | '2026-10-12' | '2026-10-21';
+  authoredAt: '2026-10-10' | '2026-10-12' | '2026-10-21' | '2026-11-02';
   provenance: {
     kind: 'user_authorized_fictional_profile_completion';
     roleSources: string[];
@@ -15,21 +19,21 @@ type FictionalProfessionalProfile = ProfessionalProfile & {
 };
 
 export const liuNutritionProfile: FictionalProfessionalProfile = {
-  "title": "营养师",
+  "title": liuCard.title,
   "titles": [
-    "营养师"
+    liuCard.title
   ],
-  "summary": "上海营养师，语气清冷、高冷御姐。专注健身餐、早餐与日常营养餐搭配、一日三餐和用餐时间安排、减脂饮食与合理营养补充。结合口味、作息、过敏与忌口给具体建议，把每天怎么吃安排清楚，根据实际反馈调整。",
+  "summary": `${liuCard.identity.job}。${liuCard.identity.oneLine}。`,
   "issuer": "智域营养与健康饮食认证中心",
   "scopeLabel": "智域世界内资质",
   "fictional": true,
   "scope": "zhiyu-fictional-world",
-  "authoredAt": "2026-10-21",
+  "authoredAt": "2026-11-02",
   "provenance": {
     "kind": "user_authorized_fictional_profile_completion",
     "roleSources": [
-      "npc-skills/references/characters/liu-zhimin.md",
-      "npc-skills/skills/zhiyu-professional-dialogue/references/liu-nutrition-guidance.md",
+      "npc-skills/skills/zhiyu-dialogue/npcs/liu/profile.json",
+      "npc-skills/skills/zhiyu-dialogue/modes/professional.md",
       "output/fitness-nutrition-role-split-20261012/user-requirement.json"
     ],
     "completionScope": "按用户本轮职业调整同步专业资料；资质为原创智域角色设定，不代表现实医学博士、营养认证、执业身份或已验收专业效果。"
@@ -95,19 +99,19 @@ export const liuNutritionProfile: FictionalProfessionalProfile = {
 };
 
 export const chenFitnessProfile: FictionalProfessionalProfile = {
-  title: '健身教练',
-  titles: ['健身教练'],
-  summary: '27岁，东北黑龙江健身教练，说话非常幽默。围绕增肌、减脂与体能目标安排训练，讲清动作、热身、训练分化、训练补剂、恢复和康复训练支持，按时间、器械与经验调整；详细餐食和日常营养由柳智敏协作。',
+  title: chenCard.title,
+  titles: [chenCard.title],
+  summary: `${chenCard.identity.job}。${chenCard.identity.oneLine}。`,
   issuer: '智域健身训练认证中心',
   scopeLabel: '智域世界内资质',
   fictional: true,
   scope: 'zhiyu-fictional-world',
-  authoredAt: '2026-10-21',
+  authoredAt: '2026-11-02',
   provenance: {
     kind: 'user_authorized_fictional_profile_completion',
     roleSources: [
-      'npc-skills/references/characters/chen-nian.md',
-      'npc-skills/skills/zhiyu-professional-dialogue/references/chen-fitness-guidance.md',
+      'npc-skills/skills/zhiyu-dialogue/npcs/chen-nian/profile.json',
+      'npc-skills/skills/zhiyu-dialogue/modes/professional.md',
       'output/fitness-nutrition-role-split-20261012/user-requirement.json',
     ],
     completionScope: '按用户本轮授权补齐专业资料展示；新增资质是原创智域角色设定，不增加现实学历、认证或执教履历，不扩展动作观察、实时带练与临床营养能力。',
@@ -170,4 +174,13 @@ export const chenFitnessProfile: FictionalProfessionalProfile = {
       summary: '依据实际完成情况、训练感受与变化复盘计划，出现不适时调整或暂停相关动作。',
     },
   ],
+};
+
+/** Existing fictional certificate assets stay intact; current public identity
+ * and responsibility follow the same new card as the dialogue. */
+export const chefCookingProfile:ProfessionalProfile={
+  ...chefLegacyAssets.professionalProfile,
+  title:chefCard.title,
+  titles:[chefCard.title],
+  summary:`${chefCard.identity.job}。${chefCard.identity.oneLine}。`,
 };
