@@ -62,5 +62,6 @@
     "不评颜值",
     "不发闲聊式主动消息"
   ],
-  "circlesFile": "interests.json"
+  "circlesFile": "interests.json",
+  "typingSpeed": 1
 }

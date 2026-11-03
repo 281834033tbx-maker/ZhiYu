@@ -1,4 +1,5 @@
 'use client';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 import {useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore} from 'react';
 import {Check, ChevronDown, ClipboardCheck, Minus, Pause, Play} from 'lucide-react';
 import {nextProfessionalTaskStep, professionalTaskProgress, type ProfessionalTask, type ProfessionalTaskStep} from '../../lib/npc/professional-task';
@@ -99,7 +100,7 @@ function useTaskActions(accountId:string,task:ProfessionalTask){
   async function perform(key:string,operation:()=>Promise<void>,fallback:string){
     if(working.current.has(key)||working.current.has('status'))return false;
     working.current.add(key);setPending(new Set(working.current));setError('');
-    try{await operation();return true;}catch(reason){setError(reason instanceof Error?reason.message:fallback);return false;}
+    try{await operation();return true;}catch(reason){setError(reportUserFacingError(reason,'save',fallback));return false;}
     finally{working.current.delete(key);setPending(new Set(working.current));}
   }
   const complete=(step:ProfessionalTaskStep)=>perform('step:'+step.id,()=>setProfessionalTaskStep(accountId,task.id,step.id,!step.completedAt),'完成状态未保存，请稍后重试。');
@@ -149,7 +150,7 @@ function EndTaskConfirmation({onCancel,onConfirm,pending,error,restoreFocus,titl
   useLayoutEffect(()=>{const node=dialog.current;node?.showModal();cancel.current?.focus();return()=>{node?.close();restoreFocus();};},[restoreFocus]);
   return <dialog ref={dialog} className="zy-dialog zy-professional-task-confirm" aria-labelledby={titleId} onCancel={event=>{event.preventDefault();if(!pending)onCancel();}} onPointerDown={event=>{if(pending||event.target!==event.currentTarget||event.button!==0)return;const rect=event.currentTarget.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)onCancel();}}>
     <h3 id={titleId}>{title}</h3>{error&&<p role="alert">{error}</p>}
-    <div><button ref={cancel} type="button" disabled={pending} onClick={onCancel}>取消</button><button type="button" className="zy-professional-task-confirm-end" disabled={pending} onClick={onConfirm}>{pending?pendingLabel:'确定'}</button></div>
+    <footer><button ref={cancel} type="button" disabled={pending} onClick={onCancel}>取消</button><button type="button" className="zy-professional-task-confirm-end" disabled={pending} onClick={onConfirm}>{pending?pendingLabel:'确定'}</button></footer>
   </dialog>;
 }
 function CompleteSessionConfirmation({confirmation,...props}:{confirmation:SessionConfirmation;onCancel:()=>void;onConfirm:()=>void;pending:boolean;error:string}){

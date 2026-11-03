@@ -58,6 +58,7 @@ export default defineConfig(async ({mode}) => {
   const providerEnv=loadEnv(mode,process.cwd(),'');
   for(const key of [
     'NPC_TEXT_PROVIDER','DEEPSEEK_API_KEY','DEEPSEEK_MODEL',
+    'WEATHER_API_KEY','WEATHER_API_HOST',
     'NPC_AUDIO_PROVIDER','NPC_AUDIO_API_KEY','NPC_ASR_MODEL','NPC_TTS_MODEL',
     'NPC_VOICE_XIA_XIA','NPC_VOICE_YUAN','NPC_VOICE_MOLLY','NPC_VOICE_LIU',
     'DOUBAO_SPEECH_API_KEY','DOUBAO_ASR_RESOURCE_ID','DOUBAO_TTS_RESOURCE_ID',

@@ -3,12 +3,19 @@
 // 关闭窗口时自动停掉服务。这是"本地自用版"，项目路径默认指向开发目录。
 'use strict';
 
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const { app, BrowserWindow, dialog, ipcMain, screen, session, shell, systemPreferences } = require('electron');
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const { spawn } = require('child_process');
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const fs = require('fs');
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const os = require('os');
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const path = require('path');
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const http = require('http');
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const { resolveLocalIdentity } = require('./local-identity.cjs');
 
 // 优先使用显式路径；打包后从 .app 所在的项目目录自动定位，避免依赖旧电脑用户名。
@@ -72,6 +79,7 @@ let characterChromeHeight = CHARACTER_DEFAULT_CHROME_HEIGHT;
 let adjustingCharacterSize = false;
 // Archived Zhao links stay valid; Zhou has an independent identity and no AI backend yet.
 const characterIds = new Set(['chen-nian', 'he-jiawei', 'zhou-chef', 'zhao-yifan', 'yuan-xiaoman', 'xia-xia', 'liu', 'molly']);
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const imageViewer = require('./image-viewer').registerImageViewer({
   baseURL: URL,
   preload: path.join(__dirname, 'preload.js'),
@@ -186,7 +194,7 @@ function recordMicrophonePermission(stage, status) {
     fs.mkdirSync(logDir, { recursive: true });
     fs.appendFileSync(path.join(logDir, 'microphone-permission.log'),
       `${new Date().toISOString()} ${stage} ${status}\n`);
-  } catch (_) { /* 诊断日志不能影响录音 */ }
+  } catch  { /* 诊断日志不能影响录音 */ }
 }
 
 ipcMain.handle('zhiyu:microphone-request', async event => {
@@ -279,7 +287,7 @@ ipcMain.handle('zhiyu:character-open', async (event, personId) => {
       try {
         await characterWindow.loadURL(`${URL}character-window?npc=${encodeURIComponent(personId)}`);
         characterPersonId = personId;
-      } catch (_) { return false; }
+      } catch  { return false; }
     }
     if (characterWindow.isMinimized()) characterWindow.restore();
     characterWindow.show();
@@ -366,7 +374,7 @@ ipcMain.handle('zhiyu:character-open', async (event, personId) => {
     await win.loadURL(`${URL}character-window?npc=${encodeURIComponent(personId)}`);
     notifyCharacterWindowState();
     return true;
-  } catch (_) {
+  } catch  {
     if (!win.isDestroyed()) win.close();
     return false;
   }
@@ -448,12 +456,12 @@ function stopServer() {
   if (server && !server.killed) {
     try {
       process.kill(-server.pid, 'SIGTERM');
-    } catch (_) {
+    } catch  {
       /* 进程组可能已不存在 */
     }
     try {
       server.kill('SIGTERM');
-    } catch (_) {}
+    } catch  {}
   }
   server = null;
 }
@@ -470,7 +478,7 @@ async function ensureServer() {
   return false;
 }
 
-app.whenReady().then(async () => {
+void app.whenReady().then(async () => {
   if (process.platform === 'darwin')
     recordMicrophonePermission('startup', systemPreferences.getMediaAccessStatus('microphone'));
   const ready = await ensureServer();
@@ -498,7 +506,7 @@ app.whenReady().then(async () => {
       sameSite: 'strict',
       expirationDate: Math.floor(Date.now() / 1000) + 31536000,
     });
-  } catch (_) { /* 非致命 */ }
+  } catch  { /* 非致命 */ }
 
   const { workArea } = screen.getPrimaryDisplay();
   const baseWindowWidth = Math.min(WINDOW_WIDTH, workArea.width);
@@ -531,7 +539,7 @@ app.whenReady().then(async () => {
   configureMediaPermissions(win.webContents.session);
   win.webContents.on('did-create-window', (child, details) => trackTaskCalendarWindow(child, details.url));
   win.setMenuBarVisibility(false);
-  win.loadURL(URL);
+  void win.loadURL(URL);
   win.center();
   win.on('closed', () => {
     mainWindow = null;

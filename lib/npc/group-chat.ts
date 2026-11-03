@@ -35,6 +35,9 @@ export type GroupMessage = {
   /** Canonical, owner-validated user media. Existing text-only history stays unchanged. */
   part?: GroupMediaPart;
   at: string;
+  typingAt?:number;
+  deliverAt?:number;
+  deliveryCancelled?:boolean;
   mentionIds?: string[];
   requestId?: string;
   replyTo?: string;
@@ -84,6 +87,9 @@ export type GroupChat = {
   messages: GroupMessage[];
   namingSource: 'molly-model';
   pending?: boolean;
+  typingName?:string;
+  typingAfter?:number;
+  typingUntil?:number;
   error?: string;
   plan?: GroupPlan;
   reminders?: GroupReminder[];

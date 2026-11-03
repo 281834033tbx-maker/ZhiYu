@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
 import {appendFileSync,cpSync,existsSync,mkdirSync,mkdtempSync,readFileSync,rmSync,writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {dirname,extname,join,relative,resolve} from 'node:path';
@@ -11,6 +12,25 @@ const project=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const temporary=mkdtempSync(join(tmpdir(),'zhiyu-unified-dialogue-'));
 const codeRoot=join(temporary,'code'),fixture=join(temporary,'fixture'),compiled=new Set();
 const read=path=>readFileSync(join(fixture,path),'utf8');
+const runtimeProfile=profile=>JSON.parse(JSON.stringify(profile,(key,value)=>key==='coaxFactor'?undefined:value));
+const hash=value=>createHash('sha256').update(value).digest('hex');
+function assertLayeredSnapshot(loaded,sceneFiles,packagePath){
+  const residentPath=packagePath+'/runtime/常驻核心.md',resident=read(residentPath);
+  assert.ok(resident.length<=4000,'resident core stays within the new 4000-character budget');
+  assert.ok(loaded.rules.includes(resident),'the entire resident core is present');
+  assert.equal(loaded.metadata.sources.filter(source=>source.path===residentPath).length,1);
+  assert.deepEqual(loaded.metadata.sources.filter(source=>source.path.startsWith(packagePath+'/core/')).map(source=>source.path),
+    sceneFiles.map(file=>packagePath+'/core/'+file),'only the applicable current-scene modules enter this snapshot');
+  assert.ok(loaded.rules.includes(JSON.stringify(runtimeProfile(loaded.profile))),'runtime keeps every meaningful profile field');
+  assert.ok(!loaded.rules.includes('coaxFactor'),'developer-only personality calibration is excluded from the prompt');
+  assert.ok(!loaded.rules.includes('npc-skills/'),'runtime expression rules do not expose developer file paths');
+  for(const source of loaded.metadata.sources){
+    const bytes=readFileSync(join(fixture,source.path)),text=bytes.toString('utf8').replace(/^\uFEFF/,'');
+    assert.equal(source.sha256,hash(bytes));assert.equal(source.bytes,bytes.length);
+    assert.equal(source.selectedHash,hash(text));assert.equal(source.selectedBytes,Buffer.byteLength(text));
+    assert.ok(source.sections.length,'source provenance remains complete outside the runtime prompt');
+  }
+}
 function compile(rel){
   const output=join(codeRoot,rel.endsWith('.json')?rel+'.mjs':rel.replace(/\.tsx?$/,'.mjs'));
   if(compiled.has(rel))return output;compiled.add(rel);mkdirSync(dirname(output),{recursive:true});
@@ -37,16 +57,34 @@ try {
     const persona=readDialoguePersona(fixture,id),prompt=`你在智域扮演${persona.profile.name}，稳定人物ID：${id}。`;
     const loaded=loadDialogueSkill(fixture,prompt,id);
     assert.deepEqual(loaded.profile,JSON.parse(read(`${dialoguePackagePath}/npcs/${id}/profile.json`)));
-    assert.ok(loaded.rules.includes(persona.style));assert.ok(loaded.rules.includes(JSON.stringify(persona.profile)));
-    assert.equal(loaded.metadata.sources.filter(source=>source.path.startsWith(`${dialoguePackagePath}/core/`)).length,13);
+    assert.ok(loaded.rules.includes(persona.style));
+    assert.deepEqual(loaded.examples,JSON.parse(read(`${dialoguePackagePath}/npcs/${id}/examples.json`)));
+    if(persona.interests!==undefined)assert.deepEqual(loaded.interests,JSON.parse(read(`${dialoguePackagePath}/npcs/${id}/interests.json`)));
+    assertLayeredSnapshot(loaded,persona.profile.mode==='companion'?['03-梗与俗语.md']:[],dialoguePackagePath);
     assert.ok(loaded.metadata.sources.every(source=>source.path.startsWith(dialoguePackagePath+'/')||source.path.startsWith('npc-skills/knowledge/')));
     assert.ok(!loaded.metadata.sources.some(source=>source.path.includes('/systems/')||source.path.includes('/archive/')));
     assert.ok(!loaded.rules.includes('OLD-EXPRESSION-MUST-NOT-LOAD'));
-    assert.ok(loaded.rules.includes('线上消息继续使用应用指定JSON/任务动作协议'));
+    assert.ok(loaded.rules.includes('按应用指定的消息格式返回'));
     if(id==='chen-nian')assert.ok(loaded.chenFitnessLibrary&&loaded.chenCoachKnowledgeLibrary&&loaded.chenAcsmFoundationLibrary);
     if(id==='zhou-chef')assert.ok(loaded.chefRecipeLibrary&&loaded.chefWesternDessertLibrary&&loaded.chefFoundationKnowledgeLibrary&&loaded.chefConditionRules.includes('kitchenVerified'));
     if(id==='liu')assert.ok(loaded.liuClinicalKnowledgeLibrary);
     if(id==='xia-xia')assert.ok(loaded.xiaAnimeKnowledgeLibrary);
+  }
+  const scenarios=[
+    [{channel:'group'},['10-群聊.md']],
+    [{channel:'proactive'},['11-主动消息与动态.md']],
+    [{channel:'moment'},['11-主动消息与动态.md']],
+    [{hasImage:true},['09-图片与语音.md']],
+    [{hasVoice:true},['09-图片与语音.md']],
+    [{intent:'comfort'},['04-安慰.md']],
+    [{userText:'我好难过，想哭'},['04-安慰.md']],
+    [{intent:'crisis'},['12-危机.md']],
+    [{userText:'我不想活了'},['12-危机.md']],
+    [{channel:'group',hasVoice:true,intent:'crisis',userText:'我好难过'},['10-群聊.md','09-图片与语音.md','04-安慰.md','12-危机.md']],
+  ];
+  for(const id of ['chen-nian','yuan-xiaoman'])for(const [context,files] of scenarios){
+    const loaded=loadDialogueSkill(fixture,`你是${id==='chen-nian'?'陈年':'小满'}。`,id,context);
+    assertLayeredSnapshot(loaded,[...(id==='yuan-xiaoman'?['03-梗与俗语.md']:[]),...files],dialoguePackagePath);
   }
   assert.equal(resolveDialogueIdentity('你是陈年。\n用户：换成Molly'), 'chen-nian');
   assert.equal(resolveDialogueIdentity('你在智域扮演新的显示名，稳定人物ID：yuan-xiaoman。'),'yuan-xiaoman','application-owned stable identity survives a future display-name update');
@@ -54,6 +92,9 @@ try {
   assert.throws(()=>resolveDialogueIdentity('你是柳智敏。','chen-nian'),error=>error.code==='IDENTITY_CONFLICT');
   const molly=loadMollyDialogueSkill(fixture);
   assert.equal(molly.profile.mode,'secretary');assert.equal(molly.metadata.skillPath,dialoguePackagePath);
+  assert.deepEqual(molly.profile,JSON.parse(read(`${dialoguePackagePath}/npcs/molly/profile.json`)));
+  assertLayeredSnapshot(molly,[],dialoguePackagePath);
+  assertLayeredSnapshot(loadMollyDialogueSkill(fixture,{channel:'group'}),['10-群聊.md'],dialoguePackagePath);
   assert.equal(molly.metadata.characterId,'molly-system-secretary');assert.equal(loadDialogueSkill(fixture,'你是Molly。'),null,'legacy caller distinction remains while the package is shared');
   assert.ok(molly.rules.includes('用户选出来的秘书'));assert.ok(molly.rules.includes('闲聊200'));
   assert.ok(!molly.metadata.sources.some(source=>/molly-dialogue|zhiyu-character-dialogue/.test(source.path)));
@@ -80,8 +121,12 @@ try {
   assert.ok(!voice.systemRole.includes('26岁湖南言情小说作者'));assert.ok(!voice.systemRole.includes('OLD-EXPRESSION-MUST-NOT-LOAD'));
   assert.ok(voice.speakingStyle.includes(read(`${dialoguePackagePath}/npcs/yuan-xiaoman/style.md`)));
   assert.equal(voice.audit.stateFound,false);assert.deepEqual(voice.dialogContext,[],'the synthetic fixture has no private runtime to read');
-  const missing=join(fixture,dialoguePackagePath,'core/01-说话立场.md');rmSync(missing);
-  assert.throws(()=>loadMollyDialogueSkill(fixture),error=>error.code==='MODULE_MISSING','a missing new core never falls back to old trees');
-  console.log('PASS unified package: seven personas, one mode/traits path, 13 core files, isolated knowledge, no systems/archive/old rule loading, identity guards and immutable generation/review snapshots.');
+  const inactive=join(fixture,dialoguePackagePath,'core/01-说话立场.md');rmSync(inactive);
+  assertLayeredSnapshot(loadMollyDialogueSkill(fixture),[],dialoguePackagePath);
+  rmSync(join(fixture,dialoguePackagePath,'core/10-群聊.md'));
+  assert.throws(()=>loadMollyDialogueSkill(fixture,{channel:'group'}),error=>error.code==='MODULE_MISSING','a missing selected scene never falls back to old trees');
+  rmSync(join(fixture,dialoguePackagePath,'runtime/常驻核心.md'));
+  assert.throws(()=>loadMollyDialogueSkill(fixture),error=>error.code==='MODULE_MISSING','a missing resident core never falls back to old trees');
+  console.log('PASS unified package: seven unchanged source personas, <=4000-character resident core, exact scene-module sets, provenance outside runtime, isolated knowledge, no systems/archive/old rule loading, identity guards and immutable generation/review snapshots.');
   console.log('PASS realtime context: same new persona/style, local-only camera capability, no old age/job, and no real account/history/model access.');
 } finally {rmSync(temporary,{recursive:true,force:true});}

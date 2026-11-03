@@ -1,7 +1,8 @@
+import {statusFromState} from '../../lib/npc/character-status';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
 import {parseTaskPageContext} from '../../lib/npc/task-page-context';
 import {clearPrivateHistory, privateHistoryMessages} from './private-history';
-import { deliveryView, scheduleDelivery } from '../../lib/npc/delivery';
+import { deliveryView, scheduleDelivery, presentationPending } from '../../lib/npc/delivery';
 import { userPart, partInput, imageInputs } from './media';
 import type { Plugin } from 'vite';
 import { DatabaseSync } from 'node:sqlite';
@@ -61,7 +62,8 @@ export function mollyLocal(deps?: {
       const typing = (s: MollyState) =>
         Object.values(s.typing).some((v) => v.until > now());
       const expose = (s: MollyState) => ({
-        ...deliveryView(privateHistoryMessages(s),s.pending,now()),
+        ...deliveryView(privateHistoryMessages(s),presentationPending(s),now()),
+        characterStatus:statusFromState('molly',s,now()),
         revision: s.revision || 0,
         conversationId: s.characterId,
         available: status(),
@@ -123,7 +125,7 @@ export function mollyLocal(deps?: {
           applyMolly(fresh, out, job);
           const last=fresh.messages.at(-1);
           if(last&&receipt){if(receipt.taskLinks.length)last.taskLinks=receipt.taskLinks;if(receipt.groupEvent)last.secretaryEvent=receipt.groupEvent;}
-          scheduleDelivery(fresh.messages,before,s.pending!.since,now());
+          scheduleDelivery(fresh.messages,before,s.pending!.since,now(),{characterId:'molly'});
           fresh.queue = fresh.queue.filter((q) => !ids.includes(q));
           fresh.error = '';
           save(id, fresh);

@@ -1,3 +1,4 @@
+import {statusFromState} from '../../lib/npc/character-status';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
 import {clearPrivateHistory, privateHistoryMessages} from './private-history';
 import type { Plugin } from 'vite';
@@ -5,7 +6,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { applyHe, createHe, importHeHistory, parseHe, type HeState, type LegacyHeMessage } from '../../lib/npc/he-jiawei';
-import { deliveryView, scheduleDelivery } from '../../lib/npc/delivery';
+import { deliveryView, scheduleDelivery, presentationPending } from '../../lib/npc/delivery';
 import { publicRelationshipValues } from '../../lib/npc/relationship-values';
 import { codexAvailable, generate } from './codex';
 import { hePrompt } from './he-prompt';
@@ -43,7 +44,8 @@ export function heLocal(deps?: { now?: () => number; generate: typeof generate; 
       const active = new Set<string>();
       const typing = (state: HeState) => Object.values(state.typing).some(client => client.until > now());
       const expose = (state: HeState) => ({
-        ...deliveryView(privateHistoryMessages(state), state.pending, now()),
+        ...deliveryView(privateHistoryMessages(state), presentationPending(state), now()),
+        characterStatus:statusFromState('he-jiawei',state,now()),
         revision: state.revision, conversationId: state.branch,
         pending: (!!state.pending && now() - state.pending.since < 180_000) || privateHistoryMessages(state).some(message => (message.deliverAt || 0) > now()) || (!!state.queue.length && !state.error && status()),
         available: status(), debugAllowed: false,
@@ -77,7 +79,7 @@ export function heLocal(deps?: { now?: () => number; generate: typeof generate; 
           }
           const before = fresh.messages.length;
           applyHe(fresh, out, job, now());
-          scheduleDelivery(fresh.messages, before, startedAt, now());
+          scheduleDelivery(fresh.messages, before, startedAt, now(),{characterId:'he-jiawei'});
           fresh.queue = fresh.queue.filter(turn => !ids.includes(turn));
           fresh.error = ''; fresh.retryAt = 0;
           save(id, fresh);

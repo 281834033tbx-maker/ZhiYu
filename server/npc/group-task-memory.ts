@@ -1,6 +1,6 @@
 import type {DatabaseSync} from 'node:sqlite';
 
-export type TaskFactKey = 'food_allergy' | 'dietary_avoidance' | 'food_allergy_status' | 'dietary_avoidance_status' | 'height' | 'weight' | 'body_fat';
+export type TaskFactKey = 'food_allergy' | 'dietary_avoidance' | 'food_allergy_status' | 'dietary_avoidance_status' | 'height' | 'weight' | 'body_fat' | 'waist' | 'sleep' | 'energy' | 'soreness';
 export type TaskEvidence = {sourceCharacterId: string; messageId: string; at: string | null; chronology: 'dated' | 'undated'; quote: string};
 export type TaskFact = {key: TaskFactKey; value: string | number; unit?: 'cm' | 'kg' | '%'; evidence: TaskEvidence};
 export type TaskMemorySnapshot = {version: 'group-task-memory-20261007-v1'; facts: TaskFact[]};
@@ -20,7 +20,7 @@ const FOOD_PATTERN = new RegExp(FOODS.sort((a, b) => b.length - a.length).join('
 const NON_SELF = /(?:假如|假设|比如|例如|举例|测试|模拟|演示|扮演|台词|角色|NPC|引用|转述|听说|据说|你说|你写|他说|她说|别人|他人|朋友|同事|患者|客户|孩子|女儿|儿子|妈妈|爸爸|父亲|母亲|老公|老婆|妻子|丈夫|男友|女友|宠物|如果)/iu;
 const FRAMED = /(?:测试|模拟|演示|扮演|台词|角色|NPC|[“”「」『』"])/iu;
 const UNCERTAIN = /(?:[?？]|是不是|是否|会不会|可能|好像|怀疑|不确定|似乎|也许|(?:吗|么|呢)$)/u;
-const METRICS: TaskFactKey[] = ['height', 'weight', 'body_fat'];
+const METRICS: TaskFactKey[] = ['height', 'weight', 'body_fat','waist','sleep','energy','soreness'];
 
 function foodItems(clause: string, dietary = false): string[] {
   return [...new Set([...clause.matchAll(FOOD_PATTERN)].map(match => {
@@ -67,6 +67,10 @@ export function extractTaskFacts(sourceCharacterId: string, messageId: string, t
       if (/身高/u.test(clause)) remove('height');
       if (/体重/u.test(clause)) remove('weight');
       if (/体脂/u.test(clause)) remove('body_fat');
+      if (/腰围/u.test(clause)) remove('waist');
+      if (/睡眠/u.test(clause)) remove('sleep');
+      if (/精力/u.test(clause)) remove('energy');
+      if (/酸痛/u.test(clause)) remove('soreness');
       if (/(?:全部|所有).{0,5}(?:健康|饮食|任务)(?:资料|记忆|信息)|(?:健康|饮食|任务)(?:资料|记忆|信息).{0,5}(?:全部|所有)/u.test(clause)) {
         [...METRICS, 'food_allergy', 'dietary_avoidance', 'food_allergy_status', 'dietary_avoidance_status'].forEach(key => remove(key as TaskFactKey));
       }
@@ -99,9 +103,13 @@ export function extractTaskFacts(sourceCharacterId: string, messageId: string, t
     }
     // Undated legacy figures are not presented as current body measurements.
     if (!at) continue;
-    const ownMetric = /^(?:我(?:本人|现在|目前)?(?:的)?|本人|现在|目前|身高|体重|体脂)/u.test(clause);
+    const ownMetric = /^(?:我(?:本人|现在|目前)?(?:的)?|本人|现在|目前|身高|体重|体脂|腰围|睡眠|精力|酸痛)/u.test(clause);
     if (!ownMetric) continue;
     const number = '(\\d{1,3}(?:\\.\\d{1,2})?)';
+    const waist=/腰围(?:是|为|现在|目前)?\s*(\d{2,3}(?:\.\d{1,2})?)\s*(?:厘米|公分|cm)(?![a-z])/iu.exec(clause);
+    if(waist&&Number(waist[1])>=30&&Number(waist[1])<=250)set('waist',Number(waist[1]),'cm',waist[0]);
+    const feeling=/^(?:我(?:最近|现在|今天|目前)?(?:的)?|本人)?(睡眠|精力|(?:肌肉)?酸痛)(?:是|很|比较|程度|情况)?(好|一般|差|轻|中等|重|没有)[。！!\s]*$/u.exec(clause);
+    if(feeling)set(feeling[1]==='睡眠'?'sleep':feeling[1]==='精力'?'energy':'soreness',feeling[2]);
     const height = new RegExp('身高(?:是|为|有|现在|目前|改为|改成|更新为)?\\s*' + number + '\\s*(厘米|公分|cm|米|m)(?![a-z])', 'iu').exec(clause);
     if (height) {
       const value = Number(height[1]) * (/^(?:米|m)$/i.test(height[2]) ? 100 : 1);

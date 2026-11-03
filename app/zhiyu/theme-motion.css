@@ -25,5 +25,5 @@
 @media (prefers-reduced-motion: reduce) {
   :root[data-zy-theme-motion]::view-transition-group(root),
   :root[data-zy-theme-motion]::view-transition-old(root),
-  :root[data-zy-theme-motion]::view-transition-new(root) { animation: none !important; }
+  :root[data-zy-theme-motion]::view-transition-new(root) { animation: none; }
 }

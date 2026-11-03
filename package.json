@@ -9,8 +9,10 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json",
-    "lint": "oxlint",
-    "format": "oxfmt"
+    "lint": "oxlint app lib server components hooks scripts desktop/main.js desktop/preload.js desktop/image-viewer.js",
+    "format": "oxfmt",
+    "npc:exam": "node scripts/npc-exam.mjs",
+    "lint:style": "node scripts/lint-style.mjs"
   },
   "dependencies": {
     "react": "19.2.6",

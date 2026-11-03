@@ -1,4 +1,5 @@
 'use client';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 import {useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent} from 'react';
 import {CalendarCheck, CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, CookingPot, Droplet, Dumbbell, House, Minus, NotebookPen, PersonStanding, ShoppingBag, Utensils} from 'lucide-react';
 import type {GroupChat} from '../../lib/npc/group-chat';
@@ -69,7 +70,7 @@ function TaskDialog({groups,onSelectGroup,onSelectCharacter,onClose,accountId,in
   const professionalTasks=useProfessionalTasks(accountId),[openTaskId,setOpenTaskId]=useState<string|null>(null);
   useEffect(()=>{
     let alive=true;
-    const refresh=()=>void refreshProfessionalTasks(accountId).catch(reason=>{if(alive)setSaveError(reason instanceof Error?reason.message:'任务暂时无法同步。');});
+    const refresh=()=>void refreshProfessionalTasks(accountId).catch(reason=>{if(alive)setSaveError(reportUserFacingError(reason,'load','读取任务'));});
     refresh();const timer=setInterval(refresh,2000);return()=>{alive=false;clearInterval(timer);};
   },[accountId]);
   useEffect(()=>{if(presentation!=='dialog')return;const node=dialog.current;if(!node?.open)node?.showModal();return()=>{node?.close();};},[presentation]);
@@ -78,7 +79,7 @@ function TaskDialog({groups,onSelectGroup,onSelectCharacter,onClose,accountId,in
   const date=selectedDate&&dates.includes(selectedDate)?selectedDate:today;
   const allGroupTasks=useMemo(()=>dates.flatMap(value=>taskItemsForDate(groups,value)),[groups,dates]);
   const tasks=useMemo(()=>scope==='all'?allGroupTasks:taskItemsForDate(groups,date),[scope,allGroupTasks,groups,date]);
-  useEffect(()=>{let alive=true;void refreshTaskCompletions(accountId,allGroupTasks.map(task=>task.id)).catch(reason=>{if(alive)setSaveError(reason instanceof Error?reason.message:'完成状态暂时无法同步。');});return()=>{alive=false;};},[accountId,allGroupTasks]);
+  useEffect(()=>{let alive=true;void refreshTaskCompletions(accountId,allGroupTasks.map(task=>task.id)).catch(reason=>{if(alive)setSaveError(reportUserFacingError(reason,'load','读取任务状态'));});return()=>{alive=false;};},[accountId,allGroupTasks]);
   const shown=tasks.filter(task=>category==='all'||task.category===category);
   const npcTasks=useMemo(()=>scope==='all'?[...professionalTasks].sort((a,b)=>b.createdAt.localeCompare(a.createdAt)):professionalTasksForDate(professionalTasks,date,today),[scope,professionalTasks,date,today]);
   const shownNpc=npcTasks.filter(task=>category==='all'||professionalTaskCategory(task)===category);
@@ -91,7 +92,7 @@ function TaskDialog({groups,onSelectGroup,onSelectCharacter,onClose,accountId,in
   const complete=countable.filter(task=>completions[task.id]).length+npcCountable.filter(task=>progressForView(task).status==='completed').length;
   const shownComplete=shownCountable.filter(task=>completions[task.id]).length+shownNpcCountable.filter(task=>progressForView(task).status==='completed').length;
   const categoryName=categories.find(item=>item.id===category)!.label,label=category==='all'?'全部任务':categoryName+'任务';
-  function completeTask(task:TaskItem){if(!task.canComplete||task.date<today||isTaskItemSkipped(task,completions,today))return;try{setSaveError('');void setTaskCompleteAndSync(accountId,task.id,!completions[task.id]).catch(error=>setSaveError(error instanceof Error?error.message:'完成状态暂时未同步，请重试。'));}catch(error){setSaveError(error instanceof Error?error.message:'完成状态未保存，请稍后重试。');}}
+  function completeTask(task:TaskItem){if(!task.canComplete||task.date<today||isTaskItemSkipped(task,completions,today))return;try{setSaveError('');void setTaskCompleteAndSync(accountId,task.id,!completions[task.id]).catch(error=>setSaveError(reportUserFacingError(error,'save','保存任务状态')));}catch(error){setSaveError(reportUserFacingError(error,'save','保存任务状态'));}}
   function expandTask(id:string){setExpanded(previous=>{const next=new Set(previous);if(next.has(id))next.delete(id);else next.add(id);return next;});}
   const content=<>
     <header className="zy-today-tasks-head"><h2 id={titleId}>任务</h2>{scope==='today'&&<TaskDatePicker dates={dates} markedDates={markedDates} today={today} selected={date} open={dateOpen} onOpen={setDateOpen} onSelect={value=>{setSelectedDate(value===today?null:value);setSaveError('');}}/>}</header>

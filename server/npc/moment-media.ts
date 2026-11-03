@@ -1,7 +1,8 @@
+import {momentFrequencyPolicy} from './moment-policy';
 import { existsSync, readFileSync, realpathSync, statSync } from 'node:fs';
 import { join, resolve, sep } from 'node:path';
 import { randomUUID } from 'node:crypto';
-import { generateScene, characterImageReferences } from './image-generator';
+import { generateScene, characterImageReferences,loadPhotoStyle } from './image-generator';
 import { generateRaw } from './codex';
 import { imageExtension } from './media';
 import type { GeneratedPhoto } from '../../lib/npc/contracts';
@@ -24,19 +25,12 @@ export function momentMediaPath(root: string, owner: string, url: string): strin
   } catch { return null; }
 }
 
-export function momentVisualRules(root: string, character: string, referenceCharacters:readonly string[]=[]): string {
-  const base = join(root, 'npc-skills/skills');
-  const files = ['SKILL.md', 'references/task-contract.md', 'references/daily-phone-photo.md',
-    'references/food-and-drink.md', 'references/character-presentation.md', 'references/quality-control.md'];
-  let rules = files.map(file => readFileSync(join(base, 'zhiyu-imagegen', file), 'utf8')).join('\n\n');
-  if (character === 'chen-nian' || referenceCharacters.includes('chen-nian')) rules += '\n' + ['SKILL.md', 'references/identity-and-body.md',
-    'references/moments-style.md', 'references/selfie-style.md', 'references/prompt-spec.md']
-    .map(file => readFileSync(join(base, 'chen-nian-visual-style', file), 'utf8')).join('\n\n');
-  return rules;
+export function momentVisualRules(root:string,character:string,referenceCharacters:readonly string[]=[]):string {
+ return loadPhotoStyle(root,character,referenceCharacters);
 }
 
 function validateTask(task: MomentImageTask) {
-  if (!task || !Number.isInteger(task.count) || task.count < 1 || task.count > 9
+  if (!task || !Number.isInteger(task.count) || task.count < 1 || task.count > momentFrequencyPolicy.maxImages
     || !Array.isArray(task.imageBriefs) || task.imageBriefs.length !== task.count
     || !task.imageBriefs.every(value => typeof value === 'string' && value.trim())
     || typeof task.event !== 'string' || !task.event.trim()

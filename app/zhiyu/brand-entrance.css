@@ -3,5 +3,5 @@
 .zy-entrance-flight { position: relative; width: clamp(110px, 13vw, 180px); aspect-ratio: 1; transform-origin: center; will-change: transform; }
 .zy-entrance-depth { width: 100%; height: 100%; perspective: 900px; perspective-origin: center; }
 .zy-entrance-mark { display: block; width: 100%; height: 100%; object-fit: contain; transform: translateZ(840px); will-change: transform, filter; }
-[data-navigation-logo] { filter: drop-shadow(2px 2px 0 rgb(38 40 45 / .12)); }
+[data-navigation-logo] { filter: none; }
 @media (prefers-reduced-motion: reduce) { .zy-entrance { display: none; } }

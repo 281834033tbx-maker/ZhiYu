@@ -1,3 +1,4 @@
+import {statusFromState} from '../../lib/npc/character-status';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
 import {parseTaskPageContext} from '../../lib/npc/task-page-context';
 import {clearPrivateHistory, privateHistoryMessages} from './private-history';
@@ -24,7 +25,7 @@ import { chenPrompt } from './chen-prompt';
 import { publicRelationshipValues } from '../../lib/npc/relationship-values';
 import { ProfessionalTaskError } from '../../lib/npc/professional-task';
 import { applyProfessionalTaskMutation, isProfessionalTaskMutation, invalidateProfessionalTaskHints, reconcileProfessionalTaskState, isCanonicalProfessionalTaskSessionId } from './professional-task-mutation';
-import { deliveryView, scheduleDelivery } from '../../lib/npc/delivery';
+import { deliveryView, scheduleDelivery, presentationPending } from '../../lib/npc/delivery';
 export function chenLocal(deps?: {
   generate?: typeof generate;
   available?: typeof codexAvailable;
@@ -72,7 +73,8 @@ export function chenLocal(deps?: {
       const typing = (s: ChenState) =>
         Object.values(s.typing).some((v) => v.until > now());
       const expose = (s: ChenState) => ({
-        ...deliveryView(privateHistoryMessages(s),s.pending,now()),
+        ...deliveryView(privateHistoryMessages(s),presentationPending(s),now()),
+        characterStatus:statusFromState('chen-nian',s,now()),
         revision: s.revision || 0,
         conversationId: s.branch,
         relationship: s.relationship,
@@ -143,7 +145,7 @@ export function chenLocal(deps?: {
                 if(applied?.changed&&!applied.created)invalidateProfessionalTaskHints(candidate,applied.task.id,now());
               }
               reconcileProfessionalTaskState(candidate,now());
-              if(taskEvent)scheduleDelivery(candidate.messages,before,startedAt,now());
+              scheduleDelivery(candidate.messages,before,startedAt,now(),{characterId:'chen-nian'});
               candidate.queue=candidate.queue.filter(turn=>!ids.includes(turn));candidate.error='';candidate.retryAt=0;
               save(id,candidate);return;
             } catch(error) {

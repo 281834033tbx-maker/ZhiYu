@@ -1,0 +1,498 @@
+{
+  "date": "2026-11-04",
+  "status": "pass",
+  "method": "PostCSS declaration AST compared against preserved pre-change CSS and the approved per-file literal whitelist; no screenshots or live state used.",
+  "scope": {
+    "beforeCssFiles": 58,
+    "afterCssFiles": 58,
+    "beforeDeclarations": 13296,
+    "afterDeclarations": 13753,
+    "beforeUniqueLiterals": 1079,
+    "afterUniqueLiterals": 991,
+    "customPropertyDefinitionsChecked": 262,
+    "frozenThemeColorDefinitions": 91
+  },
+  "checks": {
+    "newLiteralColors": [],
+    "newVariableNameValuePairs": [],
+    "alteredFrozenThemeColorDefinitions": [],
+    "novelGradientValues": [],
+    "novelOpacityValues": [],
+    "nonThemeWhitelistViolations": []
+  },
+  "notes": [
+    "The global literal set may shrink when dead declarations are removed or popup text/dividers reuse existing variables (§4, §9).",
+    "Existing CSS may be merged into app.css via style-ownership.json. New popup selectors reuse existing glass/text variables; no token value is introduced or changed.",
+    "Typography/radius/shadow changes are checked separately. This verifies declared palette values and token definitions; visual cascade behavior is covered by the separate UI comparison."
+  ],
+  "sourceHashes": {
+    "baseline": [
+      {
+        "file": "app/character-window/character-window.css",
+        "sha256": "779086f7c77f9f62535d4676d46af601b726bf06a4b5246fb5ccac96deb0f243"
+      },
+      {
+        "file": "app/companion/companion.css",
+        "sha256": "f35559ebf95c2454b1a79263eb57ae58bb4dacd249f1ddc22c8a24918c4349cc"
+      },
+      {
+        "file": "app/globals.css",
+        "sha256": "410307512b25d3668d6e82bdbdcea89a5e1817c9c7daace7a3778d5ce52739dd"
+      },
+      {
+        "file": "app/image-viewer/image-viewer.css",
+        "sha256": "72d60972d87b64e708ddd5d70a4fc02abdd9b08cb4ce895bf7deee871f00b1a5"
+      },
+      {
+        "file": "app/task-calendar/task-calendar.css",
+        "sha256": "8f226d262a0b8a0609ca231b2e96db5b983101a755e482bf1074dd80ce9fc561"
+      },
+      {
+        "file": "app/zhiyu/app-settings.css",
+        "sha256": "f483d54142148919ee15af20381b14a67ffa22e2ec2920406d7f8dd6b0e7373a"
+      },
+      {
+        "file": "app/zhiyu/auth-gate.css",
+        "sha256": "b4b2bfa8218238f920deac46aabb7d116e221c458581d56860fa4d651d1817cf"
+      },
+      {
+        "file": "app/zhiyu/brand-entrance.css",
+        "sha256": "2cd66e9f897c1e4a3c17cca58506643bf095d1631b482f39a20057d5f625d527"
+      },
+      {
+        "file": "app/zhiyu/character-dock.css",
+        "sha256": "5412bcdbb3984e4dae1ad20da39474830adb312a2467a22d5cb66fd8aa4d5908"
+      },
+      {
+        "file": "app/zhiyu/chat-add-menu.css",
+        "sha256": "a167c952c0d891a536cd1a4ee11f909365701a1e067ffb106b4a704b6b5b8802"
+      },
+      {
+        "file": "app/zhiyu/chat-composer.css",
+        "sha256": "f84f33672a2b14bbfec4b4b3a1da4bd8529ef126bc3e8976a8b91b4c0c0389b7"
+      },
+      {
+        "file": "app/zhiyu/chat-icon-controls.css",
+        "sha256": "133693da3ee12c09bdef7577534568ec2ba1c5d6e8ae3db778dc7f580cbb6a0f"
+      },
+      {
+        "file": "app/zhiyu/chat-image-placeholder.css",
+        "sha256": "142043176f82ffe71493ce1a7f440c57196a87db45baaf296148a61aa1512c36"
+      },
+      {
+        "file": "app/zhiyu/chat-image.css",
+        "sha256": "f6ba0884e2bc7b53884b149c395cf4b1cc731db1b373f0ada4dabdad7a9f8456"
+      },
+      {
+        "file": "app/zhiyu/chat-mute.css",
+        "sha256": "4236b33d681bf2bbb680decc554af7be2e692e063325da61d31164acdc84d62d"
+      },
+      {
+        "file": "app/zhiyu/choice-chat.css",
+        "sha256": "a038b3cf7455e435fccdcff7e7b4b23bf319220f77c67d8538eda5b45366b3df"
+      },
+      {
+        "file": "app/zhiyu/dual-preview.css",
+        "sha256": "8d4437aa3ac494390456e345c9f2484beca0e988ae9cabacaa2902dbc9770135"
+      },
+      {
+        "file": "app/zhiyu/dungeons.css",
+        "sha256": "44212cc4506776369e94bdb370366707d032a4c3a14e5c9ea14ff872ec840490"
+      },
+      {
+        "file": "app/zhiyu/fitness-demonstration.css",
+        "sha256": "3a575ef76f94c6a48a4c1654528a7e1f1dc0173c046f3da5fc81aa8307f08f6a"
+      },
+      {
+        "file": "app/zhiyu/font-size.css",
+        "sha256": "2708d5c6281fbf3954a1081549ad1288cc9d35abf7d5eb937cc1e5a9d9cb4da1"
+      },
+      {
+        "file": "app/zhiyu/group-chat.css",
+        "sha256": "f8a994ad4fdda5d847169754c81daeb16d31de62a1fd82a05a02147ef97048c8"
+      },
+      {
+        "file": "app/zhiyu/group-create-dialog.css",
+        "sha256": "1e69804c2fc8d78d22024b75e3973dcf570c0a34b863dc3702b761020eb95bf9"
+      },
+      {
+        "file": "app/zhiyu/group-member-stack.css",
+        "sha256": "081e159d613fb51ff93fde64ab69951ffd43cbdb1cf5e3e5e81e6930b3509000"
+      },
+      {
+        "file": "app/zhiyu/group-message-actions.css",
+        "sha256": "2880a39aa4f51e362895cd1c7dabd18478d6c6651c8e629da14b7c68124181c4"
+      },
+      {
+        "file": "app/zhiyu/inline-name-edit.css",
+        "sha256": "afa9d670e406d180653abe0fa38ed04552a5794fee1670e22a6a9e6ed637549f"
+      },
+      {
+        "file": "app/zhiyu/liquid-base-plate.css",
+        "sha256": "adf896e894fb70d2d5f6e34b70c032151c8a812fb68b8f3d3e1dd6abf690b189"
+      },
+      {
+        "file": "app/zhiyu/local-chat-header.css",
+        "sha256": "3bb4e03a6b74f5e6154909e350f0726b9fca5cad83dd29ef214f7b874c76eaab"
+      },
+      {
+        "file": "app/zhiyu/message-actions.css",
+        "sha256": "05f6652ae0dcaa5c9616d8ae949a52d1d848ab264c3041f3e771bc1c69292217"
+      },
+      {
+        "file": "app/zhiyu/message-forward-dialog.css",
+        "sha256": "7806c077f128d0c86e9d1b6f9268ab7e87da34831e3205f7ff8f8261db67c766"
+      },
+      {
+        "file": "app/zhiyu/mobile.css",
+        "sha256": "e44865f506146399d534d1298e63d35cc2f901941f7229f9c2b6a4c6ee193755"
+      },
+      {
+        "file": "app/zhiyu/morning-reminder-settings.css",
+        "sha256": "b3b346c9fd283bcb93b07396ee4db383ec4a045d90faf219bf361356e4141f0a"
+      },
+      {
+        "file": "app/zhiyu/npc-contact-card.css",
+        "sha256": "b99e3b4cabfcb1e2bfb8622372de24f3b96f87daef5373465d301c5f8254f5b7"
+      },
+      {
+        "file": "app/zhiyu/npc-type-badge.css",
+        "sha256": "b57ff3519f31d10e80433c86c4561a8908a42cb1356546aec693def9a981467b"
+      },
+      {
+        "file": "app/zhiyu/pets.css",
+        "sha256": "e2a59c462c35746a3361d09010d1ae50a7099386d130c77a055602c5b4cf220e"
+      },
+      {
+        "file": "app/zhiyu/pressable-icon-button.css",
+        "sha256": "a6d97306e3588bd221fd173311d07a0c79dc85f5ebd3ac134f6f200343a0cc67"
+      },
+      {
+        "file": "app/zhiyu/private-chat-settings.css",
+        "sha256": "2ddcce86150e202352ec979952a027308c9932771916cdd22277f48065b5558a"
+      },
+      {
+        "file": "app/zhiyu/professional-profile.css",
+        "sha256": "d6cb8fb1b59a0169057ea9b37afbaeb22fe502b77b2d36b9903ecb7009bf9ff9"
+      },
+      {
+        "file": "app/zhiyu/professional-task.css",
+        "sha256": "0a6605bfb04350c35627987258c37c3362da7b002482a095cb64bc612a55c09f"
+      },
+      {
+        "file": "app/zhiyu/profile-popover.css",
+        "sha256": "e91c5f41a663af131d60c4720ecaad7bd30109410e7cf7ff666487e546788d3e"
+      },
+      {
+        "file": "app/zhiyu/profile-redesign.css",
+        "sha256": "b47c8bcffd5c1da27d0cc0f212b892d1f4c1ff768b3dc256c755580eaf17a776"
+      },
+      {
+        "file": "app/zhiyu/rail-navigation.css",
+        "sha256": "e305ae3fdbca5e6b82e4683e004ce71ea3d9e66374dcaa7a78e28b9b54b12535"
+      },
+      {
+        "file": "app/zhiyu/realtime-speech-settings.css",
+        "sha256": "fefea4cf4e5a5db8687f93078f0270620ab5cc937d6139a0f054832b1e9e1333"
+      },
+      {
+        "file": "app/zhiyu/realtime-voice-call.css",
+        "sha256": "e82e0ce832c4d19bf3d4b538b39061026e53c174506c64ee3e403004d61c2646"
+      },
+      {
+        "file": "app/zhiyu/refinements.css",
+        "sha256": "06aa910231f9c5a038dd93eee49467d2627f90ab0a9c0e2ea583ebdd27509db0"
+      },
+      {
+        "file": "app/zhiyu/relationship-dashboard.css",
+        "sha256": "093775c933934c91cb912d4ac1929a7f65350b283840a242fd6faec240e809a3"
+      },
+      {
+        "file": "app/zhiyu/self-profile-card.css",
+        "sha256": "d1fbd561b5f5c18774541bb9c621ee10482f583598d457eac1b58cc451763567"
+      },
+      {
+        "file": "app/zhiyu/task-board/history-view.css",
+        "sha256": "da4ae6da68ebd37d823c2b609bfcd49c566406323d4ecad689a53eb7380fa04b"
+      },
+      {
+        "file": "app/zhiyu/task-board/task-board.css",
+        "sha256": "b39de5a312fd5855478374a7fa8b6e799fa8e8ae134bf7d166be30a4046ec634"
+      },
+      {
+        "file": "app/zhiyu/task-board/task-components.css",
+        "sha256": "917fccf8591d3606eab4767a4e423315dd2e8d56a98ca828079a0ddf9e3b6ba6"
+      },
+      {
+        "file": "app/zhiyu/theme-frosted.css",
+        "sha256": "d717d5e327329e6855dec274126c068e32e657557f9a2519e86440757736db9d"
+      },
+      {
+        "file": "app/zhiyu/theme-glass.css",
+        "sha256": "e125feac2bf0ea814ec0f04e71473ed438364f3443a8418de226815fbfad249e"
+      },
+      {
+        "file": "app/zhiyu/theme-motion.css",
+        "sha256": "8616ef1f5d1585254fe9e64067c6636db43e312422096c91634e5926011697af"
+      },
+      {
+        "file": "app/zhiyu/theme-surfaces.css",
+        "sha256": "279ce6c749d7055bdfbb1a9eb247d11a4cf88880e052b38e9b83c138bab93590"
+      },
+      {
+        "file": "app/zhiyu/theme.css",
+        "sha256": "1bf10f4af1dae742ffdbd1daca6b7fddb4658c67c641f0de562f2f5a8e14e7ff"
+      },
+      {
+        "file": "app/zhiyu/today-tasks.css",
+        "sha256": "d95c5e92b30c28be8e473edd65835a66037253e53084de0ab449c4c9dc5d5ecf"
+      },
+      {
+        "file": "app/zhiyu/voice-bubble.css",
+        "sha256": "7ce77bfeb696f84b689585f34c9097bc309c66f4933a831efff4b239dd2da1ea"
+      },
+      {
+        "file": "app/zhiyu/xia-xia.css",
+        "sha256": "235efe86dd432e3c392ebedd32d7f7f7ef6012da0ec1f77e2be3972773b7410a"
+      },
+      {
+        "file": "app/zhiyu/zhiyu.css",
+        "sha256": "e01e8717d636108b2217ad98f5007e798ba1e345528521658e82182e7c943ee5"
+      }
+    ],
+    "current": [
+      {
+        "file": "app/character-window/character-window.css",
+        "sha256": "c629db1c2d9473be99eff590fbe600aeb971354c6f7a8a376096fdf84e0a7a1a"
+      },
+      {
+        "file": "app/companion/companion.css",
+        "sha256": "8f2afe45e96190c09992c6f07492f418b1604e64e87dad13d87ddb331d86371d"
+      },
+      {
+        "file": "app/globals.css",
+        "sha256": "e2315c39ed0af0564ff8a4080119d52d7991a173f292df04f09b367b0dcace53"
+      },
+      {
+        "file": "app/image-viewer/image-viewer.css",
+        "sha256": "bff3ece970e16e57567fd2154384f40b63954f3dc6eedea60f81a98d5063fc0c"
+      },
+      {
+        "file": "app/task-calendar/task-calendar.css",
+        "sha256": "62793cfc40412ca1cd0fbe8094929a65be1eb63ff95de94825d5c15e842bc155"
+      },
+      {
+        "file": "app/zhiyu/app-settings.css",
+        "sha256": "b25f547b3882981528c289785a1584e18d774c0176ffdaf4af4ee7ed0d0a4aeb"
+      },
+      {
+        "file": "app/zhiyu/app.css",
+        "sha256": "0e02eed6b4477b9dc46ea0dfbcb56904aff9c16fff339c590a2c8301c49f106b"
+      },
+      {
+        "file": "app/zhiyu/auth-gate.css",
+        "sha256": "e8cb9224bcdfce69508d6e94e53756cccbff29edbe12e79b4df718938ad75f3d"
+      },
+      {
+        "file": "app/zhiyu/brand-entrance.css",
+        "sha256": "4c2d6607bff42c2358107d0917294fffa82c2a9ff0039a4283b3b28c3819b096"
+      },
+      {
+        "file": "app/zhiyu/character-dock.css",
+        "sha256": "b9b2f56d4b4cc5cbbead1641ccd9ba6bd1047b3dc7af9f492f191220ba0e9132"
+      },
+      {
+        "file": "app/zhiyu/chat-add-menu.css",
+        "sha256": "fb2c5b2971747f854e66ec6246c94e154ad56d31e1d81d0cf151e486f4fb7ac4"
+      },
+      {
+        "file": "app/zhiyu/chat-composer.css",
+        "sha256": "5a48efd86c48b9ff6912dbf6752b38107da0d816b9f82697a2e3c9672814d1e6"
+      },
+      {
+        "file": "app/zhiyu/chat-icon-controls.css",
+        "sha256": "133693da3ee12c09bdef7577534568ec2ba1c5d6e8ae3db778dc7f580cbb6a0f"
+      },
+      {
+        "file": "app/zhiyu/chat-image-placeholder.css",
+        "sha256": "142043176f82ffe71493ce1a7f440c57196a87db45baaf296148a61aa1512c36"
+      },
+      {
+        "file": "app/zhiyu/chat-image.css",
+        "sha256": "2c04caf24156b98ac159d3dd4aaea9596ee20a85cee19ef3b9ae8f6dbce257c3"
+      },
+      {
+        "file": "app/zhiyu/chat-mute.css",
+        "sha256": "4236b33d681bf2bbb680decc554af7be2e692e063325da61d31164acdc84d62d"
+      },
+      {
+        "file": "app/zhiyu/choice-chat.css",
+        "sha256": "ceaf4a8abd580be31fed8fe1d42a64472412a19e87452d17814652ca67a13382"
+      },
+      {
+        "file": "app/zhiyu/dungeons.css",
+        "sha256": "8b13600bf0978579ee6fbfb00eacf971dfe80ea6bd25a7045e8f2be44fc19af7"
+      },
+      {
+        "file": "app/zhiyu/fitness-demonstration.css",
+        "sha256": "1dccf6eca08665ff2cf6ec9587d9927d552597ae9a841a4e8ca7645fbf50cb85"
+      },
+      {
+        "file": "app/zhiyu/font-size.css",
+        "sha256": "2e85802a1320d426a4c55e9788cd6df416e327b54b20bacc37cf94c49431a044"
+      },
+      {
+        "file": "app/zhiyu/group-chat.css",
+        "sha256": "e1b8820af81bfab881fe145c2b75f74530be0fe906c1f812552c1c048ee53232"
+      },
+      {
+        "file": "app/zhiyu/group-create-dialog.css",
+        "sha256": "537ce7d7d0ddc14d376523dba58accf4fe3f5fe0eb51705335f190b914904aa9"
+      },
+      {
+        "file": "app/zhiyu/group-member-stack.css",
+        "sha256": "cd928d06f505729ebe9479835a2a0b3c1f3aeb22a3fa7726ad97f5380fbc2dd3"
+      },
+      {
+        "file": "app/zhiyu/group-message-actions.css",
+        "sha256": "dbc94bd8c6bd0ab5f73f23ad234a827a95db46ee8873f89694aa040b5981356b"
+      },
+      {
+        "file": "app/zhiyu/inline-name-edit.css",
+        "sha256": "7a039e27e6294de1108a8f0aef190b45f0202f34e616110525d6cab5ee33f657"
+      },
+      {
+        "file": "app/zhiyu/liquid-base-plate.css",
+        "sha256": "feefa072525fcd1fe7510517c042f896a854062be760f7e0df695a9f09453dc8"
+      },
+      {
+        "file": "app/zhiyu/local-chat-header.css",
+        "sha256": "3bb4e03a6b74f5e6154909e350f0726b9fca5cad83dd29ef214f7b874c76eaab"
+      },
+      {
+        "file": "app/zhiyu/me-page.css",
+        "sha256": "30ea29da37c7ee93f25ab06136707af97fd17afa81781e2ef2424c451ef51e7e"
+      },
+      {
+        "file": "app/zhiyu/message-actions.css",
+        "sha256": "a8d016d9228359d4cd54db3a24a67aa99c254daf5344de6a7f9372156e4e61f5"
+      },
+      {
+        "file": "app/zhiyu/message-forward-dialog.css",
+        "sha256": "a77bf254b1c805b2dbb578d3af3a45833c5be35bfddfb0fbd76a56707422e433"
+      },
+      {
+        "file": "app/zhiyu/mobile.css",
+        "sha256": "7a2b39fb426bf97c943b01790959ae37844f100e4e85630149b85aaecfea0c16"
+      },
+      {
+        "file": "app/zhiyu/morning-reminder-settings.css",
+        "sha256": "2f0c9ccb9a82ba44537197e3263521d40cfdac941317cfae2aac6d844a366353"
+      },
+      {
+        "file": "app/zhiyu/npc-contact-card.css",
+        "sha256": "a49acdeab54c2e8d77567accbeb90937c7c87959fc27cc532f34280ede00a398"
+      },
+      {
+        "file": "app/zhiyu/npc-type-badge.css",
+        "sha256": "dd2d3a61d907063eaca38fb5ff0b79369b794f79dc1ec6ac6f2d112f1b428e26"
+      },
+      {
+        "file": "app/zhiyu/pets.css",
+        "sha256": "45bae69715c1bfa34f93cdac6d3ac7513b9624d1ed4fba052abfee67135aba62"
+      },
+      {
+        "file": "app/zhiyu/pressable-icon-button.css",
+        "sha256": "a6d97306e3588bd221fd173311d07a0c79dc85f5ebd3ac134f6f200343a0cc67"
+      },
+      {
+        "file": "app/zhiyu/private-chat-settings.css",
+        "sha256": "2e91468bd9ab59298962b86852833df93bf07fdd7a3ad6a2e4f69b9ffe9b7635"
+      },
+      {
+        "file": "app/zhiyu/professional-profile.css",
+        "sha256": "0abdd1e91983cb2acb0f77576edac5af4a4daa7e229845a96d34313072cf6067"
+      },
+      {
+        "file": "app/zhiyu/professional-task.css",
+        "sha256": "cb6dec5bc6e01d28a2f0585e2bbc4bcd0526716f73966e7cfbc4f209addce75c"
+      },
+      {
+        "file": "app/zhiyu/profile-popover.css",
+        "sha256": "e91c5f41a663af131d60c4720ecaad7bd30109410e7cf7ff666487e546788d3e"
+      },
+      {
+        "file": "app/zhiyu/rail-navigation.css",
+        "sha256": "afd7fc94fb3bd0adefddb111fb0e811797b6207d0c13efa1843c96a7505f38de"
+      },
+      {
+        "file": "app/zhiyu/realtime-speech-settings.css",
+        "sha256": "73d1c06a4720f4318bb156eba878962cad201da41814af58fcd7709c53e6b10c"
+      },
+      {
+        "file": "app/zhiyu/realtime-voice-call.css",
+        "sha256": "c7152d0438038dc1509eabae676ed32b47de5e5ddf8545faded053c5c44fce17"
+      },
+      {
+        "file": "app/zhiyu/relationship-dashboard.css",
+        "sha256": "f756b40b8a4a9b9d6b7e7a8544aa0f0f8ab4f49e7228dfa7766d1c1ccf581cc9"
+      },
+      {
+        "file": "app/zhiyu/secretary-report.css",
+        "sha256": "b24eb2017d7a867cf113d812e9ce1a53521a304542658e3014bee473f3e95980"
+      },
+      {
+        "file": "app/zhiyu/self-profile-card.css",
+        "sha256": "5e02d02b89b0863684fbd27acb5ea69caf64579fe4dc22b225f1497743a38934"
+      },
+      {
+        "file": "app/zhiyu/task-board/history-view.css",
+        "sha256": "8a28c6b213ead8f814fb5ff0c773679ff9625b1f4aa5cbd9e2f243497b75cc8d"
+      },
+      {
+        "file": "app/zhiyu/task-board/task-board.css",
+        "sha256": "d59581df2eeacc3bb37f805530374b23748c98564250d46bc8ec9b1fe35fc467"
+      },
+      {
+        "file": "app/zhiyu/task-board/task-components.css",
+        "sha256": "36bf7f1c9c9a1e2ed18863736c0ca6169db384dcd3d9b41deb273bd5c304e36a"
+      },
+      {
+        "file": "app/zhiyu/theme-frosted.css",
+        "sha256": "d717d5e327329e6855dec274126c068e32e657557f9a2519e86440757736db9d"
+      },
+      {
+        "file": "app/zhiyu/theme-glass.css",
+        "sha256": "888e465aeb8e5cae72f983e72471bfc53af8e48a6d60941337cee2c22837121e"
+      },
+      {
+        "file": "app/zhiyu/theme-motion.css",
+        "sha256": "c077e14d0ad7f45753187b902b0d4f08d4fba029508cc369dd9fe669806fc7fe"
+      },
+      {
+        "file": "app/zhiyu/theme-surfaces.css",
+        "sha256": "0acb50ba003249cb0895a898dfb3a737ca6c306c0df12ef755e853912aef2de2"
+      },
+      {
+        "file": "app/zhiyu/theme.css",
+        "sha256": "595d530d315570029fb810e4635a46febfec5d70666384b765213c2e658aff21"
+      },
+      {
+        "file": "app/zhiyu/today-tasks.css",
+        "sha256": "2fd2ed60d8e9f84213b9e996440dd40ecb27c26485256f6c3ef56f8a5ff54ead"
+      },
+      {
+        "file": "app/zhiyu/user-facing-ui.css",
+        "sha256": "a387b862d06f73f3d408731c39952b536bb717650f0f133b643ad96a4364a48e"
+      },
+      {
+        "file": "app/zhiyu/voice-bubble.css",
+        "sha256": "f671e3a65d4ce64b9cbdb712bd4a39f8652bbe166f7f732eaa71dd39b28e9ee5"
+      },
+      {
+        "file": "app/zhiyu/xia-xia.css",
+        "sha256": "2a29586d2d7fe350ecac860ec285b6eb60a39eaff6ef6055fb812076ff23ae19"
+      }
+    ]
+  }
+}

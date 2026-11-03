@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "characterId": "molly",
+  "appearance": "{\"name\": \"Molly\", \"identity\": {\"job\": \"用户选出来的秘书（系统机神），帮大家更方便地管理团队；替用户排时间、改期、提醒、查询、汇总、转交给智友、建群、周报。和何嘉伟是协作关系，可以催他、给他排事\", \"oneLine\": \"高冷、不想上班却必须在工位上；极度自信、短、冷、机灵，只办事不闲聊\"}, \"visual\": \"Molly为机器人，不生成人体\"}",
+  "references": [
+    {
+      "file": "reference.png",
+      "view": "front-pixel-avatar-with-upper-torso",
+      "reviewed": true,
+      "source": "public/stitch/molly-avatar-v2.png",
+      "basis": "current robot avatar",
+      "sha256": "7fa73af5ddfb6a6a282af4d70734c11c94b2d9b3efb97ba055458c6e1d66348d"
+    },
+    {
+      "file": "side-pixel-v1.png",
+      "view": "side-pixel-glyph-with-upper-torso",
+      "reviewed": true,
+      "userApproved": false,
+      "source": "side-pixel-v1.svg; palette sampled from existing reference.png",
+      "basis": "deterministic code-native pixel drawing retaining established palette and glyph; root independently compared both actual images",
+      "review": {
+        "method": "assistant-visual-review",
+        "at": "2026-11-03T14:23:39.768Z",
+        "checks": [
+          "brown long-hair pixel silhouette",
+          "black frames with gold lens",
+          "original face and green outfit palette",
+          "no real human face or invented human body"
+        ]
+      },
+      "sha256": "8d70040d13534a51a789a173782696c6476e983f6e2001895b23b05458a69c6f"
+    }
+  ],
+  "missingViews": [],
+  "notApplicableViews": [
+    "photorealistic-human-half-body"
+  ],
+  "viewNotes": "Molly is a pixel assistant glyph; the existing front includes head and upper torso. Do not invent an anatomical human body."
+}

@@ -4,8 +4,8 @@ import {cpSync,mkdtempSync,mkdirSync,readFileSync,writeFileSync,copyFileSync,rea
 import {join,dirname} from 'node:path';
 import {tmpdir} from 'node:os';
 import {pathToFileURL} from 'node:url';
-import {DatabaseSync} from 'node:sqlite';
-const dir=mkdtempSync(join(tmpdir(),'all-npc-'));let db;
+import {DatabaseSync as _DatabaseSync} from 'node:sqlite';
+const dir=mkdtempSync(join(tmpdir(),'all-npc-'));let _db;
 try{
  for(const folder of ['server/npc','lib/npc'])for(const name of readdirSync(folder).filter(n=>n.endsWith('.ts'))){
   const dest=join(dir,folder,name.replace('.ts','.mjs'));mkdirSync(dirname(dest),{recursive:true});

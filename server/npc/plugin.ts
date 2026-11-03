@@ -1,6 +1,7 @@
+import {statusFromState} from '../../lib/npc/character-status';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
 import {clearPrivateHistory, privateHistoryMessages} from './private-history';
-import { deliveryView } from '../../lib/npc/delivery';
+import { deliveryView,presentationPending } from '../../lib/npc/delivery';
 import { userPart, partInput } from './media';
 import type { Plugin } from 'vite';
 import { DatabaseSync } from 'node:sqlite';
@@ -140,7 +141,8 @@ export function npcLocal(testDependencies?: {
             }
             const id = `${user}:xia-xia:${mode}`;
             const expose = (s: NpcState) => ({
-              ...deliveryView(privateHistoryMessages(s),s.pending),
+              ...deliveryView(privateHistoryMessages(s),presentationPending(s)),
+        characterStatus:statusFromState('xia-xia',s,Date.now()),
               revision: s.revision,
               conversationId: s.branch,
               available: status(),

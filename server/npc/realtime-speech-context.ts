@@ -72,7 +72,7 @@ function voicePairs(root: string, ownerId: string): Pair[] {
 }
 
 export function loadXiaomanRealtimeContext(root: string, ownerId: string) {
-  const skill = loadDialogueSkill(root, identity, 'yuan-xiaoman');
+  const skill = loadDialogueSkill(root, identity, 'yuan-xiaoman',{channel:'realtime',hasVoice:true});
   if (!skill) throw new Error('小满对话规则未载入');
   let state: YuanState | undefined;
   const path = join(root, '.npc-runtime/state.sqlite');

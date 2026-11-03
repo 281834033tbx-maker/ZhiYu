@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable next/no-img-element -- Existing NPC portraits and project-owned cutouts are local assets. */
-import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type SyntheticEvent } from 'react';
 import { ArrowDownRight, ArrowUpRight, Heart, Send, X } from 'lucide-react';
 import type { ChatMessage, PublicSession } from '../../lib/npc/contracts';
 import { choicePlainText } from '../../lib/npc/choice-chat';
@@ -9,6 +9,10 @@ import type { Person } from './data';
 import { useChatView } from './chat-view-store';
 import { npcFetch } from './npc-fetch';
 import './character-dock.css';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
+import {AiDisclosure} from './user-facing-ui';
+const outfitChanged='zhiyu-character-outfit-changed';
+function subscribeOutfit(onChange:()=>void){window.addEventListener('storage',onChange);window.addEventListener(outfitChanged,onChange);return()=>{window.removeEventListener('storage',onChange);window.removeEventListener(outfitChanged,onChange);};}
 
 type DockSize = 'half' | 'full';
 type Activity = 'idle' | 'selfie' | 'review';
@@ -39,15 +43,19 @@ function moodScore(data: PublicSession | null): number {
   return 60;
 }
 
-export default function CharacterDock({ person, accountId, size, onSize, onClose, onOpenChat }: {
+type CharacterDockProps={
   person: Person;
   accountId: string;
   size: DockSize;
   onSize: (size: DockSize) => void;
   onClose: () => void;
   onOpenChat: () => void;
-}) {
-  const { data, accept } = useChatView(person.id);
+};
+export default function CharacterDock(props:CharacterDockProps) {
+  return <CharacterDockSession key={`${props.accountId}:${props.person.id}`} {...props}/>;
+}
+function CharacterDockSession({ person, accountId, size, onSize, onClose, onOpenChat }:CharacterDockProps) {
+  const { data, accept } = useChatView(`${accountId}:${person.id}`);
   const isYuan = person.id === 'yuan-xiaoman';
   const sceneSource = person.desktopImage || null;
   const [draft, setDraft] = useState('');
@@ -55,7 +63,7 @@ export default function CharacterDock({ person, accountId, size, onSize, onClose
   const [error, setError] = useState('');
   const [bubble, setBubble] = useState('');
   const [activity, setActivity] = useState<Activity>('idle');
-  const [outfit, setOutfit] = useState<Outfit>('casual');
+  const [changedOutfit,setChangedOutfit]=useState<Outfit|null>(null);
   const [away, setAway] = useState(false);
   const lastAssistant = useRef<string | null>(null);
   const processedTurns = useRef<Set<string> | null>(null);
@@ -65,43 +73,25 @@ export default function CharacterDock({ person, accountId, size, onSize, onClose
   const outfitKey = `zhiyu-character-outfit:v1:${accountId}:${person.id}`;
   const endpoint = `/api/npc/${person.id}?mode=normal`;
   const acceptRef = useRef(accept);
-  acceptRef.current = accept;
+  useLayoutEffect(()=>{acceptRef.current=accept;},[accept]);
 
-  useEffect(() => {
-    try { setOutfit(localStorage.getItem(outfitKey) === 'denim' ? 'denim' : 'casual'); }
-    catch { setOutfit('casual'); }
-  }, [outfitKey]);
-
-  useEffect(() => {
-    let active = true;
-    const poll = async () => {
-      try {
-        const response = await npcFetch(endpoint, { cache: 'no-store',headers:{'X-Zhiyu-Account':accountId} });
-        if (!response.ok) throw new Error('暂时无法同步消息');
-        const next = await response.json() as PublicSession;
-        if (active) acceptRef.current(next);
-      } catch { /* The main chat keeps its existing error handling. */ }
-    };
-    void poll();
-    const timer = setInterval(() => { void poll(); }, 2500);
-    return () => { active = false; clearInterval(timer); };
-  }, [endpoint,accountId]);
+  const savedOutfit=useSyncExternalStore(subscribeOutfit,()=>{try{return localStorage.getItem(outfitKey)==='denim'?'denim':'casual';}catch{return 'casual';}},()=>'casual');
+  const outfit=changedOutfit||savedOutfit;
 
   const changeOutfit = useCallback((next: Outfit) => {
     if (changeTimer.current) clearTimeout(changeTimer.current);
     setAway(true);
     setBubble('');
     changeTimer.current = setTimeout(() => {
-      setOutfit(next);
-      try { localStorage.setItem(outfitKey, next); } catch { /* storage may be disabled */ }
+      setChangedOutfit(next);
+      try { localStorage.setItem(outfitKey, next);window.dispatchEvent(new Event(outfitChanged)); } catch { /* storage may be disabled */ }
       setActivity('idle');
       setAway(false);
     }, 1100);
   }, [outfitKey]);
 
-  useEffect(() => {
-    if (!data) return;
-    const messages = data?.messages || [];
+  const processSession=useCallback((next:PublicSession)=>{
+    const messages = next.messages;
     if (processedTurns.current === null) {
       processedTurns.current = new Set(messages.filter(m => m.role === 'user').map(m => m.turnId));
       lastAssistant.current = [...messages].reverse().find(m => m.role === 'assistant')?.id || '';
@@ -124,7 +114,22 @@ export default function CharacterDock({ person, accountId, size, onSize, onClose
       processedTurns.current.add(userMessage.turnId);
       if (acceptedChange(spokenText(reply))) changeOutfit(wanted);
     }
-  }, [data?.messages, isYuan, sceneSource, changeOutfit]);
+  }, [isYuan, sceneSource, changeOutfit]);
+
+  useEffect(() => {
+    let active = true;
+    const poll = async () => {
+      try {
+        const response = await npcFetch(endpoint, { cache: 'no-store',headers:{'X-Zhiyu-Account':accountId} });
+        if (!response.ok) throw new Error('暂时无法同步消息');
+        const next = await response.json() as PublicSession;
+        if (active) {processSession(next);acceptRef.current(next);}
+      } catch { /* The main chat keeps its existing error handling. */ }
+    };
+    void poll();
+    const timer = setInterval(() => { void poll(); }, 2500);
+    return () => { active = false; clearInterval(timer); };
+  }, [endpoint,accountId,processSession]);
 
   useEffect(() => {
     if (!isYuan || sceneSource || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -144,7 +149,7 @@ export default function CharacterDock({ person, accountId, size, onSize, onClose
     if (changeTimer.current) clearTimeout(changeTimer.current);
   }, []);
 
-  async function send(event: FormEvent<HTMLFormElement>) {
+  async function send(event: SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     const text = draft.trim();
     if (!text || sending) return;
@@ -157,10 +162,10 @@ export default function CharacterDock({ person, accountId, size, onSize, onClose
       });
       const next = await response.json() as PublicSession & { error?: string };
       if (!response.ok) throw new Error(next.error || '发送失败');
-      acceptRef.current(next);
+      processSession(next);acceptRef.current(next);
       setDraft('');
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : '发送失败');
+      setError(reportUserFacingError(reason,'send','发送消息'));
     } finally { setSending(false); }
   }
 
@@ -196,6 +201,7 @@ export default function CharacterDock({ person, accountId, size, onSize, onClose
         <input id={`zy-character-input-${person.id}`} value={draft} onChange={event => setDraft(event.target.value)} placeholder="说点什么…" disabled={sending || !data?.available} />
         <button type="submit" disabled={!draft.trim() || sending || !data?.available} aria-label="发送消息"><Send size={17} /></button>
       </form>
+      <AiDisclosure/>
       {error && <output className="zy-character-error" role="alert">{error}</output>}
     </section>
   </aside>;

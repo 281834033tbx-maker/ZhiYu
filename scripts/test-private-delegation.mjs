@@ -25,7 +25,7 @@ const output=(text,task={decision:'none'})=>({action:'reply',messages:[{type:'te
 try {
   const {receivePrivateDelegation,privateDelegationTargetIds,supportsPrivateDelegationTarget}=await runtime.load('server/npc/private-delegation-receiver');
   const {characterDirectory}=await runtime.load('lib/npc/character-directory');
-  assert.deepEqual([...privateDelegationTargetIds()].sort(),characterDirectory.filter(character=>character.enabled).map(character=>character.id).sort());
+  assert.deepEqual([...privateDelegationTargetIds()].sort((a,b)=>a<b?-1:a>b?1:0),characterDirectory.filter(character=>character.enabled).map(character=>character.id).sort((a,b)=>a<b?-1:a>b?1:0));
   for (const character of characterDirectory.filter(character=>character.enabled)) assert.ok(supportsPrivateDelegationTarget(character.id));
   assert.equal(supportsPrivateDelegationTarget('unwired-npc'),false);
   const {nextNutritionWeek,liuNutritionWeek,parseLiu,applyLiu,liuTaskDelegationEvidence,liuRenewalConfirmationRequired,nutritionRenewalAnswer}=await runtime.load('lib/npc/liu');
@@ -67,7 +67,7 @@ try {
   assert.equal(calls,6);
 
   // A direct, source-verified future training request creates one dated card.
-  let training=input('chen-nian','让陈年帮我安排明天肩部训练任务','肩部训练');
+  const training=input('chen-nian','让陈年帮我安排明天肩部训练任务','肩部训练');
   const trainingReceipt=await receivePrivateDelegation(runtime.root,db,training,{...deps,generate:async()=>output('明天练肩，安排在这张卡里。',{
     decision:'create',basis:'explicit_request',confidence:.98,scope:'current_user',polarity:'affirmed',readiness:'ready',
     sourceMessageId:training.source.messageId,evidence:training.source.text,title:'肩部训练',goalKey:'肩部训练',
@@ -82,12 +82,12 @@ try {
   const task=(source,extra={})=>({decision:'create',basis:'explicit_request',confidence:.98,scope:'current_user',polarity:'affirmed',readiness:'ready',
     sourceMessageId:source.messageId,evidence:source.text,title:'下周减脂饮食',goalKey:'减脂饮食',
     steps:dates.map((date,index)=>({title:`周${index+1}饮食`,scheduledDate:date,instructions:['早餐 燕麦、鸡蛋和牛奶','午餐 米饭、鸡肉和蔬菜','晚餐 杂粮饭、豆腐和蔬菜']})),...extra});
-  let nutritionReceipt=await receivePrivateDelegation(runtime.root,db,nutrition,{...deps,generate:async(_root,prompt)=>{
+  const nutritionReceipt=await receivePrivateDelegation(runtime.root,db,nutrition,{...deps,generate:async(_root,prompt)=>{
     assert.match(liuClinicalInputFromPrompt(prompt).current,/下周减脂饮食/,'delegated request must reach clinical retrieval without a forged local message');
     return output('下周的饮食安排在这里。',task(nutrition.source));
   }});
   assert.equal(nutritionReceipt.taskIds.length,1);
-  let liu=read('liu'), old=structuredClone(liu.professionalTasks[0]);
+  let liu=read('liu');const old=structuredClone(liu.professionalTasks[0]);
   assert.equal(old.characterId,'liu');assert.equal(old.steps.length,7);assert.equal(professionalTaskSessionKind(old),undefined);
   const calendar=readTaskCalendar(db,{owner_id:owner},'liu',now);
   assert.equal(calendar.days.flatMap(day=>day.entries).length,0,'historical calendar does not pretend future meals happened');

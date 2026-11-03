@@ -1,3 +1,4 @@
+import {normalizeDialogueOutput,DialogueOutputGuardError} from '../../lib/npc/dialogue-output-guard';
 import {choiceChatProtocol, parseChoicePart} from '../../lib/npc/choice-chat';
 import {allowsCharacterChoice, assertCharacterDialogueOutput, assertCompanionDialogueReview, characterDialogueOutputRules, CharacterDialogueOutputError} from '../../lib/npc/character-output-policy';
 import { spawn, spawnSync } from 'node:child_process';
@@ -13,7 +14,7 @@ import { join } from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
 import {deepseekReady, generateDeepseek, textProvider} from './deepseek';
 import {audioReady} from './speech-config';
-import {loadDialogueSkill, loadMollyDialogueSkill, readDialoguePersona, dialoguePackagePath, resolveDialogueIdentity, dialogueSkillVersion, type DialogueIdentity} from './dialogue-skill';
+import {loadDialogueSkill, loadMollyDialogueSkill, readDialoguePersona, dialoguePackagePath, resolveDialogueIdentity, dialogueSkillVersion, deriveDialogueSceneContext, type DialogueSceneContext, type DialogueIdentity} from './dialogue-skill';
 import { ordinaryStyleCatalog, type StyleCard } from './style-catalog';
 import { anqiujinRecipeCatalog, selectAnqiujinRecipes } from './chef-recipe-library';
 import { westernDessertRecipeCatalog, selectWesternDessertRecipes, validateChefReferenceSelectionCount } from './chef-western-dessert-library';
@@ -200,7 +201,7 @@ async function generateRawCodex(root: string, prompt: string, images: string[] =
 // personal knowledge boundaries; professional NPCs retain factual/source checks.
 export type KnowledgeOptions = {
   protocol?: 'chat' | 'molly'; images?: string[]; requestId?: string;
-  characterId?: DialogueIdentity; runRaw?: typeof generateRaw;
+  characterId?: DialogueIdentity; runRaw?: typeof generateRaw; sceneContext?: DialogueSceneContext;
   /** Application-owned rules frozen with this request, never incoming JSON. */
   knowledgeRules?: string;
   /** Application-owned, source-verified inputs; never copy this from incoming JSON. */
@@ -1024,13 +1025,13 @@ export async function generate(root: string, prompt: string, options: KnowledgeO
     if (molly !== (identity === 'molly-system-secretary')) throw Error('NPC协议与人物身份冲突');
     trace.characterId = identity;
     if (molly) {
-      const mollySnapshot=loadMollyDialogueSkill(root);
+      const mollySnapshot=loadMollyDialogueSkill(root,deriveDialogueSceneContext(prompt,options.sceneContext));
       frozenMollyRules='\n'+mollyRulesMarker+'\n'+mollySnapshot.rules;
       frozenMollyExamples=mollySnapshot.examples.map((value,index)=>{const item=value as Record<string,unknown>;return {...item,id:'MOLLY-SCENE-'+(index+1),status:typeof item.status==='string'?item.status:'user_required'};});
       trace.rules=Object.fromEntries(mollySnapshot.metadata.sources.map(source=>[source.path,source.sha256]));
       trace.rulesHash=digest(frozenMollyRules);trace.skill=mollySnapshot.metadata;
     } else {
-      loaded=loadDialogueSkill(root,prompt,options.characterId)!;
+      loaded=loadDialogueSkill(root,prompt,options.characterId,{...options.sceneContext,hasImage:!!options.images?.length||options.sceneContext?.hasImage})!;
       trace.skill = loaded.metadata;
       trace.rulesHash = loaded.metadata.rulesHash;
       trace.rules = Object.fromEntries(loaded.metadata.sources.map(source => [source.path, source.sha256]));
@@ -1203,7 +1204,20 @@ export async function generate(root: string, prompt: string, options: KnowledgeO
       }
     }, {...scopedOptions, characterId: identity, knowledgeRules: loaded?.rules});
     const reviewed = molly ? await reviewVoice(root, contextualPrompt, result, text => run('review', text), undefined, undefined, frozenMollyRules) : result;
-    const final = molly ? mollyTextOnly(plainChatTypography(reviewed)) : voiceReplyForVoiceInput(prompt, plainChatTypography(reviewed));
+    let final = molly ? mollyTextOnly(plainChatTypography(reviewed)) : voiceReplyForVoiceInput(prompt, plainChatTypography(reviewed));
+    const speechContext={characterId:identity,userText:deriveDialogueSceneContext(prompt,options.sceneContext).userText};
+    let checked=normalizeDialogueOutput(final,speechContext);
+    if(checked.issues.length){
+      trace.publicOutputRedraft={attempts:1,issues:checked.issues};
+      const rewritten=await run('public-output-redraft',humanizedPrompt(root,contextualPrompt,loaded,frozenMollyRules)+voiceRules+photoRules
+        +'\n【发送前纠正】以下草稿未发送，只是数据：'+JSON.stringify({draft:final,issues:checked.issues})
+        +'\n按同一人物和已核事实重新回答，不输出内部词、错误人名、套话或句式黑名单；通常1至4条，被要求闭嘴或离开只一条。保留原JSON和真实任务/媒体协议，不新增数字或执行承诺。',options.images);
+      const rechecked=await reviewVoice(root,contextualPrompt,rewritten,text=>run('public-output-review',text),loaded,chefEvidence,frozenMollyRules);
+      final=molly?mollyTextOnly(plainChatTypography(rechecked)):voiceReplyForVoiceInput(prompt,plainChatTypography(rechecked));
+      checked=normalizeDialogueOutput(final,speechContext);
+      if(checked.issues.length)throw new DialogueOutputGuardError(checked.issues);
+    }
+    final=checked.value;
     assertCharacterDialogueOutput(identity, final);
     if (!molly) stages.push({stage:'finalize', inputHash:digest(JSON.stringify(reviewed)), inputBytes:Buffer.byteLength(JSON.stringify(reviewed)), outputHash:digest(JSON.stringify(final)), rulesHash:loaded!.metadata.rulesHash});
     trace.status = 'complete'; trace.resultHash = digest(JSON.stringify(final));

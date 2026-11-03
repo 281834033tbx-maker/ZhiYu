@@ -137,13 +137,11 @@ export function dueKind(
     state.cooldownUntil > now ||
     (state.pending && now - state.pending.since < 180000) ||
     life.retryAt > now ||
-    current === 'sleeping'
+    (current === 'sleeping'&&!life.queue.length)
   )
     return null;
   if (life.queue.length)
-    return !prepare && current === 'working' && life.nextWorkReplyAt > now
-      ? null
-      : 'queued';
+    return 'queued';
   if (
     !life.proactiveEnabled ||
     life.quietUntil > now ||

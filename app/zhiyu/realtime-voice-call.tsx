@@ -1,5 +1,6 @@
 'use client';
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import {userFacingError} from '../../lib/user-facing-errors';
 import { RealtimePcmPlayer } from './realtime-voice-audio';
 import RealtimeVoiceControls from './realtime-voice-controls';
 import type { RealtimeCaption } from '../../lib/npc/realtime-transcript';
@@ -34,6 +35,7 @@ export type RealtimeVoiceCallProps = {
   gender?: 'female'|'male';
   authorize: () => Promise<boolean>;
   onCallActiveChange?: (active: boolean) => void;
+  onBusyChange?: (busy:boolean)=>void;
 };
 
 function microphoneError(cause: unknown) {
@@ -47,16 +49,19 @@ function microphoneError(cause: unknown) {
 }
 
 function safeError(message: string) {
-  // Gateway errors are already sanitized; redact recognisable credential
-  // shapes again before any remotely supplied error is shown in the scene.
-  return message.slice(0, 500)
-    .replace(/(?:bearer\s+)[\w.+/=-]+/gi, 'Bearer [已隐藏]')
-    .replace(/(?:access[_ -]?token|api[_ -]?key|authorization)\s*[:=]\s*[^\s,;]+/gi, '凭据：[已隐藏]')
-    .replace(/\beyJ[\w-]+\.[\w-]+\.[\w-]+\b/g, '[已隐藏]')
-    .replace(/\b[A-Za-z0-9_+/=-]{32,}\b/g, '[已隐藏]');
+  const permissionHints=new Set([
+    '麦克风权限被拒绝。请允许智域使用麦克风，再重新开启。',
+    '没有找到麦克风，请检查设备连接。',
+    '麦克风无法读取，请关闭占用麦克风的程序后重试。',
+    '智域没有麦克风权限，请在系统设置里允许后重试',
+    '智域没有麦克风权限。请在系统设置中允许智域使用麦克风，然后重试。',
+    '麦克风连接已中断，请检查设备后重新通话。',
+    '麦克风处理已停止，请重新开启通话。',
+  ]);
+  return permissionHints.has(message)?message:userFacingError(message,'media');
 }
 
-export default function RealtimeVoiceCall({ name, character, gender='female', authorize, onCallActiveChange }: RealtimeVoiceCallProps) {
+export default function RealtimeVoiceCall({ name, character, gender='female', authorize, onCallActiveChange,onBusyChange }: RealtimeVoiceCallProps) {
   const [state, setState] = useState<CallState>('idle');
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
@@ -143,6 +148,7 @@ export default function RealtimeVoiceCall({ name, character, gender='female', au
   }, []);
 
   useEffect(()=>{onCallActiveChange?.(state==='idle'||active);},[active,state,onCallActiveChange]);
+  useEffect(()=>{onBusyChange?.(state==='connecting'||state==='thinking'||state==='speaking');},[state,onBusyChange]);
   useEffect(()=>{
     if(!active)return;
     const timer=setInterval(()=>{const time=Date.now();setNow(time);updateCaptions({type:'tick',now:time});},250);
@@ -360,7 +366,7 @@ export default function RealtimeVoiceCall({ name, character, gender='female', au
         } else if (message.type === 'error') {
           fail(typeof message.message === 'string' ? message.message : '语音服务连接失败，请检查配置后重试。');
         } else if (message.type === 'notice' && typeof message.message === 'string') {
-          setNotice(safeError(message.message));
+          setNotice(userFacingError(message.message,'media'));
         } else if (message.type === 'ended') {
           release(session);
           setEndedAt(Date.now());

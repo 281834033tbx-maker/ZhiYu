@@ -8,23 +8,23 @@
 .zy-professional-profile h2 {
   margin: 0 0 12px;
   color: var(--zy-muted, #7a827b);
-  font-size: 11px;
-  font-weight: 530;
+  font-size: calc(11px + var(--zy-font-adjust,0px));
+  font-weight: 400;
 }
 .zy-professional-title {
   display: block;
-  font-size: 13px;
-  font-weight: 570;
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+  font-weight: 600;
   line-height: 1.55;
 }
 .zy-professional-summary {
   margin: 7px 0 0;
-  font-size: 12px;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
   line-height: 1.65;
 }
 .zy-professional-certificates {
   margin-top: 13px;
-  font-size: 12px;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
   line-height: 1.6;
 }
 .zy-professional-certificates > summary {
@@ -36,7 +36,7 @@
 .zy-professional-certificates > summary:focus-visible {
   outline: 2px solid var(--zy-nav-active, #2e6252);
   outline-offset: 4px;
-  border-radius: 2px;
+  border-radius: 6px;
 }
 .zy-professional-certificates > ul {
   margin: 13px 0 0;
@@ -49,17 +49,17 @@
 }
 .zy-professional-certificates > ul > li:first-child { padding-top: 0; border-top: 0; }
 .zy-professional-certificates > ul > li:last-child { padding-bottom: 0; }
-.zy-professional-certificates strong { display: block; font-weight: 540; }
+.zy-professional-certificates strong { display: block; font-weight: 400; }
 .zy-professional-certificate-level {
   display: block;
   margin-top: 3px;
   color: var(--zy-secondary, #62665d);
-  font-size: 10px;
+  font-size: calc(11px + var(--zy-font-adjust,0px));
 }
 .zy-professional-certificates li p {
   margin: 4px 0 0;
   color: var(--zy-secondary, #62665d);
-  font-size: 11px;
+  font-size: calc(11px + var(--zy-font-adjust,0px));
   line-height: 1.65;
 }
 .zy-profile-popover.zy-professional-profile-popover.zy-dialog {

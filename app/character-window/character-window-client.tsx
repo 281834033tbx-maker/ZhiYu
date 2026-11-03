@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable next/no-img-element -- Character scenes are the exact user-approved local assets. */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import type { Part, PublicSession } from '../../lib/npc/contracts';
 import ChatComposer, { type ComposePayload } from '../zhiyu/chat-composer';
 import { molly, allPeople, type Message } from '../zhiyu/data';
@@ -14,7 +14,10 @@ import { ensureChefChatHistory } from '../zhiyu/chef-chat-history';
 import {notificationMessages, readMutedChats, useChatMuted} from '../zhiyu/chat-mute';
 import RealtimeVoiceCall from '../zhiyu/realtime-voice-call';
 import XiaomanVideoScene from './xiaoman-video-scene';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 import './character-window.css';
+import {useContinuousUse} from '../zhiyu/use-continuous-use';
+import {AiDisclosure} from '../zhiyu/user-facing-ui';
 
 const liveCharacters = new Set(['chen-nian', 'yuan-xiaoman', 'xia-xia', 'liu', 'molly', 'he-jiawei', 'zhou-chef']);
 const textOnlyCharacters = new Set(['he-jiawei', 'zhou-chef']);
@@ -33,13 +36,25 @@ function messageText(part: Part): string {
   if(part.type==='professional_task')return '[任务] 可在聊天窗口查看和完成';
   if(part.type==='text'||part.type==='emoji'||part.type==='voice')return part.text;
   if(part.type==='upload')return part.text || '[图片]';
-  if(part.type==='generated_photo')return part.caption || (part.status==='ready'?'[图片]':'[图片生成中]');
+  if(part.type==='generated_photo')return part.caption || '[图片]';
   return 'caption' in part ? part.caption || '[图片]' : '[消息]';
 }
 
+function subscribeLocation(onChange:()=>void) {
+  window.addEventListener('popstate',onChange);
+  return()=>window.removeEventListener('popstate',onChange);
+}
+function readWindowPerson() {
+  const requested=new URLSearchParams(window.location.search).get('npc');
+  return [molly,...allPeople].some(person=>person.id===requested)?requested:null;
+}
 export default function CharacterWindowClient() {
   const {account}=useAccount();
-  const [personId, setPersonId] = useState<string | null>(null);
+  const personId=useSyncExternalStore(subscribeLocation,readWindowPerson,()=>null);
+  return <CharacterWindowSession key={`${account.id}:${personId||''}`} personId={personId}/>;
+}
+function CharacterWindowSession({personId}:{personId:string|null}) {
+  const {account}=useAccount();
   const [session, setSession] = useState<{ key: string; data: PublicSession } | null>(null);
   const [localChat,setLocalChat]=useState<{ key: string; messages: Message[] } | null>(null);
   const [floatingChat,setFloatingChat]=useState<FloatingChat | null>(null);
@@ -48,11 +63,12 @@ export default function CharacterWindowClient() {
   const [macFullscreen, setMacFullscreen] = useState(false);
   const [authChanged, setAuthChanged] = useState(false);
   const [syncError, setSyncError] = useState<{ key: string; text: string } | null>(null);
+  const [callBusy,setCallBusy]=useState<{key:string;busy:boolean}|null>(null);
   const [callPresentation,setCallPresentation]=useState<{key:string;active:boolean}|null>(null);
   const titlebar = useRef<HTMLDivElement>(null);
   const composer = useRef<HTMLElement>(null);
   const chatBox = useRef<HTMLDivElement>(null);
-  const stream = useRef<{ key: string; seen: Set<string>; initialized: boolean } | null>(null);
+  const stream = useRef<{ key: string; seen: Set<string>; initialized: boolean } | null>({key:`${account.id}:${personId||''}`,seen:new Set(),initialized:false});
   const authentication = useRef<AuthenticationScope | null>(null);
 
   const invalidateAuthentication = useCallback((scope: AuthenticationScope) => {
@@ -108,7 +124,6 @@ export default function CharacterWindowClient() {
   useEffect(() => {
     const scope: AuthenticationScope = { accountId: account.id, active: true, invalidated: false, controllers: new Set(), checking: null };
     authentication.current = scope;
-    setAuthChanged(false);
     return () => {
       scope.active = false;
       scope.controllers.forEach(controller => controller.abort());
@@ -159,11 +174,6 @@ export default function CharacterWindowClient() {
   }, [personId]);
 
   useEffect(() => {
-    const requested = new URLSearchParams(window.location.search).get('npc');
-    setPersonId([molly, ...allPeople].some(person => person.id === requested) ? requested : null);
-  }, []);
-
-  useEffect(() => {
     if (!personId || !liveCharacters.has(personId)) return;
     let active = true;
     let polling = false;
@@ -203,7 +213,7 @@ export default function CharacterWindowClient() {
         }
       } catch (cause) {
         if (textOnlyCharacters.has(personId) && active && scope?.active && !scope.invalidated && authentication.current === scope) {
-          setSyncError({ key, text: cause instanceof Error ? cause.message : '暂时无法同步聊天，请稍后重试。' });
+          setSyncError({ key, text: reportUserFacingError(cause,'load','同步人物消息') });
         }
       }
       finally {
@@ -245,6 +255,8 @@ export default function CharacterWindowClient() {
   const visibleMessages=floatingChat?.key===chatKey?floatingChat.messages:[];
   const realtimeLayout=personId==='yuan-xiaoman';
   const callActive=realtimeLayout&&(callPresentation?.key!==chatKey||callPresentation.active);
+  const onCallBusyChange=useCallback((busy:boolean)=>setCallBusy(previous=>previous?.key===chatKey&&previous.busy===busy?previous:{key:chatKey,busy}),[chatKey]);
+  useContinuousUse({accountId:account.id,characterId:personId||'molly',enabled:!!personId&&!authChanged,busy:!!(callBusy?.key===chatKey&&callBusy.busy)||!!data?.pending});
   const onCallActiveChange=useCallback((active:boolean)=>setCallPresentation(previous=>previous?.key===chatKey&&previous.active===active?previous:{key:chatKey,active}),[chatKey]);
 
   useEffect(()=>{
@@ -253,12 +265,6 @@ export default function CharacterWindowClient() {
     setChatOverflowing(box.scrollHeight>box.clientHeight+1);
     box.scrollTo({top:box.scrollHeight,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
   },[floatingChat?.messages]);
-
-  useEffect(()=>{
-    stream.current={key:chatKey,seen:new Set(),initialized:false};
-    setFloatingChat(null);
-    setChatOverflowing(false);
-  },[chatKey]);
 
   useEffect(()=>{
     if(!personId || !incomingMessages)return;
@@ -324,7 +330,7 @@ export default function CharacterWindowClient() {
     } finally {scope.controllers.delete(controller);}
   }
 
-  if(authChanged)return <main className="zy-app zy-character-window" aria-label="正在刷新登录状态"><p role="status" style={{padding:20}}>正在刷新登录状态…</p></main>;
+  if(authChanged)return <main className="zy-app zy-character-window" aria-label="正在刷新登录状态"><output style={{padding:20}}>正在刷新登录状态…</output></main>;
 
   return <main className={`zy-app zy-character-window${macFullscreen?' is-mac-fullscreen':''}${realtimeLayout?' has-realtime-layout':''}${callActive?' is-call-active':''}`} aria-label="桌面人物窗口">
     <div ref={titlebar} className="zy-character-window-titlebar" aria-label={macFullscreen?'全屏窗口控制':undefined}>
@@ -334,9 +340,9 @@ export default function CharacterWindowClient() {
       {personId==='yuan-xiaoman'&&scene
         ? <XiaomanVideoScene fallback={scene}/>
         : scene
-          ? <img className="zy-character-window-scene-direct" src={scene} alt={`${person?.realName || person?.name || 'NPC'}的人物形象`} draggable={false}/>
+          ? <img className="zy-character-window-scene-direct" src={scene} alt={person?.realName || person?.name || '智友'} draggable={false}/>
           : source
-            ? <img className="zy-character-window-avatar" src={source} alt={`${person?.realName || person?.name || 'NPC'}的人物形象`} draggable={false} />
+            ? <img className="zy-character-window-avatar" src={source} alt={person?.realName || person?.name || '智友'} draggable={false} />
             : personId==='zhou-chef'&&<div className="zy-character-window-avatar" style={{color:'#fff',display:'grid',placeContent:'center',textAlign:'center'}}><h1>赵一帆</h1></div>}
       {visibleMessages.length>0&&<aside className="zy-character-window-chat" role="log" aria-label={`${person?.name||'人物'}的新消息`} aria-live="polite">
         <div ref={chatBox} className={`zy-character-window-chat-scroll${chatOverflowing?' is-overflowing':''}`}>
@@ -349,8 +355,9 @@ export default function CharacterWindowClient() {
         </div>
       </aside>}
       {personId==='yuan-xiaoman'&&person&&<RealtimeVoiceCall key={chatKey}
-        name={person.nickname||person.name} character={person.id} gender={person.gender} authorize={verifyAuthentication} onCallActiveChange={onCallActiveChange}/>}
+        name={person.nickname||person.name} character={person.id} gender={person.gender} authorize={verifyAuthentication} onCallActiveChange={onCallActiveChange} onBusyChange={onCallBusyChange}/>}
     </div>
+    {callActive&&<div className="zy-character-call-disclosure"><AiDisclosure/></div>}
     <section ref={composer} className="zy-character-window-composer" aria-label="发送消息">
       {syncError?.key===chatKey&&<div className="chat-compose-error" role="alert">{syncError.text}</div>}
       <ChatComposer
@@ -360,8 +367,8 @@ export default function CharacterWindowClient() {
         allowImages={!personId || !textOnlyCharacters.has(personId)}
         allowVoice={false}
         disabled={!personId || (isLive&&!data?.available) || (!isLive&&!localMessages)}
-        label={`给${person?.realName || person?.name || 'NPC'}的消息`}
-        placeholder={`和${person?.realName || person?.name || 'NPC'}说点什么…`}
+        label={`给${person?.realName || person?.name || '智友'}的消息`}
+        placeholder={`和${person?.realName || person?.name || '智友'}说点什么…`}
       />
     </section>
   </main>;

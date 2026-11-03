@@ -1,0 +1,100 @@
+{
+  "items": [
+    {
+      "text": "带课中",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "练腿日",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "下午打球",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "研究新动作",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "整理训练表",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "记训练日志",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "练背日",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "检查动作细节",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "热身中",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "做拉伸",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "研究进阶",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "整理器械",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 1
+    }
+  ]
+}

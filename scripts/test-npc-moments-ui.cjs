@@ -1,10 +1,12 @@
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const {chromium}=require('/Users/jayden/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const {readFileSync,mkdirSync}=require('node:fs');const assert=require('node:assert/strict');
 (async()=>{
  const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
  try{
   const page=await browser.newPage({viewport:{width:1440,height:1100}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
-  let items=JSON.parse(readFileSync('npc-skills/data/moments-approved-20260919.json','utf8')).items.map(i=>({...i,personId:'yuan-xiaoman',createdAt:Date.parse(i.timelineAt),status:'published',source:'npc-moment',reason:i.title,liked:false,likeCount:0,likes:[],comments:[]})).sort((a,b)=>b.createdAt-a.createdAt);
+  const items=JSON.parse(readFileSync('npc-skills/data/moments-approved-20260919.json','utf8')).items.map(i=>({...i,personId:'yuan-xiaoman',createdAt:Date.parse(i.timelineAt),status:'published',source:'npc-moment',reason:i.title,liked:false,likeCount:0,likes:[],comments:[]})).sort((a,b)=>b.createdAt-a.createdAt);
   await page.route('**/api/npc/moments**',async route=>{
     if(route.request().method()==='POST'){
       const body=route.request().postDataJSON(),id=route.request().url().split('/').at(-2),post=items.find(i=>i.id===id);

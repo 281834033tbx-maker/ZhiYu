@@ -1,4 +1,5 @@
 'use client';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 /* eslint-disable next/no-img-element */
 import {useState} from 'react';
 import {useImageGallery, openImageViewer} from './image-gallery';
@@ -25,7 +26,7 @@ export default function ChatImage({src,alt,messageId,className,gallery:providedG
     try {
       await openImageViewer(index>=0 && gallery ? {...gallery,index}
         : {conversationId:'image',images:[{id:messageId||src,src,alt}],index:0});
-    } catch(cause) {setError(cause instanceof Error?cause.message:'图片窗口未能打开');}
+    } catch(cause) {setError(reportUserFacingError(cause,'media','打开图片'));}
   }
   return <>{failed?<ChatImagePlaceholder className={className} onRetry={missingSource?undefined:reload}/>:<button className="chat-image-open" type="button" aria-label="查看图片" onClick={()=>void open()}><img key={`${src}:${attempt}`} className={className} src={src} alt={alt} onError={()=>setFailedSrc(src)}/></button>}
     {error&&<small className="chat-image-error" role="alert">{error}</small>}</>;

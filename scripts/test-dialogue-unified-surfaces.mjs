@@ -9,7 +9,7 @@ const runtime=isolatedNpcRuntime();
 try {
   for(const name of ['references','skills/zhiyu-character-dialogue','skills/zhiyu-companion-dialogue','skills/zhiyu-professional-dialogue','skills/molly-dialogue','skills/zhiyu-group-dialogue'])
     rmSync(join(runtime.root,'npc-skills',name),{recursive:true,force:true});
-  const {loadDialogueSkill,loadMollyDialogueSkill}=await runtime.load('server/npc/dialogue-skill');
+  const {loadDialogueSkill,loadMollyDialogueSkill,dialoguePackagePath}=await runtime.load('server/npc/dialogue-skill');
   const {ordinaryStyleCatalog}=await runtime.load('server/npc/style-catalog');
   const {loadMomentRules,momentProfessionalEvidence}=await runtime.load('server/npc/moment-policy');
   const {dialogueHealth}=await runtime.load('server/npc/dialogue-health');
@@ -19,7 +19,10 @@ try {
   for(const [id,name] of Object.entries(names)) {
     const prompt=`你是${name}，稳定人物ID：${id}。`;
     const loaded=loadDialogueSkill(runtime.root,prompt,id),cards=ordinaryStyleCatalog(runtime.root,prompt,loaded);
+    const sourceProfile=JSON.parse(readFileSync(join(runtime.root,dialoguePackagePath,'npcs',id,'profile.json'),'utf8'));
+    assert.deepEqual(loaded.profile,sourceProfile,'raw source profile stays complete and unchanged in the snapshot');
     assert.equal(cards[0].id,`PERSONAL-${id}`);
+    assert.deepEqual(JSON.parse(cards[0].content),{profile:sourceProfile,style:loaded.style},'personal catalog preserves the original source facts');
     assert.equal(cards.length,loaded.examples.length+1);
     assert.deepEqual(cards.slice(1).map(card=>JSON.parse(card.content)),loaded.examples);
     assert.ok(cards.slice(1).every(card=>card.id.startsWith(id+'-SCENE-')));
@@ -28,14 +31,24 @@ try {
     assert.throws(()=>ordinaryStyleCatalog(runtime.root,'你是Molly',loaded),/冲突/);
     for(const section of ['post','interaction']) {
       const rules=loadMomentRules(runtime.root,id,section);
-      assert.ok(rules.includes(JSON.stringify(loaded.profile))&&rules.includes(loaded.style));
-      assert.ok(rules.includes('npc-skills/skills/zhiyu-moments/'));
-      assert.ok(!rules.includes('npc-skills/references/characters/'));
+      const momentSnapshot=loadDialogueSkill(runtime.root,prompt,id,{channel:'moment'});
+      assert.deepEqual(momentSnapshot.profile,sourceProfile);
+      assert.ok(rules.includes(momentSnapshot.rules)&&rules.includes(loaded.style),'public expression uses the same complete persona with its actual moment scene');
+      assert.deepEqual(momentSnapshot.metadata.sources.filter(source=>source.path.startsWith(dialoguePackagePath+'/core/')).map(source=>source.path),
+        [...(loaded.profile.mode==='companion'?['03-梗与俗语.md']:[]),'11-主动消息与动态.md'].map(file=>dialoguePackagePath+'/core/'+file));
+      assert.ok(!rules.includes('coaxFactor'),'developer-only profile calibration is absent from runtime');
+      assert.ok(!rules.includes('npc-skills/'),'source provenance does not become a developer path in the prompt');
+      assert.ok(momentSnapshot.metadata.sources.every(source=>source.path.startsWith(dialoguePackagePath+'/')||source.path.startsWith('npc-skills/knowledge/')));
+      for(const source of momentSnapshot.metadata.sources)assert.ok(readFileSync(join(runtime.root,source.path)).length,'every metadata source remains traceable');
     }
   }
   const molly=loadMollyDialogueSkill(runtime.root);
   assert.equal(molly.profile.mode,'secretary');
-  assert.ok(loadMomentRules(runtime.root,'molly').includes(molly.rules));
+  assert.deepEqual(molly.profile,JSON.parse(readFileSync(join(runtime.root,dialoguePackagePath,'npcs/molly/profile.json'),'utf8')));
+  const mollyMoment=loadMollyDialogueSkill(runtime.root,{channel:'moment'}),mollyMomentRules=loadMomentRules(runtime.root,'molly');
+  assert.ok(mollyMomentRules.includes(mollyMoment.rules));
+  assert.deepEqual(mollyMoment.metadata.sources.filter(source=>source.path.startsWith(dialoguePackagePath+'/core/')).map(source=>source.path),[dialoguePackagePath+'/core/11-主动消息与动态.md']);
+  assert.ok(!mollyMomentRules.includes('npc-skills/')&&!mollyMomentRules.includes('coaxFactor'));
   assert.throws(()=>ordinaryStyleCatalog(runtime.root,'你是Molly'),/Molly/);
   for(const id of ['chen-nian','liu','zhou-chef'])
     assert.ok(!momentProfessionalEvidence(runtime.root,id,'训练 营养 做饭').includes('LOCAL_KNOWLEDGE_UNAVAILABLE'));
@@ -81,5 +94,5 @@ try {
   assert.ok(generationSeen&&reviewSeen);assert.equal(output.messages[0].senderId,'chen-nian');
   const opening={...context,kind:'opening',incoming:undefined};
   assert.ok(parseGroupDialogue({messages:[{senderId:'molly',text:'老板，合成群已就绪',mentionIds:[]}]},opening,['molly']),'opening uses the current persona rather than forcing an archived address');
-  console.log('PASS unified surfaces: six isolated snapshot catalogs, pending-case status, no legacy trees, same-turn freeze, seven-person health, retained public Skills/knowledge, new group protocol/rules and unchanged membership/authority boundaries; synthetic only.');
+  console.log('PASS unified surfaces: complete source personas/catalogs, exact moment-scene modules without runtime developer paths, pending-case status, no legacy trees, same-turn freeze, seven-person health, retained public Skills/knowledge, group protocol/rules and unchanged membership/authority boundaries; synthetic only.');
 } finally {runtime.cleanup();}

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import ts from 'typescript';
-import {mkdtempSync,readFileSync,writeFileSync,rmSync,mkdirSync} from 'node:fs';
+import {mkdtempSync,readFileSync,writeFileSync,rmSync,mkdirSync as _mkdirSync} from 'node:fs';
 import {tmpdir} from 'node:os';import {join} from 'node:path';import {pathToFileURL} from 'node:url';
 // Only fresh synthetic states. Never open the runtime DB or load browser history.
 const dir=mkdtempSync(join(tmpdir(),'humanizer-live-'));

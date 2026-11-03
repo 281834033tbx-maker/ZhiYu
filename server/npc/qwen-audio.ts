@@ -3,6 +3,8 @@ import {join,resolve} from 'node:path';
 
 export type QwenAudio={bytes:Buffer;extension:'mp3'|'wav'};
 
+const errorText=(value:unknown,fallback='')=>typeof value==='string'?value:typeof value==='number'&&Number.isFinite(value)?String(value):fallback;
+
 function audioType(bytes:Buffer):QwenAudio['extension']|null{
  if(bytes.length>=12&&bytes.subarray(0,4).toString()==='RIFF'&&bytes.subarray(8,12).toString()==='WAVE')return 'wav';
  if(bytes.length>=3&&(bytes.subarray(0,3).toString()==='ID3'||(bytes[0]===255&&(bytes[1]&0xe0)===0xe0)))return 'mp3';
@@ -70,10 +72,10 @@ export async function synthesizeQwen(
   throw Error('千问语音返回格式无效');
  }
  if(!response.ok){
-  if(result.code||result.message)throw Error(`千问语音合成失败（${String(result.code||response.status)}：${String(result.message||'请求被拒绝')}）`);
+  if(result.code||result.message)throw Error(`千问语音合成失败（${errorText(result.code,String(response.status))}：${errorText(result.message,'请求被拒绝')}）`);
   throw providerError(response.status);
  }
- if(result.code)throw Error(`千问语音合成失败（${String(result.code)}：${String(result.message||'未知错误')}）`);
+ if(result.code)throw Error(`千问语音合成失败（${errorText(result.code,'未知错误')}：${errorText(result.message,'未知错误')}）`);
  const audio=result.output?.audio;
  if(typeof audio?.url==='string'&&audio.url){
   const download=await request(trustedAudioUrl(audio.url),{signal:AbortSignal.timeout(90000)});
@@ -109,7 +111,7 @@ export async function synthesizeQwenLocal(
  }catch{throw Error('本地 Qwen3-TTS 服务未启动或正在加载');}
  if(!response.ok){
   let detail='';
-  try{detail=String((await response.json() as {error?:unknown}).error||'');}catch{}
+  try{detail=errorText((await response.json() as {error?:unknown}).error);}catch{}
   throw Error(detail?`本地 Qwen3-TTS 合成失败：${detail}`:'本地 Qwen3-TTS 合成失败');
  }
  return validAudio(response);

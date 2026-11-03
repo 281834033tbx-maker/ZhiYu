@@ -1,0 +1,2065 @@
+/* App component: zhiyu.css; order preserved. */
+.zy-desktop-stage {
+  min-height: 100dvh;
+  padding: var(--window-gap-y) var(--window-gap-x);
+  display: grid;
+  place-items: center;
+  background: #e2e3e5;
+}
+.zy-app {
+  width: min(100%, 1560px);
+  min-height: 500px;
+  min-width: min(960px, calc(100vw - var(--window-gap-x, 0px) * 2));
+  display: flex;
+  background: #e8e8e8;
+  color: #22211f;
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: calc(14px + var(--zy-font-adjust,0px));
+  overflow: hidden;
+  border: 1px solid #ffffff9c;
+  border-radius: 12px;
+  box-shadow: none;
+}
+.zy-app button:focus-visible,
+.zy-dialog button:focus-visible,
+.zy-app input:focus-visible,
+.zy-dialog input:focus-visible,
+.zy-app textarea:focus-visible {
+  outline: 2px solid #fa795a;
+  outline-offset: 3px;
+}
+.zy-app svg,
+.zy-dialog svg {
+  stroke-width: 1.8;
+}
+.zy-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  color: #77736d;
+  position: relative;
+}
+.zy-icon:hover {
+  background: #00000006;
+  color: #272522;
+}
+.zy-icon svg {
+  width: 22px;
+  height: 22px;
+}
+.zy-rail {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 24px 0 20px;
+}
+.zy-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.zy-nav-items {
+  display: flex;
+  flex-direction: column;
+}
+.zy-nav-items .zy-icon {
+  color: #5b5751;
+}
+.zy-nav-items .active {
+  color: #242320;
+}
+.zy-rail-bottom {
+  margin-top: auto;
+}
+.zy-badge {
+  position: absolute;
+  right: -3px;
+  top: -4px;
+  background: #ee3639;
+  border: 2px solid #f3f3f3;
+  color: #fff;
+  font-size: calc(11px + var(--zy-font-adjust,0px));
+  line-height: 18px;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 12px;
+  text-align: center;
+  padding: 0 4px;
+}
+.zy-badge.brown {
+  background: #906642;
+}
+.zy-base {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  background: #f2f2f2;
+  border-radius: 12px;
+  margin: 4px 6px 4px 0;
+  overflow: hidden;
+}
+.zy-directory {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 14px;
+  background: #f2f2f2;
+}
+.zy-self {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 10px;
+  flex-shrink: 0;
+}
+.zy-self strong {
+  font-size: calc(16px + var(--zy-font-adjust,0px));
+  font-weight: 600;
+  display: block;
+}
+.zy-self small {
+  color: #918c85;
+  display: block;
+  margin-top: 3px;
+}
+.zy-self > .zy-icon {
+  margin-left: auto;
+}
+.zy-avatar {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.zy-avatar img,
+.zy-avatar-letter {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.zy-avatar-letter {
+  display: grid;
+  place-items: center;
+  font-size: calc(20px + var(--zy-font-adjust,0px));
+}
+.zy-ring {
+  padding: 3px;
+  border: 2px solid #fc855d;
+  border-radius: 50%;
+  background: #fff;
+}
+.zy-presence {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  background: #9ca4b0;
+  border: 2px solid #f2f2f2;
+  border-radius: 50%;
+}
+.zy-presence.is-online,
+.zy-online-dot {
+  background: #0abc88;
+}
+.zy-search-row {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+  margin: 0 0 13px;
+}
+.zy-search {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: none;
+  padding: 0 14px;
+  height: 46px;
+  flex: 1;
+  color: #8a857d;
+}
+.zy-search input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: none;
+  font-size: calc(14px + var(--zy-font-adjust,0px));
+}
+.zy-search input::placeholder {
+  color: #918b83;
+}
+.zy-search .zy-icon {
+  width: 22px;
+  height: 24px;
+}
+.zy-add {
+  height: 46px;
+  width: 46px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: none;
+  color: #222;
+}
+.zy-list-scroll {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #d6d3ce transparent;
+}
+.zy-conversation {
+  width: 100%;
+  padding: 18px 10px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  text-align: left;
+  border-radius: 12px;
+  margin: 2px 0;
+}
+.zy-conversation:hover {
+  background: #eae9e7;
+}
+.zy-conversation-copy {
+  min-width: 0;
+  flex: 1;
+}
+.zy-conversation-copy > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.zy-conversation strong {
+  font-size: calc(16px + var(--zy-font-adjust,0px));
+  white-space: nowrap;
+  font-weight: 400;
+}
+.zy-conversation.selected strong {
+  font-weight: 600;
+}
+.zy-conversation time {
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+  color: #928c85;
+  white-space: nowrap;
+}
+.zy-conversation small {
+  display: block;
+  margin-top: 9px;
+  font-size: calc(14px + var(--zy-font-adjust,0px));
+  color: #726d66;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.zy-list-avatar {
+  position: relative;
+}
+.zy-list-avatar .zy-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  top: -7px;
+  right: -7px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  border: 0;
+  border-radius: 12px;
+  font-size: calc(11px + var(--zy-font-adjust,0px));
+  line-height: 16px;
+}
+.zy-chat {
+  flex: 1;
+  min-width: 0;
+  background: #f7f7f7;
+  border: 1px solid #e9e9e9;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  margin: 4px 4px 4px 0;
+  overflow: hidden;
+  box-shadow: none;
+}
+.zy-chat-head {
+  flex-shrink: 0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid #eceae7;
+}
+.zy-chat-person {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  min-width: 0;
+}
+.zy-chat-person strong {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+}
+.zy-chat-person small {
+  display: block;
+  margin-top: 4px;
+  color: #5d5750;
+}
+.zy-online-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.zy-chat-tools {
+  display: flex;
+  gap: 11px;
+  margin-left: 20px;
+}
+.zy-thread {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.zy-message {
+  display: flex;
+  align-items: flex-end;
+}
+.zy-message.mine {
+  justify-content: flex-end;
+}
+.zy-message-avatar {
+  width: 36px;
+  flex-shrink: 0;
+  margin-top: 24px;
+}
+.zy-message-content {
+  max-width: 77%;
+}
+.zy-bubble-wrap {
+  width: fit-content;
+}
+.zy-bubble {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 21px;
+  box-shadow: none;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.mine .zy-bubble {
+  background: #22211f;
+  color: #fff;
+  border-color: #161614;
+  border-radius: 21px;
+}
+.mine .zy-bubble-wrap {
+  margin-left: auto;
+}
+.zy-message-time {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #99928a;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+  margin-top: 12px;
+}
+.mine .zy-message-time {
+  justify-content: flex-end;
+}
+.zy-message-time .read {
+  color: #fa6254;
+}
+.zy-reaction {
+  position: absolute;
+  right: -9px;
+  bottom: -9px;
+  display: grid;
+  place-items: center;
+  background: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  box-shadow: none;
+  color: #948f89;
+}
+.liked {
+  color: #f45f50;
+}
+.zy-unread-line {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  justify-content: center;
+  margin: 44px 12% 36px;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+  white-space: nowrap;
+}
+.zy-unread-line span {
+  height: 1px;
+  background: #e0ddd7;
+  flex: 1;
+}
+.zy-composer-area {
+  position: relative;
+}
+.zy-composer {
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+}
+.zy-composer textarea {
+  flex: 1;
+  outline: none;
+  max-height: 110px;
+  field-sizing: content;
+  color: #222;
+}
+.zy-composer textarea::placeholder {
+  color: #99938a;
+}
+.zy-send {
+  display: grid;
+  place-items: center;
+}
+.zy-chat-welcome {
+  text-align: center;
+  padding: 100px 0;
+  color: #928a83;
+}
+.zy-chat-welcome h2 {
+  font-size: calc(20px + var(--zy-font-adjust,0px));
+  color: #333;
+  margin: 18px 0 8px;
+}
+.zy-chat-welcome small {
+  display: block;
+  margin: 20px;
+}
+.zy-message-photo {
+  max-width: 300px;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+.zy-file {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.zy-emoji-picker {
+  position: absolute;
+  bottom: 95px;
+  left: 22px;
+  display: flex;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: none;
+}
+.zy-emoji-picker button {
+  padding: 8px;
+  border-radius: 10px;
+}
+.zy-emoji-picker button:hover {
+  background: #f6eee8;
+}
+.zy-page-contacts .zy-directory {
+  width: 320px;
+  background: #f1f1f1;
+}
+.zy-address-list {
+  padding: 0 1px 30px;
+}
+.zy-manage {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  color: #77726c;
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+}
+.zy-manage > svg:last-child {
+  margin-left: auto;
+}
+.zy-directory-row {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 11px 12px;
+  text-align: left;
+}
+.zy-tile {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  color: white;
+  display: grid;
+  place-items: center;
+}
+.zy-tile.orange {
+  background: #fc9548;
+}
+.zy-tile.green {
+  background: #4cad80;
+}
+.zy-tile.blue {
+  background: #669ed4;
+}
+.zy-directory-row small {
+  margin-left: auto;
+  color: #99928a;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+}
+.zy-directory-row b {
+  margin-left: auto;
+  color: #fff;
+  background: #f37c55;
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-size: calc(11px + var(--zy-font-adjust,0px));
+}
+.zy-letter {
+  display: block;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+  color: #a0a0ab;
+  margin: 11px 17px 7px;
+}
+.zy-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-align: left;
+  width: 100%;
+  height: 62px;
+  border-radius: 10px;
+  padding: 8px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.zy-contact-row strong {
+  font-weight: 600;
+  font-size: calc(14px + var(--zy-font-adjust,0px));
+}
+.zy-contact-row:hover {
+  background: #ece9e6;
+}
+.zy-contact-row.selected {
+  background: linear-gradient(90deg, #ffebe0, #eee8e3);
+}
+.zy-contact-row.selected:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(#ff9265, #ff664c);
+}
+.zy-contact-detail {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  background: #faf9f7;
+  scrollbar-width: thin;
+}
+.zy-contact-cover {
+  height: 240px;
+  position: relative;
+}
+.zy-contact-cover > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 48%;
+}
+.zy-cover-menu {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+}
+.zy-cover-menu > .zy-icon {
+  background: #ffffffa8;
+  border-radius: 50%;
+}
+.zy-profile-surface {
+  position: relative;
+  padding-top: 77px;
+  min-height: calc(100% - 240px);
+}
+.zy-large-avatar {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -50%);
+  border: 5px solid #faf9f7;
+  border-radius: 50%;
+}
+.zy-large-avatar:active:not(:disabled) {
+  transform: translate(-50%, -50%);
+}
+.zy-profile-inner {
+  max-width: 800px;
+  padding: 0 45px 48px;
+  margin: auto;
+}
+.zy-profile-inner h1 {
+  text-align: center;
+  font-size: calc(28px + var(--zy-font-adjust,0px));
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.zy-profile-bio {
+  text-align: center;
+  margin-top: 12px;
+  color: var(--zy-ink);
+  font-size: calc(14px + var(--zy-font-adjust,0px));
+  line-height: 1.7;
+}
+.zy-profile-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 34px 0 40px;
+}
+.zy-profile-actions .zy-icon {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  color: var(--zy-ink);
+  background: linear-gradient(110deg, #ff9767, #fc774b);
+  box-shadow: none;
+}
+.zy-profile-actions .zy-icon:hover {
+  filter: brightness(1.04);
+  box-shadow: none;
+}
+.zy-info {
+  margin: 0;
+  border-top: 1px solid #e8e5df;
+  border-bottom: 1px solid #e8e5df;
+  padding: 25px 0;
+  display: grid;
+  gap: 22px;
+}
+.zy-info > div {
+  display: flex;
+  gap: 25px;
+}
+.zy-info dt {
+  color: #928a82;
+  width: 65px;
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+}
+.zy-info dd {
+  margin: 0;
+  color: #55504a;
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+}
+.zy-preview {
+  margin-top: 28px;
+}
+.zy-preview-heading {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.zy-preview-heading h2 {
+  font-size: calc(16px + var(--zy-font-adjust,0px));
+  font-weight: 600;
+}
+.zy-preview-heading svg {
+  color: #8c847a;
+}
+.zy-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 13px;
+}
+.zy-preview-grid button {
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+.zy-preview-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.zy-preview-grid button:hover img {
+  transform: scale(1.04);
+}
+.zy-preview > small {
+  display: block;
+  margin-top: 14px;
+  color: #a39b90;
+  font-size: calc(11px + var(--zy-font-adjust,0px));
+}
+.zy-page-moments.zy-app {
+  background: #e8e8e8;
+}
+.zy-page-moments .zy-base {
+  background: white;
+}
+.zy-base > .zy-moments {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+}
+.zy-moments-cover {
+  height: clamp(270px, 42vh, 360px);
+  position: relative;
+  flex-shrink: 0;
+  isolation: isolate;
+}
+.zy-moments-cover > img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 47%;
+}
+.zy-moments-cover-change {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.zy-moments-tools {
+  position: absolute;
+  z-index: 4;
+  top: 18px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.zy-moments-tool {
+  position: relative;
+  width: 23px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  mix-blend-mode: difference;
+  cursor: pointer;
+}
+.zy-moments-tool:hover { opacity: .72; }
+.zy-moments-notification-anchor { position: relative; display: flex; }
+.zy-moments-notification-dot { position: absolute; top: 1px; right: 0; width: 6px; height: 6px; border-radius: 50%; background: #ee5b53; box-shadow: none; }
+.zy-moments-notifications {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 10px);
+  right: -35px;
+  width: min(330px, calc(100vw - 100px));
+  max-height: min(420px, 65vh);
+  overflow: auto;
+  border: 1px solid #e8e9e4;
+  border-radius: 10px;
+  background: #fff;
+  color: #303531;
+  box-shadow: var(--zy-popup-shadow),inset 0 1px 0 var(--zy-glass-highlight);
+  mix-blend-mode: normal;
+}
+.zy-moments-notifications > header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid #eceee9; font-size: calc(13px + var(--zy-font-adjust,0px)); }
+.zy-moments-notifications > header button { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; background: transparent; color: #7b837d; cursor: pointer; }
+.zy-moments-notification { display: block; width: 100%; padding: 11px 14px; border: 0; border-bottom: 1px solid #f0f1ee; background: #fff; color: #454b46; text-align: left; cursor: pointer; }
+.zy-moments-notification:hover { background: #f7f8f6; }
+.zy-moments-notification > span { display: block; font-size: calc(12px + var(--zy-font-adjust,0px)); line-height: 1.5; }
+.zy-moments-notification > span strong { color: #2e6252; font-weight: 600; }
+.zy-moments-notification small { display: block; overflow: hidden; margin-top: 3px; color: #7b837d; font-size: calc(11px + var(--zy-font-adjust,0px)); text-overflow: ellipsis; white-space: nowrap; }
+.zy-moments-notification time { display: block; margin-top: 5px; color: #9a9f9b; font-size: calc(11px + var(--zy-font-adjust,0px)); }
+.zy-moments-notifications-empty { margin: 0; padding: 22px 14px; color: #858b86; font-size: calc(12px + var(--zy-font-adjust,0px)); text-align: center; }
+.zy-camera {
+  position: absolute;
+  right: 30px;
+  top: 24px;
+  background: #ffffffd9;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  color: #4b5146;
+}
+.zy-camera-plus {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  width: 10px;
+  height: 10px;
+}
+.zy-self-cover-avatar {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: -57px;
+  transform: translateX(-50%);
+  display: flex;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+}
+.zy-self-cover-avatar::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid #fc855d;
+  border-radius: 50%;
+  background: transparent;
+  pointer-events: none;
+}
+.zy-self-cover-avatar:active:not(:disabled) {
+  transform: translateX(-50%);
+}
+.zy-moments-identity {
+  text-align: center;
+  padding: 80px 20px 34px;
+}
+.zy-moments-identity h1 {
+  margin: 0;
+  color: #30332f;
+  font-size: calc(28px + var(--zy-font-adjust,0px));
+  line-height: 1.35;
+  font-weight: 600;
+}
+.zy-moments-identity .zy-signature {
+  font-family: 'Snell Roundhand', 'Brush Script MT', cursive;
+  font-size: calc(28px + var(--zy-font-adjust,0px));
+  font-weight: 400;
+  line-height: 1.3;
+}
+.zy-moments-identity p {
+  margin: 8px 0 0;
+  color: #626962;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+  line-height: 1.65;
+  letter-spacing: 0.1px;
+}
+.zy-post .zy-media.count-1 {
+  width: min(183px, 100%);
+  height: 244px;
+  max-height: none;
+  border-radius: 0;
+}
+.zy-post .zy-media.count-1 img {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: contain;
+  border-radius: 0;
+}
+.zy-feed-stream {
+  width: 700px;
+  max-width: calc(100% - 100px);
+  margin: auto;
+}
+.zy-post {
+  margin-bottom: 68px;
+}
+.zy-post > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.zy-post-person {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  text-align: left;
+  min-width: 0;
+}
+.zy-post-person > span:last-child {
+  min-width: 0;
+}
+.zy-post-person > span > span {
+  display: flex;
+  gap: 13px;
+  align-items: baseline;
+}
+.zy-post-person strong {
+  font-size: calc(16px + var(--zy-font-adjust,0px));
+  font-weight: 600;
+}
+.zy-post-person time {
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+  color: #a19b95;
+}
+.zy-post-person small {
+  display: block;
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+  font-weight: 400;
+  color: #242320;
+  margin-top: 7px;
+  line-height: 1.5;
+}
+.zy-media {
+  display: grid;
+  gap: 10px;
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+}
+.zy-image-hit {
+  padding: 0;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  background: #f4f3f0;
+  touch-action: pan-y;
+}
+.zy-image-hit img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.zy-media.count-3 {
+  grid-template-columns: 1.1fr 1fr;
+  grid-template-rows: 240px 240px;
+}
+.zy-media.count-3 .zy-image-hit:first-child {
+  grid-row: 1/3;
+}
+.zy-media.count-2 {
+  grid-template-columns: 1fr 1fr;
+  height: 450px;
+}
+.zy-media.count-1 {
+  height: auto;
+  max-height: 650px;
+}
+.zy-media.count-1 img {
+  max-height: 650px;
+  object-fit: contain;
+}
+.zy-media.is-carousel {
+  height: 540px;
+}
+.zy-chat-screenshot {
+  overflow: hidden;
+  margin-bottom: 2px;
+  border: 1px solid #e4e1dd;
+  border-radius: 12px;
+  background: #f8f8f7;
+}
+.zy-chat-shot-head {height:72px;min-height:72px;}
+.zy-chat-shot-head .chat-header-person {pointer-events:none;}
+.zy-chat-shot-thread {height:auto;overflow:visible;padding:24px 26px 4px;}
+.zy-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffff9c;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  color: #36332f;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.zy-media:hover .zy-carousel-arrow,
+.zy-media:focus-within .zy-carousel-arrow {
+  opacity: 1;
+}
+.zy-carousel-arrow.prev {
+  left: 16px;
+}
+.zy-carousel-arrow.next {
+  right: 16px;
+}
+.zy-dots {
+  position: absolute;
+  bottom: 13px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 3px;
+  filter: none;
+}
+.zy-dots button {
+  width: 20px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+}
+.zy-dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffffc9;
+  transition:
+    width 0.2s,
+    height 0.2s,
+    background 0.2s;
+}
+.zy-dots .current {
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #ffa073, #ff5e66);
+}
+.zy-location {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+  color: #a19a91;
+  margin-top: 17px;
+}
+.zy-post-caption {
+  font-size: calc(14px + var(--zy-font-adjust,0px));
+  line-height: 1.8;
+  white-space: pre-wrap;
+  margin: 0 0 16px;
+  color: #222;
+}
+.zy-post-caption strong {
+  font-weight: 600;
+  margin-right: 12px;
+}
+.zy-post-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+.zy-post-actions .zy-icon {
+  height: 30px;
+  border-radius: 0;
+  color: #262422;
+}
+.zy-feed-end {
+  padding: 5px 0 40px;
+  color: #b4afa8;
+  font-size: calc(11px + var(--zy-font-adjust,0px));
+  text-align: center;
+  letter-spacing: 2px;
+}
+.zy-feed-end span {
+  display: block;
+  margin: 0 auto 18px;
+  height: 1px;
+  width: 40px;
+  background: #d7d1c9;
+}
+.zy-back-feed {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #aa7863;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+  margin-bottom: 30px;
+}
+.zy-menu-anchor {
+  position: relative;
+}
+.zy-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  min-width: 182px;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid #eee9e3;
+  box-shadow: var(--zy-popup-shadow),inset 0 1px 0 var(--zy-glass-highlight);
+  border-radius: 12px;
+  z-index: 30;
+  color: #554e46;
+}
+.zy-menu button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  white-space: nowrap;
+  padding: 11px 12px;
+  width: 100%;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+  border-radius: 10px;
+  text-align: left;
+}
+.zy-menu svg {
+  width: 16px;
+  height: 16px;
+}
+.zy-menu button:hover {
+  background: #f7f1ed;
+}
+.zy-empty {
+  padding: 50px 15px;
+  text-align: center;
+  color: #9c958c;
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+  line-height: 1.8;
+}
+.zy-empty > svg {
+  margin: 0 auto 14px;
+  opacity: 0.6;
+}
+.zy-empty button {
+  margin-top: 15px;
+  color: #d47d59;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+}
+.zy-empty-small {
+  padding: 20px;
+}
+.zy-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.zy-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: 480px;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100dvh - 60px);
+  padding: 0;
+  border: 1px solid #e7e2dc;
+  border-radius: 12px;
+  background: #fff;
+  color: #292723;
+  box-shadow: var(--zy-popup-shadow),inset 0 1px 0 var(--zy-glass-highlight);
+  font:
+    calc(14px + var(--zy-font-adjust,0px)) 'PingFang SC',
+    'Microsoft YaHei',
+    sans-serif;
+  overflow: auto;
+}
+.zy-dialog::backdrop {
+  background: #25232045;
+  backdrop-filter: blur(5px);
+}
+.zy-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid #f0ece7;
+}
+.zy-dialog-head h2 {
+  font-size: calc(16px + var(--zy-font-adjust,0px));
+  font-weight: 600;
+}
+.zy-primary {
+  padding: 10px 17px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #292623;
+  color: white;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+  white-space: nowrap;
+}
+.zy-primary:hover:not(:disabled) {
+  background: #504840;
+}
+.zy-call {
+  text-align: center;
+  padding: 35px 25px;
+}
+.zy-call h3 {
+  font-size: calc(20px + var(--zy-font-adjust,0px));
+  font-weight: 600;
+  margin: 22px 0 10px;
+}
+.zy-call p {
+  color: #9b8d81;
+  font-size: calc(14px + var(--zy-font-adjust,0px));
+}
+.zy-call small {
+  display: block;
+  margin: 16px 0 35px;
+  color: #a6a099;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+}
+.zy-call > div {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+}
+.zy-call .zy-icon {
+  background: #f4f1ed;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+}
+.zy-call .zy-icon[aria-pressed='true'] {
+  background: #e7dcd3;
+}
+.zy-call .zy-hangup {
+  background: #f56c59;
+  color: white;
+}
+.zy-comment-dialog {
+  left: auto;
+  right: 18px;
+  width: 420px;
+  height: calc(100dvh - 36px);
+  max-height: none;
+  display: none;
+}
+.zy-comment-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+.zy-comment-context {
+  padding: 22px;
+  background: #fbf9f6;
+  border-bottom: 1px solid #f0ece7;
+}
+.zy-comment-context p {
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+  line-height: 1.8;
+  margin-top: 10px;
+  color: #8d8175;
+}
+.zy-comments {
+  flex: 1;
+  overflow: auto;
+  padding: 22px;
+}
+.zy-comment {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.zy-comment > div {
+  flex: 1;
+  min-width: 0;
+}
+.zy-comment strong {
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+  display: flex;
+  justify-content: space-between;
+}
+.zy-comment time {
+  font-size: calc(11px + var(--zy-font-adjust,0px));
+  color: #aca399;
+  font-weight: 400;
+}
+.zy-comment p {
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+  margin-top: 9px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.zy-comment-form {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid #eee9e3;
+  padding: 18px;
+}
+.zy-comment-form input {
+  background: #f7f4f0;
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 12px;
+  flex: 1;
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+  min-width: 0;
+}
+.zy-publish-dialog {
+  width: 590px;
+}
+.zy-publish-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 25px 0;
+}
+.zy-publish-person small {
+  margin-left: auto;
+  font-size: calc(11px + var(--zy-font-adjust,0px));
+  color: #aaa196;
+}
+.zy-publish-dialog > textarea {
+  width: calc(100% - 50px);
+  margin: 20px 25px;
+  height: 100px;
+  border: 0;
+  outline: none;
+  line-height: 1.8;
+  background: transparent;
+}
+.zy-upload-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 0 25px;
+}
+.zy-upload-grid > div {
+  aspect-ratio: 1;
+  position: relative;
+}
+.zy-upload-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.zy-upload-grid .zy-icon {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  background: #fff9;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+.zy-photo-add {
+  border: 1px dashed #dcd1c6;
+  border-radius: 10px;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #b0927a;
+  background: #faf7f3;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+}
+.zy-publish-location {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 25px;
+  color: #a69788;
+}
+.zy-publish-location input {
+  border: 0;
+  outline: none;
+  flex: 1;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+}
+.zy-publish-dialog footer {
+  padding: 20px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #eee8e1;
+  gap: 12px;
+}
+.zy-publish-dialog footer small {
+  font-size: calc(11px + var(--zy-font-adjust,0px));
+  color: #a49b90;
+}
+.zy-settings {
+  padding: 23px;
+}
+.zy-demo-info {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #eee8e1;
+  margin-bottom: 12px;
+}
+.zy-demo-info > svg {
+  flex-shrink: 0;
+  color: #c88e6a;
+  width: 20px;
+}
+.zy-demo-info p {
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+  line-height: 1.9;
+  color: #948b80;
+  margin-top: 8px;
+}
+.zy-settings > button,
+.zy-settings > a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 8px;
+  width: 100%;
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+  text-decoration: none;
+  color: inherit;
+}
+.zy-settings > button:hover,
+.zy-settings > a:hover {
+  background: #faf6f0;
+}
+.zy-settings > button svg,
+.zy-settings > a svg {
+  width: 17px;
+  height: 17px;
+}
+.zy-settings > button > svg:last-child,
+.zy-settings > a > svg:last-child,
+.zy-settings > button > span {
+  margin-left: auto;
+}
+.zy-settings > small {
+  display: block;
+  margin-top: 22px;
+  color: #aca398;
+  font-size: calc(11px + var(--zy-font-adjust,0px));
+}
+.zy-people-dialog {
+  padding: 22px;
+}
+.zy-people-dialog > .zy-search {
+  background: #f7f4f0;
+  margin-bottom: 15px;
+}
+.zy-person-option {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px 0;
+  border-bottom: 1px solid #f0ebe4;
+}
+.zy-person-option > div {
+  min-width: 0;
+  flex: 1;
+}
+.zy-person-option small {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #a3988b;
+  font-size: calc(11px + var(--zy-font-adjust,0px));
+  margin-top: 6px;
+}
+.zy-my-profile {
+  text-align: center;
+  padding: 32px;
+}
+.zy-my-profile h3 {
+  font-size: calc(20px + var(--zy-font-adjust,0px));
+  margin: 18px 0 10px;
+}
+.zy-my-profile p {
+  font-size: calc(12px + var(--zy-font-adjust,0px));
+  color: #817468;
+  line-height: 1.8;
+}
+.zy-my-profile dl {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  text-align: left;
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+  gap: 16px;
+  margin: 30px 0;
+}
+.zy-my-profile dt {
+  color: #aa9a8b;
+}
+.zy-my-profile dd {
+  margin: 0;
+}
+.zy-lightbox {
+  width: 90vw;
+  max-width: 1200px;
+  background: #171716;
+  color: #fff;
+  border: 0;
+}
+.zy-lightbox .zy-dialog-head {
+  border-color: #ffffff17;
+}
+.zy-lightbox .zy-icon {
+  color: #fff;
+}
+.zy-lightbox-image {
+  height: 75dvh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 65px;
+}
+.zy-lightbox-image > img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.zy-lightbox-image > .zy-icon {
+  position: absolute;
+  top: 50%;
+  background: #ffffff1a;
+  border-radius: 50%;
+}
+.zy-lightbox-image > .prev {
+  left: 15px;
+}
+.zy-lightbox-image > .next {
+  right: 15px;
+}
+.zy-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 23px;
+  background: #302b27;
+  color: #fff9f3;
+  border-radius: 12px;
+  font-size: calc(13px + var(--zy-font-adjust,0px));
+  z-index: 200;
+  box-shadow: var(--zy-popup-shadow),inset 0 1px 0 var(--zy-glass-highlight);
+  max-width: 80vw;
+  pointer-events: none;
+}
+@media (max-width: 1150px) {
+  .zy-directory {
+    width: 285px;
+  }
+  .zy-page-contacts .zy-directory {
+    width: 275px;
+  }
+  .zy-rail {
+    width: 74px;
+  }
+  .zy-bubble {
+    font-size: calc(16px + var(--zy-font-adjust,0px));
+    padding: 13px 18px;
+  }
+  .zy-chat-head {
+    padding: 0 18px;
+  }
+  .zy-thread-inner {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  .zy-chat-tools {
+    gap: 3px;
+  }
+  .zy-profile-inner {
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+  .zy-profile-actions {
+    gap: 18px;
+  }
+  .zy-moments-cover {
+    height: clamp(220px, 42vh, 300px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zy-app * {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}
+
+.zy-molly-avatar {width:100%;height:100%;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,#ffe3cf,#ffd4c9);color:#cf7656;border:1px solid #f4c9b7;}
+.zy-molly-pinned {margin-bottom:0;}
+.zy-system-label {font-size:calc(11px + var(--zy-font-adjust,0px));font-weight:400;color:#ab816a;background:#f8f2ec;border-radius:6px;padding:2px 5px;margin-left:7px;vertical-align:middle;}
+
+.zy-presence.is-busy {background:#e7a34a;}
+.zy-presence.is-offline {background:#a2a6ac;}
+.zy-status-badge {display:inline-flex;align-items:center;font-size:calc(11px + var(--zy-font-adjust,0px));font-weight:400;line-height:1.5;padding:2px 7px;border:1px solid #d9dadd;border-radius:6px;color:#8c9096;background:#f3f4f5;margin-left:8px;vertical-align:middle;}
+.zy-status-badge.online {color:#24936e;background:#edf8f3;border-color:#cbeadd;}
+.zy-status-badge.busy {color:#b67b25;background:#fff6e8;border-color:#f0dcba;}
+.zy-self-status {display:block;font-size:calc(12px + var(--zy-font-adjust,0px));color:#89867f;cursor:pointer;margin-top:3px;}
+
+/* 板块1: .zy-app 底层；板块2: .zy-base/.zy-directory 覆盖其上；
+   板块3: .zy-chat/.xx-layout 覆盖板块2。保留嵌套圆角，不拆成分离卡片。 */
+.zy-desktop-stage {--window-gap-y:clamp(32px,6vh,88px);--window-gap-x:clamp(32px,6vw,128px);}
+.zy-app {height:min(1120px,calc(100dvh - var(--window-gap-y)*2));}
+.zy-rail {width:72px;padding-top:20px;}
+.zy-logo {width:38px;height:38px;margin-bottom:25px;}
+.zy-nav-items {gap:16px;}
+.zy-nav-items .zy-icon {width:38px;height:38px;}
+.zy-nav-items svg {width:22px;height:22px;}
+.zy-directory {width:300px;}
+.zy-chat-head {height:66px;}
+.zy-chat-person strong {font-size:calc(16px + var(--zy-font-adjust,0px));}
+.zy-chat-person small {font-size:calc(12px + var(--zy-font-adjust,0px));}
+.zy-thread-inner {padding:18px 26px 20px;}
+.zy-bubble {font-size:calc(14px + var(--zy-font-adjust,0px));line-height:1.55;padding:10px 16px;}
+.zy-message {gap:12px;margin-bottom:5px;}
+.zy-message.new-group {margin-top:18px;}
+.zy-message-avatar {align-self:flex-end;margin:0 0 23px;}
+.zy-composer-area {padding:8px 20px 16px;}
+.zy-composer {border:0;background:transparent;box-shadow:none;padding:0;gap:10px;}
+.zy-composer textarea {border:0;border-radius:12px;background:linear-gradient(110deg,#fff0e8 0%,#fde8eb 100%);font-size:calc(14px + var(--zy-font-adjust,0px));line-height:22px;height:44px;min-height:44px;padding:11px 18px;}
+.zy-app .zy-composer textarea:focus-visible {outline:none;box-shadow:none;}
+.zy-send,.zy-send:hover:not(:disabled),.zy-send:disabled {background:transparent;border:0;border-radius:0;color:#111;box-shadow:none;width:38px;height:40px;}
+.zy-send svg {width:22px;height:22px;}
+@media(max-width:1150px){.zy-directory {width:270px;}.zy-rail{width:64px;}}
+
+.zy-conversation {position:relative;transition:background .18s,box-shadow .18s;}
+.zy-conversation.selected {background:linear-gradient(110deg,#f49373,#e47a96);box-shadow:none;}
+.zy-conversation.selected::before {content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0;background:#28665f;}
+.npc-quote {display:flex;flex-direction:column;gap:3px;max-width:100%;padding:7px 11px;border:0;border-left:2px solid #ee8769;border-radius:6px;background:#ebe6e18a;text-align:left;color:#746b64;font-size:calc(12px + var(--zy-font-adjust,0px));cursor:pointer;}
+.npc-quote strong {font-size:calc(11px + var(--zy-font-adjust,0px));font-weight:600;color:#ba6e57;}
+.npc-quote span {max-width:360px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.npc-quote-draft {display:flex;gap:10px;align-items:center;margin:6px 24px 0;padding:8px 12px;border-left:2px solid #ef9279;background:#f3efec;border-radius:6px;color:#8e7c70;font-size:calc(12px + var(--zy-font-adjust,0px));}
+.npc-quote-draft>span {flex:1;min-width:0;}
+.npc-quote-draft strong {font-size:calc(11px + var(--zy-font-adjust,0px));}
+.npc-quote-draft small {display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-top:3px;}
+.npc-quote-draft button {background:transparent;flex-shrink:0;}
+.npc-reply-action {position:absolute;right:-29px;top:8px;opacity:0;width:25px;height:25px;display:grid;place-items:center;color:#91857a;background:#f0ece8;border:0;border-radius:50%;cursor:pointer;}
+.xx-message,.zy-bubble-wrap {position:relative;}
+.xx-message:hover>.npc-reply-action,.xx-message:focus-within>.npc-reply-action,.zy-bubble-wrap:hover>.npc-reply-action,.zy-bubble-wrap:focus-within>.npc-reply-action {opacity:1;}
+.xx-group.user .npc-reply-action,.mine .npc-reply-action {left:-29px;right:auto;}
+.xx-message>.npc-quote {margin-bottom:3px;}
+.zy-bubble-wrap>.npc-quote {margin-bottom:3px;}
+.zy-send:disabled {opacity:1;color:#111;}
+
+.zy-post-actions .zy-icon{width:auto;min-width:38px;gap:7px;padding:4px 8px}.zy-interaction-count{font-size:calc(13px + var(--zy-font-adjust,0px));font-variant-numeric:tabular-nums}.zy-post-actions .commented{color:#e57362}.zy-comment-filled circle{fill:#fff;stroke:#fff}.zy-comment-filled path:not(:first-child){stroke:#fff}.zy-post-likers{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:calc(12px + var(--zy-font-adjust,0px));color:#a9675a}.zy-post-comments{margin-top:12px;padding:12px 16px;background:#f7f7f6;border-radius:10px;font-size:calc(13px + var(--zy-font-adjust,0px));line-height:1.8}.zy-inline-comment+.zy-inline-comment{margin-top:6px}.zy-inline-comment button{background:none;border:0;padding:0;text-align:left;color:#444;white-space:pre-wrap;overflow-wrap:anywhere}.zy-inline-comment strong{color:#775f56;font-weight:600}
+
+/* 空状态：未选择会话时的空白 + 灰色 logo */
+.zy-chat-empty{display:flex;align-items:center;justify-content:center;background:#f8f8f7}
+.zy-chat-empty .zy-empty-logo img{width:120px;height:120px;object-fit:contain;filter:grayscale(1);opacity:.4;user-select:none;-webkit-user-drag:none}
+
+/* App component: refinements.css; order preserved. */
+/* Product detail pass: preserve the established three-layer layout and coral brand.
+   System fonts avoid a blocking download; Lucide remains the single icon family.
+   Radius roles: 8px controls, square conversation rows, existing 22px surfaces/pill composer. */
+.zy-app {
+  --detail-ink: #252628;
+  --detail-secondary: #626469;
+  --detail-muted: #717378;
+  --detail-hover: #e7e8ea;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: var(--detail-ink);
+}
+.zy-app svg { stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.zy-app .zy-icon,
+.zy-app .xx-call-actions button {
+  color: var(--detail-secondary);
+  border-radius: 10px;
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+.zy-app .zy-icon:hover,
+.zy-app .xx-call-actions button:hover { background-color: var(--detail-hover); color: var(--detail-ink); }
+.zy-app .zy-icon:active,
+.zy-app .xx-call-actions button:active { transform: scale(.94); }
+.zy-app button:focus-visible { outline: 2px solid #65676c; outline-offset: 3px; }
+.zy-app .zy-nav-items .active .lucide-compass circle { fill: none; }
+.zy-app .zy-nav-items .active .lucide-compass path { fill: currentColor; }
+.zy-app .zy-nav-items .active .lucide-layout-grid rect { fill: currentColor; }
+.zy-app .zy-nav-items .zy-moments-dot { position: absolute; top: 3px; right: 3px; width: 8px; height: 8px; border-radius: 50%; background: #f34f59; pointer-events: none; }
+.zy-app .zy-icon svg { width: 20px; height: 20px; }
+.zy-app .zy-nav-items svg { width: 22px; height: 22px; }
+.zy-app .zy-self strong { font-size: calc(16px + var(--zy-font-adjust,0px)); font-weight: 600; letter-spacing: -.25px; }
+.zy-app .zy-self small { font-size: calc(12px + var(--zy-font-adjust,0px)); color: var(--detail-secondary); }
+.zy-app .zy-search { box-shadow: none; }
+.zy-app .zy-search input::placeholder { color: var(--detail-muted); }
+.zy-app .zy-conversation strong { font-weight: 600; line-height: 1.45; }
+.zy-app .zy-conversation.selected strong { font-weight: 600; }
+.zy-app .zy-conversation time { color: var(--detail-muted); font-variant-numeric: tabular-nums; }
+.zy-app .zy-conversation small { line-height: 1.55; color: var(--detail-secondary); }
+.zy-app .zy-system-label { color: #67696e; background: #f8f8f9; font-size: calc(11px + var(--zy-font-adjust,0px)); font-weight: 400; border-radius: 6px; }
+.zy-app .zy-contact-row strong { font-weight: 600; }
+.zy-app .zy-chat-head strong,
+.zy-app .xx-head strong { font-size: calc(16px + var(--zy-font-adjust,0px)); font-weight: 600; letter-spacing: -.2px; }
+.zy-app .zy-chat-head small,
+.zy-app .xx-head small { font-size: calc(12px + var(--zy-font-adjust,0px)); line-height: 1.5; color: var(--detail-secondary); }
+.zy-app .zy-status-badge { font-size: calc(11px + var(--zy-font-adjust,0px)); line-height: 15px; padding: 1px 6px; border-radius: 6px; vertical-align: 2px; letter-spacing: 0; }
+.zy-app .xx-head { border-bottom-color: #e9eaec; }
+.zy-app .xx-call-actions { gap: 10px; }
+.zy-app .xx-call-actions svg { width: 20px; height: 20px; }
+.zy-app .xx-meta { color: var(--detail-muted); font-variant-numeric: tabular-nums; }
+.zy-app .zy-composer textarea::placeholder,
+.zy-app .xx-compose textarea::placeholder { color: #757074; }
+.zy-app .xx-compose textarea,
+.zy-app .zy-composer textarea { caret-color: #c74559; }
+.zy-app .xx-welcome h2 { font-size: calc(16px + var(--zy-font-adjust,0px)); font-weight: 600; color: var(--detail-ink); }
+.zy-app .xx-welcome p { font-size: calc(13px + var(--zy-font-adjust,0px)); color: var(--detail-secondary); line-height: 1.7; }
+.zy-app .npc-quote { color: #626469; border-left-color: #e87961; background: #e9e9eb; }
+.zy-app .npc-quote strong { color: #a74b38; }
+.zy-app .npc-reply-action { color: #65676c; }
+.zy-app .zy-profile-inner h1 { font-size: calc(28px + var(--zy-font-adjust,0px)); font-weight: 600; letter-spacing: .2px; }
+.zy-app .zy-profile-bio { font-size: calc(14px + var(--zy-font-adjust,0px)); line-height: 1.7; color: var(--detail-secondary); }
+.zy-app .zy-profile-actions .zy-icon {
+  color: var(--zy-ink);
+  background: linear-gradient(110deg, #fce8de, #f9e5e8);
+  border: 1px solid #edcfc6;
+  border-radius: 12px;
+  box-shadow: none;
+}
+.zy-app .zy-profile-actions .zy-icon:hover { background: #f8dace; color: var(--zy-ink); }
+.zy-app .zy-profile-actions .zy-icon svg { width: 21px; height: 21px; }
+.zy-app .zy-post-person strong { font-size: calc(16px + var(--zy-font-adjust,0px)); font-weight: 600; }
+.zy-app .zy-post-person time { font-size: calc(11px + var(--zy-font-adjust,0px)); color: var(--detail-muted); font-variant-numeric: tabular-nums; }
+.zy-app .zy-post-person small { font-size: calc(12px + var(--zy-font-adjust,0px)); color: #252628; line-height: 1.6; }
+.zy-app .zy-post-caption { font-size: calc(14px + var(--zy-font-adjust,0px)); line-height: 1.75; }
+.zy-app .zy-post-caption strong { font-weight: 600; }
+.zy-app .zy-post-actions .zy-icon { border-radius: 50%; }
+@media (prefers-reduced-motion: reduce) {
+  .zy-app *, .zy-app *::before, .zy-app *::after { transition: none; scroll-behavior: auto; }
+}
+
+.zy-resize-handles { position: absolute; inset: 0; pointer-events: none; z-index: 50; }
+.zy-resize-handle { position: absolute; pointer-events: auto; touch-action: none; border: 0; background: transparent; padding: 0; }
+.zy-resize-handle.n, .zy-resize-handle.s { left: 22px; right: 22px; height: 6px; cursor: ns-resize; }
+.zy-resize-handle.n { top: 0; } .zy-resize-handle.s { bottom: 0; }
+.zy-resize-handle.e, .zy-resize-handle.w { top: 22px; bottom: 22px; width: 6px; cursor: ew-resize; }
+.zy-resize-handle.e { right: 0; } .zy-resize-handle.w { left: 0; }
+.zy-resize-handle.ne, .zy-resize-handle.nw, .zy-resize-handle.se, .zy-resize-handle.sw { width: 20px; height: 20px; }
+.zy-resize-handle.ne { right: 0; top: 0; cursor: nesw-resize; }
+.zy-resize-handle.nw { left: 0; top: 0; cursor: nwse-resize; }
+.zy-resize-handle.se { right: 0; bottom: 0; cursor: nwse-resize; }
+.zy-resize-handle.sw { left: 0; bottom: 0; cursor: nesw-resize; }
+.zy-resize-handle.se::after { content: ''; position: absolute; right: 7px; bottom: 7px; width: 7px; height: 7px; border-right: 1.5px solid #96989d; border-bottom: 1.5px solid #96989d; border-radius: 0 0 6px 0; }
+.zy-app .zy-search-row { margin-bottom: 9px; }
+.zy-app .zy-search { height: 34px; padding: 0 11px; border-radius: 10px; gap: 8px; }
+.zy-app .zy-search input { font-size: calc(12px + var(--zy-font-adjust,0px)); }
+.zy-app .zy-search > svg { width: 15px; height: 15px; }
+.zy-app .zy-search .zy-icon { width: 24px; height: 24px; }
+.zy-app .zy-directory { --directory-background: #f2f2f2; background: var(--directory-background); }
+.zy-app .zy-directory .zy-self,
+.zy-app .zy-directory .zy-list-scroll { background: var(--directory-background); }
+.zy-app .zy-chat-list { margin: 0 -14px; width: calc(100% + 28px); }
+/* 2026-10-15: all directory pages share the straight seam and 6px resize hit area. */
+.zy-app:is(.zy-page-chat,.zy-page-contacts,.zy-page-pets,.zy-page-tasks) .zy-directory + .zy-panel-divider { position: relative; width: 0; min-width: 0; flex: 0 0 0; z-index: 2; }
+.zy-app:is(.zy-page-chat,.zy-page-contacts,.zy-page-pets,.zy-page-tasks) .zy-directory + .zy-panel-divider::before { content: ''; position: absolute; top: 0; bottom: 0; left: -3px; width: 6px; cursor: col-resize; }
+.zy-directory-divider{align-self:stretch;margin:0;border:0;touch-action:none;-webkit-app-region:no-drag}
+.zy-directory-divider:focus-visible{outline:0}
+.zy-directory-divider:focus-visible::before{background:var(--zy-composer-edge)}
+.zy-app .zy-conversation:not(.selected):not(.zy-conversation-pinned):not(:hover) { background: var(--directory-background); }
+.zy-app .zy-conversation { padding: 13px 24px; gap: 11px; margin: 0; border-radius: 0; box-shadow: none; }
+.zy-app .zy-directory { --zy-row-divider: rgb(38 42 39 / 8%); --zy-row-hover: color-mix(in srgb, var(--directory-background) 92%, #262a27 8%); }
+.zy-app .zy-conversation:not(:last-child)::after { content: ''; position: absolute; left: 24px; right: 24px; bottom: 0; height: 1px; pointer-events: none; background: var(--zy-row-divider); }
+.zy-app .zy-conversation:hover:not(.selected) { z-index: 2; background: var(--zy-row-hover); box-shadow: none; }
+.zy-app .zy-conversation:hover::after, .zy-app .zy-conversation.selected::after { opacity: 0; }
+.zy-app .zy-conversation:has(+ .zy-conversation:hover)::after, .zy-app .zy-conversation:has(+ .zy-conversation.selected)::after { opacity: 0; }
+.zy-address-group { position: relative; }
+.zy-address-group-start::before { content: ''; position: absolute; top: 0; left: 24px; right: 24px; height: 1px; pointer-events: none; background: var(--zy-row-divider); }
+.zy-address-group-start:has(.zy-contact-row:hover)::before, .zy-address-group-start:has(.zy-contact-row.selected)::before { opacity: 0; }
+.zy-address-group:has(.zy-contact-row:hover), .zy-address-group:has(.zy-contact-row.selected) { z-index: 2; }
+.zy-address-group:has(.zy-contact-row:hover) + .zy-address-group-start::before, .zy-address-group:has(.zy-contact-row.selected) + .zy-address-group-start::before { opacity: 0; }
+html[data-zy-theme='dark'] .zy-app .zy-directory { --zy-row-divider: rgb(255 255 255 / 12%); --zy-row-hover: color-mix(in srgb, var(--directory-background) 88%, #fff 12%); }
+.zy-app .zy-conversation strong, .zy-app .zy-contact-row strong { font-size: calc(14px + var(--zy-font-adjust,0px)); }
+.zy-app .zy-conversation small { font-size: calc(12px + var(--zy-font-adjust,0px)); margin-top: 3px; }
+.zy-app .zy-conversation time { font-size: calc(11px + var(--zy-font-adjust,0px)); }
+.zy-app .zy-conversation time .is-yesterday { font-size: calc(11px + var(--zy-font-adjust,0px)); }
+.zy-app .zy-conversation.selected::before { left: 0; top: 0; bottom: 0; width: 3px; border-radius: 0; }
+.zy-app .zy-molly-pinned { margin-bottom: 0; }
+.zy-app .zy-contact-row { height: 52px; padding: 7px 12px; gap: 11px; }
+.zy-app .zy-letter { margin-top: 7px; margin-bottom: 4px; }
+/* One composer treatment for both demo and live NPCs: white interior,
+   brand gradient ONLY on the thin border, with gently rounded rectangular corners. */
+.zy-app .zy-composer, .zy-app .xx-compose { gap: 12px; align-items: center; }
+.zy-app .zy-composer textarea, .zy-app .xx-compose textarea {
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  min-height: 44px;
+  max-height: 110px;
+  field-sizing: content;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(110deg, #ff936e, #ee7395) border-box;
+  padding: 10px 14px;
+  font: inherit;
+  font-size: calc(14px + var(--zy-font-adjust,0px));
+  line-height: 22px;
+  resize: none;
+  outline: none;
+  box-shadow: none;
+}
+.zy-app .zy-composer textarea:focus-visible, .zy-app .xx-compose textarea:focus-visible { outline: none; box-shadow: none; }
+
+/* One panel-3 header and shared metrics, using Xiaxia as the reference. */
+.zy-app .unified-chat-head{flex-shrink:0;height:72px;min-height:72px;padding:11px 26px;gap:14px;border-bottom:1px solid #e9eaec;background:#fff;}
+.zy-app .chat-header-person{display:flex;align-items:center;gap:14px;min-width:0;flex:0 0 auto;padding:0;border:0;background:none;text-align:left;color:inherit;cursor:pointer;}
+.zy-app .chat-header-person:disabled{opacity:1;cursor:default;}
+.zy-app .chat-header-person .xx-avatar{width:40px;height:40px;flex-shrink:0;}
+.zy-app .chat-header-copy{min-width:0;}
+.zy-app .chat-header-copy strong{display:flex;align-items:center;gap:10px;font-size:calc(16px + var(--zy-font-adjust,0px));font-weight:600;line-height:22px;}
+.zy-app .chat-header-copy small{display:block;margin-top:5px;font-size:calc(12px + var(--zy-font-adjust,0px));line-height:18px;color:var(--detail-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.zy-app .unified-chat-head .xx-call-actions{gap:10px;margin-left:auto;flex-shrink:0;}
+.zy-app .unified-chat-head .xx-call-actions > button,
+.zy-app .unified-chat-head .zy-chat-more > button{width:36px;height:36px;padding:8px;}
+.zy-app .unified-chat-head .xx-call-actions svg{width:20px;height:20px;}
+.zy-app .zy-chat-more{position:relative;-webkit-app-region:no-drag;}
+.zy-app .zy-chat-more-menu{position:absolute;z-index:30;top:calc(100% + 9px);right:0;width:190px;padding:5px;border:1px solid #e4e5e7;border-radius:10px;background:#fff;box-shadow:var(--zy-popup-shadow),inset 0 1px 0 var(--zy-glass-highlight);-webkit-app-region:no-drag;}
+.zy-app .unified-chat-head .zy-chat-more-menu button{display:flex;align-items:center;justify-content:flex-start;gap:11px;width:100%;height:38px;padding:0 11px;border:0;border-radius:6px;background:transparent;color:#303236;text-align:left;white-space:nowrap;font-size:calc(13px + var(--zy-font-adjust,0px));font-weight:400;line-height:1.4;}
+.zy-app .unified-chat-head .zy-chat-more-menu button + button{margin-top:2px;}
+.zy-app .unified-chat-head .zy-chat-more-menu button:hover,.zy-app .unified-chat-head .zy-chat-more-menu button:focus-visible{background:#f1f2f3;color:#202225;}
+.zy-app .unified-chat-head .zy-chat-more-menu button svg{width:17px;height:17px;color:#6d7075;}
+.zy-app .zy-chat{margin:0;border:0;border-radius:12px;background:#f8f8f7;box-shadow:none;min-height:0;}
+.zy-app .zy-thread{min-height:0;}
+.zy-app .zy-thread-inner{padding:20px 26px;}
+.zy-app .zy-message{gap:13px;margin-bottom:4px;}
+.zy-app .zy-message.new-group{margin-top:0;}
+.zy-app .zy-message.group-last{margin-bottom:20px;}
+.zy-app .zy-message-avatar{align-self:flex-end;margin:0 0 22px;}
+.zy-app .zy-message-content{max-width:min(82%,680px);min-width:0;}
+.zy-app .zy-bubble{font-size:calc(14px + var(--zy-font-adjust,0px));line-height:1.55;padding:10px 16px;border:0;border-radius:21px;box-shadow:none;color:#242321;}
+.zy-app .zy-message:not(.mine)[data-bubble-position='start'] .zy-bubble{border-radius:21px 21px 21px 5px;}
+.zy-app .zy-message:not(.mine)[data-bubble-position='middle'] .zy-bubble{border-radius:5px 21px 21px 5px;}
+.zy-app .zy-message:not(.mine)[data-bubble-position='end'] .zy-bubble{border-radius:5px 21px 21px 21px;}
+.zy-app .mine .zy-bubble{background:#242321;color:#fff;border-radius:21px;}
+.zy-app .zy-message.mine[data-bubble-position='start'] .zy-bubble{border-radius:21px 21px 5px 21px;}
+.zy-app .zy-message.mine[data-bubble-position='middle'] .zy-bubble{border-radius:21px 5px 5px 21px;}
+.zy-app .zy-message.mine[data-bubble-position='end'] .zy-bubble{border-radius:21px 5px 21px 21px;}
+.zy-app .zy-message-time{font-size:calc(11px + var(--zy-font-adjust,0px));gap:7px;margin-top:5px;color:#97938c;}
+.zy-app .zy-message-time .read{color:#f16f5e;}
+.zy-app .zy-composer-area{padding:0;border:0;background:transparent;}
+.zy-app .zy-composer-area>.chat-composer-shell{margin:8px 20px 16px;}
+
+.zy-chat-context{position:fixed;z-index:1200;width:180px;padding:6px;background:#fff;border:1px solid #e8e6e3;border-radius:12px;box-shadow:none}
+.zy-chat-context button{display:block;width:100%;text-align:left;padding:10px 13px;border:0;border-radius:6px;background:none;font-size:calc(13px + var(--zy-font-adjust,0px));color:#302d2a;cursor:pointer}
+.zy-chat-context button:hover,.zy-chat-context button:focus-visible{background:#fff0e9;outline:none}.zy-chat-context button:disabled{color:#aaa;cursor:default;background:none}
+.zy-signature-edit{display:flex;flex-direction:column;gap:10px;text-align:left;width:100%;margin:20px 0;color:#777;font-size:calc(13px + var(--zy-font-adjust,0px))}.zy-signature-edit textarea{resize:vertical;min-height:80px;padding:12px;border:1px solid #e4e1dd;border-radius:10px;color:#282624;background:#fafaf9;font:inherit}
+.zy-npc-profile-card{padding:10px 16px 20px;max-height:70vh;overflow:auto}.zy-npc-profile-top{display:flex;align-items:center;gap:24px;padding:12px 0 28px}.zy-npc-profile-top h3{font-size:calc(20px + var(--zy-font-adjust,0px));font-weight:600;margin:0 0 14px}.zy-npc-profile-top p{font-size:calc(14px + var(--zy-font-adjust,0px));color:var(--zy-ink);margin:6px 0}.zy-npc-profile-card dl{display:grid;grid-template-columns:86px 1fr;gap:22px 16px;padding:26px 0;margin:0;border-top:1px solid #eeece9;font-size:calc(14px + var(--zy-font-adjust,0px))}.zy-npc-profile-card dt{color:var(--zy-ink)}.zy-npc-profile-card dd{margin:0;line-height:1.6}.zy-profile-moments{border:0;border-top:1px solid #eeece9;background:none;display:flex;align-items:center;justify-content:space-between;padding:24px 0;width:100%;font-size:calc(14px + var(--zy-font-adjust,0px));color:var(--zy-ink);cursor:pointer;font-weight: 400}.zy-profile-moments span{display:flex;align-items:center;gap:5px}.zy-profile-moments img{width:48px;height:48px;object-fit:cover;border-radius:6px}.zy-npc-profile-actions{display:flex;justify-content:space-between;border-top:1px solid #eeece9;padding:26px 0 0;gap:22px}.zy-npc-profile-actions button{display:flex;flex:1;flex-direction:column;align-items:center;gap:12px;padding:10px 0;background:none;border:0;color:var(--zy-nav-active);font-size:calc(12px + var(--zy-font-adjust,0px));cursor:pointer;font-weight: 600}.zy-npc-profile-actions button:hover{color:var(--zy-nav-active);font-size: calc(12px + var(--zy-font-adjust,0px));font-weight: 600}.zy-npc-profile-actions svg{width:25px;height:25px}
+.xx-profile-avatar-button{border:0;padding:0;background:none;flex-shrink:0;align-self:flex-end;cursor:pointer;border-radius:50%}.xx-profile-avatar-button:focus-visible{outline:2px solid #f17760;outline-offset:3px}
+.zy-npc-identity{min-width:0;flex:1}.zy-npc-profile-top .zy-npc-identity h3{display:flex;align-items:center;gap:12px;overflow-wrap:anywhere;font-size:calc(20px + var(--zy-font-adjust,0px));margin-bottom:14px;font-weight: 600}.zy-gender{font-size:calc(20px + var(--zy-font-adjust,0px));font-weight:600;flex-shrink:0}.zy-gender.female{color:#f27a9c}.zy-gender.male{color:#579fe0}.zy-npc-profile-top .zy-npc-identity p{font-size:calc(12px + var(--zy-font-adjust,0px));color:var(--zy-glass-muted);line-height:1.7;margin:2px 0;font-weight: 400}.zy-friend-details{border-top:1px solid #eeece9;padding-top:24px}.zy-friend-details h4{margin:0;color:var(--zy-ink);font-weight:400;font-size:calc(14px + var(--zy-font-adjust,0px))}.zy-npc-profile-card .zy-friend-details dl{border:0;padding:20px 0 26px;align-items:center;font-size: calc(14px + var(--zy-font-adjust,0px));font-weight: 400}.zy-friend-details input{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid transparent;border-radius:6px;background:#f5f4f2;font:inherit;color:var(--zy-ink);outline:none}.zy-friend-details input:focus{border-color:#edb4a4;background:#fff}.zy-npc-profile-card .zy-friend-source{padding:24px 0}.zy-npc-profile-actions button{border-radius:10px;font-size: calc(12px + var(--zy-font-adjust,0px));font-weight: 600}.zy-npc-profile-actions button:hover{background:#fff1eb;font-size: calc(12px + var(--zy-font-adjust,0px));font-weight: 600}
+
+.zy-self-avatar-edit{position:relative;display:inline-flex;padding:0;border:0;border-radius:50%;background:none;cursor:pointer;overflow:hidden;flex-shrink:0}.zy-avatar-camera{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0006;color:white;opacity:0;transition:opacity .16s}.zy-self-avatar-edit:hover .zy-avatar-camera,.zy-self-avatar-edit:focus-visible .zy-avatar-camera{opacity:1}.zy-self-avatar-edit:focus-visible{outline:2px solid #ed9d85;outline-offset:4px}.zy-my-profile .zy-self-account{font-size:calc(14px + var(--zy-font-adjust,0px));color:#77716b;margin:16px 0 6px}.zy-signature-edit input{padding:12px;border:1px solid #e4e1dd;border-radius:10px;color:#282624;background:#fafaf9;font:inherit;width:100%;box-sizing:border-box}.zy-signature-edit:focus-within{color:#514b45}@media(hover:none){.zy-avatar-camera{opacity:1;background:#0003}}
+
+
+/* Friend profile: plain content, outside-click dismissal, no page scrim. */
+.zy-profile-popover{border:0;background:#fff;box-shadow:var(--zy-popup-shadow),inset 0 1px 0 var(--zy-glass-highlight)}
+.zy-profile-popover::backdrop{background:transparent;backdrop-filter:none}
+.zy-profile-popover .zy-dialog-head,.zy-profile-popover .zy-friend-details,.zy-profile-popover .zy-npc-profile-card dl,.zy-profile-popover .zy-profile-moments,.zy-profile-popover .zy-npc-profile-actions{border:0;background:transparent}
+.zy-profile-popover .zy-friend-details input,.zy-profile-popover .zy-friend-details input:focus{border:0;border-radius:0;background:transparent;padding:8px 0;box-shadow:none}
+.zy-profile-popover .zy-npc-profile-actions button,.zy-profile-popover .zy-npc-profile-actions button:hover{background:transparent;font-size: calc(12px + var(--zy-font-adjust,0px));font-weight: 600}
+.zy-profile-popover .zy-npc-profile-actions button:disabled{color:var(--zy-nav-active);cursor:default;font-size: calc(12px + var(--zy-font-adjust,0px));font-weight: 600}
+.zy-molly-profile-bio{text-align:left;margin:0;padding:4px 0 20px;color:var(--zy-glass-muted);line-height:1.7}
+
+.zy-molly-profile-card .zy-npc-profile-actions{justify-content:center}
+.zy-molly-profile-card .zy-npc-profile-actions button{flex:0 0 auto;min-width:96px;border:0;border-radius:0;background:transparent;box-shadow:none;color:var(--zy-nav-active);outline:none;font-size: calc(12px + var(--zy-font-adjust,0px));font-weight: 600}
+.zy-molly-profile-card .zy-npc-profile-actions button:hover,.zy-molly-profile-card .zy-npc-profile-actions button:focus-visible{color:var(--zy-nav-active);background:transparent;box-shadow:none;outline:none;font-size: calc(12px + var(--zy-font-adjust,0px));font-weight: 600}
+.zy-molly-profile-card .zy-npc-profile-actions button:focus-visible{text-decoration:underline;text-underline-offset:4px;font-size: calc(12px + var(--zy-font-adjust,0px));font-weight: 600}
+.zy-molly-profile-card .zy-npc-profile-actions svg{color:var(--zy-nav-active);stroke:#000;fill:none}
+.zy-app .zy-post-actions .zy-icon.commented,.zy-app .zy-post-actions .zy-icon.commented:hover{color:#e57362}
+.zy-app .zy-publish-fab{position:fixed;top:auto;right:42px;bottom:36px;z-index:30;width:52px;height:52px;border:1px solid #f3b5a5;border-radius:12px;color:#d86853;background:#fff9f6;box-shadow:none}.zy-app .zy-publish-fab:hover{background:#ffebe2;transform:translateY(-2px)}.zy-publish-editor{display:flex;flex-direction:column;gap:16px}.zy-publish-editor>textarea{width:100%;min-height:145px;resize:vertical;border:0;outline:none;background:#faf9f7;border-radius:12px;padding:18px;font:inherit;font-size:calc(14px + var(--zy-font-adjust,0px));line-height:1.7;box-sizing:border-box}.zy-publish-hint{font-size:calc(12px + var(--zy-font-adjust,0px));color:#98928c;margin:0}.zy-publish-editor footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:16px;border-top:1px solid #eeebe7}.zy-publish-editor footer small{font-size:calc(11px + var(--zy-font-adjust,0px));color:#98928c}.zy-publish-dialog .zy-upload-grid{margin:0}.zy-publish-editor .zy-publish-person{margin:0}
+
+/* App component: dual-preview.css; order preserved. */
+.zy-desktop-stage{padding:0;display:block;min-width:0;min-height:100vh;background:transparent}
+.zy-dual-preview{display:block;width:100%;height:100vh;min-height:0;max-width:none;margin:0}
+.zy-desktop-slot{width:100%;height:100%;min-width:0;position:relative}
+.zy-desktop-slot>.zy-app{width:100%;height:100%;min-width:0;min-height:0;max-width:none;max-height:none;border-radius:0;box-shadow:none;border:0;background:#e2e3e5}
+.zy-desktop .zy-directory{width:260px;flex-shrink:0}
+.zy-desktop .zy-rail{width:68px;flex-shrink:0}
+.zy-desktop-slot>.zy-entrance{position:absolute;border-radius:0}
+.zy-desktop .zy-rail{padding-top:44px}
+.zy-desktop .zy-base{flex:1;min-width:0;margin:3px 3px 3px 0;border-radius:12px}
+.zy-desktop .xx-layout{flex:1;border-radius:0}
+.zy-app .zy-chat{flex:1;border-radius:0}
+.zy-panel-divider{width:6px;flex-shrink:0;cursor:col-resize;background:transparent;user-select:none}
+/* 拖拽窗口移动区域 */
+.zy-rail{-webkit-app-region:drag}
+.zy-rail button{-webkit-app-region:no-drag}
+.xx-head,.unified-chat-head{-webkit-app-region:drag}
+.xx-head button,.unified-chat-head button{-webkit-app-region:no-drag}
+.zy-self{-webkit-app-region:drag}
+.zy-self button{-webkit-app-region:no-drag}
+
+/* App component: profile-redesign.css; order preserved. */
+/* Profile and contacts content. The rail, base and panel layer geometry stays in theme.css. */
+html[data-zy-theme] .zy-app.zy-desktop .zy-self-copy { min-width: 0; flex: 1; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-self-copy strong,
+html[data-zy-theme] .zy-app.zy-desktop .zy-self-copy small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-self-copy small { margin-top: 3px; color: var(--zy-muted); font-size: calc(11px + var(--zy-font-adjust,0px)); line-height: 16px; }
+.zy-self-avatar-button { padding: 0; border: 0; border-radius: 50%; background: transparent; flex-shrink: 0; cursor: pointer; }
+.zy-self-avatar-button:focus-visible { outline: 2px solid var(--zy-nav-active); outline-offset: 3px; }
+
+html[data-zy-theme] .zy-app.zy-desktop .zy-address-list { width: calc(100% + 32px); margin: 0 -16px; padding: 0 0 28px; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-section-toggle { height: 37px; padding: 0 20px; gap: 9px; color: var(--zy-ink); border-radius: 0; font-size: calc(12px + var(--zy-font-adjust,0px)); font-weight: 400; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-section-toggle:hover { background: var(--zy-hover); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-section-toggle small { margin-left: auto; color: var(--zy-muted); font-size: calc(11px + var(--zy-font-adjust,0px)); }
+.zy-contact-section-toggle .zy-disclosure-chevron { flex: 0 0 auto; color: var(--zy-muted); transition: transform .16s ease; }
+.zy-contact-section-toggle[aria-expanded='true'] .zy-disclosure-chevron { transform: rotate(90deg); }
+.zy-contact-section-empty { margin: 3px 20px 10px 45px; color: var(--zy-muted); font-size: calc(11px + var(--zy-font-adjust,0px)); line-height: 1.5; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-letter { margin: 8px 0 3px; padding: 0 20px; color: var(--zy-muted); font-size: calc(11px + var(--zy-font-adjust,0px)); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-row { width: 100%; height: 58px; margin: 0; padding: 12px 20px; gap: 10px; border-radius: 0; box-shadow: none; background: transparent; color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-row .zy-avatar { width: 34px; height: 34px; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-row strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: calc(13px + var(--zy-font-adjust,0px)); font-weight: 600; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-row:hover:not(.selected) { position: relative; z-index: 2; background: var(--zy-row-hover); box-shadow: none; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-row.selected { background: var(--zy-selected); color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-row.selected strong { color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-row.selected::before { left: 0; top: 0; bottom: 0; width: 3px; border-radius: 0; background: var(--zy-selected-accent); }
+
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-detail { background: var(--zy-canvas); color: var(--zy-ink); }
+.zy-contact-profile { width: min(100% - 72px, 380px); margin: 58px auto 48px; }
+.zy-contact-profile-head { display: flex; align-items: flex-start; gap: 16px; padding-bottom: 21px; border-bottom: 1px solid var(--zy-line); }
+.zy-contact-profile-avatar { flex: 0 0 auto; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; }
+.zy-contact-profile-avatar:disabled { cursor: default; opacity: 1; }
+.zy-contact-profile-identity { min-width: 0; flex: 1; padding-top: 1px; }
+.zy-contact-profile-identity h1 { margin: 0 0 9px; color: var(--zy-ink); font-size: calc(20px + var(--zy-font-adjust,0px)); line-height: 1.3; font-weight: 600; }
+.zy-contact-profile-identity p { margin: 3px 0; color: var(--zy-muted); font-size: calc(11px + var(--zy-font-adjust,0px)); line-height: 1.4; }
+.zy-molly-contact-profile .zy-contact-profile-head { align-items: center; }
+.zy-molly-contact-profile .zy-contact-profile-identity { padding-top: 0; }
+.zy-molly-contact-profile .zy-contact-profile-identity h1 { margin: 0; font-size: calc(20px + var(--zy-font-adjust,0px)); font-weight: 600; }
+.zy-molly-contact-profile .zy-molly-contact-bio { margin: 0; padding: 18px 0; color: var(--zy-secondary); font-size: calc(12px + var(--zy-font-adjust,0px)); line-height: 1.6; }
+.zy-contact-profile-menu { flex: 0 0 auto; }
+.zy-contact-profile-menu > .zy-icon { width: 26px; height: 26px; color: var(--zy-secondary); }
+.zy-contact-profile-menu .zy-menu { z-index: 5; }
+.zy-contact-profile-section { padding: 18px 0; border-bottom: 1px solid var(--zy-line); }
+.zy-contact-profile-section h2 { margin: 0 0 13px; color: var(--zy-muted); font-size: calc(11px + var(--zy-font-adjust,0px)); font-weight: 400; }
+.zy-contact-profile-row { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 8px; align-items: start; margin: 10px 0 0; font-size: calc(12px + var(--zy-font-adjust,0px)); line-height: 1.6; }
+.zy-app .zy-contact-profile .zy-inline-name-edit { grid-template-columns: 84px minmax(0, 1fr); gap: 8px; }
+.zy-contact-profile-row:first-of-type { margin-top: 0; }
+.zy-contact-profile-row > span { color: var(--zy-muted); }
+.zy-contact-profile-row p { margin: 0; color: var(--zy-ink); }
+.zy-contact-profile-row input { width: 100%; min-width: 0; padding: 0; border: 0; border-radius: 0; outline: none; background: transparent; color: var(--zy-ink); font: inherit; }
+.zy-contact-profile-row input::placeholder { color: var(--zy-secondary); opacity: 1; }
+.zy-contact-profile-row input:focus { border-bottom: 1px solid var(--zy-nav-active); }
+.zy-contact-profile-moments { width: 100%; min-height: 43px; padding: 0; display: grid; grid-template-columns: 84px 1fr 16px; align-items: center; gap: 8px; text-align: left; border: 0; background: transparent; color: var(--zy-muted); font: inherit; font-size: calc(12px + var(--zy-font-adjust,0px)); cursor: pointer; }
+.zy-contact-profile-moments:hover { color: var(--zy-nav-active); }
+.zy-contact-profile-thumbnails { display: flex; min-width: 0; gap: 5px; }
+.zy-contact-profile-thumbnails img { width: 38px; height: 38px; flex: 0 0 38px; border-radius: 6px; object-fit: cover; }
+.zy-contact-profile-actions { display: flex; justify-content: space-around; gap: 6px; padding: 18px 0 0; }
+.zy-contact-profile-actions button { min-width: 76px; padding: 3px 4px; display: flex; flex-direction: column; align-items: center; gap: 7px; border: 0; border-radius: 6px; background: transparent; color: var(--zy-nav-active); font: inherit; font-size: calc(12px + var(--zy-font-adjust,0px)); cursor: pointer; font-weight: 600; }
+.zy-contact-profile-actions button:hover { background: var(--zy-hover); font-size: calc(12px + var(--zy-font-adjust,0px)); font-weight: 600; }
+
+html[data-zy-theme] .zy-app.zy-desktop .zy-chat-more-menu { width: 178px; padding: 5px; border-radius: 10px; border-color: var(--zy-line); background: var(--zy-canvas); box-shadow: var(--zy-popup-shadow),inset 0 1px 0 var(--zy-glass-highlight); }
+html[data-zy-theme] .zy-app.zy-desktop .unified-chat-head .zy-chat-more-menu button { height: 34px; gap: 10px; padding: 0 9px; border-radius: 6px; color: var(--zy-ink); font-size: calc(12px + var(--zy-font-adjust,0px)); font-weight: 400; }
+html[data-zy-theme] .zy-app.zy-desktop .unified-chat-head .zy-chat-more-menu button:hover,
+html[data-zy-theme] .zy-app.zy-desktop .unified-chat-head .zy-chat-more-menu button:focus-visible { background: var(--zy-hover); color: var(--zy-ink); }
+html[data-zy-theme] .zy-app.zy-desktop .unified-chat-head .zy-chat-more-menu button svg { width: 17px; height: 17px; color: var(--zy-nav-active); }
+.zy-chat-menu-divider { height: 1px; margin: 5px 7px; background: var(--zy-line); }
+
+.zy-profile-popover.zy-dialog { width: 277.5px; max-width: calc(100vw - 28px); max-height: calc(100dvh - 28px); border: 1px solid #e6e8e3; border-radius: 10px; background: #fff; color: var(--zy-ink); box-shadow: var(--zy-popup-shadow),inset 0 1px 0 var(--zy-glass-highlight); overflow: visible; }
+.zy-profile-popover::backdrop { background: transparent; backdrop-filter: none; }
+.zy-profile-popover .zy-dialog-head { display: none; }
+.zy-self-profile-popover.zy-dialog { width: 380px; }
+.zy-my-profile { padding: 21px 22px 20px; text-align: left; }
+.zy-my-profile-identity { display: flex; align-items: center; gap: 14px; }
+.zy-my-profile-copy { min-width: 0; flex: 1; }
+.zy-my-profile-name { min-height: 23px; display: flex; align-items: center; gap: 6px; }
+.zy-my-profile-name strong { font-size: calc(16px + var(--zy-font-adjust,0px)); line-height: 1.35; font-weight: 600; color: #2c312e; }
+.zy-my-profile :is(.zy-my-profile-name,.zy-my-profile-signature) > button { width: 20px; height: 20px; flex: 0 0 auto; display: grid; place-items: center; padding: 0; border: 0; border-radius: 6px; background: transparent; color: #818981; cursor: pointer; }
+.zy-my-profile :is(.zy-my-profile-name,.zy-my-profile-signature) > button:hover { background: #f0f3ef; color: #2e6252; }
+.zy-my-profile-copy p { margin: 4px 0 0; color: #818781; font-size: calc(11px + var(--zy-font-adjust,0px)); line-height: 1.4; }
+.zy-my-profile-name input { width: min(100%, 220px); padding: 0; border: 0; border-bottom: 1px solid #2e6252; border-radius: 0; background: transparent; outline: none; font: inherit; font-size: calc(16px + var(--zy-font-adjust,0px)); }
+.zy-my-profile-signature { min-height: 44px; display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; margin: 19px 0 14px; }
+.zy-my-profile-signature p { margin: 0; color: #4d5550; font-size: calc(12px + var(--zy-font-adjust,0px)); line-height: 1.65; }
+.zy-my-profile-signature textarea { width: 100%; min-height: 43px; max-height: 70px; padding: 0; resize: none; border: 0; border-bottom: 1px solid #2e6252; border-radius: 0; background: transparent; outline: none; color: #2d312f; font: inherit; font-size: calc(12px + var(--zy-font-adjust,0px)); line-height: 1.5; }
+.zy-my-profile-moments { width: 100%; display: grid; grid-template-columns: 57px 1fr 15px; align-items: center; gap: 10px; padding: 15px 0 0; border: 0; border-top: 1px solid #e7eae6; background: transparent; text-align: left; color: #69716b; font: inherit; font-size: calc(12px + var(--zy-font-adjust,0px)); cursor: pointer; }
+.zy-my-profile-thumbnails { display: flex; min-height: 35px; gap: 5px; }
+.zy-my-profile-thumbnails img { width: 35px; height: 35px; border-radius: 6px; object-fit: cover; }
+.zy-my-profile-moments:hover { color: #2e6252; }
+.zy-my-profile .zy-self-avatar-edit { width: 56px; height: 56px; }
+
+.zy-profile-popover .zy-npc-profile-card { width: min(calc(100% - 48px), 300px); max-height: none; padding: 24px 0 22px; margin: 0 auto; overflow: visible; }
+.zy-profile-popover .zy-npc-profile-top { gap: 13px; padding: 0 0 19px; align-items: center; border-bottom: 1px solid #e7eae6; }
+.zy-profile-popover .zy-npc-identity h3 { margin: 0 0 5px; gap: 5px; color: var(--zy-ink); font-size: calc(20px + var(--zy-font-adjust,0px)); line-height: 1.3; font-weight: 600; }
+.zy-profile-popover .zy-gender { font-size: calc(12px + var(--zy-font-adjust,0px)); }
+.zy-profile-popover .zy-npc-identity p { margin: 2px 0; color: var(--zy-glass-muted); font-size: calc(12px + var(--zy-font-adjust,0px)); line-height: 1.45; font-weight: 400; }
+.zy-profile-popover .zy-friend-details { padding: 18px 0 22px; border-bottom: 1px solid #e7eae6; }
+.zy-profile-popover .zy-friend-details h4 { margin: 0 0 10px; color: var(--zy-ink); font-size: calc(14px + var(--zy-font-adjust,0px)); font-weight: 400; }
+.zy-profile-popover .zy-friend-details dl { grid-template-columns: 72px minmax(0, 1fr); gap: 10px 8px; padding: 0; margin: 0; border: 0; align-items: baseline; font-size: calc(14px + var(--zy-font-adjust,0px)); line-height: 1.55; font-weight: 400; }
+.zy-app .zy-profile-popover .zy-friend-details .zy-inline-name-edit { grid-template-columns: 72px minmax(0, 1fr); gap: 8px; }
+.zy-profile-popover .zy-friend-details dt { color: var(--zy-ink); font-size: calc(14px + var(--zy-font-adjust,0px)); font-weight: 400; }
+.zy-profile-popover .zy-friend-details dd { margin: 0; color: var(--zy-ink); line-height: 1.55; font-size: calc(14px + var(--zy-font-adjust,0px)); font-weight: 400; }
+.zy-profile-popover .zy-friend-details input { width: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--zy-ink); font: inherit; outline: none; }
+.zy-profile-popover .zy-friend-details input::placeholder { color: var(--zy-glass-muted); opacity: 1; }
+.zy-profile-popover .zy-friend-details input:focus { border: 0; box-shadow: none; }
+.zy-profile-popover .zy-profile-moments { display: grid; grid-template-columns: 72px minmax(0, 1fr) 15px; gap: 8px; min-height: 62px; padding: 16px 0; border: 0; border-bottom: 1px solid #e7eae6; color: var(--zy-ink); font-size: calc(14px + var(--zy-font-adjust,0px)); text-align: left; font-weight: 400; }
+.zy-profile-popover .zy-profile-moments-content { min-width: 0; display: flex; align-items: center; gap: 4px; overflow: hidden; }
+.zy-profile-popover .zy-profile-moments-chevron { justify-self: end; }
+.zy-profile-popover .zy-profile-moments img { width: 32px; height: auto; min-width: 0; flex: 0 1 32px; aspect-ratio: 1; object-fit: cover; border-radius: 6px; }
+.zy-profile-popover .zy-npc-profile-card .zy-friend-source { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 8px; padding: 17px 0; margin: 0; border-bottom: 1px solid #e7eae6; color: var(--zy-glass-muted); font-size: calc(11px + var(--zy-font-adjust,0px)); }
+.zy-profile-popover .zy-friend-source dt { color: var(--zy-ink); font-size: calc(14px + var(--zy-font-adjust,0px)); font-weight: 400; }
+.zy-profile-popover .zy-friend-source dd { margin: 0; }
+.zy-profile-popover .zy-npc-profile-card .zy-npc-profile-actions { justify-content: center; align-items: center; gap: 18px; padding: 20px 0 0; border: 0; }
+.zy-profile-popover .zy-npc-profile-card .zy-npc-profile-actions button { display: flex; flex-direction: column; justify-content: center; align-items: center; width: 72px; height: 72px; min-width: 0; min-height: 72px; flex: 0 0 72px; gap: 6px; padding: 0; border: 0; border-radius: 10px; background: transparent; color: var(--zy-nav-active); font-size: calc(12px + var(--zy-font-adjust,0px)); font-weight: 600; line-height: 1.4; }
+.zy-profile-popover .zy-npc-profile-card .zy-npc-profile-actions button:hover { color: var(--zy-nav-active); background: #f3f6f3; font-size: calc(12px + var(--zy-font-adjust,0px)); font-weight: 600; }
+.zy-profile-popover .zy-npc-profile-card:not(.zy-molly-profile-card) .zy-npc-profile-actions { padding-top: 32px; }
+.zy-profile-popover .zy-npc-profile-actions svg { width: 19px; height: 19px; }
+.zy-profile-popover .zy-molly-profile-bio { margin: 0; padding: 14px 0; color: var(--zy-glass-muted); font-size: calc(12px + var(--zy-font-adjust,0px)); line-height: 1.5; }
+.zy-profile-popover .zy-molly-profile-card .zy-npc-identity h3 { margin: 0; font-size: calc(20px + var(--zy-font-adjust,0px)); font-weight: 600; }
+.zy-profile-popover .zy-molly-profile-card .zy-npc-profile-actions button { min-width: 74px; color: var(--zy-nav-active); font-size: calc(12px + var(--zy-font-adjust,0px)); font-weight: 600; }
+
+html[data-zy-theme='dark'] .zy-profile-popover.zy-dialog { border-color: #4a4c49; background: #303033; color: var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-profile-popover :is(.zy-my-profile-name strong,.zy-npc-identity h3,.zy-friend-details dd,.zy-friend-source,.zy-my-profile-signature p) { color: var(--zy-glass-muted); font-size: calc(14px + var(--zy-font-adjust,0px)); font-weight: 400; }
+html[data-zy-theme='dark'] .zy-profile-popover :is(.zy-my-profile-copy p,.zy-npc-identity p,.zy-friend-details dt,.zy-friend-details h4,.zy-friend-source dt,.zy-profile-moments,.zy-my-profile-moments) { color: var(--zy-glass-muted); font-size: calc(14px + var(--zy-font-adjust,0px)); font-weight: 400; }
+html[data-zy-theme='dark'] .zy-profile-popover :is(.zy-my-profile-moments,.zy-npc-profile-top,.zy-friend-details,.zy-profile-moments,.zy-friend-source) { border-color: #4a4c49; }
+html[data-zy-theme='dark'] .zy-profile-popover :is(.zy-my-profile-name input,.zy-my-profile-signature textarea,.zy-friend-details input) { color: var(--zy-ink); }
+html[data-zy-theme='dark'] .zy-profile-popover .zy-npc-profile-card .zy-npc-profile-actions button { color: var(--zy-nav-active); font-size: calc(12px + var(--zy-font-adjust,0px)); font-weight: 600; }
+html[data-zy-theme='dark'] .zy-profile-popover .zy-npc-profile-card .zy-npc-profile-actions button:hover { background: #3b443d; font-size: calc(12px + var(--zy-font-adjust,0px)); font-weight: 600; }
+
+/* The same quiet separators apply to everyday and professional profile content. */
+html[data-zy-theme] .zy-profile-popover.zy-dialog :is(.zy-my-profile-moments,.zy-npc-profile-top,.zy-friend-details,.zy-profile-moments,.zy-friend-source,.zy-professional-profile,.zy-professional-certificates > ul > li) { border-color: var(--zy-glass-line); }
+
+@media (max-height: 610px) {
+  .zy-profile-popover .zy-npc-profile-card { padding-top: 18px; padding-bottom: 16px; }
+  .zy-profile-popover .zy-npc-profile-top { padding-bottom: 14px; }
+  .zy-profile-popover .zy-friend-details { padding: 14px 0 18px; }
+  .zy-profile-popover .zy-profile-moments { min-height: 53px; padding: 12px 0; font-size: calc(14px + var(--zy-font-adjust,0px)); font-weight: 400; }
+  .zy-profile-popover .zy-friend-source { padding: 12px 0; }
+  .zy-profile-popover .zy-npc-profile-card .zy-npc-profile-actions { padding-top: 14px; }
+  .zy-profile-popover .zy-npc-profile-card:not(.zy-molly-profile-card) .zy-npc-profile-actions { padding-top: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .zy-contact-section-toggle .zy-disclosure-chevron { transition: none; } }
+
+/* The remark text starts at the signature column; its hover plate extends 8px left. */
+.zy-app .zy-profile-popover .zy-friend-details .zy-inline-name-field,
+.zy-app .zy-contact-profile .zy-inline-name-field { margin-left:-8px; }
+.zy-app .zy-profile-popover .zy-friend-details .zy-inline-name-edit .zy-inline-name-input,
+.zy-app .zy-contact-profile .zy-inline-name-edit .zy-inline-name-input { padding-left:7px; }
+
+/* Narrow profile cards keep all content within the text column. */
+.zy-profile-popover :is(.zy-npc-identity p,.zy-friend-details dd,.zy-friend-source dd) { overflow-wrap:anywhere; font-size: calc(14px + var(--zy-font-adjust,0px)); font-weight: 400; }
+
+/* Profile labels read as ordinary text, with the same treatment in contact details. */
+html[data-zy-theme] .zy-profile-popover.zy-dialog .zy-npc-profile-card :is(.zy-friend-details h4,.zy-inline-name-label,.zy-friend-details dt,.zy-profile-moments-label,.zy-friend-source dt),
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-profile :is(.zy-contact-profile-section h2,.zy-inline-name-label,.zy-contact-profile-row > span,.zy-contact-profile-moments > span:first-child) { color:var(--zy-ink); font-weight:400; font-size: calc(14px + var(--zy-font-adjust,0px)); }
+html[data-zy-theme='dark'] .zy-profile-popover.zy-dialog .zy-npc-profile-card :is(.zy-friend-details h4,.zy-inline-name-label,.zy-friend-details dt,.zy-profile-moments-label,.zy-friend-source dt),
+html[data-zy-theme='dark'] .zy-app.zy-desktop .zy-contact-profile :is(.zy-contact-profile-section h2,.zy-inline-name-label,.zy-contact-profile-row > span,.zy-contact-profile-moments > span:first-child) { color:var(--zy-ink); font-size: calc(14px + var(--zy-font-adjust,0px)); font-weight: 400; }
+
+/* Both actions keep a 22px icon slot; the flatter video drawing is optically larger. */
+.zy-profile-popover.zy-dialog .zy-npc-profile-card .zy-npc-profile-actions button > svg { flex-shrink:0; width:22px; height:22px; box-sizing:content-box; padding:0; font-size: calc(12px + var(--zy-font-adjust,0px)); font-weight: 600; }
+.zy-profile-popover.zy-dialog .zy-npc-profile-card .zy-npc-profile-actions button > svg.lucide-message-circle { width:18px; height:18px; padding:2px; font-size: calc(12px + var(--zy-font-adjust,0px)); font-weight: 600; }
+.zy-profile-popover.zy-dialog .zy-npc-profile-card .zy-npc-profile-actions button > svg.lucide-video { width:21px; height:21px; padding:.5px; font-size: calc(12px + var(--zy-font-adjust,0px)); font-weight: 600; }
+html[data-zy-theme] .zy-profile-popover.zy-dialog .zy-npc-profile-card .zy-npc-profile-actions button,
+html[data-zy-theme] .zy-profile-popover.zy-dialog .zy-npc-profile-card .zy-npc-profile-actions button:is(:hover,:focus,:focus-visible,:active),
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-profile .zy-contact-profile-actions button,
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-profile .zy-contact-profile-actions button:is(:hover,:focus,:focus-visible,:active) { background:transparent; background-color:transparent; box-shadow:none; }
+html[data-zy-theme] .zy-profile-popover.zy-dialog .zy-npc-profile-card .zy-npc-profile-actions button:focus-visible,
+html[data-zy-theme] .zy-app.zy-desktop .zy-contact-profile .zy-contact-profile-actions button:focus-visible { outline:2px solid var(--zy-nav-active,#ed7b7b); outline-offset:2px; font-size: calc(12px + var(--zy-font-adjust,0px)); font-weight: 600; }
+/* Profile text roles live with the App profile implementation. */
+html[data-zy-theme] .zy-profile-popover.zy-dialog .zy-npc-profile-card :is(.zy-inline-name-label,.zy-inline-name-value,.zy-friend-details dt,.zy-friend-details dd,.zy-profile-moments-label,.zy-friend-source dt){font-size:calc(14px + var(--zy-font-adjust,0px));font-weight:400;color:var(--zy-ink)}
+html[data-zy-theme] .zy-profile-popover.zy-dialog .zy-npc-profile-card :is(.zy-friend-source dd,.zy-npc-identity p){font-size:calc(12px + var(--zy-font-adjust,0px));font-weight:400;color:var(--zy-glass-muted)}
+html[data-zy-theme] .zy-profile-popover.zy-dialog .zy-npc-profile-card .zy-npc-profile-actions button{font-size:calc(12px + var(--zy-font-adjust,0px));font-weight:600;color:var(--zy-nav-active)}
+html[data-zy-theme] .zy-profile-popover.zy-dialog .zy-npc-profile-card .zy-npc-identity h3 {font-size:calc(20px + var(--zy-font-adjust,0px));font-weight:600;color:var(--zy-ink)}

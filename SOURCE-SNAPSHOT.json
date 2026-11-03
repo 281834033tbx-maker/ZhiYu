@@ -1,11 +1,11 @@
 {
-  "date": "2026-11-02",
-  "description": "Current source after desktop call redesign and unified user-provided dialogue Skill; private runtime and rollback data excluded.",
+  "date": "2026-11-04",
+  "description": "Current source after frontend and character-experience redesign; original palette/geometry retained, private runtime and rollback data excluded.",
   "files": [
     {
       "path": ".env.example",
-      "bytes": 1702,
-      "sha256": "af01016d2118c8adf1a0a70a7bc78d129e6fc91f95c80fd7a58e487a4dd126dd"
+      "bytes": 1840,
+      "sha256": "3b87a46a0713a5501276777a1fc0249f149b47414afa7508d3dc4f70fe18ad4c"
     },
     {
       "path": ".gitattributes",
@@ -69,13 +69,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 5903,
-      "sha256": "178bb3f55a680caed2bec13afaa501b2844ee6f1b40cda612f9b1241b46636a9"
+      "bytes": 7302,
+      "sha256": "8df841bdd5a820d986abf4fc1e226d43bf1c6d7ef8a17cba88fc171f81f0ae2c"
     },
     {
       "path": "UI-LAYOUT.md",
-      "bytes": 3774,
-      "sha256": "8c39dbe99f2d1db7f21b99cd7711cf269f9eddccccdca6c1d83caf9b0726f0b5"
+      "bytes": 1099,
+      "sha256": "bc9346aa86c44bf0f764f657efd161489757a9764e487d01c45a336baef10387"
     },
     {
       "path": "VOICE-SETUP.md",
@@ -104,23 +104,23 @@
     },
     {
       "path": "app/character-window/character-window-client.tsx",
-      "bytes": 19620,
-      "sha256": "e69b0fe1b6c8f9929fd11c983c643da6333c67032900a99cd6224242f9e9a22c"
+      "bytes": 20483,
+      "sha256": "09e78487da8005927a08608d2a7af769d6f395e352bca6fcfbbbbcdae6e3ed15"
     },
     {
       "path": "app/character-window/character-window.css",
-      "bytes": 6931,
-      "sha256": "779086f7c77f9f62535d4676d46af601b726bf06a4b5246fb5ccac96deb0f243"
+      "bytes": 7225,
+      "sha256": "c629db1c2d9473be99eff590fbe600aeb971354c6f7a8a376096fdf84e0a7a1a"
     },
     {
       "path": "app/character-window/page.tsx",
-      "bytes": 150,
-      "sha256": "8ac7f9845fc4e862f178a265185a126e57aceee48c1380cf81a2881ac9fa2574"
+      "bytes": 251,
+      "sha256": "761fca62b6d298156bbf6b5ebb1bdc73a2ed8994a8c4a7de305bbfb66ff104e7"
     },
     {
       "path": "app/character-window/xiaoman-video-scene.tsx",
-      "bytes": 2924,
-      "sha256": "223cd1dcbc0dd1a2c3e5db38f9129c0773a9ed384346d49314b73c91b3d19804"
+      "bytes": 2903,
+      "sha256": "60fb81ecae53e14e59860827aa241e31a9a952ca7dd6936ec577f6db4d755975"
     },
     {
       "path": "app/companion/companion-client.tsx",
@@ -129,8 +129,8 @@
     },
     {
       "path": "app/companion/companion.css",
-      "bytes": 3216,
-      "sha256": "f35559ebf95c2454b1a79263eb57ae58bb4dacd249f1ddc22c8a24918c4349cc"
+      "bytes": 3173,
+      "sha256": "8f2afe45e96190c09992c6f07492f418b1604e64e87dad13d87ddb331d86371d"
     },
     {
       "path": "app/companion/page.tsx",
@@ -139,13 +139,23 @@
     },
     {
       "path": "app/desktop.tsx",
-      "bytes": 24239,
-      "sha256": "65cc9cecbd884272e95c354e0e5def92c5cd7cc1e3497606a73f82652d430564"
+      "bytes": 140,
+      "sha256": "8cc7a82c79e8d7e9ce3c6a88175c2b3e7b0a3220fa20d455b2684da313c4c9ca"
+    },
+    {
+      "path": "app/error.tsx",
+      "bytes": 347,
+      "sha256": "261b788ecfe5d560ee0fbbb4ee2cc309cbd4b67610e6b1abd5f55936c68c7ef1"
+    },
+    {
+      "path": "app/global-error.tsx",
+      "bytes": 389,
+      "sha256": "413b9223965577082c2d0eeb82884a09d58e843b1e479ceef87a91d8fe0683d9"
     },
     {
       "path": "app/globals.css",
-      "bytes": 24936,
-      "sha256": "410307512b25d3668d6e82bdbdcea89a5e1817c9c7daace7a3778d5ce52739dd"
+      "bytes": 28477,
+      "sha256": "e2315c39ed0af0564ff8a4080119d52d7991a173f292df04f09b367b0dcace53"
     },
     {
       "path": "app/image-viewer/image-viewer-client.tsx",
@@ -154,8 +164,8 @@
     },
     {
       "path": "app/image-viewer/image-viewer.css",
-      "bytes": 6456,
-      "sha256": "72d60972d87b64e708ddd5d70a4fc02abdd9b08cb4ce895bf7deee871f00b1a5"
+      "bytes": 6669,
+      "sha256": "bff3ece970e16e57567fd2154384f40b63954f3dc6eedea60f81a98d5063fc0c"
     },
     {
       "path": "app/image-viewer/page.tsx",
@@ -169,13 +179,13 @@
     },
     {
       "path": "app/mobile/page.tsx",
-      "bytes": 316,
-      "sha256": "78712ee4180e26df7eca47cf9814accb5236b5e0253deb92bfa3a6826798dfcc"
+      "bytes": 408,
+      "sha256": "7ed5f421ba1d63291177f25d57bfcdd06f8f45ccdabcc9d03c30e644bc8bfdf2"
     },
     {
       "path": "app/model.ts",
-      "bytes": 5502,
-      "sha256": "67dc940d9d793977eb63c69095fd32d06aa934003096fb1f18017bded9bb569e"
+      "bytes": 5572,
+      "sha256": "6aa66354ee86e732748f67eb93208216ddb7726f9d223fe8dfce54472f0f3b1c"
     },
     {
       "path": "app/npc/xia-xia/test/page.tsx",
@@ -184,8 +194,8 @@
     },
     {
       "path": "app/page.tsx",
-      "bytes": 128,
-      "sha256": "fb358a0c83eee5be777262c7cd8d051bdb9d0448d854c4dd75e802324af18dc6"
+      "bytes": 228,
+      "sha256": "ca09aa7441a6e376729d6f4db0006c69c767ec02d9b6d83ded9a9fe22327c088"
     },
     {
       "path": "app/speech-settings/page.tsx",
@@ -194,8 +204,8 @@
     },
     {
       "path": "app/studio/page.tsx",
-      "bytes": 21707,
-      "sha256": "9a85d959573efe460a60f0cb9ef45ac1a2abb2ec09ee5791f618e3b84c031535"
+      "bytes": 169,
+      "sha256": "5fac9171249a5bda5bec28a9bb84783f69511a43de5e68e6528fcc5bcc120e84"
     },
     {
       "path": "app/task-calendar/page.tsx",
@@ -204,8 +214,8 @@
     },
     {
       "path": "app/task-calendar/task-calendar-client.tsx",
-      "bytes": 6189,
-      "sha256": "31c5d1109a69d563f9cad44624518fb493b750a0316100d5cf19b58c3731b4d4"
+      "bytes": 6217,
+      "sha256": "956d761c40e33ffb2538fcf5f3329ed1cfa4d2938ebb45e321bc3ea34786c890"
     },
     {
       "path": "app/task-calendar/task-calendar-summary.ts",
@@ -219,8 +229,8 @@
     },
     {
       "path": "app/task-calendar/task-calendar.css",
-      "bytes": 15713,
-      "sha256": "8f226d262a0b8a0609ca231b2e96db5b983101a755e482bf1074dd80ce9fc561"
+      "bytes": 15572,
+      "sha256": "62793cfc40412ca1cd0fbe8094929a65be1eb63ff95de94825d5c15e842bc155"
     },
     {
       "path": "app/zhiyu/anchored-popup-motion.ts",
@@ -229,8 +239,8 @@
     },
     {
       "path": "app/zhiyu/app-settings.css",
-      "bytes": 5907,
-      "sha256": "f483d54142148919ee15af20381b14a67ffa22e2ec2920406d7f8dd6b0e7373a"
+      "bytes": 5942,
+      "sha256": "b25f547b3882981528c289785a1584e18d774c0176ffdaf4af4ee7ed0d0a4aeb"
     },
     {
       "path": "app/zhiyu/app-settings.tsx",
@@ -238,9 +248,14 @@
       "sha256": "748fdb4274261de8e11bc610dc224cd29129782e28857deb4c9171919ca435d6"
     },
     {
+      "path": "app/zhiyu/app.css",
+      "bytes": 83976,
+      "sha256": "0e02eed6b4477b9dc46ea0dfbcb56904aff9c16fff339c590a2c8301c49f106b"
+    },
+    {
       "path": "app/zhiyu/app.tsx",
-      "bytes": 125804,
-      "sha256": "f16e8e89063032d70975f00351c49497cf3fc78f24e16c9312f41765aadd14c1"
+      "bytes": 128446,
+      "sha256": "1f8f948c47d4e32c83c0518a33b4decc59b238287830047f6286bc4e83464aa4"
     },
     {
       "path": "app/zhiyu/application-shell.tsx",
@@ -259,13 +274,13 @@
     },
     {
       "path": "app/zhiyu/auth-gate.css",
-      "bytes": 5112,
-      "sha256": "b4b2bfa8218238f920deac46aabb7d116e221c458581d56860fa4d651d1817cf"
+      "bytes": 5506,
+      "sha256": "e8cb9224bcdfce69508d6e94e53756cccbff29edbe12e79b4df718938ad75f3d"
     },
     {
       "path": "app/zhiyu/auth-gate.tsx",
-      "bytes": 10372,
-      "sha256": "79b1d0de2217c781d30cecc2543700920da68d07487ab2ba3993c8867f508e18"
+      "bytes": 10646,
+      "sha256": "f10729be8d874ff528a1a122d9bafd69b6376c6479e9020ae48e2610e6e8f035"
     },
     {
       "path": "app/zhiyu/auth-validation.ts",
@@ -274,28 +289,28 @@
     },
     {
       "path": "app/zhiyu/brand-entrance.css",
-      "bytes": 759,
-      "sha256": "2cd66e9f897c1e4a3c17cca58506643bf095d1631b482f39a20057d5f625d527"
+      "bytes": 721,
+      "sha256": "4c2d6607bff42c2358107d0917294fffa82c2a9ff0039a4283b3b28c3819b096"
     },
     {
       "path": "app/zhiyu/brand-entrance.tsx",
-      "bytes": 5263,
-      "sha256": "8c2c1dee8dd12fb0a13db73d4c2a4a59535bb4d94a48c61b657a26699c92fd29"
+      "bytes": 5376,
+      "sha256": "256ca0922fc71b2775b5140384371622fea7cb5cbcc19f89161e266a11529002"
     },
     {
       "path": "app/zhiyu/character-dock.css",
-      "bytes": 7656,
-      "sha256": "5412bcdbb3984e4dae1ad20da39474830adb312a2467a22d5cb66fd8aa4d5908"
+      "bytes": 7887,
+      "sha256": "b9b2f56d4b4cc5cbbead1641ccd9ba6bd1047b3dc7af9f492f191220ba0e9132"
     },
     {
       "path": "app/zhiyu/character-dock.tsx",
-      "bytes": 9926,
-      "sha256": "fba0daa9fffd72bb885c87f73a83bafd6cf348394a89bb3efb42ab70553edd6b"
+      "bytes": 10823,
+      "sha256": "b9bccdb04d9cb98f80cfca6cf9d7365c09f7c17599e018b035bb20d762c469d1"
     },
     {
       "path": "app/zhiyu/chat-add-menu.css",
-      "bytes": 1266,
-      "sha256": "a167c952c0d891a536cd1a4ee11f909365701a1e067ffb106b4a704b6b5b8802"
+      "bytes": 1324,
+      "sha256": "fb2c5b2971747f854e66ec6246c94e154ad56d31e1d81d0cf151e486f4fb7ac4"
     },
     {
       "path": "app/zhiyu/chat-add-menu.tsx",
@@ -304,18 +319,18 @@
     },
     {
       "path": "app/zhiyu/chat-composer.css",
-      "bytes": 7965,
-      "sha256": "f84f33672a2b14bbfec4b4b3a1da4bd8529ef126bc3e8976a8b91b4c0c0389b7"
+      "bytes": 8229,
+      "sha256": "5a48efd86c48b9ff6912dbf6752b38107da0d816b9f82697a2e3c9672814d1e6"
     },
     {
       "path": "app/zhiyu/chat-composer.tsx",
-      "bytes": 17213,
-      "sha256": "69dba202159ec2fa3917705145852130c023650fd5e8cf7d62ed60390b07de6f"
+      "bytes": 17262,
+      "sha256": "49db2aec77c1ee7207686161482bdf0f64f5b1a6d455c1e7e73a093076fd719c"
     },
     {
       "path": "app/zhiyu/chat-header.tsx",
-      "bytes": 6661,
-      "sha256": "0e106fc4aef73d2ffbebcfc4035301dd407b2d6e2157d7f468ae7beb93e80ecd"
+      "bytes": 6622,
+      "sha256": "fb5c93d811ca6a8b01d2c5ae72c5550c2a5b3413741c41dd14714d5c2ffcd4af"
     },
     {
       "path": "app/zhiyu/chat-icon-controls.css",
@@ -334,13 +349,13 @@
     },
     {
       "path": "app/zhiyu/chat-image.css",
-      "bytes": 289,
-      "sha256": "f6ba0884e2bc7b53884b149c395cf4b1cc731db1b373f0ada4dabdad7a9f8456"
+      "bytes": 323,
+      "sha256": "2c04caf24156b98ac159d3dd4aaea9596ee20a85cee19ef3b9ae8f6dbce257c3"
     },
     {
       "path": "app/zhiyu/chat-image.tsx",
-      "bytes": 1743,
-      "sha256": "e8f08c7fcd31a9b816b2ac578d43bb301bc9353520b980d65c38c19562e9c099"
+      "bytes": 1799,
+      "sha256": "926ec78727f347a324aa44f40d729a314dab26fb77d9b4ae07a2533bb64f53a4"
     },
     {
       "path": "app/zhiyu/chat-mute.css",
@@ -351,6 +366,11 @@
       "path": "app/zhiyu/chat-mute.ts",
       "bytes": 2265,
       "sha256": "b490c4dac717818a88ea0de17af8765053057168a48d42eddac19742cea598b7"
+    },
+    {
+      "path": "app/zhiyu/chat-send-failures.ts",
+      "bytes": 1112,
+      "sha256": "1b6ff5bde6030d4d67fe09439c40499709d3a707a0ca78b57da42dd32e23acf8"
     },
     {
       "path": "app/zhiyu/chat-view-store.ts",
@@ -365,7 +385,7 @@
     {
       "path": "app/zhiyu/choice-chat.css",
       "bytes": 2015,
-      "sha256": "a038b3cf7455e435fccdcff7e7b4b23bf319220f77c67d8538eda5b45366b3df"
+      "sha256": "ceaf4a8abd580be31fed8fe1d42a64472412a19e87452d17814652ca67a13382"
     },
     {
       "path": "app/zhiyu/choice-chat.tsx",
@@ -374,8 +394,8 @@
     },
     {
       "path": "app/zhiyu/data.ts",
-      "bytes": 8652,
-      "sha256": "d0813a5e620fc7174865ee3272fd2a17f2d6fc8ed9b8d81cedd71f7e6801e619"
+      "bytes": 8759,
+      "sha256": "3ca7ac943594981668e2ae79d32678a9920144b51e90e50293af15b52ead38fd"
     },
     {
       "path": "app/zhiyu/desktop-bridge.ts",
@@ -388,19 +408,14 @@
       "sha256": "469e60b38307a5ef8cedd24570aa443c5fef83bb6ed2dc330b30b19313350d51"
     },
     {
-      "path": "app/zhiyu/dual-preview.css",
-      "bytes": 1208,
-      "sha256": "8d4437aa3ac494390456e345c9f2484beca0e988ae9cabacaa2902dbc9770135"
-    },
-    {
       "path": "app/zhiyu/dungeons.css",
-      "bytes": 4492,
-      "sha256": "44212cc4506776369e94bdb370366707d032a4c3a14e5c9ea14ff872ec840490"
+      "bytes": 4663,
+      "sha256": "8b13600bf0978579ee6fbfb00eacf971dfe80ea6bd25a7045e8f2be44fc19af7"
     },
     {
       "path": "app/zhiyu/dungeons.tsx",
-      "bytes": 4156,
-      "sha256": "e7a8f4a475f6415810bca68aacc07de34872e9665fa387487d57258553cde8e3"
+      "bytes": 4543,
+      "sha256": "0aa40abdcbc60757c053daca3f86d4bbe2a4d370c92912852f799f6c9f42a781"
     },
     {
       "path": "app/zhiyu/emoji-data/LICENSE.txt",
@@ -419,13 +434,18 @@
     },
     {
       "path": "app/zhiyu/emoji-picker.tsx",
-      "bytes": 3095,
-      "sha256": "7c53b9dd3d2b92f3d1d1f5483557e08e7ee29a46882d65c16a27d5ca9004a0be"
+      "bytes": 3236,
+      "sha256": "79d6ec484c9cf90678e945525f94a5dae85e046c081e8a32759e1e66c2fc872a"
+    },
+    {
+      "path": "app/zhiyu/features.ts",
+      "bytes": 123,
+      "sha256": "1c80d98fd681f205fe81e1018749dc06a87bb3406edb944e665d0e8f957af277"
     },
     {
       "path": "app/zhiyu/fitness-demonstration.css",
-      "bytes": 5930,
-      "sha256": "3a575ef76f94c6a48a4c1654528a7e1f1dc0173c046f3da5fc81aa8307f08f6a"
+      "bytes": 5957,
+      "sha256": "1dccf6eca08665ff2cf6ec9587d9927d552597ae9a841a4e8ca7645fbf50cb85"
     },
     {
       "path": "app/zhiyu/fitness-demonstration.tsx",
@@ -439,8 +459,8 @@
     },
     {
       "path": "app/zhiyu/font-size.css",
-      "bytes": 3550,
-      "sha256": "2708d5c6281fbf3954a1081549ad1288cc9d35abf7d5eb937cc1e5a9d9cb4da1"
+      "bytes": 363,
+      "sha256": "2e85802a1320d426a4c55e9788cd6df416e327b54b20bacc37cf94c49431a044"
     },
     {
       "path": "app/zhiyu/font-size.ts",
@@ -454,23 +474,23 @@
     },
     {
       "path": "app/zhiyu/group-chat.css",
-      "bytes": 30705,
-      "sha256": "f8a994ad4fdda5d847169754c81daeb16d31de62a1fd82a05a02147ef97048c8"
+      "bytes": 33813,
+      "sha256": "e1b8820af81bfab881fe145c2b75f74530be0fe906c1f812552c1c048ee53232"
     },
     {
       "path": "app/zhiyu/group-chat.tsx",
-      "bytes": 48407,
-      "sha256": "f365bf6fa9335aeace8bc7b33d9636191970a62c6d5ae6a09b2931975c5cd3cc"
+      "bytes": 51794,
+      "sha256": "e6c95abb2a0631731ecc9a697a8ee4968db1a1657038b8a1754e9714957362e6"
     },
     {
       "path": "app/zhiyu/group-create-dialog.css",
-      "bytes": 8102,
-      "sha256": "1e69804c2fc8d78d22024b75e3973dcf570c0a34b863dc3702b761020eb95bf9"
+      "bytes": 9153,
+      "sha256": "537ce7d7d0ddc14d376523dba58accf4fe3f5fe0eb51705335f190b914904aa9"
     },
     {
       "path": "app/zhiyu/group-create-dialog.tsx",
-      "bytes": 7047,
-      "sha256": "0cdf406a0fe7fe8ef7833a152608fccb9fc675c8dd42e28d2f02c96a25378d9b"
+      "bytes": 7077,
+      "sha256": "c5e71fc8556d08d63426173dd8d7b718b502d97a188eaa654750d9553a502c0d"
     },
     {
       "path": "app/zhiyu/group-intent.ts",
@@ -479,8 +499,8 @@
     },
     {
       "path": "app/zhiyu/group-member-stack.css",
-      "bytes": 2369,
-      "sha256": "081e159d613fb51ff93fde64ab69951ffd43cbdb1cf5e3e5e81e6930b3509000"
+      "bytes": 2438,
+      "sha256": "cd928d06f505729ebe9479835a2a0b3c1f3aeb22a3fa7726ad97f5380fbc2dd3"
     },
     {
       "path": "app/zhiyu/group-member-stack.tsx",
@@ -494,8 +514,8 @@
     },
     {
       "path": "app/zhiyu/group-message-actions.css",
-      "bytes": 978,
-      "sha256": "2880a39aa4f51e362895cd1c7dabd18478d6c6651c8e629da14b7c68124181c4"
+      "bytes": 1012,
+      "sha256": "dbc94bd8c6bd0ab5f73f23ad234a827a95db46ee8873f89694aa040b5981356b"
     },
     {
       "path": "app/zhiyu/group-self.ts",
@@ -514,18 +534,18 @@
     },
     {
       "path": "app/zhiyu/inline-name-edit.css",
-      "bytes": 2876,
-      "sha256": "afa9d670e406d180653abe0fa38ed04552a5794fee1670e22a6a9e6ed637549f"
+      "bytes": 2953,
+      "sha256": "7a039e27e6294de1108a8f0aef190b45f0202f34e616110525d6cab5ee33f657"
     },
     {
       "path": "app/zhiyu/inline-name-edit.tsx",
-      "bytes": 4423,
-      "sha256": "809c39b2a43be2a120d6c1389ce28bd1d4351417946f885db90d50f113ec4a30"
+      "bytes": 4449,
+      "sha256": "2bc66c114a63a48974321faae2bea518eb340aad9bcde72717801664078a3bc4"
     },
     {
       "path": "app/zhiyu/liquid-base-plate.css",
-      "bytes": 2367,
-      "sha256": "adf896e894fb70d2d5f6e34b70c032151c8a812fb68b8f3d3e1dd6abf690b189"
+      "bytes": 2255,
+      "sha256": "feefa072525fcd1fe7510517c042f896a854062be760f7e0df695a9f09453dc8"
     },
     {
       "path": "app/zhiyu/liquid-base-plate.tsx",
@@ -548,14 +568,19 @@
       "sha256": "924a241759df8dc4a1d2756ce8d0a2d4a1a91dedd43ce78945910e02fbac3fa8"
     },
     {
+      "path": "app/zhiyu/me-page.css",
+      "bytes": 994,
+      "sha256": "30ea29da37c7ee93f25ab06136707af97fd17afa81781e2ef2424c451ef51e7e"
+    },
+    {
       "path": "app/zhiyu/message-actions.css",
-      "bytes": 2798,
-      "sha256": "05f6652ae0dcaa5c9616d8ae949a52d1d848ab264c3041f3e771bc1c69292217"
+      "bytes": 3060,
+      "sha256": "a8d016d9228359d4cd54db3a24a67aa99c254daf5344de6a7f9372156e4e61f5"
     },
     {
       "path": "app/zhiyu/message-actions.tsx",
-      "bytes": 9388,
-      "sha256": "93486b0fd30841d48addd22073ff3b70922bcf4606adf341d759e8587f267a40"
+      "bytes": 9450,
+      "sha256": "ed8ad4c23df70bb412fdbac8339bb6fdd9aec8165485f79cd56256df36be2b0e"
     },
     {
       "path": "app/zhiyu/message-bubbles.ts",
@@ -564,13 +589,13 @@
     },
     {
       "path": "app/zhiyu/message-forward-dialog.css",
-      "bytes": 957,
-      "sha256": "7806c077f128d0c86e9d1b6f9268ab7e87da34831e3205f7ff8f8261db67c766"
+      "bytes": 1060,
+      "sha256": "a77bf254b1c805b2dbb578d3af3a45833c5be35bfddfb0fbd76a56707422e433"
     },
     {
       "path": "app/zhiyu/message-forward-dialog.tsx",
-      "bytes": 4926,
-      "sha256": "e78dbae2ba94f1de75476c80ef9d88ff157bee52b3cd574d3ced8faa1969ee1d"
+      "bytes": 4972,
+      "sha256": "ac52131a8da3816e9c80870de6138521fac9c218b057127174ce5e54a0590e76"
     },
     {
       "path": "app/zhiyu/message-visibility.ts",
@@ -579,23 +604,23 @@
     },
     {
       "path": "app/zhiyu/mobile.css",
-      "bytes": 21165,
-      "sha256": "e44865f506146399d534d1298e63d35cc2f901941f7229f9c2b6a4c6ee193755"
+      "bytes": 21317,
+      "sha256": "7a2b39fb426bf97c943b01790959ae37844f100e4e85630149b85aaecfea0c16"
     },
     {
       "path": "app/zhiyu/morning-reminder-settings.css",
-      "bytes": 2574,
-      "sha256": "b3b346c9fd283bcb93b07396ee4db383ec4a045d90faf219bf361356e4141f0a"
+      "bytes": 3146,
+      "sha256": "2f0c9ccb9a82ba44537197e3263521d40cfdac941317cfae2aac6d844a366353"
     },
     {
       "path": "app/zhiyu/morning-reminder-settings.tsx",
-      "bytes": 4960,
-      "sha256": "4c51c43c5d6e6f78e8185884258733bd1486bdfad3a222f4a5f53b9db88c01c3"
+      "bytes": 5509,
+      "sha256": "83c9123ec9d0d9a30a0bee915e59e5c484c7e5da84795e6fce7f8a3bbfdb0768"
     },
     {
       "path": "app/zhiyu/npc-contact-card.css",
-      "bytes": 1476,
-      "sha256": "b99e3b4cabfcb1e2bfb8622372de24f3b96f87daef5373465d301c5f8254f5b7"
+      "bytes": 1473,
+      "sha256": "a49acdeab54c2e8d77567accbeb90937c7c87959fc27cc532f34280ede00a398"
     },
     {
       "path": "app/zhiyu/npc-contact-card.tsx",
@@ -609,13 +634,18 @@
     },
     {
       "path": "app/zhiyu/npc-type-badge.css",
-      "bytes": 1433,
-      "sha256": "b57ff3519f31d10e80433c86c4561a8908a42cb1356546aec693def9a981467b"
+      "bytes": 1467,
+      "sha256": "dd2d3a61d907063eaca38fb5ff0b79369b794f79dc1ec6ac6f2d112f1b428e26"
     },
     {
       "path": "app/zhiyu/npc-type-badge.tsx",
-      "bytes": 789,
-      "sha256": "0c0a2eabe63cc32aa92f2c49df4f5c04e1e1d5e7164acb8eaf04c2d4b18d0627"
+      "bytes": 675,
+      "sha256": "9345d790bcdc690ddf8c47efdbbb2ed2dbc8acb78d78d978259959bdfc4baf0d"
+    },
+    {
+      "path": "app/zhiyu/page-error-boundary.tsx",
+      "bytes": 1129,
+      "sha256": "0ba544d251468eca609bf181eae7ddd91e51137c8a52b725305bea88cd9b774d"
     },
     {
       "path": "app/zhiyu/pet-display-frames.ts",
@@ -634,13 +664,13 @@
     },
     {
       "path": "app/zhiyu/pets.css",
-      "bytes": 14274,
-      "sha256": "e2a59c462c35746a3361d09010d1ae50a7099386d130c77a055602c5b4cf220e"
+      "bytes": 15232,
+      "sha256": "45bae69715c1bfa34f93cdac6d3ac7513b9624d1ed4fba052abfee67135aba62"
     },
     {
       "path": "app/zhiyu/pets.tsx",
-      "bytes": 15741,
-      "sha256": "f8728a53b6ead28ef660286d8a86b9a573aa2fc2f2b4c1aa05ba108e90e0fe10"
+      "bytes": 17645,
+      "sha256": "7409a29d56371ac8ebc5f8b23af5b6f78e730e271531d9d3fd7b3786fcf5525f"
     },
     {
       "path": "app/zhiyu/pressable-icon-button.css",
@@ -654,13 +684,13 @@
     },
     {
       "path": "app/zhiyu/private-chat-settings.css",
-      "bytes": 5875,
-      "sha256": "2ddcce86150e202352ec979952a027308c9932771916cdd22277f48065b5558a"
+      "bytes": 6698,
+      "sha256": "2e91468bd9ab59298962b86852833df93bf07fdd7a3ad6a2e4f69b9ffe9b7635"
     },
     {
       "path": "app/zhiyu/professional-profile.css",
-      "bytes": 1899,
-      "sha256": "d6cb8fb1b59a0169057ea9b37afbaeb22fe502b77b2d36b9903ecb7009bf9ff9"
+      "bytes": 2103,
+      "sha256": "0abdd1e91983cb2acb0f77576edac5af4a4daa7e229845a96d34313072cf6067"
     },
     {
       "path": "app/zhiyu/professional-profile.tsx",
@@ -679,13 +709,13 @@
     },
     {
       "path": "app/zhiyu/professional-task.css",
-      "bytes": 22281,
-      "sha256": "0a6605bfb04350c35627987258c37c3362da7b002482a095cb64bc612a55c09f"
+      "bytes": 22795,
+      "sha256": "cb6dec5bc6e01d28a2f0585e2bbc4bcd0526716f73966e7cfbc4f209addce75c"
     },
     {
       "path": "app/zhiyu/professional-task.tsx",
-      "bytes": 29529,
-      "sha256": "013f6a5f1b1da9f72945d8572920ef46ac115e28b375892bae4f0c047603d591"
+      "bytes": 29601,
+      "sha256": "a34e5e8bb19cf793068bfd0919abf752754e9a783c4d1f5a113feb7c03afd601"
     },
     {
       "path": "app/zhiyu/profile-popover.css",
@@ -698,14 +728,9 @@
       "sha256": "e4b74bc9423da6a64bcf7e5e12af2eeb1dc87ef8e17d359ba496ddc0bda98d28"
     },
     {
-      "path": "app/zhiyu/profile-redesign.css",
-      "bytes": 18853,
-      "sha256": "b47c8bcffd5c1da27d0cc0f212b892d1f4c1ff768b3dc256c755580eaf17a776"
-    },
-    {
       "path": "app/zhiyu/rail-navigation.css",
-      "bytes": 2244,
-      "sha256": "e305ae3fdbca5e6b82e4683e004ce71ea3d9e66374dcaa7a78e28b9b54b12535"
+      "bytes": 2349,
+      "sha256": "afd7fc94fb3bd0adefddb111fb0e811797b6207d0c13efa1843c96a7505f38de"
     },
     {
       "path": "app/zhiyu/rail-navigation.tsx",
@@ -719,13 +744,13 @@
     },
     {
       "path": "app/zhiyu/realtime-speech-settings.css",
-      "bytes": 4963,
-      "sha256": "fefea4cf4e5a5db8687f93078f0270620ab5cc937d6139a0f054832b1e9e1333"
+      "bytes": 5723,
+      "sha256": "73d1c06a4720f4318bb156eba878962cad201da41814af58fcd7709c53e6b10c"
     },
     {
       "path": "app/zhiyu/realtime-speech-settings.tsx",
-      "bytes": 6818,
-      "sha256": "16ae8aebb325536bf7ac33e32f597be9e414d9d7ed628de3e29869d5421fb91d"
+      "bytes": 6859,
+      "sha256": "8e73c5225392814f74e42f672c5f993acb1302e8301b7cf49514b6f6ed135907"
     },
     {
       "path": "app/zhiyu/realtime-voice-audio.ts",
@@ -734,13 +759,13 @@
     },
     {
       "path": "app/zhiyu/realtime-voice-call.css",
-      "bytes": 9114,
-      "sha256": "e82e0ce832c4d19bf3d4b538b39061026e53c174506c64ee3e403004d61c2646"
+      "bytes": 9239,
+      "sha256": "c7152d0438038dc1509eabae676ed32b47de5e5ddf8545faded053c5c44fce17"
     },
     {
       "path": "app/zhiyu/realtime-voice-call.tsx",
-      "bytes": 22862,
-      "sha256": "833ea5b5b366960adc844075a7776ea908dbbd6e908fd914946c10eaf8f1f01f"
+      "bytes": 23278,
+      "sha256": "22e8978c924d5a7fa37e54fb34f28b3423dbed62535cc2a09e0a9f62f6dfe867"
     },
     {
       "path": "app/zhiyu/realtime-voice-controls.tsx",
@@ -748,34 +773,44 @@
       "sha256": "6160877722c2cbc6b66d3406427d16af82f332b576e3f37e72e821476f090452"
     },
     {
-      "path": "app/zhiyu/refinements.css",
-      "bytes": 21697,
-      "sha256": "06aa910231f9c5a038dd93eee49467d2627f90ab0a9c0e2ea583ebdd27509db0"
-    },
-    {
       "path": "app/zhiyu/relationship-dashboard.css",
-      "bytes": 3031,
-      "sha256": "093775c933934c91cb912d4ac1929a7f65350b283840a242fd6faec240e809a3"
+      "bytes": 3510,
+      "sha256": "f756b40b8a4a9b9d6b7e7a8544aa0f0f8ab4f49e7228dfa7766d1c1ccf581cc9"
     },
     {
       "path": "app/zhiyu/relationship-dashboard.tsx",
-      "bytes": 4300,
-      "sha256": "b8df862526393a61125acd398d34a638869be92d4b378bd284678af5fadcbb35"
+      "bytes": 4296,
+      "sha256": "a0c1edbe888bd890255b9150ff598182e29c26d510690c6d77d66e60f7ca4959"
+    },
+    {
+      "path": "app/zhiyu/reply-retry.ts",
+      "bytes": 573,
+      "sha256": "b4fe5aaf43c67f7b16dbe34309d73cedc0aaed5d275fbcc81270ea2616451931"
     },
     {
       "path": "app/zhiyu/saved-stickers.ts",
-      "bytes": 2043,
-      "sha256": "905d2cf822c740258db5cd17b8444116b00b10e4e8c7024bbe34207b9d5fef7e"
+      "bytes": 2113,
+      "sha256": "f2de649fc82ea71cd5b558adcdd2e1f33495907ae277a4de6f245c3320daec55"
+    },
+    {
+      "path": "app/zhiyu/secretary-report.css",
+      "bytes": 5507,
+      "sha256": "b24eb2017d7a867cf113d812e9ce1a53521a304542658e3014bee473f3e95980"
+    },
+    {
+      "path": "app/zhiyu/secretary-report.tsx",
+      "bytes": 12374,
+      "sha256": "e671d78bd4cc15ab36779d1954c13007e9c917185a915d100abc13bdd50d1f39"
     },
     {
       "path": "app/zhiyu/self-profile-card.css",
-      "bytes": 8429,
-      "sha256": "d1fbd561b5f5c18774541bb9c621ee10482f583598d457eac1b58cc451763567"
+      "bytes": 8397,
+      "sha256": "5e02d02b89b0863684fbd27acb5ea69caf64579fe4dc22b225f1497743a38934"
     },
     {
       "path": "app/zhiyu/self-profile-card.tsx",
-      "bytes": 12234,
-      "sha256": "0c5b63927a626419655f1f3b335ed472abaf07d6eca7c8026159a463f6644d72"
+      "bytes": 12260,
+      "sha256": "da15eeca0016e41e199841acdccea169a543f18de7fda38f537e30e4cc42004b"
     },
     {
       "path": "app/zhiyu/task-board/config.ts",
@@ -789,8 +824,8 @@
     },
     {
       "path": "app/zhiyu/task-board/history-view.css",
-      "bytes": 5508,
-      "sha256": "da4ae6da68ebd37d823c2b609bfcd49c566406323d4ecad689a53eb7380fa04b"
+      "bytes": 5592,
+      "sha256": "8a28c6b213ead8f814fb5ff0c773679ff9625b1f4aa5cbd9e2f243497b75cc8d"
     },
     {
       "path": "app/zhiyu/task-board/history-view.tsx",
@@ -814,18 +849,18 @@
     },
     {
       "path": "app/zhiyu/task-board/task-board.css",
-      "bytes": 9565,
-      "sha256": "b39de5a312fd5855478374a7fa8b6e799fa8e8ae134bf7d166be30a4046ec634"
+      "bytes": 10431,
+      "sha256": "d59581df2eeacc3bb37f805530374b23748c98564250d46bc8ec9b1fe35fc467"
     },
     {
       "path": "app/zhiyu/task-board/task-board.tsx",
-      "bytes": 12745,
-      "sha256": "775508cf41806f8b6e4c08a16a0dc7cb2c68f43d12fc1bb4b8791a7d18853469"
+      "bytes": 12928,
+      "sha256": "03aca4f6a155de164920897f7fe1e30ca076982bc5760308a91cfc3f902314a0"
     },
     {
       "path": "app/zhiyu/task-board/task-components.css",
-      "bytes": 19948,
-      "sha256": "917fccf8591d3606eab4767a4e423315dd2e8d56a98ca828079a0ddf9e3b6ba6"
+      "bytes": 20609,
+      "sha256": "36bf7f1c9c9a1e2ed18863736c0ca6169db384dcd3d9b41deb273bd5c304e36a"
     },
     {
       "path": "app/zhiyu/task-board/task-components.tsx",
@@ -889,23 +924,23 @@
     },
     {
       "path": "app/zhiyu/theme-glass.css",
-      "bytes": 13878,
-      "sha256": "e125feac2bf0ea814ec0f04e71473ed438364f3443a8418de226815fbfad249e"
+      "bytes": 18413,
+      "sha256": "888e465aeb8e5cae72f983e72471bfc53af8e48a6d60941337cee2c22837121e"
     },
     {
       "path": "app/zhiyu/theme-motion.css",
-      "bytes": 1210,
-      "sha256": "8616ef1f5d1585254fe9e64067c6636db43e312422096c91634e5926011697af"
+      "bytes": 1199,
+      "sha256": "c077e14d0ad7f45753187b902b0d4f08d4fba029508cc369dd9fe669806fc7fe"
     },
     {
       "path": "app/zhiyu/theme-surfaces.css",
-      "bytes": 9428,
-      "sha256": "279ce6c749d7055bdfbb1a9eb247d11a4cf88880e052b38e9b83c138bab93590"
+      "bytes": 9299,
+      "sha256": "0acb50ba003249cb0895a898dfb3a737ca6c306c0df12ef755e853912aef2de2"
     },
     {
       "path": "app/zhiyu/theme.css",
-      "bytes": 19618,
-      "sha256": "1bf10f4af1dae742ffdbd1daca6b7fddb4658c67c641f0de562f2f5a8e14e7ff"
+      "bytes": 20094,
+      "sha256": "595d530d315570029fb810e4635a46febfec5d70666384b765213c2e658aff21"
     },
     {
       "path": "app/zhiyu/theme.tsx",
@@ -914,13 +949,18 @@
     },
     {
       "path": "app/zhiyu/today-tasks.css",
-      "bytes": 15373,
-      "sha256": "d95c5e92b30c28be8e473edd65835a66037253e53084de0ab449c4c9dc5d5ecf"
+      "bytes": 15810,
+      "sha256": "2fd2ed60d8e9f84213b9e996440dd40ecb27c26485256f6c3ef56f8a5ff54ead"
     },
     {
       "path": "app/zhiyu/today-tasks.tsx",
-      "bytes": 17619,
-      "sha256": "5265a81b4351373f644e1eeddf9d0538f10c3e040ff125320737736d7fc5662d"
+      "bytes": 17603,
+      "sha256": "c34245c7de63f59cf0f153fc6a851b37d2bb58b7d3caf2c1c8be05080aaf4a0c"
+    },
+    {
+      "path": "app/zhiyu/use-continuous-use.ts",
+      "bytes": 1596,
+      "sha256": "8c759e794e1d98b00b04cd62cb313933ab7bd0f23b2ad16692cc293690000033"
     },
     {
       "path": "app/zhiyu/use-group-chats.ts",
@@ -933,14 +973,24 @@
       "sha256": "c7f576543f2fe9821fd5f6c0c04c70c95efdcef77ecc4c4b4dd0063f824cf9b2"
     },
     {
+      "path": "app/zhiyu/user-facing-ui.css",
+      "bytes": 2657,
+      "sha256": "a387b862d06f73f3d408731c39952b536bb717650f0f133b643ad96a4364a48e"
+    },
+    {
+      "path": "app/zhiyu/user-facing-ui.tsx",
+      "bytes": 1272,
+      "sha256": "3e877d39697087606b6c0c8671220dee00c7e67caacfb67595e401a35be11c3f"
+    },
+    {
       "path": "app/zhiyu/voice-bubble.css",
-      "bytes": 1245,
-      "sha256": "7ce77bfeb696f84b689585f34c9097bc309c66f4933a831efff4b239dd2da1ea"
+      "bytes": 1279,
+      "sha256": "f671e3a65d4ce64b9cbdb712bd4a39f8652bbe166f7f732eaa71dd39b28e9ee5"
     },
     {
       "path": "app/zhiyu/voice-bubble.tsx",
-      "bytes": 4564,
-      "sha256": "afa6fdb34f5a3fea792346a23644014fc9e1deba046900913d003907fe678efc"
+      "bytes": 4962,
+      "sha256": "3dec81ba35f3cd8e177dc8f50379fe14c9efd40bf0e868630c3080247e9737fa"
     },
     {
       "path": "app/zhiyu/window-resize.tsx",
@@ -949,18 +999,13 @@
     },
     {
       "path": "app/zhiyu/xia-xia.css",
-      "bytes": 12516,
-      "sha256": "235efe86dd432e3c392ebedd32d7f7f7ef6012da0ec1f77e2be3972773b7410a"
+      "bytes": 13560,
+      "sha256": "2a29586d2d7fe350ecac860ec285b6eb60a39eaff6ef6055fb812076ff23ae19"
     },
     {
       "path": "app/zhiyu/xia-xia.tsx",
-      "bytes": 35573,
-      "sha256": "9be1cdb52bdebedc779fb657e08592d387138242b6b69273e2eb9991740dff23"
-    },
-    {
-      "path": "app/zhiyu/zhiyu.css",
-      "bytes": 35923,
-      "sha256": "e01e8717d636108b2217ad98f5007e798ba1e345528521658e82182e7c943ee5"
+      "bytes": 39168,
+      "sha256": "28a891c1a91ff8196c7e2f10ef1804747341efa8ea940ee81d34661e1b3fd3ae"
     },
     {
       "path": "components.json",
@@ -1004,8 +1049,8 @@
     },
     {
       "path": "components/ui/breadcrumb.tsx",
-      "bytes": 2602,
-      "sha256": "b28b76d6f8d0feafbbeff2220cf83f9a6b03d8c81f0145b3af4c7d19933ab2c0"
+      "bytes": 2584,
+      "sha256": "4916ea1d6665750dabc5fc225045abb914dfe896a1fe4cd5e273650dcf58bb0f"
     },
     {
       "path": "components/ui/bubble.tsx",
@@ -1014,8 +1059,8 @@
     },
     {
       "path": "components/ui/button-group.tsx",
-      "bytes": 2494,
-      "sha256": "79ad8fb6644a775cc49131c1aa737ca26cae6a563beec0fa52ef6e8d85202fab"
+      "bytes": 2512,
+      "sha256": "6fa405cb3efed3cd389dd12f17792000adeedd4454bc9824ef153bda6f023b36"
     },
     {
       "path": "components/ui/button.tsx",
@@ -1034,13 +1079,13 @@
     },
     {
       "path": "components/ui/carousel.tsx",
-      "bytes": 5727,
-      "sha256": "7444126492d4e0b85b1270f0d83a0955350fa95b3d3fb7b88edc2a5c2b4e5d14"
+      "bytes": 5654,
+      "sha256": "27cb8e1a7978cec09c1ff8c91c630cfcc107180f47bbc36a8e3bec004da31284"
     },
     {
       "path": "components/ui/chart.tsx",
-      "bytes": 10581,
-      "sha256": "56ab0e0b41f0cc7902414e046ea4f710bdbf0b756028672ea8c7e5137a278f2b"
+      "bytes": 10590,
+      "sha256": "27d829542fd3605a0f7b50fb00797fbc8e1d7cf5aec23c02bff8aa56246694e4"
     },
     {
       "path": "components/ui/checkbox.tsx",
@@ -1094,8 +1139,8 @@
     },
     {
       "path": "components/ui/field.tsx",
-      "bytes": 6303,
-      "sha256": "79023ca89aae39f9cffa83a9483c9c672099b4547cc821486283db61c6ae9327"
+      "bytes": 6434,
+      "sha256": "52b3302d10810369c6e111d95c86c55b8ad4fdcfed85b2071a8d3eb9047d5722"
     },
     {
       "path": "components/ui/hover-card.tsx",
@@ -1104,13 +1149,13 @@
     },
     {
       "path": "components/ui/input-group.tsx",
-      "bytes": 5289,
-      "sha256": "2e65ddecb4401220be374cc6cfc42344538266cafeb2e590b3c760c7ed6b490a"
+      "bytes": 5532,
+      "sha256": "85f2303520596a2c4664090886d1c2ec2f7e74affbeb099a9b7855c0d14991b3"
     },
     {
       "path": "components/ui/input-otp.tsx",
-      "bytes": 2558,
-      "sha256": "867f568259caac95f682d128d72e681b3fe7c31701a396eacc9284401d917a6a"
+      "bytes": 2560,
+      "sha256": "5a6339a2fd925546941dd21493f84fe8231c5680d82be6119245a6e7ca07f761"
     },
     {
       "path": "components/ui/input.tsx",
@@ -1119,8 +1164,8 @@
     },
     {
       "path": "components/ui/item.tsx",
-      "bytes": 4888,
-      "sha256": "9c5e45e6c4aae5b9c4c1304e1f1208d32681ab616a6e0de9de6e0d6b22690592"
+      "bytes": 4870,
+      "sha256": "7ca2e40aa77f7a97430661fa46b11c3dec730f8be850b8be6a075d4db20cd0ba"
     },
     {
       "path": "components/ui/kbd.tsx",
@@ -1129,8 +1174,8 @@
     },
     {
       "path": "components/ui/label.tsx",
-      "bytes": 524,
-      "sha256": "e4a6fb662c44a44c468d16d79d02b3a3e5bf7b77bd50aef1e586c4d9613df0f6"
+      "bytes": 551,
+      "sha256": "e8ee4f75305646103fea93ebfb0000ed190a4843b319c4a47bb6f8ae34e223c6"
     },
     {
       "path": "components/ui/marker.tsx",
@@ -1164,8 +1209,8 @@
     },
     {
       "path": "components/ui/pagination.tsx",
-      "bytes": 2928,
-      "sha256": "1f3c1713e8824cca7c3c0edacf9da7b0114bfda58640771b8fe0bc6179b370ce"
+      "bytes": 2953,
+      "sha256": "276cdf9fe3a9801fc2b5be3b2d3425fcfd6b25a75211e947fe52fd4fd06d2f39"
     },
     {
       "path": "components/ui/popover.tsx",
@@ -1224,8 +1269,8 @@
     },
     {
       "path": "components/ui/spinner.tsx",
-      "bytes": 360,
-      "sha256": "8ddbb330e5564a1f53026da36c2322ed4b027687e91a88f63348ab10f26ae0cb"
+      "bytes": 378,
+      "sha256": "84a30438b9681ecea00759011777b1c24e0d3dfe1c0f8636c5891df22fe720d3"
     },
     {
       "path": "components/ui/switch.tsx",
@@ -1459,8 +1504,8 @@
     },
     {
       "path": "desktop/image-viewer.js",
-      "bytes": 9813,
-      "sha256": "e4b3e360cc81e0a2dfaf64fa9616da1ebee166da2fabfd636300a6a41316b6a1"
+      "bytes": 10202,
+      "sha256": "90dbd0a0fa1ab78c1b4bbc770292135b0c1a046878325fd3c83d786b8a767088"
     },
     {
       "path": "desktop/local-identity.cjs",
@@ -1469,8 +1514,8 @@
     },
     {
       "path": "desktop/main.js",
-      "bytes": 22573,
-      "sha256": "b95ba5c986ea29d20a711b8552255a57f095bf8b3a3e61a6747e91f2f651e391"
+      "bytes": 23589,
+      "sha256": "cb76c00579dc0c8649b91b58998a031d256a636817cf09ce4b2b9b25784eb930"
     },
     {
       "path": "desktop/package-lock.json",
@@ -1484,8 +1529,8 @@
     },
     {
       "path": "desktop/preload.js",
-      "bytes": 2649,
-      "sha256": "afdfd470494ba13a695c65c94139075a0292c9ae478b3f60c034183942dbb396"
+      "bytes": 2777,
+      "sha256": "e787e28f180bc89187a8dd522c98bd0a4114e4e9c6a7e7afed275d8930e05c12"
     },
     {
       "path": "desktop/tests/camera-permissions.test.cjs",
@@ -1543,9 +1588,514 @@
       "sha256": "49f273ebaeb44af64759cb3d8e5f25c4a8f8b680357d7a7547e640ae8803f142"
     },
     {
+      "path": "docs/design-spec.md",
+      "bytes": 10290,
+      "sha256": "115f0d04167b5e137a48bb7ada09e94316134b99d4d7471da6b21ba527dfd59d"
+    },
+    {
       "path": "docs/history/README-prototype-20260910.md",
       "bytes": 1606,
       "sha256": "fb7e9498179d3a4a2e4e2fceaa3c8bff5d6f7d35e49cfe950f8ab67449074070"
+    },
+    {
+      "path": "docs/history/UI-LAYOUT-before-20261103.md",
+      "bytes": 3774,
+      "sha256": "8c39dbe99f2d1db7f21b99cd7711cf269f9eddccccdca6c1d83caf9b0726f0b5"
+    },
+    {
+      "path": "docs/history/frontend-style-before-20261103/dual-preview.css.source",
+      "bytes": 1208,
+      "sha256": "8d4437aa3ac494390456e345c9f2484beca0e988ae9cabacaa2902dbc9770135"
+    },
+    {
+      "path": "docs/history/frontend-style-before-20261103/font-size.css.source",
+      "bytes": 3550,
+      "sha256": "2708d5c6281fbf3954a1081549ad1288cc9d35abf7d5eb937cc1e5a9d9cb4da1"
+    },
+    {
+      "path": "docs/history/frontend-style-before-20261103/profile-redesign.css.source",
+      "bytes": 18853,
+      "sha256": "b47c8bcffd5c1da27d0cc0f212b892d1f4c1ff768b3dc256c755580eaf17a776"
+    },
+    {
+      "path": "docs/history/frontend-style-before-20261103/refinements.css.source",
+      "bytes": 21697,
+      "sha256": "06aa910231f9c5a038dd93eee49467d2627f90ab0a9c0e2ea583ebdd27509db0"
+    },
+    {
+      "path": "docs/history/frontend-style-before-20261103/zhiyu.css.source",
+      "bytes": 35923,
+      "sha256": "e01e8717d636108b2217ad98f5007e798ba1e345528521658e82182e7c943ee5"
+    },
+    {
+      "path": "docs/history/prototypes/desktop.tsx.source",
+      "bytes": 24239,
+      "sha256": "65cc9cecbd884272e95c354e0e5def92c5cd7cc1e3497606a73f82652d430564"
+    },
+    {
+      "path": "docs/history/prototypes/studio-page.tsx.source",
+      "bytes": 21707,
+      "sha256": "9a85d959573efe460a60f0cb9ef45ac1a2abb2ec09ee5791f618e3b84c031535"
+    },
+    {
+      "path": "docs/qa/2026-11-03-after-contextual-regression.md",
+      "bytes": 3389,
+      "sha256": "1bbb6987ce0bbcf6896975b163582e6fcf1eecf2566560d0928833c06acc50fc"
+    },
+    {
+      "path": "docs/qa/2026-11-03-after-final-regression.md",
+      "bytes": 11343,
+      "sha256": "eec5d27f5576604becbbd5f9c2e2c1cd5ffa6c7c0ffac4e54cf85e684ec5f764"
+    },
+    {
+      "path": "docs/qa/2026-11-03-after.md",
+      "bytes": 15791,
+      "sha256": "eb2ce87c5742039519bab352f696f951ba06ba469f321912dd03d7d8fda3e72d"
+    },
+    {
+      "path": "docs/qa/2026-11-03-before.md",
+      "bytes": 14976,
+      "sha256": "cd74b33610470b971cf3b70634998629b52de30614611ebf0423cd1cac081d90"
+    },
+    {
+      "path": "docs/qa/2026-11-03.md",
+      "bytes": 15791,
+      "sha256": "eb2ce87c5742039519bab352f696f951ba06ba469f321912dd03d7d8fda3e72d"
+    },
+    {
+      "path": "docs/qa/com.zhiyu.npc-exam.plist.disabled",
+      "bytes": 929,
+      "sha256": "56e0b2e805fb1545b973e9c0f628ca09232b5e5fac6b553cf1189cd02bcf9ba9"
+    },
+    {
+      "path": "docs/qa/dialogue-rule-map-20261103.md",
+      "bytes": 89085,
+      "sha256": "fdb50b42c836aa5e23ccb3ba02d799f57e515bf71f15372184da3cd5b810ece5"
+    },
+    {
+      "path": "docs/qa/image-identity-library-20261103-before.md",
+      "bytes": 2435,
+      "sha256": "c5f2c8de83c91148f8b4eedde026e44ec46a493add4311218c3132503d5d5055"
+    },
+    {
+      "path": "docs/qa/image-identity-library-20261103.md",
+      "bytes": 5800,
+      "sha256": "66467a7952fc66abaab0cb528575c8b219f192fcd57d29179dae814820c6206c"
+    },
+    {
+      "path": "docs/qa/npc-exam-contextual-fixtures.json",
+      "bytes": 1627,
+      "sha256": "5f4007e6439e7398249a92c90337f72b13bb23268024d9800531c9842d5b0e3f"
+    },
+    {
+      "path": "docs/qa/npc-exam-schedule.md",
+      "bytes": 1208,
+      "sha256": "c1bfaf443f006f3d650e563f22a9884c239d75a4b4c3b62ba97530f7a00b44ca"
+    },
+    {
+      "path": "docs/redesign/after/character-window-dark.jpg",
+      "bytes": 82785,
+      "sha256": "8e61db06671a08f2df5988e735e5914d90aacf52aa43239fbc8f50d4afd53047"
+    },
+    {
+      "path": "docs/redesign/after/character-window-light.jpg",
+      "bytes": 83192,
+      "sha256": "94a6ce03cf3360193b1019e9b1e4ea2d3f62f54e9421dd0e15903335214c46ac"
+    },
+    {
+      "path": "docs/redesign/after/confirm-clear-dark.jpg",
+      "bytes": 25762,
+      "sha256": "66d99c67066e00e7a212454688379ddfc4c39bec23cae54dcc39e33fb58ca536"
+    },
+    {
+      "path": "docs/redesign/after/confirm-clear-light.jpg",
+      "bytes": 27028,
+      "sha256": "f3447c2669a53b20e580b975e47b3be3de0f258cf00d74e31f54b24388f4c67f"
+    },
+    {
+      "path": "docs/redesign/after/contacts-dark.jpg",
+      "bytes": 25446,
+      "sha256": "5e3b21767e90cec95dac505adbf6acfe1caf254aba4f8dcb48ce315bb0a887a9"
+    },
+    {
+      "path": "docs/redesign/after/contacts-light.jpg",
+      "bytes": 25597,
+      "sha256": "067cb63e20df767c17d151e26c569d67b64f87c5e622ff79386dc3af29707c9c"
+    },
+    {
+      "path": "docs/redesign/after/group-create-dark.jpg",
+      "bytes": 43264,
+      "sha256": "5d8e1cbadb508be048b333f56b05119ee68b2d8d79382de715177198d1e1503e"
+    },
+    {
+      "path": "docs/redesign/after/group-create-light.jpg",
+      "bytes": 47831,
+      "sha256": "b4dca4e55409d0adf3145db9d27a5e3878d969f20a26a8b8f477996377fc5441"
+    },
+    {
+      "path": "docs/redesign/after/group-drawer-dark.jpg",
+      "bytes": 62378,
+      "sha256": "2fe412dbea53704125d2ce6f3367fe2ef3e17b7c3c5217f1a1e11ed01b289830"
+    },
+    {
+      "path": "docs/redesign/after/group-drawer-light.jpg",
+      "bytes": 63103,
+      "sha256": "60e2450a1a4489f3114c1dd7f1d0ef7fa6f8b2c003c3f0a3646b02f1f20e49be"
+    },
+    {
+      "path": "docs/redesign/after/me-dark.jpg",
+      "bytes": 21746,
+      "sha256": "06d5fddd6475e1ab86c8e33af15b48100916d7ff04ce17abd0a92d5eb9b0fe9a"
+    },
+    {
+      "path": "docs/redesign/after/me-light.jpg",
+      "bytes": 19712,
+      "sha256": "4a5be83ba9b1973f15c03db145a5885e58ddb0db7bb68503b891601a0267564e"
+    },
+    {
+      "path": "docs/redesign/after/messages-dark.jpg",
+      "bytes": 56196,
+      "sha256": "864413cddeab11d788822708200130157cc7d6a65f143b585859823da090488d"
+    },
+    {
+      "path": "docs/redesign/after/messages-light.jpg",
+      "bytes": 57565,
+      "sha256": "da6201706a7ca310406b6f969126a370c4d8fa827070c251b7258f2afded316b"
+    },
+    {
+      "path": "docs/redesign/after/mobile-dark.jpg",
+      "bytes": 35356,
+      "sha256": "8c8935153fcf1971d00ce5c75dc5c3f1d636d873fffa6f1535e3ac587370d14d"
+    },
+    {
+      "path": "docs/redesign/after/mobile-light.jpg",
+      "bytes": 39347,
+      "sha256": "cc58fc4294cec2a15855e8da668828807c89a21c2da76e32b19aec5a319187bc"
+    },
+    {
+      "path": "docs/redesign/after/moments-dark.jpg",
+      "bytes": 45795,
+      "sha256": "10928fe21396bd9509aaa622fb31457770e8857ab35e92c0e006a3990b765255"
+    },
+    {
+      "path": "docs/redesign/after/moments-light.jpg",
+      "bytes": 43337,
+      "sha256": "651fa6dbda09f44ce4d48a1750c9700cfe653f4d6545cfa89e2495e084129144"
+    },
+    {
+      "path": "docs/redesign/after/monthly-report-dark.jpg",
+      "bytes": 60666,
+      "sha256": "16b5d543e7d1ad3a3095f5fdc9b95d2a52ce8ed2949958713210535934e9b5bb"
+    },
+    {
+      "path": "docs/redesign/after/monthly-report-light.jpg",
+      "bytes": 62883,
+      "sha256": "ee1947de6c54b8e162483dee2810514f9788b26a6b184b916b217a21b5fe421a"
+    },
+    {
+      "path": "docs/redesign/after/morning-city-dark.jpg",
+      "bytes": 58301,
+      "sha256": "76a5d568a5a1095096d838731b625d3f984a3129cef3f5ef40c60aa89bd5ce94"
+    },
+    {
+      "path": "docs/redesign/after/morning-report-dark.jpg",
+      "bytes": 58598,
+      "sha256": "fd202fcef8a1ce3f41165330fcbc0635ee7a6a807bd5ed30c8d0c718d6942fac"
+    },
+    {
+      "path": "docs/redesign/after/morning-report-light.jpg",
+      "bytes": 59426,
+      "sha256": "5798a4882e3b6ca4e2201c5f47ae7d35837831b4e7bf72fbfdb50708bd02d327"
+    },
+    {
+      "path": "docs/redesign/after/morning-settings-dark.jpg",
+      "bytes": 33372,
+      "sha256": "7bd73ddfffa1bc59f61a004f4bd251ae0499d007bc6c3074ffdb4fce66732efc"
+    },
+    {
+      "path": "docs/redesign/after/morning-settings-light.jpg",
+      "bytes": 35529,
+      "sha256": "6bb6c6a8e762fc459f33f1c0fad0fb73ff53f408b4512a9bfde2eda1d791e811"
+    },
+    {
+      "path": "docs/redesign/after/private-dark.jpg",
+      "bytes": 56196,
+      "sha256": "864413cddeab11d788822708200130157cc7d6a65f143b585859823da090488d"
+    },
+    {
+      "path": "docs/redesign/after/private-drawer-dark.jpg",
+      "bytes": 59615,
+      "sha256": "fb849b16106bebd318ff90ed43940a695fa3332a59415431396ac3ff71071c7c"
+    },
+    {
+      "path": "docs/redesign/after/private-drawer-light.jpg",
+      "bytes": 60577,
+      "sha256": "b4db1c42eb8ad3893314997e05fa5127df4a83fe49f4ffbd49bac8d91f06494a"
+    },
+    {
+      "path": "docs/redesign/after/private-light.jpg",
+      "bytes": 57689,
+      "sha256": "29f16cbf04b12e3a5558b4e3f05567cb1d2476853faba4aa35e9f06171eb0f70"
+    },
+    {
+      "path": "docs/redesign/after/profile-dark.jpg",
+      "bytes": 68207,
+      "sha256": "c201e038dabbc357e375114463cb3cee263a592ca15727940c0cd895a291936f"
+    },
+    {
+      "path": "docs/redesign/after/profile-light.jpg",
+      "bytes": 70523,
+      "sha256": "dd0b868d3acd36201c3e962945c408ced8b8fe13061531bbbb61c69a562322ea"
+    },
+    {
+      "path": "docs/redesign/after/settings-dark.jpg",
+      "bytes": 24242,
+      "sha256": "918b663a5fd1dd292cc2403cc6060d1124e9ea7420d0b6c6f30bf7fb8ba931c4"
+    },
+    {
+      "path": "docs/redesign/after/settings-light.jpg",
+      "bytes": 23471,
+      "sha256": "c45fa70ffeb079f19a10ed65a9358b11d83bb68a2ceef857ed9187e2b428eeae"
+    },
+    {
+      "path": "docs/redesign/after/speech-settings-dark.jpg",
+      "bytes": 19848,
+      "sha256": "c4ed974eb122a4af310d7d5882878c80f04725b047d1d5ebd37d835b5d604504"
+    },
+    {
+      "path": "docs/redesign/after/speech-settings-light.jpg",
+      "bytes": 21065,
+      "sha256": "ba8a0ad9459f24546be2231a672cc60c25ec5f1db0b35154eeff10047dab22da"
+    },
+    {
+      "path": "docs/redesign/after/tasks-dark.jpg",
+      "bytes": 61784,
+      "sha256": "0083ee327c601dfee62858eb7584d183a643bfde4aa6d006c02841569cc38200"
+    },
+    {
+      "path": "docs/redesign/after/tasks-future-dark.jpg",
+      "bytes": 53712,
+      "sha256": "f3f0af99e59e197bfdb1424fe5236b856eb0871f89951ba759cab9c22a750f06"
+    },
+    {
+      "path": "docs/redesign/after/tasks-history-dark.jpg",
+      "bytes": 62091,
+      "sha256": "68370b699909a7dfee9879569edc650a22915875ad9c55a61d56c660a5647192"
+    },
+    {
+      "path": "docs/redesign/after/tasks-light.jpg",
+      "bytes": 62622,
+      "sha256": "f700f6480c1450bc221629a624b556dbf99ea85ff9690a04087336d8ea8341ed"
+    },
+    {
+      "path": "docs/redesign/after/weekly-report-dark.jpg",
+      "bytes": 58750,
+      "sha256": "635ec00b1a668bc283f9655bce095e5aa8ecc6cfbf765680fe38f8b6dcc10887"
+    },
+    {
+      "path": "docs/redesign/after/weekly-report-light.jpg",
+      "bytes": 63729,
+      "sha256": "b678ba7dd610c4185b162cb78253d2897e545c52cac24446361addb221597869"
+    },
+    {
+      "path": "docs/redesign/before/character-window-dark.jpg",
+      "bytes": 82036,
+      "sha256": "70fc0d3a3efb0e62d3ec91f4e24618aaefcc01c68efe9df91701673ba865c586"
+    },
+    {
+      "path": "docs/redesign/before/character-window-light.jpg",
+      "bytes": 82036,
+      "sha256": "70fc0d3a3efb0e62d3ec91f4e24618aaefcc01c68efe9df91701673ba865c586"
+    },
+    {
+      "path": "docs/redesign/before/confirm-clear-dark.jpg",
+      "bytes": 25457,
+      "sha256": "5d8733bcd8a051893cf846764431231038ea243ba830bf20ac3e1f58a154bc33"
+    },
+    {
+      "path": "docs/redesign/before/confirm-clear-light.jpg",
+      "bytes": 26634,
+      "sha256": "0aec7af54802d7596b95619b6300f3366deacde0d7697ab04e5c74d67396e7a5"
+    },
+    {
+      "path": "docs/redesign/before/contacts-dark.jpg",
+      "bytes": 26083,
+      "sha256": "ff33a21304a9c48519ec02807a6d6c792615a2c8164581eb6a87ef7fb73e3714"
+    },
+    {
+      "path": "docs/redesign/before/contacts-light.jpg",
+      "bytes": 26141,
+      "sha256": "735d2195e5ae0ecfa7155e0bff36886eb8a60659fcd32f4406582ac00ad994bc"
+    },
+    {
+      "path": "docs/redesign/before/group-create-dark.jpg",
+      "bytes": 43044,
+      "sha256": "1c9e3a2debff4003e986f9cffee7b286b3ba640da46f83526f6abfa0bc66c615"
+    },
+    {
+      "path": "docs/redesign/before/group-create-light.jpg",
+      "bytes": 46250,
+      "sha256": "c7bfaa699125c1604325f79f8e73a04779b26132422b0c1b05710baa67ed9797"
+    },
+    {
+      "path": "docs/redesign/before/group-drawer-dark.jpg",
+      "bytes": 60880,
+      "sha256": "6e86c20dd1c5188efe7e061c8f1cbf9d58c84b5a4641aa2b768c7721993f9fd0"
+    },
+    {
+      "path": "docs/redesign/before/group-drawer-light.jpg",
+      "bytes": 61791,
+      "sha256": "345e37204adb44d774613ae9b37ef131f3748be1a2b4afdcf476e0f54b3b85a9"
+    },
+    {
+      "path": "docs/redesign/before/messages-dark.jpg",
+      "bytes": 52159,
+      "sha256": "4f04d7ac56f4d9175d0fa13a757b5df4bb50ce9c039cac4f841fcb4aef4d23f7"
+    },
+    {
+      "path": "docs/redesign/before/messages-light.jpg",
+      "bytes": 53619,
+      "sha256": "9ccbe789f93ac1506d3345c2ab75bf60a7231cb932964b467bb00dfe2deb7dc2"
+    },
+    {
+      "path": "docs/redesign/before/mobile-dark.jpg",
+      "bytes": 36054,
+      "sha256": "6f7ce99de7dd4d8a18670dde9c7f38c27129db1868ecd047fbd7bc8c9ce25673"
+    },
+    {
+      "path": "docs/redesign/before/mobile-light.jpg",
+      "bytes": 40294,
+      "sha256": "b264db65e9431bc7115e29e91dab9079cd34dd2cf48332cbbfc0c2df0ca49979"
+    },
+    {
+      "path": "docs/redesign/before/moments-dark.jpg",
+      "bytes": 46344,
+      "sha256": "ea11930a65b27cad97cadca16665dbd442b85790896ef339ec68b020159b5313"
+    },
+    {
+      "path": "docs/redesign/before/moments-light.jpg",
+      "bytes": 43980,
+      "sha256": "5cfd16244f3598c9a1204c444619d90169dbd797e094bf1f1c5dbcc321453a82"
+    },
+    {
+      "path": "docs/redesign/before/morning-settings-dark.jpg",
+      "bytes": 32528,
+      "sha256": "9a2a61096afc121380d8cb5adf4fd97a47294b4f81c6c72be07d801b5ea14b1b"
+    },
+    {
+      "path": "docs/redesign/before/morning-settings-light.jpg",
+      "bytes": 34446,
+      "sha256": "2aa0a6abd87e5922d882aa6de03e5a2eb9ee318d59f06f42bddee4c98c557b1a"
+    },
+    {
+      "path": "docs/redesign/before/private-drawer-dark.jpg",
+      "bytes": 54912,
+      "sha256": "534d0c214cb813501f2199efc23b6fea360d75aaadb1b0ffe3c1300cf005f6b7"
+    },
+    {
+      "path": "docs/redesign/before/private-drawer-light.jpg",
+      "bytes": 55767,
+      "sha256": "9ce809ed2d5598783545f515f9e4ca6c399d8a0752f0e9bc4d9ea1a7bbb7724b"
+    },
+    {
+      "path": "docs/redesign/before/profile-dark.jpg",
+      "bytes": 63830,
+      "sha256": "5a4251afaf60d11020ff58b91eff46e6603a98bc495c849d0f18ee87c0243b4f"
+    },
+    {
+      "path": "docs/redesign/before/profile-light.jpg",
+      "bytes": 64620,
+      "sha256": "643958daa4bd33ca5d0a09df9e3eb294b7ff2de04d70550e2d43ee7a91f47dd5"
+    },
+    {
+      "path": "docs/redesign/before/settings-dark.jpg",
+      "bytes": 31344,
+      "sha256": "646499a11e8bafb1426701f3aab303a899e2d8cdf386e527d83b31c24925192c"
+    },
+    {
+      "path": "docs/redesign/before/settings-light.jpg",
+      "bytes": 30875,
+      "sha256": "5a2bfdf83c0e605a5e035f87e61608e3fb4bc6828c0fdb5efe839510ee71e878"
+    },
+    {
+      "path": "docs/redesign/before/speech-settings-dark.jpg",
+      "bytes": 18930,
+      "sha256": "a59cc2ed44c4918a116286a178bec2d216b71793b8204f24805d2885679ba938"
+    },
+    {
+      "path": "docs/redesign/before/speech-settings-light.jpg",
+      "bytes": 19786,
+      "sha256": "79d4716c4e1a9146604743aca6db70f154c4b3041fa7eea3dd088b4239fb47f6"
+    },
+    {
+      "path": "docs/redesign/before/tasks-dark.jpg",
+      "bytes": 65405,
+      "sha256": "22373413f5888609467cbeb04f0c23ba52a98df60228340f601f283fb0bc8ab1"
+    },
+    {
+      "path": "docs/redesign/before/tasks-light.jpg",
+      "bytes": 65844,
+      "sha256": "795c1e8c90ded5a1f0edccdb642ffb7115c254c3a1a632a6b10f3213a1a6a4a4"
+    },
+    {
+      "path": "docs/redesign/css-cleanup.json",
+      "bytes": 36235,
+      "sha256": "98d84ac6f2dd279c3d0a44d867104e4e484f3f87ead88ac2f1d970b8a25509dc"
+    },
+    {
+      "path": "docs/redesign/geometry-dark.json",
+      "bytes": 6710,
+      "sha256": "2b309e2312854bc6135aa75d117d5a6257d0970df184b0666f234b8527193564"
+    },
+    {
+      "path": "docs/redesign/geometry-light.json",
+      "bytes": 6588,
+      "sha256": "fa07ec4de10ee6dbb0ae47e7d2904021186bcd7edd154cdf92336b2518d61b6a"
+    },
+    {
+      "path": "docs/redesign/identity-generation-prompts.json",
+      "bytes": 2337,
+      "sha256": "09533a50503efea7a33811cee49331042e61a5ce585e3a5a05bf7a47dec418ae"
+    },
+    {
+      "path": "docs/redesign/identity-review-20261104.json",
+      "bytes": 21432,
+      "sha256": "96b3389eac1a21ae82b2b4e81810a161569525a908e6f69a8150ea4e7506926d"
+    },
+    {
+      "path": "docs/redesign/palette-verification.json",
+      "bytes": 18826,
+      "sha256": "00fd0c0c250cdcc4244402e42cf6675b1d907447898475fe7e4b697ca8a8e5cb"
+    },
+    {
+      "path": "docs/redesign/requirements-20261103.md",
+      "bytes": 30742,
+      "sha256": "cccb06f3c70532d21a1253680c59296f87211e140a3139fad5236ad6a471168f"
+    },
+    {
+      "path": "docs/redesign/review-20261104.md",
+      "bytes": 12293,
+      "sha256": "9b334721d2a1debe5e0745816a169be0d78744649282a024db9e725fee4c66d0"
+    },
+    {
+      "path": "docs/redesign/status-catalog.md",
+      "bytes": 1880,
+      "sha256": "acf7fc545df170315faf91d0e6d7440b0af94ab0132d93beae88ae0d107da024"
+    },
+    {
+      "path": "docs/redesign/style-baseline.json",
+      "bytes": 56264,
+      "sha256": "dae5de70f02035ad97fe2d62866295342d73d726b312feb809d913761a61f5bb"
+    },
+    {
+      "path": "docs/redesign/style-ownership.json",
+      "bytes": 164,
+      "sha256": "4c0cf437f070903bb18bf4517e750a6f160f6a01f31498a5df77f73afe0883f9"
+    },
+    {
+      "path": "docs/redesign/verification-20261104.json",
+      "bytes": 16625,
+      "sha256": "7c4cb5d530afc084ba05308c726c256a3004d8fb72d3a9e73a117e4d21024e0f"
     },
     {
       "path": "docs/task-page/requirements-20261101.md",
@@ -1559,18 +2109,23 @@
     },
     {
       "path": "hooks/use-mobile.ts",
-      "bytes": 585,
-      "sha256": "82bff42ff087bd5dc90a5d17609cc428b8688de92d1333073a839af5ad3c9cbd"
+      "bytes": 416,
+      "sha256": "a1a3c7e70ad0df0ea3a39c9d4260444471e2d64604f5104b7e1a04c429e19f8f"
     },
     {
       "path": "lib/npc/character-directory.ts",
-      "bytes": 4410,
-      "sha256": "de0bfafe8ac2c382ffe89499c9ed83d215e5600087f19a9bdacbc9f214db87cf"
+      "bytes": 4537,
+      "sha256": "9f3bbf0e0a544897c0799aaba7e60feb48f0fc2c111d8c08a4275ad2c8878a80"
     },
     {
       "path": "lib/npc/character-output-policy.ts",
       "bytes": 9989,
       "sha256": "42cffbbc7563581c332032cc9489bb100c103ba3c635bd06a317a61bc86b8527"
+    },
+    {
+      "path": "lib/npc/character-status.ts",
+      "bytes": 3629,
+      "sha256": "254bf4a5d963df35f67fefe2a4aaa2cf155dd0c34fe3430c0fe7475cf8f76b14"
     },
     {
       "path": "lib/npc/chen-nian.ts",
@@ -1589,13 +2144,18 @@
     },
     {
       "path": "lib/npc/contracts.ts",
-      "bytes": 8142,
-      "sha256": "24beb9b196f739374398d68ca3911c2017aa5abaf3cd519aa755c9c8cadd1a44"
+      "bytes": 8443,
+      "sha256": "fb1c82dbd643ffd3f2f96463803f1381b624ac875ab31d95d04b1f33fd8d4379"
     },
     {
       "path": "lib/npc/delivery.ts",
-      "bytes": 1308,
-      "sha256": "659f1b5a58b89697505fd3bb029a794f9d6b7f93b59d896ae4c28d58b5bf6dfc"
+      "bytes": 3964,
+      "sha256": "715bf5bd6e00ba39809f1b040b59afd5d5364748d816eaaaf01b9ad64e00a772"
+    },
+    {
+      "path": "lib/npc/dialogue-output-guard.ts",
+      "bytes": 5959,
+      "sha256": "81a6e56569f1c76531e73c7eb2cfabe33f4cfad5c94573063f7cde5626a55b36"
     },
     {
       "path": "lib/npc/dialogue-purpose.ts",
@@ -1606,6 +2166,11 @@
       "path": "lib/npc/engine.ts",
       "bytes": 13468,
       "sha256": "408cbca33528d64c6a119150faf1432679ca3cfe21f0e7c5bdbe8ce4f454be56"
+    },
+    {
+      "path": "lib/npc/experience.ts",
+      "bytes": 3287,
+      "sha256": "12fb9fbb50b75929a950beb8b969068ffa926ea6fb2079e755a4ae52e4465a9a"
     },
     {
       "path": "lib/npc/expression-preferences.ts",
@@ -1619,8 +2184,8 @@
     },
     {
       "path": "lib/npc/group-chat.ts",
-      "bytes": 4354,
-      "sha256": "b4339becd22e5a0ed935160f470e179ba0131751b493c57926dd87ac60a3e251"
+      "bytes": 4493,
+      "sha256": "9417cc615b8915489cec17cb8cf87b3f3812bde2d24a10f115ebefe6641b7076"
     },
     {
       "path": "lib/npc/he-jiawei.ts",
@@ -1634,8 +2199,8 @@
     },
     {
       "path": "lib/npc/life.ts",
-      "bytes": 7255,
-      "sha256": "74ef6bc674cc575897965adb59219b96d83189ab6ba7bee9cfbf1921a87e156e"
+      "bytes": 7192,
+      "sha256": "62199b7834d5b7dff74355c40e640b9f457a83130527b5f9332d79a73a392301"
     },
     {
       "path": "lib/npc/liu.ts",
@@ -1698,6 +2263,11 @@
       "sha256": "1b4a8157a6056f692f4e448a6df4a9b97663c5641e5788966fa17d538cc7b3a5"
     },
     {
+      "path": "lib/npc/reply-retry.ts",
+      "bytes": 1189,
+      "sha256": "7819715e8416da40d9e584fd40e4966322c4535576cc0aa77035498bf10c921a"
+    },
+    {
       "path": "lib/npc/secretary-delegation.ts",
       "bytes": 2997,
       "sha256": "7285e748a8b5701d77dd0a74cd81487bf5954e5cc099a515ab2c9fa7a33670e0"
@@ -1738,6 +2308,11 @@
       "sha256": "d255ce32f508ff39a7e3fd48de920b45b3c02dae3e8a8d4a9a9a4a49d89f6a33"
     },
     {
+      "path": "lib/user-facing-errors.ts",
+      "bytes": 1613,
+      "sha256": "6f51030d0ffa8f550ccb7901071dfb73bb77bf3b6c0ecbf8420d94f0bc7c9ba7"
+    },
+    {
       "path": "lib/utils.ts",
       "bytes": 169,
       "sha256": "9304a861c8673bee09e0f12de31773abbde503b02e59dfd74763ddec2e37cf05"
@@ -1768,6 +2343,136 @@
       "sha256": "af643ffeea8f7119c8cfbe2c7a6ffa8580c65fd82234b728172634aefd6c770a"
     },
     {
+      "path": "npc-skills/assets/chen-nian/identity/appearance.md",
+      "bytes": 400,
+      "sha256": "a3bb265ca94e24180d448d295f2b1b2339d1cbda7ccb7250aeb24e13ce382103"
+    },
+    {
+      "path": "npc-skills/assets/chen-nian/identity/half-body-reference-20261103.png",
+      "bytes": 2054486,
+      "sha256": "24b9d6bfaf9d6782ca8cc7c825417566eebf199cef09026f3180474a9c89b130"
+    },
+    {
+      "path": "npc-skills/assets/chen-nian/identity/manifest.json",
+      "bytes": 1618,
+      "sha256": "93d761d026edb4ab38d66bbdb06ffb9e89bcdb6a650d44de53c50876a1d24be1"
+    },
+    {
+      "path": "npc-skills/assets/chen-nian/identity/reference.png",
+      "bytes": 1900173,
+      "sha256": "7b3e44b4d95e99b6064e10da3b220eeccea63238e3263007fc0f6f5dd8239680"
+    },
+    {
+      "path": "npc-skills/assets/chen-nian/identity/side-reference-20261103.png",
+      "bytes": 2128705,
+      "sha256": "c6059bb8022a77d5f8367f20202876e04da71d2f8b6c857f33d40c50a3a85bf7"
+    },
+    {
+      "path": "npc-skills/assets/chen-nian/library/manifest.json",
+      "bytes": 1498,
+      "sha256": "8a23237456e46bab48c4994b13b2f864cff9680484ce375bc90eb51e14ff2968"
+    },
+    {
+      "path": "npc-skills/assets/chen-nian/library/share-rainy-selfie-v2.png",
+      "bytes": 2180655,
+      "sha256": "2f5fab7448d9525e49e7980eb03bb8408769ea318b4ba48294e157ff47aca884"
+    },
+    {
+      "path": "npc-skills/assets/chen-nian/library/share-workdesk-v1.png",
+      "bytes": 1975871,
+      "sha256": "7479052a4792155b60ad55af52325983ea9b71a020ca7108b3a210d712c0634c"
+    },
+    {
+      "path": "npc-skills/assets/he-jiawei/identity/appearance.md",
+      "bytes": 502,
+      "sha256": "d9cd08b500e2059e8cc0e9839a5f0b8d065d73d9d2a4d5fe29f97ce94f335cf0"
+    },
+    {
+      "path": "npc-skills/assets/he-jiawei/identity/manifest.json",
+      "bytes": 2327,
+      "sha256": "ecaf50cc595ed922ff480ead816e3238f73bdff5484f74de3b99aee4293264d3"
+    },
+    {
+      "path": "npc-skills/assets/he-jiawei/identity/reference.png",
+      "bytes": 1646122,
+      "sha256": "71456d93b9e87ec51d78e8f537cf0cde0b141eb7b83b823d0d2dce15878d6611"
+    },
+    {
+      "path": "npc-skills/assets/he-jiawei/identity/side-reference-20261103.png",
+      "bytes": 2121065,
+      "sha256": "9a86b62e27efd4067fa4ac76b8e9b5b6c050738a0225c3268641ce6c60f09adf"
+    },
+    {
+      "path": "npc-skills/assets/he-jiawei/library/manifest.json",
+      "bytes": 63,
+      "sha256": "89b41aa8bd074c0a778620bf33ef8ef412e963e250e4b1e7ea627ec335a66e2f"
+    },
+    {
+      "path": "npc-skills/assets/liu/identity/appearance.md",
+      "bytes": 388,
+      "sha256": "88559a597cc05de52141b49140af000f98cc9f5dea930df39bf27f94b40c8d77"
+    },
+    {
+      "path": "npc-skills/assets/liu/identity/approved-scene.png",
+      "bytes": 1613218,
+      "sha256": "9d885347fbf726fa9b433adf6b8fdb375d9cf744d352c9f343aeb808d8712ac9"
+    },
+    {
+      "path": "npc-skills/assets/liu/identity/manifest.json",
+      "bytes": 2531,
+      "sha256": "f4485608530de8c02aee9d970f5bb05e65c4b50f1603707df47699f460f07e4b"
+    },
+    {
+      "path": "npc-skills/assets/liu/identity/reference.jpg",
+      "bytes": 224894,
+      "sha256": "7cecf9a8dfd8b7002e757290416c56ade3083a110277051d745b5d7b8da04e5d"
+    },
+    {
+      "path": "npc-skills/assets/liu/identity/side-reference-20261103.png",
+      "bytes": 1992621,
+      "sha256": "21b0bdf767ba0caacead149590863c75c4f1f5b8d81d08b0009a4de303f05207"
+    },
+    {
+      "path": "npc-skills/assets/liu/library/manifest.json",
+      "bytes": 57,
+      "sha256": "595970cc6dab7dc219444777169c279e551eeda1745290812837a42ca35fccce"
+    },
+    {
+      "path": "npc-skills/assets/molly/identity/appearance.md",
+      "bytes": 541,
+      "sha256": "8aec99bf70548542287f1da026450c6e2f6bc2d5e4ffa385c5cfb632004324ba"
+    },
+    {
+      "path": "npc-skills/assets/molly/identity/manifest.json",
+      "bytes": 1868,
+      "sha256": "11dffb58a4bf4a923f86671ecfb9641ced111d9743851df83c43a7fd02940db7"
+    },
+    {
+      "path": "npc-skills/assets/molly/identity/reference.png",
+      "bytes": 1289511,
+      "sha256": "7fa73af5ddfb6a6a282af4d70734c11c94b2d9b3efb97ba055458c6e1d66348d"
+    },
+    {
+      "path": "npc-skills/assets/molly/identity/side-pixel-source.json",
+      "bytes": 1520,
+      "sha256": "db2bbcc27aac2bb36ca7b457f08f512edadbafdbccaf0cdb8ed8c0389cdde64a"
+    },
+    {
+      "path": "npc-skills/assets/molly/identity/side-pixel-v1.png",
+      "bytes": 5161,
+      "sha256": "8d70040d13534a51a789a173782696c6476e983f6e2001895b23b05458a69c6f"
+    },
+    {
+      "path": "npc-skills/assets/molly/identity/side-pixel-v1.svg",
+      "bytes": 1521,
+      "sha256": "930974179221592e2b932b5038f88c9955daaa4eae96e16fd8f55c40071260ef"
+    },
+    {
+      "path": "npc-skills/assets/molly/library/manifest.json",
+      "bytes": 59,
+      "sha256": "adee7269c59aa9b0c98a91fa85a523e244bc0c83ef6d92396df3763f094fe4d6"
+    },
+    {
       "path": "npc-skills/assets/xia-xia/cake-night-v1.png",
       "bytes": 2101087,
       "sha256": "d881f64c5bbad9fbb563830b975c4936805b448dc67365fd00d6a4ce647d192d"
@@ -1778,9 +2483,89 @@
       "sha256": "7679ca6b57a2792bed820411c0796620c0b32ad4da7fd3f789e1451af82e1a4e"
     },
     {
+      "path": "npc-skills/assets/xia-xia/identity/appearance.md",
+      "bytes": 385,
+      "sha256": "00b88ab28737fea3905fb79b1487bfd8990f9196dada18b2f07da4ec56108a98"
+    },
+    {
+      "path": "npc-skills/assets/xia-xia/identity/manifest.json",
+      "bytes": 2202,
+      "sha256": "ffaaac4e2c49c9f918ae49f5c7dc778fd1cf1614ee4dbb4f1fcc5c3d81936431"
+    },
+    {
+      "path": "npc-skills/assets/xia-xia/identity/reference.png",
+      "bytes": 1894340,
+      "sha256": "31d495fab0ce6ca6e127b273a444de78ca23b39ab8a7c73148a5ad9c082cc7d1"
+    },
+    {
+      "path": "npc-skills/assets/xia-xia/identity/side-reference-20261103.png",
+      "bytes": 1682227,
+      "sha256": "8c53012579e753181b573273f11acf1139a48d35361735d3bfc170801daa2d83"
+    },
+    {
+      "path": "npc-skills/assets/xia-xia/library/manifest.json",
+      "bytes": 61,
+      "sha256": "602b60a5239c15f50d638a10ffb9617bc0f1b5b728e93fdfe26221ce847d91a2"
+    },
+    {
       "path": "npc-skills/assets/yuan-xiaoman/avatar-user.png",
       "bytes": 1986627,
       "sha256": "60c66cf226e04979b7b8c0312ac97ca0fcbc0b830ae0d634bbd4a1329e8e0b60"
+    },
+    {
+      "path": "npc-skills/assets/yuan-xiaoman/identity/appearance.md",
+      "bytes": 448,
+      "sha256": "eb12d173d976100c9e51bdaa20d7bbfed1506287469b3d53c6f7e90646e274e4"
+    },
+    {
+      "path": "npc-skills/assets/yuan-xiaoman/identity/approved-scene.png",
+      "bytes": 1732341,
+      "sha256": "a05d01208b283830e9332d1592780ad3a7abf82e6a933c7a53ff23f52a199473"
+    },
+    {
+      "path": "npc-skills/assets/yuan-xiaoman/identity/manifest.json",
+      "bytes": 1804,
+      "sha256": "74bc4eb3697d01f79d3a4b52ef70b5ffe2904ad91e66fbc52066e7375d5291be"
+    },
+    {
+      "path": "npc-skills/assets/yuan-xiaoman/identity/reference.png",
+      "bytes": 1986627,
+      "sha256": "60c66cf226e04979b7b8c0312ac97ca0fcbc0b830ae0d634bbd4a1329e8e0b60"
+    },
+    {
+      "path": "npc-skills/assets/yuan-xiaoman/identity/side-existing-v1.png",
+      "bytes": 1820081,
+      "sha256": "12e7d9167983938a013787625624a3d39561a3c00e7178f59da8c4aa02827c71"
+    },
+    {
+      "path": "npc-skills/assets/yuan-xiaoman/library/manifest.json",
+      "bytes": 66,
+      "sha256": "40777789216df4cc1ade444a6c14865cf42894643220b3da902e8b6a0f8d1704"
+    },
+    {
+      "path": "npc-skills/assets/zhou-chef/identity/appearance.md",
+      "bytes": 412,
+      "sha256": "d18e0d4b3848b6fd25d44a46cf1cb9eb23584d19bfdadd95e28225b6be36ae69"
+    },
+    {
+      "path": "npc-skills/assets/zhou-chef/identity/manifest.json",
+      "bytes": 1449,
+      "sha256": "77d1970dae2a46409f44e2d231bcba46a5dd6187e66b9b92567dbb397a0e3df5"
+    },
+    {
+      "path": "npc-skills/assets/zhou-chef/identity/reference.png",
+      "bytes": 1678456,
+      "sha256": "f5d8ca57712b57e721c02cbb511f77e5302c9d937fe8feebb9d7fc61783350c4"
+    },
+    {
+      "path": "npc-skills/assets/zhou-chef/identity/side-existing-v1.png",
+      "bytes": 1649482,
+      "sha256": "42e9ed6c3248f5961fb414f7a423249b1889835fb18c58e219b21cfcf0185f63"
+    },
+    {
+      "path": "npc-skills/assets/zhou-chef/library/manifest.json",
+      "bytes": 63,
+      "sha256": "394e5e92e1605b4163588cc5f6cb7e399126a65c3ceacc90833c7efc4657ea34"
     },
     {
       "path": "npc-skills/config/README-小满实时语音.md",
@@ -1903,109 +2688,9 @@
       "sha256": "efc7280219665892fca0295bb98ebf905c777f493cfe1fe41a5f74fc1ce2ae93"
     },
     {
-      "path": "npc-skills/skills/chen-nian-visual-style/SKILL.md",
-      "bytes": 4686,
-      "sha256": "2e7cec3cfd021a7cbae8e415830aae6bad61fb137ad7e967156ad1f61c7a426e"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/agents/openai.yaml",
-      "bytes": 508,
-      "sha256": "998477cf09fa9f77664ab43619e1b91417d5c0689290cefcf129707046f596dc"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/assets/examples/share-rainy-selfie-v2.png",
-      "bytes": 2180655,
-      "sha256": "2f5fab7448d9525e49e7980eb03bb8408769ea318b4ba48294e157ff47aca884"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/assets/examples/share-workdesk-v1.png",
-      "bytes": 1975871,
-      "sha256": "7479052a4792155b60ad55af52325983ea9b71a020ca7108b3a210d712c0634c"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/assets/history/avatar-placeholder-not-reference.svg",
-      "bytes": 268,
-      "sha256": "7da8a14aa1f0aaeb463e64e68f38bbbdbb063a50d6eae0f9183a10e25d28ea23"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/assets/history/share-rainy-selfie-v1-superseded.png",
-      "bytes": 2253480,
-      "sha256": "813edcef4d8025caebde874acb6971b2852a408129dd382dbba151d6465c3c9d"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/assets/identity/chen-nian-face-reference.png",
-      "bytes": 1900173,
-      "sha256": "7b3e44b4d95e99b6064e10da3b220eeccea63238e3263007fc0f6f5dd8239680"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/assets/style/front-leaning-selfie-style.png",
-      "bytes": 1826492,
-      "sha256": "e81a5378ca872e41f5aae84343acbbe8dffe7fbae4f50df5d14df7ddb66f3528"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/references/asset-manifest.md",
-      "bytes": 1483,
-      "sha256": "08fab20a2a25fb245610e97faa955de4e10a68535d47d11b28f4d4f190f1b7b0"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/references/history.md",
-      "bytes": 3226,
-      "sha256": "77f6ad2cccfb1fac65ad7b3f452488aa8aec2328d56bc344fe05289d9182bcdc"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/references/identity-and-body.md",
-      "bytes": 2633,
-      "sha256": "13e45cbfc9e7e72d53dadda724104a1cd787c388391f9f94ca9eb3353db48e68"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/references/moments-style.md",
-      "bytes": 2743,
-      "sha256": "e692b9851aef7074cb1f0cd3247ec60a3956c03c20015ddd516733ab25a86522"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/references/prompt-spec.md",
-      "bytes": 5368,
-      "sha256": "bdb408d156214a7afd4136e54387519bd8b7dc2041402b1f101e37ba6d4c138a"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/references/selfie-style.md",
-      "bytes": 2782,
-      "sha256": "c504fc8582e04eb3059b5fa08d539580bfa5eda4852d801c7112843cd8b53379"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/references/source-snapshots/legacy-chen-nian-selfie-skill.md",
-      "bytes": 3840,
-      "sha256": "bac7d95f1f625227064f5202696926d0079b13622a73b6fe0264246a7a795a2a"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/references/source-snapshots/legacy-prompt-spec.md",
-      "bytes": 3364,
-      "sha256": "5e606951b98d808174d1b6814b5366b9004ff56dbfd7379d3099224ed13c38a3"
-    },
-    {
-      "path": "npc-skills/skills/chen-nian-visual-style/references/source-snapshots/visual-decisions-2026-09-19.md",
-      "bytes": 1611,
-      "sha256": "f069554290254b6070b02fe203f96792cd071de437039dbee8b4496fd7f46069"
-    },
-    {
-      "path": "npc-skills/skills/npc-candid-photo/SKILL.md",
-      "bytes": 6677,
-      "sha256": "245aed89a3c23e0653fc961e7158f9483435d5f14edda3d29c1cb97c8e097de8"
-    },
-    {
-      "path": "npc-skills/skills/npc-candid-photo/references/photography-workflow.md",
-      "bytes": 7103,
-      "sha256": "97d2e8f92648fe00f997de5a10cd4866ed94a59eddc7d67f732df051efa1fd8d"
-    },
-    {
-      "path": "npc-skills/skills/npc-candid-photo/references/sources.md",
-      "bytes": 1269,
-      "sha256": "62ee4fc938a18c7001f5363f9b7d4434c6dcb0a78ed901f935a5779330555c1f"
-    },
-    {
       "path": "npc-skills/skills/zhiyu-dialogue/SKILL.md",
-      "bytes": 2969,
-      "sha256": "85ec2bc05ec5530847a8ee394e0d50529b60260995d6a1d98e7234f332ff69a3"
+      "bytes": 682,
+      "sha256": "3f20c1bbb67b0a41f267a410c5319b6532bab69d5b50419a062245b74367035c"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/archive/README.md",
@@ -2016,6 +2701,76 @@
       "path": "npc-skills/skills/zhiyu-dialogue/archive/molly-codex-training.txt",
       "bytes": 319386,
       "sha256": "9b19cd0a2abfe51f0c95a7ca033b60d5b4d1462cb12560e8931e6c65797a535b"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/SKILL.md",
+      "bytes": 2969,
+      "sha256": "85ec2bc05ec5530847a8ee394e0d50529b60260995d6a1d98e7234f332ff69a3"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/01-说话立场.md",
+      "bytes": 6299,
+      "sha256": "8c20389e898170af5d5d9ab4d7944c9feed7323bbb9f5c3f7e7b897416dcce43"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/02-标点语气表情.md",
+      "bytes": 2086,
+      "sha256": "ca92b623db00211348bd06c29d363a3325cee6da85ab5237f79591d8df1cfe6e"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/03-梗与俗语.md",
+      "bytes": 3439,
+      "sha256": "00864fc29de99dadea20f5692293b995d98efb5cba698f7e95c708fc76ef2a4a"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/04-安慰.md",
+      "bytes": 1644,
+      "sha256": "e12af1cc3257e0aed980f4d4520f7d5dd338ebe7b8950a5b8ba2ac24fba2a342"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/05-记忆与连续性.md",
+      "bytes": 1170,
+      "sha256": "89dc2d9a5945688ec47698e584bbcb2f7b1d5e750af607b88d6cb135fe782010"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/06-时间与作息.md",
+      "bytes": 1648,
+      "sha256": "621b8546aff5fe29fb5f6a6fa134ae33cde7902d39f55ee4dfca45162885f51c"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/07-知识与事实边界.md",
+      "bytes": 4160,
+      "sha256": "8d3e3736ea360bf797a7f33b006d74aa14c002aa55c93f77505fb7fc2509d383"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/08-智域世界观.md",
+      "bytes": 3264,
+      "sha256": "127c141c5c4c9f4508a32dfcde27628370280b425b139e1e494747a42e508c2c"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/09-图片与语音.md",
+      "bytes": 1811,
+      "sha256": "2b825be0ec32cdbd116956dbab8b7b281ca5c96614e21db285d8df143e69b1bc"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/10-群聊.md",
+      "bytes": 5015,
+      "sha256": "b5ed2acd01ad699d83ab7c76f2d3cc9814fd6d8544319d382dbdd570911457a9"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/11-主动消息与动态.md",
+      "bytes": 3670,
+      "sha256": "c3da1328aff549fb02188504d814cd36e13785231d21cc3e3237c138e51f7c1b"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/12-危机.md",
+      "bytes": 1234,
+      "sha256": "4d92b32f87c26f5a8357fed950c31833bf789bf37c2381c5a5af9427037f5b3f"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/archive/pre-layering-20261103/core/成品复核清单.md",
+      "bytes": 5108,
+      "sha256": "417d3c31c9b534a6bc5006f95fbceb28e61f28b20eaaed27c53ee8a9e29bf999"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/core/01-说话立场.md",
@@ -2029,8 +2784,8 @@
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/core/03-梗与俗语.md",
-      "bytes": 3439,
-      "sha256": "00864fc29de99dadea20f5692293b995d98efb5cba698f7e95c708fc76ef2a4a"
+      "bytes": 3402,
+      "sha256": "d98b70724b7229edcfe071678602290900eb26b9069b3910504c7d7856ff0db9"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/core/04-安慰.md",
@@ -2064,18 +2819,18 @@
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/core/10-群聊.md",
-      "bytes": 5015,
-      "sha256": "b5ed2acd01ad699d83ab7c76f2d3cc9814fd6d8544319d382dbdd570911457a9"
+      "bytes": 4963,
+      "sha256": "23747054eef04267938dfd37be4ed29d095370db5b4fd2e82c50449ed12e2a8f"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/core/11-主动消息与动态.md",
-      "bytes": 3670,
-      "sha256": "c3da1328aff549fb02188504d814cd36e13785231d21cc3e3237c138e51f7c1b"
+      "bytes": 3582,
+      "sha256": "82e1f2b901fb659bb162c77cce15cb7eac7a685e9857df2d4c1f7e9f6f4dfe36"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/core/12-危机.md",
-      "bytes": 1234,
-      "sha256": "4d92b32f87c26f5a8357fed950c31833bf789bf37c2381c5a5af9427037f5b3f"
+      "bytes": 1222,
+      "sha256": "dcbeb0d73eac0cc70017be998ec5ff06e4696d360837bcfecc6a70cd6c541988"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/core/成品复核清单.md",
@@ -2129,8 +2884,13 @@
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/chen-nian/profile.json",
-      "bytes": 1497,
-      "sha256": "e47e626d9037462600f892c1f8c52f19a27149865c55eb844561284226e12ef2"
+      "bytes": 1520,
+      "sha256": "da6669c87ba683a3803d36321a96bef2af887552be9a9cc6a7c3ca738de1b3c8"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/chen-nian/status.json",
+      "bytes": 1492,
+      "sha256": "85febc9c91ddc8f54299ba55a16b412b7c96cd17c5ac2cfe4bafb39e643fa2ae"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/chen-nian/style.md",
@@ -2149,8 +2909,13 @@
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/he-jiawei/profile.json",
-      "bytes": 941,
-      "sha256": "67ab52ca8cfffb9087e7dfa082eff68e39a3afa8f85d7a8926cd28824567f496"
+      "bytes": 964,
+      "sha256": "79a9f601a7aed01f56fe7c37666db26c36f37c526754a2e64182f557d3cc8df0"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/he-jiawei/status.json",
+      "bytes": 2497,
+      "sha256": "a787a43216d276bedfa3f66a1f35ea8f2b666708ae9820467bdd3d961ab576b5"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/he-jiawei/style.md",
@@ -2169,8 +2934,13 @@
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/liu/profile.json",
-      "bytes": 1477,
-      "sha256": "1c065813b3f6c0e123bd192aa4a64974c1d5e8ae9fee7c24127bae30689d471b"
+      "bytes": 1498,
+      "sha256": "a4fe894380cd214a7df3f766afe219ca33b344f118ef7a78e9b28141188b149e"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/liu/status.json",
+      "bytes": 1520,
+      "sha256": "43a96be940c52502f2566c64177485dcf5445e11e6458b77b030c03f40e0fa3a"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/liu/style.md",
@@ -2183,9 +2953,19 @@
       "sha256": "e296e16ab441b2ad0aede4557256f35ba2c1685e98efcfacbb95367e06d54962"
     },
     {
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/molly/opening.json",
+      "bytes": 179,
+      "sha256": "4efd9e8457fe33d21250a9859880ea28ec8487b52ba9f169244ab0a4093ff9a3"
+    },
+    {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/molly/profile.json",
-      "bytes": 1174,
-      "sha256": "6098fa719fc409c80ce9341e31171473c9ff93060873e6c24013e81b8987e7ca"
+      "bytes": 1183,
+      "sha256": "dd0fed2fea21f4b5c634349761a010d48a7ecd16d787e982cae39ddbad71e810"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/molly/status.json",
+      "bytes": 732,
+      "sha256": "d64f7cb6d716b02775009215be989bc5378f0de7b7656adcca08832bd474ef4c"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/molly/style.md",
@@ -2204,8 +2984,13 @@
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/xia-xia/profile.json",
-      "bytes": 978,
-      "sha256": "ec8a9f4c810c05cac5cdca231dccf1cf40b3d2d01f8527f983f79c50c95bac23"
+      "bytes": 1001,
+      "sha256": "740425fda439501d62be5e1d9ed8aebd16291cbc20f2cde86374ad85d433f6e7"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/xia-xia/status.json",
+      "bytes": 2476,
+      "sha256": "ebf0e7f8d4542788cf44c29cd512a87ecf4e2a9baabab21d04dada9b6967095b"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/xia-xia/style.md",
@@ -2224,8 +3009,13 @@
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/yuan-xiaoman/profile.json",
-      "bytes": 997,
-      "sha256": "dee0c3ae26bc96ba1b4873c58d6253db7d5380390dd195fc12abe27bcaaf5a23"
+      "bytes": 1018,
+      "sha256": "167c92bc10fe8bb8f6d0cbd7b008f4db8e54a3a1fc06842f7cb199cbb999d8fa"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/yuan-xiaoman/status.json",
+      "bytes": 2491,
+      "sha256": "626d24b2ccfac9da46a17b42d955b93e69fb88d047a53f4f69a40458bf79b0d1"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/yuan-xiaoman/style.md",
@@ -2244,13 +3034,28 @@
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/zhou-chef/profile.json",
-      "bytes": 1280,
-      "sha256": "87d1925ee83d5707755286b62fa8da6be2338629913c5161863fe63f5303129d"
+      "bytes": 1303,
+      "sha256": "e9955ac007d77855707afe7584fb302b3643ee54318306fc8f62d1a46e9b2270"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/zhou-chef/status.json",
+      "bytes": 1486,
+      "sha256": "baef8d59d4558b15b368a8475cdb5b75260e0bb6439a380f2fdaf00d3162f8e7"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/zhou-chef/style.md",
       "bytes": 324,
       "sha256": "de4ce9e1d723edcc976bb2899ed2cfaac9f327e05c043bae081e910d9f7a1683"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/runtime/常驻核心.md",
+      "bytes": 8087,
+      "sha256": "7404d6ed6728f9d0ed3fe5e5db3a3d71fa576180f40ad938ca2bb82282ed205c"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/runtime/规则映射.json",
+      "bytes": 132595,
+      "sha256": "91056fdc70e7cd54fbd2a27cee10370f5dc0dedbe313ddcdd3cba67963d3917a"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/systems/事件与八卦.md",
@@ -2314,8 +3119,8 @@
     },
     {
       "path": "npc-skills/skills/zhiyu-imagegen/SKILL.md",
-      "bytes": 3624,
-      "sha256": "d849d8b49fe7b4fc02196359fd445f07632221c16908000c59f3928a8def291b"
+      "bytes": 4862,
+      "sha256": "0c1b53ce5ef12080ab31503fa2d52d25d85ab8e32468691544606a506815f720"
     },
     {
       "path": "npc-skills/skills/zhiyu-imagegen/agents/openai.yaml",
@@ -2323,9 +3128,139 @@
       "sha256": "17650cfd492ea7cef7d148ae446c48215498ae386a6bf719cfd1035e2c41828b"
     },
     {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/SKILL.md",
+      "bytes": 4686,
+      "sha256": "2e7cec3cfd021a7cbae8e415830aae6bad61fb137ad7e967156ad1f61c7a426e"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/agents/openai.yaml",
+      "bytes": 508,
+      "sha256": "998477cf09fa9f77664ab43619e1b91417d5c0689290cefcf129707046f596dc"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/assets/examples/share-rainy-selfie-v2.png",
+      "bytes": 2180655,
+      "sha256": "2f5fab7448d9525e49e7980eb03bb8408769ea318b4ba48294e157ff47aca884"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/assets/examples/share-workdesk-v1.png",
+      "bytes": 1975871,
+      "sha256": "7479052a4792155b60ad55af52325983ea9b71a020ca7108b3a210d712c0634c"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/assets/history/avatar-placeholder-not-reference.svg",
+      "bytes": 268,
+      "sha256": "7da8a14aa1f0aaeb463e64e68f38bbbdbb063a50d6eae0f9183a10e25d28ea23"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/assets/history/share-rainy-selfie-v1-superseded.png",
+      "bytes": 2253480,
+      "sha256": "813edcef4d8025caebde874acb6971b2852a408129dd382dbba151d6465c3c9d"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/assets/identity/chen-nian-face-reference.png",
+      "bytes": 1900173,
+      "sha256": "7b3e44b4d95e99b6064e10da3b220eeccea63238e3263007fc0f6f5dd8239680"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/assets/style/front-leaning-selfie-style.png",
+      "bytes": 1826492,
+      "sha256": "e81a5378ca872e41f5aae84343acbbe8dffe7fbae4f50df5d14df7ddb66f3528"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/references/asset-manifest.md",
+      "bytes": 1483,
+      "sha256": "08fab20a2a25fb245610e97faa955de4e10a68535d47d11b28f4d4f190f1b7b0"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/references/history.md",
+      "bytes": 3226,
+      "sha256": "77f6ad2cccfb1fac65ad7b3f452488aa8aec2328d56bc344fe05289d9182bcdc"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/references/identity-and-body.md",
+      "bytes": 2633,
+      "sha256": "13e45cbfc9e7e72d53dadda724104a1cd787c388391f9f94ca9eb3353db48e68"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/references/moments-style.md",
+      "bytes": 2743,
+      "sha256": "e692b9851aef7074cb1f0cd3247ec60a3956c03c20015ddd516733ab25a86522"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/references/prompt-spec.md",
+      "bytes": 5368,
+      "sha256": "bdb408d156214a7afd4136e54387519bd8b7dc2041402b1f101e37ba6d4c138a"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/references/selfie-style.md",
+      "bytes": 2782,
+      "sha256": "c504fc8582e04eb3059b5fa08d539580bfa5eda4852d801c7112843cd8b53379"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/references/source-snapshots/legacy-chen-nian-selfie-skill.md",
+      "bytes": 3840,
+      "sha256": "bac7d95f1f625227064f5202696926d0079b13622a73b6fe0264246a7a795a2a"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/references/source-snapshots/legacy-prompt-spec.md",
+      "bytes": 3364,
+      "sha256": "5e606951b98d808174d1b6814b5366b9004ff56dbfd7379d3099224ed13c38a3"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/chen-nian-visual-style/references/source-snapshots/visual-decisions-2026-09-19.md",
+      "bytes": 1611,
+      "sha256": "f069554290254b6070b02fe203f96792cd071de437039dbee8b4496fd7f46069"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/npc-candid-photo/SKILL.md",
+      "bytes": 6677,
+      "sha256": "245aed89a3c23e0653fc961e7158f9483435d5f14edda3d29c1cb97c8e097de8"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/npc-candid-photo/references/photography-workflow.md",
+      "bytes": 7103,
+      "sha256": "97d2e8f92648fe00f997de5a10cd4866ed94a59eddc7d67f732df051efa1fd8d"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/archive/pre-unification-20261103/npc-candid-photo/references/sources.md",
+      "bytes": 1269,
+      "sha256": "62ee4fc938a18c7001f5363f9b7d4434c6dcb0a78ed901f935a5779330555c1f"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/references/candid-character-guidance.md",
+      "bytes": 5508,
+      "sha256": "0d851cd3bec5d019d9b7c49678c32a840bbd1f8bd6daadf5354bdf79d613d385"
+    },
+    {
       "path": "npc-skills/skills/zhiyu-imagegen/references/character-presentation.md",
       "bytes": 2384,
       "sha256": "c8a5faedeaed30b7aa79b2f36d63e971a49e588eff57a8db6c951a4f6991c0a2"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/references/characters/chen-nian/asset-manifest.md",
+      "bytes": 1483,
+      "sha256": "08fab20a2a25fb245610e97faa955de4e10a68535d47d11b28f4d4f190f1b7b0"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/references/characters/chen-nian/identity-and-body.md",
+      "bytes": 2636,
+      "sha256": "35426e86f44634993d1f713e0b6f2f1a44f4f23e2921c7fe60cf7de7517de43c"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/references/characters/chen-nian/moments-style.md",
+      "bytes": 2743,
+      "sha256": "e692b9851aef7074cb1f0cd3247ec60a3956c03c20015ddd516733ab25a86522"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/references/characters/chen-nian/prompt-spec.md",
+      "bytes": 5368,
+      "sha256": "bdb408d156214a7afd4136e54387519bd8b7dc2041402b1f101e37ba6d4c138a"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/references/characters/chen-nian/selfie-style.md",
+      "bytes": 2782,
+      "sha256": "c504fc8582e04eb3059b5fa08d539580bfa5eda4852d801c7112843cd8b53379"
     },
     {
       "path": "npc-skills/skills/zhiyu-imagegen/references/chat-screenshot.md",
@@ -2341,6 +3276,11 @@
       "path": "npc-skills/skills/zhiyu-imagegen/references/food-and-drink.md",
       "bytes": 2647,
       "sha256": "ebe2e9619b3f202fe88363b64c608021465f12d7f3a14e6dd15fb03b9fe29420"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-imagegen/references/photography-workflow.md",
+      "bytes": 7103,
+      "sha256": "97d2e8f92648fe00f997de5a10cd4866ed94a59eddc7d67f732df051efa1fd8d"
     },
     {
       "path": "npc-skills/skills/zhiyu-imagegen/references/quality-control.md",
@@ -2359,8 +3299,8 @@
     },
     {
       "path": "npc-skills/skills/zhiyu-moments/SKILL.md",
-      "bytes": 14036,
-      "sha256": "017506a258dc759b754b732895631602d5f239306b9465c9c351f7443317a1e1"
+      "bytes": 2960,
+      "sha256": "7d5090cb0aa1432aea750c07e8cb3ac12fcd4c7ec8be3a94a6797b6268bf6019"
     },
     {
       "path": "npc-skills/skills/zhiyu-moments/agents/openai.yaml",
@@ -2368,14 +3308,39 @@
       "sha256": "23366f98e314b52d6f63ea9dfbf7f395ee7312ecd0c37cc0797d6fdfe876362e"
     },
     {
-      "path": "npc-skills/skills/zhiyu-moments/references/companion-posts.md",
+      "path": "npc-skills/skills/zhiyu-moments/archive/pre-slim-20261103/SKILL.md",
+      "bytes": 14036,
+      "sha256": "017506a258dc759b754b732895631602d5f239306b9465c9c351f7443317a1e1"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-moments/archive/pre-slim-20261103/references/companion-posts.md",
       "bytes": 8171,
       "sha256": "e3d3123999bac41ca615a4ea934477744f49fad2e06652f395ba7ec30ddc52c6"
     },
     {
-      "path": "npc-skills/skills/zhiyu-moments/references/contract.md",
+      "path": "npc-skills/skills/zhiyu-moments/archive/pre-slim-20261103/references/contract.md",
       "bytes": 11167,
       "sha256": "f204d651bd3d7353987c5e2a5a4a6133a78e983b41385279e7880be4a611a293"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-moments/archive/pre-slim-20261103/references/life-simulation.md",
+      "bytes": 5784,
+      "sha256": "6b91c0d8f83aa3bfd166edc8c633f2cfe424a403e558010a3cee332606344775"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-moments/archive/pre-slim-20261103/references/runtime-integration.md",
+      "bytes": 8310,
+      "sha256": "ff3a1ce9434e1fa1fc372000441335eec945d8997c2829be4200e4a3a1c3ad06"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-moments/references/companion-posts.md",
+      "bytes": 8141,
+      "sha256": "3ce207943d897d0486eaa43060737747a66cf51821073005bb6c6a5dd76da1e5"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-moments/references/contract.md",
+      "bytes": 11163,
+      "sha256": "2de6411bd01241b9e21cbbf27cf05c7b0731a75a4d97193d7648dd7dcd25cc0e"
     },
     {
       "path": "npc-skills/skills/zhiyu-moments/references/interactions.md",
@@ -2384,8 +3349,8 @@
     },
     {
       "path": "npc-skills/skills/zhiyu-moments/references/life-simulation.md",
-      "bytes": 5784,
-      "sha256": "6b91c0d8f83aa3bfd166edc8c633f2cfe424a403e558010a3cee332606344775"
+      "bytes": 5761,
+      "sha256": "a61801a193e8e7d49a6c8011e6d5aea38a2386c6680b0e7788e63c74fb161237"
     },
     {
       "path": "npc-skills/skills/zhiyu-moments/references/professional-posts.md",
@@ -2394,8 +3359,8 @@
     },
     {
       "path": "npc-skills/skills/zhiyu-moments/references/runtime-integration.md",
-      "bytes": 8310,
-      "sha256": "ff3a1ce9434e1fa1fc372000441335eec945d8997c2829be4200e4a3a1c3ad06"
+      "bytes": 8263,
+      "sha256": "8be49aef3a3d42f4f8bdc3e258152bdc6b588d5358afc06b95834d5543f9863c"
     },
     {
       "path": "npc-skills/skills/zhiyu-moments/scripts/validate_payload.py",
@@ -2409,8 +3374,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 1478,
-      "sha256": "bb68ca23be54f3cf6443d53d3bf5149c1ae900208987fb1231a0f6c70012090f"
+      "bytes": 1671,
+      "sha256": "f15fa12e4bb12584b9fe6493648dd7ec7eddb9f94970aa92002cce059d137b06"
     },
     {
       "path": "public/desktop-npc/assets/20260927/xu-xiaoman/01-face-front-v1.png",
@@ -3324,8 +4289,8 @@
     },
     {
       "path": "scripts/check-all-npc-live.mjs",
-      "bytes": 2892,
-      "sha256": "4a8961ae5bb55af05715ca4918227cad6dae199ef916252c4c61a80a6531c147"
+      "bytes": 2910,
+      "sha256": "a5bf24c09641d2af254fa0034c752802115c94b50e3d688617b1b7eb2b6c7341"
     },
     {
       "path": "scripts/check-casual-chat-runtime.mjs",
@@ -3339,8 +4304,8 @@
     },
     {
       "path": "scripts/check-he-data-preservation-20261006.mjs",
-      "bytes": 3403,
-      "sha256": "edaaad9557ab6cb41d3a8bd8b4d59b1fde4f67b68750df4c33f3e6c6740e80dc"
+      "bytes": 3419,
+      "sha256": "437059b885412cb91dc9d615f7672f39e84acb2251dafbff23101be669b5e405"
     },
     {
       "path": "scripts/check-humanizer-runtime.mjs",
@@ -3394,8 +4359,8 @@
     },
     {
       "path": "scripts/evaluate-npc-naturalness.mjs",
-      "bytes": 7029,
-      "sha256": "1e39142b1c64aa659e42c4ac294fe1e022b1c5a4049b1bb3e783115f1c23de9e"
+      "bytes": 7038,
+      "sha256": "98e98618b9d140ad35cea70b04012c05baa7f960ab0c5460592731bb439c8d4b"
     },
     {
       "path": "scripts/evaluate-npc-story-review.mjs",
@@ -3428,9 +4393,19 @@
       "sha256": "5fe64ecaccf71f708b2a84e1060506d191f31c01a73caffad4a707893d73f5ee"
     },
     {
+      "path": "scripts/lint-style.mjs",
+      "bytes": 2350,
+      "sha256": "90e948a697b36b5a6d5ad171dcdc318dfa702ed0de136e017218cd4686c22d9c"
+    },
+    {
       "path": "scripts/musetalk-still-mps.py",
       "bytes": 7744,
       "sha256": "ddd1941c6942015b4cc5a6f63986d5d6c5ea03450f84aafe321ff654ba25023f"
+    },
+    {
+      "path": "scripts/npc-exam.mjs",
+      "bytes": 13615,
+      "sha256": "4ff2c39fdd757a7a32b31ff1dc5a63458a8060e1cff61c8572bb8bcba748ba26"
     },
     {
       "path": "scripts/npc-test-runtime.mjs",
@@ -3499,13 +4474,13 @@
     },
     {
       "path": "scripts/task-page-ui-fixture.mjs",
-      "bytes": 17689,
-      "sha256": "58e7d399ecaec05fb8de570d9c89d6f1eb1155b0547a82af9367ac3563ecbb24"
+      "bytes": 19751,
+      "sha256": "5d5707df9b7a4e5a06a33bbb547ccf82a2462dd9a16a144b2e19fa95b10dae67"
     },
     {
       "path": "scripts/test-all-npc-capabilities.mjs",
-      "bytes": 5562,
-      "sha256": "dd5ab34b4d12f95149bd42b458f5c6a51ebaadd03d8d7cce9491c9dba1802ab3"
+      "bytes": 5604,
+      "sha256": "9fdef5b0503401dbced0a477d027a0079df393119f4d452b2ec3ff45ae252c33"
     },
     {
       "path": "scripts/test-anqiujin-recipe-library.mjs",
@@ -3514,8 +4489,8 @@
     },
     {
       "path": "scripts/test-chat-layout-quotes.cjs",
-      "bytes": 3060,
-      "sha256": "d10e2a759a35ae95125de70f1ce49075ae9256e1e60f7407f8097b6ef5c66655"
+      "bytes": 3188,
+      "sha256": "1a2fdc1911c369ec291c8b96bc1f055912fdee896402b0e37b09720a825e753c"
     },
     {
       "path": "scripts/test-chat-media.mjs",
@@ -3623,14 +4598,24 @@
       "sha256": "3fa59759360cbf844c8badb26e778040d8f02a62707b8ca4b71bae1a27aedad0"
     },
     {
+      "path": "scripts/test-dialogue-layering.mjs",
+      "bytes": 5583,
+      "sha256": "6b51f2f0f8e14cc008301bbc51394d5ed313b299f0521688c1268ae51842b6e1"
+    },
+    {
       "path": "scripts/test-dialogue-prompts.mjs",
       "bytes": 12313,
       "sha256": "5e42f45249f621fe68ea58b8b71f7f18c4b8a59c62969a1515fb552e87086aef"
     },
     {
       "path": "scripts/test-dialogue-unified-surfaces.mjs",
-      "bytes": 6995,
-      "sha256": "d8a2f96e39d855bd1c630fe1b3df9d644cc4f4591a676c6c5b7b488567e1469d"
+      "bytes": 8947,
+      "sha256": "6cd355f9bf2fc84a80c66bd42a7627043a4b42a02f750835ed3e640139495f70"
+    },
+    {
+      "path": "scripts/test-experience-redesign.mjs",
+      "bytes": 13830,
+      "sha256": "82651a952691cc77ac6837b665eabb3d7150574bf11fccee018227deedb83468"
     },
     {
       "path": "scripts/test-fitness-demonstrations.mjs",
@@ -3654,8 +4639,8 @@
     },
     {
       "path": "scripts/test-group-chat.mjs",
-      "bytes": 14393,
-      "sha256": "ceefc435e16109ffd0f4caf00544a2a7b342aaaf8df381e02cbd28afe1bd2d44"
+      "bytes": 14401,
+      "sha256": "6a0e8104731dfd778ccdcf747759863571ea6b0214207521b564005d680c151f"
     },
     {
       "path": "scripts/test-group-chen-coach-knowledge.mjs",
@@ -3704,8 +4689,8 @@
     },
     {
       "path": "scripts/test-group-social-continuity.mjs",
-      "bytes": 16172,
-      "sha256": "4d0df09d2b0f7cbf7845b4c7f0e04ea9b9bb4c0145969ef969fa25d67ab002c1"
+      "bytes": 16178,
+      "sha256": "5fba0d8afd76bc354ef8244f8f9a2d9fc093d0ced095ab6de90a76c3e9e260ef"
     },
     {
       "path": "scripts/test-group-task-auto-skip.mjs",
@@ -3724,13 +4709,13 @@
     },
     {
       "path": "scripts/test-humanizer-conversation.mjs",
-      "bytes": 3104,
-      "sha256": "f4aaf72c025b0f4443fc52d591de8ac9912aded6e46237116644ca348f6c8775"
+      "bytes": 3189,
+      "sha256": "4fc5ae7d44d00803af7c8f3f78d7ee0ca9b646ecb4b6a0a39b25531322bd4e87"
     },
     {
       "path": "scripts/test-humanizer-familiarity.mjs",
-      "bytes": 3514,
-      "sha256": "e84adc963a4ab8a32c33121401da84f27665fd27ebc3cd0733d533b82301c269"
+      "bytes": 3641,
+      "sha256": "f9e7b021b18e3a00264e569f470c9ef7c7e39b9fcb36506f650896edb2108ab1"
     },
     {
       "path": "scripts/test-humanizer-live.mjs",
@@ -3739,13 +4724,13 @@
     },
     {
       "path": "scripts/test-humanizer-reactions.mjs",
-      "bytes": 3440,
-      "sha256": "796190d315b1f1f15c8dcefed92154289757ce661cb2ff3398cce69f704a2378"
+      "bytes": 3525,
+      "sha256": "0c5732256d030bf3204004a91a33e0dd5c7a5dc06d846789df9534b7ba5b09fc"
     },
     {
       "path": "scripts/test-humanizer-targeted.mjs",
-      "bytes": 3371,
-      "sha256": "b593429b5ca2643ef6b241d8b9da8fd8e9893d177bc454f41238d49b15050fb9"
+      "bytes": 3456,
+      "sha256": "85087b3481ed75c519e19a48d424789d31063340870b8d6b7068bb508e149aef"
     },
     {
       "path": "scripts/test-humanizer.mjs",
@@ -3754,8 +4739,13 @@
     },
     {
       "path": "scripts/test-image-generation.mjs",
-      "bytes": 7086,
-      "sha256": "759e84c10e03c23821511f8bd5a510c26ef74594584eb92654a02bd735bb5631"
+      "bytes": 6235,
+      "sha256": "a9a4dc30b512e586a06cf17d6fde83aa0d9336dd29c614a7a59be419b177678e"
+    },
+    {
+      "path": "scripts/test-image-identity-library.mjs",
+      "bytes": 6243,
+      "sha256": "0b00a966f7ac3d7451b219e1100e2273694fe71e80dfe3d63c63e33e54ee5b04"
     },
     {
       "path": "scripts/test-image-provider-connection.mjs",
@@ -3798,14 +4788,19 @@
       "sha256": "63972d418800d96d0ecb602bb039b730e9eea849eec336aef5115d8d201f262d"
     },
     {
+      "path": "scripts/test-message-failure-retry.mjs",
+      "bytes": 5710,
+      "sha256": "cecf4e7faea8bac28d2683db5340849980e2bb028c99168b7ac88f649c956c4b"
+    },
+    {
       "path": "scripts/test-molly-dialogue.mjs",
-      "bytes": 21512,
-      "sha256": "8fa7425d9481d9a0041925a189d02caa11ff9d7215e0ea400b6e7af36a14875e"
+      "bytes": 21513,
+      "sha256": "57fa070ccc6fe35860d5f4436a35fbad0a593d9f6e15961eb33b7109403868e7"
     },
     {
       "path": "scripts/test-molly-live.cjs",
-      "bytes": 3589,
-      "sha256": "b1540fa4cfe73bc4c3bfa7cc0a282835d025748c0896acd5bc9490177b5aaaff"
+      "bytes": 3845,
+      "sha256": "7310f958d1b6874bedf90d5cabaf2e0c3c162d0621cd88bad8db59c7b62b138d"
     },
     {
       "path": "scripts/test-molly-race.mjs",
@@ -3814,8 +4809,8 @@
     },
     {
       "path": "scripts/test-molly-refresh.cjs",
-      "bytes": 2284,
-      "sha256": "07871a3a95a34a1db96803c201d1de6c2553ed08d5d1b110ed2d010716f43296"
+      "bytes": 2418,
+      "sha256": "5a42d39f212367074796e9c990c6789c708aecd24262187c2e7610e19d9e4ec5"
     },
     {
       "path": "scripts/test-molly-runtime-boundaries.mjs",
@@ -3849,8 +4844,13 @@
     },
     {
       "path": "scripts/test-moment-media-v2.mjs",
-      "bytes": 20462,
-      "sha256": "9af3ad1f464a2fd7a7c1ba7f266e514ed03b6cf81b4518aa6dad950eda437fc8"
+      "bytes": 20676,
+      "sha256": "067b91f67ec92073be968aa6fc79abb43874b933c5ea7536e7fdb271757cbf3c"
+    },
+    {
+      "path": "scripts/test-moment-policy-runtime.mjs",
+      "bytes": 2963,
+      "sha256": "81bc993dad3d55633a5c5e52e6f430d20026dc4dc815707e4183fce4fc8bbae9"
     },
     {
       "path": "scripts/test-moment-policy-v2.mjs",
@@ -3864,8 +4864,8 @@
     },
     {
       "path": "scripts/test-moment-relationships.mjs",
-      "bytes": 6142,
-      "sha256": "9d722a17d927d2428a6e833710a2d6cf27b754fa075ecb666d3a1331d6a74d3e"
+      "bytes": 6143,
+      "sha256": "2fb6958232685609fce632fd314824f6b2a768778e058f8275d353d568866e41"
     },
     {
       "path": "scripts/test-moment-social-v2.mjs",
@@ -3879,13 +4879,13 @@
     },
     {
       "path": "scripts/test-npc-approved-style.mjs",
-      "bytes": 3933,
-      "sha256": "95986553817b1f06d631881ed3d25e83cec01fa7bb6ea743d4e3c44c6626d4b2"
+      "bytes": 3947,
+      "sha256": "92e52b4ef45c13199fc28730b358c911bda28ea5540f26622ddfdaeab39df83d"
     },
     {
       "path": "scripts/test-npc-density.mjs",
-      "bytes": 3954,
-      "sha256": "b4455e96a0170d4247f6423f22346f05dc1d081c650e1ba0afca75c703700e14"
+      "bytes": 4039,
+      "sha256": "9840f6b81134a39d153056b878dc6f095e1eea9568c36d24bfe5d9c8db13ddd4"
     },
     {
       "path": "scripts/test-npc-dialogue-parsers.mjs",
@@ -3914,8 +4914,8 @@
     },
     {
       "path": "scripts/test-npc-moments-ui.cjs",
-      "bytes": 5029,
-      "sha256": "63ea05e77083cd23609008beb20342143cfb6558ffbf4ad159a1dc6b34efd8a3"
+      "bytes": 5287,
+      "sha256": "2bf30be6076886046a89e5e223cf93ed031d4fb5e0ec8bb24e20fbc4ebf836ce"
     },
     {
       "path": "scripts/test-npc-moments.mjs",
@@ -3944,13 +4944,13 @@
     },
     {
       "path": "scripts/test-private-chat-history.mjs",
-      "bytes": 8116,
-      "sha256": "a6cbe3b7864063d8426a3000d733476256184a8758b35173f8564d32501c041b"
+      "bytes": 8123,
+      "sha256": "824a66b9de9eadf944a4e555b7da03516ed6232ef2c0ed01836d20c11e8c4111"
     },
     {
       "path": "scripts/test-private-delegation.mjs",
-      "bytes": 17208,
-      "sha256": "1a020d6ec5d8aa29bc860269dc0309174f77614f984e8a3a3f8831ef5e4d7331"
+      "bytes": 17259,
+      "sha256": "479b008cda78a4206c18e7ca952752f2ffaa63f018a2adb5ec62bfb67303f0e2"
     },
     {
       "path": "scripts/test-professional-task-backend.mjs",
@@ -4039,13 +5039,18 @@
     },
     {
       "path": "scripts/test-scheduled-moments-ui.cjs",
-      "bytes": 1663,
-      "sha256": "caf6ee32a9e4b99fbdbf2e71aa1e8a78602cad2f4b2170fab9556da1a2b5637a"
+      "bytes": 1919,
+      "sha256": "fba12e0060bc33dc097cf236331ab5f1188d74f7af5cbeba8f5adf50df7e0fb6"
     },
     {
       "path": "scripts/test-scheduled-moments.mjs",
       "bytes": 2940,
       "sha256": "7ef142efb384be2a6f1722ad8960d3bbafdefafa65a3860cd2a57f25a1a002f6"
+    },
+    {
+      "path": "scripts/test-secretary-report-presentation.mjs",
+      "bytes": 4631,
+      "sha256": "b94d28dbdd24fdf99bc5519e95ec82622d7fd5c66e2e6e870eb9882dc3a5e05e"
     },
     {
       "path": "scripts/test-six-character-roles.mjs",
@@ -4064,8 +5069,8 @@
     },
     {
       "path": "scripts/test-social-resolution-and-delivery.mjs",
-      "bytes": 7531,
-      "sha256": "69a0a76e764b35d71d0cfbee40062c39afb14111e4368a6e8d18d317c3e2662e"
+      "bytes": 7559,
+      "sha256": "b8310ee14c236979b8f0f344b5d57a666400a6452c5a866753807ad41ffe92d7"
     },
     {
       "path": "scripts/test-style-retrieval.mjs",
@@ -4119,8 +5124,13 @@
     },
     {
       "path": "scripts/test-unified-dialogue-package.mjs",
-      "bytes": 8611,
-      "sha256": "f0ca8d1cc500a2a944372d2641a47edd55156fee0d5914d6f347f08f2658beea"
+      "bytes": 12151,
+      "sha256": "ea8d6669057beb27fa3a9c4b17182a064472f4c8242d6e7c221d85ce8b7577c8"
+    },
+    {
+      "path": "scripts/test-user-facing-copy.mjs",
+      "bytes": 1768,
+      "sha256": "e90b3da5281583d4edb713e78e6fbe16ccb1026be454898e3e7bcc547befa324"
     },
     {
       "path": "scripts/test-voice-review.mjs",
@@ -4149,8 +5159,8 @@
     },
     {
       "path": "scripts/test-xia-conversation.cjs",
-      "bytes": 3187,
-      "sha256": "95777f2ab8e88acf315ac0fe4d20418d817c3f4f33bdd5c0e14bd67b58414889"
+      "bytes": 3443,
+      "sha256": "02b558ad4838d8c0cca384d407acb6d12349d3406750126d5f563da47a05d84a"
     },
     {
       "path": "scripts/test-xia-life.mjs",
@@ -4169,18 +5179,18 @@
     },
     {
       "path": "scripts/test-xia-ui.cjs",
-      "bytes": 3470,
-      "sha256": "c66fb23293b03fd49df90e9e76dc6836fe8e8c51ef478cb75da1ecd5cd4ea5fb"
+      "bytes": 3854,
+      "sha256": "2f55667472e96ebec2b37ac1143bcda46af42c75302ea58a3824fa686bfaf5ea"
     },
     {
       "path": "scripts/test-xia-xia.mjs",
-      "bytes": 8526,
-      "sha256": "62f66d007b5760e7044de0245fd0c826a0c5bf089ce5c1b7bc4d4a62867a64e3"
+      "bytes": 8520,
+      "sha256": "150950eb80c8211bee526a2dea5fb2c5790f6235823d7743b7fc23f3cb4c9ed4"
     },
     {
       "path": "scripts/test-yuan-live.cjs",
-      "bytes": 2950,
-      "sha256": "6a66a3b82c87c555253d6033bd1de23b51968a5f94e77ea77ab88f548075afff"
+      "bytes": 3206,
+      "sha256": "edcd8a55e6b91fe741dfaad0f83d41c0c224c169f477bff04f39695a7af77620"
     },
     {
       "path": "scripts/test-yuan.mjs",
@@ -4189,13 +5199,18 @@
     },
     {
       "path": "scripts/test-zhiyu.cjs",
-      "bytes": 6142,
-      "sha256": "b7cfd791e59fcae66df653480fe75013685784c1e4cbd3c56f7928c5c2962347"
+      "bytes": 6398,
+      "sha256": "6346a98201fb68b0143bf0491a2ef265729d20751155e7e583ea69272f873b25"
     },
     {
       "path": "scripts/ui-only.vite.config.mjs",
       "bytes": 707,
       "sha256": "692d9e684990373bf20a375abe7e075b0a9f79aff4e055ff79abac54c0b7a868"
+    },
+    {
+      "path": "scripts/user-facing-copy-check.mjs",
+      "bytes": 7117,
+      "sha256": "fbead9715594d0eb58577eade8df24dad9f3735a813584ed2434fbb98dea3e38"
     },
     {
       "path": "scripts/validate-chen-acsm-foundation.mjs",
@@ -4259,8 +5274,8 @@
     },
     {
       "path": "server/npc/auth-plugin.ts",
-      "bytes": 11843,
-      "sha256": "b2e0e5b66c2ca3a5bc6b2fbfe82c506722b208674118bcd1dce3d06e9b4c098c"
+      "bytes": 12058,
+      "sha256": "4ef2aa89fcd45287564eba1c9ff4c86027bf1cae35d31b0f1fd53d1531887f8d"
     },
     {
       "path": "server/npc/character-profile.ts",
@@ -4299,8 +5314,8 @@
     },
     {
       "path": "server/npc/chen-plugin.ts",
-      "bytes": 17895,
-      "sha256": "97d2acbf0f9fd31e739694d9591529fd522dd3dcf8bfc03eba6719d45870605c"
+      "bytes": 18068,
+      "sha256": "e4015f7e07e5a1b7d3908d5810549ced4894a54c94220f941f31a3689e415a1e"
     },
     {
       "path": "server/npc/chen-professional-task.test.ts",
@@ -4334,8 +5349,8 @@
     },
     {
       "path": "server/npc/codex.ts",
-      "bytes": 112270,
-      "sha256": "c19f5b8f5027415741e6270fe7386a07ee1d96fbd6f52d4774516b0e8ad72323"
+      "bytes": 113881,
+      "sha256": "5bff010dabd30e33ec59cd245cfd185f1b2eb789592d74e4f71c4f0d43870c26"
     },
     {
       "path": "server/npc/companion-knowledge.ts",
@@ -4354,8 +5369,8 @@
     },
     {
       "path": "server/npc/dialogue-skill.ts",
-      "bytes": 14465,
-      "sha256": "ab415f2afb0ad1f498c308fc3420ba22e25d40005d2ee100d2154af69f2debb9"
+      "bytes": 16233,
+      "sha256": "eab0464284081c9ccd46884e4b4a053509cf62521fce54dc6c6b8fb6af143185"
     },
     {
       "path": "server/npc/doubao-audio.ts",
@@ -4363,9 +5378,19 @@
       "sha256": "f78a97fb5a5ff93cdc9fc46d997b34fcb216ed1f3a24baa0e7fa5d0854d29bdb"
     },
     {
+      "path": "server/npc/experience-onboarding.ts",
+      "bytes": 2104,
+      "sha256": "a05c77fb289885c0fcfab3cb661335be21fc52e70277f406422cc378fd0e6411"
+    },
+    {
+      "path": "server/npc/experience-reports-store.ts",
+      "bytes": 15763,
+      "sha256": "c4e670b4c69773f93442ddbde0167271f927af9dd5e6c9904ef1950d26fd4d18"
+    },
+    {
       "path": "server/npc/group-dialogue.ts",
-      "bytes": 47681,
-      "sha256": "e7a3f201d01af1258015830353f6aae9d20a4ed6f4035cda782d5d9469259057"
+      "bytes": 48945,
+      "sha256": "1d627f69a6da0e313f3366992a869d57765e4de2c7f9b2ee6f49b26c379285ce"
     },
     {
       "path": "server/npc/group-media.ts",
@@ -4394,13 +5419,13 @@
     },
     {
       "path": "server/npc/group-task-memory.ts",
-      "bytes": 14507,
-      "sha256": "3dafdd5068cc8daf91e060350f375e2c1d872a166e091682cdc1e319fce537b8"
+      "bytes": 15364,
+      "sha256": "1e2108425d54b5aefd5a23cc4c1197822448b7552ad5f2a9ab567b2c3682e6c6"
     },
     {
       "path": "server/npc/groups-plugin.ts",
-      "bytes": 50277,
-      "sha256": "25dd0e945277d9496946c94883fc91693e557cf7e6bea26c8c73f439d406ac7e"
+      "bytes": 51832,
+      "sha256": "5518a7488c17f769592cf7ea615944c455bfbdc631da2312dbbf5d7946e28ba2"
     },
     {
       "path": "server/npc/he-auth.test.ts",
@@ -4409,8 +5434,8 @@
     },
     {
       "path": "server/npc/he-plugin.ts",
-      "bytes": 13825,
-      "sha256": "f03582decf0800314d923012a9ea71d125bd0a504e5884dc5ee1023792f7d178"
+      "bytes": 14015,
+      "sha256": "c31cc3a2b327e604376f1382e91e48c660b9b2107a5e106a88f87e7335b93e59"
     },
     {
       "path": "server/npc/he-prompt.ts",
@@ -4423,9 +5448,19 @@
       "sha256": "43feda7205f08b481b7ea692282222b08b6954022dadbcc1da0f5e4415878851"
     },
     {
+      "path": "server/npc/image-aigc-metadata.ts",
+      "bytes": 4044,
+      "sha256": "6d533132a1334c9231cfebe9828b3986006ec0a0bf4264b97fc29e85eac008e0"
+    },
+    {
+      "path": "server/npc/image-asset-library.ts",
+      "bytes": 4614,
+      "sha256": "b7a42f92ae388609496f7a8b7429bf0305d5d9957e2e99a82be012c8b21ec89f"
+    },
+    {
       "path": "server/npc/image-generator.ts",
-      "bytes": 12563,
-      "sha256": "f01e0fd1ff9020a8c6606fa281b7cb3614a36908af063e08b1d253ea4d0f84a0"
+      "bytes": 14943,
+      "sha256": "350cd576a2a364980d07a58c75666ea03190b278ae2caa0984f378ec4900250e"
     },
     {
       "path": "server/npc/image-worker.ts",
@@ -4439,8 +5474,8 @@
     },
     {
       "path": "server/npc/liu-plugin.ts",
-      "bytes": 13233,
-      "sha256": "9f1a98f6245c3d0f6acc2a9116376d051ff21c5faa219271d6b20387b0e41df6"
+      "bytes": 13413,
+      "sha256": "dbcfe5d4fe389fe31d49cc39cd869e190192a8c1d89ec6b34c0e5550fc7ac56e"
     },
     {
       "path": "server/npc/liu-prompt.ts",
@@ -4464,13 +5499,13 @@
     },
     {
       "path": "server/npc/molly-plugin.ts",
-      "bytes": 11706,
-      "sha256": "8b2b55c3bd2dbef0320c33a0e2ea04887020302e71cf73e22f2919ad1d96591b"
+      "bytes": 11884,
+      "sha256": "f3aa391db2fcac484737e17c3ff02a5ed0fbdd6e18b8e0d223dfa00a8515b16f"
     },
     {
       "path": "server/npc/molly-prompt.ts",
       "bytes": 9066,
-      "sha256": "817a86892ec79ca3945c9b5ed1bf37b66151f612ebe3b6772df07efaeb6a32b3"
+      "sha256": "d1705f8a01fc059691f3a52dcd4a8e858b2d05ebd258c64d022888cb05dd02fb"
     },
     {
       "path": "server/npc/moment-interactions.ts",
@@ -4479,23 +5514,23 @@
     },
     {
       "path": "server/npc/moment-media.ts",
-      "bytes": 8232,
-      "sha256": "a2d653a2f576830d350863f7f908a2e4de482f4416580101a7e85a3551aefd08"
+      "bytes": 7681,
+      "sha256": "0dc621f62b7fbfc4908bb63b764ab25bd423610fd3a34cb3f5bbfa0e1971e19e"
     },
     {
       "path": "server/npc/moment-policy.ts",
-      "bytes": 19664,
-      "sha256": "f8ba80f2d69bb7e553d055bf31468d9dac048c1155c4848c893f177063fb94ac"
+      "bytes": 20856,
+      "sha256": "af610b8e82b58638cc4358787acbf78a85471ae6cbd72ce33af66707b1b2db3b"
     },
     {
       "path": "server/npc/moment-relationships.ts",
-      "bytes": 12953,
-      "sha256": "a3bb708c123ed5c3bddeff59513ef6e8951f3d42f0e3cb88f02d5cfbcb773321"
+      "bytes": 12977,
+      "sha256": "3d07d54c29210958c32fafa7dad1d2449f68a85b72b63194e032f828b53798d2"
     },
     {
       "path": "server/npc/moments-plugin.ts",
-      "bytes": 54173,
-      "sha256": "6c64680f348271a0106f56ee704183417ccc9b49d699aec22c5a99a66965f9e7"
+      "bytes": 54954,
+      "sha256": "e522c8a56f822ba6fbe71032bca2b10c6649bd90933e5a509a2de342124eb67a"
     },
     {
       "path": "server/npc/moments.ts",
@@ -4504,13 +5539,13 @@
     },
     {
       "path": "server/npc/plugin.ts",
-      "bytes": 16267,
-      "sha256": "6946832c64d63a167b21dfe42ded0d8aebf32b642325031d28854c1b45f40a30"
+      "bytes": 16429,
+      "sha256": "53f81cbbd5d75b0dffa7c8986007ea8cc97a3377afdaa1c0e0f887e3583bfb5b"
     },
     {
       "path": "server/npc/private-delegation-receiver.ts",
-      "bytes": 16179,
-      "sha256": "e385b8e66c8ecef62b78c6901b9baf2118e95f0c2dcd7e278842e5c8edf7399b"
+      "bytes": 16208,
+      "sha256": "b9963c10a7d3c7e791ba4a74bfe77c0d17887431268fc56a124031fc94a8748f"
     },
     {
       "path": "server/npc/private-history.ts",
@@ -4554,8 +5589,8 @@
     },
     {
       "path": "server/npc/qwen-audio.ts",
-      "bytes": 5042,
-      "sha256": "7552e7c9d23cf8f8f35db6c01aad4eba913afe441af6fc3d9586024a2754c63c"
+      "bytes": 5221,
+      "sha256": "1f3365d17ed21d4d7f21fa1989c2b404ddc172ee968b1ef663753a6f07f41040"
     },
     {
       "path": "server/npc/qwen-local-worker.ts",
@@ -4569,8 +5604,8 @@
     },
     {
       "path": "server/npc/realtime-speech-context.ts",
-      "bytes": 11542,
-      "sha256": "87cf3ad1efc5eedfd55e0d72e3cd1b1e6e7550af4f8ddf2057bba0201916c305"
+      "bytes": 11577,
+      "sha256": "6e92a59cc3fc059f17099a2638369618238bc3bbad3f5d6218defe6f864996a4"
     },
     {
       "path": "server/npc/realtime-speech-gateway.ts",
@@ -4594,23 +5629,28 @@
     },
     {
       "path": "server/npc/scheduled-moments.ts",
-      "bytes": 6821,
-      "sha256": "f5f825d5f4b232721452bd62c4bce8bba43f1b52eb57a7a7a5f2dcb51070b857"
+      "bytes": 6445,
+      "sha256": "5d64fbb24624c612a51096f3d591254d2a2238e061322188818e898a69d7f05a"
     },
     {
       "path": "server/npc/scheduler.ts",
-      "bytes": 4504,
-      "sha256": "d64222c443d4a5ad9d8c05e01ebee5f2c0bd3bcfce3020d587638b3e948f84bf"
+      "bytes": 4479,
+      "sha256": "b4b5f122717622d551ce7bfc60fd1fa7b8cc65d6c21b6cef4d4edf7b43a8d3e8"
     },
     {
       "path": "server/npc/secretary-plugin.ts",
-      "bytes": 4107,
-      "sha256": "a41739b900fb493ac8a662cb9728858a9b7cdd2928f8677b343a9403acb110e2"
+      "bytes": 5163,
+      "sha256": "0f9e6fa58d724872cfb325d3bb158953489572c055641172ea9aa2482522e72a"
+    },
+    {
+      "path": "server/npc/secretary-reports.ts",
+      "bytes": 9851,
+      "sha256": "5ced1881b5040014e5f8d3d14cad8e20bce5bd126b875a7112d3b5784ce13f8f"
     },
     {
       "path": "server/npc/secretary-service.ts",
-      "bytes": 16017,
-      "sha256": "8d84eea9b3987473ef55a250be1c8d41101f6ded315e42c49e1f901356bc047d"
+      "bytes": 16266,
+      "sha256": "92e7c84e6aeda14fceaf8a54e38394c9b29436dbdace91aff09ca02187019497"
     },
     {
       "path": "server/npc/secretary-tasks.ts",
@@ -4644,13 +5684,18 @@
     },
     {
       "path": "server/npc/voice-worker.ts",
-      "bytes": 3222,
-      "sha256": "c465ec02c371426855a9d7e6818f492dd6bff52e1a316f89538cf68cf209608c"
+      "bytes": 5604,
+      "sha256": "df1113250e5f1842e0eb80740eddd331143ec478fd748e3e137620ad08b71976"
+    },
+    {
+      "path": "server/npc/weather-provider.ts",
+      "bytes": 4237,
+      "sha256": "57757a6b46ba4e5c0fd7fa31d6a1bee51dfc2b4f53580b320e9ae93c3d1fc149"
     },
     {
       "path": "server/npc/ws-types.d.ts",
-      "bytes": 1767,
-      "sha256": "c327fde46896612b375298d55b9fccc48f68eac7c1101e888fa0e7b120777097"
+      "bytes": 1880,
+      "sha256": "49a190ba8644896b6d11885be60495557a10a6d26ff3c050c54262f16be5a36d"
     },
     {
       "path": "server/npc/xia-anime-knowledge.ts",
@@ -4659,8 +5704,8 @@
     },
     {
       "path": "server/npc/yuan-plugin.ts",
-      "bytes": 12171,
-      "sha256": "1b1069dad5f92cd3d836cd4c8ba6c90c5e7dabfc1d08c469fd9110e4e113dc37"
+      "bytes": 12369,
+      "sha256": "b05c2e16b2ccb5b5d6aa5eef9c869de090f83cd1ca9a9541aeae2ea273b14422"
     },
     {
       "path": "server/npc/yuan-prompt.ts",
@@ -4674,8 +5719,8 @@
     },
     {
       "path": "server/npc/zhou-chef-plugin.ts",
-      "bytes": 24622,
-      "sha256": "a97d04f02e0e4218fe048d4dec1feeeac7ba6bb35e1370f3580c377ad9ae2b1b"
+      "bytes": 24812,
+      "sha256": "ed09ff67a402dfa8f4f162882f1ed86ad72e67e1da7da785fab8758b0d0f0058"
     },
     {
       "path": "server/npc/zhou-chef-prompt.ts",
@@ -7914,8 +8959,8 @@
     },
     {
       "path": "vite.config.ts",
-      "bytes": 5224,
-      "sha256": "bcad93cc14dfb33c1ea4b55513a5fa7b78a22460c94f5e2704d4fa433d42a723"
+      "bytes": 5266,
+      "sha256": "1cde8ad985dc960cdcebb98e60fec3e2c35cfecc2595a83ef46a283af0dad61a"
     }
   ]
 }

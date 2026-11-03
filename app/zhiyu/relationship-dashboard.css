@@ -1,31 +1,31 @@
 .relationship-dashboard{flex:1;min-height:0;overflow:auto;background:#faf9f7;color:#302c28;padding:0 0 32px;scrollbar-width:thin}
-.relationship-dashboard-head{height:66px;display:flex;align-items:center;gap:22px;padding:0 28px;background:#fff;border-bottom:1px solid #eceae7;color:#77716b;font-size:13px}
-.relationship-dashboard-head button{display:flex;align-items:center;gap:7px;padding:7px 10px;border:0;border-radius:9px;background:#f5f2ef;color:#5b554f;font:inherit;cursor:pointer}
+.relationship-dashboard-head{height:66px;display:flex;align-items:center;gap:22px;padding:0 28px;background:#fff;border-bottom:1px solid #eceae7;color:#77716b;font-size:calc(13px + var(--zy-font-adjust,0px))}
+.relationship-dashboard-head button{display:flex;align-items:center;gap:7px;padding:7px 10px;border:0;border-radius:10px;background:#f5f2ef;color:#5b554f;font:inherit;cursor:pointer}
 .relationship-dashboard-head button:hover{background:#ebe6e0}
 .relationship-dashboard-content{width:min(760px,calc(100% - 48px));margin:42px auto}
 .relationship-intro{margin-bottom:28px}
-.relationship-kicker{color:#c18469;font-size:10px;letter-spacing:.18em;font-weight:700}
-.relationship-intro h2{margin:7px 0 8px;font-size:24px;font-weight:600;letter-spacing:.01em}
-.relationship-intro p,.relationship-unlock-card p,.relationship-footnote{color:#8b847c;font-size:13px;line-height:1.7}
+.relationship-kicker{color:#c18469;font-size:calc(11px + var(--zy-font-adjust,0px));letter-spacing:.18em;font-weight:600}
+.relationship-intro h2{margin:7px 0 8px;font-size:calc(20px + var(--zy-font-adjust,0px));font-weight:600;letter-spacing:.01em}
+.relationship-intro p,.relationship-unlock-card p,.relationship-footnote{color:#8b847c;font-size:calc(13px + var(--zy-font-adjust,0px));line-height:1.7}
 .relationship-intro p{margin:0}
 .relationship-values{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.relationship-value{padding:17px 18px;background:#fff;border:1px solid #eeeae5;border-radius:14px}
+.relationship-value{padding:17px 18px;background:#fff;border:1px solid #eeeae5;border-radius:12px}
 .relationship-value-copy{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
-.relationship-value-copy strong{display:block;color:#49433e;font-size:14px;font-weight:600}
-.relationship-value-copy small{display:block;margin-top:4px;color:#a29b94;font-size:11px}
-.relationship-value-copy b{font-size:20px;font-weight:600;color:#6d6158;font-variant-numeric:tabular-nums}
-.relationship-track{height:6px;overflow:hidden;background:#f0ece8;border-radius:9px}
-.relationship-track i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#e3b59e,#c88068);transition:width .35s ease}
-.relationship-unavailable{margin:16px 2px;color:#99928c;font-size:12px}
+.relationship-value-copy strong{display:block;color:#49433e;font-size:calc(14px + var(--zy-font-adjust,0px));font-weight:600}
+.relationship-value-copy small{display:block;margin-top:4px;color:#a29b94;font-size:calc(11px + var(--zy-font-adjust,0px))}
+.relationship-value-copy b{font-size:calc(20px + var(--zy-font-adjust,0px));font-weight:600;color:#6d6158;font-variant-numeric:tabular-nums}
+.relationship-track{height:6px;overflow:hidden;background:#f0ece8;border-radius:10px}
+.relationship-track i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,#e3b59e,#c88068);transition:width .35s ease}
+.relationship-unavailable{margin:16px 2px;color:#99928c;font-size:calc(12px + var(--zy-font-adjust,0px))}
 .relationship-unlocks{margin-top:33px}
-.relationship-unlocks h3{margin:0 0 13px;font-size:15px;font-weight:600;color:#514b45}
-.relationship-unlock-card{display:flex;align-items:center;gap:13px;margin:10px 0;padding:16px;background:#fff;border:1px solid #eeeae5;border-radius:14px}
-.relationship-unlock-icon{width:34px;height:34px;display:grid;place-items:center;flex:none;border-radius:11px;background:#f5f1ed;color:#b39a8a;font-size:18px}
+.relationship-unlocks h3{margin:0 0 13px;font-size:calc(14px + var(--zy-font-adjust,0px));font-weight:600;color:#514b45}
+.relationship-unlock-card{display:flex;align-items:center;gap:13px;margin:10px 0;padding:16px;background:#fff;border:1px solid #eeeae5;border-radius:12px}
+.relationship-unlock-icon{width:34px;height:34px;display:grid;place-items:center;flex:none;border-radius:10px;background:#f5f1ed;color:#b39a8a;font-size:calc(16px + var(--zy-font-adjust,0px))}
 .relationship-unlock-card.is-open .relationship-unlock-icon{background:#f6eadf;color:#be795b}
 .relationship-unlock-card>div{flex:1;min-width:0}
-.relationship-unlock-card strong{font-size:13px;font-weight:600;color:#514b45}
-.relationship-unlock-card p{margin:4px 0 0;font-size:12px}
-.relationship-unlock-card>small{flex:none;color:#a29991;font-size:11px}
+.relationship-unlock-card strong{font-size:calc(13px + var(--zy-font-adjust,0px));font-weight:600;color:#514b45}
+.relationship-unlock-card p{margin:4px 0 0;font-size:calc(12px + var(--zy-font-adjust,0px))}
+.relationship-unlock-card>small{flex:none;color:#a29991;font-size:calc(11px + var(--zy-font-adjust,0px))}
 .relationship-unlock-card.is-open>small{color:#ba795b}
-.relationship-footnote{margin:19px 2px 0;font-size:11px}
+.relationship-footnote{margin:19px 2px 0;font-size:calc(11px + var(--zy-font-adjust,0px))}
 @media(max-width:720px){.relationship-dashboard-head{height:58px;padding:0 16px;gap:12px}.relationship-dashboard-content{width:calc(100% - 32px);margin:28px auto}.relationship-values{grid-template-columns:1fr}.relationship-value{padding:15px 16px}}

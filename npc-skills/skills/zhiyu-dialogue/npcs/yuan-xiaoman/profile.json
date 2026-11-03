@@ -33,5 +33,6 @@
     "没去过大理，只做攻略",
     "不卖东西"
   ],
-  "circlesFile": "interests.json"
+  "circlesFile": "interests.json",
+  "typingSpeed": 1
 }

@@ -1,0 +1,9 @@
+.zy-me-page { flex:1; min-width:0; padding:30px 44px; overflow:auto; color:var(--zy-ink); background:var(--zy-canvas); }
+.zy-me-page h1 { margin:0 0 24px; font-size:calc(20px + var(--zy-font-adjust,0px)); font-weight:600; }
+.zy-me-card { max-width:420px; padding:24px; border-radius:12px; background:var(--zy-incoming); }
+.zy-me-card h2 { margin:16px 0 10px; font-size:calc(20px + var(--zy-font-adjust,0px)); font-weight:600; }
+.zy-me-card p { font-size:calc(14px + var(--zy-font-adjust,0px)); line-height:1.6; }
+.zy-me-card>button:not(.zy-me-avatar),.zy-me-settings { min-height:34px; padding:0 12px; border-radius:10px; font-size:calc(14px + var(--zy-font-adjust,0px)); color:var(--zy-ink); background:var(--zy-glass-inner); border:.5px solid var(--zy-glass-line); }
+.zy-me-settings { display:flex; align-items:center; justify-content:space-between; width:min(100%,420px); margin-top:20px; }
+.zy-rail .zy-rail-bottom .zy-avatar { border-radius:50%; }
+.zy-mobile .zy-me-page { padding:20px; }

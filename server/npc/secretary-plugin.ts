@@ -11,12 +11,12 @@ export function secretaryLocal(deps:SecretaryDependencies&{automatic?:boolean}={
     const root=server.config.root;mkdirSync(join(root,'.npc-runtime'),{recursive:true});
     const db=new DatabaseSync(join(root,'.npc-runtime/state.sqlite'));db.exec('PRAGMA journal_mode=WAL');
     const store=new SecretaryStore(db,root,deps);stores.set(root,store);
-    let ticking=false,closed=false;
+    let ticking=false,reporting=false,closed=false;
     const timer=deps.automatic===false?undefined:setInterval(()=>{
       if(closed)return;
       // The daily clock must run even while an NPC model is still replying.
       store.scanTaskExpiry();
-      store.scanMorning();
+      if(!reporting){reporting=true;void store.scanMorning().then(()=>store.scanReports()).catch(()=>{}).finally(()=>{reporting=false;});}
       if(ticking)return;ticking=true;
       void store.drain().catch(()=>{}).finally(()=>{ticking=false;});
     },1000);
@@ -37,16 +37,24 @@ export function secretaryLocal(deps:SecretaryDependencies&{automatic?:boolean}={
       if(!input||typeof input!=='object'||Array.isArray(input))return reply(400,{error:'请求内容无效'});
       const body=input as Record<string,unknown>;
       try{
-        if(body.action==='settings'&&Object.keys(body).every(key=>['action','enabled','time'].includes(key)))
-          return reply(200,{settings:store.updateSettings(owner,{enabled:body.enabled,time:body.time}),completions:store.completions(owner)});
+        if(body.action==='settings'&&Object.keys(body).every(key=>['action','enabled','time','city'].includes(key)))
+          return reply(200,{settings:store.updateSettings(owner,{enabled:body.enabled,time:body.time,...(body.city!==undefined?{city:body.city}:{})}),completions:store.completions(owner)});
+        if(body.action==='locate-city'&&Object.keys(body).every(key=>['action','query','source'].includes(key)))
+          return reply(200,{city:await store.locateCity(owner,body.query,body.source)});
+        if(body.action==='city'&&Object.keys(body).every(key=>['action','city'].includes(key)))
+          return reply(200,{settings:store.updateCity(owner,body.city)});
+        if(body.action==='report-quote'&&Object.keys(body).every(key=>['action','reportId','characterId'].includes(key)))
+          return reply(200,store.reportQuote(owner,body.reportId,body.characterId));
+        if(body.action==='usage'&&Object.keys(body).every(key=>['action','currentNpc','visible','busy','clientId'].includes(key)))
+          return reply(200,store.usage(owner,body as {currentNpc:string;visible:boolean;busy?:boolean;clientId:string}));
         if(body.action==='completions'&&Object.keys(body).every(key=>['action','changes'].includes(key)))
           return reply(200,{settings:store.settings(owner),completions:store.updateCompletions(owner,body.changes)});
         return reply(400,{error:'不支持的秘书设置'});
-      }catch(error){return reply(400,{error:error instanceof Error?error.message:'设置未保存'});}
+      }catch(error){console.error('Secretary setting request failed',error);return reply(400,{error:'没保存上，再试一次'});}
     })().catch(()=>{if(!res.writableEnded){res.statusCode=500;res.setHeader('Content-Type','application/json');res.end(JSON.stringify({error:'秘书服务暂时不可用'}));}});});
     server.httpServer?.once('close',()=>{closed=true;store.stop();if(timer)clearInterval(timer);if(stores.get(root)===store)stores.delete(root);
       // A receiver may still be awaiting a model. It observes stop before further
       // writes; release this connection only once its tick unwinds.
-      const close=()=>{if(ticking){setTimeout(close,50).unref();return;}db.close();};close();});
+      const close=()=>{if(ticking||reporting){setTimeout(close,50).unref();return;}db.close();};close();});
   }};
 }

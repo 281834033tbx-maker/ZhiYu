@@ -1,20 +1,18 @@
-import assert from 'node:assert/strict';import ts from 'typescript';
-import {cpSync,mkdtempSync,mkdirSync,readFileSync,writeFileSync,readdirSync,rmSync} from 'node:fs';import{join,dirname}from'node:path';import{tmpdir}from'node:os';import{pathToFileURL}from'node:url';import{DatabaseSync}from'node:sqlite';
-const dir=mkdtempSync(join(tmpdir(),'zhiyu-image-tests-'));let db;
+import assert from 'node:assert/strict';
+import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
+import {join} from 'node:path';
+import {DatabaseSync} from 'node:sqlite';
+import {pathToFileURL} from 'node:url';
+import {isolatedNpcRuntime} from './npc-test-runtime.mjs';
+const runtime=isolatedNpcRuntime(),dir=runtime.root;let db;
 try{
- for(const folder of ['server/npc','lib/npc'])for(const name of readdirSync(folder).filter(n=>n.endsWith('.ts'))){
-  const output=join(dir,folder,name.replace('.ts','.mjs'));mkdirSync(dirname(output),{recursive:true});
-  const src=readFileSync(join(folder,name),'utf8').replace(/(from\s+['"])(\.[^'"]+)(['"])/g,'$1$2.mjs$3');writeFileSync(output,ts.transpileModule(src,{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText);
- }
- for(const name of readdirSync('lib/npc').filter(n=>n.endsWith('.json')))writeFileSync(join(dir,'lib/npc',name+'.mjs'),'export default '+readFileSync(join('lib/npc',name),'utf8'));
- cpSync('npc-skills/skills/npc-candid-photo',join(dir,'npc-skills/skills/npc-candid-photo'),{recursive:true});
- const {loadPhotoStyle}=await import(pathToFileURL(join(dir,'server/npc/image-generator.mjs')));
+ const {loadPhotoStyle}=await runtime.load('server/npc/image-generator');
  const style=loadPhotoStyle(dir);
- assert.ok(style.includes(readFileSync('npc-skills/skills/npc-candid-photo/SKILL.md','utf8')));
- assert.ok(style.includes(readFileSync('npc-skills/skills/npc-candid-photo/references/photography-workflow.md','utf8')));
- const workflow=join(dir,'npc-skills/skills/npc-candid-photo/references/photography-workflow.md');
- const original=readFileSync(workflow,'utf8');writeFileSync(workflow,original+'\n更新探针');assert.ok(loadPhotoStyle(dir).endsWith('更新探针'));writeFileSync(workflow,original);
- console.log('PASS full merged Skill and reference content loaded; file updates apply on next generation');
+ assert.ok(style.includes(readFileSync('npc-skills/skills/zhiyu-imagegen/SKILL.md','utf8')));
+ assert.ok(style.includes(readFileSync('npc-skills/skills/zhiyu-imagegen/references/photography-workflow.md','utf8')));
+ const workflow=join(dir,'npc-skills/skills/zhiyu-imagegen/references/photography-workflow.md');
+ const original=readFileSync(workflow,'utf8');writeFileSync(workflow,original+'\n更新探针');assert.ok(loadPhotoStyle(dir).includes('更新探针'));writeFileSync(workflow,original);
+ console.log('PASS one merged workflow and reference content; next generation reads current files');
  const {parseOutput,createState,finishTurn}=await import(pathToFileURL(join(dir,'lib/npc/engine.mjs')));
  const {ImageQueue}=await import(pathToFileURL(join(dir,'server/npc/image-worker.mjs')));
  const {parseYuan}=await import(pathToFileURL(join(dir,'lib/npc/yuan-xiaoman.mjs')));
@@ -26,7 +24,7 @@ try{
  db=new DatabaseSync(join(dir,'state.sqlite'));db.exec('CREATE TABLE sessions (id TEXT PRIMARY KEY,revision INTEGER,data TEXT);CREATE TABLE yuan_sessions(id TEXT PRIMARY KEY,data TEXT)');
  const user=crypto.randomUUID(),id=user+':xia-xia:normal';const state=createState('normal');finishTurn(state,crypto.randomUUID(),'看看你喝的茶',out);db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(id,state.revision,JSON.stringify(state));
  const get=()=>JSON.parse(db.prepare('SELECT data FROM sessions WHERE id=?').get(id).data);
- let finish,calls=0;const queue=new ImageQueue(db,dir,async(root,owner,character,p)=>{calls++;assert.equal(owner,user);assert.equal(character,'xia-xia');return new Promise(r=>finish=r);});
+ let finish,calls=0;const queue=new ImageQueue(db,dir,async(root,owner,character,_p)=>{calls++;assert.equal(owner,user);assert.equal(character,'xia-xia');return new Promise(r=>finish=r);});
  const task=queue.tick();await queue.tick();assert.equal(calls,1);assert.equal(get().messages.at(-1).part.status,'generating');
  // Concurrent chat writes must survive the completion of a slow image job.
  const fresh=get();fresh.messages.push({id:'during-image',role:'user',part:{type:'text',text:'刚刚又发了一句'}});fresh.revision++;db.prepare('UPDATE sessions SET revision=?,data=? WHERE id=?').run(fresh.revision,JSON.stringify(fresh),id);
@@ -52,4 +50,4 @@ try{
   mkdirSync('output/imagegen',{recursive:true});writeFileSync('output/imagegen/npc-live-generation-verified.png',bytes);
   console.log('PASS LIVE native generation, file validation, application storage and cached same-job replay; saved output/imagegen/npc-live-generation-verified.png');
  }
-}finally{db?.close();rmSync(dir,{recursive:true,force:true});}
+}finally{db?.close();runtime.cleanup();}

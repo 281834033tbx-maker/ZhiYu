@@ -1,8 +1,10 @@
 // Local integration smoke test. PLAYWRIGHT_MODULE and CHROME_PATH can override bundled tools.
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const { chromium } = require(
   process.env.PLAYWRIGHT_MODULE ||
     '/Users/jayden/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright',
 );
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const assert = require('node:assert/strict');
 (async () => {
   const b = await chromium.launch({

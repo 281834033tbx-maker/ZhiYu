@@ -4,7 +4,7 @@ import {randomUUID} from 'node:crypto';
 import {isolatedNpcRuntime} from './npc-test-runtime.mjs';
 const runtime=isolatedNpcRuntime(),db=new DatabaseSync(':memory:');
 try{
- const {createYuan,parseYuan,applyYuan}=await runtime.load('lib/npc/yuan-xiaoman');
+ const {createYuan,parseYuan: _parseYuan,applyYuan: _applyYuan}=await runtime.load('lib/npc/yuan-xiaoman');
  const {ensureContact,prepareContactTurn}=await runtime.load('lib/npc/contact-life');
  const core=await runtime.load('lib/npc/social-continuity');const api=await runtime.load('server/npc/social-continuity');
  const now=Date.now(),owner=randomUUID(),key=owner+':yuan-xiaoman';db.exec('CREATE TABLE yuan_sessions(id TEXT PRIMARY KEY,data TEXT)');
@@ -16,12 +16,12 @@ try{
  function base(){const s=createYuan(now-86400000);s.values.familiarity=75;s.values.affection=75;s.messages=[{id:'old-u',turnId:'old-u',role:'user',at:new Date(now-7200000).toISOString(),part:{type:'text',text:'合成旧输入'}},{id:'old-a',turnId:'old-a',role:'assistant',at:new Date(now-7100000).toISOString(),part:{type:'text',text:'那本书后来找到了吗？'}}];ensureContact(s,now);return s;}
  function observed(s,status='expressed'){write(s);const m=message(randomUUID()),g=groupFor(m);const c=api.observeGroupActivity(db,owner,g,m,now)[0];api.recordGroupSocialExpressions(db,owner,g.id,m.id,{messages:status==='expressed'?[{senderId:'yuan-xiaoman'}]:[],socialExpressions:[{characterId:'yuan-xiaoman',eventId:c.incident.id,expression:status,feeling:'hurt'}]},now);return {id:c.incident.id,g,m};}
  function returned(s,text,at=now+1000){const turn=randomUUID();s.messages.push({id:randomUUID(),turnId:turn,role:'user',at:new Date(at).toISOString(),part:{type:'text',text}});s.queue=[turn];return s;}
- const exp=observed(base());let s=returned(read(),'刚才我在开会，没看到你的消息');core.completePrivateSocialTurn(s,undefined,[{}],now+1000);write(s);
+ const _exp=observed(base());let s=returned(read(),'刚才我在开会，没看到你的消息');core.completePrivateSocialTurn(s,undefined,[{}],now+1000);write(s);
  assert.equal(s.socialContinuity.incidents[0].status,'resolved');assert.equal(s.socialContinuity.incidents[0].resolution,'explanation');assert.equal(s.socialContinuity.incidents[0].feeling,'hurt');
  assert.match(core.socialPrivatePrompt(s,now+1000),/"status":"resolved"/);
  const publicReturn=message('after-explanation',now+2000),publicGroup=groupFor(publicReturn);const summary=api.observeGroupActivity(db,owner,publicGroup,publicReturn,now+2000)[0];
  assert.equal(summary.recentEmotions[0].status,'resolved');assert.equal(summary.recentEmotions[0].feeling,'hurt');assert.equal(summary.incident,undefined);
- const repair=observed(base());s=returned(read(),'刚才我不该那样跟你说话，我错了');core.completePrivateSocialTurn(s,undefined,[{}],now+1000,{kind:'repair',basis:'user_claim',evidence:'我错了'});write(s);
+ const _repair=observed(base());s=returned(read(),'刚才我不该那样跟你说话，我错了');core.completePrivateSocialTurn(s,undefined,[{}],now+1000,{kind:'repair',basis:'user_claim',evidence:'我错了'});write(s);
  assert.equal(s.socialContinuity.incidents[0].resolution,'repair');assert.match(core.socialPrivatePrompt(s,now+1000),/"status":"resolved"/);
  assert.equal(api.observeGroupActivity(db,owner,publicGroup,publicReturn,now+2000)[0].recentEmotions[0].status,'resolved');
  for(const [text,event] of [['对不起',undefined],['我朋友对我说我错了',{kind:'repair',basis:'user_claim',evidence:'我错了'}],['我错了',{kind:'repair',basis:'hypothesis',evidence:'我错了'}],['我错了',{kind:'repair',basis:'user_claim',evidence:'并不存在的原文'}]]){
@@ -33,7 +33,7 @@ try{
  // A split round is not a series of separate neglected messages.
  s=base();s.messages.push({id:'bubble-2',turnId:'old-a',role:'assistant',at:new Date(now-7100000).toISOString(),deliverAt:now+1000,part:{type:'text',text:'还有个事想跟你说'}});s.contactLife.waiting.at=now+1000;write(s);
  let m=message('mid-bubbles'),g=groupFor(m);assert.equal(api.observeGroupActivity(db,owner,g,m,now)[0].incident,undefined);
- m=message('all-delivered',now+2000);g=groupFor(m);let c=api.observeGroupActivity(db,owner,g,m,now+2000)[0];assert.equal(Date.parse(c.pendingPrivateReply.since),now+1000);
+ m=message('all-delivered',now+2000);g=groupFor(m);const c=api.observeGroupActivity(db,owner,g,m,now+2000)[0];assert.equal(Date.parse(c.pendingPrivateReply.since),now+1000);
  const stable=c.incident.id;const again=message('all-delivered-again',now+3000),g2=groupFor(again);assert.equal(api.observeGroupActivity(db,owner,g2,again,now+3000)[0].incident.id,stable);assert.equal(read().socialContinuity.incidents.length,1);
  api.recordGroupSocialExpressions(db,owner,g.id,m.id,{messages:[{senderId:'yuan-xiaoman'}],socialExpressions:[{characterId:'yuan-xiaoman',eventId:stable,expression:'expressed',feeling:'missed'}]},now+2000);assert.equal(read().contactLife.waiting.followedUp,true);
  s=base();s.messages[1].professionalTaskHint={taskId:'synthetic'};write(s);m=message('task-hint');g=groupFor(m);assert.equal(api.observeGroupActivity(db,owner,g,m,now)[0].incident,undefined);

@@ -9,8 +9,10 @@ import EmojiPicker from './emoji-picker';
 import PressableIconButton from './pressable-icon-button';
 import {recordedVoiceWav} from './audio-format';
 import type { DisplayPet } from './pet-storage';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
+import {AiDisclosure} from './user-facing-ui';
 export type ComposePayload={text:string;audioId?:string;audioUrl?:string;audioText?:string;audioDurationSeconds?:number;imageId?:string;imageUrl?:string;assetId?:keyof typeof assets};
-export function shouldSendEnter(key:string,shift:boolean,composing:boolean,keyCode:number,endedAt:number,now=Date.now()) {
+export function shouldSendEnter(key:string,shift:boolean,composing:boolean,keyCode:number,_endedAt:number,_now=Date.now()) {
  return key==='Enter'&&!shift&&!composing&&keyCode!==229;
 }
 export default function ChatComposer({value,onChange,onSend,disabled=false,placeholder,label='输入消息',companion,allowImages=true,allowVoice=true,showUnavailableTools=false,textareaRef,onSelectionChange,onEditorKeyDown,toolbarStart,aboveInput,inputPrefix}:{value:string;onChange:(text:string)=>void;onSend:(payload:ComposePayload)=>Promise<void>|void;disabled?:boolean;placeholder:string;label?:string;companion?:DisplayPet|null;allowImages?:boolean;allowVoice?:boolean;showUnavailableTools?:boolean;textareaRef?:Ref<HTMLTextAreaElement>;onSelectionChange?:(text:string,start:number,end:number)=>void;onEditorKeyDown?:(event:KeyboardEvent<HTMLTextAreaElement>)=>void;toolbarStart?:ReactNode;aboveInput?:ReactNode;inputPrefix?:ReactNode}) {
@@ -27,7 +29,7 @@ export default function ChatComposer({value,onChange,onSend,disabled=false,place
   locked.current=true;setBusy(true);setError('');
   let upload=blob,uploaded:NonNullable<typeof voice>['uploaded'];
   try{upload=speechProvider.current==='doubao'?await recordedVoiceWav(blob):blob;const response=await npcFetch('/api/npc/audio/upload',{method:'POST',headers:{'Content-Type':upload.type,'X-Zhiyu-Audio-Duration':String(durationSeconds)},body:upload});const result=await response.json() as {audioId:string;url:string;text:string;error?:string};if(!response.ok)throw Error(result.error||'语音识别失败');uploaded={audioId:result.audioId,audioUrl:result.url,audioText:result.text,audioDurationSeconds:durationSeconds};await onSend({text:'',...uploaded});setVoice(null);}
-  catch(e){setVoice({blob:upload,durationSeconds,uploaded});setError(e instanceof Error?e.message:'语音发送失败，请重试');}
+  catch(e){setVoice({blob:upload,durationSeconds,uploaded});setError(reportUserFacingError(e,'send','发送语音'));}
   finally{locked.current=false;setBusy(false);}
  }
  async function startRecording(){
@@ -62,7 +64,7 @@ export default function ChatComposer({value,onChange,onSend,disabled=false,place
    if(e instanceof DOMException&&['NotAllowedError','PermissionDeniedError','SecurityError'].includes(e.name)){setMicrophoneDenied(true);setError('麦克风被系统或浏览器拒绝。请允许智域使用麦克风，然后重试。');}
    else if(e instanceof DOMException&&e.name==='NotFoundError')setError('没有找到麦克风，请检查麦克风是否已连接。');
    else if(e instanceof DOMException&&e.name==='NotReadableError')setError('麦克风被其他程序占用或无法读取，请关闭占用程序后重试。');
-   else setError(e instanceof Error?e.message:'无法使用麦克风');
+   else setError(reportUserFacingError(e,'media','开启录音'));
   }}finally{recordStarting.current=false;}
  }
  function cancelRecording(){discardRecording.current=true;if(recorder.current?.state==='recording')recorder.current.stop();setRecording(false);setRecordSeconds(0);setAudioLevel(0);}
@@ -95,14 +97,14 @@ export default function ChatComposer({value,onChange,onSend,disabled=false,place
    }
    await onSend({text:value.trim(),...uploaded,...(attachment?.assetId?{assetId:attachment.assetId}:{})});
    setAttachment(null);setPicker(false);
-  }catch(e){setError(e instanceof Error?e.message:'发送失败，请重试');}
+  }catch(e){setError(reportUserFacingError(e,'send','发送消息'));}
   finally{locked.current=false;setBusy(false);setTimeout(()=>editor.current?.focus(),0);}
  }
  function keyDown(e:KeyboardEvent<HTMLTextAreaElement>){
   onEditorKeyDown?.(e);if(e.defaultPrevented)return;
   if(e.key==='Enter'&&!e.shiftKey){
-   if(shouldSendEnter(e.key,e.shiftKey,composing.current||e.nativeEvent.isComposing,e.nativeEvent.keyCode,endedAt.current)){e.preventDefault();void submit();}
-   else if(!composing.current&&!e.nativeEvent.isComposing&&e.nativeEvent.keyCode!==229)e.preventDefault();
+   if(shouldSendEnter(e.key,e.shiftKey,composing.current||e.nativeEvent.isComposing,0,endedAt.current)){e.preventDefault();void submit();}
+   else if(!composing.current&&!e.nativeEvent.isComposing)e.preventDefault();
   }
  }
  return <div className="chat-composer-shell">
@@ -116,11 +118,12 @@ export default function ChatComposer({value,onChange,onSend,disabled=false,place
    <PressableIconButton type="button" title="表情包" aria-label="选择表情包" aria-expanded={picker} disabled={busy||disabled||recording||!!voice} onClick={()=>setPicker(!picker)}><Smile size={19}/></PressableIconButton>
    {(allowVoice||showUnavailableTools)&&<PressableIconButton type="button" className={recording?'is-recording':''} aria-label={recording?'停止录音':'录制语音'} title={!allowVoice?'当前聊天暂不支持语音':recording?'停止录音并发送':'录制语音，最长60秒'} disabled={busy||disabled||!!voice} onClick={()=>!allowVoice?setError('当前聊天暂不支持发送语音，可以先发送文字或小表情。'):recording?recorder.current?.state==='recording'&&recorder.current.stop():void startRecording()}><Mic size={19}/></PressableIconButton>}
    {toolbarStart}
-   {recording?<div className="chat-recording-bar" role="status" aria-label={`正在录音 ${recordSeconds} 秒`}><div className="chat-recording-info">{recordSeconds}秒</div><div className={audioLevel<.015?'chat-recording-dots':'chat-recording-wave'} aria-hidden="true">{audioLevel<.015?Array.from({length:9},(_,i)=><i key={i}/>):Array.from({length:17},(_,i)=><i key={i} style={{height:`${Math.min(22,4+audioLevel*(15+(i%5)*3))}px`}}/>)}</div><button type="button" aria-label="取消录音" title="取消录音" onClick={cancelRecording}><X size={16}/></button></div>:<div className="chat-text-entry">
+   {recording?<output className="chat-recording-bar" aria-label={`正在录音 ${recordSeconds} 秒`}><div className="chat-recording-info">{recordSeconds}秒</div><div className={audioLevel<.015?'chat-recording-dots':'chat-recording-wave'} aria-hidden="true">{audioLevel<.015?Array.from({length:9},(_,i)=><i key={i}/>):Array.from({length:17},(_,i)=><i key={i} style={{height:`${Math.min(22,4+audioLevel*(15+(i%5)*3))}px`}}/>)}</div><button type="button" aria-label="取消录音" title="取消录音" onClick={cancelRecording}><X size={16}/></button></output>:<div className="chat-text-entry">
     {companion?.imageSrc&&<div className="chat-pet-horizon" aria-hidden="true"><span className="chat-pet-walker"><img src={companion.imageSrc} alt="" draggable={false}/></span></div>}
     <div className="chat-text-entry-body">{inputPrefix}<textarea ref={editor} rows={1} aria-label={label} placeholder={placeholder} value={value} maxLength={4000} disabled={busy||recording||!!voice} onChange={e=>{onChange(e.target.value);onSelectionChange?.(e.target.value,e.target.selectionStart,e.target.selectionEnd);}} onSelect={e=>onSelectionChange?.(e.currentTarget.value,e.currentTarget.selectionStart,e.currentTarget.selectionEnd)} onCompositionStart={()=>{composing.current=true;}} onCompositionEnd={()=>{composing.current=false;endedAt.current=Date.now();}} onKeyDown={keyDown} onPaste={e=>{const images=Array.from(e.clipboardData.items).filter(i=>i.kind==='file'&&i.type.startsWith('image/'));if(images.length){e.preventDefault();void choose(images[0].getAsFile()||undefined);}}}/></div>
     <PressableIconButton type="submit" aria-label="发送消息" title="发送消息" disabled={busy||disabled||recording||(!value.trim()&&!attachment&&!voice)}><svg className="chat-send-plane" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><defs><linearGradient id="zy-paper-plane-hover" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stopColor="#f49373"/><stop offset="1" stopColor="#e47a96"/></linearGradient></defs><path d="m22 2-7 20-4-9-9-4Z"/></svg></PressableIconButton>
    </div>}
   </form>
+  <AiDisclosure/>
  </div>;
 }

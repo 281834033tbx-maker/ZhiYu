@@ -1,0 +1,100 @@
+{
+  "items": [
+    {
+      "text": "逛菜市场",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "熬汤中",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "给同事做午饭",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "试新菜",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "研究火候",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "备菜中",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "整理菜谱",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "磨刀中",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "试一锅新汤",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "琢磨调味",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "揉面中",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "整理食材",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 1
+    }
+  ]
+}

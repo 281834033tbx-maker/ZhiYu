@@ -1,7 +1,8 @@
+import {statusFromState} from '../../lib/npc/character-status';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
 import {clearPrivateHistory, privateHistoryMessages} from './private-history';
 import { ensureYuanProactive, yuanProactiveDue, yuanUserActivity, finishYuanProactive, yuanProactivePolicy } from '../../lib/npc/yuan-proactive';
-import { deliveryView, scheduleDelivery } from '../../lib/npc/delivery';
+import { deliveryView, scheduleDelivery, presentationPending } from '../../lib/npc/delivery';
 import { userPart, partInput, imageInputs } from './media';
 import type { Plugin } from 'vite';
 import { DatabaseSync } from 'node:sqlite';
@@ -66,7 +67,8 @@ export function yuanLocal(deps?: {
       const typing = (s: YuanState) =>
         Object.values(s.typing).some((v) => v.until > now());
       const expose = (s: YuanState) => ({
-        ...deliveryView(privateHistoryMessages(s),s.pending),
+        ...deliveryView(privateHistoryMessages(s),presentationPending(s)),
+        characterStatus:statusFromState('yuan-xiaoman',s,now()),
         revision: s.revision || 0,
         conversationId: s.branch,
         available: status(),
@@ -124,7 +126,7 @@ export function yuanLocal(deps?: {
           if (proactive) { out.memories = []; out.event = undefined; }
           applyYuan(fresh, out, job);
           for (const m of fresh.messages.slice(before)) m.origin = proactive ? 'proactive' : 'chat';
-          scheduleDelivery(fresh.messages,before,s.pending!.since);
+          scheduleDelivery(fresh.messages,before,s.pending!.since,now(),{characterId:'yuan-xiaoman'});
           completeContactTurn(fresh, now(), contactKind, fresh.messages.slice(before), out.event, incoming);
           if (proactive) finishYuanProactive(fresh, now(), fresh.messages.length > before);
           else {

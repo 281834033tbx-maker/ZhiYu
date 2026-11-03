@@ -1,15 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import Image from 'next/image';
 import { createPortal } from 'react-dom';
 import './brand-entrance.css';
 
+const subscribeHydration=()=>()=>{};
+
 /** One continuous mark: depth landing, hold, then FLIP to the real navigation mark. */
 export default function BrandEntrance({ src }: { src: string }) {
-  const [mounted, setMounted] = useState(false);
+  const mounted=useSyncExternalStore(subscribeHydration,()=>true,()=>false);
   const [done, setDone] = useState(false);
   const layer = useRef<HTMLDivElement>(null);
-  useEffect(() => { setMounted(true); }, []);
   useEffect(() => {
     if (!mounted || done) return;
     const root = layer.current;
@@ -109,7 +111,7 @@ export default function BrandEntrance({ src }: { src: string }) {
       <div className="zy-entrance-backdrop" />
       <div className="zy-entrance-flight">
         <div className="zy-entrance-depth">
-          <img className="zy-entrance-mark" src={src} alt="" />
+          <Image unoptimized width={180} height={180} className="zy-entrance-mark" src={src} alt="" />
         </div>
       </div>
     </div>, document.querySelector('.zy-desktop-slot') || document.body,

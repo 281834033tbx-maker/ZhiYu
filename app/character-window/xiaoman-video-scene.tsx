@@ -63,7 +63,7 @@ export default function XiaomanVideoScene({ fallback }: { fallback: string }) {
   return <>
     {/* Preserve the established still scene while the first clip loads or if playback fails. */}
     {/* eslint-disable-next-line @next/next/no-img-element -- Exact existing desktop scene fallback. */}
-    <img className="zy-character-window-scene-direct" src={fallback} alt="许晓曼的桌面人物形象" draggable={false} />
+    <img className="zy-character-window-scene-direct" src={fallback} alt="徐小曼" draggable={false} />
     {sources.map((sourceIndex, slot) => <video
       key={slot}
       ref={slot === 0 ? firstVideo : secondVideo}

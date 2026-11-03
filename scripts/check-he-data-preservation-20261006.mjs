@@ -36,8 +36,8 @@ try {
       }
     } else result.oldPrimaryKeysRetained = null;
     report.tables[name] = result;
-    assert.notEqual(result.oldPrimaryKeysRetained, false, `${name}: original keys missing`);
-    assert.equal(result.oldMessageIdsRetained, true, `${name}: original messages missing`);
+    assert.notEqual(result.oldPrimaryKeysRetained, false, `${String(name)}: original keys missing`);
+    assert.equal(result.oldMessageIdsRetained, true, `${String(name)}: original messages missing`);
   }
   report.he = current.prepare('SELECT data FROM he_sessions').all().map(row => {
     const state = JSON.parse(row.data);

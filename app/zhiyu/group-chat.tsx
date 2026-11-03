@@ -21,6 +21,10 @@ import {bubblePosition} from './message-bubbles';
 import './xia-xia.css';
 import './group-chat.css';
 import './group-message-actions.css';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
+import {AiDisclosure,RetryableMessage} from './user-facing-ui';
+import {useReplyRetry} from './reply-retry';
+import {useFailedChatSends} from './chat-send-failures';
 
 function MemberFace({member}: {member: Pick<GroupMember, 'id' | 'name' | 'avatar'>}) {
   const [failedAvatar, setFailedAvatar] = useState<string>();
@@ -125,6 +129,8 @@ function GroupMessageBody({message, members, displayNames}: {message: GroupMessa
   return caption;
 }
 
+type FailedGroupSend={requestId:string;text:string;mentionIds:string[];replyTo?:string;media:GroupSendMedia};
+
 function GroupChatPanelContent({accountId, group, companion, onRename, onSend, onOpen, onRetry, onConfirmPlan, onReminder, availablePeople, onSettings, onMembers, onClear, onExit, onForward}: GroupChatPanelProps) {
   const hiddenMessages = useMessageVisibility(accountId);
   const visibleMessages = useMemo(() => group.messages.filter(message => !hiddenMessages[group.id]?.includes(message.id)), [group.messages, hiddenMessages, group.id]);
@@ -156,8 +162,21 @@ function GroupChatPanelContent({accountId, group, companion, onRename, onSend, o
   const [mentionIndex, setMentionIndex] = useState(0);
   const [sending, setSending] = useState(false);
   const [opening, setOpening] = useState(false);
-  const [retrying, setRetrying] = useState(false);
   const [sendError, setSendError] = useState('');
+  const [failedSends,setFailedSends]=useFailedChatSends<FailedGroupSend>(accountId+':group:'+group.id);
+  const savedRequestIds=new Set(group.messages.filter(message=>message.senderId==='user').map(message=>message.requestId));
+  const unsentMessages=failedSends.filter(message=>!savedRequestIds.has(message.requestId));
+  useEffect(()=>{const saved=new Set(group.messages.filter(message=>message.senderId==='user').map(message=>message.requestId));setFailedSends(current=>{const next=current.filter(message=>!saved.has(message.requestId));return next.length===current.length?current:next;});},[group.messages,setFailedSends]);
+  const [deliveryClock,setDeliveryClock]=useState(()=>Date.now());
+  const replyKey=accountId+':group:'+group.id+':' +(group.messages.findLast(message=>message.senderId==='user')?.id||group.createdAt);
+  const replyRetry=useReplyRetry(replyKey);
+  const {claimAutomatic,claimManual,settle:settleReply}=replyRetry;
+  const typing=!!group.pending&&!!group.typingName&&group.typingAfter!==undefined&&deliveryClock>=group.typingAfter&&(group.typingUntil===undefined||deliveryClock<group.typingUntil);
+  useEffect(()=>{if(!group.pending)return;const timer=setInterval(()=>setDeliveryClock(Date.now()),250);return()=>clearInterval(timer);},[group.pending]);
+  useEffect(()=>{
+    if(!group.error||group.pending||!claimAutomatic())return;
+    void onRetry().catch(cause=>{reportUserFacingError(cause,'send','自动重试群回复');}).finally(settleReply);
+  },[group.error,group.pending,claimAutomatic,settleReply,onRetry]);
   const textarea = useRef<HTMLTextAreaElement>(null);
   const composer = useRef<HTMLDivElement>(null);
   const thread = useRef<HTMLDivElement>(null);
@@ -171,6 +190,7 @@ function GroupChatPanelContent({accountId, group, companion, onRename, onSend, o
   const controlRequestIds = useRef(new Map<string, string>());
   const controlLock = useRef(false);
   const lastMessageId = visibleMessages.at(-1)?.id;
+  const lastUserMessageId=visibleMessages.findLast(message=>message.senderId==='user')?.id;
   const showMentionMenu = mentionQuery !== null;
   const recipientKey = group.members.filter(member => member.role !== 'user').map(member => member.id).join('\u0000');
   useLayoutEffect(() => {
@@ -273,7 +293,7 @@ function GroupChatPanelContent({accountId, group, companion, onRename, onSend, o
       hideMessage(accountId, group.id, message.id);
       setMessageDraft(previous => previous.replyTo === message.id ? {...previous, replyTo: undefined} : previous);
       if (locatedMessage?.id === message.id) setLocatedMessage(null);
-    } catch (failure) {setSendError(failure instanceof Error ? failure.message : '删除未保存，请重试。');}
+    } catch (failure) {setSendError(reportUserFacingError(failure,'save','删除群消息'));}
   }
   function quoteMessage(message: GroupMessage) {
     if (sendLock.current) return;
@@ -323,6 +343,7 @@ function GroupChatPanelContent({accountId, group, companion, onRename, onSend, o
       submission.current = request;
     }
     sendLock.current = true; followBottom.current = true; setSending(true); setSendError(''); setMentionQuery(null);
+    const failedMessage:FailedGroupSend={requestId:request.requestId,text:outgoing,mentionIds:[...ids],replyTo,media:{...media}};
     try {
       await onSend(outgoing, ids, request.requestId, replyTo, media);
       try {
@@ -335,10 +356,23 @@ function GroupChatPanelContent({accountId, group, companion, onRename, onSend, o
       } catch { /* A completed send must not fail because browser storage is unavailable. */ }
       window.dispatchEvent(new CustomEvent('zhiyu-group-draft-sent', {detail: {storageKey: draftStorageKey, draftSnapshot}}));
       if (active.current) {setMessageDraft(current => sameDraft(current, draftSnapshot) ? {text: '', mentionIds: []} : current); submission.current = null; composer.current?.querySelector('textarea')?.focus();}
+    } catch(cause) {
+      reportUserFacingError(cause,'send','发送群消息');
+      setFailedSends(current=>current.some(item=>item.requestId===failedMessage.requestId)?current:[...current,failedMessage]);
+      if(active.current){setMessageDraft(current=>sameDraft(current,draftSnapshot)?{text:'',mentionIds:[]}:current);submission.current=null;}
     } finally {
       sendLock.current = false;
       if (active.current) setSending(false);
     }
+  }
+  async function retryFailedSend(failed:FailedGroupSend) {
+    if(sendLock.current||group.pending)return;
+    sendLock.current=true;setSending(true);
+    try {
+      await onSend(failed.text,failed.mentionIds,failed.requestId,failed.replyTo,failed.media);
+      setFailedSends(current=>current.filter(item=>item.requestId!==failed.requestId));
+    }catch(cause){reportUserFacingError(cause,'send','重新发送群消息');}
+    finally{sendLock.current=false;if(active.current)setSending(false);}
   }
   function composerKey(event: KeyboardEvent<HTMLTextAreaElement>) {
     if (event.nativeEvent.isComposing) return;
@@ -358,14 +392,14 @@ function GroupChatPanelContent({accountId, group, companion, onRename, onSend, o
   async function openChat() {
     if (opening || group.pending) return;
     setOpening(true); setSendError('');
-    try {await onOpen();} catch (error) {if (active.current) setSendError(error instanceof Error ? error.message : '群聊暂时无法开启，请重试。');}
+    try {await onOpen();} catch (error) {if (active.current) setSendError(reportUserFacingError(error,'send','开启群聊'));}
     finally {if (active.current) setOpening(false);}
   }
   async function retryReply() {
-    if (retrying) return;
-    setRetrying(true); setSendError('');
-    try {await onRetry();} catch (error) {if (active.current) setSendError(error instanceof Error ? error.message : '回复暂时无法重试。');}
-    finally {if (active.current) setRetrying(false);}
+    if (group.pending||!claimManual()) return;
+    setSendError('');
+    try {await onRetry();} catch (error) {reportUserFacingError(error,'send','重试群回复');}
+    finally {settleReply();}
   }
   const selectedMembers = mentionIds.map(id => recipients.find(member => member.id === id)).filter((member): member is GroupMember => !!member);
   async function controlTask(key: string, task: (requestId: string) => Promise<unknown>, allowWhilePending = false) {
@@ -374,7 +408,7 @@ function GroupChatPanelContent({accountId, group, companion, onRename, onSend, o
     if (!requestId) {requestId = crypto.randomUUID(); controlRequestIds.current.set(key, requestId);}
     controlLock.current = true; setControlBusy(key); setControlError('');
     try {await task(requestId); controlRequestIds.current.delete(key);}
-    catch (error) {if (active.current) setControlError(error instanceof Error ? error.message : '操作暂时无法保存，请重试。');}
+    catch (error) {if (active.current) setControlError(reportUserFacingError(error,'save','保存群任务'));}
     finally {controlLock.current = false; if (active.current) setControlBusy('');}
   }
   const planComplete = group.plan?.days.length === 7 && group.plan.days.every((day, index, days) => validCalendarDate(day.date) && (index === 0 || Date.parse(day.date) - Date.parse(days[index - 1].date) === 86400000) && !!day.label?.trim() && !!day.breakfast?.trim() && !!day.lunch?.trim() && !!day.dinner?.trim());
@@ -397,7 +431,7 @@ function GroupChatPanelContent({accountId, group, companion, onRename, onSend, o
     try {await task(requestId); drawerRequests.current.delete(key); return true;}
     catch (error) {
       if (propagateError) throw error;
-      if (active.current) setDrawerError(error instanceof Error ? error.message : '群设置暂时无法保存，请重试。');
+      if (active.current) setDrawerError(reportUserFacingError(error,'save','保存群设置'));
       return false;
     }
     finally {drawerLock.current = false; if (active.current) setDrawerBusy('');}
@@ -443,7 +477,7 @@ function GroupChatPanelContent({accountId, group, companion, onRename, onSend, o
   }
   return <section className="zy-chat zy-group-chat" aria-label={`${group.name}群聊`}>
     <header className="xx-head unified-chat-head zy-group-head">
-      <div className="chat-header-person zy-group-header-person"><GroupAvatar members={group.members}/><span className="chat-header-copy"><strong title={`${group.name}（${group.members.length}）`}>{group.name}（{group.members.length}）</strong></span></div>
+      <div className="chat-header-person zy-group-header-person"><GroupAvatar members={group.members}/><span className="chat-header-copy"><strong title={`${group.name}（${group.members.length}）`}>{group.name}（{group.members.length}）</strong>{typing&&<output className="zy-chat-header-status is-typing">{group.typingName} 正在输入…</output>}</span></div>
       <div className="xx-call-actions"><div className="zy-chat-more"><PressableIconButton ref={drawerToggle} type="button" aria-label="更多选项" title="更多选项" aria-expanded={drawerOpen} onClick={toggleDrawer}><MoreHorizontal size={20} strokeWidth={1.7}/></PressableIconButton></div></div>
     </header>
     {(group.plan || !!group.reminders?.length) && <div className="zy-group-task-area">
@@ -487,14 +521,15 @@ function GroupChatPanelContent({accountId, group, companion, onRename, onSend, o
                 const quote = original ? item.quote || {id: original.id, senderName: original.senderName, text: groupMessageText(original)} : undefined;
                 return <div key={item.id} className={`xx-message ${locatedMessage?.id === item.id ? 'is-located' : ''}`} data-message-id={item.id} data-bubble-position={bubblePosition(index > 0 && item.type === 'text' && block[index - 1].type === 'text', index < block.length - 1 && item.type === 'text' && block[index + 1].type === 'text')}>
                   {quote && <button type="button" className="npc-quote zy-group-message-quote" onClick={() => locateMessage(quote.id)}><strong>{quote.senderName}</strong><span>{quote.text}</span></button>}
-                  <MessageActions text={groupMessageText(item)} voice={item.type === 'voice'} onQuote={() => quoteMessage(item)} onDelete={() => deleteMessage(item)} onForward={onForward ? () => onForward(item.text || '') : undefined}><div className="xx-bubble zy-group-message-bubble"><GroupMessageBody message={item} members={historicalMembers} displayNames={displayNames}/></div></MessageActions>
+                  <RetryableMessage failed={item.id===lastUserMessageId&&!!group.error&&!group.pending&&replyRetry.attempted&&!replyRetry.pending} disabled={!!group.pending||replyRetry.pending} label="重新回复这条群消息" onRetry={()=>void retryReply()}><MessageActions text={groupMessageText(item)} voice={item.type === 'voice'} onQuote={() => quoteMessage(item)} onDelete={() => deleteMessage(item)} onForward={onForward ? () => onForward(item.text || '') : undefined}><div className="xx-bubble zy-group-message-bubble"><GroupMessageBody message={item} members={historicalMembers} displayNames={displayNames}/></div></MessageActions></RetryableMessage>
                 </div>;
               })}
             </div>
           </div>
         </article>;
       })}
-      {group.error && <div className="zy-group-reply-error" role="alert"><span>{group.error}</span><button type="button" disabled={retrying} onClick={() => void retryReply()}><RefreshCw size={13}/>{retrying ? '重试中…' : '重试回复'}</button></div>}
+      {unsentMessages.map(message=><div className="xx-group user" key={message.requestId}><div className="zy-failed-message"><button type="button" className="zy-message-retry" aria-label="重新发送这条群消息" title="消息没发出去，点一下重试" disabled={sending||!!group.pending} onClick={()=>void retryFailedSend(message)}><RefreshCw size={16}/></button><div className="xx-bubble">{message.text||(message.media.audioId?'[语音]':message.media.assetId?'[表情]':'[图片]')}</div></div></div>)}
+
     </div>
     {group.chatEnabled ? <div ref={composer} className="zy-group-composer-wrap"><ChatComposer value={text} onChange={value => {setText(value); setSendError('');}} onSend={sendMessage} disabled={sending || !!group.pending} placeholder="发消息，输入 @ 选择成员" label="群聊消息" companion={companion} textareaRef={textarea} onSelectionChange={(value, start) => updateMention(value, start)} onEditorKeyDown={composerKey} inputPrefix={selectedMembers.length > 0 && <div className="zy-group-mention-chips" aria-label="本条消息提及的成员">{selectedMembers.map(member => <span key={member.id} data-member-id={member.id}><AtSign size={11}/>{displayNames.get(member.id) || member.name}<button type="button" aria-label={`取消 @ ${displayNames.get(member.id) || member.name}`} disabled={sending} onClick={() => {setMentionIds(previous => previous.filter(id => id !== member.id)); setSendError('');}}><X size={12}/></button></span>)}</div>} toolbarStart={<button type="button" aria-label="@ 群成员" title="@ 群成员" disabled={sending} onClick={showMembers}><AtSign size={19}/></button>} aboveInput={<>
       {quotedMessage && <div className="npc-quote-draft zy-group-quote-draft" aria-label="正在引用的群消息"><Reply size={15}/><span><strong>回复 {displayNames.get(quotedMessage.senderId) || quotedMessage.senderName}</strong><small>{groupMessageText(quotedMessage)}</small></span><button type="button" aria-label="取消引用" disabled={sending} onClick={() => {setMessageDraft(previous => ({...previous, replyTo: undefined})); setSendError('');}}><X size={16}/></button></div>}
@@ -507,7 +542,7 @@ function GroupChatPanelContent({accountId, group, companion, onRename, onSend, o
       </div>}
     </>}/>
       {sendError && <p className="zy-group-error" role="alert">{sendError}</p>}
-    </div> : <div className="zy-group-open-composer"><span>Molly 会主持目标和成员分工。</span><button type="button" className="zy-group-submit" disabled={opening || !!group.pending} onClick={() => void openChat()}>{opening || group.pending ? '开启中…' : '开始群聊'}</button>{sendError && <p className="zy-group-error" role="alert">{sendError}</p>}</div>}
+    </div> : <div className="zy-group-open-composer"><span>Molly 会主持目标和成员分工。</span><button type="button" className="zy-group-submit" disabled={opening || !!group.pending} onClick={() => void openChat()}>{opening || group.pending ? '开启中…' : '开始群聊'}</button>{sendError && <p className="zy-group-error" role="alert">{sendError}</p>}<AiDisclosure/></div>}
     {drawerPresent && <aside ref={drawer} className="zy-group-drawer" aria-label="群聊设置" aria-hidden={!drawerOpen} inert={!drawerOpen}>
       <GroupMemberStack members={members} displayNames={displayNames} renderFace={member => <MemberFace member={member}/>} addAction={<button type="button" className="zy-group-drawer-member zy-group-drawer-member-action" disabled={drawerDisabled || !addCandidates.length} onClick={() => {setMemberMode(value => value === 'add' ? null : 'add'); setMemberSelection([]); setDrawerError('');}} aria-label="添加群成员"><span className="zy-group-drawer-member-face"><Plus size={23}/></span><span>添加</span></button>}/>
       {memberMode && <div className="zy-group-drawer-picker"><p>选择要添加的联系人</p><div className="zy-group-drawer-members">{addCandidates.map(person => <button key={person.id} type="button" className={`zy-group-drawer-member ${memberSelection.includes(person.id) ? 'is-selected' : ''}`} disabled={drawerDisabled} onClick={() => toggleSelectedMember(person.id)} aria-pressed={memberSelection.includes(person.id)}><span className="zy-group-drawer-member-face"><MemberFace member={person}/><i>{memberSelection.includes(person.id) && <Check size={11}/>}</i></span><span>{person.name}</span></button>)}</div><div className="zy-group-drawer-picker-actions"><button type="button" disabled={drawerDisabled} onClick={() => {setMemberMode(null); setMemberSelection([]);}}>取消</button><button type="button" className="zy-group-submit" disabled={drawerDisabled || !memberSelection.length} onClick={() => void saveMembers()}>{drawerBusy.startsWith('members:') ? '保存中…' : '添加选中成员'}</button></div></div>}
@@ -530,7 +565,7 @@ function GroupChatPanelContent({accountId, group, companion, onRename, onSend, o
     {searchOpen && <GroupChatSearch name={group.name} memberCount={group.members.length} entries={searchEntries} onLocate={locateMessage} onClose={() => setSearchOpen(false)}/>}
     {confirmAction && <GroupActionConfirm action={confirmAction} busy={drawerBusy === confirmAction} error={drawerError} onClose={() => {if (!drawerLock.current) {setConfirmAction(null); setDrawerError('');}}} onConfirm={async () => {
       const saved = await drawerTask(confirmAction, requestId => confirmAction === 'clear' ? onClear(requestId) : onExit(requestId));
-      if (saved && active.current) {setConfirmAction(null); if (confirmAction === 'clear') {setLocatedMessage(null); setMessageDraft(previous => ({...previous, replyTo: undefined})); followBottom.current = true;}}
+      if (saved && active.current) {setConfirmAction(null); if (confirmAction === 'clear') {setFailedSends([]);setLocatedMessage(null); setMessageDraft(previous => ({...previous, replyTo: undefined})); followBottom.current = true;}}
     }}/>}
   </section>;
 }

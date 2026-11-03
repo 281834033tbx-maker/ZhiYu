@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useId, useState, type FormEvent } from 'react';
+import { useEffect, useId, useState, type SyntheticEvent } from 'react';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 import { Check, Eye, EyeOff, Mic, RefreshCw } from 'lucide-react';
 import './realtime-speech-settings.css';
 
@@ -14,6 +15,10 @@ type SettingsStatus = {
 const endpoint = '/api/npc/realtime-speech/settings';
 
 export default function RealtimeSpeechSettings({ onStartCall }: { onStartCall?: () => void }) {
+  const [refresh,setRefresh]=useState(0);
+  return <RealtimeSpeechSettingsSession key={refresh} onStartCall={onStartCall} onReload={()=>setRefresh(value=>value+1)}/>;
+}
+function RealtimeSpeechSettingsSession({onStartCall,onReload}:{onStartCall?:()=>void;onReload:()=>void}) {
   const id = useId();
   const [apiKey, setApiKey] = useState('');
   const [tokenSaved, setTokenSaved] = useState(false);
@@ -24,16 +29,12 @@ export default function RealtimeSpeechSettings({ onStartCall }: { onStartCall?: 
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
-  const [refresh, setRefresh] = useState(0);
   const dirty = !!apiKey.trim();
 
   useEffect(() => {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 10000);
     let active = true;
-    setLoading(true);
-    setLoaded(false);
-    setError('');
     fetch(endpoint, { credentials: 'same-origin', cache: 'no-store', signal: controller.signal })
       .then(async response => {
         const data = await response.json() as SettingsStatus & { error?: string };
@@ -47,17 +48,16 @@ export default function RealtimeSpeechSettings({ onStartCall }: { onStartCall?: 
         }
       })
       .catch(cause => {
-        if (active) setError(cause instanceof Error && cause.name !== 'AbortError'
-          ? cause.message : '读取设置超时，请重试。');
+        if (active) setError(reportUserFacingError(cause,'load','读取语音设置'));
       })
       .finally(() => {
         clearTimeout(timer);
         if (active) setLoading(false);
       });
     return () => { active = false; clearTimeout(timer); controller.abort(); };
-  }, [refresh]);
+  }, []);
 
-  async function save(event: FormEvent<HTMLFormElement>) {
+  async function save(event: SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     if (busy || loading || !loaded) return;
     setError('');
@@ -82,8 +82,7 @@ export default function RealtimeSpeechSettings({ onStartCall }: { onStartCall?: 
       setConnectionOpen(false);
       setMessage('API Key 已保存，可在桌面人物窗口开启语音互动。');
     } catch (cause) {
-      setError(cause instanceof Error && !['TimeoutError', 'AbortError'].includes(cause.name)
-        ? cause.message : '保存超时，请重新打开确认保存状态。');
+      setError(reportUserFacingError(cause,'save','保存语音设置'));
     } finally { setBusy(false); }
   }
 
@@ -95,7 +94,7 @@ export default function RealtimeSpeechSettings({ onStartCall }: { onStartCall?: 
         <p>填写 API Key 后，在桌面人物窗口开启语音互动。</p>
       </div>
     </div>
-    {loading ? <p className="zy-realtime-loading" role="status">正在读取本机设置…</p> : <>
+    {loading ? <output className="zy-realtime-loading">正在读取本机设置…</output> : <>
       <form onSubmit={save} autoComplete="off">
         <details className="zy-realtime-connection" open={connectionOpen}
           onToggle={event => setConnectionOpen(event.currentTarget.open)}>
@@ -121,13 +120,13 @@ export default function RealtimeSpeechSettings({ onStartCall }: { onStartCall?: 
           </div>
         </details>
         {error && <p className="zy-realtime-error" role="alert">{error}</p>}
-        {message && <p className="zy-realtime-success" role="status"><Check size={15} aria-hidden="true" />{message}</p>}
+        {message && <output className="zy-realtime-success"><Check size={15} aria-hidden="true" />{message}</output>}
         <footer className="zy-realtime-footer">
           <small>仅保存在这台电脑。</small>
           {loaded ? <button type="submit" className="zy-realtime-save"
             disabled={busy || !dirty || (!tokenSaved && !apiKey.trim())}>
             {busy ? '正在保存…' : '保存 API Key'}
-          </button> : <button type="button" className="zy-realtime-save" onClick={() => setRefresh(value => value + 1)}>
+          </button> : <button type="button" className="zy-realtime-save" onClick={onReload}>
             <RefreshCw size={14} aria-hidden="true" />重新读取
           </button>}
         </footer>

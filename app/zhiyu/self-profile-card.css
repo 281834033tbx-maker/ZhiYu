@@ -68,16 +68,16 @@ html[data-zy-theme] .zy-profile-popover.zy-dialog.zy-self-profile-popover { bord
 .zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-edit { display: block; padding: 0; --zy-inline-name-font-size: calc(16px + var(--zy-font-adjust, 0px)); }
 .zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-label { display: none; }
 html[data-zy-theme] .zy-profile-popover.zy-dialog .zy-self-profile-card .zy-self-card-name .zy-inline-name-value,
-.zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-value { min-height: 29px; width: max-content; max-width: calc(100% + 6px); margin-left: -6px; padding: 4px 6px; gap: 6px; color: #fff; font-size: calc(16px + var(--zy-font-adjust, 0px)); font-weight: 600; line-height: 21px; }
+.zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-value { min-height: 29px; width: max-content; max-width: calc(100% + 6px); margin-left: -6px; padding: 4px 6px; gap: 6px; color: #fff; font-size: calc(16px + var(--zy-font-adjust,0px)); font-weight: 600; line-height: 21px; }
 .zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-value:hover:not(:disabled),
 .zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-value:focus-visible { background: rgb(255 255 255 / 28%); }
 .zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-value > span { flex: 0 1 auto; }
 .zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-value > svg { color: #fff; }
 .zy-app .zy-self-profile-card .zy-self-card-name .zy-inline-name-input { font-weight: 600; color: #293334; }
-.zy-self-card-account { margin: 2px 0 0; color: rgb(255 255 255 / 88%); font-size: calc(11px + var(--zy-font-adjust, 0px)); line-height: 1.5; overflow-wrap: anywhere; user-select: text; }
+.zy-self-card-account { margin: 2px 0 0; color: rgb(255 255 255 / 88%); font-size: calc(11px + var(--zy-font-adjust,0px)); line-height: 1.5; overflow-wrap: anywhere; user-select: text; }
 .zy-self-card-signature { min-width: 0; margin: 0; }
 .zy-self-card-signature-label { display: none; }
-.zy-self-card-signature-value { display: block; width: fit-content; max-width: calc(100% + 12px); min-height: 28px; margin-left: -6px; padding: 4px 6px; border: 0; border-radius: 6px; background: transparent; color: #fff; text-align: left; font: inherit; font-size: calc(12px + var(--zy-font-adjust, 0px)); line-height: 1.65; cursor: pointer; }
+.zy-self-card-signature-value { display: block; width: fit-content; max-width: calc(100% + 12px); min-height: 28px; margin-left: -6px; padding: 4px 6px; border: 0; border-radius: 6px; background: transparent; color: #fff; text-align: left; font: inherit; font-size: calc(12px + var(--zy-font-adjust,0px)); line-height: 1.65; cursor: pointer; }
 .zy-self-card-signature-value > span { white-space: pre-wrap; overflow-wrap: anywhere; }
 .zy-self-card-signature-tail { white-space: nowrap; }
 .zy-self-card-signature-tail > svg { display: inline-block; margin-left: 6px; vertical-align: -2px; color: #fff; opacity: 0; }
@@ -86,11 +86,11 @@ html[data-zy-theme] .zy-profile-popover.zy-dialog .zy-self-profile-card .zy-self
 .zy-self-card-signature-value:focus-visible { outline: 2px solid #ed7b7b; outline-offset: 2px; }
 .zy-self-card-signature-value .is-placeholder { color: #fff; }
 .zy-self-card-signature-input-wrap { position: relative; }
-.zy-app .zy-self-profile-card .zy-self-card-signature-input { display: block; width: 100%; min-height: 55px; max-height: 140px; box-sizing: border-box; padding: 6px 8px; resize: vertical; border: 1px solid transparent; border-radius: 6px; background: linear-gradient(#fffaf7, #fffaf7) padding-box, linear-gradient(110deg, #ff946f, #ed628e) border-box; color: #344b4e; font: inherit; font-size: calc(12px + var(--zy-font-adjust, 0px)); line-height: 1.65; outline: none; box-shadow: none; }
-.zy-app .zy-self-profile-card .zy-self-card-signature-input:focus-visible { outline: none; box-shadow: 0 0 0 2px rgb(237 98 142 / 10%); }
+.zy-app .zy-self-profile-card .zy-self-card-signature-input { display: block; width: 100%; min-height: 55px; max-height: 140px; box-sizing: border-box; padding: 6px 8px; resize: vertical; border: 1px solid transparent; border-radius: 6px; background: linear-gradient(#fffaf7, #fffaf7) padding-box, linear-gradient(110deg, #ff946f, #ed628e) border-box; color: #344b4e; font: inherit; font-size: calc(12px + var(--zy-font-adjust,0px)); line-height: 1.65; outline: none; box-shadow: none; }
+.zy-app .zy-self-profile-card .zy-self-card-signature-input:focus-visible { outline: none; box-shadow: none; }
 .zy-app .zy-self-profile-card .zy-self-card-signature-input:disabled { padding-right: 28px; opacity: .7; }
 .zy-self-card-saving { position: absolute; right: 8px; top: 10px; color: #ed628e; animation: zy-self-card-spin 1s linear infinite; }
-.zy-self-card-error { margin: 5px 0 0; color: #a73435; font-size: calc(11px + var(--zy-font-adjust, 0px)); line-height: 1.5; overflow-wrap: anywhere; }
+.zy-self-card-error { margin: 5px 0 0; color: #a73435; font-size: calc(11px + var(--zy-font-adjust,0px)); line-height: 1.5; overflow-wrap: anywhere; }
 @keyframes zy-self-card-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) {
   .zy-self-profile-card .zy-self-card-surface, .zy-self-profile-card.is-pressed .zy-self-card-surface { transform: none; transition: none; }

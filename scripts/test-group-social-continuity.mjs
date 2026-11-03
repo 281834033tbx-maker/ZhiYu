@@ -26,7 +26,7 @@ try {
   };
   seed('yuan-xiaoman',createYuan(now));seed('liu',createLiu(now));
   const originalValues=structuredClone(read('yuan-xiaoman').values);
-  let mode='missing-social',captured=[],missingDraftCalls=0;
+  let mode='missing-social',missingDraftCalls=0;const captured=[];
   const store=new GroupChatStore(db,runtime.root,async()=> '合成关系连续性群',()=>now,randomUUID,async(root,context)=>{
     captured.push(structuredClone(context));
     assert.ok(!JSON.stringify(context.socialContexts).includes('PRIVATE_'),'private raw text never reaches the group generator');

@@ -186,7 +186,7 @@ export async function receivePrivateDelegation(root: string, db: DatabaseSync, i
     const messages=fresh.messages.slice(before);
     if (!messages.length) throw new ProfessionalTaskError('秘书转交需要可见的承接回复','DELEGATION_REPLY_OMITTED');
     for (const message of messages) {message.origin='proactive';message.secretaryEvent={id:event.id,kind:'handoff',sourceMessageId:event.source.messageId,targetId:input.targetId};}
-    scheduleDelivery(fresh.messages,before,startedAt,clock());
+    scheduleDelivery(fresh.messages,before,startedAt,clock(),{characterId:input.targetId});
     const delivered=fresh.secretaryDelegations!.find(row=>row.id===event.id)!;
     delivered.status='delivered';delivered.deliveredAt=new Date(clock()).toISOString();delivered.messageIds=messages.map(message=>message.id);
     delivered.taskIds=(fresh.professionalTasks || []).filter(task=>!taskBefore.has(task.id)).map(task=>task.id);

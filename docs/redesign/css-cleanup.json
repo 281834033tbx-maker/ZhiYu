@@ -1,0 +1,1281 @@
+{
+  "date": "2026-11-03",
+  "scope": "section 9; source-proven dead declarations only; no new CSS values",
+  "counts": [
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "removedDeclarations": 48,
+      "beforeSha256": "5118b124fe71545b364d2254a4e62a4562790156b9acd31c87c26ad12fce9cb1",
+      "afterSha256": "442169ba0478f01642f2d954e62ee16366241e57f550a1a7dc859a31fe73425d"
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "removedDeclarations": 18,
+      "beforeSha256": "38f8de51b666d931f04404d68835fcb6f42a400d322055d89749e5268ca61278",
+      "afterSha256": "6cb05eb1bd9bf33450c2c0d066ae89a8359f48138d5a0572b6aa53e88cc21e2b"
+    },
+    {
+      "file": "app/zhiyu/dual-preview.css",
+      "removedDeclarations": 0,
+      "beforeSha256": "8d4437aa3ac494390456e345c9f2484beca0e988ae9cabacaa2902dbc9770135",
+      "afterSha256": "8d4437aa3ac494390456e345c9f2484beca0e988ae9cabacaa2902dbc9770135"
+    }
+  ],
+  "preserved": [
+    "dual-preview app-region drag/no-drag and panel-divider hit area",
+    "all declarations without a proven identical-condition winner",
+    "all mobile overrides and character-window styles"
+  ],
+  "deletions": [
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-desktop-stage",
+      "condition": "",
+      "line": 2,
+      "property": "--window-gap-y",
+      "value": "clamp(48px, 8vh, 112px)",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-desktop-stage",
+          "condition": "",
+          "line": 1664,
+          "property": "--window-gap-y",
+          "value": "clamp(32px,6vh,88px)"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-desktop-stage",
+      "condition": "",
+      "line": 3,
+      "property": "--window-gap-x",
+      "value": "clamp(48px, 8vw, 160px)",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-desktop-stage",
+          "condition": "",
+          "line": 1664,
+          "property": "--window-gap-x",
+          "value": "clamp(32px,6vw,128px)"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-app",
+      "condition": "",
+      "line": 12,
+      "property": "height",
+      "value": "min(1000px, calc(100dvh - var(--window-gap-y, 0px) * 2))",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-app",
+          "condition": "",
+          "line": 1665,
+          "property": "height",
+          "value": "min(1120px,calc(100dvh - var(--window-gap-y)*2))"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-rail",
+      "condition": "",
+      "line": 57,
+      "property": "width",
+      "value": "88px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-rail",
+          "condition": "",
+          "line": 1666,
+          "property": "width",
+          "value": "72px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-logo",
+      "condition": "",
+      "line": 65,
+      "property": "width",
+      "value": "44px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-logo",
+          "condition": "",
+          "line": 1667,
+          "property": "width",
+          "value": "38px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-logo",
+      "condition": "",
+      "line": 66,
+      "property": "height",
+      "value": "44px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-logo",
+          "condition": "",
+          "line": 1667,
+          "property": "height",
+          "value": "38px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-logo",
+      "condition": "",
+      "line": 67,
+      "property": "margin-bottom",
+      "value": "36px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-logo",
+          "condition": "",
+          "line": 1667,
+          "property": "margin-bottom",
+          "value": "25px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-nav-items",
+      "condition": "",
+      "line": 77,
+      "property": "gap",
+      "value": "29px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-nav-items",
+          "condition": "",
+          "line": 1668,
+          "property": "gap",
+          "value": "16px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-nav-items .zy-icon",
+      "condition": "",
+      "line": 80,
+      "property": "width",
+      "value": "44px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-nav-items .zy-icon",
+          "condition": "",
+          "line": 1669,
+          "property": "width",
+          "value": "38px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-nav-items .zy-icon",
+      "condition": "",
+      "line": 81,
+      "property": "height",
+      "value": "44px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-nav-items .zy-icon",
+          "condition": "",
+          "line": 1669,
+          "property": "height",
+          "value": "38px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-nav-items svg",
+      "condition": "",
+      "line": 85,
+      "property": "width",
+      "value": "28px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-nav-items svg",
+          "condition": "",
+          "line": 1670,
+          "property": "width",
+          "value": "22px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-nav-items svg",
+      "condition": "",
+      "line": 86,
+      "property": "height",
+      "value": "28px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-nav-items svg",
+          "condition": "",
+          "line": 1670,
+          "property": "height",
+          "value": "22px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-directory",
+      "condition": "",
+      "line": 122,
+      "property": "width",
+      "value": "340px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-directory",
+          "condition": "",
+          "line": 1671,
+          "property": "width",
+          "value": "300px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-chat-head",
+      "condition": "",
+      "line": 311,
+      "property": "height",
+      "value": "76px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-chat-head",
+          "condition": "",
+          "line": 1672,
+          "property": "height",
+          "value": "66px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-chat-person strong",
+      "condition": "",
+      "line": 331,
+      "property": "font-size",
+      "value": "calc(20px + var(--zy-font-adjust,0px))",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-chat-person strong",
+          "condition": "",
+          "line": 1673,
+          "property": "font-size",
+          "value": "calc(16px + var(--zy-font-adjust,0px))"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-chat-person small",
+      "condition": "",
+      "line": 336,
+      "property": "font-size",
+      "value": "calc(14px + var(--zy-font-adjust,0px))",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-chat-person small",
+          "condition": "",
+          "line": 1674,
+          "property": "font-size",
+          "value": "calc(12px + var(--zy-font-adjust,0px))"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-thread-inner",
+      "condition": "",
+      "line": 356,
+      "property": "padding",
+      "value": "12px 32px 28px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-thread-inner",
+          "condition": "",
+          "line": 1675,
+          "property": "padding",
+          "value": "18px 26px 20px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-message",
+      "condition": "",
+      "line": 360,
+      "property": "gap",
+      "value": "16px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-message",
+          "condition": "",
+          "line": 1677,
+          "property": "gap",
+          "value": "12px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-message",
+      "condition": "",
+      "line": 361,
+      "property": "margin-bottom",
+      "value": "10px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-message",
+          "condition": "",
+          "line": 1677,
+          "property": "margin-bottom",
+          "value": "5px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-message.new-group",
+      "condition": "",
+      "line": 368,
+      "property": "margin-top",
+      "value": "22px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-message.new-group",
+          "condition": "",
+          "line": 1678,
+          "property": "margin-top",
+          "value": "18px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-message-avatar",
+      "condition": "",
+      "line": 373,
+      "property": "align-self",
+      "value": "flex-start",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-message-avatar",
+          "condition": "",
+          "line": 1679,
+          "property": "align-self",
+          "value": "flex-end"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-bubble-wrap",
+      "condition": "",
+      "line": 380,
+      "property": "position",
+      "value": "relative",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-bubble-wrap",
+          "condition": "",
+          "line": 1701,
+          "property": "position",
+          "value": "relative"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-bubble",
+      "condition": "",
+      "line": 384,
+      "property": "padding",
+      "value": "15px 22px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-bubble",
+          "condition": "",
+          "line": 1676,
+          "property": "padding",
+          "value": "10px 16px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-bubble",
+      "condition": "",
+      "line": 388,
+      "property": "font-size",
+      "value": "calc(16px + var(--zy-font-adjust,0px))",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-bubble",
+          "condition": "",
+          "line": 1676,
+          "property": "font-size",
+          "value": "calc(14px + var(--zy-font-adjust,0px))"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-bubble",
+      "condition": "",
+      "line": 389,
+      "property": "line-height",
+      "value": "1.55",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-bubble",
+          "condition": "",
+          "line": 1676,
+          "property": "line-height",
+          "value": "1.55"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-composer-area",
+      "condition": "",
+      "line": 448,
+      "property": "padding",
+      "value": "18px 18px 14px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-composer-area",
+          "condition": "",
+          "line": 1680,
+          "property": "padding",
+          "value": "8px 20px 16px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-composer",
+      "condition": "",
+      "line": 454,
+      "property": "gap",
+      "value": "13px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-composer",
+          "condition": "",
+          "line": 1681,
+          "property": "gap",
+          "value": "10px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-composer",
+      "condition": "",
+      "line": 455,
+      "property": "background",
+      "value": "#fff",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-composer",
+          "condition": "",
+          "line": 1681,
+          "property": "background",
+          "value": "transparent"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-composer",
+      "condition": "",
+      "line": 456,
+      "property": "border",
+      "value": "1px solid #e4e1dd",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-composer",
+          "condition": "",
+          "line": 1681,
+          "property": "border",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-composer",
+      "condition": "",
+      "line": 458,
+      "property": "padding",
+      "value": "12px 19px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-composer",
+          "condition": "",
+          "line": 1681,
+          "property": "padding",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-composer",
+      "condition": "",
+      "line": 459,
+      "property": "box-shadow",
+      "value": "none",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-composer",
+          "condition": "",
+          "line": 1681,
+          "property": "box-shadow",
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-composer textarea",
+      "condition": "",
+      "line": 463,
+      "property": "background",
+      "value": "none",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-composer textarea",
+          "condition": "",
+          "line": 1682,
+          "property": "background",
+          "value": "linear-gradient(110deg,#fff0e8 0%,#fde8eb 100%)"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-composer textarea",
+      "condition": "",
+      "line": 464,
+      "property": "border",
+      "value": "0",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-composer textarea",
+          "condition": "",
+          "line": 1682,
+          "property": "border",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-composer textarea",
+      "condition": "",
+      "line": 466,
+      "property": "line-height",
+      "value": "26px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-composer textarea",
+          "condition": "",
+          "line": 1682,
+          "property": "line-height",
+          "value": "22px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-composer textarea",
+      "condition": "",
+      "line": 467,
+      "property": "height",
+      "value": "28px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-composer textarea",
+          "condition": "",
+          "line": 1682,
+          "property": "height",
+          "value": "44px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-composer textarea",
+      "condition": "",
+      "line": 470,
+      "property": "font-size",
+      "value": "calc(16px + var(--zy-font-adjust,0px))",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-composer textarea",
+          "condition": "",
+          "line": 1682,
+          "property": "font-size",
+          "value": "calc(14px + var(--zy-font-adjust,0px))"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-composer textarea",
+      "condition": "",
+      "line": 471,
+      "property": "padding",
+      "value": "0 12px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-composer textarea",
+          "condition": "",
+          "line": 1682,
+          "property": "padding",
+          "value": "11px 18px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-send",
+      "condition": "",
+      "line": 478,
+      "property": "height",
+      "value": "48px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-send",
+          "condition": "",
+          "line": 1684,
+          "property": "height",
+          "value": "40px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-send",
+      "condition": "",
+      "line": 479,
+      "property": "width",
+      "value": "48px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-send",
+          "condition": "",
+          "line": 1684,
+          "property": "width",
+          "value": "38px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-send",
+      "condition": "",
+      "line": 480,
+      "property": "border-radius",
+      "value": "12px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-send",
+          "condition": "",
+          "line": 1684,
+          "property": "border-radius",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-send",
+      "condition": "",
+      "line": 483,
+      "property": "background",
+      "value": "#242320",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-send",
+          "condition": "",
+          "line": 1684,
+          "property": "background",
+          "value": "transparent"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-send",
+      "condition": "",
+      "line": 484,
+      "property": "color",
+      "value": "white",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-send",
+          "condition": "",
+          "line": 1684,
+          "property": "color",
+          "value": "#111"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-send",
+      "condition": "",
+      "line": 485,
+      "property": "border",
+      "value": "1px solid #111",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-send",
+          "condition": "",
+          "line": 1684,
+          "property": "border",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-send:disabled",
+      "condition": "",
+      "line": 488,
+      "property": "opacity",
+      "value": "1",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-send:disabled",
+          "condition": "",
+          "line": 1685,
+          "property": "opacity",
+          "value": ".35"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-send:disabled",
+      "condition": "",
+      "line": 489,
+      "property": "color",
+      "value": "#f8f8f8",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-send:disabled",
+          "condition": "",
+          "line": 1684,
+          "property": "color",
+          "value": "#111"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-send:hover:not(:disabled)",
+      "condition": "",
+      "line": 492,
+      "property": "background",
+      "value": "#423e39",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-send:hover:not(:disabled)",
+          "condition": "",
+          "line": 1684,
+          "property": "background",
+          "value": "transparent"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-post-actions .zy-icon",
+      "condition": "",
+      "line": 1121,
+      "property": "width",
+      "value": "29px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-post-actions .zy-icon",
+          "condition": "",
+          "line": 1708,
+          "property": "width",
+          "value": "auto"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/zhiyu.css",
+      "selector": ".zy-send:disabled",
+      "condition": "",
+      "line": 1685,
+      "property": "opacity",
+      "value": ".35",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/zhiyu.css",
+          "selector": ".zy-send:disabled",
+          "condition": "",
+          "line": 1706,
+          "property": "opacity",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-search",
+      "condition": "",
+      "line": 35,
+      "property": "border-radius",
+      "value": "12px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/refinements.css",
+          "selector": ".zy-app .zy-search",
+          "condition": "",
+          "line": 98,
+          "property": "border-radius",
+          "value": "10px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-search input",
+      "condition": "",
+      "line": 36,
+      "property": "font-size",
+      "value": "calc(13px + var(--zy-font-adjust,0px))",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/refinements.css",
+          "selector": ".zy-app .zy-search input",
+          "condition": "",
+          "line": 99,
+          "property": "font-size",
+          "value": "calc(12px + var(--zy-font-adjust,0px))"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation",
+      "condition": "",
+      "line": 38,
+      "property": "padding",
+      "value": "15px 10px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/refinements.css",
+          "selector": ".zy-app .zy-conversation",
+          "condition": "",
+          "line": 113,
+          "property": "padding",
+          "value": "13px 24px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation",
+      "condition": "",
+      "line": 38,
+      "property": "gap",
+      "value": "13px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/refinements.css",
+          "selector": ".zy-app .zy-conversation",
+          "condition": "",
+          "line": 113,
+          "property": "gap",
+          "value": "11px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation",
+      "condition": "",
+      "line": 38,
+      "property": "border-radius",
+      "value": "0",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/refinements.css",
+          "selector": ".zy-app .zy-conversation",
+          "condition": "",
+          "line": 113,
+          "property": "border-radius",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation strong",
+      "condition": "",
+      "line": 39,
+      "property": "font-size",
+      "value": "calc(14px + var(--zy-font-adjust,0px))",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/refinements.css",
+          "selector": ".zy-app .zy-conversation strong",
+          "condition": "",
+          "line": 130,
+          "property": "font-size",
+          "value": "calc(14px + var(--zy-font-adjust,0px))"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation time",
+      "condition": "",
+      "line": 41,
+      "property": "font-size",
+      "value": "calc(11px + var(--zy-font-adjust,0px))",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/refinements.css",
+          "selector": ".zy-app .zy-conversation time",
+          "condition": "",
+          "line": 132,
+          "property": "font-size",
+          "value": "calc(11px + var(--zy-font-adjust,0px))"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation small",
+      "condition": "",
+      "line": 42,
+      "property": "margin-top",
+      "value": "5px",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/refinements.css",
+          "selector": ".zy-app .zy-conversation small",
+          "condition": "",
+          "line": 131,
+          "property": "margin-top",
+          "value": "3px"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation small",
+      "condition": "",
+      "line": 42,
+      "property": "font-size",
+      "value": "calc(13px + var(--zy-font-adjust,0px))",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/refinements.css",
+          "selector": ".zy-app .zy-conversation small",
+          "condition": "",
+          "line": 131,
+          "property": "font-size",
+          "value": "calc(12px + var(--zy-font-adjust,0px))"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-contact-row strong",
+      "condition": "",
+      "line": 45,
+      "property": "font-size",
+      "value": "calc(14px + var(--zy-font-adjust,0px))",
+      "reason": "same-file later identical selector and condition",
+      "winners": [
+        {
+          "file": "app/zhiyu/refinements.css",
+          "selector": ".zy-app .zy-contact-row strong",
+          "condition": "",
+          "line": 130,
+          "property": "font-size",
+          "value": "calc(14px + var(--zy-font-adjust,0px))"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-nav-items .active",
+      "condition": "",
+      "line": 26,
+      "property": "color",
+      "value": "#000",
+      "reason": "higher specificity theme covers every current App match in both desktop and phone; character window does not match source selector",
+      "winners": [
+        {
+          "file": "app/zhiyu/theme.css",
+          "selector": "html[data-zy-theme] .zy-app.zy-desktop .zy-nav-items .active",
+          "line": 52,
+          "property": "color"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation-pinned:not(.selected)",
+      "condition": "",
+      "line": 43,
+      "property": "background",
+      "value": "#e4e4e6",
+      "reason": "higher specificity theme covers every current App match in both desktop and phone; character window does not match source selector",
+      "winners": [
+        {
+          "file": "app/zhiyu/theme.css",
+          "selector": "html[data-zy-theme] .zy-app.zy-desktop .zy-conversation-pinned:not(.selected)",
+          "line": 71,
+          "property": "background"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation.selected",
+      "condition": "",
+      "line": 125,
+      "property": "background",
+      "value": "linear-gradient(110deg, #f49373, #e47a96)",
+      "reason": "higher specificity theme covers every current App match in both desktop and phone; character window does not match source selector",
+      "winners": [
+        {
+          "file": "app/zhiyu/theme.css",
+          "selector": "html[data-zy-theme] .zy-app.zy-desktop :is(.zy-conversation,.zy-contact-row).selected",
+          "line": 76,
+          "property": "background"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation.selected",
+      "condition": "",
+      "line": 125,
+      "property": "color",
+      "value": "#fff",
+      "reason": "higher specificity theme covers every current App match in both desktop and phone; character window does not match source selector",
+      "winners": [
+        {
+          "file": "app/zhiyu/theme.css",
+          "selector": "html[data-zy-theme] .zy-app.zy-desktop :is(.zy-conversation,.zy-contact-row).selected",
+          "line": 76,
+          "property": "color"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation.selected strong,\n.zy-app .zy-conversation.selected small,\n.zy-app .zy-conversation.selected time",
+      "condition": "",
+      "line": 128,
+      "property": "color",
+      "value": "#fff",
+      "reason": "higher specificity theme covers every current App match in both desktop and phone; character window does not match source selector",
+      "winners": [
+        {
+          "file": "app/zhiyu/theme.css",
+          "selector": "html[data-zy-theme] .zy-app.zy-desktop :is(.zy-conversation,.zy-contact-row).selected strong",
+          "line": 80,
+          "property": "color"
+        },
+        {
+          "file": "app/zhiyu/theme.css",
+          "selector": "html[data-zy-theme] .zy-app.zy-desktop .zy-conversation.selected :is(small,time)",
+          "line": 81,
+          "property": "color"
+        },
+        {
+          "file": "app/zhiyu/theme.css",
+          "selector": "html[data-zy-theme] .zy-app.zy-desktop .zy-conversation.selected :is(small,time)",
+          "line": 81,
+          "property": "color"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation.selected .zy-system-label",
+      "condition": "",
+      "line": 129,
+      "property": "color",
+      "value": "#fff",
+      "reason": "higher specificity theme covers every current App match in both desktop and phone; character window does not match source selector",
+      "winners": [
+        {
+          "file": "app/zhiyu/theme.css",
+          "selector": "html[data-zy-theme] .zy-app.zy-desktop .zy-conversation .zy-system-label",
+          "line": 83,
+          "property": "color"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation.selected .zy-system-label",
+      "condition": "",
+      "line": 129,
+      "property": "background",
+      "value": "#ffffff30",
+      "reason": "higher specificity theme covers every current App match in both desktop and phone; character window does not match source selector",
+      "winners": [
+        {
+          "file": "app/zhiyu/theme.css",
+          "selector": "html[data-zy-theme] .zy-app.zy-desktop .zy-conversation.selected .zy-system-label",
+          "line": 84,
+          "property": "background"
+        }
+      ]
+    },
+    {
+      "file": "app/zhiyu/refinements.css",
+      "selector": ".zy-app .zy-conversation.selected::before",
+      "condition": "",
+      "line": 134,
+      "property": "background",
+      "value": "#28665f",
+      "reason": "higher specificity theme covers every current App match in both desktop and phone; character window does not match source selector",
+      "winners": [
+        {
+          "file": "app/zhiyu/theme.css",
+          "selector": "html[data-zy-theme] .zy-app.zy-desktop .zy-conversation.selected::before",
+          "line": 82,
+          "property": "background"
+        }
+      ]
+    }
+  ]
+}

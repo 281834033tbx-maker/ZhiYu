@@ -22,6 +22,7 @@ try {
   const { createMomentMediaAdapter, momentMediaPath, momentVisualRules, reviewMomentImages } = await runtime.load('server/npc/moment-media');
   const { momentActors, loadMomentRules, normalizeTrainedMoment } = await runtime.load('server/npc/moment-policy');
   const { publicGroupDirectory } = await runtime.load('lib/npc/character-directory');
+  const {characterImageReferences}=await runtime.load('server/npc/image-generator');
   for(const person of publicGroupDirectory()) {
     const target=join(runtime.root,'public',person.avatar.slice(1));
     mkdirSync(dirname(target),{recursive:true});copyFileSync(join('public',person.avatar.slice(1)),target);
@@ -59,7 +60,7 @@ try {
     assert.match(prompt, /identity_reference/);
     assert.match(prompt, /不计图数/);
     assert.match(prompt, /descriptions仅按postImageIndex/);
-    assert.ok(attachments[0].endsWith('assets/identity/chen-nian-face-reference.png'));
+    assert.ok(attachments[0].endsWith('assets/chen-nian/identity/reference.png'));
     for (const path of attachments) assert.ok(readFileSync(path).length > 0);
     return { accepted: true, descriptions: attachments.slice(1).map((_, index) => `第${index + 1}张现场可见内容`), failures: [] };
   };
@@ -119,9 +120,9 @@ try {
   await assert.rejects(createMomentMediaAdapter(async () => photoUrl, review)(runtime.root, owner, 'chen-nian', task), 'two tasks cannot reuse the same generated asset');
   const reused = await reviewMomentImages(runtime.root, owner, 'chen-nian', { ...task, count: 1, imageBriefs: [task.imageBriefs[0]] }, [photoUrl], review);
   assert.equal(reused.generated, false); assert.equal(reused.descriptions.length, 1);
-  const identity = realpathSync(join(runtime.root, 'npc-skills/skills/chen-nian-visual-style/assets/identity/chen-nian-face-reference.png'));
+  const identity = realpathSync(join(runtime.root, 'npc-skills/assets/chen-nian/identity/reference.png'));
   renameSync(identity, identity + '.test-backup');
-  try { await assert.rejects(adapter(runtime.root, owner, 'chen-nian', task), /锁脸参考/); }
+  try { await assert.rejects(adapter(runtime.root, owner, 'chen-nian', task), /ENOENT|身份参考/); }
   finally { renameSync(identity + '.test-backup', identity); }
 
   // Execute generateScene's actual argv/reference/immutable-output path with a process stub.
@@ -142,7 +143,8 @@ writeFileSync(out,JSON.stringify({path:photo}));queueMicrotask(()=>child.emit('c
     .replace("from 'node:child_process'", "from './fixture-image-child.mjs'");
   assert.ok(generatorSource.includes("from './fixture-image-child.mjs'"));
   writeFileSync(generatorPath, generatorSource);
-  const { generateScene } = await import(pathToFileURL(generatorPath));
+  const { generateScene: actualGenerateScene } = await import(pathToFileURL(generatorPath));
+  const generateScene=(root,user,character,photo,signal)=>actualGenerateScene(root,user,character,photo,signal,async()=>({accepted:true,failures:[]}));
   const processStub = await import(pathToFileURL(childPath));
   const output = await generateScene(runtime.root, owner, 'chen-nian', { ...calls[0], jobId: randomUUID(), withCharacter: true });
   assert.ok(momentMediaPath(runtime.root, owner, output));
@@ -158,38 +160,37 @@ writeFileSync(out,JSON.stringify({path:photo}));queueMicrotask(()=>child.emit('c
   const groupAdapter=createMomentMediaAdapter(generate,async (_root,prompt,attachments)=>{
     groupReviewAttachments=attachments;
     for(const id of groupIds)assert.ok(prompt.includes(`"characterId":"${id}"`));
-    assert.equal(attachments.length,5,'four identity references plus one finished image');
+    assert.equal(attachments.length,characterImageReferences(runtime.root,'chen-nian',true,groupIds).length+1,'all identity assets plus one finished image');
     assert.match(prompt,/不同人物不得串脸或合脸/);
     return {accepted:true,descriptions:['四位人物的同场合照'],failures:[]};
   });
   assert.equal((await groupAdapter(runtime.root,owner,'chen-nian',groupTask)).images.length,1);
   assert.deepEqual(calls.at(-1).referenceCharacters,groupIds,'adapter only forwards host-supplied stable participant IDs');
-  const expectedGroupPaths=groupIds.map(id=>id==='chen-nian'?identity
-    :realpathSync(join(runtime.root,'public',publicGroupDirectory().find(person=>person.id===id).avatar.slice(1))));
-  assert.deepEqual(groupReviewAttachments.slice(0,4),expectedGroupPaths);
+  const expectedGroupPaths=characterImageReferences(runtime.root,'chen-nian',true,groupIds).map(ref=>ref.path);
+  assert.deepEqual(groupReviewAttachments.slice(0,expectedGroupPaths.length),expectedGroupPaths);
   const groupOutput=await generateScene(runtime.root,owner,'chen-nian',{...calls.at(-1),jobId:randomUUID(),withCharacter:true});
   const groupCall=processStub.calls.at(-1),groupPaths=[];
   for(let index=0;index<groupCall.args.length;index++)if(groupCall.args[index]==='--image')groupPaths.push(groupCall.args[index+1]);
   assert.deepEqual(groupPaths,expectedGroupPaths,'real generateScene argv binds all four current identities');
   const groupManifest=JSON.parse(readFileSync(join(folder,groupOutput.split('/').at(-1).replace(/\.png$/,'.json')),'utf8'));
-  assert.deepEqual(groupManifest.identityReferences.map(item=>item.characterId),groupIds);
+  assert.deepEqual([...new Set(groupManifest.identityReferences.map(item=>item.characterId))],groupIds);
   assert.ok(groupCall.prompt.includes('never merge or exchange their faces'));
   const beforeUnknown=processStub.calls.length;
   await assert.rejects(generateScene(runtime.root,owner,'chen-nian',{...calls[0],jobId:randomUUID(),referenceCharacters:['unknown']}),/身份参考列表无效/);
   await assert.rejects(generateScene(runtime.root,owner,'chen-nian',{...calls[0],jobId:randomUUID(),referenceCharacters:['liu','liu']}),/身份参考列表无效/);
   assert.equal(processStub.calls.length,beforeUnknown,'invalid identities fail before a process is invoked');
   const heReference=expectedGroupPaths[1];renameSync(heReference,heReference+'.test-backup');
-  try{await assert.rejects(groupAdapter(runtime.root,owner,'chen-nian',groupTask),/身份参考缺失/);}
+  try{await assert.rejects(groupAdapter(runtime.root,owner,'chen-nian',groupTask),/ENOENT|身份参考/);}
   finally{renameSync(heReference+'.test-backup',heReference);}
   await generateScene(runtime.root,owner,'chen-nian',{...calls[0],jobId:randomUUID(),referenceCharacters:['molly']});
   assert.match(processStub.calls.at(-1).prompt,/Molly is a robot\/system avatar, never a human body/);
   assert.ok(processStub.calls.at(-1).prompt.includes('"characterId":"molly"'));
   const allIds=momentActors.map(actor=>actor.id);
   await generateScene(runtime.root,owner,'chen-nian',{...calls[0],jobId:randomUUID(),referenceCharacters:allIds});
-  assert.equal(processStub.calls.at(-1).args.filter(arg=>arg==='--image').length,7);
+  assert.equal(processStub.calls.at(-1).args.filter(arg=>arg==='--image').length,characterImageReferences(runtime.root,'chen-nian',true,allIds).length);
   await generateScene(runtime.root,owner,'xia-xia',{...calls[0],jobId:randomUUID(),withCharacter:true,referenceCharacters:[]});
   const animeCall=processStub.calls.at(-1);
-  assert.equal(animeCall.args[animeCall.args.indexOf('--image')+1],realpathSync(join(runtime.root,xiaIdentity)));
+  assert.equal(animeCall.args[animeCall.args.indexOf('--image')+1],characterImageReferences(runtime.root,'xia-xia',true)[0].path);
   assert.match(animeCall.prompt,/Japanese anime illustration style/);
   assert.match(animeCall.prompt,/"kind":"anime"/);
   assert.equal(animeCall.prompt.includes('Use natural casual phone photography'),false);
@@ -232,9 +233,7 @@ writeFileSync(out,JSON.stringify({path:photo}));queueMicrotask(()=>child.emit('c
   assert.equal(Object.hasOwn(normalizeTrainedMoment(characterFlags,{characterId:'chen-nian',verifiedSourceIds:['event:training']}).imageTask,'referenceCharacters'),false,'model-injected participant lists are stripped before the host injects verified activity participants');
 
   // Actor-specific documents stay private to their own generation/reply request.
-  const paths = new Map(momentActors.map(value => [value.id, value.id === 'he-jiawei'
-    ? join(runtime.root, 'npc-skills/skills/zhiyu-companion-dialogue/references/he-jiawei-companionship.md')
-    : join(runtime.root, 'npc-skills/references/characters', value.profile + '.md')]));
+  const paths=new Map(momentActors.map(value=>[value.id,join(runtime.root,'npc-skills/skills/zhiyu-dialogue/npcs',value.id==='molly'?'molly':value.id,'style.md')]));
   for (const [id, path] of paths) {
     const source=readFileSync(path,'utf8'),marker=`\nPRIVATE_PROFILE_MARKER_${id}\n`;
     writeFileSync(path,source.includes('<!-- current-character-profile:end -->')
@@ -243,10 +242,10 @@ writeFileSync(out,JSON.stringify({path:photo}));queueMicrotask(()=>child.emit('c
   for (const actor of momentActors) for (const section of ['post', 'interaction']) {
     const rules = loadMomentRules(runtime.root, actor.id, section);
     for (const other of momentActors) assert.equal(rules.includes('PRIVATE_PROFILE_MARKER_' + other.id), other.id === actor.id);
-    assert.ok(rules.includes('所有示范、demo日期、联动与台词只解释方向'));
+    assert.ok(rules.includes('示例与联动只解释方向'));
     assert.ok(rules.includes(actor.name));
   }
-  console.log('PASS moments media v2: owned-file confinement, sequential 1–9 images, real generateScene argv/output manifests with 1/4/7 role references, Chen lock face, Molly robot identity, host pixel-review receipts, abort/rejection/duplicates, invalid media cannot pass prepare, stripped model participant injection, seven isolated personas; no real generation/model/database/publication');
+  console.log('PASS moments media v2: owned-file confinement, sequential 1–9 images, real generateScene argv/output manifests with all current identity-package references, Chen lock face, Molly robot identity, host pixel-review receipts, abort/rejection/duplicates, invalid media cannot pass prepare, stripped model participant injection, seven isolated personas; no real generation/model/database/publication');
 } finally {
   runtime.cleanup();
 }

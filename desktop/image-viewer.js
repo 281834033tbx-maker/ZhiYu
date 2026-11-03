@@ -1,8 +1,11 @@
 'use strict';
 
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const { BrowserWindow, ipcMain, screen, dialog, clipboard, nativeImage, net } = require('electron');
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const fs = require('node:fs/promises');
-const path = require('node:path');
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
+const _path = require('node:path');
 
 const TOOLBAR_HEIGHT = 34;
 // Default window bounds, including toolbar/sidebar; resizing/fullscreen remains unrestricted.
@@ -155,7 +158,7 @@ function registerImageViewer({ baseURL, preload, allowedSender }) {
     if (id !== selected.id) return { error: '图片已经切换，请重试' };
     const owner = win;
     try {
-      const source = /^data:image\//.test(selected.src) ? selected.src : new URL(selected.src, baseURL).href;
+      const source = selected.src.startsWith('data:image/') ? selected.src : new URL(selected.src, baseURL).href;
       const response = await net.fetch(source, { redirect: 'error' });
       if (!response.ok) throw Error('图片读取失败，请重试');
       const mime = response.headers.get('content-type')?.split(';')[0];

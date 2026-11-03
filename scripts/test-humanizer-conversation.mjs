@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import ts from 'typescript';
-import {mkdtempSync,readFileSync,writeFileSync,rmSync,mkdirSync} from 'node:fs';
+import {mkdtempSync,readFileSync,writeFileSync,rmSync,mkdirSync as _mkdirSync} from 'node:fs';
 import {tmpdir} from 'node:os';import {join} from 'node:path';import {pathToFileURL} from 'node:url';
 // Only fresh synthetic states. Never open the runtime DB or load browser history.
 const dir=mkdtempSync(join(tmpdir(),'humanizer-live-'));
@@ -13,11 +13,11 @@ try {
   writeFileSync(join(dir,name+'.mjs'),ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText);
  }
  const load=name=>import(pathToFileURL(join(dir,name+'.mjs')));
- const {generate,unknownReplies}=await load('codex');
+ const {generate,unknownReplies: _unknownReplies}=await load('codex');
  const {createState,parseOutput}=await load('engine');
  const {buildPrompt}=await load('prompt');
  const {createYuan,parseYuan}=await load('yuan-xiaoman');const {yuanPrompt}=await load('yuan-prompt');
- const {createMolly,parseMolly,applyMolly}=await load('molly');const {mollyPrompt}=await load('molly-prompt');
+ const {createMolly: _createMolly,parseMolly: _parseMolly,applyMolly: _applyMolly}=await load('molly');const {mollyPrompt: _mollyPrompt}=await load('molly-prompt');
 
  const root=process.cwd(),results=[];
  const series=[{id:'xia',state:createState('test'),build:buildPrompt,parse:parseOutput,inputs:['今天方案改了四遍，老板又说还是第一版好。','没事，不想说工作了。刚才路过烧烤店，突然想你了。','我就想你，没惦记烧烤。']},{id:'yuan',state:createYuan(),build:yuanPrompt,parse:parseYuan,inputs:['今天拍摄顺利吗？','我都没问你私事呢，你就不愿意聊了吗？','我们才刚认识，我开个玩笑。你不用告诉我私事。']}];

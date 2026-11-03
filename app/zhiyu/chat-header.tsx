@@ -6,10 +6,13 @@ import PressableIconButton from './pressable-icon-button';
 import {useAnchoredPopupPresence} from './anchored-popup-motion';
 import NpcTypeBadge from './npc-type-badge';
 import type {DialoguePurpose} from '../../lib/npc/dialogue-purpose';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 import './private-chat-settings.css';
+import './user-facing-ui.css';
 
 type ChatHeaderProps = {
  name:string; avatar?:string; bio:string;
+ status?:string;typing?:boolean;typingName?:string;
  dialoguePurpose?:DialoguePurpose; professionalTitle?:string;
  onCall?:(kind:'voice'|'video')=>void;
  onProfile?:(anchor:HTMLElement)=>void;
@@ -30,7 +33,7 @@ function ClearChatConfirm({onClear,onClose}:{onClear:()=>Promise<void>|void;onCl
   if(lock.current)return;
   lock.current=true;setBusy(true);setError('');
   try {await onClear();if(alive.current)onClose();}
-  catch(e){if(alive.current)setError(e instanceof Error?e.message:'清空失败，请重试。');}
+  catch(e){if(alive.current)setError(reportUserFacingError(e,'save','清空聊天记录'));}
   finally{lock.current=false;if(alive.current)setBusy(false);}
  };
  return <dialog ref={dialog} className="zy-dialog zy-private-clear-dialog" aria-labelledby={title} onCancel={event=>{event.preventDefault();if(!lock.current)onClose();}}>
@@ -40,7 +43,7 @@ function ClearChatConfirm({onClear,onClose}:{onClear:()=>Promise<void>|void;onCl
  </dialog>;
 }
 
-export default function ChatHeader({name,avatar,bio,dialoguePurpose,professionalTitle,onProfile,onDesktop,desktopOpen,onCalendar,onRelationship,muted,onToggleMute,pinned,onTogglePin,onSearch,onClear}:ChatHeaderProps){
+export default function ChatHeader({name,avatar,status='',typing=false,typingName,dialoguePurpose,professionalTitle,onProfile,onDesktop,desktopOpen,onCalendar,muted,onToggleMute,pinned,onTogglePin,onSearch,onClear}:ChatHeaderProps){
  const [drawerOpen,setDrawerOpen]=useState(false),[confirmClear,setConfirmClear]=useState(false);
  const drawerId=useId();
  const root=useRef<HTMLDivElement>(null);
@@ -62,8 +65,8 @@ export default function ChatHeader({name,avatar,bio,dialoguePurpose,professional
  return <>
   <header className="xx-head unified-chat-head">
    <div className="chat-header-person chat-header-person-avatar-only">
-    <button type="button" className="chat-header-avatar" disabled={!onProfile&&!onRelationship} aria-label={name+'的资料'} title={onRelationship?'查看资料，右键查看隐藏数值':'查看资料'} aria-keyshortcuts={onRelationship?'Shift+F10':undefined} onClick={event=>onProfile?.(event.currentTarget.querySelector<HTMLElement>('.xx-avatar')||event.currentTarget)} onContextMenu={event=>{if(onRelationship){event.preventDefault();onRelationship();}}} onKeyDown={event=>{if(onRelationship&&(event.key==='ContextMenu'||event.shiftKey&&event.key==='F10')){event.preventDefault();onRelationship();}}}>{face}</button>
-    <span className="chat-header-copy"><strong>{name}<NpcTypeBadge purpose={dialoguePurpose} professionalTitle={professionalTitle}/></strong>{bio&&<small>{bio}</small>}</span>
+    <button type="button" className="chat-header-avatar" disabled={!onProfile} aria-label={name+'的资料'} title="查看资料" onClick={event=>onProfile?.(event.currentTarget.querySelector<HTMLElement>('.xx-avatar')||event.currentTarget)}>{face}</button>
+    <span className="chat-header-copy"><strong>{name}<NpcTypeBadge purpose={dialoguePurpose} professionalTitle={professionalTitle}/></strong>{(status||typing)&&<small className={'zy-chat-header-status'+(typing?' is-typing':'')} role={typing?'status':undefined}>{typing?`${typingName?typingName+' ':''}正在输入…`:status}</small>}</span>
    </div>
    <div className="xx-call-actions" ref={root}>
     {onCalendar&&<PressableIconButton type="button" aria-label="查看历史任务日历" title="查看历史任务日历" onClick={onCalendar}><CalendarDays size={17} style={{width:17,height:17}} strokeWidth={1.7}/></PressableIconButton>}

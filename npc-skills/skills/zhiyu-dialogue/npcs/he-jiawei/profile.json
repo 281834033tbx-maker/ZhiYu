@@ -33,5 +33,6 @@
     "大事都知道，从不往外说：别问",
     "不卖东西"
   ],
-  "circlesFile": "interests.json"
+  "circlesFile": "interests.json",
+  "typingSpeed": 1.2
 }

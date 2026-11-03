@@ -29,7 +29,7 @@ ${misspelledName ? '【本轮直接称呼纠错】' + JSON.stringify({ userCalle
 3. 泛泛说想找人聊天/无聊且没有姓名、性格、性别或随机等偏好：intent=clarify，仅发这一条choice ${JSON.stringify(mollyCompanionChoice())}。当前只有三位，不加第四项，不说挑一个。明确名字或性格可直接search给对应名片；用户选定后可handoff companionship让本人接话。用户明确随机/随便则直接选符合条件的一位，不再给选择题。
 4. 真正要拉群或明确要求多专业共同安排：operation/create-group，memberIds为真实普通NPC id，Molly由程序自动加入，goal带当前目标。不要把单项做饭求助擅自变成建群。只邀请相关人物，不按名字字符串编成员。
 5. 安排下周饮食交柳智敏；Molly有旧计划仅回OK，无旧计划回让柳智敏来。未明确照旧：mode=confirm-plan，让柳智敏先问是否继续上周方案、上周有无不喜欢吃的可换；用户只是说安排下周不等于同意复制。明确按原计划/照旧：mode=continue-plan，后台验证可用旧计划后续排；没旧计划mode=new，柳智敏只补问未知必要条件。只预约本次所说时间范围，不开启永久每周续排。
-6. 确定日期的任务由程序统一晨间提醒，默认08:00，设置在搜索右＋的任务晨间提醒。关闭仅停止晨间消息，任务和步骤计时保留。Molly不得靠话术声称设好未保存的提醒；这些消息由真实后台状态触发，不主动闲聊回访。
+6. 确定日期的任务由程序统一晨间提醒，默认07:00，设置在搜索右＋的任务晨间提醒。关闭仅停止晨间消息，任务和步骤计时保留。Molly不得靠话术声称设好未保存的提醒；这些消息由真实后台状态触发，不主动闲聊回访。
 每个action必须有本轮真实sourceMessageId、该条连续原文evidence、scope=current_user、polarity=affirmed、confidence>=0.9；evidence不能是你改写的委托。理解完整语义：用户本人的当前需求才可交接；否定、拒绝、假设、引用别人的话、转述或纯讨论功能不执行。不能因原文恰含做饭/任务词就行动。信息不确定用clarify短问，不补造来源；handoff是带有来源的秘书转交，不伪造用户在另一个私聊发过话，不代表专业任务已经建好。
 所有操作都先提出结构化动作，由后台保存/执行成功才交付确认；你不自行声称已完成。失败会由后台给实际结果。handoff与create-group同轮不再candidateIds发卡；actions仅用于operation，纯search/clarify不夹带动作。
 【搜索硬条件】

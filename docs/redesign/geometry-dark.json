@@ -1,0 +1,246 @@
+{
+  "before": [
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "zy-rail",
+      "color": "rgb(237, 242, 238)",
+      "font": "14px",
+      "radius": "0px",
+      "rect": {
+        "height": 720,
+        "width": 68,
+        "x": 0,
+        "y": 0
+      },
+      "shadow": "none",
+      "weight": "400"
+    },
+    {
+      "background": "rgb(49, 59, 53) none repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "zy-base",
+      "color": "rgb(237, 242, 238)",
+      "font": "14px",
+      "radius": "12px",
+      "rect": {
+        "height": 714,
+        "width": 1209,
+        "x": 68,
+        "y": 3
+      },
+      "shadow": "rgba(0, 0, 0, 0.26) -6px 0px 14px -8px, rgba(0, 0, 0, 0.18) 0px 8px 18px -16px",
+      "weight": "400"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) linear-gradient(rgb(56, 69, 60) 0%, rgb(49, 59, 53) 40%, rgb(45, 56, 49) 100%) repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "zy-directory",
+      "color": "rgb(237, 242, 238)",
+      "font": "14px",
+      "radius": "0px",
+      "rect": {
+        "height": 714,
+        "width": 260,
+        "x": 68,
+        "y": 3
+      },
+      "shadow": "none",
+      "weight": "400"
+    },
+    {
+      "background": "rgb(35, 43, 40) none repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "xx-chat",
+      "color": "rgb(237, 242, 238)",
+      "font": "14px",
+      "radius": "0px",
+      "rect": {
+        "height": 714,
+        "width": 949,
+        "x": 328,
+        "y": 3
+      },
+      "shadow": "none",
+      "weight": "400"
+    },
+    {
+      "background": "rgb(35, 43, 40) none repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "xx-head unified-chat-head",
+      "color": "rgb(237, 242, 238)",
+      "font": "14px",
+      "radius": "0px",
+      "rect": {
+        "height": 72,
+        "width": 949,
+        "x": 328,
+        "y": 3
+      },
+      "shadow": "none",
+      "weight": "400"
+    },
+    {
+      "background": "rgb(55, 66, 59) none repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "xx-bubble ",
+      "color": "rgb(237, 242, 238)",
+      "font": "13px",
+      "radius": "21px",
+      "rect": {
+        "height": 41.4453125,
+        "width": 215.640625,
+        "x": 1033.359375,
+        "y": 103
+      },
+      "shadow": "none",
+      "weight": "400"
+    },
+    {
+      "background": "rgb(55, 66, 59) none repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "xx-bubble ",
+      "color": "rgb(237, 242, 238)",
+      "font": "13px",
+      "radius": "21px",
+      "rect": {
+        "height": 41.4453125,
+        "width": 281.9453125,
+        "x": 406,
+        "y": 264.4453125
+      },
+      "shadow": "none",
+      "weight": "400"
+    },
+    {
+      "background": "linear-gradient(rgb(35, 43, 40), rgb(35, 43, 40)) repeat scroll 0% 0% / auto padding-box padding-box, rgba(0, 0, 0, 0) linear-gradient(rgb(131, 169, 197), rgb(131, 169, 197)) repeat scroll 0% 0% / auto border-box border-box",
+      "class": "chat-text-entry",
+      "color": "rgb(237, 242, 238)",
+      "font": "14px",
+      "radius": "10px",
+      "rect": {
+        "height": 40,
+        "width": 770,
+        "x": 479,
+        "y": 657
+      },
+      "shadow": "rgba(0, 0, 0, 0.14) 0px 2px 8px 0px",
+      "weight": "400"
+    }
+  ],
+  "after": [
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "zy-rail",
+      "color": "rgb(237, 242, 238)",
+      "font": "14px",
+      "radius": "0px",
+      "rect": {
+        "height": 720,
+        "width": 68,
+        "x": 0,
+        "y": 0
+      },
+      "shadow": "none",
+      "weight": "400"
+    },
+    {
+      "background": "rgb(49, 59, 53) none repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "zy-base",
+      "color": "rgb(237, 242, 238)",
+      "font": "14px",
+      "radius": "12px",
+      "rect": {
+        "height": 714,
+        "width": 1209,
+        "x": 68,
+        "y": 3
+      },
+      "shadow": "rgba(0, 0, 0, 0.26) -6px 0px 14px -8px, rgba(0, 0, 0, 0.18) 0px 8px 18px -16px",
+      "weight": "400"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) linear-gradient(rgb(56, 69, 60) 0%, rgb(49, 59, 53) 40%, rgb(45, 56, 49) 100%) repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "zy-directory",
+      "color": "rgb(237, 242, 238)",
+      "font": "14px",
+      "radius": "0px",
+      "rect": {
+        "height": 714,
+        "width": 260,
+        "x": 68,
+        "y": 3
+      },
+      "shadow": "none",
+      "weight": "400"
+    },
+    {
+      "background": "rgb(35, 43, 40) none repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "xx-chat",
+      "color": "rgb(237, 242, 238)",
+      "font": "14px",
+      "radius": "0px",
+      "rect": {
+        "height": 714,
+        "width": 949,
+        "x": 328,
+        "y": 3
+      },
+      "shadow": "none",
+      "weight": "400"
+    },
+    {
+      "background": "rgb(35, 43, 40) none repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "xx-head unified-chat-head",
+      "color": "rgb(237, 242, 238)",
+      "font": "14px",
+      "radius": "0px",
+      "rect": {
+        "height": 72,
+        "width": 949,
+        "x": 328,
+        "y": 3
+      },
+      "shadow": "none",
+      "weight": "400"
+    },
+    {
+      "background": "rgb(55, 66, 59) none repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "xx-bubble ",
+      "color": "rgb(237, 242, 238)",
+      "font": "13px",
+      "radius": "21px",
+      "rect": {
+        "height": 41.4453125,
+        "width": 215.640625,
+        "x": 1033.359375,
+        "y": 152.1953125
+      },
+      "shadow": "none",
+      "weight": "400"
+    },
+    {
+      "background": "rgb(55, 66, 59) none repeat scroll 0% 0% / auto padding-box border-box",
+      "class": "xx-bubble ",
+      "color": "rgb(237, 242, 238)",
+      "font": "13px",
+      "radius": "21px",
+      "rect": {
+        "height": 41.4453125,
+        "width": 281.9453125,
+        "x": 406,
+        "y": 313.640625
+      },
+      "shadow": "none",
+      "weight": "400"
+    },
+    {
+      "background": "linear-gradient(rgb(35, 43, 40), rgb(35, 43, 40)) repeat scroll 0% 0% / auto padding-box padding-box, rgba(0, 0, 0, 0) linear-gradient(rgb(131, 169, 197), rgb(131, 169, 197)) repeat scroll 0% 0% / auto border-box border-box",
+      "class": "chat-text-entry",
+      "color": "rgb(237, 242, 238)",
+      "font": "14px",
+      "radius": "10px",
+      "rect": {
+        "height": 40,
+        "width": 770,
+        "x": 479,
+        "y": 634.5
+      },
+      "shadow": "rgba(0, 0, 0, 0.14) 0px 2px 8px 0px",
+      "weight": "400"
+    }
+  ]
+}

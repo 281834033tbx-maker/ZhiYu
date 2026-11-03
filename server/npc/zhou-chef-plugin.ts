@@ -1,3 +1,4 @@
+import {statusFromState} from '../../lib/npc/character-status';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
 import {parseTaskPageContext} from '../../lib/npc/task-page-context';
 import {clearPrivateHistory, privateHistoryMessages} from './private-history';
@@ -6,7 +7,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { appendFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { applyChef, chefTaskDelegationEvidence, createChef, importChefHistory, parseChef, type ChefState, type LegacyChefMessage } from '../../lib/npc/zhou-chef';
-import { deliveryView, scheduleDelivery } from '../../lib/npc/delivery';
+import { deliveryView, scheduleDelivery, presentationPending } from '../../lib/npc/delivery';
 import { publicRelationshipValues } from '../../lib/npc/relationship-values';
 import { codexAvailable, generate, type generateRaw } from './codex';
 import { chefPrompt, chefApplicationEvidence } from './zhou-chef-prompt';
@@ -62,7 +63,8 @@ export function chefLocal(deps?: { now?: () => number; generate?: typeof generat
       const active = new Set<string>();
       const typing = (state: ChefState) => Object.values(state.typing).some(client => client.until > now());
       const expose = (state: ChefState) => ({
-        ...deliveryView(privateHistoryMessages(state), state.pending, now()),
+        ...deliveryView(privateHistoryMessages(state), presentationPending(state), now()),
+        characterStatus:statusFromState('zhou-chef',state,now()),
         revision: state.revision, conversationId: state.branch,
         pending: (!!state.pending && now() - state.pending.since < 180_000) || privateHistoryMessages(state).some(message => (message.deliverAt || 0) > now()) || ((!!state.queue.length || !!state.taskEvents.length) && !state.error && status()),
         available: status(), debugAllowed: false,
@@ -165,7 +167,7 @@ export function chefLocal(deps?: { now?: () => number; generate?: typeof generat
                 if (applied?.changed && !applied.created) invalidateHints(candidate, applied.task.id);
               }
               reconcileProfessionalTaskState(candidate,now());
-              scheduleDelivery(candidate.messages, before, startedAt, now());
+              scheduleDelivery(candidate.messages, before, startedAt, now(),{characterId:'zhou-chef'});
               candidate.queue = candidate.queue.filter(turn => !ids.includes(turn));
               candidate.error = ''; candidate.retryAt = 0;
               save(id, candidate);

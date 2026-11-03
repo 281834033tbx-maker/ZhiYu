@@ -1,0 +1,346 @@
+{
+  "version": "zhiyu-identity-review-20261104",
+  "date": "2026-11-04",
+  "scope": "需求14.6：现行虚构人物身份包及本轮补充角度；未替换现行头像、桌面场景或固定脸。",
+  "summary": {
+    "characters": 7,
+    "actualFilesVerified": 17,
+    "newImagegenReferences": 5,
+    "newCodeDrawnReferences": 1,
+    "reusedExistingSideReferences": 2,
+    "sha256Matches": true
+  },
+  "reviewMeaning": "reviewed表示assistant已实际目视核对或现行固定参考沿用；不表示用户重新批准，也不是生物识别证明。生成角度的prompt逐字保留，未把历史提示中的年龄描述写回当前人物资料。",
+  "referenceCoverage": "同一原图可同时包含正面与半身；小满和厨师侧姿复用既有全身图，不把正面副本冒充侧面。Molly保持像素助手，上半身像素图成立，真人解剖半身不适用。",
+  "sources": [
+    "docs/redesign/identity-generation-prompts.json",
+    "docs/qa/image-identity-library-20261103.md"
+  ],
+  "characters": [
+    {
+      "characterId": "chen-nian",
+      "manifest": "npc-skills/assets/chen-nian/identity/manifest.json",
+      "references": [
+        {
+          "path": "npc-skills/assets/chen-nian/identity/reference.png",
+          "view": "front-three-quarter-face",
+          "sha256": "7b3e44b4d95e99b6064e10da3b220eeccea63238e3263007fc0f6f5dd8239680",
+          "bytes": 1900173,
+          "reviewed": true,
+          "source": "npc-skills/skills/chen-nian-visual-style/assets/identity/chen-nian-face-reference.png",
+          "basis": "approved locked identity"
+        },
+        {
+          "path": "npc-skills/assets/chen-nian/identity/side-reference-20261103.png",
+          "view": "side",
+          "sha256": "c6059bb8022a77d5f8367f20202876e04da71d2f8b6c857f33d40c50a3a85bf7",
+          "bytes": 2128705,
+          "reviewed": true,
+          "source": "system_imagegen:20261103",
+          "basis": "Supplement derived solely from the unchanged locked face; visually reviewed by Codex for identity, true view, adult athletic proportions; no claim of new user approval.",
+          "productionMethod": "system_imagegen",
+          "userApproved": false,
+          "review": {
+            "method": "assistant-visual-qc",
+            "decision": "pass",
+            "scope": "新增角度与未变更固定脸部参考的实际目视比对；不等于用户重新定稿。"
+          },
+          "prompt": "Use case: identity-preserve. Asset type: fictional adult NPC 陈年 identity supplement for the Zhiyu app, no publishing. Input image 1 is the sole approved identity anchor. Keep EXACT same slightly long face, hard brow, long-shaped eyes, straight strong nose, cheekbone plane, solid jaw, skin tone, small moles and natural asymmetry, same short black hair and charcoal worn cotton T-shirt. Chinese adult man age28 appearing youthful23–25, natural athletic body around183cm, open shoulders, balanced muscle and body fat. Do not change existing identity, do not beautify, do not narrow jaw, enlarge eyes, add idol makeup, age him, show bodybuilding proportions. Ordinary softly lit grey indoor wall, neutral relaxed expression, no extra people, no text/logo/watermark, no cinematic lighting. Actual anatomy must be plausible. Create one genuine 90-degree left-facing side profile head-and-shoulders reference, nose pointing left. Camera level, upright head, only one eye visible, ear/head/nose/jaw profile clearly visible. Same facial identity seen from a new angle. Not a three-quarter pose, not a grid."
+        },
+        {
+          "path": "npc-skills/assets/chen-nian/identity/half-body-reference-20261103.png",
+          "view": "half-body",
+          "sha256": "24b9d6bfaf9d6782ca8cc7c825417566eebf199cef09026f3180474a9c89b130",
+          "bytes": 2054486,
+          "reviewed": true,
+          "source": "system_imagegen:20261103",
+          "basis": "Supplement derived solely from the unchanged locked face; visually reviewed by Codex for identity, true view, adult athletic proportions; no claim of new user approval.",
+          "productionMethod": "system_imagegen",
+          "userApproved": false,
+          "review": {
+            "method": "assistant-visual-qc",
+            "decision": "pass",
+            "scope": "新增角度与未变更固定脸部参考的实际目视比对；不等于用户重新定稿。"
+          },
+          "prompt": "Use case: identity-preserve. Asset type: fictional adult NPC 陈年 identity supplement for the Zhiyu app, no publishing. Input image 1 is the sole approved identity anchor. Keep EXACT same slightly long face, hard brow, long-shaped eyes, straight strong nose, cheekbone plane, solid jaw, skin tone, small moles and natural asymmetry, same short black hair and charcoal worn cotton T-shirt. Chinese adult man age28 appearing youthful23–25, natural athletic body around183cm, open shoulders, balanced muscle and body fat. Do not change existing identity, do not beautify, do not narrow jaw, enlarge eyes, add idol makeup, age him, show bodybuilding proportions. Ordinary softly lit grey indoor wall, neutral relaxed expression, no extra people, no text/logo/watermark, no cinematic lighting. Actual anatomy must be plausible. Create one waist-up front half-body identity reference. Entire head, shoulders, chest, both arms to around waist are visible, arms relaxed down, ordinary standing posture straight toward level camera. Clear face matching input exactly, naturally athletic chest/shoulders under the same plain charcoal T-shirt, no gym props or bare torso. Not a headshot, not a grid."
+        }
+      ],
+      "missingViews": [],
+      "notApplicableViews": [],
+      "viewNotes": ""
+    },
+    {
+      "characterId": "he-jiawei",
+      "manifest": "npc-skills/assets/he-jiawei/identity/manifest.json",
+      "references": [
+        {
+          "path": "npc-skills/assets/he-jiawei/identity/reference.png",
+          "view": "front-seated-half-body",
+          "sha256": "71456d93b9e87ec51d78e8f537cf0cde0b141eb7b83b823d0d2dce15878d6611",
+          "bytes": 1646122,
+          "reviewed": true,
+          "source": "public/desktop-npc/scenes/he-jiawei-20260926.png",
+          "basis": "current character scene"
+        },
+        {
+          "path": "npc-skills/assets/he-jiawei/identity/side-reference-20261103.png",
+          "view": "left-profile-90-degree-face-upper-chest",
+          "sha256": "9a86b62e27efd4067fa4ac76b8e9b5b6c050738a0225c3268641ce6c60f09adf",
+          "bytes": 2121065,
+          "reviewed": true,
+          "source": "npc-skills/assets/he-jiawei/identity/side-reference-20261103.png",
+          "basis": "generated side-angle supplement from the existing approved character reference; assistant visual QC only, not new user approval",
+          "productionMethod": "system_imagegen",
+          "inputReference": "npc-skills/assets/he-jiawei/identity/reference.png",
+          "inputSha256": "71456d93b9e87ec51d78e8f537cf0cde0b141eb7b83b823d0d2dce15878d6611",
+          "prompt": "Use case: identity-preserve. Asset type: supplementary side-view reference for Zhiyu's established fictional adult character 何嘉伟. Input image 1 is the sole current approved character appearance reference. Create ONE true 90-degree left-facing side-profile head-and-upper-chest portrait; body and head both in profile, upright neck, only the near eye visible, the far eye not visible. Keep precisely the established adult masculine age impression and physical design: very short platinum/silver textured hair, the original hairline, strong brow ridge, straight nose profile, lips, cheek and defined jaw/chin, natural slightly warm skin, no face slimming or age change. Preserve original white suit over black shirt, and any existing small ear jewelry only if on the visible side. Calm restrained closed-mouth expression, no smile, no threatening expression. Replace the scene only with a simple neutral gray background and soft even portrait light suitable as an angle reference. Realistic natural texture, no stylized beauty filter, no text/watermark, no hands or extra people, one single frame, no collage, no front or three-quarter face. Preserve the same established fictional design and add only the genuinely missing profile angle.",
+          "userApproved": false,
+          "review": {
+            "method": "assistant-visual-qc",
+            "decision": "pass",
+            "checks": [
+              "仅近眼可见的左向90度侧脸，头颈直立",
+              "短铂银发、浓眉/下颌轮廓、耳饰及白西装黑衫延续原参考",
+              "成年人写实风格，未发现明显换脸或年龄漂移；这是虚构设计连续性目视检查，不是生物识别证明"
+            ]
+          },
+          "machineChecks": {
+            "validPng": true,
+            "implicitAigcMetadata": true,
+            "idatPayloadPreserved": true
+          }
+        }
+      ],
+      "missingViews": [],
+      "notApplicableViews": [],
+      "viewNotes": ""
+    },
+    {
+      "characterId": "liu",
+      "manifest": "npc-skills/assets/liu/identity/manifest.json",
+      "references": [
+        {
+          "path": "npc-skills/assets/liu/identity/reference.jpg",
+          "view": "front-three-quarter-face",
+          "sha256": "7cecf9a8dfd8b7002e757290416c56ade3083a110277051d745b5d7b8da04e5d",
+          "bytes": 224894,
+          "reviewed": true,
+          "source": "public/stitch/6ee1d45916762d31.jpg",
+          "basis": "current avatar"
+        },
+        {
+          "path": "npc-skills/assets/liu/identity/approved-scene.png",
+          "view": "front-seated-half-body",
+          "sha256": "9d885347fbf726fa9b433adf6b8fdb375d9cf744d352c9f343aeb808d8712ac9",
+          "bytes": 1613218,
+          "reviewed": true,
+          "source": "public/desktop-npc/scenes/liu-zhimin-20260926.png",
+          "basis": "user-provided existing current desktop scene; source scene manifest"
+        },
+        {
+          "path": "npc-skills/assets/liu/identity/side-reference-20261103.png",
+          "view": "left-profile-90-degree-face-upper-chest",
+          "sha256": "21b0bdf767ba0caacead149590863c75c4f1f5b8d81d08b0009a4de303f05207",
+          "bytes": 1992621,
+          "reviewed": true,
+          "source": "npc-skills/assets/liu/identity/side-reference-20261103.png",
+          "basis": "generated side-angle supplement from the existing approved character reference; assistant visual QC only, not new user approval",
+          "productionMethod": "system_imagegen",
+          "inputReference": "npc-skills/assets/liu/identity/approved-scene.png",
+          "inputSha256": "9d885347fbf726fa9b433adf6b8fdb375d9cf744d352c9f343aeb808d8712ac9",
+          "prompt": "Use case: identity-preserve. Asset type: supplementary side-view reference for Zhiyu's established fictional adult character 柳智敏. Input image 1 is the sole current approved character appearance reference, not a request to reproduce the sofa scene. Create ONE clean true 90-degree side-profile portrait, facing left, head and neck and upper chest visible, head upright and body also in profile. Only the nearer eye is visible; the far eye and far nostril must not appear. Preserve the reference character's adult age impression, forehead/nose/lips/chin silhouette, eyes and eyelids, brow, skin tone and natural detail, dark brown swept-back bun, original gold hoop earring on its actual side, red lipstick and black turtleneck. Neutral relaxed closed mouth, no posing, no beauty redesign or narrowing the jaw. Plain unobtrusive neutral gray background, soft even neutral lighting that makes the profile readable; keep the reference's warm natural skin and black/brown/gold palette. A natural realistic reference photo, no glamour filter, no text, no watermark, no extra person, no reference sheet or collage, no hands, no front or three-quarter face. The task is to add a missing angle while keeping the established fictional character, not invent a replacement appearance.",
+          "userApproved": false,
+          "review": {
+            "method": "assistant-visual-qc",
+            "decision": "pass",
+            "checks": [
+              "仅近眼可见的左向90度侧脸，鼻/唇/下颌轮廓清楚",
+              "深棕后挽髻、金环耳饰、红唇及黑高领延续原参考",
+              "成年人写实风格，未发现明显换脸或幼态化；这是虚构设计连续性目视检查，不是生物识别证明"
+            ]
+          },
+          "machineChecks": {
+            "validPng": true,
+            "implicitAigcMetadata": true,
+            "idatPayloadPreserved": true
+          }
+        }
+      ],
+      "missingViews": [],
+      "notApplicableViews": [],
+      "viewNotes": ""
+    },
+    {
+      "characterId": "molly",
+      "manifest": "npc-skills/assets/molly/identity/manifest.json",
+      "references": [
+        {
+          "path": "npc-skills/assets/molly/identity/reference.png",
+          "view": "front-pixel-avatar-with-upper-torso",
+          "sha256": "7fa73af5ddfb6a6a282af4d70734c11c94b2d9b3efb97ba055458c6e1d66348d",
+          "bytes": 1289511,
+          "reviewed": true,
+          "source": "public/stitch/molly-avatar-v2.png",
+          "basis": "current robot avatar"
+        },
+        {
+          "path": "npc-skills/assets/molly/identity/side-pixel-v1.png",
+          "view": "side-pixel-glyph-with-upper-torso",
+          "sha256": "8d70040d13534a51a789a173782696c6476e983f6e2001895b23b05458a69c6f",
+          "bytes": 5161,
+          "reviewed": true,
+          "source": "side-pixel-v1.svg; palette sampled from existing reference.png",
+          "basis": "deterministic code-native pixel drawing retaining established palette and glyph; root independently compared both actual images",
+          "productionMethod": "deterministic-code-native-pixel-drawing",
+          "userApproved": false,
+          "review": {
+            "method": "assistant-visual-review",
+            "at": "2026-11-03T14:23:39.768Z",
+            "checks": [
+              "brown long-hair pixel silhouette",
+              "black frames with gold lens",
+              "original face and green outfit palette",
+              "no real human face or invented human body"
+            ]
+          }
+        }
+      ],
+      "missingViews": [],
+      "notApplicableViews": [
+        "photorealistic-human-half-body"
+      ],
+      "viewNotes": "Molly is a pixel assistant glyph; the existing front includes head and upper torso. Do not invent an anatomical human body."
+    },
+    {
+      "characterId": "xia-xia",
+      "manifest": "npc-skills/assets/xia-xia/identity/manifest.json",
+      "references": [
+        {
+          "path": "npc-skills/assets/xia-xia/identity/reference.png",
+          "view": "front-seated-half-body",
+          "sha256": "31d495fab0ce6ca6e127b273a444de78ca23b39ab8a7c73148a5ad9c082cc7d1",
+          "bytes": 1894340,
+          "reviewed": true,
+          "source": "public/desktop-npc/scenes/xia-xia-anime-sofa-final-20261021.png",
+          "basis": "current approved anime identity"
+        },
+        {
+          "path": "npc-skills/assets/xia-xia/identity/side-reference-20261103.png",
+          "view": "left-profile-90-degree-face-upper-chest",
+          "sha256": "8c53012579e753181b573273f11acf1139a48d35361735d3bfc170801daa2d83",
+          "bytes": 1682227,
+          "reviewed": true,
+          "source": "npc-skills/assets/xia-xia/identity/side-reference-20261103.png",
+          "basis": "generated side-angle supplement from the existing approved character reference; assistant visual QC only, not new user approval",
+          "productionMethod": "system_imagegen",
+          "inputReference": "npc-skills/assets/xia-xia/identity/reference.png",
+          "inputSha256": "31d495fab0ce6ca6e127b273a444de78ca23b39ab8a7c73148a5ad9c082cc7d1",
+          "prompt": "Use case: identity-preserve. Asset type: supplementary side-view model reference for Zhiyu's established fictional adult anime character 夏夏 (adult, age 23). Input image 1 is the sole approved anime character reference. Generate ONE true 90-degree left-facing profile portrait showing head, neck and upper chest; body and head fully in profile. Only the near purple eye is visible, not the far eye. Preserve the exact established adult Japanese anime design and style: shoulder-length softly wavy pink hair, layered bangs, pink flower accessory on its actual original side (if hidden by the rotation, do not move it), purple eye color and the same adult facial proportions, nose, lips and small chin, natural slight friendly neutral smile. Preserve the white collared shirt and dark red bow at the neck, no costume changes or extra ornaments. Simple neutral gray background, soft even anime shading. This must remain a high quality 2D Japanese anime drawing, NOT a real person, photorealistic skin, 3D doll, child or school-age redesign. No sofa/background story, no hands, no text/watermark, no collage or multiple views, no frontal or three-quarter face. The purpose is a missing geometric side angle of the established fictional adult character.",
+          "userApproved": false,
+          "review": {
+            "method": "assistant-visual-qc",
+            "decision": "pass",
+            "checks": [
+              "仅近紫眼可见的左向90度日漫侧脸",
+              "粉色波浪中长发、原侧花饰、白衬衫及深红领结延续原参考",
+              "保持成年二维日漫风格，没有转真人/3D或儿童化；这是角色设计连续性目视检查"
+            ]
+          },
+          "machineChecks": {
+            "validPng": true,
+            "implicitAigcMetadata": true,
+            "idatPayloadPreserved": true
+          }
+        }
+      ],
+      "missingViews": [],
+      "notApplicableViews": [],
+      "viewNotes": ""
+    },
+    {
+      "characterId": "yuan-xiaoman",
+      "manifest": "npc-skills/assets/yuan-xiaoman/identity/manifest.json",
+      "references": [
+        {
+          "path": "npc-skills/assets/yuan-xiaoman/identity/reference.png",
+          "view": "front-face-eyes-obscured",
+          "sha256": "60c66cf226e04979b7b8c0312ac97ca0fcbc0b830ae0d634bbd4a1329e8e0b60",
+          "bytes": 1986627,
+          "reviewed": true,
+          "source": "public/npc/yuan-xiaoman/avatar.png",
+          "basis": "current avatar"
+        },
+        {
+          "path": "npc-skills/assets/yuan-xiaoman/identity/approved-scene.png",
+          "view": "front-seated-half-body",
+          "sha256": "a05d01208b283830e9332d1592780ad3a7abf82e6a933c7a53ff23f52a199473",
+          "bytes": 1732341,
+          "reviewed": true,
+          "source": "public/desktop-npc/scenes/xu-xiaoman-20260926.png",
+          "basis": "user-provided existing current desktop scene; source scene manifest"
+        },
+        {
+          "path": "npc-skills/assets/yuan-xiaoman/identity/side-existing-v1.png",
+          "view": "left-side-full-body",
+          "sha256": "12e7d9167983938a013787625624a3d39561a3c00e7178f59da8c4aa02827c71",
+          "bytes": 1820081,
+          "reviewed": true,
+          "source": "public/desktop-npc/assets/20260927/xu-xiaoman/03-body-left-v1.png",
+          "basis": "existing same-character front/side set; actual assistant visual comparison with current fixed reference; not newly user-approved",
+          "productionMethod": "reuse-existing-identical-file",
+          "userApproved": false,
+          "review": {
+            "method": "assistant-visual-comparison",
+            "at": "2026-11-03T14:11:28.472Z",
+            "checks": [
+              "same eye/nose/jaw silhouette",
+              "side body connected and coherent",
+              "source identity unchanged"
+            ]
+          }
+        }
+      ],
+      "missingViews": [],
+      "notApplicableViews": [],
+      "viewNotes": ""
+    },
+    {
+      "characterId": "zhou-chef",
+      "manifest": "npc-skills/assets/zhou-chef/identity/manifest.json",
+      "references": [
+        {
+          "path": "npc-skills/assets/zhou-chef/identity/reference.png",
+          "view": "front-seated-half-body",
+          "sha256": "f5d8ca57712b57e721c02cbb511f77e5302c9d937fe8feebb9d7fc61783350c4",
+          "bytes": 1678456,
+          "reviewed": true,
+          "source": "public/desktop-npc/scenes/zhou-chef-night-sofa-20261005-v1.png",
+          "basis": "current character scene"
+        },
+        {
+          "path": "npc-skills/assets/zhou-chef/identity/side-existing-v1.png",
+          "view": "left-side-full-body",
+          "sha256": "42e9ed6c3248f5961fb414f7a423249b1889835fb18c58e219b21cfcf0185f63",
+          "bytes": 1649482,
+          "reviewed": true,
+          "source": "public/desktop-npc/assets/20260927/zhao-yifan/03-body-left-v1.png",
+          "basis": "existing same-character front/side set; actual assistant visual comparison with current fixed reference; not newly user-approved",
+          "productionMethod": "reuse-existing-identical-file",
+          "userApproved": false,
+          "review": {
+            "method": "assistant-visual-comparison",
+            "at": "2026-11-03T14:11:28.478Z",
+            "checks": [
+              "same eye/nose/jaw silhouette",
+              "side body connected and coherent",
+              "source identity unchanged"
+            ]
+          }
+        }
+      ],
+      "missingViews": [],
+      "notApplicableViews": [],
+      "viewNotes": ""
+    }
+  ]
+}

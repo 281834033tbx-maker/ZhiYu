@@ -3,13 +3,12 @@ import { Loader2Icon } from 'lucide-react';
 
 function Spinner({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
-    <Loader2Icon
+    <output aria-label="加载中"><Loader2Icon
       data-slot="spinner"
-      role="status"
-      aria-label="Loading"
+      aria-hidden="true"
       className={cn('size-4 animate-spin', className)}
       {...props}
-    />
+    /></output>
   );
 }
 

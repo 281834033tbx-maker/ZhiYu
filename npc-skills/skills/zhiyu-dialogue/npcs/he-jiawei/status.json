@@ -1,0 +1,164 @@
+{
+  "items": [
+    {
+      "text": "晨跑",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "看季度数据",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "面试新人",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "复盘中",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "整理日程",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "看项目进度",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "对预算",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "整理会议纪要",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "研究新方案",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "翻行业报告",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "做周计划",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "梳理重点",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "读一本传记",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "整理书架",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "想下一步",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "校对数据",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "看团队提案",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "整理工作台",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "翻经营案例",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "记复盘笔记",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    }
+  ]
+}

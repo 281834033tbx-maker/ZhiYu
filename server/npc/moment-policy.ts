@@ -1,5 +1,6 @@
+import {normalizeDialogueOutput} from '../../lib/npc/dialogue-output-guard';
 import {getCharacter} from '../../lib/npc/character-directory';
-import {loadMollyDialogueSkill, readDialoguePersona} from './dialogue-skill';
+import {loadMollyDialogueSkill, loadDialogueSkill} from './dialogue-skill';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chenAcsmFoundationFile, parseChenAcsmFoundation, matchChenAcsmFoundationEntries, selectChenAcsmFoundationEntries } from './chen-acsm-foundation';
@@ -27,6 +28,17 @@ export const momentFrequencyPolicy = Object.freeze({
   minimumImportance: 0.65,
 });
 
+/** One host-owned quota shared by every publication route. No model decides
+ * a count or bypasses the gap by changing a post's source. */
+export function momentCanPublish(publishedAt:readonly number[],now:number):boolean {
+  if(!Number.isFinite(now)||publishedAt.some(at=>!Number.isFinite(at)))return false;
+  const latest=publishedAt.length?Math.max(...publishedAt):-Infinity;
+  if(now-latest<momentFrequencyPolicy.minGapMs)return false;
+  const localDay=(at:number)=>new Intl.DateTimeFormat('en-CA',{timeZone:momentFrequencyPolicy.timezone,year:'numeric',month:'2-digit',day:'2-digit'}).format(at);
+  const today=localDay(now);
+  return publishedAt.filter(at=>localDay(at)===today).length<momentFrequencyPolicy.maxDaily;
+}
+
 const personalHeading = /^(?:赵一帆|陈年|柳智敏|小满|何嘉伟|夏夏)：/;
 const actorHeading: Partial<Record<MomentActorId, string>> = {
   'xia-xia': '夏夏：', 'yuan-xiaoman': '小满：', liu: '柳智敏：',
@@ -45,10 +57,19 @@ export function loadMomentRules(root: string, characterId: string, section: 'pos
   if (!actor || !['post', 'interaction'].includes(section)) throw new Error('未知朋友圈人物或规则分支');
   const mirror = 'npc-skills/skills/zhiyu-moments';
   const read = (path: string) => readFileSync(join(root, path), 'utf8');
-  const chunk = (path: string, content = read(path)) => `【规则来源 ${path}】\n${content}`;
+  const titles: Record<string, string> = {
+    [`${mirror}/SKILL.md`]: '动态表达总则',
+    [`${mirror}/references/professional-posts.md`]: '专业智友动态',
+    [`${mirror}/references/companion-posts.md`]: '陪伴智友动态',
+    [`${mirror}/references/life-simulation.md`]: '日常生活与连续性',
+    [`${mirror}/references/contract.md`]: '动态内容与公开边界',
+    [`${mirror}/references/runtime-integration.md`]: '本轮动态处理',
+    [`${mirror}/references/interactions.md`]: '动态互动',
+  };
+  const chunk = (path: string, content = read(path)) => `【${titles[path] || '动态表达规则'}】\n${content}`;
   const skill = read(`${mirror}/SKILL.md`);
   const parts = [
-    '【当前朋友圈规则优先级】现行镜像Skill及本人物公开风格覆盖旧档案中的每日四条、普通美食一律不发等旧朋友圈条款。每天最多2条、至少间隔2小时、最多9图；上限不是配额。没有聊天不降低生活分享判断。所有示范、demo日期、联动与台词只解释方向，不是已发生事实，不写入记忆。内部理由、私聊来源和估算依据不进入公开正文或观察者上下文。',
+    '【本轮动态表达】只写当前这条，程序已检查发布资格。没有聊天不降低生活分享判断；示例与联动只解释方向，不是已发生事实。内部理由、私聊来源和估算依据不进入公开正文或观察者上下文。',
     `【本次独立人物】${JSON.stringify(actor)}`,
     chunk(`${mirror}/SKILL.md`, skill),
   ];
@@ -59,12 +80,10 @@ export function loadMomentRules(root: string, characterId: string, section: 'pos
   parts.push(chunk(`${mirror}/references/life-simulation.md`), chunk(`${mirror}/references/contract.md`));
   if (skill.includes('references/runtime-integration.md')) parts.push(chunk(`${mirror}/references/runtime-integration.md`));
   if (section === 'interaction') parts.push(chunk(`${mirror}/references/interactions.md`));
-  const persona=readDialoguePersona(root,actor.id==='molly'?'molly-system-secretary':actor.id);
-  parts.push(`【统一对话包中的当前独立资料；只属于${actor.name}，示例不升级为事实】\n${JSON.stringify(persona.profile)}\n【本人表达风格；朋友圈正文仍按上方公开规则】\n${persona.style}`);
-  if (actor.kind === 'functional') {
-    parts.push(`【Molly统一对话Skill；仅本人秘书模式】\n${loadMollyDialogueSkill(root).rules}`,
-      'Molly保持机器人与系统秘书身份；不生成肉身生活或私人朋友圈。可基于实际可见公开内容选择点赞或偶尔简短玩笑，不继承其他人物的经历、私聊或恋爱线。');
-  }
+  const dialogue=actor.kind==='functional'?loadMollyDialogueSkill(root,{channel:'moment'}):loadDialogueSkill(root,'Current application identity',actor.id,{channel:'moment'});
+  if(!dialogue)throw Error('本人物动态规则缺失');
+  parts.push(`【本人对话与公开表达规则；示例不是当前事实】\n${dialogue.rules}`);
+  if(actor.kind==='functional')parts.push('Molly保持机器人与秘书身份，不生成肉身生活或私人动态；仅按真实公开内容自然互动，不继承他人的经历或私聊。');
   return parts.join('\n\n');
 }
 
@@ -253,8 +272,11 @@ export function normalizeTrainedMoment(raw: unknown, context: NormalizeTrainedMo
   }
   if (topicKind === 'roundup' && !roundup) return null;
   const professionalDetail = field(inner, 'professional_detail', 'professionalDetail');
+  const spoken=format==='image_only'?null:normalizeDialogueOutput({messages:[body.trim()]},{characterId:context.characterId});
+  if(spoken?.issues.length)return null;
+  const publicBody=spoken?(spoken.value as {messages:string[]}).messages[0]:'';
   return {
-    format: format as MomentFormat, text: format === 'image_only' ? '' : body.trim(), images, imageTask, mediaResult,
+    format: format as MomentFormat, text: publicBody, images, imageTask, mediaResult,
     internalContext: { npcType: actor.kind, topicKind, topic, eventSummary, shareReason, formatReason, imageCountReason, evidenceRefs: [...refs],
       ...(nonempty(professionalDetail) ? { professionalDetail } : {}), returnPhotoSourceIds: [...returnIds],
       ...(nonempty(calorieId) ? { calorieEvidenceId: calorieId } : {}), collaboration, roundup },

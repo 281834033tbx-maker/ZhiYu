@@ -78,7 +78,7 @@ export default function TaskBoard({board,dirWidth,onDirectoryWidthChange,onOpenC
   const countsFor=(categoryId:string)=>categoryOverview(model,categoryId,historyMonth);
   function selectView(next:TaskView){dispatch({type:'set-view',view:next});setQuery('');content.current?.scrollTo({top:0});}
   return <div className="zy-task-board" data-task-view={view} aria-label="任务工作台">
-    <aside className="zy-directory zy-pet-directory zy-task-board-guide" style={{width:dirWidth}} aria-label="任务指引栏">
+    <aside className="zy-directory zy-pet-directory zy-task-board-guide" style={{'--zy-directory-width':`${dirWidth}px` } as React.CSSProperties} aria-label="任务指引栏">
       <div className="zy-tb-guide-scroll">
         <h1 className="zy-tb-guide-title">任务</h1>
         <div className="zy-tb-search-line"><label className="zy-tb-search"><Search size={15}/><input aria-label="搜索任务" placeholder="搜索" value={query} onChange={event=>setQuery(event.target.value)}/>{query&&<button type="button" aria-label="清空任务搜索" onClick={()=>setQuery('')}><X size={13}/></button>}</label><PressableIconButton rotateOnClick type="button" aria-label="让 Molly 安排任务" onClick={()=>onOpenConversation('molly')}><Plus size={21}/></PressableIconButton></div>
@@ -99,7 +99,7 @@ export default function TaskBoard({board,dirWidth,onDirectoryWidthChange,onOpenC
           {!!pending.length&&<section className="zy-tb-task-section" aria-label="待完成"><header><h2>待完成</h2><span>按建议顺序</span></header>{pending.map(task=>row(task,'today'))}</section>}
           {!!completed.length&&<section className="zy-tb-task-section" aria-label="已完成"><header><h2>已完成</h2></header>{completed.map(task=>row(task,'today'))}</section>}
           {!!appended.length&&<section className="zy-tb-task-section" aria-label="新增任务"><header><h2>新增任务</h2><span>按添加顺序</span></header>{appended.map(task=>row(task,'today'))}</section>}
-          {!pending.length&&!completed.length&&!appended.length&&!(active&&matches(active))&&<div className="zy-tb-empty">没有匹配的任务</div>}
+          {!pending.length&&!completed.length&&!appended.length&&!(active&&matches(active))&&<div className="zy-tb-empty">{query?'没有匹配的任务':'Molly：今天还没安排，要不要说说你想做什么？'}</div>}
         </>}
         {view==='future'&&<>
           <header className="zy-tb-page-heading"><div><h1>未来</h1><p>{monthDay(futureDates[0])} – {monthDay(futureDates.at(-1)!)}</p></div><SegmentedControl label="未来日期范围" value={String(model.page.futureRange)} options={[{value:'7',label:'7 天'},{value:'30',label:'30 天'}]} onChange={value=>dispatch({type:'set-future-range',range:value==='30'?30:7})}/></header>
@@ -114,7 +114,7 @@ export default function TaskBoard({board,dirWidth,onDirectoryWidthChange,onOpenC
               <div className={'zy-tb-day-expansion'+(expanded?' is-open':'')} inert={!expanded} aria-hidden={!expanded}><div>{tasks.map(task=>row(task,'future'))}</div></div>
             </section>;
           })}
-          {!daily.length&&!futureTasks.some(matches)&&<div className="zy-tb-empty">没有匹配的未来任务</div>}
+          {!daily.length&&!futureTasks.some(matches)&&<div className="zy-tb-empty">{query?'没有匹配的未来任务':'Molly：有想做的事，随时叫我来安排'}</div>}
         </>}
         {view==='history'&&<HistoryView model={model} dispatch={dispatch} now={now} query={query} actions={actions} scrollRef={content} onMonthChange={onHistoryMonthChange}/>}
       </div>

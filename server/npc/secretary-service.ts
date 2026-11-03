@@ -1,21 +1,23 @@
+import {ExperienceReportsStore,type ReportStoreDependencies} from './experience-reports-store';
+import {parseReportCity} from './weather-provider';
+import type {SecretarySettings} from '../../lib/npc/experience';
+export type {SecretarySettings} from '../../lib/npc/experience';
 import {createHash, randomUUID} from 'node:crypto';
 import type {DatabaseSync} from 'node:sqlite';
 import type {MollyAction, MollyState} from '../../lib/npc/molly';
 import {createMolly} from '../../lib/npc/molly';
 import type {ChatMessage} from '../../lib/npc/contracts';
-import {shanghaiDate} from './group-reminders';
 import {validTime} from './group-dialogue';
 import {groupStoreFor, type GroupChatStore} from './groups-plugin';
 import {receivePrivateDelegation,supportsPrivateDelegationTarget, type PrivateDelegationReceiverDeps} from './private-delegation-receiver';
 import {getCharacter} from '../../lib/npc/character-directory';
-import {readSecretaryTasks, readSecretaryCompletions, secretaryTaskContext, secretaryPlanContext, taskReminderCards, existingTables, reconcileStoredPrivateTasks} from './secretary-tasks';
+import {readSecretaryTasks, readSecretaryCompletions, secretaryTaskContext, secretaryPlanContext, existingTables, reconcileStoredPrivateTasks} from './secretary-tasks';
 import {reconcileGroupTaskExpiry,readGroupTaskSkips} from './group-task-expiry';
 
-export type SecretarySettings = {enabled:boolean;time:string};
 type SavedSettings=SecretarySettings&{effectiveSince:number};
 type DelegationInput=Parameters<typeof receivePrivateDelegation>[2];
 type JobRow={owner:string;id:string;data:string;attempts:number;next_at:number;status:string;notified:number};
-export type SecretaryDependencies={now?:()=>number;receiver?:typeof receivePrivateDelegation;receiverDeps?:PrivateDelegationReceiverDeps;groups?:GroupChatStore};
+export type SecretaryDependencies={now?:()=>number;receiver?:typeof receivePrivateDelegation;receiverDeps?:PrivateDelegationReceiverDeps;groups?:GroupChatStore}&ReportStoreDependencies;
 const OWNER=/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i;
 function stableUuid(value:string){const h=createHash('sha256').update(value).digest('hex');return `${h.slice(0,8)}-${h.slice(8,12)}-4${h.slice(13,16)}-a${h.slice(17,20)}-${h.slice(20,32)}`;}
 export function explicitlyContinuePlan(text:string){
@@ -28,6 +30,7 @@ export class SecretaryStore {
   private now:()=>number;
   private active=new Set<string>();
   private stopped=false;
+  private reports:ExperienceReportsStore;
   constructor(private db:DatabaseSync,private root:string,private deps:SecretaryDependencies={}){
     this.now=deps.now||Date.now;
     db.exec(`CREATE TABLE IF NOT EXISTS npc_secretary_settings(owner TEXT PRIMARY KEY,data TEXT NOT NULL);
@@ -38,24 +41,28 @@ export class SecretaryStore {
       CREATE TABLE IF NOT EXISTS npc_secretary_completions(owner TEXT NOT NULL,task_id TEXT NOT NULL,completed INTEGER NOT NULL,PRIMARY KEY(owner,task_id));
       CREATE TABLE IF NOT EXISTS molly_sessions(id TEXT PRIMARY KEY,data TEXT NOT NULL);`);
     db.prepare("UPDATE npc_secretary_jobs SET status='queued' WHERE status='running'").run();
+    this.reports=new ExperienceReportsStore(db,root,this.now,deps);
   }
   private checkOwner(owner:string){if(!OWNER.test(owner))throw Error('请先登录智域');}
   private savedSettings(owner:string):SavedSettings{
     this.checkOwner(owner);
     const row=this.db.prepare('SELECT data FROM npc_secretary_settings WHERE owner=?').get(owner) as {data:string}|undefined;
     if(row)return JSON.parse(row.data) as SavedSettings;
-    const settings={enabled:true,time:'08:00',effectiveSince:this.now()};
+    const settings={enabled:true,time:'07:00',effectiveSince:this.now()};
     this.db.prepare('INSERT INTO npc_secretary_settings VALUES(?,?)').run(owner,JSON.stringify(settings));
     return settings;
   }
-  settings(owner:string):SecretarySettings{const {enabled,time}=this.savedSettings(owner);return {enabled,time};}
+  settings(owner:string):SecretarySettings{const {enabled,time,city}=this.savedSettings(owner);return {enabled,time,...(city?{city}:{})};}
   updateSettings(owner:string,value:unknown):SecretarySettings{
     this.checkOwner(owner);
     const input=value as SecretarySettings;
     if(!input||typeof input.enabled!=='boolean'||!validTime(input.time))throw Error('请选择有效的提醒开关和时间');
-    const saved:SavedSettings={enabled:input.enabled,time:input.time,effectiveSince:this.now()};
+    const old=this.savedSettings(owner);
+    const city=input.city===undefined?old.city:parseReportCity(input.city);
+    if(input.city!==undefined&&!city)throw Error('请选择有效城市');
+    const saved:SavedSettings={enabled:input.enabled,time:input.time,effectiveSince:this.now(),...(city?{city}:{})};
     this.db.prepare('INSERT OR REPLACE INTO npc_secretary_settings VALUES(?,?)').run(owner,JSON.stringify(saved));
-    return {enabled:saved.enabled,time:saved.time};
+    return {enabled:saved.enabled,time:saved.time,...(saved.city?{city:saved.city}:{})};
   }
   completions(owner:string){this.checkOwner(owner);reconcileGroupTaskExpiry(this.db,owner,this.now());return readSecretaryCompletions(this.db,owner);}
   updateCompletions(owner:string,changes:unknown){
@@ -161,36 +168,34 @@ export class SecretaryStore {
       }finally{this.active.delete(key);}
     }
   }
-  morning(owner:string){
-    this.checkOwner(owner);const now=this.now(),settings=this.savedSettings(owner),date=shanghaiDate(now);
-    if(!settings.enabled)return false;
-    const due=Date.parse(`${date}T${settings.time}:00+08:00`);
-    // Never backfill the installation/setting change; recover only today's
-    // occurrence after a later service restart, not every missed past day.
-    if(now<due||due<settings.effectiveSince)return false;
-    if(this.db.prepare('SELECT 1 FROM npc_secretary_occurrences WHERE owner=? AND date=?').get(owner,date))return false;
-    const snapshot=readSecretaryTasks(this.db,owner,now);
-    if(snapshot.readErrors)throw Error('任务未读全，暂不发送晨间提醒');
-    const entries=snapshot.todayEntries.filter(item=>item.status==='active'&&item.completed<item.total);
-    if(!entries.length)return false;
-    this.db.exec('BEGIN IMMEDIATE');
-    try{
-      if(this.db.prepare('SELECT 1 FROM npc_secretary_occurrences WHERE owner=? AND date=?').get(owner,date)){this.db.exec('ROLLBACK');return false;}
-      taskReminderCards(this.db,owner,snapshot,date,now);
-      const names=entries.slice(0,4).map(item=>item.title),extra=entries.length>4?`等${entries.length}项`:'';
-      const professionals=[...new Set(entries.map(item=>item.characterName).filter(Boolean))];
-      const text=`今天${names.join('、')}${extra}。${professionals.length?`具体细节找${professionals.join('、')}。`:''}`;
-      this.appendMolly(owner,`morning:${date}`,text,'morning',[{scope:'today',label:'查看今日任务'}]);
-      this.db.prepare('INSERT INTO npc_secretary_occurrences VALUES(?,?,?)').run(owner,date,new Date(now).toISOString());
-      this.db.exec('COMMIT');return true;
-    }catch(error){this.db.exec('ROLLBACK');throw error;}
+  async morning(owner:string){
+    this.checkOwner(owner);const settings=this.savedSettings(owner);
+    return this.reports.publish(owner,'morning',settings,settings.effectiveSince);
   }
-  scanMorning(){
-    if(this.stopped)return;
+  private owners(){
     const owners=new Set((this.db.prepare('SELECT owner FROM npc_secretary_settings').all() as {owner:string}[]).map(row=>row.owner));
     if(existingTables(this.db).has('zhiyu_accounts'))for(const row of this.db.prepare('SELECT owner_id FROM zhiyu_accounts').all() as {owner_id:string}[])owners.add(row.owner_id);
-    for(const owner of owners){if(this.stopped)return;try{this.morning(owner);}catch{/* retry the live task snapshot on the next tick */}}
+    return owners;
   }
+  async scanMorning(){
+    if(this.stopped)return;
+    for(const owner of this.owners()){if(this.stopped)return;try{await this.morning(owner);}catch{/* Retry a complete task snapshot next tick. */}}
+  }
+  async scanReports(){
+    if(this.stopped)return;
+    for(const owner of this.owners()){
+      if(this.stopped)return;const saved=this.savedSettings(owner);
+      for(const kind of ['weekly','monthly'] as const)try{await this.reports.publish(owner,kind,saved,saved.effectiveSince);}catch{/* Preserve existing report and retry only this due occurrence. */}
+    }
+  }
+  async locateCity(owner:string,query:unknown,source:unknown){this.checkOwner(owner);return this.reports.locate(query,source);}
+  updateCity(owner:string,value:unknown):SecretarySettings{
+    this.checkOwner(owner);const city=parseReportCity(value);if(!city)throw Error('请选择有效城市');
+    const saved={...this.savedSettings(owner),city};this.db.prepare('INSERT OR REPLACE INTO npc_secretary_settings VALUES(?,?)').run(owner,JSON.stringify(saved));
+    return this.settings(owner);
+  }
+  reportQuote(owner:string,reportId:unknown,characterId:unknown){this.checkOwner(owner);return this.reports.reportQuote(owner,reportId,characterId);}
+  usage(owner:string,value:{currentNpc:string;visible:boolean;busy?:boolean;clientId:string}){this.checkOwner(owner);return this.reports.usage(owner,value);}
   scanTaskExpiry(){
     if(this.stopped)return;
     reconcileStoredPrivateTasks(this.db,this.now());
@@ -199,8 +204,9 @@ export class SecretaryStore {
   }
   async tick(){
     this.scanTaskExpiry();
-    this.scanMorning();
+    await this.scanMorning();
+    await this.scanReports();
     await this.drain();
   }
-  stop(){this.stopped=true;}
+  stop(){this.stopped=true;this.reports.stop();}
 }

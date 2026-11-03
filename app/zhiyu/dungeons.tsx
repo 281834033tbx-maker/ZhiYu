@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, BookOpen, X } from 'lucide-react';
 import './dungeons.css';
+import './user-facing-ui.css';
 
 type Dungeon = {
   id: string;
@@ -46,9 +47,9 @@ function chunk<T>(list: T[], size: number): T[][] {
 }
 
 /** 封面留空白：只有纸张、书脊阴影和内页边，不放图也不放字。 */
-function BookCover({ label, blank }: { label: string; blank: boolean }) {
+function BookCover({ blank }: { label: string; blank: boolean }) {
   return (
-    <span className={`zy-book-cover${blank ? ' is-blank' : ''}`} role="img" aria-label={label} />
+    <span className={`zy-book-cover${blank ? ' is-blank' : ''}`} aria-hidden="true" />
   );
 }
 
@@ -95,31 +96,30 @@ export default function Dungeons({ onBack }: { onBack: () => void }) {
           ))}
         </div>
       </div>
-      {picked && (
-        <div
-          className="zy-dungeon-backdrop"
-          onMouseDown={event => {
-            if (event.target === event.currentTarget) setPicked(null);
-          }}
-        >
-          <div className="zy-dungeon-card" role="dialog" aria-label={picked.title || '副本详情'}>
-            <button type="button" className="zy-dungeon-close" aria-label="关闭" onClick={() => setPicked(null)}>
+      {picked&&<DungeonDialog dungeon={picked} onClose={()=>setPicked(null)}/>}
+    </section>
+  );
+}
+
+function DungeonDialog({dungeon,onClose}:{dungeon:Dungeon;onClose:()=>void}) {
+  const dialog=useRef<HTMLDialogElement>(null);
+  useEffect(()=>{const node=dialog.current;node?.showModal();return()=>node?.close();},[]);
+  return <dialog ref={dialog} className="zy-dungeon-backdrop" aria-label={dungeon.title||'副本详情'} style={{width:'100vw',height:'100dvh',maxWidth:'none',maxHeight:'none',margin:0,border:0}} onCancel={event=>{event.preventDefault();onClose();}} onPointerDown={event=>{if(event.target===event.currentTarget)onClose();}}>
+          <div className="zy-dungeon-card">
+            <button type="button" className="zy-dungeon-close" aria-label="关闭" onClick={() => onClose()}>
               <X size={18} />
             </button>
             <div className="zy-dungeon-cover">
-              <BookCover label={picked.title || '即将开放'} blank={!picked.title} />
+              <BookCover label={dungeon.title || '即将开放'} blank={!dungeon.title} />
             </div>
             <div className="zy-dungeon-info">
-              <span className="zy-dungeon-genre">{picked.genre || '待定'}</span>
-              <h2>{picked.title || '即将开放'}</h2>
-              <p>{picked.summary}</p>
+              <span className="zy-dungeon-genre">{dungeon.genre || '待定'}</span>
+              <h2>{dungeon.title || '即将开放'}</h2>
+              <p>{dungeon.summary}</p>
               <button type="button" className="zy-dungeon-enter" disabled>
                 即将开放
               </button>
             </div>
           </div>
-        </div>
-      )}
-    </section>
-  );
+  </dialog>;
 }

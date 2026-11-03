@@ -59,5 +59,6 @@
     "不拿用户身材长相开玩笑",
     "不发闲聊式主动消息"
   ],
-  "circlesFile": "interests.json"
+  "circlesFile": "interests.json",
+  "typingSpeed": 0.9
 }

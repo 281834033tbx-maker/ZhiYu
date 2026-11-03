@@ -1,9 +1,10 @@
 import type { DatabaseSync } from 'node:sqlite';
+import {momentFrequencyPolicy,momentCanPublish} from './moment-policy';
 import { existsSync, readFileSync } from 'node:fs';
 import { join, resolve, sep } from 'node:path';
 export type ApprovedMoment = {id:string;personId:string;title:string;text:string;images:string[];scheduledFor?:string;timelineAt?:string;publicationMode?:'historical';sourceRequestId:string;authorization:string;approved:boolean;provenance:string};
 export type ScheduledRow = {id:string;character:string;scheduled:number;status:'scheduled'|'published'|'blocked_by_role_policy';published:number|null;data:string};
-export const scheduledPolicy = {minGapMs:2*60*60*1000,maxDaily:2,timezone:'Asia/Shanghai'};
+export const scheduledPolicy = momentFrequencyPolicy;
 export function installApprovedMoments(db:DatabaseSync,root:string) {
   db.exec(`CREATE TABLE IF NOT EXISTS npc_scheduled_moments(id TEXT PRIMARY KEY,character TEXT NOT NULL,scheduled INTEGER NOT NULL,status TEXT NOT NULL,published INTEGER,data TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS npc_moment_publication_receipts(id TEXT PRIMARY KEY,published INTEGER NOT NULL,data TEXT NOT NULL);`);
@@ -35,7 +36,6 @@ export function installApprovedMoments(db:DatabaseSync,root:string) {
   }
   catch(e){db.exec('ROLLBACK');throw e;}
 }
-const localDay=(at:number)=>new Intl.DateTimeFormat('en-CA',{timeZone:scheduledPolicy.timezone,year:'numeric',month:'2-digit',day:'2-digit'}).format(at);
 export function publishDueMoments(db:DatabaseSync,now=Date.now()) {
   const published:string[]=[];
   db.exec('BEGIN IMMEDIATE');
@@ -53,12 +53,10 @@ export function publishDueMoments(db:DatabaseSync,now=Date.now()) {
         const owners=new Set(live.map(item=>item.owner));
         if([...owners].some(owner=>{
           const own=live.filter(item=>item.owner===owner).map(item=>JSON.parse(item.data).publishedAt||item.created);
-          const all=[...own,...history.map(item=>item.published)].sort((a,b)=>b-a);
-          return (all[0]&&now-all[0]<scheduledPolicy.minGapMs)||all.filter(at=>localDay(at)===localDay(now)).length>=scheduledPolicy.maxDaily;
+          return !momentCanPublish([...own,...history.map(item=>item.published)],now);
         }))continue;
       }
-      if(history[0] && now-history[0].published<scheduledPolicy.minGapMs)continue;
-      if(history.filter(h=>localDay(h.published)===localDay(now)).length>=scheduledPolicy.maxDaily)continue;
+      if(!momentCanPublish(history.map(item=>item.published),now))continue;
       const data=JSON.parse(row.data) as ApprovedMoment;
       if(!data.approved || !data.authorization)continue;
       const result=db.prepare("UPDATE npc_scheduled_moments SET status='published',published=? WHERE id=? AND status='scheduled'").run(now,row.id);

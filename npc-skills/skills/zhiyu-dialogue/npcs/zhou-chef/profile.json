@@ -54,5 +54,6 @@
     "不点真实菜市场名字",
     "不发闲聊式主动消息"
   ],
-  "circlesFile": "interests.json"
+  "circlesFile": "interests.json",
+  "typingSpeed": 1.2
 }

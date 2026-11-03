@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "characterId": "chen-nian",
+  "items": [
+    {
+      "id": "share-workdesk-v1",
+      "file": "share-workdesk-v1.png",
+      "scene": "陈年既有工作桌生活照",
+      "timeSlots": [
+        "晚上",
+        "深夜"
+      ],
+      "seasons": [
+        "any"
+      ],
+      "tags": [
+        "陈年",
+        "书桌",
+        "原图"
+      ],
+      "matchAll": [
+        "陈年",
+        "书桌",
+        "原图"
+      ],
+      "withCharacter": false,
+      "reviewed": true,
+      "review": {
+        "method": "existing-user-approved-canon",
+        "source": "npc-skills/skills/chen-nian-visual-style/assets/examples/share-workdesk-v1.png"
+      },
+      "sha256": "7479052a4792155b60ad55af52325983ea9b71a020ca7108b3a210d712c0634c"
+    },
+    {
+      "id": "share-rainy-selfie-v2",
+      "file": "share-rainy-selfie-v2.png",
+      "scene": "陈年既有雨夜自拍",
+      "timeSlots": [
+        "晚上",
+        "深夜"
+      ],
+      "seasons": [
+        "any"
+      ],
+      "tags": [
+        "陈年",
+        "雨夜",
+        "原图"
+      ],
+      "matchAll": [
+        "陈年",
+        "雨夜",
+        "原图"
+      ],
+      "withCharacter": true,
+      "reviewed": true,
+      "review": {
+        "method": "existing-user-approved-canon",
+        "source": "npc-skills/skills/chen-nian-visual-style/assets/examples/share-rainy-selfie-v2.png"
+      },
+      "sha256": "2f5fab7448d9525e49e7980eb03bb8408769ea318b4ba48294e157ff47aca884"
+    }
+  ]
+}

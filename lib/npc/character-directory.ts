@@ -15,12 +15,12 @@ export type PublicCharacter={
   gender:'男'|'女'|null;origin:string|null;occupation:string;
   role:'professional'|'companion';responsibility:string;professionalTitle:string|null;
   services:CharacterService[];personality:string;tags:string[];avatar:string;
-  enabled:boolean;chatEndpoint:string;source:string;
+  enabled:boolean;chatEndpoint:string;source:string;internalSource:string;typingSpeed:number;
 };
 type PublicCard={
   id:string;name:string;realName?:string;aliases?:string[];mode:string;traits:string[];title?:string;
   identity:{job:string;oneLine:string;age?:number;hometown?:string};
-  knowledgeScope?:{decide?:string[]};
+  knowledgeScope?:{decide?:string[]};typingSpeed?:number;
 };
 type ExistingBinding=Pick<PublicCharacter,'age'|'gender'|'origin'|'avatar'|'services'|'enabled'|'chatEndpoint'>;
 const bindings:Record<string,ExistingBinding>={
@@ -46,7 +46,8 @@ export const characterDirectory:PublicCharacter[]=cards.map(card=>{
     professionalTitle:card.mode==='professional'?card.title||null:null,
     personality:card.traits.join('、'),
     tags:[...new Set([...card.traits,...(card.knowledgeScope?.decide||[]),card.title||'',card.identity.oneLine].filter(Boolean))],
-    source:`npc-skills/skills/zhiyu-dialogue/npcs/${card.id}/profile.json:user_required-20261102`,
+    source:'molly_intro',typingSpeed:card.typingSpeed||1,
+    internalSource:`npc-skills/skills/zhiyu-dialogue/npcs/${card.id}/profile.json:user_required-20261102`,
   };
 });
 

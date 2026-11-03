@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "characterId": "chen-nian",
+  "appearance": "{\"name\": \"陈年\", \"identity\": {\"job\": \"智域健身组教练，负责用户的训练计划；公司大喇叭\", \"age\": 27, \"hometown\": \"东北\", \"oneLine\": \"东北小伙，幽默嘴欠，嘴硬心软\"}, \"visual\": \"陈年固定硬骨相、自然运动身体与年轻松弛手机照；不换脸\"}",
+  "references": [
+    {
+      "file": "reference.png",
+      "view": "front-three-quarter-face",
+      "reviewed": true,
+      "source": "npc-skills/skills/chen-nian-visual-style/assets/identity/chen-nian-face-reference.png",
+      "basis": "approved locked identity",
+      "sha256": "7b3e44b4d95e99b6064e10da3b220eeccea63238e3263007fc0f6f5dd8239680"
+    },
+    {
+      "file": "side-reference-20261103.png",
+      "view": "side",
+      "reviewed": true,
+      "source": "system_imagegen:20261103",
+      "basis": "Supplement derived solely from the unchanged locked face; visually reviewed by Codex for identity, true view, adult athletic proportions; no claim of new user approval.",
+      "sha256": "c6059bb8022a77d5f8367f20202876e04da71d2f8b6c857f33d40c50a3a85bf7"
+    },
+    {
+      "file": "half-body-reference-20261103.png",
+      "view": "half-body",
+      "reviewed": true,
+      "source": "system_imagegen:20261103",
+      "basis": "Supplement derived solely from the unchanged locked face; visually reviewed by Codex for identity, true view, adult athletic proportions; no claim of new user approval.",
+      "sha256": "24b9d6bfaf9d6782ca8cc7c825417566eebf199cef09026f3180474a9c89b130"
+    }
+  ],
+  "missingViews": []
+}

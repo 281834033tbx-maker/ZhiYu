@@ -1,3 +1,4 @@
+import {initializeNewAccountOpening} from './experience-onboarding';
 import { createHash, randomBytes, randomUUID, scryptSync, timingSafeEqual } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
@@ -102,11 +103,11 @@ export function authLocal(): Plugin {
           WHERE s.token_digest=?`).get(hash(token)) as SessionRow | undefined;
         return row && row.expires_at > Date.now() ? row : null;
       };
-      const issueSession = (req: IncomingMessage, res: ServerResponse, account: Account, claimedLegacy = false) => {
+      const issueSession = (req: IncomingMessage, res: ServerResponse, account: Account, claimedLegacy = false, firstUse = false) => {
         const token = randomBytes(32).toString('hex');
         db.prepare('INSERT INTO zhiyu_auth_sessions VALUES(?,?,?)').run(hash(token), account.id, Date.now() + SESSION_AGE_SECONDS * 1000);
         setSessionCookie(res, token);
-        send(res, 200, { authenticated: true, account: { id: account.id, username: account.username }, claimedLegacy });
+        send(res, 200, { authenticated: true, account: { id: account.id, username: account.username }, claimedLegacy, firstUse });
       };
 
       // This middleware must be registered before every NPC plugin. The browser's
@@ -179,8 +180,9 @@ export function authLocal(): Plugin {
               const claimedLegacy = !!(isFirst && legacy && LEGACY_OWNER.test(legacy));
               const account: Account = { id: randomUUID(), username, owner_id: claimedLegacy ? legacy! : randomUUID() };
               db.prepare('INSERT INTO zhiyu_accounts VALUES(?,?,?,?,?,?)').run(account.id, username, salt, digest, account.owner_id, Date.now());
+              const firstUse=initializeNewAccountOpening(db,root,account.owner_id,Date.now(),claimedLegacy);
               db.exec('COMMIT');
-              return issueSession(req, res, account, claimedLegacy);
+              return issueSession(req, res, account, claimedLegacy,firstUse);
             } catch {
               try { db.exec('ROLLBACK'); } catch { /* transaction already ended */ }
               return send(res, 500, { error: '注册未完成，请稍后重试' });

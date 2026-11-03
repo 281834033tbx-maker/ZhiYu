@@ -1,3 +1,4 @@
+import {scheduleGroupDelivery,deliveryView} from '../../lib/npc/delivery';
 import type { Plugin } from 'vite';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { DatabaseSync } from 'node:sqlite';
@@ -137,11 +138,21 @@ export class GroupChatStore {
 
   get(owner: string, id: unknown): GroupChat {
     const { openingDone: _openingDone, hiddenBefore = 0, generationEpoch: _generationEpoch, ...group } = this.stored(owner, id);
-    const jobs = this.db.prepare("SELECT status,error FROM npc_group_jobs WHERE owner=? AND group_id=? AND status IN ('queued','running','failed') ORDER BY seq").all(owner, group.id) as { status: string; error: string }[];
-    // Later queued messages wait behind the failed job; expose the retry action
-    // instead of an endless pending state which can hide the failure in the UI.
-    return { ...group, messages: (group.messages || []).slice(hiddenBefore),
-      pending: !group.leftAt && !!jobs[0] && ['queued', 'running'].includes(jobs[0].status), error: group.leftAt ? '' : jobs.find(job => job.status === 'failed')?.error || '' };
+    const jobs = this.db.prepare("SELECT status,error,data,created_at FROM npc_group_jobs WHERE owner=? AND group_id=? AND status IN ('queued','running','failed') ORDER BY seq").all(owner, group.id) as { status: string; error: string;data:string;created_at:string }[];
+    const now=this.now(),future=group.messages.slice(hiddenBefore).filter(message=>!message.deliveryCancelled&&(message.deliverAt||0)>now).sort((a,b)=>a.deliverAt!-b.deliverAt!),next=future[0];
+    const preparing=!group.leftAt&&!!jobs[0]&&['queued','running'].includes(jobs[0].status);
+    let speaker:string|undefined=next?.senderId;let typingAfter=next?.typingAt,typingUntil=next?.deliverAt;
+    if(!next&&preparing){
+      let input:JobInput={};try{input=JSON.parse(jobs[0].data);}catch{/* No invented actor from malformed metadata. */}
+      const source=group.messages.find(message=>message.id===input.messageId);
+      const candidate=input.participationPlan?.requiredReplyIds[0]||source?.mentionIds?.[0]||'molly';
+      speaker=group.members.some(member=>member.id===candidate)?candidate:undefined;
+      const since=Date.parse(jobs[0].created_at);typingAfter=Number.isFinite(since)?deliveryView([],{since},now).typingAfter:undefined;typingUntil=undefined;
+    }
+    return { ...group, messages: group.messages.slice(hiddenBefore).filter(message=>!message.deliveryCancelled&&(!message.deliverAt||message.deliverAt<=now)).sort((a,b)=>Date.parse(a.at)-Date.parse(b.at)),
+      pending:!group.leftAt&&(preparing||future.length>0),typingName:speaker?group.members.find(member=>member.id===speaker)?.name:undefined,typingAfter,typingUntil,
+      error: group.leftAt ? '' : jobs.find(job => job.status === 'failed')?.error || '' };
+
   }
 
   list(owner: string): GroupChat[] {
@@ -278,6 +289,7 @@ export class GroupChatStore {
     return this.mutate(owner, group, value.requestId, 'members', { addIds, removeIds }, () => {
       const removed = group.members.filter(member => removeIds.includes(member.id));
       if (removed.length) {
+        for(const message of group.messages)if((message.deliverAt||0)>this.now()&&removed.some(member=>member.id===message.senderId))message.deliveryCancelled=true;
         group.formerMembers = [...(group.formerMembers || []), ...removed];
         group.members = group.members.filter(member => !removeIds.includes(member.id));
         if (removed.some(member => member.id === 'zhou-chef')) {
@@ -484,6 +496,7 @@ export class GroupChatStore {
     if (this.closed || this.active.has(key)) return;
     const job = this.db.prepare("SELECT * FROM npc_group_jobs WHERE owner=? AND group_id=? AND status IN ('queued','failed') ORDER BY seq LIMIT 1").get(owner, groupId) as GroupJob | undefined;
     if (!job || job.status === 'failed') return;
+    if(this.stored(owner,groupId).messages.some(message=>!message.deliveryCancelled&&(message.deliverAt||0)>this.now()))return;
     this.active.add(key);
     this.db.prepare("UPDATE npc_group_jobs SET status='running' WHERE seq=?").run(job.seq);
     try {
@@ -509,7 +522,7 @@ export class GroupChatStore {
       if (job.kind === 'reminder' && !reminderStillCurrent(fresh.reminders?.find(item => item.id === input.reminderId), input.occurrence!, this.now())) {
         this.db.prepare("UPDATE npc_group_jobs SET status='done' WHERE seq=?").run(job.seq); return;
       }
-      const at = new Date(this.now()).toISOString();
+      const at = new Date(this.now()).toISOString(),beforeMessages=fresh.messages.length;
       // A reply belongs to the same join instance that saw the generation
       // snapshot. Removing and re-adding an ID does not revive stale drafts.
       const stillJoined = (id: string) => {
@@ -584,6 +597,7 @@ export class GroupChatStore {
         delete safeOutput.confirmPlan; delete safeOutput.reminderProposals; delete safeOutput.reminderControls;
       }
       this.applyOperations(fresh, safeOutput, incoming);
+      scheduleGroupDelivery(fresh.messages,beforeMessages,Date.parse(at),this.now());
       if (job.kind === 'opening') fresh.openingDone = true;
       this.db.exec('BEGIN IMMEDIATE');
       try {

@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "characterId": "he-jiawei",
+  "appearance": "{\"name\": \"何嘉伟\", \"identity\": {\"job\": \"智域二把手，相当于老板；替用户（创办者）打理智域，管下面所有智友：人员安排、调动、考核、处分；智友有事先向他汇报\", \"oneLine\": \"高冷、话少、懂商业，职场创业问题用专业模式第七部分回答\"}, \"visual\": \"沿现行参考保留五官与身份，不从职业推导改脸磨皮\"}",
+  "references": [
+    {
+      "file": "reference.png",
+      "view": "front-seated-half-body",
+      "reviewed": true,
+      "source": "public/desktop-npc/scenes/he-jiawei-20260926.png",
+      "basis": "current character scene",
+      "sha256": "71456d93b9e87ec51d78e8f537cf0cde0b141eb7b83b823d0d2dce15878d6611"
+    },
+    {
+      "file": "side-reference-20261103.png",
+      "view": "left-profile-90-degree-face-upper-chest",
+      "reviewed": true,
+      "source": "output/frontend-redesign-20261103/identity-angles/he-jiawei/side-reference-20261103.png",
+      "basis": "generated side-angle supplement from the existing approved character reference; assistant visual QC only, not new user approval",
+      "sha256": "9a86b62e27efd4067fa4ac76b8e9b5b6c050738a0225c3268641ce6c60f09adf",
+      "provenance": {
+        "productionMethod": "system_imagegen",
+        "generatedAt": "2026-11-03T14:11:55.321988+00:00",
+        "inputReference": "npc-skills/assets/he-jiawei/identity/reference.png",
+        "inputSha256": "71456d93b9e87ec51d78e8f537cf0cde0b141eb7b83b823d0d2dce15878d6611",
+        "promptRecord": "output/frontend-redesign-20261103/identity-angles/generation-and-review.json",
+        "userApproved": false,
+        "review": {
+          "method": "assistant-visual-qc",
+          "decision": "pass",
+          "checks": [
+            "仅近眼可见的左向90度侧脸，头颈直立",
+            "短铂银发、浓眉/下颌轮廓、耳饰及白西装黑衫延续原参考",
+            "成年人写实风格，未发现明显换脸或年龄漂移；这是虚构设计连续性目视检查，不是生物识别证明"
+          ]
+        },
+        "machineChecks": {
+          "validPng": true,
+          "implicitAigcMetadata": true,
+          "idatPayloadPreserved": true
+        }
+      }
+    }
+  ],
+  "missingViews": []
+}

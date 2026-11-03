@@ -107,4 +107,4 @@ try {
  mkdirSync('output/private-chat-settings-20261008',{recursive:true});
  writeFileSync('output/private-chat-settings-20261008/backend-verification.json',JSON.stringify(report,null,2)+'\n');
  console.log(JSON.stringify(report));
-} finally {for(const stop of [...closers])stop();db?.close();runtime.cleanup();}
+} finally {for(const stop of Array.from(closers))stop();db?.close();runtime.cleanup();}

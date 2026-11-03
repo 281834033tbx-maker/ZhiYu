@@ -6,6 +6,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { userFacingValidationMessage } from '@/lib/user-facing-errors';
 
 function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
   return (
@@ -73,13 +74,12 @@ function Field({
   className,
   orientation = 'vertical',
   ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof fieldVariants>) {
+}: React.ComponentProps<'fieldset'> & VariantProps<typeof fieldVariants>) {
   return (
-    <div
-      role="group"
+    <fieldset
       data-slot="field"
       data-orientation={orientation}
-      className={cn(fieldVariants({ orientation }), className)}
+      className={cn('m-0 min-w-0 border-0 p-0',fieldVariants({ orientation }), className)}
       {...props}
     />
   );
@@ -195,14 +195,14 @@ function FieldError({
     ];
 
     if (uniqueErrors?.length == 1) {
-      return uniqueErrors[0]?.message;
+      return userFacingValidationMessage(uniqueErrors[0]);
     }
 
     return (
       <ul className="ml-4 flex list-disc flex-col gap-1">
         {uniqueErrors.map(
           (error, index) =>
-            error?.message && <li key={index}>{error.message}</li>,
+            error?.message && <li key={index}>{userFacingValidationMessage(error)}</li>,
         )}
       </ul>
     );

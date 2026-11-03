@@ -1,7 +1,8 @@
+import {statusFromState} from '../../lib/npc/character-status';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
 import {parseTaskPageContext} from '../../lib/npc/task-page-context';
 import {clearPrivateHistory, privateHistoryMessages} from './private-history';
-import { deliveryView, scheduleDelivery } from '../../lib/npc/delivery';
+import { deliveryView, scheduleDelivery, presentationPending } from '../../lib/npc/delivery';
 import { userPart, partInput, imageInputs } from './media';
 import type { Plugin } from 'vite';
 import { DatabaseSync } from 'node:sqlite';
@@ -70,7 +71,8 @@ export function liuLocal(deps?: {
       const typing = (s: LiuState) =>
         Object.values(s.typing).some((v) => v.until > now());
       const expose = (s: LiuState) => ({
-        ...deliveryView(privateHistoryMessages(s),s.pending),
+        ...deliveryView(privateHistoryMessages(s),presentationPending(s)),
+        characterStatus:statusFromState('liu',s,now()),
         revision: s.revision || 0,
         conversationId: s.branch,
         available: status(),
@@ -129,7 +131,7 @@ export function liuLocal(deps?: {
           if (proactive) { out.memories = []; out.event = undefined; }
           applyLiu(fresh, out, job, now(), ids);
           reconcileProfessionalTaskState(fresh,now());
-          scheduleDelivery(fresh.messages,before,s.pending!.since);
+          scheduleDelivery(fresh.messages,before,s.pending!.since,now(),{characterId:'liu'});
           for (const m of fresh.messages.slice(before)) m.origin = proactive ? 'proactive' : 'chat';
           completeContactTurn(fresh, now(), kind, fresh.messages.slice(before), out.event, incoming);
           if (out.action === 'end_conversation') fresh.contactLife!.quietUntil = now() + 2 * 3600000;

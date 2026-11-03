@@ -29,7 +29,7 @@
   background: #f7f7f8;
   color: #282b2f;
   font: inherit;
-  font-size: 12px;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
   cursor: pointer;
 }
 .zy-dungeons-back:hover { background: #f0f1f2; }
@@ -40,12 +40,12 @@
   align-items: center;
   gap: 9px;
   margin: 0;
-  font-size: 25px;
+  font-size: calc(28px + var(--zy-font-adjust,0px));
   line-height: 1.25;
-  font-weight: 560;
+  font-weight: 600;
   letter-spacing: -.025em;
 }
-.zy-dungeons-head p { margin: 8px 0 0; color: #72777d; font-size: 13px; line-height: 1.6; }
+.zy-dungeons-head p { margin: 8px 0 0; color: #72777d; font-size: calc(13px + var(--zy-font-adjust,0px)); line-height: 1.6; }
 
 /* ---- 书架 ---- */
 
@@ -60,9 +60,9 @@
 .zy-shelf-plank {
   height: 9px;
   margin: 10px -10px 0;
-  border-radius: 3px;
+  border-radius: 6px;
   background: linear-gradient(180deg, #ececeb, #f7f7f6);
-  box-shadow: 0 7px 14px #2025300f;
+  box-shadow: none;
 }
 
 .zy-book {
@@ -84,9 +84,9 @@
   display: block;
   aspect-ratio: 2 / 3;
   border: 1px solid #e7e8eb;
-  border-radius: 4px 10px 10px 4px;
+  border-radius: 6px 10px 10px 6px;
   background: #fdfdfc;
-  box-shadow: 0 10px 24px #2025300d;
+  box-shadow: none;
   transition: transform .16s, box-shadow .16s, border-color .16s;
   overflow: hidden;
 }
@@ -104,18 +104,18 @@
   position: absolute;
   inset: 9px;
   border: 1px solid #00000008;
-  border-radius: 2px 7px 7px 2px;
+  border-radius: 6px 6px 6px 6px;
 }
 .zy-book-cover.is-blank { background: #fbfbfa; }
 
 .zy-book:hover .zy-book-cover {
   transform: translateY(-5px);
   border-color: #d5d7da;
-  box-shadow: 0 16px 30px #2025301a;
+  box-shadow: none;
 }
 .zy-book:focus-visible .zy-book-cover { border-color: #41474d; }
 
-.zy-book-title { color: #30343a; font-size: 13px; font-weight: 560; line-height: 1.4; }
+.zy-book-title { color: #30343a; font-size: calc(13px + var(--zy-font-adjust,0px)); font-weight: 600; line-height: 1.4; }
 .zy-book-title.is-dim { color: #9a9ea3; font-weight: 400; }
 
 /* ---- 详情卡 ---- */
@@ -138,11 +138,11 @@
   width: min(100%, 520px);
   padding: 24px;
   border: 1px solid #e5e6e8;
-  border-radius: 18px;
+  border-radius: 12px;
   background: #fff;
-  box-shadow: var(--zy-popup-shadow,0 9px 28px #0002);
+  box-shadow: none;
 }
-.zy-dungeon-cover .zy-book-cover { box-shadow: 0 12px 26px #20253014; }
+.zy-dungeon-cover .zy-book-cover { box-shadow: none; }
 .zy-dungeon-close {
   position: absolute;
   top: 14px;
@@ -152,7 +152,7 @@
   width: 28px;
   height: 28px;
   border: 0;
-  border-radius: 7px;
+  border-radius: 6px;
   background: transparent;
   color: #6c7176;
   cursor: pointer;
@@ -161,23 +161,23 @@
 .zy-dungeon-genre {
   display: inline-block;
   padding: 5px 9px;
-  border-radius: 15px;
+  border-radius: 12px;
   background: #f5f6f6;
   color: #71777c;
-  font-size: 11px;
+  font-size: calc(11px + var(--zy-font-adjust,0px));
 }
-.zy-dungeon-info h2 { margin: 11px 0 0; font-size: 18px; font-weight: 600; }
-.zy-dungeon-info p { margin: 9px 0 0; color: #72777d; font-size: 13px; line-height: 1.65; }
+.zy-dungeon-info h2 { margin: 11px 0 0; font-size: calc(16px + var(--zy-font-adjust,0px)); font-weight: 600; }
+.zy-dungeon-info p { margin: 9px 0 0; color: #72777d; font-size: calc(13px + var(--zy-font-adjust,0px)); line-height: 1.65; }
 .zy-dungeon-enter {
   margin-top: 20px;
   min-height: 35px;
   padding: 0 14px;
   border: 1px solid #e1e3e5;
-  border-radius: 9px;
+  border-radius: 10px;
   background: #f7f7f8;
   color: #92979c;
   font: inherit;
-  font-size: 12px;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
   cursor: not-allowed;
 }
 

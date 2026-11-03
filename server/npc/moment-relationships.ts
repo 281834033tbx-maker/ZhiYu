@@ -92,7 +92,7 @@ export class MomentRelationshipReactions {
           state.impressions.push({text:`看到公开动态后${decision.kind==='suspected_betrayal'?'产生疑虑，尚未证实背叛':'认为承诺被违背'}：${decision.reason}`,evidence:JSON.stringify(context),confidence:'model_proposed',at});
           const from=state.messages.length;
           for(const part of parts)state.messages.push({id:randomUUID(),turnId:eventId,role:'assistant',at,part,origin:'proactive'});
-          scheduleDelivery(state.messages,from,this.now(),this.now());
+          scheduleDelivery(state.messages,from,this.now(),this.now(),{characterId:'xia-xia'});
           if(parts.length)ensureLife(state,this.now()).nextProactiveAt=Math.max(state.life!.nextProactiveAt,this.now()+30*60000);
           state.revision=fresh.revision+1;
           this.db.exec('BEGIN IMMEDIATE');

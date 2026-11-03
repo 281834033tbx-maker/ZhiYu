@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "characterId": "zhou-chef",
+  "appearance": "{\"name\": \"赵一帆\", \"identity\": {\"job\": \"智域美食组主厨，负责菜谱教学，兼管公司小厨房，同事午饭都是他做\", \"oneLine\": \"成熟稳重，中餐为主（西餐甜点只略懂），不闲聊\"}, \"visual\": \"沿现行参考保留五官与身份，不从职业推导改脸磨皮\"}",
+  "references": [
+    {
+      "file": "reference.png",
+      "view": "front-seated-half-body",
+      "reviewed": true,
+      "source": "public/desktop-npc/scenes/zhou-chef-night-sofa-20261005-v1.png",
+      "basis": "current character scene",
+      "sha256": "f5d8ca57712b57e721c02cbb511f77e5302c9d937fe8feebb9d7fc61783350c4"
+    },
+    {
+      "file": "side-existing-v1.png",
+      "view": "left-side-full-body",
+      "reviewed": true,
+      "source": "public/desktop-npc/assets/20260927/zhao-yifan/03-body-left-v1.png",
+      "basis": "existing same-character front/side set; actual assistant visual comparison with current fixed reference; not newly user-approved",
+      "review": {
+        "method": "assistant-visual-comparison",
+        "at": "2026-11-03T14:11:28.478Z",
+        "checks": [
+          "same eye/nose/jaw silhouette",
+          "side body connected and coherent",
+          "source identity unchanged"
+        ]
+      },
+      "sha256": "42e9ed6c3248f5961fb414f7a423249b1889835fb18c58e219b21cfcf0185f63"
+    }
+  ],
+  "missingViews": []
+}

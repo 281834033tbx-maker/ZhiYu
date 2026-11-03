@@ -3,6 +3,7 @@ import type { CoreRelationshipValues } from './relationship-values';
 import type { ProfessionalTask } from './professional-task';
 import type { ChoicePart } from './choice-chat';
 import type { TaskPageContext } from './task-page-context';
+import type {SecretaryReport,CharacterStatus} from './experience';
 export const labels = {
   familiarity: '熟悉',
   affection: '好感',
@@ -102,6 +103,8 @@ export type GeneratedPhoto = {type:'generated_photo'; jobId:string; prompt:strin
   referenceCharacters?:string[];
   status:'pending'|'generating'|'ready'|'failed'; url?:string; error?:string; attempts:number; startedAt?:number};
 export type Part = (
+  | {type:'secretary_report';report:SecretaryReport;text:string}
+  | {type:'city_request';text:string}
   | ChoicePart
   | { type: 'professional_task'; taskId: string }
   | {type: 'voice'; text:string; url?:string; status:'pending'|'ready'|'failed'; synthetic:boolean; error?:string; durationSeconds?:number}
@@ -124,11 +127,12 @@ export type ChatMessage = {
   origin?: 'chat' | 'call' | 'proactive';
   readAt?: string;
   deliverAt?: number;
+  typingAt?:number;
   replyTo?: string;
   recommendations?: {id:string;name:string;avatar:string;detail:string}[];
   /** Application-owned navigation to the existing task view, never model URLs. */
   taskLinks?: {scope:'today'|'all';label:string}[];
-  secretaryEvent?: {id:string;kind:'handoff'|'morning'|'task-reminder'|'group';sourceMessageId?:string;targetId?:string;groupId?:string};
+  secretaryEvent?: {id:string;kind:'handoff'|'morning'|'task-reminder'|'group'|'opening'|'city-request'|'weekly'|'monthly'|'usage';sourceMessageId?:string;targetId?:string;groupId?:string};
   /** Structured progress events retain their own source; they are never user utterances. */
   professionalTaskHint?: {taskId:string;stepId:string;eventId:string};
 };
@@ -224,6 +228,8 @@ export type PublicSession = {
   pending: boolean;
   debugAllowed: boolean;
   typingAfter?: number;
+  typingUntil?:number;
+  characterStatus?:CharacterStatus;
   debug?: NpcState;
   deliveryError?: string;
   presence?: 'online' | 'offline' | 'busy';

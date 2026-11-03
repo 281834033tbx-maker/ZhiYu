@@ -185,8 +185,8 @@
 - `text_only`：正文非空，`image_task=null`，`media=[]`。
 - `image_only`：正文空字符串，有 `image_task`，不能偷偷配隐藏文案。
 - `text_image`：正文非空，有 `image_task`。
-- 1.2 图片候选必有整数 `count`（1—9）与等长 `image_briefs` 逐张描述。制作前 `media=[]`、`media_result=null` 正常；用户只要文字说明时止于此。
-- 实际图片完成后 `media` 数量等于 `count`，且不超过 9。进入 publish_ready/publish 必须有验收通过的媒体；失败不能静默换形式。独立表情包计一张，照片上的贴纸不另计。
+- 1.2 图片候选必有整数 `count`（实际需要张数）与等长 `image_briefs` 逐张描述。制作前 `media=[]`、`media_result=null` 正常；用户只要文字说明时止于此。
+- 实际图片完成后 `media` 数量等于 `count`。进入 publish_ready/publish 必须有验收通过的媒体；失败不能静默换形式。独立表情包计一张，照片上的贴纸不另计。
 - 聊天截图仍只用有效分支已送达的连续真实消息 ID，由 `$zhiyu-imagegen` 的真实界面路线制作，不润色原话。
 
 ## 发布请求与可见字段白名单

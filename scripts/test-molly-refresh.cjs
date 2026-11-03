@@ -1,9 +1,10 @@
+// oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const {chromium}=require('/Users/jayden/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');const assert=require('node:assert/strict');
 (async()=>{const browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});try{
  const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
  const opening={id:'hello',turnId:'hello',role:'assistant',at:new Date().toISOString(),part:{type:'text',text:'老大，有什么指示'}};
  const base={messages:[opening],revision:1,conversationId:'molly-system-secretary',available:true,pending:false,debugAllowed:false,presence:'online'};
- let snapshot=structuredClone(base),gets=0,lateRoute,release,held=new Promise(r=>release=r);
+ let snapshot=structuredClone(base),gets=0,lateRoute,release;const held=new Promise(r=>release=r);
  await page.route('**/api/npc/xia-xia?mode=normal',r=>r.fulfill({json:{messages:[],available:true,pending:false,debugAllowed:false}}));
  await page.route('**/api/npc/molly?mode=normal',async route=>{
   const body=route.request().postDataJSON();

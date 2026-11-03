@@ -3,7 +3,7 @@
 .zy-app .voice-bubble-waves{flex:none}
 .zy-app .voice-bubble-wrap{display:inline-flex;flex-direction:column;align-items:flex-end;gap:3px}
 .zy-app .voice-bubble-wrap audio{display:none}
-.zy-app .voice-bubble-error{font-size:10px;color:#b84040;white-space:nowrap}
+.zy-app .voice-bubble-error{font-size:calc(11px + var(--zy-font-adjust,0px));color:#b84040;white-space:nowrap}
 .zy-app .voice-bubble.is-playing .voice-wave-one{fill:#000}
 .zy-app .voice-bubble.is-playing .voice-wave-two{animation:voice-wave-two .9s steps(1,end) infinite}
 .zy-app .voice-bubble.is-playing .voice-wave-three{animation:voice-wave-three .9s steps(1,end) infinite}

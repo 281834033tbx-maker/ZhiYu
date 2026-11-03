@@ -247,10 +247,10 @@ try {
     const p = buildPrompt(resolve('.'), createState('test'), '你好');
     assert.match(p, /162/);
     assert.match(p, /上帝那边先不用审批/);
-    assert.doesNotMatch(p, /\"id\":\"A02\"/);
+    assert.doesNotMatch(p, /"id":"A02"/);
     assert.doesNotMatch(p, /S07-23/);
     assert.doesNotMatch(p, /Users\/jayden/);
-    assert.match(p, /\"memories\"|记忆/);
+    assert.match(p, /"memories"|记忆/);
   });
   check('NPC可引用有效原话，不能引用其他会话',()=>{
     const s=createState('normal');s.messages.push({id:'original',turnId:'one',role:'user',at:new Date().toISOString(),part:{type:'text',text:'周末想去哪'}});

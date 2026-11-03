@@ -15,7 +15,7 @@ export type ProfessionalProfile = {
 
 export const asset = (page: keyof typeof assets, index: number) =>
   assets[page][index].src;
-export type Page = 'chat' | 'contacts' | 'tasks' | 'moments' | 'pets';
+export type Page = 'chat' | 'contacts' | 'tasks' | 'moments' | 'pets' | 'me';
 export type Person = {
   id: string;
   name: string;
@@ -28,6 +28,7 @@ export type Person = {
   origin?: string | null;
   occupation?: string;
   source?: string;
+  internalSource?: string;
   avatar?: string;
   desktopImage?: string;
   professionalProfile?: ProfessionalProfile;
@@ -94,7 +95,7 @@ export const self: Person = {
   letter: 'J',
 };
 export const molly: Person = {
-  id: 'molly', name: 'Molly', nickname: 'Molly', avatar: '/stitch/molly-avatar-v2.png', bio: '您的智能机器人助手（闲聊200）',
+  id: 'molly', source:'default', name: 'Molly', nickname: 'Molly', avatar: '/stitch/molly-avatar-v2.png', bio: '以后你只管做决定，剩下的我和团队来',
   account: 'molly_system_0001', region: '杭州', added: '', letter: 'M',
 };
 // Public identity handles are separate from internal ids, nicknames and local remarks.
@@ -165,6 +166,7 @@ export const people: Person[] = enabledCharacterDirectory().sort((a, b) =>
       ? {...presentation.professionalProfile, title: character.professionalTitle || presentation.professionalProfile.title}
       : undefined,
     source: character.source,
+    internalSource: character.internalSource,
     publicDirectoryVersion: publicCharacterDirectoryVersion,
   };
 });

@@ -1,4 +1,5 @@
 'use client';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 /* eslint-disable next/no-img-element */
 
 import {useEffect, useId, useRef, useState, type SubmitEvent} from 'react';
@@ -72,7 +73,7 @@ export function GroupCreateDialog({source, people, initialGoal = '', initialMemb
     try {
       await onCreate({goal: goal.trim(), memberIds: chosen.map(person => person.id)});
     } catch (createError) {
-      setLocalError(createError instanceof Error ? createError.message : '群聊暂时无法创建，请重试。');
+      setLocalError(reportUserFacingError(createError,'send','创建群聊'));
     } finally {
       setSubmitting(false);
     }

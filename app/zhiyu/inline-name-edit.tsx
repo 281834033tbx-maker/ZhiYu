@@ -1,4 +1,5 @@
 'use client';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 
 import {useLayoutEffect, useRef, useState, type KeyboardEvent} from 'react';
 import {LoaderCircle, Pencil} from 'lucide-react';
@@ -82,7 +83,7 @@ export function InlineNameEdit({label, value, onSave, maxLength = 40, placeholde
       returnFocus.current = from === 'enter';
       setEditing(false);
     } catch (cause) {
-      if (mounted.current) setError(cause instanceof Error && cause.message ? cause.message : `${label}未保存，请重试。`);
+      if (mounted.current) setError(reportUserFacingError(cause,'save','保存名字'));
     } finally {
       lock.current = false;
       if (mounted.current) setSaving(false);

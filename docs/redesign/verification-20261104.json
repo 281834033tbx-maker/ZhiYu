@@ -1,0 +1,522 @@
+{
+  "date": "2026-11-04",
+  "scope": "前端与智友体验改版 §1–15",
+  "isolatedChecks": [
+    {
+      "name": "test-message-failure-retry",
+      "exitCode": 0,
+      "durationSeconds": 0.806
+    },
+    {
+      "name": "test-experience-redesign",
+      "exitCode": 0,
+      "durationSeconds": 0.847
+    },
+    {
+      "name": "test-unified-dialogue-package",
+      "exitCode": 0,
+      "durationSeconds": 0.441
+    },
+    {
+      "name": "test-dialogue-layering",
+      "exitCode": 0,
+      "durationSeconds": 0.926
+    },
+    {
+      "name": "test-image-identity-library",
+      "exitCode": 0,
+      "durationSeconds": 0.906
+    },
+    {
+      "name": "test-dialogue-unified-surfaces",
+      "exitCode": 0,
+      "durationSeconds": 1.044
+    },
+    {
+      "name": "test-image-generation",
+      "exitCode": 0,
+      "durationSeconds": 0.793
+    },
+    {
+      "name": "test-molly-secretary-integration",
+      "exitCode": 0,
+      "durationSeconds": 0.96
+    },
+    {
+      "name": "test-secretary-report-presentation",
+      "exitCode": 0,
+      "durationSeconds": 0.18
+    },
+    {
+      "name": "typescript",
+      "exitCode": 0,
+      "durationSeconds": 1.545
+    },
+    {
+      "name": "lint",
+      "exitCode": 0,
+      "durationSeconds": 1.784
+    },
+    {
+      "name": "style",
+      "exitCode": 0,
+      "durationSeconds": 0.077
+    },
+    {
+      "name": "user-facing-copy",
+      "exitCode": 0,
+      "durationSeconds": 2.181
+    }
+  ],
+  "productionBuild": "pass",
+  "paletteReport": "palette-verification.json",
+  "geometry": {
+    "light": {
+      "checks": [
+        {
+          "selector": "zy-rail",
+          "rectUnchanged": true,
+          "backgroundUnchanged": true,
+          "radiusUnchanged": true
+        },
+        {
+          "selector": "zy-base",
+          "rectUnchanged": true,
+          "backgroundUnchanged": true,
+          "radiusUnchanged": true
+        },
+        {
+          "selector": "zy-directory",
+          "rectUnchanged": true,
+          "backgroundUnchanged": true,
+          "radiusUnchanged": true
+        },
+        {
+          "selector": "xx-chat",
+          "rectUnchanged": true,
+          "backgroundUnchanged": true,
+          "radiusUnchanged": true
+        },
+        {
+          "selector": "xx-head unified-chat-head",
+          "rectUnchanged": true,
+          "backgroundUnchanged": true,
+          "radiusUnchanged": true
+        }
+      ],
+      "bubbleFontShapeAndSizeUnchanged": true
+    },
+    "dark": {
+      "checks": [
+        {
+          "selector": "zy-rail",
+          "rectUnchanged": true,
+          "backgroundUnchanged": true,
+          "radiusUnchanged": true
+        },
+        {
+          "selector": "zy-base",
+          "rectUnchanged": true,
+          "backgroundUnchanged": true,
+          "radiusUnchanged": true
+        },
+        {
+          "selector": "zy-directory",
+          "rectUnchanged": true,
+          "backgroundUnchanged": true,
+          "radiusUnchanged": true
+        },
+        {
+          "selector": "xx-chat",
+          "rectUnchanged": true,
+          "backgroundUnchanged": true,
+          "radiusUnchanged": true
+        },
+        {
+          "selector": "xx-head unified-chat-head",
+          "rectUnchanged": true,
+          "backgroundUnchanged": true,
+          "radiusUnchanged": true
+        }
+      ],
+      "bubbleFontShapeAndSizeUnchanged": true
+    }
+  },
+  "uiCounters": {
+    "before": {
+      "isolated": true,
+      "realModel": false,
+      "actualRealWrites": 0,
+      "modelCalls": 0,
+      "realApiReads": 0,
+      "blockedRealWrites": 2169
+    },
+    "after": {
+      "isolated": true,
+      "realModel": false,
+      "actualRealWrites": 0,
+      "modelCalls": 0,
+      "realApiReads": 0,
+      "blockedRealWrites": 1666
+    }
+  },
+  "additionalUiChecks": {
+    "taskDivider": "实际guide宽度260→280→260，切页后共享宽度有效",
+    "fontSetting": "大号设置下16px标题变18px，随后恢复中号",
+    "reportCards": "实际渲染背景不透明，border 0px、shadow none、radius 12px、width≤420px",
+    "devices": "未开启真实摄像头、麦克风或定位",
+    "data": "截图为合成账号与任务；无真实API读取/写入/模型调用，仅对隔离预览成立"
+  },
+  "normalService": {
+    "port": 3100,
+    "httpStatus": 200
+  },
+  "screenshots": [
+    {
+      "file": "docs/redesign/before/character-window-dark.jpg",
+      "sha256": "70fc0d3a3efb0e62d3ec91f4e24618aaefcc01c68efe9df91701673ba865c586",
+      "bytes": 82036
+    },
+    {
+      "file": "docs/redesign/before/character-window-light.jpg",
+      "sha256": "70fc0d3a3efb0e62d3ec91f4e24618aaefcc01c68efe9df91701673ba865c586",
+      "bytes": 82036
+    },
+    {
+      "file": "docs/redesign/before/confirm-clear-dark.jpg",
+      "sha256": "5d8733bcd8a051893cf846764431231038ea243ba830bf20ac3e1f58a154bc33",
+      "bytes": 25457
+    },
+    {
+      "file": "docs/redesign/before/confirm-clear-light.jpg",
+      "sha256": "0aec7af54802d7596b95619b6300f3366deacde0d7697ab04e5c74d67396e7a5",
+      "bytes": 26634
+    },
+    {
+      "file": "docs/redesign/before/contacts-dark.jpg",
+      "sha256": "ff33a21304a9c48519ec02807a6d6c792615a2c8164581eb6a87ef7fb73e3714",
+      "bytes": 26083
+    },
+    {
+      "file": "docs/redesign/before/contacts-light.jpg",
+      "sha256": "735d2195e5ae0ecfa7155e0bff36886eb8a60659fcd32f4406582ac00ad994bc",
+      "bytes": 26141
+    },
+    {
+      "file": "docs/redesign/before/group-create-dark.jpg",
+      "sha256": "1c9e3a2debff4003e986f9cffee7b286b3ba640da46f83526f6abfa0bc66c615",
+      "bytes": 43044
+    },
+    {
+      "file": "docs/redesign/before/group-create-light.jpg",
+      "sha256": "c7bfaa699125c1604325f79f8e73a04779b26132422b0c1b05710baa67ed9797",
+      "bytes": 46250
+    },
+    {
+      "file": "docs/redesign/before/group-drawer-dark.jpg",
+      "sha256": "6e86c20dd1c5188efe7e061c8f1cbf9d58c84b5a4641aa2b768c7721993f9fd0",
+      "bytes": 60880
+    },
+    {
+      "file": "docs/redesign/before/group-drawer-light.jpg",
+      "sha256": "345e37204adb44d774613ae9b37ef131f3748be1a2b4afdcf476e0f54b3b85a9",
+      "bytes": 61791
+    },
+    {
+      "file": "docs/redesign/before/messages-dark.jpg",
+      "sha256": "4f04d7ac56f4d9175d0fa13a757b5df4bb50ce9c039cac4f841fcb4aef4d23f7",
+      "bytes": 52159
+    },
+    {
+      "file": "docs/redesign/before/messages-light.jpg",
+      "sha256": "9ccbe789f93ac1506d3345c2ab75bf60a7231cb932964b467bb00dfe2deb7dc2",
+      "bytes": 53619
+    },
+    {
+      "file": "docs/redesign/before/mobile-dark.jpg",
+      "sha256": "6f7ce99de7dd4d8a18670dde9c7f38c27129db1868ecd047fbd7bc8c9ce25673",
+      "bytes": 36054
+    },
+    {
+      "file": "docs/redesign/before/mobile-light.jpg",
+      "sha256": "b264db65e9431bc7115e29e91dab9079cd34dd2cf48332cbbfc0c2df0ca49979",
+      "bytes": 40294
+    },
+    {
+      "file": "docs/redesign/before/moments-dark.jpg",
+      "sha256": "ea11930a65b27cad97cadca16665dbd442b85790896ef339ec68b020159b5313",
+      "bytes": 46344
+    },
+    {
+      "file": "docs/redesign/before/moments-light.jpg",
+      "sha256": "5cfd16244f3598c9a1204c444619d90169dbd797e094bf1f1c5dbcc321453a82",
+      "bytes": 43980
+    },
+    {
+      "file": "docs/redesign/before/morning-settings-dark.jpg",
+      "sha256": "9a2a61096afc121380d8cb5adf4fd97a47294b4f81c6c72be07d801b5ea14b1b",
+      "bytes": 32528
+    },
+    {
+      "file": "docs/redesign/before/morning-settings-light.jpg",
+      "sha256": "2aa0a6abd87e5922d882aa6de03e5a2eb9ee318d59f06f42bddee4c98c557b1a",
+      "bytes": 34446
+    },
+    {
+      "file": "docs/redesign/before/private-drawer-dark.jpg",
+      "sha256": "534d0c214cb813501f2199efc23b6fea360d75aaadb1b0ffe3c1300cf005f6b7",
+      "bytes": 54912
+    },
+    {
+      "file": "docs/redesign/before/private-drawer-light.jpg",
+      "sha256": "9ce809ed2d5598783545f515f9e4ca6c399d8a0752f0e9bc4d9ea1a7bbb7724b",
+      "bytes": 55767
+    },
+    {
+      "file": "docs/redesign/before/profile-dark.jpg",
+      "sha256": "5a4251afaf60d11020ff58b91eff46e6603a98bc495c849d0f18ee87c0243b4f",
+      "bytes": 63830
+    },
+    {
+      "file": "docs/redesign/before/profile-light.jpg",
+      "sha256": "643958daa4bd33ca5d0a09df9e3eb294b7ff2de04d70550e2d43ee7a91f47dd5",
+      "bytes": 64620
+    },
+    {
+      "file": "docs/redesign/before/settings-dark.jpg",
+      "sha256": "646499a11e8bafb1426701f3aab303a899e2d8cdf386e527d83b31c24925192c",
+      "bytes": 31344
+    },
+    {
+      "file": "docs/redesign/before/settings-light.jpg",
+      "sha256": "5a2bfdf83c0e605a5e035f87e61608e3fb4bc6828c0fdb5efe839510ee71e878",
+      "bytes": 30875
+    },
+    {
+      "file": "docs/redesign/before/speech-settings-dark.jpg",
+      "sha256": "a59cc2ed44c4918a116286a178bec2d216b71793b8204f24805d2885679ba938",
+      "bytes": 18930
+    },
+    {
+      "file": "docs/redesign/before/speech-settings-light.jpg",
+      "sha256": "79d4716c4e1a9146604743aca6db70f154c4b3041fa7eea3dd088b4239fb47f6",
+      "bytes": 19786
+    },
+    {
+      "file": "docs/redesign/before/tasks-dark.jpg",
+      "sha256": "22373413f5888609467cbeb04f0c23ba52a98df60228340f601f283fb0bc8ab1",
+      "bytes": 65405
+    },
+    {
+      "file": "docs/redesign/before/tasks-light.jpg",
+      "sha256": "795c1e8c90ded5a1f0edccdb642ffb7115c254c3a1a632a6b10f3213a1a6a4a4",
+      "bytes": 65844
+    },
+    {
+      "file": "docs/redesign/after/character-window-dark.jpg",
+      "sha256": "8e61db06671a08f2df5988e735e5914d90aacf52aa43239fbc8f50d4afd53047",
+      "bytes": 82785
+    },
+    {
+      "file": "docs/redesign/after/character-window-light.jpg",
+      "sha256": "94a6ce03cf3360193b1019e9b1e4ea2d3f62f54e9421dd0e15903335214c46ac",
+      "bytes": 83192
+    },
+    {
+      "file": "docs/redesign/after/confirm-clear-dark.jpg",
+      "sha256": "66d99c67066e00e7a212454688379ddfc4c39bec23cae54dcc39e33fb58ca536",
+      "bytes": 25762
+    },
+    {
+      "file": "docs/redesign/after/confirm-clear-light.jpg",
+      "sha256": "f3447c2669a53b20e580b975e47b3be3de0f258cf00d74e31f54b24388f4c67f",
+      "bytes": 27028
+    },
+    {
+      "file": "docs/redesign/after/contacts-dark.jpg",
+      "sha256": "5e3b21767e90cec95dac505adbf6acfe1caf254aba4f8dcb48ce315bb0a887a9",
+      "bytes": 25446
+    },
+    {
+      "file": "docs/redesign/after/contacts-light.jpg",
+      "sha256": "067cb63e20df767c17d151e26c569d67b64f87c5e622ff79386dc3af29707c9c",
+      "bytes": 25597
+    },
+    {
+      "file": "docs/redesign/after/group-create-dark.jpg",
+      "sha256": "5d8e1cbadb508be048b333f56b05119ee68b2d8d79382de715177198d1e1503e",
+      "bytes": 43264
+    },
+    {
+      "file": "docs/redesign/after/group-create-light.jpg",
+      "sha256": "b4dca4e55409d0adf3145db9d27a5e3878d969f20a26a8b8f477996377fc5441",
+      "bytes": 47831
+    },
+    {
+      "file": "docs/redesign/after/group-drawer-dark.jpg",
+      "sha256": "2fe412dbea53704125d2ce6f3367fe2ef3e17b7c3c5217f1a1e11ed01b289830",
+      "bytes": 62378
+    },
+    {
+      "file": "docs/redesign/after/group-drawer-light.jpg",
+      "sha256": "60e2450a1a4489f3114c1dd7f1d0ef7fa6f8b2c003c3f0a3646b02f1f20e49be",
+      "bytes": 63103
+    },
+    {
+      "file": "docs/redesign/after/me-dark.jpg",
+      "sha256": "06d5fddd6475e1ab86c8e33af15b48100916d7ff04ce17abd0a92d5eb9b0fe9a",
+      "bytes": 21746
+    },
+    {
+      "file": "docs/redesign/after/me-light.jpg",
+      "sha256": "4a5be83ba9b1973f15c03db145a5885e58ddb0db7bb68503b891601a0267564e",
+      "bytes": 19712
+    },
+    {
+      "file": "docs/redesign/after/messages-dark.jpg",
+      "sha256": "864413cddeab11d788822708200130157cc7d6a65f143b585859823da090488d",
+      "bytes": 56196
+    },
+    {
+      "file": "docs/redesign/after/messages-light.jpg",
+      "sha256": "da6201706a7ca310406b6f969126a370c4d8fa827070c251b7258f2afded316b",
+      "bytes": 57565
+    },
+    {
+      "file": "docs/redesign/after/mobile-dark.jpg",
+      "sha256": "8c8935153fcf1971d00ce5c75dc5c3f1d636d873fffa6f1535e3ac587370d14d",
+      "bytes": 35356
+    },
+    {
+      "file": "docs/redesign/after/mobile-light.jpg",
+      "sha256": "cc58fc4294cec2a15855e8da668828807c89a21c2da76e32b19aec5a319187bc",
+      "bytes": 39347
+    },
+    {
+      "file": "docs/redesign/after/moments-dark.jpg",
+      "sha256": "10928fe21396bd9509aaa622fb31457770e8857ab35e92c0e006a3990b765255",
+      "bytes": 45795
+    },
+    {
+      "file": "docs/redesign/after/moments-light.jpg",
+      "sha256": "651fa6dbda09f44ce4d48a1750c9700cfe653f4d6545cfa89e2495e084129144",
+      "bytes": 43337
+    },
+    {
+      "file": "docs/redesign/after/monthly-report-dark.jpg",
+      "sha256": "16b5d543e7d1ad3a3095f5fdc9b95d2a52ce8ed2949958713210535934e9b5bb",
+      "bytes": 60666
+    },
+    {
+      "file": "docs/redesign/after/monthly-report-light.jpg",
+      "sha256": "ee1947de6c54b8e162483dee2810514f9788b26a6b184b916b217a21b5fe421a",
+      "bytes": 62883
+    },
+    {
+      "file": "docs/redesign/after/morning-city-dark.jpg",
+      "sha256": "76a5d568a5a1095096d838731b625d3f984a3129cef3f5ef40c60aa89bd5ce94",
+      "bytes": 58301
+    },
+    {
+      "file": "docs/redesign/after/morning-report-dark.jpg",
+      "sha256": "fd202fcef8a1ce3f41165330fcbc0635ee7a6a807bd5ed30c8d0c718d6942fac",
+      "bytes": 58598
+    },
+    {
+      "file": "docs/redesign/after/morning-report-light.jpg",
+      "sha256": "5798a4882e3b6ca4e2201c5f47ae7d35837831b4e7bf72fbfdb50708bd02d327",
+      "bytes": 59426
+    },
+    {
+      "file": "docs/redesign/after/morning-settings-dark.jpg",
+      "sha256": "7bd73ddfffa1bc59f61a004f4bd251ae0499d007bc6c3074ffdb4fce66732efc",
+      "bytes": 33372
+    },
+    {
+      "file": "docs/redesign/after/morning-settings-light.jpg",
+      "sha256": "6bb6c6a8e762fc459f33f1c0fad0fb73ff53f408b4512a9bfde2eda1d791e811",
+      "bytes": 35529
+    },
+    {
+      "file": "docs/redesign/after/private-dark.jpg",
+      "sha256": "864413cddeab11d788822708200130157cc7d6a65f143b585859823da090488d",
+      "bytes": 56196
+    },
+    {
+      "file": "docs/redesign/after/private-drawer-dark.jpg",
+      "sha256": "fb849b16106bebd318ff90ed43940a695fa3332a59415431396ac3ff71071c7c",
+      "bytes": 59615
+    },
+    {
+      "file": "docs/redesign/after/private-drawer-light.jpg",
+      "sha256": "b4db1c42eb8ad3893314997e05fa5127df4a83fe49f4ffbd49bac8d91f06494a",
+      "bytes": 60577
+    },
+    {
+      "file": "docs/redesign/after/private-light.jpg",
+      "sha256": "29f16cbf04b12e3a5558b4e3f05567cb1d2476853faba4aa35e9f06171eb0f70",
+      "bytes": 57689
+    },
+    {
+      "file": "docs/redesign/after/profile-dark.jpg",
+      "sha256": "c201e038dabbc357e375114463cb3cee263a592ca15727940c0cd895a291936f",
+      "bytes": 68207
+    },
+    {
+      "file": "docs/redesign/after/profile-light.jpg",
+      "sha256": "dd0b868d3acd36201c3e962945c408ced8b8fe13061531bbbb61c69a562322ea",
+      "bytes": 70523
+    },
+    {
+      "file": "docs/redesign/after/settings-dark.jpg",
+      "sha256": "918b663a5fd1dd292cc2403cc6060d1124e9ea7420d0b6c6f30bf7fb8ba931c4",
+      "bytes": 24242
+    },
+    {
+      "file": "docs/redesign/after/settings-light.jpg",
+      "sha256": "c45fa70ffeb079f19a10ed65a9358b11d83bb68a2ceef857ed9187e2b428eeae",
+      "bytes": 23471
+    },
+    {
+      "file": "docs/redesign/after/speech-settings-dark.jpg",
+      "sha256": "c4ed974eb122a4af310d7d5882878c80f04725b047d1d5ebd37d835b5d604504",
+      "bytes": 19848
+    },
+    {
+      "file": "docs/redesign/after/speech-settings-light.jpg",
+      "sha256": "ba8a0ad9459f24546be2231a672cc60c25ec5f1db0b35154eeff10047dab22da",
+      "bytes": 21065
+    },
+    {
+      "file": "docs/redesign/after/tasks-dark.jpg",
+      "sha256": "0083ee327c601dfee62858eb7584d183a643bfde4aa6d006c02841569cc38200",
+      "bytes": 61784
+    },
+    {
+      "file": "docs/redesign/after/tasks-future-dark.jpg",
+      "sha256": "f3f0af99e59e197bfdb1424fe5236b856eb0871f89951ba759cab9c22a750f06",
+      "bytes": 53712
+    },
+    {
+      "file": "docs/redesign/after/tasks-history-dark.jpg",
+      "sha256": "68370b699909a7dfee9879569edc650a22915875ad9c55a61d56c660a5647192",
+      "bytes": 62091
+    },
+    {
+      "file": "docs/redesign/after/tasks-light.jpg",
+      "sha256": "f700f6480c1450bc221629a624b556dbf99ea85ff9690a04087336d8ea8341ed",
+      "bytes": 62622
+    },
+    {
+      "file": "docs/redesign/after/weekly-report-dark.jpg",
+      "sha256": "635ec00b1a668bc283f9655bce095e5aa8ecc6cfbf765680fe38f8b6dcc10887",
+      "bytes": 58750
+    },
+    {
+      "file": "docs/redesign/after/weekly-report-light.jpg",
+      "sha256": "b678ba7dd610c4185b162cb78253d2897e545c52cac24446361addb221597869",
+      "bytes": 63729
+    }
+  ],
+  "modelExam": "真实考试和局限见 review-20261104.md；离线检查通过不代表模型全题达标。"
+}

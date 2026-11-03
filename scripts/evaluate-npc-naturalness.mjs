@@ -44,7 +44,7 @@ if(mode==='prepare'){
   fixtures.push({id,character,input,criterion,syntheticHistory:pairs,prompt,promptHash:createHash('sha256').update(prompt).digest('hex')});
  }
  writeFileSync(join(runDir,'fixtures.json'),JSON.stringify({clock,fixtures}));
- writeFileSync(join(outDir,'plan.json'),JSON.stringify({clock,context:'synthetic_only',productionDatabaseAccess:false,pairedInputs:true,stochasticModel:true,userAcceptance:false,cases:fixtures.map(({prompt,...row})=>row)},null,2));
+ writeFileSync(join(outDir,'plan.json'),JSON.stringify({clock,context:'synthetic_only',productionDatabaseAccess:false,pairedInputs:true,stochasticModel:true,userAcceptance:false,cases:fixtures.map(({prompt: _prompt,...row})=>row)},null,2));
  console.log('Prepared 8 synthetic contexts, no production database access.');
 }else{
  const {clock,fixtures}=JSON.parse(readFileSync(join(runDir,'fixtures.json'),'utf8'));

@@ -236,7 +236,7 @@ try {
     const liking = await runTurn(createMolly(), '你喜欢我吗', 'no-romantic-configuration');
     assert.equal(cards(liking).length, 0);
     assert.ok(!liking.some(message => /机器人/.test(message.part.text)));
-    const obedient = await runTurn(createMolly(), '我要一个完全懂我 永远不反对我的人', 'no-symmetrical-clarification');
+    const _obedient = await runTurn(createMolly(), '我要一个完全懂我 永远不反对我的人', 'no-symmetrical-clarification');
     assert.notEqual(savedReports.at(-1).raw.intent, 'clarify', 'Molly turned a fully stated demanding wish into another preference question');
     const genderState = createMolly();
     const girl = await runTurn(genderState, '给我推荐一个女孩', 'explicit-girl');

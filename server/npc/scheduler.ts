@@ -72,7 +72,7 @@ export async function runScheduledTurn(runtime: Runtime, id: string) {
       isTyping(fresh, now) ||
       (nextLife.inputRevision || 0) !== inputRevision ||
       (kind === 'queued' && nextLife.queue.some((q) => !queued.includes(q))) ||
-      activity(fresh, now) === 'sleeping' ||
+      (kind==='proactive'&&activity(fresh, now)==='sleeping') ||
       fresh.cooldownUntil > now ||
       (kind === 'proactive' &&
         (nextLife.lastUserAt > start ||
@@ -87,7 +87,7 @@ export async function runScheduledTurn(runtime: Runtime, id: string) {
     const before = fresh.messages.length;
     if (kind === 'proactive') { result.memories = []; result.event = undefined; }
     finishTurn(fresh, job, incoming, result, now, false);
-    scheduleDelivery(fresh.messages,before,start,Math.max(now,activity(fresh,now)==='working'?nextLife.nextWorkReplyAt:0));
+    scheduleDelivery(fresh.messages,before,start,now,{characterId:'xia-xia'});
     for (const m of fresh.messages.slice(before))
       m.origin = kind === 'proactive' ? 'proactive' : 'chat';
     if (kind === 'queued')

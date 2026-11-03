@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "characterId": "xia-xia",
+  "appearance": "{\"name\": \"夏夏\", \"identity\": {\"job\": \"智域吉祥物兼虚拟主播，不坐班，偶尔直播、拍宣传视频；全公司最闲\", \"oneLine\": \"二次元、爱猫、懂游戏、爱看恐怖片的活泼女生\"}, \"visual\": \"夏夏为成年日漫二次元角色，不转真人\"}",
+  "references": [
+    {
+      "file": "reference.png",
+      "view": "front-seated-half-body",
+      "reviewed": true,
+      "source": "public/desktop-npc/scenes/xia-xia-anime-sofa-final-20261021.png",
+      "basis": "current approved anime identity",
+      "sha256": "31d495fab0ce6ca6e127b273a444de78ca23b39ab8a7c73148a5ad9c082cc7d1"
+    },
+    {
+      "file": "side-reference-20261103.png",
+      "view": "left-profile-90-degree-face-upper-chest",
+      "reviewed": true,
+      "source": "output/frontend-redesign-20261103/identity-angles/xia-xia/side-reference-20261103.png",
+      "basis": "generated side-angle supplement from the existing approved character reference; assistant visual QC only, not new user approval",
+      "sha256": "8c53012579e753181b573273f11acf1139a48d35361735d3bfc170801daa2d83",
+      "provenance": {
+        "productionMethod": "system_imagegen",
+        "generatedAt": "2026-11-03T14:11:55.321988+00:00",
+        "inputReference": "npc-skills/assets/xia-xia/identity/reference.png",
+        "inputSha256": "31d495fab0ce6ca6e127b273a444de78ca23b39ab8a7c73148a5ad9c082cc7d1",
+        "promptRecord": "output/frontend-redesign-20261103/identity-angles/generation-and-review.json",
+        "userApproved": false,
+        "review": {
+          "method": "assistant-visual-qc",
+          "decision": "pass",
+          "checks": [
+            "仅近紫眼可见的左向90度日漫侧脸",
+            "粉色波浪中长发、原侧花饰、白衬衫及深红领结延续原参考",
+            "保持成年二维日漫风格，没有转真人/3D或儿童化；这是角色设计连续性目视检查"
+          ]
+        },
+        "machineChecks": {
+          "validPng": true,
+          "implicitAigcMetadata": true,
+          "idatPayloadPreserved": true
+        }
+      }
+    }
+  ],
+  "missingViews": []
+}

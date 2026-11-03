@@ -1,4 +1,5 @@
 'use client';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 
 import {useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent, type ReactNode} from 'react';
 import {Camera, LoaderCircle, Pencil} from 'lucide-react';
@@ -210,7 +211,7 @@ function ProfileFieldEditor({kind, value, editing, draft, onBegin, onDraftChange
     } catch (cause) {
       suppressBlur.current = false;
       returnFocus.current = false;
-      if (mounted.current) setError(cause instanceof Error && cause.message ? cause.message : `${label}未保存，请重试。`);
+      if (mounted.current) setError(reportUserFacingError(cause,'save','保存资料'));
     } finally {
       lock.current = false;
       if (mounted.current) setSaving(false);

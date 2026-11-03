@@ -1,4 +1,5 @@
 'use client';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 
 import {useEffect, useLayoutEffect, useRef, useState, type ReactNode} from 'react';
 import {createPortal} from 'react-dom';
@@ -136,7 +137,7 @@ export default function MessageActions({children, text, onQuote, onDelete, onFor
       if (!response.ok) throw Error(result.error || '翻译失败');
       if (alive.current) setTranslation(result.text);
     } catch (reason) {
-      if (alive.current) setError(reason instanceof Error ? reason.message : '翻译失败');
+      if (alive.current) setError(reportUserFacingError(reason,'load','翻译消息'));
     } finally {
       if (alive.current) setBusy(false);
     }

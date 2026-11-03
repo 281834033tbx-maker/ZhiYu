@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "characterId": "yuan-xiaoman",
+  "appearance": "{\"name\": \"徐小曼\", \"identity\": {\"job\": \"智域内容组作者，写文章、专栏、每周生活小结、节日推送；常采访同事，知道很多小事但嘴严\", \"oneLine\": \"温柔知性，爱看书，反差是爱看格斗和暴力美学电影\"}, \"visual\": \"沿现行参考保留五官与身份，不从职业推导改脸磨皮\"}",
+  "references": [
+    {
+      "file": "reference.png",
+      "view": "front-face-eyes-obscured",
+      "reviewed": true,
+      "source": "public/npc/yuan-xiaoman/avatar.png",
+      "basis": "current avatar",
+      "sha256": "60c66cf226e04979b7b8c0312ac97ca0fcbc0b830ae0d634bbd4a1329e8e0b60"
+    },
+    {
+      "file": "approved-scene.png",
+      "view": "front-seated-half-body",
+      "reviewed": true,
+      "source": "public/desktop-npc/scenes/xu-xiaoman-20260926.png",
+      "basis": "user-provided existing current desktop scene; source scene manifest",
+      "sha256": "a05d01208b283830e9332d1592780ad3a7abf82e6a933c7a53ff23f52a199473"
+    },
+    {
+      "file": "side-existing-v1.png",
+      "view": "left-side-full-body",
+      "reviewed": true,
+      "source": "public/desktop-npc/assets/20260927/xu-xiaoman/03-body-left-v1.png",
+      "basis": "existing same-character front/side set; actual assistant visual comparison with current fixed reference; not newly user-approved",
+      "review": {
+        "method": "assistant-visual-comparison",
+        "at": "2026-11-03T14:11:28.472Z",
+        "checks": [
+          "same eye/nose/jaw silhouette",
+          "side body connected and coherent",
+          "source identity unchanged"
+        ]
+      },
+      "sha256": "12e7d9167983938a013787625624a3d39561a3c00e7178f59da8c4aa02827c71"
+    }
+  ],
+  "missingViews": []
+}

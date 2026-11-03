@@ -1,0 +1,48 @@
+{
+  "items": [
+    {
+      "text": "在线",
+      "slots": [
+        "morning",
+        "noon",
+        "afternoon",
+        "evening",
+        "night"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "整理周报中",
+      "slots": [
+        "morning",
+        "noon",
+        "afternoon",
+        "evening",
+        "night"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "排明天的日程",
+      "slots": [
+        "morning",
+        "noon",
+        "afternoon",
+        "evening",
+        "night"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "盯进度",
+      "slots": [
+        "morning",
+        "noon",
+        "afternoon",
+        "evening",
+        "night"
+      ],
+      "weight": 2
+    }
+  ]
+}

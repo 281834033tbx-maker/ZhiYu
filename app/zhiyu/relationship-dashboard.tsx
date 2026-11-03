@@ -52,7 +52,7 @@ export default function RelationshipDashboard({
           </article>;
         })}
       </div>
-      {!ready && <p className="relationship-unavailable" role="status">{loading ? '正在读取关系数值…' : `${name}的关系数值暂未接入，当前没有可显示的分数。`}</p>}
+      {!ready && <output className="relationship-unavailable">{loading ? '正在读取关系数值…' : `${name}的关系数值暂未接入，当前没有可显示的分数。`}</output>}
       {ready && <div className="relationship-unlocks">
         <h3>相处里程碑</h3>
         <article className={'relationship-unlock-card ' + (photoOpen ? 'is-open' : '')}>

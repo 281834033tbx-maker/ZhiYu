@@ -1,0 +1,164 @@
+{
+  "items": [
+    {
+      "text": "写稿中",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "卡文了",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "在看吃播",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "读一本悬疑",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "交稿放空",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "改最后一段",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "翻旧笔记",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "挑下一本书",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "整理书桌",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "煮杯咖啡",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "记灵感",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "研究开头",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "给稿子起名",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "写人物小传",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "整理素材",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "重读结尾",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "散步想情节",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "听故事播客",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "读读来信",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "翻美食杂志",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    }
+  ]
+}

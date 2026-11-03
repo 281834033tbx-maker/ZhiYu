@@ -49,8 +49,8 @@ try{
  const iq=new ImageQueue(db,dir,async(_r,_u,c)=>{images.push(c);return '/api/npc/media/test.png'});
  const vq=new VoiceQueue(db,dir,async(_r,_u,_text,c)=>{voices.push(c);return '/api/npc/audio/test.mp3'});
  for(let i=0;i<4;i++){await iq.tick();await vq.tick();}
- assert.deepEqual(images.sort(),['liu','molly-system-secretary','xia-xia','yuan-xiaoman']);
- assert.deepEqual(voices.sort(),['liu','molly','xia-xia','yuan-xiaoman']);
+ assert.deepEqual(images.sort((a,b)=>a<b?-1:a>b?1:0),['liu','molly-system-secretary','xia-xia','yuan-xiaoman']);
+ assert.deepEqual(voices.sort((a,b)=>a<b?-1:a>b?1:0),['liu','molly','xia-xia','yuan-xiaoman']);
  for(const [table] of states){const s=JSON.parse(db.prepare(`SELECT data FROM ${table}`).get().data);assert.ok(s.messages.filter(m=>['voice','generated_photo'].includes(m.part.type)).every(m=>m.part.status==='ready'));}
  const failed=JSON.parse(db.prepare('SELECT data FROM liu_sessions').get().data);const m=failed.messages.find(m=>m.part.type==='generated_photo');m.part.status='failed';db.prepare('UPDATE liu_sessions SET data=?').run(JSON.stringify(failed));
  assert.equal(iq.retry(crypto.randomUUID(),'liu',m.id),false);assert.equal(iq.retry(user,'liu',m.id),true);await iq.tick();

@@ -1,4 +1,5 @@
 'use client';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 
 import {useEffect, useId, useRef, useState, type ReactNode, type SubmitEvent} from 'react';
 import {Check, Search} from 'lucide-react';
@@ -42,7 +43,7 @@ export default function MessageForwardDialog({text, targets, onSend, onClose}: {
     if (!requestId) {requestId = crypto.randomUUID(); requestIds.current.set(chosen.id, requestId);}
     setAttemptedTargets(previous => previous.includes(chosen.id) ? previous : [...previous, chosen.id]);
     try {await onSend(chosen, requestId); if (mounted.current) onClose();}
-    catch (failure) {if (mounted.current) setError(failure instanceof Error ? failure.message : '转发失败，请重试。');}
+    catch (failure) {if (mounted.current) setError(reportUserFacingError(failure,'send','转发消息'));}
     finally {lock.current = false; if (mounted.current) setBusy(false);}
   }
   return <dialog ref={dialog} className="zy-dialog zy-contact-create zy-message-forward" aria-labelledby={titleId} onCancel={event => {event.preventDefault(); if (!lock.current) onClose();}}>

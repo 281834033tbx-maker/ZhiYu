@@ -5,6 +5,7 @@ import {realtimeCallFixtureScript} from './realtime-call-browser-fixture.mjs';
 // are loaded. The real App supplies GET UI assets only; every API stays here.
 // This opt-in creates only in-memory ProfessionalTask-shaped source snapshots.
 // It does not enable API writes, execute task commands, or send chat messages.
+const experienceFixture=process.env.ZHIYU_EXPERIENCE_FIXTURE==='1';
 const taskBoardImportFixture = process.env.ZHIYU_TASK_BOARD_IMPORT_FIXTURE === '1';
 const realtimeCallFixture=process.env.ZHIYU_REALTIME_CALL_FIXTURE==='1';
 const requestedAssetPort=Number(process.env.ZHIYU_FIXTURE_ASSET_PORT||3100);
@@ -47,6 +48,13 @@ html[data-liquid-optics='off'] .zy-liquid-base-plate__warp{filter:none!important
 html[data-liquid-optics='invert'] .zy-liquid-base-plate__warp{filter:none!important;backdrop-filter:invert(1)!important;-webkit-backdrop-filter:invert(1)!important}
 #liquid-optics-toggle{position:fixed;z-index:10000;top:82px;right:18px;padding:8px 12px;border:1px solid #999;border-radius:8px;background:white;color:#222;font:12px system-ui}
 </style><script>document.addEventListener('DOMContentLoaded',()=>{const button=document.createElement('button');button.id='liquid-optics-toggle';button.textContent='关闭折射（A/B）';button.addEventListener('click',()=>{const off=document.documentElement.dataset.liquidOptics!=='off';document.documentElement.dataset.liquidOptics=off?'off':'on';button.textContent=off?'开启折射（A/B）':'关闭折射（A/B）';});document.body.append(button);});</script>`;
+
+
+function syntheticExperienceMessages(){
+ const metric={completed:3,planned:4,missedDates:['2026-11-01']};
+ const base={createdAt:updatedAt,startDate:'2026-10-27',endDate:'2026-11-03',city:{name:'深圳',source:'manual'},weather:{min:22,max:28,text:'晴',summary:'白天温暖',attribution:'界面隔离数据'},agenda:[{id:'qa-t1',date:today,time:'18:00',title:'腿部训练',source:'陈年',characterId:'chen-nian',completed:false}],decisions:[{id:'qa-choice',characterId:'chen-nian',messageId:'qa-choice-origin',text:'明天练腿还是练背？',options:['练腿','练背']}],weekNumber:4,completionPercent:75,training:metric,nutrition:metric,cooking:{completed:1,planned:2,missedDates:[]},packedMeals:null,weightKg:72.5,previousWeightKg:73,waistCm:null,weeklyWeights:[{startDate:'2026-10-06',weightKg:74},{startDate:'2026-10-13',weightKg:73.5},{startDate:'2026-10-20',weightKg:null},{startDate:'2026-10-27',weightKg:72.5}],feelings:{sleep:null,energy:null,soreness:null},adjustments:['下周沿用当前训练重量'],milestones:['连续完成三次训练'],nextFocus:['按原计划安排休息日'],team:[{characterId:'chen-nian',name:'陈年',avatar:'/npc/chen-nian/avatar-20260926.png',text:'这周三次训练都做到了，下周稳住动作。',quoteId:'qa-quote'}],partial:false};
+ return [{id:'qa-morning-hello',role:'assistant',at:updatedAt,part:{type:'text',text:'早。今天的安排'}},...['morning','weekly','monthly'].map((kind,index)=>({id:'qa-report-'+kind,role:'assistant',at:updatedAt,part:{type:'secretary_report',text:kind==='morning'?'早报':kind==='weekly'?'本周回顾':'月度总结',report:{...base,id:'qa-report-'+kind,kind,title:kind==='morning'?'今天的安排':kind==='weekly'?'本周回顾':'月度总结',...(index===2?{startDate:'2026-10-01',endDate:'2026-10-31'}:{})}}}))];
+}
 
 function syntheticGroups(key) {
   const prefix = `group-task-fixture-${key}`;
@@ -230,9 +238,9 @@ const server = createServer((req, res) => {
       return json(res, 200, {groups: groupsByAccount[key]});
     }
     if (path === '/api/npc/moments') return json(res, 200, {items: []});
-    if (path === '/api/npc/secretary') return json(res, 200, {completions: {}});
+    if (path === '/api/npc/secretary') return json(res, 200, {completions: {},...(experienceFixture?{settings:{enabled:true,time:'07:00',city:{name:'深圳',source:'manual'}}}:{})});
     if (['molly', 'chen-nian', 'xia-xia', 'yuan-xiaoman', 'liu', 'he-jiawei', 'zhou-chef'].some(id => path === `/api/npc/${id}`)) {
-      const messages = path === '/api/npc/chen-nian' ? [
+      const messages = experienceFixture&&path==='/api/npc/molly'?syntheticExperienceMessages():path === '/api/npc/chen-nian' ? [
         {id: `task-fixture-${key}-user`, role: 'user', at: createdAt, part: {type: 'text', text: '隔离预览：今天可以怎么安排？'}},
         {id: `task-fixture-${key}-assistant`, role: 'assistant', at: updatedAt, part: {type: 'text', text: '这是合成消息，供核对右键菜单文字大小。'}},
       ] : [];

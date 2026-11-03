@@ -1,4 +1,5 @@
 'use client';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 
 import {useEffect, useMemo, useState, useSyncExternalStore} from 'react';
 import {useAccount} from '../zhiyu/auth-gate';
@@ -65,7 +66,7 @@ export default function TaskCalendarClient() {
         if (data.accountId !== account.id || data.characterId !== character.id) return rejectSession();
         if (alive) setProjection(data);
       } catch (failure) {
-        if (alive && !controller.signal.aborted) {setProjection(null); setError(failure instanceof Error ? failure.message : '任务记录暂时无法读取，请稍后刷新。');}
+        if (alive && !controller.signal.aborted) {setProjection(null); setError(reportUserFacingError(failure,'load','读取任务记录'));}
       } finally {pending = false; if (alive) setLoading(false);}
     };
     void read();

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import ts from 'typescript';
-import {mkdtempSync,readFileSync,writeFileSync,rmSync,mkdirSync} from 'node:fs';
+import {mkdtempSync,readFileSync,writeFileSync,rmSync,mkdirSync as _mkdirSync} from 'node:fs';
 import {tmpdir} from 'node:os';import {join} from 'node:path';import {pathToFileURL} from 'node:url';
 // Only fresh synthetic states. Never open the runtime DB or load browser history.
 const dir=mkdtempSync(join(tmpdir(),'humanizer-live-'));
@@ -13,11 +13,11 @@ try {
   writeFileSync(join(dir,name+'.mjs'),ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText);
  }
  const load=name=>import(pathToFileURL(join(dir,name+'.mjs')));
- const {generate,unknownReplies}=await load('codex');
- const {createState,parseOutput}=await load('engine');
- const {buildPrompt}=await load('prompt');
+ const {generate,unknownReplies: _unknownReplies}=await load('codex');
+ const {createState: _createState,parseOutput: _parseOutput}=await load('engine');
+ const {buildPrompt: _buildPrompt}=await load('prompt');
  const {createYuan,parseYuan}=await load('yuan-xiaoman');const {yuanPrompt}=await load('yuan-prompt');
- const {createMolly,parseMolly,applyMolly}=await load('molly');const {mollyPrompt}=await load('molly-prompt');
+ const {createMolly: _createMolly,parseMolly: _parseMolly,applyMolly: _applyMolly}=await load('molly');const {mollyPrompt: _mollyPrompt}=await load('molly-prompt');
 
  const root=process.cwd(),results=[];
  const first=createYuan(),familiar=createYuan();

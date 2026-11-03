@@ -20,7 +20,6 @@ npm run dev
 | --- | --- |
 | `http://localhost:3100/` | 当前主应用 |
 | `http://localhost:3100/mobile` | 手机版界面预览 |
-| `http://localhost:3100/studio` | 早期交互设计工作台 |
 
 首次克隆不带原账户、登录状态、聊天、关系进度或任务存档。服务会使用本项目自己的 `.npc-runtime/`；原来使用智域的电脑应继续保留原项目与完整数据备份。
 
@@ -89,3 +88,15 @@ cd desktop-mobile && npm test
 具体测试结果以本次仓库交付记录为准；这些命令不构成所有检查已通过的声明。`scripts/` 中部分带 `live` 的测试会调用模型或写运行数据，执行前应阅读脚本并使用隔离环境，不要批量在正式账户运行。
 
 第三方依赖、模型与素材沿用各自许可证和来源说明；本次入库未为全部项目资产重新指定统一开源许可证。
+
+<!-- frontend-experience-redesign-20261104 -->
+## 前端与智友体验改版
+
+导航为消息、智友、任务、动态及个人头像入口“我”；宠物、副本入口由 `features.extras=false` 隐藏，旧 `/studio` 不作为应用入口。现有主题配色、三栏几何及 13px 聊天气泡保留，弹窗材质与字号规范见 [设计规范](docs/design-spec.md)。
+
+智友状态、中文添加来源、错误边界与重发、分段回复节奏、秘书早报/周报/月报和统一图片身份库已纳入源码。报表基于实际保存记录，页面展示样例不冒充真实完成记录。天气需自行填写 `WEATHER_API_KEY` 和账户专属 `WEATHER_API_HOST`，没有配置仍可发早报。
+
+校验入口增加 `npm run lint:style`、`node scripts/test-user-facing-copy.mjs` 与 `npm run npc:exam`。真实模型考试仅使用隔离题目，可能消耗已有模型账户额度；夜间 03:00 调度模板默认关闭，启用说明见 [考试调度](docs/qa/npc-exam-schedule.md)。不得把未满分的角色输出或未执行的提案说成验收通过。
+
+本轮前后截图与差异记录在 `docs/redesign/`，状态库供审阅见 [状态清单](docs/redesign/status-catalog.md)，真实模型考试原话与分数见 `docs/qa/`。仓库当前为公开源码；真实登录凭据、运行数据库、用户上传与账号媒体、依赖安装和构建成品不在此发布。
+<!-- /frontend-experience-redesign-20261104 -->

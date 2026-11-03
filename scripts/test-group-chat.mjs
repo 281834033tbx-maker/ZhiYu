@@ -180,7 +180,7 @@ try {
   const accountA = await register('synthetic_group_a'), accountB = await register('synthetic_group_b');
   const aOwner = db.prepare('SELECT owner_id FROM zhiyu_accounts WHERE id=?').get(accountA.account.id).owner_id;
   const bOwner = db.prepare('SELECT owner_id FROM zhiyu_accounts WHERE id=?').get(accountB.account.id).owner_id;
-  const headers = { cookie: `${accountA.cookie}; zhiyu_npc=${bOwner}`, 'x-zhiyu-account': accountA.account.id };
+  const headers = { cookie: `${accountA.cookie}; zhiyu_npc=${String(bOwner)}`, 'x-zhiyu-account': accountA.account.id };
   assert.equal((await api.request('GET', undefined, { owner: aOwner })).status, 401, 'an owner cookie alone must not authenticate');
   assert.equal((await api.request('GET', undefined, { headers: { ...headers, 'x-zhiyu-account': accountB.account.id } })).status, 409, 'stale account headers must not mutate the new account');
   const callsBeforeStale = namingCalls;

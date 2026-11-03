@@ -1,0 +1,100 @@
+{
+  "items": [
+    {
+      "text": "改食谱中",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "周三螺蛳粉日",
+      "slots": [
+        "noon",
+        "evening"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "看文献",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "备周菜单",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 2
+    },
+    {
+      "text": "研究早餐",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "算食材份量",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "整理营养笔记",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "对照食物标签",
+      "slots": [
+        "afternoon",
+        "evening"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "研究外卖搭配",
+      "slots": [
+        "evening",
+        "night"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "试新便当",
+      "slots": [
+        "night",
+        "morning"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "准备加餐",
+      "slots": [
+        "morning",
+        "noon"
+      ],
+      "weight": 1
+    },
+    {
+      "text": "看食物成分表",
+      "slots": [
+        "noon",
+        "afternoon"
+      ],
+      "weight": 1
+    }
+  ]
+}

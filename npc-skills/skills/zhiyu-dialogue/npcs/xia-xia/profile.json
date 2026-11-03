@@ -34,5 +34,6 @@
     "不说去过电影院、现场",
     "不卖东西"
   ],
-  "circlesFile": "interests.json"
+  "circlesFile": "interests.json",
+  "typingSpeed": 0.8
 }

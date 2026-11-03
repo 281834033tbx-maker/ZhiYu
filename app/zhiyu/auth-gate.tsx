@@ -5,10 +5,11 @@ import { createContext, useContext, useEffect, useState, type SyntheticEvent, ty
 import { LockKeyhole, QrCode } from 'lucide-react';
 import { authFailureFeedback, validateAuthForm, type AuthFieldErrors, type AuthFieldName } from './auth-validation';
 import './auth-gate.css';
+import {userFacingError} from '../../lib/user-facing-errors';
 
 type Account = { id: string; username: string };
-type AuthContextValue = { account: Account; logout: () => Promise<void> };
-type AuthResponse = { authenticated: boolean; account?: Account; claimedLegacy?: boolean; error?: string };
+type AuthContextValue = { account: Account; firstUse?:boolean; logout: () => Promise<void> };
+type AuthResponse = { authenticated: boolean; account?: Account; claimedLegacy?: boolean; firstUse?:boolean; error?: string };
 type View = 'welcome' | 'choose' | 'login' | 'register';
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -31,6 +32,7 @@ function migrateLegacyBrowserState(accountId: string) {
 }
 
 export default function AuthGate({ children }: { children: ReactNode }) {
+  const [firstUse,setFirstUse]=useState(false);
   const [account, setAccount] = useState<Account | null>(null);
   const [checking, setChecking] = useState(true);
   const [view, setView] = useState<View>('welcome');
@@ -55,7 +57,7 @@ export default function AuthGate({ children }: { children: ReactNode }) {
           setAccount(data.account);
         }
       })
-      .catch(() => { if (alive) setError('本机登录服务暂时无法连接'); })
+      .catch(() => { if (alive) setError('网络不太好，请稍后重试'); })
       .finally(() => { if (alive) setChecking(false); });
     return () => { alive = false; };
   }, []);
@@ -112,7 +114,7 @@ export default function AuthGate({ children }: { children: ReactNode }) {
       const data = await response.json() as AuthResponse;
       if (!response.ok || !data.account) {
         const feedback = authFailureFeedback(view, response.status, data.error);
-        setError(feedback.error);
+        setError(Object.keys(feedback.fields).length?'':userFacingError(feedback.error,'load'));
         showFieldErrors(feedback.fields, form);
         return;
       }
@@ -122,9 +124,10 @@ export default function AuthGate({ children }: { children: ReactNode }) {
       }
       setPassword('');
       setConfirmPassword('');
+      setFirstUse(view==='register'&&data.firstUse===true);
       setAccount(data.account);
     } catch {
-      setError('本机登录服务暂时无法连接，请重试');
+      setError('网络不太好，请稍后重试，请重试');
     } finally {
       setBusy(false);
     }
@@ -139,7 +142,7 @@ export default function AuthGate({ children }: { children: ReactNode }) {
   }
 
   if (checking) return <main className="zy-auth-stage"><div className="zy-auth-loading">正在打开智域…</div></main>;
-  if (account) return <AuthContext.Provider value={{ account, logout }}>{children}</AuthContext.Provider>;
+  if (account) return <AuthContext.Provider value={{ account, logout,firstUse }}>{children}</AuthContext.Provider>;
 
   return <main className="zy-auth-stage">
     <section className="zy-auth-card" aria-label="智域登录">

@@ -6,7 +6,7 @@
   display:flex; align-items:center; gap:9px; width:100%; min-width:0;
   padding:7px 10px; border:1px solid rgb(0 0 0 / 10%); border-radius:12px;
   background:rgb(255 255 255 / 38%); color:inherit; font:inherit;
-  font-weight:550; line-height:inherit; text-align:left; cursor:pointer;
+  font-weight:600; line-height:inherit; text-align:left; cursor:pointer;
 }
 .zy-choice-number {
   display:inline-grid; place-items:center; flex:0 0 21px; width:21px; height:21px;

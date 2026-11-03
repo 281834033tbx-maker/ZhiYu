@@ -1,12 +1,15 @@
 'use client';
+import {reportUserFacingError} from '../../lib/user-facing-errors';
 
 import {useEffect, useId, useRef, useState} from 'react';
 import {X} from 'lucide-react';
 import {useAccount} from './auth-gate';
 import {npcFetch} from './npc-fetch';
 import './morning-reminder-settings.css';
+import {CityPicker} from './secretary-report';
+import type {SecretarySettings} from '../../lib/npc/experience';
 
-type Settings={enabled:boolean;time:string};
+type Settings=SecretarySettings;
 type SettingsResponse={settings?:Settings;error?:string};
 const validTime=(time:string)=>/^([01]\d|2[0-3]):[0-5]\d$/.test(time);
 function responseSettings(result:SettingsResponse):Settings{
@@ -21,9 +24,10 @@ export default function MorningReminderSettings({onClose}:{onClose:()=>void}){
 function SettingsDialog({accountId,onClose}:{accountId:string;onClose:()=>void}){
   const dialog=useRef<HTMLDialogElement>(null),alive=useRef(true),busy=useRef(false);
   const titleId=useId(),descriptionId=useId();
-  const [settings,setSettings]=useState<Settings>({enabled:true,time:'08:00'});
+  const [settings,setSettings]=useState<Settings>({enabled:true,time:'07:00'});
   const [loading,setLoading]=useState(true),[saving,setSaving]=useState(false),[error,setError]=useState('');
   const [saved,setSaved]=useState(false),[retry,setRetry]=useState(0);
+  const [changingCity,setChangingCity]=useState(false);
   useEffect(()=>{const node=dialog.current;node?.showModal();return()=>node?.close();},[]);
   useEffect(()=>{
     alive.current=true;
@@ -33,7 +37,7 @@ function SettingsDialog({accountId,onClose}:{accountId:string;onClose:()=>void})
       if(!response.ok)throw Error(result.error||'提醒设置暂时无法同步，请重试。');
       const next=responseSettings(result);
       if(alive.current)setSettings(next);
-    }).catch(reason=>{if(alive.current&&!controller.signal.aborted)setError(reason instanceof Error?reason.message:'提醒设置暂时无法同步，请重试。');})
+    }).catch(reason=>{if(alive.current&&!controller.signal.aborted)setError(reportUserFacingError(reason,'load','读取提醒设置'));})
       .finally(()=>{if(alive.current&&!controller.signal.aborted)setLoading(false);});
     return()=>{alive.current=false;controller.abort();};
   },[accountId,retry]);
@@ -46,7 +50,7 @@ function SettingsDialog({accountId,onClose}:{accountId:string;onClose:()=>void})
       if(!response.ok)throw Error(result.error||'修改未保存，请重试。');
       const confirmed=responseSettings(result);
       if(alive.current){setSettings(confirmed);setSaved(true);}
-    }catch(reason){if(alive.current)setError(reason instanceof Error?reason.message:'修改未保存，请重试。');}
+    }catch(reason){if(alive.current)setError(reportUserFacingError(reason,'save','保存提醒设置'));}
     finally{busy.current=false;if(alive.current)setSaving(false);}
   }
   return <dialog ref={dialog} className="zy-dialog zy-morning-settings" aria-labelledby={titleId} aria-describedby={descriptionId} onCancel={event=>{event.preventDefault();onClose();}} onPointerDown={event=>{if(event.target!==event.currentTarget||event.button!==0)return;const rect=event.currentTarget.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)onClose();}}>
@@ -54,6 +58,7 @@ function SettingsDialog({accountId,onClose}:{accountId:string;onClose:()=>void})
     <p id={descriptionId}>Molly 在每天早晨提醒当天已安排的任务。</p>
     <div className="zy-morning-settings-row"><label htmlFor={titleId+'-enabled'}>晨间提醒</label><button type="button" id={titleId+'-enabled'} role="switch" aria-checked={settings.enabled} aria-label="晨间提醒" className="zy-morning-settings-switch" disabled={loading||saving||!!error&&!saved} onClick={()=>void save({...settings,enabled:!settings.enabled})}><span/></button></div>
     <div className="zy-morning-settings-row"><label htmlFor={titleId+'-time'}>提醒时间</label><input id={titleId+'-time'} type="time" aria-label="提醒时间" value={settings.time} disabled={loading||saving||!settings.enabled||!!error&&!saved} onChange={event=>{const time=event.currentTarget.value;if(validTime(time))void save({...settings,time});}}/></div>
+<div className="zy-morning-settings-row"><span>城市</span><button type="button" className="zy-morning-city-change" disabled={loading||saving} onClick={()=>setChangingCity(value=>!value)}>{settings.city?.name||'设置城市'} · 换城市</button></div>{changingCity&&<CityPicker onSaved={city=>{setSettings(current=>({...current,city}));setChangingCity(false);}}/>}
     <p className="zy-morning-settings-note">上海时间 · 修改后自动保存<br/>关闭晨间提醒不会影响任务和步骤计时。</p>
     <div className="zy-morning-settings-status" aria-live="polite">{error?<p role="alert">{error}<button type="button" onClick={()=>{setLoading(true);setError('');setRetry(value=>value+1);}}>重新同步</button></p>:loading?'正在同步…':saving?'保存中…':saved?'已保存':''}</div>
   </dialog>;

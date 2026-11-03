@@ -41,7 +41,7 @@
   border: 0;
   background: transparent;
   color: #4a4948;
-  font: 12px -apple-system, BlinkMacSystemFont, sans-serif;
+  font: calc(12px + var(--zy-font-adjust,0px)) -apple-system, BlinkMacSystemFont, sans-serif;
   cursor: pointer;
   -webkit-app-region: no-drag;
 }
@@ -93,10 +93,10 @@
   flex-direction: column;
   padding: 8px;
   border: 1px solid #ffffff30;
-  border-radius: 14px;
+  border-radius: 12px;
   background: rgb(11 16 25 / 42%);
   color: #fff;
-  box-shadow: 0 8px 24px #070b131c, inset 0 1px #ffffff20;
+  box-shadow: none;
   backdrop-filter: blur(6px) saturate(105%);
   -webkit-backdrop-filter: blur(6px) saturate(105%);
   animation: zy-character-chat-appear 280ms cubic-bezier(.18,.8,.24,1) both;
@@ -118,7 +118,7 @@
 }
 .zy-character-window-chat-message {
   display: flex;
-  font-size: 14px;
+  font-size: calc(14px + var(--zy-font-adjust,0px));
   line-height: 1.55;
   min-width: 0;
   flex: 0 0 auto;
@@ -147,7 +147,7 @@
   display: block;
   white-space: pre-wrap;
   color: #fff;
-  text-shadow: 0 1px 2px #0008;
+  text-shadow: none;
 }
 @keyframes zy-character-chat-appear { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes zy-character-message-appear { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -178,9 +178,9 @@
   gap: 10px;
   padding: 6px 10px;
   margin-bottom: 8px;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #f6f6f6;
-  font-size: 12px;
+  font-size: calc(12px + var(--zy-font-adjust,0px));
 }
 .zy-character-window .voice-recording span { flex: 1; }
 .zy-character-window .voice-recording audio { max-width: 230px; height: 30px; }
@@ -202,6 +202,9 @@
 .zy-character-window.has-realtime-layout .zy-character-window-stage { --zy-call-camera-top: 48px; }
 .zy-character-window.has-realtime-layout .zy-character-window-titlebar .zy-character-window-exit-fullscreen {
   color: rgb(255 255 255 / 85%);
-  text-shadow: 0 1px 4px #000;
+  text-shadow: none;
 }
 
+
+.zy-character-call-disclosure {position:absolute;z-index:15;bottom:0;left:0;right:0;background:var(--zy-canvas);pointer-events:none;}
+.zy-character-call-disclosure .zy-ai-disclosure {margin:4px 12px;font-size:calc(11px + var(--zy-font-adjust,0px));}
