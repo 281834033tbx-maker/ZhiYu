@@ -1,6 +1,6 @@
 {
   "date": "2026-11-04",
-  "description": "Current source after frontend and character-experience redesign; original palette/geometry retained, private runtime and rollback data excluded.",
+  "description": "Current source including native App service/window recovery; portable local identity retained, private runtime and native backups excluded.",
   "files": [
     {
       "path": ".env.example",
@@ -1514,8 +1514,8 @@
     },
     {
       "path": "desktop/main.js",
-      "bytes": 23589,
-      "sha256": "cb76c00579dc0c8649b91b58998a031d256a636817cf09ce4b2b9b25784eb930"
+      "bytes": 25959,
+      "sha256": "ae2bbca9e99e3d2292db23193046f21d4a9726f63a1893935415b12d1ffc0d6d"
     },
     {
       "path": "desktop/package-lock.json",
@@ -1524,8 +1524,8 @@
     },
     {
       "path": "desktop/package.json",
-      "bytes": 941,
-      "sha256": "9cfd770c028932e063e353090c31d7164cbac50de9d43a092b57ed8e8008e7b7"
+      "bytes": 1059,
+      "sha256": "f6499302e33b0ed6bfc3446bf620aaffe92eb6c2a9de1f0894ea8a828ca3a032"
     },
     {
       "path": "desktop/preload.js",
@@ -1533,14 +1533,29 @@
       "sha256": "e787e28f180bc89187a8dd522c98bd0a4114e4e9c6a7e7afed275d8930e05c12"
     },
     {
+      "path": "desktop/service-status.html",
+      "bytes": 1025,
+      "sha256": "ef8a26c733b6b2467225759ca6a828c218792f18481cb5ee47319cb0cc897172"
+    },
+    {
+      "path": "desktop/service-supervisor.cjs",
+      "bytes": 13784,
+      "sha256": "aede2484326d5b4cccc17fe558e700e1acd0f0a2c68faf6e8edf3e55dc4a6f6d"
+    },
+    {
+      "path": "desktop/tests/app-recovery.test.cjs",
+      "bytes": 12939,
+      "sha256": "f749f70d7a0c420dc8aaa8f77324ff5cd4d49ff1f083507bccbdaac6db366e60"
+    },
+    {
       "path": "desktop/tests/camera-permissions.test.cjs",
-      "bytes": 9147,
-      "sha256": "3b86421b46f4df0e49cca7837599d29f6855ef6c7e36df06c7d8c16688631d6a"
+      "bytes": 9377,
+      "sha256": "90a03d6ffebe6669226d98b5c9c97a65578dcf6a70f38b62bd572f378fa9a116"
     },
     {
       "path": "desktop/tests/character-window.test.cjs",
-      "bytes": 6772,
-      "sha256": "b78f069d6155ef1a0072de0dd27368b803751d4ea11c7f657d1bde9a1e38244c"
+      "bytes": 7013,
+      "sha256": "7ffe81c9737ea8cd987f2ffc10615fd0118c7b4c4124dcbeffd7db3c9fb5d783"
     },
     {
       "path": "desktop/tests/image-viewer-native-fixture.cjs",
@@ -1568,9 +1583,24 @@
       "sha256": "ebb44a30ac55b1e6215eaadb86d23d9f197db8d6e66ab74acd273fbd883aaf61"
     },
     {
+      "path": "desktop/tests/service-supervisor.test.cjs",
+      "bytes": 16296,
+      "sha256": "045694470a38e91f2cb45066293576f306287f308f6af4f90668409c95cfbb71"
+    },
+    {
+      "path": "desktop/tests/window-recovery.test.cjs",
+      "bytes": 14297,
+      "sha256": "9cc633ad826790995ae2bcf72dace40ef50f3feab6ed821a89a51529d9abccf0"
+    },
+    {
       "path": "desktop/update.command",
       "bytes": 532,
       "sha256": "e9f2f6494399b20abc1ae8aa17435f1f7c292b51082ce2e44122dc91247d8f92"
+    },
+    {
+      "path": "desktop/window-recovery.cjs",
+      "bytes": 12192,
+      "sha256": "b2d9b5b60b998d9b3ff2ada0235f11755c29f7cd5a9c5126325d325a4077308c"
     },
     {
       "path": "distribution/start.command",
@@ -1586,6 +1616,11 @@
       "path": "distribution/使用说明.md",
       "bytes": 5190,
       "sha256": "49f273ebaeb44af64759cb3d8e5f25c4a8f8b680357d7a7547e640ae8803f142"
+    },
+    {
+      "path": "docs/app-recovery.md",
+      "bytes": 2759,
+      "sha256": "d718894d727051ea6a1e0e87fa6faff18cad7a7b4ce028d4e440fc48ee3abd1c"
     },
     {
       "path": "docs/design-spec.md",
@@ -3374,8 +3409,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 1671,
-      "sha256": "f15fa12e4bb12584b9fe6493648dd7ec7eddb9f94970aa92002cce059d137b06"
+      "bytes": 1730,
+      "sha256": "4d79642c5fea49efcf3d1719161b61561d336a804047ea3562603cbcc9417150"
     },
     {
       "path": "public/desktop-npc/assets/20260927/xu-xiaoman/01-face-front-v1.png",
@@ -4778,6 +4813,11 @@
       "sha256": "20e73be29a6f5a45449d5170a7db72e4e788a145b60cbf374750bff460cabaf2"
     },
     {
+      "path": "scripts/test-local-service-health.mjs",
+      "bytes": 1755,
+      "sha256": "8b2de5c893cb4e880566bb8a75c077153dfe215cef3a96727a8d7b532705277f"
+    },
+    {
       "path": "scripts/test-locked-frame-compositor.mjs",
       "bytes": 3926,
       "sha256": "de71790dd52126e9ac35d30bbf03347046a577cf281bcbfd1e4910df4a8e4784"
@@ -5259,8 +5299,8 @@
     },
     {
       "path": "scripts/zhiyu-launcher.applescript",
-      "bytes": 3562,
-      "sha256": "01b0768a622537a6517c38fc2bc5c6625517038b7c8998fc911ab8e5884f02bc"
+      "bytes": 1024,
+      "sha256": "2716c5b076771d6406dad2bf8f36a6cb8894f0c777cde7fc8b02af35e33506a4"
     },
     {
       "path": "scripts/启动VoxCPM2语音后台.command",
@@ -5491,6 +5531,11 @@
       "path": "server/npc/local-asr.ts",
       "bytes": 1521,
       "sha256": "865a1cfbbdf19caaa7c593b16a0602dd4f15dbcd028b80f58ac75a5b472a9f0a"
+    },
+    {
+      "path": "server/npc/local-service-health.ts",
+      "bytes": 813,
+      "sha256": "6b2375a9f99135c51b642b46e8fb0030c8db95ca038d789f3fb89655b8dc66a8"
     },
     {
       "path": "server/npc/media.ts",
@@ -8959,8 +9004,8 @@
     },
     {
       "path": "vite.config.ts",
-      "bytes": 5266,
-      "sha256": "1cde8ad985dc960cdcebb98e60fec3e2c35cfecc2595a83ef46a283af0dad61a"
+      "bytes": 5670,
+      "sha256": "455fb26e2d7d9bc9535b6021491fdf46a9f642001938a59d26e273831fc8e9d4"
     }
   ]
 }

@@ -30,13 +30,15 @@ class FakeWindow extends EventEmitter {
 }
 const main = new FakeWindow({ width: 1060, height: 720 });
 const electron = {
-  app: { on() {}, whenReady: () => ({ then() {} }) },
+  app: { on() {}, requestSingleInstanceLock:()=>true, whenReady: () => ({ then() {} }) },
   BrowserWindow: FakeWindow, dialog: {}, session: {},
   screen: { getDisplayMatching: () => ({ workArea: area }) },
   ipcMain: { handle: (key, handler) => handlers.set(key, handler) },
 };
 const context = vm.createContext({
-  require: name => name === 'electron' ? electron : name === './image-viewer' ? {registerImageViewer:()=>({close(){}})} : name === './local-identity.cjs' ? require('../local-identity.cjs') : require(name),
+  require: name => name === 'electron' ? electron : name === './image-viewer' ? {registerImageViewer:()=>({close(){}})}
+    : name === './window-recovery.cjs' ? {attachWindowRecovery:win=>({load:url=>win.loadURL(url),dispose(){},recover(){}})}
+    : name === './service-supervisor.cjs' ? require('../service-supervisor.cjs') : name === './local-identity.cjs' ? require('../local-identity.cjs') : require(name),
   process: { ...process, on() {}, resourcesPath: project, env: { ...process.env, ZHIYU_PROJECT: project, ZHIYU_NPC_ID: 'test-character-window' } },
   __dirname: path.join(project, 'desktop'), console, setTimeout, clearTimeout, __testMain: main,
 });

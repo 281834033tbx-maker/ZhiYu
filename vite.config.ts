@@ -19,6 +19,7 @@ import { authLocal } from './server/npc/auth-plugin';
 import { groupChatsLocal } from './server/npc/groups-plugin';
 import { secretaryLocal } from './server/npc/secretary-plugin';
 import { dialogueHealth } from './server/npc/dialogue-health';
+import { localServiceHealth } from './server/npc/local-service-health';
 import { npcQwenLocalWorker } from './server/npc/qwen-local-worker';
 import { npcRealtimeSpeechSettings } from './server/npc/realtime-speech-settings';
 import { npcRealtimeSpeechGateway } from './server/npc/realtime-speech-gateway';
@@ -31,6 +32,9 @@ const { d1, r2 } = hostingConfig;
 
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === 'seatbelt';
+// The desktop is a long-running App, not an editing session. Avoid keeping the
+// HMR graph and watchers alive for days; code changes apply on a normal reopen.
+const isDesktopRuntime = process.env.ZHIYU_DESKTOP_RUNTIME === '1';
 
 const localBindingConfig = {
   main: 'vinext/server/fetch-handler',
@@ -91,12 +95,14 @@ export default defineConfig(async ({mode}) => {
       // Runtime models, Python environments and generated media live under
       // .npc-runtime. Watching that multi-GB tree made a cold launch take
       // several minutes and caused the outer launcher to report HTTP 000.
-      watch: {
+      hmr: isDesktopRuntime ? false : undefined,
+      watch: isDesktopRuntime ? null : {
         ignored: ['**/.npc-runtime/**', '**/desktop/dist/**', '**/output/**'],
         ...(isCodexSeatbeltSandbox ? { useFsEvents: false, usePolling: true } : {}),
       },
     },
     plugins: [
+      localServiceHealth(),
       dialogueHealth(),
       authLocal(),
       groupChatsLocal(),

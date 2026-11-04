@@ -22,7 +22,11 @@
       "main.js",
       "preload.js",
       "image-viewer.js",
-      "package.json"
+      "service-supervisor.cjs",
+      "window-recovery.cjs",
+      "service-status.html",
+      "package.json",
+      "local-identity.cjs"
     ],
     "mac": {
       "target": "dir",

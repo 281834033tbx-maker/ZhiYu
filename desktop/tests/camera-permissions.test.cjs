@@ -32,14 +32,16 @@ async function fixture(platform='darwin') {
   }
   const main=new FakeWindow({width:1194,height:870});
   await main.loadURL('http://localhost:3100/');
-  const electron={app:{on(){},whenReady:()=>({then(){}})},BrowserWindow:FakeWindow,session:{},dialog:{},
+  const electron={app:{on(){},requestSingleInstanceLock:()=>true,whenReady:()=>({then(){}})},BrowserWindow:FakeWindow,session:{},dialog:{},
     ipcMain:{handle:(name,handler)=>handlers.set(name,handler)},screen:{getDisplayMatching:()=>({workArea:{width:1440,height:1080}})},
     shell:{openExternal:async value=>{external.push(value);}},
     systemPreferences:{getMediaAccessStatus:type=>{assert.equal(type,'camera');return status;},askForMediaAccess:async type=>{
       assert.equal(type,'camera');asks.push(type);if(askFailure)throw Error('synthetic unavailable permission');return answer;
     }},
   };
-  const context=vm.createContext({require:name=>name==='electron'?electron:name==='./image-viewer'?{registerImageViewer:()=>({close(){}})}:name==='./local-identity.cjs'?{resolveLocalIdentity:()=>'synthetic-desktop-owner'}:require(name),
+  const context=vm.createContext({require:name=>name==='electron'?electron:name==='./image-viewer'?{registerImageViewer:()=>({close(){}})}:name==='./local-identity.cjs'?{resolveLocalIdentity:()=>'synthetic-desktop-owner'}
+    :name==='./window-recovery.cjs'?{attachWindowRecovery:win=>({load:url=>win.loadURL(url),dispose(){},recover(){}})}
+    :name==='./service-supervisor.cjs'?require('../service-supervisor.cjs'):require(name),
     __dirname:path.join(root,'desktop'),process:{...process,platform,on(){},resourcesPath:root,env:{...process.env,ZHIYU_PROJECT:root}},
     console,URL,setTimeout,clearTimeout,__testMain:main,
   });

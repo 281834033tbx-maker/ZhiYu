@@ -1,10 +1,10 @@
 // 智域桌面客户端 —— Electron 壳
 // 职责：启动本机服务，打开主窗口，并按需打开独立人物窗口。
-// 关闭窗口时自动停掉服务。这是"本地自用版"，项目路径默认指向开发目录。
+// 本机服务由 App 自己监督；窗口崩溃和服务退出均可自动恢复。
 'use strict';
 
 // oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
-const { app, BrowserWindow, dialog, ipcMain, screen, session, shell, systemPreferences } = require('electron');
+const { app, BrowserWindow, ipcMain, screen, session, shell, systemPreferences, powerMonitor } = require('electron');
 // oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const { spawn } = require('child_process');
 // oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
@@ -14,7 +14,9 @@ const os = require('os');
 // oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const path = require('path');
 // oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
-const http = require('http');
+const { createServiceSupervisor, probeLocalService } = require('./service-supervisor.cjs');
+// oxlint-disable-next-line typescript/no-require-imports -- Shared native recovery controller.
+const { attachWindowRecovery } = require('./window-recovery.cjs');
 // oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const { resolveLocalIdentity } = require('./local-identity.cjs');
 
@@ -50,29 +52,36 @@ function resolveNode() {
   return 'node';
 }
 
-function isUp() {
-  return new Promise((resolve) => {
-    const req = http.get(URL, (res) => {
-      res.resume();
-      resolve(true);
-    });
-    req.on('error', () => resolve(false));
-    req.setTimeout(1500, () => {
-      req.destroy();
-      resolve(false);
-    });
-  });
-}
-
-function wait(ms) {
-  return new Promise((r) => setTimeout(r, ms));
-}
-
-let server = null;
+const hasInstanceLock = app.requestSingleInstanceLock();
+if (!hasInstanceLock) app.quit();
+let stopping = false;
+let shutdownPromise = null;
+let quitReady = false;
+const recoveryControllers = new Map();
 let mainWindow = null;
 let characterWindow = null;
 let characterPersonId = null;
 const taskCalendarWindows = new Map();
+function logRecovery(event, detail = {}) {
+  try {
+    const folder = path.join(os.homedir(), '.zhiyu');
+    fs.mkdirSync(folder, {recursive:true});
+    const file = path.join(folder, 'recovery.log');
+    if (fs.existsSync(file) && fs.statSync(file).size > 1024 * 1024)
+      fs.renameSync(file, `${file}.previous`);
+    fs.appendFileSync(file, `${JSON.stringify({at:new Date().toISOString(),event,...detail})}\n`);
+  } catch { /* Recovery must not depend on the logging volume. */ }
+}
+function protectWindow(win, targetURL) {
+  let controller = recoveryControllers.get(win);
+  if (!controller) {
+    controller = attachWindowRecovery(win, {targetURL,ensureService:ensureServer,
+      statusFile:path.join(__dirname,'service-status.html'),isStopping:()=>stopping,log:logRecovery});
+    recoveryControllers.set(win,controller);
+    win.once('closed',()=>{controller.dispose();recoveryControllers.delete(win);});
+  }
+  return controller;
+}
 const CHARACTER_SCENE_RATIO = 16 / 9;
 const CHARACTER_DEFAULT_CHROME_HEIGHT = 28 + 54;
 let characterChromeHeight = CHARACTER_DEFAULT_CHROME_HEIGHT;
@@ -160,6 +169,7 @@ function trackTaskCalendarWindow(win, initialURL) {
   if (!target || win.isDestroyed()) return;
   const record = { initialURL: target, initialLoading: true };
   taskCalendarWindows.set(win, record);
+  protectWindow(win,target);
   win.webContents.once('did-finish-load', () => { record.initialLoading = false; });
   win.on('closed', () => taskCalendarWindows.delete(win));
 }
@@ -285,8 +295,9 @@ ipcMain.handle('zhiyu:character-open', async (event, personId) => {
   if (characterWindow && !characterWindow.isDestroyed()) {
     if (characterPersonId !== personId) {
       try {
-        await characterWindow.loadURL(`${URL}character-window?npc=${encodeURIComponent(personId)}`);
         characterPersonId = personId;
+        const target = `${URL}character-window?npc=${encodeURIComponent(personId)}`;
+        await protectWindow(characterWindow,target).load(target);
       } catch  { return false; }
     }
     if (characterWindow.isMinimized()) characterWindow.restore();
@@ -371,7 +382,8 @@ ipcMain.handle('zhiyu:character-open', async (event, personId) => {
     notifyCharacterWindowState();
   });
   try {
-    await win.loadURL(`${URL}character-window?npc=${encodeURIComponent(personId)}`);
+    const target = `${URL}character-window?npc=${encodeURIComponent(personId)}`;
+    await protectWindow(win,target).load(target);
     notifyCharacterWindowState();
     return true;
   } catch  {
@@ -422,79 +434,68 @@ function startServer() {
     'cli.js'
   );
   if (!fs.existsSync(cli)) {
-    dialog.showErrorBox(
-      '智域',
-      `找不到项目依赖：\n${cli}\n\n请确认项目文件夹完整（node_modules/vinext 存在）。`
-    );
-    app.quit();
-    return null;
+    throw new Error('missing-local-dependencies');
   }
 
   const logDir = path.join(os.homedir(), '.zhiyu');
   fs.mkdirSync(logDir, { recursive: true });
   const logFd = fs.openSync(path.join(logDir, 'server.log'), 'a');
 
-  server = spawn(
-    node,
-    [cli, 'dev', '--host', '127.0.0.1', '--port', String(PORT), '--strictPort'],
-    {
-      cwd: PROJECT_ROOT,
-      detached: true,
-      env: {
-        ...process.env,
-        HOME: process.env.HOME || os.homedir(),
-        PATH: [path.dirname(node), process.env.PATH, '/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin']
-          .filter(Boolean).join(path.delimiter),
-      },
-      stdio: ['ignore', logFd, logFd],
-    }
-  );
-  return server;
+  try {
+    const child = spawn(node,
+      [cli, 'dev', '--host', '127.0.0.1', '--port', String(PORT), '--strictPort'],
+      {cwd:PROJECT_ROOT,detached:true,env:{...process.env,
+        HOME:process.env.HOME || os.homedir(), ZHIYU_DESKTOP_RUNTIME:'1',
+        PATH:[path.dirname(node),process.env.PATH,'/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin'].filter(Boolean).join(path.delimiter),
+      },stdio:['ignore',logFd,logFd]});
+    logRecovery('service-spawn',{pid:child.pid});
+    return child;
+  } finally { fs.closeSync(logFd); }
 }
 
+function stopOwnedServer(child) {
+  // Never terminate a listener that was reused from a different process.
+  if (!child || child.exitCode !== null || child.signalCode || !Number.isSafeInteger(child.pid) || child.pid<=0)
+    return Promise.resolve();
+  return new Promise(resolve=>{
+    let done=false;
+    const finish=()=>{if(done)return;done=true;clearTimeout(forceTimer);clearTimeout(deadline);child.removeListener('exit',finish);resolve();};
+    const signal=value=>{
+      if(child.exitCode!==null||child.signalCode){finish();return;}
+      try {process.kill(-child.pid,value);}
+      catch {try {child.kill(value);} catch {finish();}}
+    };
+    child.once('exit',finish);
+    const forceTimer=setTimeout(()=>{logRecovery('owned-service-force-stop',{pid:child.pid});signal('SIGKILL');},5000);
+    const deadline=setTimeout(finish,10000);
+    signal('SIGTERM');
+  });
+}
+
+const serviceSupervisor = createServiceSupervisor({
+  probe:()=>probeLocalService(`${URL}api/desktop/health`),start:startServer,stopOwned:stopOwnedServer,
+  onState:state=>logRecovery('service-state',state),
+});
+function ensureServer() {
+  return stopping ? Promise.resolve(false) : serviceSupervisor.ensure();
+}
 function stopServer() {
-  if (server && !server.killed) {
-    try {
-      process.kill(-server.pid, 'SIGTERM');
-    } catch  {
-      /* 进程组可能已不存在 */
-    }
-    try {
-      server.kill('SIGTERM');
-    } catch  {}
-  }
-  server = null;
+  if(shutdownPromise)return shutdownPromise;
+  stopping=true;
+  for(const controller of recoveryControllers.values())controller.dispose();
+  recoveryControllers.clear();
+  shutdownPromise=serviceSupervisor.stop();
+  return shutdownPromise;
 }
-
-async function ensureServer() {
-  if (await isUp()) return true; // 已有实例在跑，直接复用
-  server = startServer();
-  if (!server) return false;
-  const deadline = Date.now() + 120000;
-  while (Date.now() < deadline) {
-    if (await isUp()) return true;
-    await wait(800);
-  }
-  return false;
+function requestQuit() {
+  if(quitReady)return;
+  void stopServer().finally(()=>{if(!quitReady){quitReady=true;app.quit();}});
 }
 
 void app.whenReady().then(async () => {
+  if(!hasInstanceLock)return;
   if (process.platform === 'darwin')
     recordMicrophonePermission('startup', systemPreferences.getMediaAccessStatus('microphone'));
-  const ready = await ensureServer();
-  if (!ready) {
-    dialog.showErrorBox(
-      '智域',
-      `服务启动超时。\n\n请确认端口 ${PORT} 没有被占用，或查看日志：\n${path.join(
-        os.homedir(),
-        '.zhiyu',
-        'server.log'
-      )}`
-    );
-    stopServer();
-    app.quit();
-    return;
-  }
 
   // 恢复历史身份：种回 zhiyu_npc cookie，指向之前那个有 983 条消息的身份
   try {
@@ -539,7 +540,8 @@ void app.whenReady().then(async () => {
   configureMediaPermissions(win.webContents.session);
   win.webContents.on('did-create-window', (child, details) => trackTaskCalendarWindow(child, details.url));
   win.setMenuBarVisibility(false);
-  void win.loadURL(URL);
+  void protectWindow(win,URL).load();
+  serviceSupervisor.startMonitoring();
   win.center();
   win.on('closed', () => {
     mainWindow = null;
@@ -550,12 +552,27 @@ void app.whenReady().then(async () => {
     imageViewer.close();
     if (characterWindow && !characterWindow.isDestroyed()) characterWindow.close();
   });
+  powerMonitor.on('resume',()=>{if(!stopping)void ensureServer();});
 });
+
+function activateMainWindow() {
+  if(stopping||!hasInstanceLock)return;
+  if(mainWindow&&!mainWindow.isDestroyed()) {
+    if(mainWindow.isMinimized())mainWindow.restore();
+    mainWindow.show();mainWindow.focus();
+    if(mainWindow.webContents.isCrashed())void protectWindow(mainWindow,URL).recover('activate');
+  }
+  void ensureServer();
+}
+app.on('activate',activateMainWindow);
+app.on('second-instance',activateMainWindow);
 
 app.on('window-all-closed', () => {
-  stopServer();
-  app.quit();
+  requestQuit();
 });
 
-app.on('before-quit', stopServer);
+app.on('before-quit', event=>{
+  if(quitReady||!hasInstanceLock)return;
+  event.preventDefault();requestQuit();
+});
 process.on('exit', stopServer);
