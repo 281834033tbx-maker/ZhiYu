@@ -1,3 +1,4 @@
+import {factualHistoryMessages} from '../../lib/npc/report-demo-history';
 import {randomUUID} from 'node:crypto';
 import type {DatabaseSync} from 'node:sqlite';
 import type {ChatMessage} from '../../lib/npc/contracts';
@@ -63,7 +64,7 @@ export class ExperienceReportsStore {
  }
  private inputs(owner:string):ReportInputs {
   const now=this.clock(),snapshot=readSecretaryTasks(this.db,owner,now),convs:ReportConversation[]=[];
-  for(const [, ,id] of conversations){const row=this.load(owner,id);if(row)convs.push({characterId:id,state:{...row.state,messages:privateHistoryMessages(row.state)}});}
+  for(const [, ,id] of conversations){const row=this.load(owner,id);if(row)convs.push({characterId:id,state:{...row.state,messages:factualHistoryMessages(privateHistoryMessages(row.state))}});}
   const measurements:ReportMeasurement[]=[];
   new TaskMemoryStore(this.db).collect(owner);
   // Consume already source-validated, dated measurement events; never reinterpret

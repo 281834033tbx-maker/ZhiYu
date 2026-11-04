@@ -11,12 +11,11 @@ export function secretaryLocal(deps:SecretaryDependencies&{automatic?:boolean}={
     const root=server.config.root;mkdirSync(join(root,'.npc-runtime'),{recursive:true});
     const db=new DatabaseSync(join(root,'.npc-runtime/state.sqlite'));db.exec('PRAGMA journal_mode=WAL');
     const store=new SecretaryStore(db,root,deps);stores.set(root,store);
-    let ticking=false,reporting=false,closed=false;
+    let ticking=false,closed=false;
     const timer=deps.automatic===false?undefined:setInterval(()=>{
       if(closed)return;
       // The daily clock must run even while an NPC model is still replying.
       store.scanTaskExpiry();
-      if(!reporting){reporting=true;void store.scanMorning().then(()=>store.scanReports()).catch(()=>{}).finally(()=>{reporting=false;});}
       if(ticking)return;ticking=true;
       void store.drain().catch(()=>{}).finally(()=>{ticking=false;});
     },1000);
@@ -37,8 +36,12 @@ export function secretaryLocal(deps:SecretaryDependencies&{automatic?:boolean}={
       if(!input||typeof input!=='object'||Array.isArray(input))return reply(400,{error:'请求内容无效'});
       const body=input as Record<string,unknown>;
       try{
-        if(body.action==='settings'&&Object.keys(body).every(key=>['action','enabled','time','city'].includes(key)))
-          return reply(200,{settings:store.updateSettings(owner,{enabled:body.enabled,time:body.time,...(body.city!==undefined?{city:body.city}:{})}),completions:store.completions(owner)});
+        if(body.action==='settings'&&Object.keys(body).every(key=>['action','enabled','time','city','weeklyEnabled','weeklyDay','weeklyTime'].includes(key)))
+          return reply(200,{settings:store.updateSettings(owner,{enabled:body.enabled,time:body.time,...(body.city!==undefined?{city:body.city}:{}),...(body.weeklyEnabled!==undefined?{weeklyEnabled:body.weeklyEnabled}:{}),...(body.weeklyDay!==undefined?{weeklyDay:body.weeklyDay}:{}),...(body.weeklyTime!==undefined?{weeklyTime:body.weeklyTime}:{})}),completions:store.completions(owner)});
+        if(body.action==='ensure-report-demos'&&Object.keys(body).length===1)return reply(200,store.ensureReportDemos(owner));
+        if(body.action==='regenerate-report-demo'&&Object.keys(body).every(key=>['action','kind'].includes(key)))return reply(200,store.regenerateReportDemo(owner,body.kind));
+        if(body.action==='report-demo-action')return reply(200,store.reportDemoAction(owner,body));
+        if(body.action==='report-demo-quote')return reply(200,store.reportDemoQuote(owner,body));
         if(body.action==='locate-city'&&Object.keys(body).every(key=>['action','query','source'].includes(key)))
           return reply(200,{city:await store.locateCity(owner,body.query,body.source)});
         if(body.action==='city'&&Object.keys(body).every(key=>['action','city'].includes(key)))
@@ -55,6 +58,6 @@ export function secretaryLocal(deps:SecretaryDependencies&{automatic?:boolean}={
     server.httpServer?.once('close',()=>{closed=true;store.stop();if(timer)clearInterval(timer);if(stores.get(root)===store)stores.delete(root);
       // A receiver may still be awaiting a model. It observes stop before further
       // writes; release this connection only once its tick unwinds.
-      const close=()=>{if(ticking||reporting){setTimeout(close,50).unref();return;}db.close();};close();});
+      const close=()=>{if(ticking){setTimeout(close,50).unref();return;}db.close();};close();});
   }};
 }

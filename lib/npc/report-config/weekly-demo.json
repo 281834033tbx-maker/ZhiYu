@@ -1,0 +1,246 @@
+{
+  "range": {
+    "from": "2026-11-02",
+    "to": "2026-11-08"
+  },
+  "opener": {
+    "category": "urgent",
+    "text": "周报 有两件要紧的"
+  },
+  "headline": "体重 −1.4斤 · 离目标还差 6.2斤",
+  "blocks": [
+    {
+      "id": "urgent",
+      "name": "要紧",
+      "ownerIds": [
+        "molly"
+      ],
+      "rows": [
+        {
+          "itemKey": "phone",
+          "label": "手机话费没交",
+          "note": "11月10日停机",
+          "danger": true
+        },
+        {
+          "itemKey": "vehicle",
+          "label": "车年检还没约",
+          "note": "11月10日过期",
+          "danger": true
+        }
+      ]
+    },
+    {
+      "id": "body",
+      "name": "身体",
+      "ownerIds": [
+        "liu",
+        "chen-nian"
+      ],
+      "rows": [
+        {
+          "itemKey": "weight",
+          "label": "体重（周平均）",
+          "value": "166.2斤",
+          "note": "比上周 −1.4 · 离目标还差 6.2斤"
+        },
+        {
+          "itemKey": "waist",
+          "label": "腰围",
+          "value": "91cm",
+          "note": "比上周 −1"
+        },
+        {
+          "itemKey": "sleep",
+          "label": "睡眠（平均）",
+          "value": "6.8小时",
+          "note": "比上周少 0.5小时"
+        },
+        {
+          "itemKey": "bedtime",
+          "label": "入睡（平均）",
+          "value": "23:40",
+          "note": "比上周晚 25分钟"
+        }
+      ]
+    },
+    {
+      "id": "training",
+      "name": "训练",
+      "ownerIds": [
+        "chen-nian"
+      ],
+      "rows": [
+        {
+          "itemKey": "completion",
+          "label": "完成",
+          "value": "3/4次",
+          "note": "周三没练"
+        },
+        {
+          "itemKey": "main-lift",
+          "label": "深蹲",
+          "value": "42.5 → 45kg"
+        },
+        {
+          "itemKey": "cardio",
+          "label": "有氧",
+          "value": "95分钟",
+          "note": "比上周 +20分钟"
+        }
+      ]
+    },
+    {
+      "id": "diet",
+      "name": "饮食",
+      "ownerIds": [
+        "liu"
+      ],
+      "rows": [
+        {
+          "itemKey": "plan",
+          "label": "按计划",
+          "value": "18/21顿"
+        },
+        {
+          "itemKey": "off-plan",
+          "label": "不该吃的",
+          "value": "3顿",
+          "note": "周三外卖 · 周六火锅 · 周日奶茶"
+        },
+        {
+          "itemKey": "protein",
+          "label": "蛋白质达标",
+          "value": "5/7天"
+        }
+      ]
+    },
+    {
+      "id": "cooking",
+      "name": "做菜",
+      "ownerIds": [
+        "zhou-chef"
+      ],
+      "rows": [
+        {
+          "itemKey": "learn",
+          "label": "学菜",
+          "value": "6/10道",
+          "note": "本周新学：宫保鸡丁"
+        }
+      ]
+    },
+    {
+      "id": "skincare",
+      "name": "护肤",
+      "ownerIds": [],
+      "rows": [
+        {
+          "itemKey": "routine",
+          "label": "早晚护肤",
+          "value": "12/14次"
+        },
+        {
+          "itemKey": "skin",
+          "label": "皮肤",
+          "value": "痘痘少了",
+          "note": "和两周前的对比照比"
+        }
+      ]
+    },
+    {
+      "id": "ledger",
+      "name": "账本",
+      "ownerIds": [
+        "molly"
+      ],
+      "rows": [
+        {
+          "itemKey": "spend",
+          "label": "本周支出",
+          "value": "约 ¥1,860",
+          "note": "比上周多 ¥320"
+        },
+        {
+          "itemKey": "takeout",
+          "label": "外卖",
+          "value": "¥420",
+          "note": "9 单"
+        },
+        {
+          "itemKey": "utilities",
+          "label": "生活缴费",
+          "value": "¥560"
+        },
+        {
+          "itemKey": "shopping",
+          "label": "购物",
+          "value": "¥350"
+        },
+        {
+          "itemKey": "transport",
+          "label": "交通",
+          "value": "¥150"
+        },
+        {
+          "itemKey": "income",
+          "label": "收入",
+          "value": "工资已到账"
+        }
+      ]
+    },
+    {
+      "id": "tracking",
+      "name": "追踪",
+      "ownerIds": [
+        "molly"
+      ],
+      "rows": [
+        {
+          "itemKey": "overtime",
+          "label": "加班",
+          "value": "2次",
+          "note": "周三、周四 · 比上周 +1"
+        }
+      ]
+    }
+  ],
+  "comments": [
+    {
+      "npcId": "chen-nian",
+      "name": "陈年",
+      "text": "少练了两组，下周分到周二周四补上",
+      "kind": "professional"
+    },
+    {
+      "npcId": "liu",
+      "name": "柳智敏",
+      "text": "外卖那三顿选得都对，下周争取只吃一顿",
+      "kind": "professional"
+    },
+    {
+      "npcId": "zhou-chef",
+      "name": "赵一帆",
+      "text": "宫保鸡丁这周算会了，下周学鱼",
+      "kind": "professional"
+    },
+    {
+      "npcId": "xia-xia",
+      "name": "夏夏",
+      "text": "伴郎冲刺 D-9！！西装照必须第一个发我",
+      "kind": "companion"
+    },
+    {
+      "npcId": "yuan-xiaoman",
+      "name": "徐小曼",
+      "text": "这周你睡得有点晚哦",
+      "kind": "companion"
+    },
+    {
+      "npcId": "he-jiawei",
+      "name": "何嘉伟",
+      "text": "可以，保持",
+      "kind": "companion"
+    }
+  ]
+}

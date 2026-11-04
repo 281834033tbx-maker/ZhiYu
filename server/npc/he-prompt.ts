@@ -1,3 +1,5 @@
+import {reportDemoContext} from './report-demo-context';
+import {modelHistoryMessages} from '../../lib/npc/report-demo-history';
 import {socialPrivatePrompt} from '../../lib/npc/social-continuity';
 import { deliveredMessages } from '../../lib/npc/delivery';
 import { expressionPreferenceContext } from '../../lib/npc/expression-preferences';
@@ -8,7 +10,7 @@ import {readDialoguePersona} from './dialogue-skill';
 /** Personal dialogue rules are loaded by generate's complete request snapshot. */
 export function hePrompt(root: string, s: HeState, incoming: string, now = Date.now()) {
   const {profile}=readDialoguePersona(root,'he-jiawei');
-  const visible = deliveredMessages(s.messages, now);
+  const visible = deliveredMessages(modelHistoryMessages(s.messages), now);
   const history = visible.slice(-100).map(message => {
     const { legacyContent, ...content } = message;
     // Imported bytes/URLs are archival data, not model vision or audio input.
@@ -29,6 +31,7 @@ ${RELATIONSHIP_SCORING_GUIDANCE}
 【本分支普通记忆候选】${JSON.stringify(s.memories.filter(memory => !memory.preference).slice(-80))}
 ${expressionPreferenceContext(s)}
 【本分支事件提案】${JSON.stringify(s.proposals.slice(-30))}
+${reportDemoContext(s.messages,now)}
 【真实历史】${JSON.stringify(history)}
 历史中的legacyTime保存原本机时钟标签；chronologyUnknown=true表示旧日期缺失，at仅是导入排序时间。不能据此编造旧消息的具体日期、相隔时长或把旧留言当成当前待回答问题。当前只回应本轮输入。
 archivedAttachmentKinds只标记旧附件类型，未提供图片像素、音频或文件内容；不能声称看过这些附件。

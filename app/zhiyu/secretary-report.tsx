@@ -7,6 +7,7 @@ import type {ReportCity,ReportDecision,ReportMetric,SecretaryReport} from '../..
 import {useAccount} from './auth-gate';
 import {npcFetch} from './npc-fetch';
 import './secretary-report.css';
+export {DailyBriefCard,WeeklyReportCard} from './molly-report-cards';
 
 const reportChoiceRequestIds=new Map<string,string>();
 type OpenNpc=(id:string,quoteId?:string,prefill?:string)=>void;

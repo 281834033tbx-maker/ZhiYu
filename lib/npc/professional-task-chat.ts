@@ -1,3 +1,4 @@
+import {modelHistoryMessages} from './report-demo-history';
 import type { ChatMessage } from './contracts';
 import { deliveredMessages } from './delivery';
 import { normalizeTaskGoal, ProfessionalTaskError, resolveTaskSource, taskSourceAllowsCreation, taskSourceClarifiesDelegation, taskSourceContinuesExecution, taskSourceIsDatedPlan, taskSourceResendMode, type ProfessionalTask, type ProfessionalTaskCharacterId, type ProfessionalTaskOperation, type ProfessionalTaskSource } from './professional-task';
@@ -9,7 +10,7 @@ export type ProfessionalTaskChatState = SecretaryDelegationState & {
 /** The model and application share this bounded, visible evidence window. */
 export function professionalTaskDelegationEvidence(state: ProfessionalTaskChatState, now = Date.now(), sourceTurnIds = state.queue) {
   const hidden = new Set(state.privateHistoryHiddenIds || []);
-  const visible = deliveredMessages(state.messages, now);
+  const visible = deliveredMessages(modelHistoryMessages(state.messages), now);
   const current = visible.filter(message => message.role === 'user' && sourceTurnIds.includes(message.turnId) && !hidden.has(message.id));
   const toSource = (message: ChatMessage): ProfessionalTaskSource => ({ id: message.id, text: 'text' in message.part ? message.part.text : '', at: message.at });
   const sources = current.map(message => {

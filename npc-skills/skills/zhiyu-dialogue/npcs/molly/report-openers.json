@@ -1,0 +1,38 @@
+{
+  "noRepeatWeeks": 4,
+  "priority": [
+    "urgent",
+    "progress",
+    "allDone",
+    "low",
+    "normal"
+  ],
+  "numberWords": {
+    "1": "一",
+    "2": "两",
+    "3": "三",
+    "4": "四",
+    "5": "五"
+  },
+  "categories": {
+    "urgent": [
+      "周报 有{N}件要紧的",
+      "周报 先看要紧的"
+    ],
+    "progress": [
+      "周报 这周不错"
+    ],
+    "allDone": [
+      "周报 这周没掉链子"
+    ],
+    "low": [
+      "周报 自己看吧"
+    ],
+    "normal": [
+      "老大 周报",
+      "这周的",
+      "周报整理好了",
+      "周报 看完早点睡"
+    ]
+  }
+}

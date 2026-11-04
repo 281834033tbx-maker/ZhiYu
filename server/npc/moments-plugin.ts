@@ -1,3 +1,4 @@
+import {factualHistoryMessages} from '../../lib/npc/report-demo-history';
 import {normalizeDialogueOutput,DialogueOutputGuardError} from '../../lib/npc/dialogue-output-guard';
 import { MomentRelationshipReactions } from './moment-relationships';
 import { MomentInteractions } from './moment-interactions';
@@ -167,7 +168,7 @@ export class MomentsQueue {
     if (!s || (s.branch || '') !== row.branch) return false;
     if (p.source === 'life' && p.lifeEventId)
       return !!this.db.prepare('SELECT id FROM npc_life_events WHERE id=? AND session=? AND branch=?').get(p.lifeEventId,row.session,row.branch);
-    const messages = deliveredMessages(s.messages, this.now());
+    const messages = deliveredMessages(factualHistoryMessages(s.messages), this.now());
     const start = messages.findIndex(m => m.id === p.lines[0]?.id);
     return start >= 0 && p.lines.every((line, i) => {
       const m = messages[start + i];
@@ -290,7 +291,7 @@ export class MomentsQueue {
         if (this.stopped) return;
         const s = JSON.parse(row.data) as State;
         if (s.pending || s.paused || s.queue?.length || s.life?.queue?.length || s.messages.some(m => (m.deliverAt || 0) > this.now())) continue;
-        const messages = deliveredMessages(s.messages, this.now()).slice(-24);
+        const messages = deliveredMessages(factualHistoryMessages(s.messages), this.now()).slice(-24);
         const user = messages.filter(m => m.role === 'user' && m.origin !== 'call').at(-1), last = messages.at(-1);
         if (!user || !last || last.role !== 'assistant' || last.origin === 'proactive' || last.origin === 'call') continue;
         const age = this.now() - Date.parse(last.at);

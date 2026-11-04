@@ -1,3 +1,4 @@
+import {factualHistoryMessages} from './report-demo-history';
 import {completePrivateSocialTurn} from './social-continuity';
 import type { ChatMessage, Memory } from './contracts';
 import { parseOutput } from './engine';
@@ -263,7 +264,7 @@ export function applyChen(s: ChenState, out: ReturnType<typeof parseChen>, turnI
     s.messages.push({id:cardMessageId,turnId,role:'assistant',at,origin:'chat',part:{type:'professional_task',taskId:applied.task.id}});
   }
   for (const memory of out.memories) {
-    const message = [...s.messages].reverse().find(m => m.role === 'user' && 'text' in m.part && m.part.text.includes(memory.evidence));
+    const message = [...factualHistoryMessages(s.messages)].reverse().find(m => m.role === 'user' && 'text' in m.part && m.part.text.includes(memory.evidence));
     if (message && shouldSaveMemory(s.memories, memory))
       s.memories.push({ ...memory, id: crypto.randomUUID(), messageId: message.id, status: 'model_proposed' });
   }

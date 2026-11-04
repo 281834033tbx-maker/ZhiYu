@@ -1,0 +1,18 @@
+[
+  {
+    "condition": "用户有目标 且目标指标这周有变化",
+    "template": "{指标} {变化} · 离目标还差 {n}"
+  },
+  {
+    "condition": "某领域本周计划全部完成",
+    "template": "{领域}全部完成"
+  },
+  {
+    "condition": "有要紧的事",
+    "template": "{n} 件要紧的事"
+  },
+  {
+    "condition": "其他",
+    "template": "这周没有大变化"
+  }
+]

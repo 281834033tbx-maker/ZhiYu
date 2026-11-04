@@ -4,6 +4,11 @@ import {join,dirname,relative,resolve,sep} from 'node:path';
 import {tmpdir} from 'node:os';
 import {pathToFileURL} from 'node:url';
 const jsonRoots=['lib/npc/','server/npc/','npc-skills/skills/zhiyu-dialogue/','npc-skills/data/'];
+function typescriptFiles(dir) {
+  return readdirSync(dir,{withFileTypes:true}).flatMap(entry=>entry.isDirectory()
+    ?typescriptFiles(join(dir,entry.name))
+    :entry.isFile()&&entry.name.endsWith('.ts')?[join(dir,entry.name)]:[]);
+}
 function safeJsonPath(project,path) {
   const key=relative(project,path).split(sep).join('/');
   if(!key.endsWith('.json')||!jsonRoots.some(prefix=>key.startsWith(prefix)))throw new Error('隔离测试不读取此JSON路径：'+key);
@@ -15,14 +20,14 @@ export function isolatedNpcRuntime({projectRoot=process.cwd()}={}) {
   const root=mkdtempSync(join(tmpdir(),'npc-contact-life-'));
   try {
     const jsonImports=new Map();
-    for(const folder of ['server/npc','lib/npc'])for(const name of readdirSync(join(project,folder)).filter(n=>n.endsWith('.ts'))) {
-      const sourcePath=join(project,folder,name),original=readFileSync(sourcePath,'utf8');
+    for(const folder of ['server/npc','lib/npc'])for(const sourcePath of typescriptFiles(join(project,folder))) {
+      const original=readFileSync(sourcePath,'utf8');
       for(const entry of ts.preProcessFile(original,true,false).importedFiles)if(entry.fileName.startsWith('.')&&entry.fileName.endsWith('.json')) {
         const path=resolve(dirname(sourcePath),entry.fileName),key=safeJsonPath(project,path);
         safeJsonPath(project,realpathSync(path));
         jsonImports.set(key,path);
       }
-      const file=join(root,folder,name.replace(/\.ts$/,'.mjs'));mkdirSync(dirname(file),{recursive:true});
+      const file=join(root,relative(project,sourcePath).replace(/\.ts$/,'.mjs'));mkdirSync(dirname(file),{recursive:true});
       const source=original.replace(/(from\s+['"])(\.[^'"]+)(['"])/g,'$1$2.mjs$3');
       writeFileSync(file,ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText);
     }

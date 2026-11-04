@@ -6,10 +6,13 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import ts from 'typescript';
 
-// One transpiled pure module, synthetic in-memory data and a temporary isolated SQLite file.
+// Pure modules, synthetic in-memory data and a temporary isolated SQLite file.
 // Do not open .npc-runtime/state.sqlite, call providers or send any chat.
 const source = readFileSync('server/npc/group-task-memory.ts', 'utf8');
-const js = ts.transpileModule(source, {compilerOptions: {module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022}}).outputText;
+const compilerOptions = {module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022};
+const helper = ts.transpileModule(readFileSync('lib/npc/report-demo-history.ts', 'utf8'), {compilerOptions}).outputText;
+const helperUrl = 'data:text/javascript;base64,' + Buffer.from(helper).toString('base64');
+const js = ts.transpileModule(source.replace("'../../lib/npc/report-demo-history'", JSON.stringify(helperUrl)), {compilerOptions}).outputText;
 const {TaskMemoryStore} = await import('data:text/javascript;base64,' + Buffer.from(js).toString('base64'));
 const db = new DatabaseSync(':memory:');
 const owner = randomUUID(), other = randomUUID();

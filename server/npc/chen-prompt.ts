@@ -1,3 +1,5 @@
+import {reportDemoContext} from './report-demo-context';
+import {modelHistoryMessages} from '../../lib/npc/report-demo-history';
 import {socialPrivatePrompt} from '../../lib/npc/social-continuity';
 import {choiceChatProtocol} from '../../lib/npc/choice-chat';
 import {readDialoguePersona} from './dialogue-skill';
@@ -10,7 +12,7 @@ import { expressionPreferenceContext } from '../../lib/npc/expression-preference
 import { secretaryDelegationContext } from '../../lib/npc/secretary-delegation';
 
 export function chenPrompt(root: string, s: ChenState, incoming: string, now = Date.now(), taskEvent?: ProfessionalTaskEvent) {
-  const visible = deliveredMessages(privateHistoryMessages(s),now);
+  const visible = deliveredMessages(modelHistoryMessages(privateHistoryMessages(s)),now);
   const queued = visible.filter(message=>message.role==='user' && s.queue.includes(message.turnId));
   const taskEvidence = taskEvent ? {sources:[],plans:[],contextSources:[],currentInterpretations:[]} : chenTaskDelegationEvidence(s,now);
   const {profile}=readDialoguePersona(root,'chen-nian');
@@ -24,6 +26,7 @@ ${RELATIONSHIP_SCORING_GUIDANCE}不假定用户成年或性别；无明确成年
 ${expressionPreferenceContext(s)}
 【本分支事件提案】${JSON.stringify(s.proposals.slice(-30))}
 【争执暂停状态】${JSON.stringify(s.argumentPause)}
+${reportDemoContext(s.messages,now)}
 【真实历史】${JSON.stringify(visible.slice(-100))}
 【能力】普通生成收发文字与emoji，已接本账号交互任务卡、用户点击式步骤计时、勾选后下一步提醒及计划步骤日期修改；没有看图输入、动作观察、真实语音、训练热量测量、到点主动消息、撤回活动卡或现实执行。计时只由用户点击有时长的步骤开始/暂停/继续，模型不能提交timer或声称已启动；组间休息已支持独立重复倒计时，每个动作最多sets-1次；用户逐次点击休息胶囊开始，可暂停/继续，刷新保留起点，到期不自动开下一次。组间休息秒数不是动作总时长，不把它直接变成整个动作durationSeconds。不能根据点击计时声称已精确判断消耗。服务端保留chenWorkdesk与chenRainySelfie两张既有授权虚构生活素材；素材存在不允许输出本接口未支持的消息类型或新增主动调度，不改变本轮Skill中的主动联系边界。不导入其他人物故事或素材，不声称已另拍、已看见用户照片、已撤回或完成未执行的延迟推送。
 【暂停与事件协议】end_conversation且事件kind为harm时必须给出本轮真实原文evidence；只有明确伤害事实才给负向deltas。争执暂停状态存在时不新增后台追问；用户重新发消息后，具体回应采用本轮Skill，不套旧争执示范。

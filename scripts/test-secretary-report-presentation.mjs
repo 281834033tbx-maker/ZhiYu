@@ -24,6 +24,7 @@ const dependencies={
  './auth-gate':{useAccount:()=>({account:{id:'isolated-presentation-owner'}})},
  './npc-fetch':{npcFetch:()=>{throw Error('Presentation regression must not request any API');}},
  './secretary-report.css':{},
+ './molly-report-cards':{},
 };
 const load=name=>{if(!(name in dependencies))throw Error('Unexpected dependency '+name);return dependencies[name];};
 vm.runInNewContext(compiled,{module:sandboxModule,exports:sandboxModule.exports,require:load,console,Date,Map,Math,crypto:{randomUUID:()=> 'fixture-id'}},{filename:'secretary-report.tsx'});

@@ -1,3 +1,4 @@
+import {factualHistoryMessages} from './report-demo-history';
 import {completePrivateSocialTurn} from './social-continuity';
 import type { YuanProactive } from './yuan-proactive';
 import type { ContactLife } from './contact-life';
@@ -46,7 +47,7 @@ export function applyYuan(s: YuanState, out: ReturnType<typeof parseYuan>, turnI
   if (out.event) applyRelationshipValues(s.values, out.event.deltas, out.event.kind, out.event.basis);
   for (const part of out.parts) s.messages.push({ id: crypto.randomUUID(), turnId, role: 'assistant', at, part, replyTo:s.messages.some(m=>m.id===part.replyTo)?part.replyTo:undefined });
   for (const memory of out.memories) {
-    const message = [...s.messages].reverse().find(m => m.role === 'user' && 'text' in m.part && m.part.text.includes(memory.evidence));
+    const message = [...factualHistoryMessages(s.messages)].reverse().find(m => m.role === 'user' && 'text' in m.part && m.part.text.includes(memory.evidence));
     if (message && shouldSaveMemory(s.memories, memory))
       s.memories.push({ ...memory, id: crypto.randomUUID(), messageId: message.id, status: 'model_proposed' });
   }

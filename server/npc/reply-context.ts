@@ -1,3 +1,4 @@
+import {modelHistoryMessages} from '../../lib/npc/report-demo-history';
 import { deliveredMessages } from '../../lib/npc/delivery';
 import type { ChatMessage } from '../../lib/npc/contracts';
 
@@ -38,7 +39,7 @@ export function publishedMomentsContext(root: string, messages: ChatMessage[], c
       }) : [];
     const scheduledContext = scheduled.length ? '\n【本人已发布的生活动态；来源为用户认可的虚构生活片段，不是共同经历】'+JSON.stringify(scheduled) : '';
     if (!db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='npc_moments'").get()) return scheduledContext;
-    const ids = new Map(messages.map(m=>[m.id,m]));
+    const ids = new Map(modelHistoryMessages(messages).map(m=>[m.id,m]));
     const rows = db.prepare("SELECT data FROM npc_moments WHERE status='published' ORDER BY created DESC").all() as {data:string}[];
     const published = rows.map(row=>JSON.parse(row.data) as {text:string;format:string;lines:ScreenshotLine[];publishedAt:number}).filter(p=>p.lines.every(line=>{
       const m=ids.get(line.id);return m && m.role===line.role && 'text' in m.part && m.part.text===line.text;

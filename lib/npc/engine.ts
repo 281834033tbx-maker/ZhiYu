@@ -1,3 +1,4 @@
+import {factualHistoryMessages} from './report-demo-history';
 import {parseSocialResponse,completePrivateSocialTurn} from './social-continuity';
 import {parseChoicePart} from './choice-chat';
 import {assertCharacterDialogueOutput} from './character-output-policy';
@@ -312,25 +313,19 @@ export function finishTurn(
       reason: '无可验证的事件提案，保持数值',
       source: 'program',
     });
-  for (const m of output.memories)
+  for (const m of output.memories) {
+    const source = recordUser ? user : [...state.messages].reverse().find(message => message.role === 'user' && 'text' in message.part && message.part.text.includes(m.evidence));
+    if (source && !factualHistoryMessages(state.messages).some(message => message.id === source.id)) continue;
     if (
       shouldSaveMemory(state.memories, m)
     )
       state.memories.push({
         ...m,
         id: crypto.randomUUID(),
-        messageId: recordUser
-          ? user.id
-          : [...state.messages]
-              .reverse()
-              .find(
-                (message) =>
-                  message.role === 'user' &&
-                  'text' in message.part &&
-                  message.part.text.includes(m.evidence),
-              )?.id || user.id,
+        messageId: source?.id || user.id,
         status: 'model_proposed',
       });
+  }
   state.completed.push(turnId);
   state.pending = null;
 }

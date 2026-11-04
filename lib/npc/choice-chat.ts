@@ -1,6 +1,8 @@
 /** A choice is a user reply affordance, never a task or an executable command. */
 export type ChoicePart = {
   type: 'choice';
+  /** Server-owned mock selection; excluded from real conversation generation. */
+  reportDemoChoice?: {messageId:string;pendingId:string};
   text: string;
   options: string[];
   /** Server-owned: written atomically with the corresponding user reply. */

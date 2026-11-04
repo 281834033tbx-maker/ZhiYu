@@ -1,0 +1,349 @@
+{
+  "date": "2026-11-04",
+  "opener": {
+    "category": "pending",
+    "text": "早 两件事等你定"
+  },
+  "header": {
+    "city": "深圳",
+    "weather": {
+      "low": 22,
+      "high": 27,
+      "text": "多云",
+      "tip": "下午 3 点后有阵雨，带伞"
+    },
+    "traffic": "限行尾号 3"
+  },
+  "pending": [
+    {
+      "id": "move-legs",
+      "kind": "change",
+      "text": "腿部训练挪到明天",
+      "ownerId": "chen-nian",
+      "apply": {
+        "kind": "remove",
+        "scheduleId": "legs"
+      }
+    },
+    {
+      "id": "dinner-takeout",
+      "kind": "change",
+      "text": "晚餐吃外卖（减脂）",
+      "ownerId": "liu",
+      "apply": {
+        "kind": "add",
+        "item": {
+          "id": "dinner",
+          "time": "晚上",
+          "category": "meal_out",
+          "text": "晚餐：外卖",
+          "ownerId": "liu",
+          "tag": "改期"
+        }
+      }
+    }
+  ],
+  "schedule": [
+    {
+      "id": "parcels",
+      "time": "全天",
+      "category": "parcel",
+      "text": "快递 2 件今天到",
+      "ownerId": "molly",
+      "sub": {
+        "kind": "place",
+        "text": "小区驿站"
+      }
+    },
+    {
+      "id": "overtime",
+      "time": "全天",
+      "category": "work",
+      "text": "加班到 20:00",
+      "ownerId": "molly",
+      "tag": "新增"
+    },
+    {
+      "id": "dog-am",
+      "time": "07:30",
+      "category": "pet",
+      "text": "遛狗 30 分钟",
+      "ownerId": "molly",
+      "tag": "每天"
+    },
+    {
+      "id": "vitamin-d",
+      "time": "08:00",
+      "category": "supplement",
+      "text": "维生素 D 1 粒",
+      "ownerId": "liu",
+      "tag": "每天",
+      "sub": {
+        "kind": "timing",
+        "text": "随早餐"
+      }
+    },
+    {
+      "id": "lunch",
+      "time": "12:00",
+      "category": "meal",
+      "text": "午餐：番茄牛腩饭",
+      "ownerId": "zhou-chef"
+    },
+    {
+      "id": "cleaning",
+      "time": "14:00",
+      "category": "housekeeping",
+      "text": "保洁上门",
+      "ownerId": "molly",
+      "tag": "新增",
+      "sub": {
+        "kind": "duration",
+        "text": "约 2 小时"
+      }
+    },
+    {
+      "id": "dog-pm",
+      "time": "20:30",
+      "category": "pet",
+      "text": "遛狗 30 分钟",
+      "ownerId": "molly",
+      "tag": "顺延",
+      "sub": {
+        "kind": "reason",
+        "text": "因加班，原定 19:00"
+      }
+    },
+    {
+      "id": "parents",
+      "time": "21:40",
+      "category": "pickup",
+      "text": "接爸妈",
+      "ownerId": "molly",
+      "sub": {
+        "kind": "place",
+        "text": "深圳北站"
+      }
+    },
+    {
+      "id": "fish-oil",
+      "time": "22:30",
+      "category": "supplement",
+      "text": "鱼油 2 粒",
+      "ownerId": "liu",
+      "tag": "每天",
+      "sub": {
+        "kind": "timing",
+        "text": "睡前"
+      }
+    }
+  ],
+  "shopping": [
+    {
+      "id": "today-shopping",
+      "title": "今日采购",
+      "notes": [
+        "今明两天的食材"
+      ],
+      "groups": [
+        {
+          "group": "蔬果",
+          "items": [
+            {
+              "name": "西红柿",
+              "qty": "3 个"
+            },
+            {
+              "name": "西兰花",
+              "qty": "1 颗"
+            },
+            {
+              "name": "青椒",
+              "qty": "2 个"
+            }
+          ]
+        },
+        {
+          "group": "肉蛋奶",
+          "items": [
+            {
+              "name": "鸡胸肉",
+              "qty": "1 斤"
+            },
+            {
+              "name": "鸡蛋",
+              "qty": "1 盒"
+            }
+          ]
+        },
+        {
+          "group": "粮油调料",
+          "items": [
+            {
+              "name": "生抽",
+              "qty": "1 瓶"
+            }
+          ]
+        },
+        {
+          "group": "日用",
+          "items": [
+            {
+              "name": "抽纸",
+              "qty": "1 提"
+            }
+          ]
+        },
+        {
+          "group": "宠物",
+          "items": [
+            {
+              "name": "狗粮",
+              "qty": "1 袋",
+              "daysLeft": 3
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "按赵一帆今明两天的菜单算好，冰箱里已有的土豆没算进去"
+      ],
+      "done": false
+    },
+    {
+      "id": "saturday-shopping",
+      "title": "周六采购",
+      "notes": [
+        "工具、五金"
+      ],
+      "groups": [
+        {
+          "group": "工具五金",
+          "items": [
+            {
+              "name": "螺丝刀套装",
+              "qty": "1 套"
+            },
+            {
+              "name": "膨胀螺丝",
+              "qty": "1 包"
+            }
+          ]
+        },
+        {
+          "group": "家居家具",
+          "items": [
+            {
+              "name": "置物架",
+              "qty": "1 个"
+            }
+          ]
+        }
+      ],
+      "sources": [
+        "按聊天里说的整理"
+      ],
+      "done": false
+    }
+  ],
+  "bills": [
+    {
+      "id": "property",
+      "type": "物业费",
+      "name": "物业费",
+      "action": "到期",
+      "dueDate": "2026-11-05",
+      "button": "缴费",
+      "paid": false
+    },
+    {
+      "id": "phone",
+      "type": "手机话费",
+      "name": "手机话费",
+      "action": "到期",
+      "dueDate": "2026-11-07",
+      "button": "充值",
+      "paid": false
+    },
+    {
+      "id": "music",
+      "type": "会员（自动续费）",
+      "name": "网易云音乐会员",
+      "action": "自动扣费",
+      "dueDate": "2026-11-05",
+      "button": "管理",
+      "paid": false
+    },
+    {
+      "id": "video",
+      "type": "会员（非自动续费）",
+      "name": "腾讯视频会员",
+      "action": "到期",
+      "dueDate": "2026-11-07",
+      "button": "续费",
+      "paid": false
+    },
+    {
+      "id": "credit",
+      "type": "信用卡 / 花呗 / 白条",
+      "name": "信用卡",
+      "action": "还款",
+      "dueDate": "2026-11-15",
+      "button": "还款",
+      "paid": false
+    }
+  ],
+  "progress": [
+    {
+      "id": "dog-vaccine",
+      "name": "狗狗打疫苗",
+      "steps": [
+        "查医院",
+        "选时间预约",
+        "去打针"
+      ],
+      "done": 1
+    },
+    {
+      "id": "passport",
+      "name": "办护照",
+      "steps": [
+        "查材料",
+        "网上预约",
+        "周六去出入境拍照",
+        "取证"
+      ],
+      "done": 2
+    }
+  ],
+  "upcoming": [
+    {
+      "id": "mom-birthday",
+      "text": "妈妈生日",
+      "date": "2026-11-06",
+      "kind": "birthday",
+      "showFrom": "2026-11-03"
+    },
+    {
+      "id": "car-check",
+      "text": "车年检到期",
+      "date": "2026-11-10",
+      "kind": "vehicle",
+      "showFrom": "2026-10-27"
+    },
+    {
+      "id": "passport-expiry",
+      "text": "护照到期",
+      "date": "2027-04-03",
+      "kind": "document",
+      "showFrom": "2027-01-03"
+    }
+  ],
+  "interests": [
+    {
+      "id": "lpl",
+      "when": "今晚 20:00",
+      "text": "LPL 决赛"
+    }
+  ]
+}

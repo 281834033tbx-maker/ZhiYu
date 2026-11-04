@@ -1,3 +1,4 @@
+import {MollyReportDemos} from './molly-report-demos';
 import {ExperienceReportsStore,type ReportStoreDependencies} from './experience-reports-store';
 import {parseReportCity} from './weather-provider';
 import type {SecretarySettings} from '../../lib/npc/experience';
@@ -31,6 +32,7 @@ export class SecretaryStore {
   private active=new Set<string>();
   private stopped=false;
   private reports:ExperienceReportsStore;
+  private demos:MollyReportDemos;
   constructor(private db:DatabaseSync,private root:string,private deps:SecretaryDependencies={}){
     this.now=deps.now||Date.now;
     db.exec(`CREATE TABLE IF NOT EXISTS npc_secretary_settings(owner TEXT PRIMARY KEY,data TEXT NOT NULL);
@@ -42,6 +44,7 @@ export class SecretaryStore {
       CREATE TABLE IF NOT EXISTS molly_sessions(id TEXT PRIMARY KEY,data TEXT NOT NULL);`);
     db.prepare("UPDATE npc_secretary_jobs SET status='queued' WHERE status='running'").run();
     this.reports=new ExperienceReportsStore(db,root,this.now,deps);
+    this.demos=new MollyReportDemos(db,this.now);
   }
   private checkOwner(owner:string){if(!OWNER.test(owner))throw Error('请先登录智域');}
   private savedSettings(owner:string):SavedSettings{
@@ -52,17 +55,18 @@ export class SecretaryStore {
     this.db.prepare('INSERT INTO npc_secretary_settings VALUES(?,?)').run(owner,JSON.stringify(settings));
     return settings;
   }
-  settings(owner:string):SecretarySettings{const {enabled,time,city}=this.savedSettings(owner);return {enabled,time,...(city?{city}:{})};}
+  settings(owner:string):SecretarySettings{const {enabled,time,city,weeklyEnabled=true,weeklyDay=0,weeklyTime='21:30'}=this.savedSettings(owner);return {enabled,time,...(city?{city}:{}),weeklyEnabled,weeklyDay,weeklyTime};}
   updateSettings(owner:string,value:unknown):SecretarySettings{
     this.checkOwner(owner);
     const input=value as SecretarySettings;
     if(!input||typeof input.enabled!=='boolean'||!validTime(input.time))throw Error('请选择有效的提醒开关和时间');
     const old=this.savedSettings(owner);
+    if(input.weeklyEnabled!==undefined&&typeof input.weeklyEnabled!=='boolean'||input.weeklyDay!==undefined&&(!Number.isInteger(input.weeklyDay)||input.weeklyDay<0||input.weeklyDay>6)||input.weeklyTime!==undefined&&!validTime(input.weeklyTime))throw Error('请选择有效的周报时间');
     const city=input.city===undefined?old.city:parseReportCity(input.city);
     if(input.city!==undefined&&!city)throw Error('请选择有效城市');
-    const saved:SavedSettings={enabled:input.enabled,time:input.time,effectiveSince:this.now(),...(city?{city}:{})};
+    const saved:SavedSettings={enabled:input.enabled,time:input.time,effectiveSince:this.now(),...(city?{city}:{}),weeklyEnabled:input.weeklyEnabled??old.weeklyEnabled??true,weeklyDay:input.weeklyDay??old.weeklyDay??0,weeklyTime:input.weeklyTime??old.weeklyTime??'21:30'};
     this.db.prepare('INSERT OR REPLACE INTO npc_secretary_settings VALUES(?,?)').run(owner,JSON.stringify(saved));
-    return {enabled:saved.enabled,time:saved.time,...(saved.city?{city:saved.city}:{})};
+    return this.settings(owner);
   }
   completions(owner:string){this.checkOwner(owner);reconcileGroupTaskExpiry(this.db,owner,this.now());return readSecretaryCompletions(this.db,owner);}
   updateCompletions(owner:string,changes:unknown){
@@ -168,27 +172,19 @@ export class SecretaryStore {
       }finally{this.active.delete(key);}
     }
   }
-  async morning(owner:string){
-    this.checkOwner(owner);const settings=this.savedSettings(owner);
-    return this.reports.publish(owner,'morning',settings,settings.effectiveSince);
+  // This release intentionally has no real scheduled report producer. Keep old
+  // messages and pure arithmetic available for historical rendering only.
+  async morning(owner:string){this.checkOwner(owner);return false;}
+  async scanMorning(){return;}
+  async scanReports(){return;}
+  async locateCity(owner:string,query:unknown,source:unknown){
+    this.checkOwner(owner);if(source!=='manual'||typeof query!=='string'||query.length>100)return undefined;
+    return parseReportCity({name:query,source:'manual'});
   }
-  private owners(){
-    const owners=new Set((this.db.prepare('SELECT owner FROM npc_secretary_settings').all() as {owner:string}[]).map(row=>row.owner));
-    if(existingTables(this.db).has('zhiyu_accounts'))for(const row of this.db.prepare('SELECT owner_id FROM zhiyu_accounts').all() as {owner_id:string}[])owners.add(row.owner_id);
-    return owners;
-  }
-  async scanMorning(){
-    if(this.stopped)return;
-    for(const owner of this.owners()){if(this.stopped)return;try{await this.morning(owner);}catch{/* Retry a complete task snapshot next tick. */}}
-  }
-  async scanReports(){
-    if(this.stopped)return;
-    for(const owner of this.owners()){
-      if(this.stopped)return;const saved=this.savedSettings(owner);
-      for(const kind of ['weekly','monthly'] as const)try{await this.reports.publish(owner,kind,saved,saved.effectiveSince);}catch{/* Preserve existing report and retry only this due occurrence. */}
-    }
-  }
-  async locateCity(owner:string,query:unknown,source:unknown){this.checkOwner(owner);return this.reports.locate(query,source);}
+  ensureReportDemos(owner:string){this.checkOwner(owner);if(this.stopped)return {};return this.demos.ensure(owner);}
+  regenerateReportDemo(owner:string,kind:unknown){this.checkOwner(owner);if(this.stopped)throw Error('服务已停止');return this.demos.regenerate(owner,kind);}
+  reportDemoAction(owner:string,input:Record<string,unknown>){this.checkOwner(owner);if(this.stopped)throw Error('服务已停止');return this.demos.action(owner,input);}
+  reportDemoQuote(owner:string,input:Record<string,unknown>){this.checkOwner(owner);if(this.stopped)throw Error('服务已停止');return this.demos.quote(owner,input);}
   updateCity(owner:string,value:unknown):SecretarySettings{
     this.checkOwner(owner);const city=parseReportCity(value);if(!city)throw Error('请选择有效城市');
     const saved={...this.savedSettings(owner),city};this.db.prepare('INSERT OR REPLACE INTO npc_secretary_settings VALUES(?,?)').run(owner,JSON.stringify(saved));

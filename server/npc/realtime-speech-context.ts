@@ -1,3 +1,4 @@
+import {factualHistoryMessages} from '../../lib/npc/report-demo-history';
 import { existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
@@ -85,7 +86,7 @@ export function loadXiaomanRealtimeContext(root: string, ownerId: string) {
       }
     } finally { db.close(); }
   }
-  const visible = deliveredMessages(state?.messages || []);
+  const visible = deliveredMessages(factualHistoryMessages(state?.messages || []));
   const lastReply = visible.findLastIndex(message => message.role === 'assistant');
   const pendingText = visible.slice(lastReply + 1).filter(message => message.role === 'user')
     .map(textOf).filter(Boolean).join('\n');

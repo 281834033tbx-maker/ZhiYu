@@ -1,3 +1,5 @@
+import {reportDemoContext} from './report-demo-context';
+import {modelHistoryMessages} from '../../lib/npc/report-demo-history';
 import {choiceChatProtocol} from '../../lib/npc/choice-chat';
 import {readDialoguePersona} from './dialogue-skill';
 import { deliveredMessages } from '../../lib/npc/delivery';
@@ -23,7 +25,8 @@ ${kind ? '【后台主动联系】没有用户新消息，按上述kind和生活
 【本用户普通记忆候选】${JSON.stringify(s.memories.filter(m => !m.preference).slice(-80))}
 ${expressionPreferenceContext(s)}
 【本用户事件提案】${JSON.stringify(s.proposals.slice(-30))}
-【真实历史】${JSON.stringify(deliveredMessages(s.messages).slice(-100))}
+${reportDemoContext(s.messages,now)}
+【真实历史】${JSON.stringify(deliveredMessages(modelHistoryMessages(s.messages)).slice(-100))}
 ${secretaryDelegationContext(s)}
 【本账号柳智敏独立营养任务】${JSON.stringify(s.professionalTasks)}
 【程序核实的任务委托来源；秘书来源不是本会话用户发言】${JSON.stringify(taskEvidence)}

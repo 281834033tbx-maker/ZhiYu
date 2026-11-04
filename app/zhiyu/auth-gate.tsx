@@ -6,6 +6,7 @@ import { LockKeyhole, QrCode } from 'lucide-react';
 import { authFailureFeedback, validateAuthForm, type AuthFieldErrors, type AuthFieldName } from './auth-validation';
 import './auth-gate.css';
 import {userFacingError} from '../../lib/user-facing-errors';
+import {npcFetch} from './npc-fetch';
 
 type Account = { id: string; username: string };
 type AuthContextValue = { account: Account; firstUse?:boolean; logout: () => Promise<void> };
@@ -43,6 +44,29 @@ export default function AuthGate({ children }: { children: ReactNode }) {
   const [fieldErrors, setFieldErrors] = useState<AuthFieldErrors>({});
   const [feedbackRevision, setFeedbackRevision] = useState(0);
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    if (!account) return;
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let attempt = 0;
+    async function ensureReports() {
+      try {
+        const response = await npcFetch('/api/npc/secretary', {
+          method: 'POST', headers: {'Content-Type':'application/json','X-Zhiyu-Account':account!.id},
+          body: JSON.stringify({action:'ensure-report-demos'}),
+        });
+        if (response.status===401 || response.status===409) return;
+        if (!response.ok) throw new Error('演示简报暂时未就绪');
+      } catch {
+        // The durable server occurrence makes StrictMode, multiple windows and
+        // cold-start retries safe; a report failure never blocks signing in.
+        if (!cancelled) timer = setTimeout(ensureReports, Math.min(1000 * 2 ** Math.min(++attempt,5), 30000));
+      }
+    }
+    void ensureReports();
+    return () => {cancelled = true; if (timer) clearTimeout(timer);};
+  }, [account]);
 
   useEffect(() => {
     let alive = true;

@@ -1,0 +1,83 @@
+[
+  {
+    "id": "urgent",
+    "name": "要紧",
+    "ownerIds": [
+      "molly"
+    ],
+    "maxRows": 5,
+    "condition": "有不处理就会出问题的事"
+  },
+  {
+    "id": "body",
+    "name": "身体",
+    "ownerIds": [
+      "liu",
+      "chen-nian"
+    ],
+    "maxRows": 5,
+    "condition": "用户有健康、减脂、增肌目标，或连了体重秤、手环"
+  },
+  {
+    "id": "training",
+    "name": "训练",
+    "ownerIds": [
+      "chen-nian"
+    ],
+    "maxRows": 5,
+    "condition": "用户有训练计划"
+  },
+  {
+    "id": "diet",
+    "name": "饮食",
+    "ownerIds": [
+      "liu"
+    ],
+    "maxRows": 5,
+    "condition": "用户有饮食计划"
+  },
+  {
+    "id": "cooking",
+    "name": "做菜",
+    "ownerIds": [
+      "zhou-chef"
+    ],
+    "maxRows": 2,
+    "condition": "用户有学做菜的目标"
+  },
+  {
+    "id": "skincare",
+    "name": "护肤",
+    "ownerIds": [],
+    "maxRows": 3,
+    "condition": "用户有护肤计划",
+    "defaultEnabled": false
+  },
+  {
+    "id": "ledger",
+    "name": "账本",
+    "ownerIds": [
+      "molly"
+    ],
+    "maxRows": 8,
+    "condition": "用户打开了记账",
+    "defaultEnabled": false
+  },
+  {
+    "id": "tracking",
+    "name": "追踪",
+    "ownerIds": [
+      "molly"
+    ],
+    "maxRows": null,
+    "condition": "用户点名要看某项数字",
+    "defaultEnabled": false
+  },
+  {
+    "id": "comments",
+    "name": "评语",
+    "ownerIds": [],
+    "maxRows": null,
+    "condition": "一直有"
+  }
+]

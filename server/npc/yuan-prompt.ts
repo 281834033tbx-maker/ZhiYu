@@ -1,3 +1,5 @@
+import {reportDemoContext} from './report-demo-context';
+import {modelHistoryMessages} from '../../lib/npc/report-demo-history';
 import {readDialoguePersona} from './dialogue-skill';
 import { replyContext, publishedMomentsContext, legPhotoGuidance } from './reply-context';
 import { deliveredMessages } from '../../lib/npc/delivery';
@@ -19,7 +21,8 @@ ${RELATIONSHIP_SCORING_GUIDANCE}关系不自动晋级；成熟或撒娇随有效
 【本分支普通记忆候选】${JSON.stringify(s.memories.filter(m => !m.preference).slice(-80))}
 ${expressionPreferenceContext(s)}
 【本分支事件提案（非已确认判定）】${JSON.stringify(s.proposals.slice(-30))}
-【真实历史】${JSON.stringify(deliveredMessages(s.messages).slice(-100))}
+${reportDemoContext(s.messages)}
+【真实历史】${JSON.stringify(deliveredMessages(modelHistoryMessages(s.messages)).slice(-100))}
 【即时生活照片】已经接入生图。用户要看你当前的生活、食物、环境或自拍，符合语境时请输出{type:"generate_photo",prompt:"具体画面、活动、物件、光线、取景，必须与本轮活动及有效历史一致",caption:"简短配文，可为空",withCharacter:true或false}。每轮最多一张，后端会实际生成并带虚构场景标识，不挑图库，不返回占位路径。自拍/人物入镜withCharacter=true，使用你的角色头像参考；第一人称景物或物件false。随机生活事件按人设兴趣与最近场景连续发展，不编造用户共同经历；无需每轮配图。不能说功能不支持，也不能在任务失败后谎称成功。表情包未设，可用emoji。
 ${replyContext(s.messages, 'parts')}
 【输出】{"action":"reply","messages":[{"type":"text","text":"自然回复"}],"event":null,"memories":[]}。

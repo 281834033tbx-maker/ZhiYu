@@ -1,0 +1,292 @@
+{
+  "urgent": [
+    {
+      "key": "bill",
+      "label": "{费用}没交",
+      "note": "{日期}{停机 / 欠费 / 断网 / 停电 / 产生滞纳金}",
+      "condition": "7天内到期还没交"
+    },
+    {
+      "key": "document",
+      "label": "{证件}还没办",
+      "note": "{日期}过期",
+      "condition": "30天内到期还没办"
+    },
+    {
+      "key": "vehicle",
+      "label": "{年检 / 车险 / 保养}还没约",
+      "note": "{日期}过期",
+      "condition": "30天内到期还没办"
+    },
+    {
+      "key": "pet",
+      "label": "{宠物名}{疫苗 / 驱虫}过期",
+      "note": "过期 {n} 天 / {日期}到期",
+      "condition": "已过期或7天内到期"
+    },
+    {
+      "key": "supplement",
+      "label": "{名称}还剩 {n} 天",
+      "note": "还没加进采购单",
+      "condition": "剩3天以内且不在采购单"
+    },
+    {
+      "key": "interrupted",
+      "label": "{领域}已经停了 {n} 周",
+      "note": "{智友名}在等你",
+      "condition": "连续2周完成率低于30%"
+    },
+    {
+      "key": "followup",
+      "label": "{项目}复查还没约",
+      "note": "医生说{时间}内复查",
+      "condition": "用户说过要复查"
+    },
+    {
+      "key": "stalled",
+      "label": "{事情}卡了 {n} 天",
+      "note": "卡在：{哪一步}",
+      "condition": "进度7天没动"
+    }
+  ],
+  "body": [
+    {
+      "key": "weight",
+      "label": "体重（周平均）",
+      "value": "{n}{斤 / kg}",
+      "note": "比上周 {变化} · 离目标还差 {n}{斤 / kg}",
+      "source": "体重秤或用户记录"
+    },
+    {
+      "key": "waist",
+      "label": "腰围",
+      "value": "{n}cm",
+      "note": "比上周 {变化}",
+      "source": "用户每周日量"
+    },
+    {
+      "key": "body-fat",
+      "label": "体脂率",
+      "value": "{n}%",
+      "note": "比上周 {变化}%",
+      "source": "智能体重秤"
+    },
+    {
+      "key": "sleep",
+      "label": "睡眠（平均）",
+      "value": "{n}小时",
+      "note": "比上周{多 / 少} {n}小时",
+      "source": "手环、手表"
+    },
+    {
+      "key": "bedtime",
+      "label": "入睡（平均）",
+      "value": "HH:MM",
+      "note": "比上周{早 / 晚} {n}分钟",
+      "source": "手环、手表或上床睡觉完成时间"
+    },
+    {
+      "key": "steps",
+      "label": "步数（日均）",
+      "value": "{n}步",
+      "note": "比上周 {变化}",
+      "source": "手机健康数据"
+    },
+    {
+      "key": "heart-rate",
+      "label": "静息心率",
+      "value": "{n}",
+      "note": "比上周 {变化}",
+      "source": "手环、手表"
+    },
+    {
+      "key": "blood",
+      "label": "血压 / 血糖",
+      "value": "数值",
+      "note": "比上周",
+      "source": "用户主动记录"
+    }
+  ],
+  "training": [
+    {
+      "key": "completion",
+      "label": "完成",
+      "value": "{n}/{n}次",
+      "note": "周{X}没练"
+    },
+    {
+      "key": "main-lift",
+      "label": "{主要动作}",
+      "value": "{n} → {n}kg",
+      "note": "",
+      "max": 3
+    },
+    {
+      "key": "cardio",
+      "label": "有氧",
+      "value": "{n}分钟 / {n}公里",
+      "note": "比上周 {变化}"
+    },
+    {
+      "key": "streak",
+      "label": "连续达标",
+      "value": "{n}周",
+      "note": ""
+    },
+    {
+      "key": "discomfort",
+      "label": "身体不适",
+      "value": "{部位}不适",
+      "note": "计划已调整"
+    }
+  ],
+  "diet": [
+    {
+      "key": "plan",
+      "label": "按计划",
+      "value": "{n}/{n}顿",
+      "note": ""
+    },
+    {
+      "key": "off-plan",
+      "label": "不该吃的",
+      "value": "{n}顿",
+      "note": "{哪些餐次}"
+    },
+    {
+      "key": "protein",
+      "label": "蛋白质达标",
+      "value": "{n}/7天",
+      "note": ""
+    },
+    {
+      "key": "water",
+      "label": "喝水达标",
+      "value": "{n}/7天",
+      "note": ""
+    },
+    {
+      "key": "supplement",
+      "label": "补剂按时",
+      "value": "{n}/{n}次",
+      "note": ""
+    },
+    {
+      "key": "calories",
+      "label": "热量（日均）",
+      "value": "{n}千卡",
+      "note": "目标 {n}",
+      "condition": "用户要求算热量"
+    }
+  ],
+  "cooking": [
+    {
+      "key": "learn",
+      "label": "学菜",
+      "value": "{n}/{n}道",
+      "note": "本周新学：{菜名}"
+    },
+    {
+      "key": "packed-meals",
+      "label": "带饭",
+      "value": "{n}/{n}天",
+      "note": "",
+      "condition": "用户定了带饭目标"
+    }
+  ],
+  "skincare": [
+    {
+      "key": "routine",
+      "label": "早晚护肤",
+      "value": "{n}/14次",
+      "note": ""
+    },
+    {
+      "key": "sunscreen",
+      "label": "防晒",
+      "value": "{n}/7天",
+      "note": ""
+    },
+    {
+      "key": "skin",
+      "label": "皮肤",
+      "value": "{变化}",
+      "note": "和两周前的对比照比"
+    }
+  ],
+  "ledger": [
+    {
+      "key": "spend",
+      "label": "本周支出",
+      "value": "约 ¥{n}",
+      "note": "比上周{多 / 少} ¥{n}"
+    },
+    {
+      "key": "category",
+      "label": "{分类}",
+      "value": "¥{n}",
+      "note": "外卖为{n} 单 其他留空"
+    },
+    {
+      "key": "income",
+      "label": "收入",
+      "value": "工资已到账",
+      "note": "",
+      "condition": "发工资那周"
+    },
+    {
+      "key": "over-budget",
+      "label": "超预算",
+      "value": "{分类}超了 ¥{n}",
+      "note": "",
+      "condition": "用户设了预算"
+    }
+  ],
+  "tracking": [
+    {
+      "key": "user-requested",
+      "label": "{用户要看的东西}",
+      "value": "{n}{单位}",
+      "note": "{明细} · 比上周 {变化}"
+    }
+  ],
+  "ledgerCategories": [
+    "外卖",
+    "餐饮",
+    "生活缴费",
+    "医疗",
+    "交通",
+    "购物",
+    "娱乐",
+    "宠物"
+  ],
+  "rules": {
+    "ledgerDefault": false,
+    "trackingDefault": false,
+    "ledgerMaxCategories": 6,
+    "ledgerSort": "金额降序",
+    "urgentSort": "后果发生最近优先",
+    "bodyMax": 5,
+    "bodyPriorities": {
+      "减脂": [
+        "weight",
+        "waist",
+        "body-fat"
+      ],
+      "睡眠": [
+        "sleep",
+        "bedtime"
+      ]
+    },
+    "commentsOrder": [
+      "professional",
+      "companion"
+    ],
+    "commentsExclude": [
+      "molly",
+      "silent"
+    ],
+    "money": "¥1,860",
+    "negativeSign": "−"
+  }
+}

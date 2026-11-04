@@ -7,6 +7,13 @@ const displayAttributes=new Set(['aria-label','alt','title','placeholder','data-
 const sinkCalls=/^(?:notify|toast|set(?:[A-Za-z]*Error|Notice|Toast))$/u;
 const safeCalls=new Set(['userFacingError','reportUserFacingError','userFacingValidationMessage']);
 const functionName=node=>ts.isIdentifier(node)?node.text:ts.isPropertyAccessExpression(node)?node.name.text:'';
+// Explicit report-demo controls and truthful sample notices requested on
+// 2026-11-04. All other internal/debug copy retains the original guard.
+const reportDemoCopy=new Set([
+  '本期展示固定演示内容，以下时间和城市只保存，暂不定时发送。',
+  '演示开发开关','演示测试','重新生成演示简报','重新生成演示周报',
+  '演示操作不会更改任务、缴费和健康记录。',
+]);
 
 function stringsFrom(node,checker,seen=new Set()) {
   if(!node||seen.has(node))return [];
@@ -62,6 +69,7 @@ export function inspectProgram(program,files,root=process.cwd()) {
   const add=(node,text,kind)=>{
     const source=node.getSourceFile(),position=source.getLineAndCharacterOfPosition(node.getStart(source));
     const item={file:relative(root,source.fileName),line:position.line+1,column:position.character+1,kind,text};
+    if(item.file==='app/zhiyu/morning-reminder-settings.tsx'&&reportDemoCopy.has(text))return;
     const key=JSON.stringify(item);if(!keys.has(key)){keys.add(key);results.push(item);}
   };
   const inspect=(expression,kind)=>{

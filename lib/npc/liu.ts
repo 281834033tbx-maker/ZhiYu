@@ -1,3 +1,4 @@
+import {factualHistoryMessages} from './report-demo-history';
 import {completePrivateSocialTurn} from './social-continuity';
 import type { ChatMessage, Memory } from './contracts';
 import type { ContactLife } from './contact-life';
@@ -157,7 +158,7 @@ export function applyLiu(s: LiuState, out: ReturnType<typeof parseLiu>, turnId: 
       (s.nutritionRenewalQuestions ||= []).push({id:crypto.randomUUID(),source:structuredClone(source),questionMessageId:message.id,branch:s.branch,at});
   }
   for (const memory of out.memories) {
-    const message = [...s.messages].reverse().find(m => m.role === 'user' && 'text' in m.part && m.part.text.includes(memory.evidence));
+    const message = [...factualHistoryMessages(s.messages)].reverse().find(m => m.role === 'user' && 'text' in m.part && m.part.text.includes(memory.evidence));
     if (message && shouldSaveMemory(s.memories, memory))
       s.memories.push({ ...memory, id: crypto.randomUUID(), messageId: message.id, status: 'model_proposed' });
   }

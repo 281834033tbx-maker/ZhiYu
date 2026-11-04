@@ -1,4 +1,5 @@
 import {statusFromState} from '../../lib/npc/character-status';
+import {isReportDemoMessage} from '../../lib/npc/report-demo-history';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
 import {parseTaskPageContext} from '../../lib/npc/task-page-context';
 import {clearPrivateHistory, privateHistoryMessages} from './private-history';
@@ -237,6 +238,12 @@ export function mollyLocal(deps?: {
             save(id, s);
             return reply(200, expose(s));
           }
+          // Sample choices are handled only by the demonstration endpoint. A
+          // forged ordinary send must not enqueue a model turn or real task.
+          const choiceId = body.choice && typeof body.choice === 'object' ? body.choice.messageId : undefined;
+          if (body.action === 'send' && typeof choiceId === 'string'
+            && s.messages.some(message => message.id === choiceId && isReportDemoMessage(message)))
+            return reply(400, {error: '请在演示简报中选择'});
           let choiceReply;
           try { choiceReply = prepareChoiceReply(s, body, now()); }
           catch(error) { if(error instanceof ChoiceReplyError)return reply(error.status,{error:error.message}); throw error; }

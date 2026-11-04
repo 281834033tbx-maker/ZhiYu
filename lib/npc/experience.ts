@@ -17,7 +17,7 @@ export type SecretaryReport = {
   previousWaistCm?:number|null;goalCountdown?:{label:string;days:number};weeklyWeights:{startDate:string;weightKg:number|null}[];feelings:{sleep:string|null;energy:string|null;soreness:string|null};
   adjustments:string[];milestones:string[];nextFocus:string[];team:ReportTeamMessage[];partial:boolean;
 };
-export type SecretarySettings = {enabled:boolean;time:string;city?:ReportCity};
+export type SecretarySettings = {enabled:boolean;time:string;city?:ReportCity;weeklyEnabled?:boolean;weeklyDay?:number;weeklyTime?:string};
 export type UsageHeartbeat = {action:'usage';currentNpc:string;visible:boolean;busy?:boolean;clientId:string};
 
 export function resolveContactSource(value:unknown,characterId:string):{source?:ContactSource;internalSource?:string} {

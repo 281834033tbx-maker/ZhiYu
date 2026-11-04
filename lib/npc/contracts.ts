@@ -4,6 +4,7 @@ import type { ProfessionalTask } from './professional-task';
 import type { ChoicePart } from './choice-chat';
 import type { TaskPageContext } from './task-page-context';
 import type {SecretaryReport,CharacterStatus} from './experience';
+import type {DailyBrief,WeeklyReport} from './molly-reports';
 export const labels = {
   familiarity: '熟悉',
   affection: '好感',
@@ -103,6 +104,8 @@ export type GeneratedPhoto = {type:'generated_photo'; jobId:string; prompt:strin
   referenceCharacters?:string[];
   status:'pending'|'generating'|'ready'|'failed'; url?:string; error?:string; attempts:number; startedAt?:number};
 export type Part = (
+  | {type:'daily_brief';brief:DailyBrief;text:string}
+  | {type:'weekly_report';report:WeeklyReport;text:string}
   | {type:'secretary_report';report:SecretaryReport;text:string}
   | {type:'city_request';text:string}
   | ChoicePart

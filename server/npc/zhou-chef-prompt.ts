@@ -1,3 +1,5 @@
+import {reportDemoContext} from './report-demo-context';
+import {modelHistoryMessages} from '../../lib/npc/report-demo-history';
 import {socialPrivatePrompt} from '../../lib/npc/social-continuity';
 import {choiceChatProtocol} from '../../lib/npc/choice-chat';
 import {readDialoguePersona} from './dialogue-skill';
@@ -24,7 +26,7 @@ export function chefApplicationEvidence(state: ChefState): ChefEvidenceInput {
 
 export function chefPrompt(root: string, state: ChefState, incoming: string, now = Date.now(), taskEvent?: ProfessionalTaskEvent) {
   const {profile}=readDialoguePersona(root,'zhou-chef');
-  const visible = deliveredMessages(privateHistoryMessages(state), now);
+  const visible = deliveredMessages(modelHistoryMessages(privateHistoryMessages(state)), now);
   const history = visible.slice(-100).map(message => {
     const { legacyContent, ...content } = message;
     return legacyContent ? { ...content, archivedAttachmentKinds: [legacyContent.image && '图片', legacyContent.audio && '音频', legacyContent.file && '文件'].filter(Boolean) } : content;
@@ -47,6 +49,7 @@ ${RELATIONSHIP_SCORING_GUIDANCE}
 【本分支普通记忆候选】${JSON.stringify(state.memories.filter(memory => !memory.preference).slice(-80))}
 ${expressionPreferenceContext(state)}
 【本分支事件提案】${JSON.stringify(state.proposals.slice(-30))}
+${reportDemoContext(state.messages,now)}
 【真实历史】${JSON.stringify(history)}
 legacyTime是原本机时钟标签；chronologyUnknown表示旧日期缺失，at只是导入排序时间。不能编造旧消息日期或间隔，不把旧留言当作本轮待回答任务。archivedAttachmentKinds只有附件类别，没有图像、音频和文件内容，不能声称看过它们。
 【本轮待回答的连续消息；只有实际队列，不含导入旧留言】${JSON.stringify(queued.map(message => ({ id: message.id, part: message.part, replyTo: message.replyTo })))}

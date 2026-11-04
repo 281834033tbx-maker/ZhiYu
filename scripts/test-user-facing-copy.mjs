@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {writeFileSync} from 'node:fs';
 import {inspectApplication,inspectSource} from './user-facing-copy-check.mjs';
+import {resolve} from 'node:path';
 
 const harmless=`// NPC Codex user_required .json\nconst id='npc-id';console.log('Skill 模型');const ignored='npc-skills/card.json';export default()=> <div id={id} data-source={ignored} className="npc-layout">智友由 AI 驱动</div>;`;
 assert.deepEqual(inspectSource(harmless),[],'comments, internal IDs, paths and logs are not rendered copy');
@@ -13,6 +14,9 @@ for(const fixture of [
   'function Page({error}){return <p>{error.message}</p>}',
 ])assert.ok(inspectSource(fixture).length,'render sinks and referenced expressions must be checked');
 assert.deepEqual(inspectSource('function reportUserFacingError(x){return "稍后再试"};function Page({error}){return <p>{reportUserFacingError(error)}</p>}'),[]);
+const reportSettingsFile=resolve('app/zhiyu/morning-reminder-settings.tsx');
+assert.deepEqual(inspectSource('export default()=> <button>重新生成演示简报</button>;',reportSettingsFile),[]);
+assert.ok(inspectSource('export default()=> <p>NPC 演示</p>;',reportSettingsFile).length,'report exception is exact copy, not a file-wide bypass');
 
 const findings=inspectApplication();
 const reportIndex=process.argv.indexOf('--report');if(reportIndex>=0&&process.argv[reportIndex+1])writeFileSync(process.argv[reportIndex+1],JSON.stringify(findings,null,2));

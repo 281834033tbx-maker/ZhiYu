@@ -1,3 +1,4 @@
+import {isReportDemoMessage} from '../../lib/npc/report-demo-history';
 import type {DatabaseSync} from 'node:sqlite';
 
 export type TaskFactKey = 'food_allergy' | 'dietary_avoidance' | 'food_allergy_status' | 'dietary_avoidance_status' | 'height' | 'weight' | 'body_fat' | 'waist' | 'sleep' | 'energy' | 'soreness';
@@ -176,10 +177,11 @@ export class TaskMemoryStore {
       let state: {mode?: string; messages?: unknown[]};
       try {state = JSON.parse(row.data);} catch {continue;}
       if (!state || state.mode === 'test' || !Array.isArray(state.messages)) continue;
+      const demoIds = new Set(state.messages.filter(isReportDemoMessage).map(item => (item as {id?: unknown}).id).filter((id): id is string => typeof id === 'string'));
       for (const item of state.messages) {
         if (!item || typeof item !== 'object') continue;
-        const message = item as {id?: unknown; role?: unknown; at?: unknown; chronologyUnknown?: unknown; part?: {type?: unknown; text?: unknown}; status?: unknown};
-        if (message.role !== 'user' || message.status === 'model_proposed' || message.part?.type !== 'text'
+        const message = item as {id?: unknown; replyTo?: unknown; role?: unknown; at?: unknown; chronologyUnknown?: unknown; part?: {type?: unknown; text?: unknown}; status?: unknown};
+        if (isReportDemoMessage(message) || typeof message.replyTo === 'string' && demoIds.has(message.replyTo) || message.role !== 'user' || message.status === 'model_proposed' || message.part?.type !== 'text'
           || typeof message.part.text !== 'string' || typeof message.id !== 'string') continue;
         const at = message.chronologyUnknown !== true && typeof message.at === 'string' && /^\d{4}-\d{2}-\d{2}T/u.test(message.at) && Number.isFinite(Date.parse(message.at)) ? message.at : undefined;
         incoming.push({source, id: message.id, text: message.part.text, ...(at ? {at} : {}), sequence: sequence++});

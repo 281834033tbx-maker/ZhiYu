@@ -45,15 +45,15 @@ try{
  assert.equal(initializeNewAccountOpening(db,runtime.root,other,clock,true),false);
  const molly=()=>JSON.parse(db.prepare('SELECT data FROM molly_sessions WHERE id=?').get(`${owner}:molly-system-secretary`).data);
  assert.equal(molly().messages.length,3);assert.equal(molly().messages[0].part.text,'我是Molly，你的秘书');
- assert.deepEqual(store.settings(owner),{enabled:true,time:'07:00'});clock+=61000;
- assert.equal(await store.morning(owner),false);assert.equal(molly().messages.filter(m=>m.part.type==='city_request').length,1);
- assert.equal(await store.morning(owner),false);assert.equal(molly().messages.filter(m=>m.part.type==='city_request').length,1);
- store.updateCity(owner,{name:'深圳',source:'manual'});assert.equal(await store.morning(owner),true);assert.equal(await store.morning(owner),false);
- const reportMessage=molly().messages.find(m=>m.part.type==='secretary_report');assert.ok(reportMessage);assert.equal(reportMessage.part.report.weather,undefined);assert.equal(reportMessage.part.report.completionPercent,null);assert.equal(reportMessage.part.report.weightKg,null);
+ assert.deepEqual(store.settings(owner),{enabled:true,time:'07:00',weeklyEnabled:true,weeklyDay:0,weeklyTime:'21:30'});clock+=61000;
+ assert.equal(await store.morning(owner),false);assert.equal(molly().messages.filter(m=>m.part.type==='city_request').length,0);
+ store.updateCity(owner,{name:'深圳',source:'manual'});assert.equal(await store.morning(owner),false);
  assert.equal(db.prepare('SELECT count(*) n FROM molly_sessions').get().n,1,'legacy account remains untouched');
- console.log('PASS registration-only 3-line opening, idempotence, legacy guard, 07:00 city prompt once, no-key weather omission and morning dedupe');
- clock=Date.parse('2026-11-08T20:00:00+08:00');await store.scanReports();await store.scanReports();assert.equal(db.prepare("SELECT count(*) n FROM npc_experience_reports WHERE id LIKE 'weekly:%'").get().n,1);
- clock=Date.parse('2026-12-01T09:00:00+08:00');await store.scanReports();assert.equal(db.prepare("SELECT count(*) n FROM npc_experience_reports WHERE id LIKE 'monthly:%'").get().n,1);
+ store.ensureReportDemos(owner);assert.equal(molly().messages.filter(m=>m.part.type==='daily_brief').length,1);assert.equal(molly().messages.filter(m=>m.part.type==='weekly_report').length,1);
+ store.ensureReportDemos(owner);assert.equal(molly().messages.filter(m=>m.part.type==='daily_brief').length,1);
+ console.log('PASS registration-only opening, no automatic city/weather/report, demo daily and weekly once');
+ clock=Date.parse('2026-11-08T21:30:00+08:00');await store.scanReports();await store.scanReports();assert.equal(db.prepare("SELECT count(*) n FROM npc_experience_reports").get().n,0);
+ clock=Date.parse('2026-12-01T09:00:00+08:00');await store.scanReports();assert.equal(db.prepare("SELECT count(*) n FROM npc_experience_reports").get().n,0);
  assert.deepEqual(reportRange('monthly',clock),{startDate:'2026-11-01',endDate:'2026-11-30'});
  const measurement={date:'2026-11-02',weightKg:70,sourceMessageId:'actual',sourceCharacterId:'chen-nian'};
  const task=(id,date,done=false)=>({id,characterId:'chen-nian',title:'真实训练',status:done?'completed':'skipped',goalKey:id,createdAt:`${date}T08:00:00+08:00`,updatedAt:`${date}T09:00:00+08:00`,revision:1,sourceMessageId:'u',cardMessageId:'c',steps:[{id:'step',title:'卧推',details:[],hints:[],scheduledDate:date,...(done?{completedAt:`${date}T09:00:00+08:00`}:{skippedAt:`${date}T23:59:00+08:00`})}]});
@@ -61,7 +61,7 @@ try{
  const report=buildSecretaryReport('weekly',input);assert.deepEqual(report.training,{planned:2,completed:1,missedDates:['2026-11-04']});assert.equal(report.completionPercent,50);assert.equal(report.weightKg,70);assert.equal(report.waistCm,null);assert.equal(report.packedMeals,null);assert.deepEqual(report.team.map(row=>row.characterId),['chen-nian','xia-xia']);
  input.conversations.push({characterId:'chen-nian',state:{messages:[],interaction:'cooldown',cooldownUntil:input.now+1000}});assert.deepEqual(reportParticipants(input,report.startDate,report.endDate).map(row=>row.characterId),['xia-xia']);
  const boundary=buildSecretaryReport('weekly',{...input,now:Date.parse('2027-01-03T20:00:00+08:00')});assert.equal(boundary.weekNumber,53);
- console.log('PASS weekly/monthly schedule once, true task arithmetic, missing records, equal daily weighting, real participating team and silence exclusion');
+ console.log('PASS legacy pure weekly/monthly arithmetic retained, true task arithmetic, missing records, equal daily weighting, real participating team and silence exclusion');
  clock=Date.parse('2026-12-02T10:00:00+08:00');let sent=0;
  for(let i=0;i<=240;i++){sent+=Number(store.usage(owner,{currentNpc:'molly',visible:true,busy:false,clientId:'window-one'}).sent);clock+=30000;}
  assert.equal(sent,1);assert.equal(store.usage(owner,{currentNpc:'molly',visible:true,clientId:'window-two'}).sent,false);

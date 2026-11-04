@@ -1,0 +1,213 @@
+[
+  {
+    "name": "手机话费",
+    "button": "充值",
+    "cycles": [
+      "每月",
+      "余额不足"
+    ],
+    "remindBeforeDays": 3,
+    "destination": "运营商充值页",
+    "link": ""
+  },
+  {
+    "name": "宽带",
+    "button": "缴费",
+    "cycles": [
+      "每月",
+      "每年"
+    ],
+    "remindBeforeDays": 7,
+    "destination": "微信或支付宝生活缴费",
+    "link": ""
+  },
+  {
+    "name": "电费",
+    "button": "缴费",
+    "cycles": [
+      "每月"
+    ],
+    "remindBeforeDays": 3,
+    "destination": "生活缴费",
+    "link": "",
+    "buttonOverrides": [
+      {
+        "condition": "预付费地区",
+        "button": "充值"
+      }
+    ]
+  },
+  {
+    "name": "水费",
+    "button": "缴费",
+    "cycles": [
+      "每月",
+      "每两月"
+    ],
+    "remindBeforeDays": 3,
+    "destination": "生活缴费",
+    "link": ""
+  },
+  {
+    "name": "燃气费",
+    "button": "缴费",
+    "cycles": [
+      "每月"
+    ],
+    "remindBeforeDays": 3,
+    "destination": "生活缴费",
+    "link": "",
+    "buttonOverrides": [
+      {
+        "condition": "IC 卡",
+        "button": "充值"
+      }
+    ]
+  },
+  {
+    "name": "物业费",
+    "button": "缴费",
+    "cycles": [
+      "每月",
+      "每季",
+      "每年"
+    ],
+    "remindBeforeDays": 7,
+    "destination": "用户给的链接",
+    "link": ""
+  },
+  {
+    "name": "停车月租",
+    "button": "缴费",
+    "cycles": [
+      "每月"
+    ],
+    "remindBeforeDays": 3,
+    "destination": "用户给的链接",
+    "link": ""
+  },
+  {
+    "name": "房租",
+    "button": "缴费",
+    "cycles": [
+      "每月"
+    ],
+    "remindBeforeDays": 3,
+    "destination": "用户给的链接",
+    "link": ""
+  },
+  {
+    "name": "取暖费",
+    "button": "缴费",
+    "cycles": [
+      "每年"
+    ],
+    "remindBeforeDays": 14,
+    "destination": "生活缴费",
+    "link": ""
+  },
+  {
+    "name": "有线电视",
+    "button": "缴费",
+    "cycles": [
+      "每年"
+    ],
+    "remindBeforeDays": 7,
+    "destination": "生活缴费",
+    "link": ""
+  },
+  {
+    "name": "交通卡 / ETC",
+    "button": "充值",
+    "cycles": [
+      "余额不足"
+    ],
+    "remindBeforeDays": 0,
+    "destination": "对应 App",
+    "link": ""
+  },
+  {
+    "name": "车险",
+    "button": "缴费",
+    "cycles": [
+      "每年"
+    ],
+    "remindBeforeDays": 30,
+    "destination": "保险公司",
+    "link": ""
+  },
+  {
+    "name": "其他保险",
+    "button": "缴费",
+    "cycles": [
+      "每年",
+      "每月"
+    ],
+    "remindBeforeDays": 14,
+    "destination": "用户给的链接",
+    "link": ""
+  },
+  {
+    "name": "社保 / 医保（个人缴）",
+    "button": "缴费",
+    "cycles": [
+      "每月",
+      "每年"
+    ],
+    "remindBeforeDays": 7,
+    "destination": "税务或医保 App",
+    "link": ""
+  },
+  {
+    "name": "会员（自动续费）",
+    "button": "管理",
+    "cycles": [
+      "每月",
+      "每年"
+    ],
+    "remindBeforeDays": 1,
+    "destination": "对应 App 的会员管理页",
+    "link": ""
+  },
+  {
+    "name": "会员（非自动续费）",
+    "button": "续费",
+    "cycles": [
+      "每月",
+      "每年"
+    ],
+    "remindBeforeDays": 3,
+    "destination": "对应 App",
+    "link": ""
+  },
+  {
+    "name": "信用卡 / 花呗 / 白条",
+    "button": "还款",
+    "cycles": [
+      "每月"
+    ],
+    "remindBeforeDays": 3,
+    "destination": "对应 App",
+    "link": ""
+  },
+  {
+    "name": "房贷 / 车贷",
+    "button": "还款",
+    "cycles": [
+      "每月"
+    ],
+    "remindBeforeDays": 3,
+    "destination": "银行 App",
+    "link": ""
+  },
+  {
+    "name": "其他",
+    "button": "缴费",
+    "cycles": [
+      "用户说的"
+    ],
+    "remindBeforeDays": 3,
+    "destination": "用户给的链接",
+    "link": ""
+  }
+]

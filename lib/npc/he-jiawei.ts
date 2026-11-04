@@ -1,3 +1,4 @@
+import {factualHistoryMessages} from './report-demo-history';
 import {completePrivateSocialTurn} from './social-continuity';
 import type { ChatMessage, Memory } from './contracts';
 import { deliveredMessages } from './delivery';
@@ -50,7 +51,7 @@ export function applyHe(s: HeState, out: ReturnType<typeof parseHe>, turnId: str
       ...(replyTo && validIds.has(replyTo) ? { replyTo } : {}) });
   }
   for (const memory of out.memories) {
-    const source = [...s.messages].reverse().find(message => message.role === 'user' && 'text' in message.part && message.part.text.includes(memory.evidence));
+    const source = [...factualHistoryMessages(s.messages)].reverse().find(message => message.role === 'user' && 'text' in message.part && message.part.text.includes(memory.evidence));
     if (source && shouldSaveMemory(s.memories, memory))
       s.memories.push({ ...memory, id: crypto.randomUUID(), messageId: source.id, status: 'model_proposed' });
   }

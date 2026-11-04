@@ -37,14 +37,16 @@ import type {TaskPageContext} from '../../lib/npc/task-page-context';
 import {resolveCharacterStatus} from '../../lib/npc/character-status';
 import {reportUserFacingError,userFacingError,userFacingErrors} from '../../lib/user-facing-errors';
 import {ChatIdentityNotice,RetryableMessage} from './user-facing-ui';
-import SecretaryReportCard,{CityRequest} from './secretary-report';
+import SecretaryReportCard,{CityRequest,DailyBriefCard,WeeklyReportCard} from './secretary-report';
 import {useReplyRetry} from './reply-retry';
 import {useFailedChatSends} from './chat-send-failures';
 
 type FailedSend={scope:string;turnId:string;body:Record<string,unknown>;text:string};
 
 function TaskMessage({taskId,onOpen}:{taskId:string;onOpen?:(taskId:string)=>void}){const {account}=useAccount();return <ProfessionalTaskCard accountId={account.id} taskId={taskId} onOpen={onOpen}/>;}
-export function NpcPart({ part, characterId, onRetry, messageId, onOpenTask, onOpenNpc, onChoose, pendingIndex, choiceDisabled, choiceError }: { part: Part; characterId?:string; onRetry?:()=>void; messageId?:string; onOpenTask?:(taskId:string)=>void; onOpenNpc?:(id:string,quoteId?:string,prefill?:string)=>void; onChoose?:ChoiceChatProps['onChoose']; pendingIndex?:number; choiceDisabled?:boolean; choiceError?:string }) {
+export function NpcPart({ part, characterId, onRetry, messageId, onOpenTask, onOpenNpc, onOpenChoice, onChoose, pendingIndex, choiceDisabled, choiceError }: { part: Part; characterId?:string; onRetry?:()=>void; messageId?:string; onOpenTask?:(taskId:string)=>void; onOpenNpc?:(id:string,quoteId?:string,prefill?:string)=>void; onOpenChoice?:(messageId:string)=>void; onChoose?:ChoiceChatProps['onChoose']; pendingIndex?:number; choiceDisabled?:boolean; choiceError?:string }) {
+  if(part.type==='daily_brief')return messageId?<DailyBriefCard messageId={messageId} brief={part.brief} onOpenNpc={onOpenNpc} onOpenChoice={onOpenChoice}/>:null;
+  if(part.type==='weekly_report')return messageId?<WeeklyReportCard messageId={messageId} report={part.report} onOpenNpc={onOpenNpc}/>:null;
   if(part.type==='secretary_report')return <SecretaryReportCard report={part.report} onOpenNpc={onOpenNpc}/>;
   if(part.type==='city_request')return <CityRequest text={part.text}/>;
   if(part.type==='choice')return <ChoiceChat part={part} characterId={characterId} onChoose={onChoose} pendingIndex={pendingIndex} disabled={choiceDisabled} error={choiceError}/>;
@@ -515,7 +517,7 @@ export default function XiaxiaChat({
     }
   }
   async function choose(message:ChatMessage,index:number) {
-    if(!allowsCharacterChoice(character)||mirror||sending||choiceLocks.current.has(taskScope)||!data?.available||message.part.type!=='choice'||message.part.selection||!message.part.options[index])return;
+    if(!allowsCharacterChoice(character)||mirror||sending||choiceLocks.current.has(taskScope)||message.part.type!=='choice'||(!data?.available&&!message.part.reportDemoChoice)||message.part.selection||!message.part.options[index])return;
     const requestKey=taskScope+':'+message.id;
     const previous=choiceRequests.current.get(requestKey);
     const request=previous?.index===index?previous:{index,turnId:crypto.randomUUID()};
@@ -525,7 +527,12 @@ export default function XiaxiaChat({
     setError('');
     try {
       // The server maps this index to the original option; the composer draft stays untouched.
-      await post({action:'send',turnId:request.turnId,choice:{messageId:message.id,index}});
+      if(message.part.reportDemoChoice) {
+        const demo=message.part.reportDemoChoice;
+        const response=await npcFetch('/api/npc/secretary',{method:'POST',headers:{'Content-Type':'application/json','X-Zhiyu-Account':account.id},body:JSON.stringify({action:'report-demo-action',messageId:message.id,itemId:demo.pendingId,decision:'select',optionIndex:index})});
+        if(!response.ok)throw Error('演示选择未保存');
+        await refreshSession();
+      } else await post({action:'send',turnId:request.turnId,choice:{messageId:message.id,index}});
       choiceRequests.current.delete(requestKey);
       setChoiceState(current=>current?.key===taskScope&&current.messageId===message.id?null:current);
     } catch(failure) {
@@ -591,7 +598,7 @@ export default function XiaxiaChat({
                         {m.legacyContent?.image && <figure className="xx-media upload"><ChatImage messageId={m.id} src={m.legacyContent.image} alt="历史聊天图片"/></figure>}
                         {m.legacyContent?.audio && <div className="xx-bubble xx-bubble-voice"><VoiceBubble src={m.legacyContent.audio} durationSeconds={m.legacyContent.audioDurationSeconds}/></div>}
                         {m.legacyContent?.file && <div className="xx-bubble">{m.legacyContent.file}</div>}
-                        {(!m.legacyContent || ('text' in m.part && m.part.text)) && <NpcPart messageId={m.id} characterId={character} part={m.part} onOpenTask={setOpenTaskId} onOpenNpc={onOpenNpc} onChoose={allowsCharacterChoice(character)&&!mirror&&!mine?index=>void choose(m,index):undefined} pendingIndex={choiceState?.key===taskScope&&choiceState.messageId===m.id?choiceState.index:undefined} choiceDisabled={mirror||mine||sending||choosing||!data?.available} choiceError={choiceState?.key===taskScope&&choiceState.messageId===m.id&&choiceState.error?userFacingError(choiceState.error):undefined} onRetry={()=>void retryPart(m.part,m.id)} />}
+                        {(!m.legacyContent || ('text' in m.part && m.part.text)) && <NpcPart messageId={m.id} characterId={character} part={m.part} onOpenTask={setOpenTaskId} onOpenNpc={onOpenNpc} onOpenChoice={id=>{void refreshSession().then(()=>jump(id)).catch(failure=>setError(reportUserFacingError(failure,'load','打开演示选择')));}} onChoose={allowsCharacterChoice(character)&&!mirror&&!mine?index=>void choose(m,index):undefined} pendingIndex={choiceState?.key===taskScope&&choiceState.messageId===m.id?choiceState.index:undefined} choiceDisabled={mirror||mine||sending||choosing||(!data?.available&&!(m.part.type==='choice'&&m.part.reportDemoChoice))} choiceError={choiceState?.key===taskScope&&choiceState.messageId===m.id&&choiceState.error?userFacingError(choiceState.error):undefined} onRetry={()=>void retryPart(m.part,m.id)} />}
                         </MessageActions>
                         </RetryableMessage>
                         {!mine&&m.taskLinks?.length&&onOpenTasks?<div className="xx-task-link-bubbles" aria-label="查看任务">{m.taskLinks.map(link=><button key={link.scope} type="button" className="xx-bubble xx-task-link-bubble" onClick={()=>onOpenTasks(link.scope)}><span className="xx-task-link-label">{link.label}</span></button>)}</div>:null}

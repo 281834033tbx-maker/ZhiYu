@@ -1,3 +1,4 @@
+import {factualHistoryMessages} from './report-demo-history';
 import {completePrivateSocialTurn} from './social-continuity';
 import type { ChatMessage, Memory } from './contracts';
 import { deliveredMessages } from './delivery';
@@ -75,7 +76,9 @@ export function applyChef(state: ChefState, out: ReturnType<typeof parseChef>, t
   }
   // Only the input that produced this answer can support a newly stored memory.
   for (const memory of out.memories) {
-    const source = [...sources].reverse().find(message => message.text.includes(memory.evidence));
+    const factualIds = new Set(factualHistoryMessages(state.messages).map(message => message.id));
+    const excludedIds = new Set(state.messages.filter(message => !factualIds.has(message.id)).map(message => message.id));
+    const source = [...sources].reverse().find(message => !excludedIds.has(message.id) && message.text.includes(memory.evidence));
     if (source && shouldSaveMemory(state.memories, memory))
       state.memories.push({ ...memory, id: crypto.randomUUID(), messageId: source.id, status: 'model_proposed' });
   }

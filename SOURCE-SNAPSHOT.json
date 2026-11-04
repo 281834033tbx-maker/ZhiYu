@@ -1,6 +1,6 @@
 {
   "date": "2026-11-04",
-  "description": "Current source including native App service/window recovery; portable local identity retained, private runtime and native backups excluded.",
+  "description": "Current source including fixed Molly daily brief and weekly report demonstrations, configuration and demo-history isolation; portable local identity retained, private runtime and native backups excluded.",
   "files": [
     {
       "path": ".env.example",
@@ -279,8 +279,8 @@
     },
     {
       "path": "app/zhiyu/auth-gate.tsx",
-      "bytes": 10646,
-      "sha256": "f10729be8d874ff528a1a122d9bafd69b6376c6479e9020ae48e2610e6e8f035"
+      "bytes": 11682,
+      "sha256": "505b6695e5326dceb11d44edd52ab5c9cefc9c655e00c194505787037733ab4c"
     },
     {
       "path": "app/zhiyu/auth-validation.ts",
@@ -314,8 +314,8 @@
     },
     {
       "path": "app/zhiyu/chat-add-menu.tsx",
-      "bytes": 4409,
-      "sha256": "e613feb2e363eadc23f2502fcf0e72b86441a2891a3fb716d1a777f8c80b0b73"
+      "bytes": 4406,
+      "sha256": "f30d3051a9b45377a03e91f5dc3ccec41ced40b4dd8867b386177c8e0d4dce9b"
     },
     {
       "path": "app/zhiyu/chat-composer.css",
@@ -608,14 +608,24 @@
       "sha256": "7a2b39fb426bf97c943b01790959ae37844f100e4e85630149b85aaecfea0c16"
     },
     {
+      "path": "app/zhiyu/molly-report-cards.css",
+      "bytes": 10720,
+      "sha256": "20ec968990903c14d5fea1959f57d4c2d96fba330e22b9d29d781f0d792cb227"
+    },
+    {
+      "path": "app/zhiyu/molly-report-cards.tsx",
+      "bytes": 15115,
+      "sha256": "ff9342cd9041adfa78f0dce0e5cb9931181fae9064ff066c69914735e8d3084d"
+    },
+    {
       "path": "app/zhiyu/morning-reminder-settings.css",
-      "bytes": 3146,
-      "sha256": "2f0c9ccb9a82ba44537197e3263521d40cfdac941317cfae2aac6d844a366353"
+      "bytes": 4547,
+      "sha256": "d7df7292b7e739b428f6629c214bfd149cd52e0bad994c762d5469230152a800"
     },
     {
       "path": "app/zhiyu/morning-reminder-settings.tsx",
-      "bytes": 5509,
-      "sha256": "83c9123ec9d0d9a30a0bee915e59e5c484c7e5da84795e6fce7f8a3bbfdb0768"
+      "bytes": 9211,
+      "sha256": "6336a9212ffe3073956fa835dbf434c9262c92ba2dc8c5d34cad3863d9632307"
     },
     {
       "path": "app/zhiyu/npc-contact-card.css",
@@ -788,6 +798,11 @@
       "sha256": "b4fe5aaf43c67f7b16dbe34309d73cedc0aaed5d275fbcc81270ea2616451931"
     },
     {
+      "path": "app/zhiyu/report-fold.tsx",
+      "bytes": 2979,
+      "sha256": "5336379219aabb3e079482a258d085910dace9ef197a6b36fe4b15c524e3c9aa"
+    },
+    {
       "path": "app/zhiyu/saved-stickers.ts",
       "bytes": 2113,
       "sha256": "f2de649fc82ea71cd5b558adcdd2e1f33495907ae277a4de6f245c3320daec55"
@@ -799,8 +814,8 @@
     },
     {
       "path": "app/zhiyu/secretary-report.tsx",
-      "bytes": 12374,
-      "sha256": "e671d78bd4cc15ab36779d1954c13007e9c917185a915d100abc13bdd50d1f39"
+      "bytes": 12444,
+      "sha256": "37b84cd5554d67c2648725c3df7c3301fc2dc7e868faff46bc7c6e69a8915e64"
     },
     {
       "path": "app/zhiyu/self-profile-card.css",
@@ -1004,8 +1019,8 @@
     },
     {
       "path": "app/zhiyu/xia-xia.tsx",
-      "bytes": 39168,
-      "sha256": "28a891c1a91ff8196c7e2f10ef1804747341efa8ea940ee81d34661e1b3fd3ae"
+      "bytes": 40267,
+      "sha256": "f090cd6d4e59cb8d5a8d518e966d47a54849ab66372c7f4f67defcc4b7a6bd80"
     },
     {
       "path": "components.json",
@@ -1673,6 +1688,51 @@
       "sha256": "9a85d959573efe460a60f0cb9ef45ac1a2abb2ec09ee5791f618e3b84c031535"
     },
     {
+      "path": "docs/molly-reports/README.md",
+      "bytes": 4569,
+      "sha256": "7bbbc9d4a45b49f4e46818ecbc49d56241a31584aac28673079fb555ad380b65"
+    },
+    {
+      "path": "docs/molly-reports/requirements/今日简报-需求文档-给Codex.md",
+      "bytes": 32391,
+      "sha256": "a9878692265b8ccffebd94d8df72593bcaef54ba7b7d40318c0aa1433b4f67e4"
+    },
+    {
+      "path": "docs/molly-reports/requirements/周报-需求文档-给Codex.md",
+      "bytes": 17328,
+      "sha256": "942e1b8eaff429f69230bca68f983c009dcfd9a794e21f17cba474480f74c174"
+    },
+    {
+      "path": "docs/molly-reports/screenshots/brief-dark.png",
+      "bytes": 54293,
+      "sha256": "130c45a91c9f7495f7b2b99921064482264f17964e7a6bdb720f51fcc3d1c5f6"
+    },
+    {
+      "path": "docs/molly-reports/screenshots/brief-light.png",
+      "bytes": 55923,
+      "sha256": "2497fee13bae2ce7b5cbe3c7338aa20819f5120be07e8abf1a45e0c5fbda1f21"
+    },
+    {
+      "path": "docs/molly-reports/screenshots/settings-dark.png",
+      "bytes": 38483,
+      "sha256": "dcf98581088250bacec71310a998218f75f394c9fda055903c83d0f8243417b6"
+    },
+    {
+      "path": "docs/molly-reports/screenshots/settings-light.png",
+      "bytes": 43596,
+      "sha256": "fd2d3b88ad50c11bd54bda41f3601f0c7856799c658a9cde3698cfcc3f5293b8"
+    },
+    {
+      "path": "docs/molly-reports/screenshots/shopping-light.png",
+      "bytes": 36383,
+      "sha256": "2f12b827a20b5b453a09be99b8167b1a7acf8cd17f05a2d4cbf533088b41a17c"
+    },
+    {
+      "path": "docs/molly-reports/screenshots/weekly-dark.png",
+      "bytes": 54450,
+      "sha256": "fdbd88fafa4b39ffa3a97a38891c4b9855e9403b3c8720259fda43db911c4ea5"
+    },
+    {
       "path": "docs/qa/2026-11-03-after-contextual-regression.md",
       "bytes": 3389,
       "sha256": "1bbb6987ce0bbcf6896975b163582e6fcf1eecf2566560d0928833c06acc50fc"
@@ -2164,13 +2224,13 @@
     },
     {
       "path": "lib/npc/chen-nian.ts",
-      "bytes": 12397,
-      "sha256": "47ff27b405ec9bd7f1d31c49c501f32a07aa1e227080669c692ddafd8ff5577d"
+      "bytes": 12483,
+      "sha256": "60ea2e42f8198abca302082468dbe24823ecdfce65ea7cda63395e7880bfb91f"
     },
     {
       "path": "lib/npc/choice-chat.ts",
-      "bytes": 3311,
-      "sha256": "69d3e55d54ee583fa469ca1e368e55fa8e4fab34a605404bcc93ef0b987c3a71"
+      "bytes": 3451,
+      "sha256": "efa226935c7d39e2df9f1320576283d91f9ef5611051f555fd18720c93886a67"
     },
     {
       "path": "lib/npc/contact-life.ts",
@@ -2179,8 +2239,8 @@
     },
     {
       "path": "lib/npc/contracts.ts",
-      "bytes": 8443,
-      "sha256": "fb1c82dbd643ffd3f2f96463803f1381b624ac875ab31d95d04b1f33fd8d4379"
+      "bytes": 8618,
+      "sha256": "859ccb8be6cb6790ae3cf0ba7aa0a2bc43f35e8ae459fe4a187832c69f793358"
     },
     {
       "path": "lib/npc/delivery.ts",
@@ -2199,13 +2259,13 @@
     },
     {
       "path": "lib/npc/engine.ts",
-      "bytes": 13468,
-      "sha256": "408cbca33528d64c6a119150faf1432679ca3cfe21f0e7c5bdbe8ce4f454be56"
+      "bytes": 13532,
+      "sha256": "2e4c509f8cd1c411fd3253a1a9f0fa96862523d1ba802a62a724d4a053bde0e7"
     },
     {
       "path": "lib/npc/experience.ts",
-      "bytes": 3287,
-      "sha256": "12fb9fbb50b75929a950beb8b969068ffa926ea6fb2079e755a4ae52e4465a9a"
+      "bytes": 3347,
+      "sha256": "794b69c57caa593656876ae2f0285565c5826cf91f0713bbce14cf10275e1c9e"
     },
     {
       "path": "lib/npc/expression-preferences.ts",
@@ -2224,8 +2284,8 @@
     },
     {
       "path": "lib/npc/he-jiawei.ts",
-      "bytes": 4883,
-      "sha256": "d5a7cdea64e6505dd72052685d870e40994f163747778e494da70fc8bc4e14ba"
+      "bytes": 4969,
+      "sha256": "a26ac4e58a270b812e0d0160dca7cc8af05567f1e6328d33fafdca8cf63222a6"
     },
     {
       "path": "lib/npc/life-config.json",
@@ -2239,8 +2299,18 @@
     },
     {
       "path": "lib/npc/liu.ts",
-      "bytes": 13743,
-      "sha256": "2af8296a8e96649cf32ef5092ef58dd419d9c18c0525de01432940206e740ef5"
+      "bytes": 13829,
+      "sha256": "917044dda7f2547124d4cf79cd477a3acd572204d3fa02c5853d3f95396f7a19"
+    },
+    {
+      "path": "lib/npc/molly-report-config.ts",
+      "bytes": 705,
+      "sha256": "065d9c89e8d3fc022121df6c0e61f59401660179a554121213501899dfe606ec"
+    },
+    {
+      "path": "lib/npc/molly-reports.ts",
+      "bytes": 5198,
+      "sha256": "52e5b1754577c0beec26c0a60103ddd200a4ac1ad77fb3aaf9f55c8682feab64"
     },
     {
       "path": "lib/npc/molly.ts",
@@ -2249,8 +2319,8 @@
     },
     {
       "path": "lib/npc/professional-task-chat.ts",
-      "bytes": 11759,
-      "sha256": "b21a6063b097e8e510fb7aaee75691b65e7c43f17a5b9a174422c10ca2193c1c"
+      "bytes": 11841,
+      "sha256": "81d37fb1cf4bbb38734a31ddc484018c3af8e09bd0a932c7a45d63cf4018456c"
     },
     {
       "path": "lib/npc/professional-task-expiry.ts",
@@ -2303,6 +2373,51 @@
       "sha256": "7819715e8416da40d9e584fd40e4966322c4535576cc0aa77035498bf10c921a"
     },
     {
+      "path": "lib/npc/report-config/bill-catalog.json",
+      "bytes": 3827,
+      "sha256": "5c09dc91e5ccdffad985ce61af708fc6f931f659a26e80eb28880365c6c15508"
+    },
+    {
+      "path": "lib/npc/report-config/daily-demo.json",
+      "bytes": 7166,
+      "sha256": "0e6f9f5e758e620c9f9109ea90a2815991bb0e5ae774c7f266dfc6d0e57c09fa"
+    },
+    {
+      "path": "lib/npc/report-config/daily-templates.json",
+      "bytes": 5620,
+      "sha256": "41099c7b6dc4ccd07cc51aeb531b2fd402c8725b13a4674e82c9a9b947e50e9f"
+    },
+    {
+      "path": "lib/npc/report-config/demo.ts",
+      "bytes": 342,
+      "sha256": "01433b7ca3c0d6165265482f0872f43a97ba2017bd90dcb2833b6bdab4f8f151"
+    },
+    {
+      "path": "lib/npc/report-config/weekly-blocks.json",
+      "bytes": 1490,
+      "sha256": "8cd17242114d0ea19dafdf20047c363c22e187f30ae1b05f659c944eb4494771"
+    },
+    {
+      "path": "lib/npc/report-config/weekly-demo.json",
+      "bytes": 5338,
+      "sha256": "cb2920c4a5cdc92110ec18d8850c7b0ca5529899dcb3b2a48fabfb4556eb19b2"
+    },
+    {
+      "path": "lib/npc/report-config/weekly-headlines.json",
+      "bytes": 399,
+      "sha256": "bd036932925e75e09f43fe3ee0651a0f8fdffcf29d7fbe2b95654a3e4ac97df7"
+    },
+    {
+      "path": "lib/npc/report-config/weekly-items.json",
+      "bytes": 6414,
+      "sha256": "7cbe4cb833b1c4202d0fbd22c0eaacb85457c24acffa198180a48161082b80ac"
+    },
+    {
+      "path": "lib/npc/report-demo-history.ts",
+      "bytes": 1131,
+      "sha256": "70b72b6d069aef6bc6508c4880c0780a8dfdd65b9700a93df6f1464c24a36396"
+    },
+    {
       "path": "lib/npc/secretary-delegation.ts",
       "bytes": 2997,
       "sha256": "7285e748a8b5701d77dd0a74cd81487bf5954e5cc099a515ab2c9fa7a33670e0"
@@ -2334,13 +2449,13 @@
     },
     {
       "path": "lib/npc/yuan-xiaoman.ts",
-      "bytes": 3365,
-      "sha256": "4ffac5284893aedd28ac8db224f788d0e9227c4ed39f3e4f5871bdb1bd738ec7"
+      "bytes": 3451,
+      "sha256": "03dd288ec8ff4e7c9b7e1727fe614c909948f7df924a01a25e4c85957020c219"
     },
     {
       "path": "lib/npc/zhou-chef.ts",
-      "bytes": 6711,
-      "sha256": "d255ce32f508ff39a7e3fd48de920b45b3c02dae3e8a8d4a9a9a4a49d89f6a33"
+      "bytes": 7027,
+      "sha256": "a15873d0915457b8455f58b73f869945d897c27e35a90d93d0ea7b3171a07086"
     },
     {
       "path": "lib/user-facing-errors.ts",
@@ -2983,6 +3098,11 @@
       "sha256": "674cace515e8f8e8af42edd8c5e0b14e626d3cff7538af9eb225d4c4bddb7df1"
     },
     {
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/molly/brief-openers.json",
+      "bytes": 1555,
+      "sha256": "f076d09681d0c16aac94dbd9521128d906a1c953c95b0db0c4ff465aac7942bc"
+    },
+    {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/molly/examples.json",
       "bytes": 5875,
       "sha256": "e296e16ab441b2ad0aede4557256f35ba2c1685e98efcfacbb95367e06d54962"
@@ -2996,6 +3116,11 @@
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/molly/profile.json",
       "bytes": 1183,
       "sha256": "dd0fed2fea21f4b5c634349761a010d48a7ecd16d787e982cae39ddbad71e810"
+    },
+    {
+      "path": "npc-skills/skills/zhiyu-dialogue/npcs/molly/report-openers.json",
+      "bytes": 612,
+      "sha256": "5eb791c4d6b3a5a5df444ca9f85e5fe4c0f2642f680775ab4a1c251ba7fa2938"
     },
     {
       "path": "npc-skills/skills/zhiyu-dialogue/npcs/molly/status.json",
@@ -4433,6 +4558,11 @@
       "sha256": "90e948a697b36b5a6d5ad171dcdc318dfa702ed0de136e017218cd4686c22d9c"
     },
     {
+      "path": "scripts/molly-reports-ui-fixture.mjs",
+      "bytes": 7002,
+      "sha256": "31f7072a286d460ecd3737a09ef1021e6647a4ac103ba4d90609703a2b9fed08"
+    },
+    {
       "path": "scripts/musetalk-still-mps.py",
       "bytes": 7744,
       "sha256": "ddd1941c6942015b4cc5a6f63986d5d6c5ea03450f84aafe321ff654ba25023f"
@@ -4444,8 +4574,8 @@
     },
     {
       "path": "scripts/npc-test-runtime.mjs",
-      "bytes": 2578,
-      "sha256": "7d907235aeed1e2601326d20cd8ccb5f5f3e74d3166a0de4f34fa49aeebf2b20"
+      "bytes": 2774,
+      "sha256": "0ea5673d8afe2ef4e7983d6080dcdf13c4425d2b386aed927dde2948e2562bcc"
     },
     {
       "path": "scripts/prepare-xiaoman-desktop-videos.py",
@@ -4649,8 +4779,8 @@
     },
     {
       "path": "scripts/test-experience-redesign.mjs",
-      "bytes": 13830,
-      "sha256": "82651a952691cc77ac6837b665eabb3d7150574bf11fccee018227deedb83468"
+      "bytes": 13656,
+      "sha256": "c0ab767042a172631256ef391d5574fa0af3283399cda61572e466278785c7ff"
     },
     {
       "path": "scripts/test-fitness-demonstrations.mjs",
@@ -4734,8 +4864,8 @@
     },
     {
       "path": "scripts/test-group-task-memory.mjs",
-      "bytes": 12325,
-      "sha256": "e36f43ae7340822c5cc35aa6309663eb44fba22a21e88d60b7b882f735cfc537"
+      "bytes": 12621,
+      "sha256": "675961bd9d218146d143ee820ec3ecff5ff3fc43bb3c4b5e1eee12620f8a12fa"
     },
     {
       "path": "scripts/test-he-chat-history-20261006.mjs",
@@ -4853,6 +4983,21 @@
       "sha256": "5a42d39f212367074796e9c990c6789c708aecd24262187c2e7610e19d9e4ec5"
     },
     {
+      "path": "scripts/test-molly-report-demo-history.mjs",
+      "bytes": 9070,
+      "sha256": "8fa0d8e45531853f7f9bc82f1923730e4b58047900e76f54c341a9bd1a264b76"
+    },
+    {
+      "path": "scripts/test-molly-report-demos.mjs",
+      "bytes": 9009,
+      "sha256": "1fef51c163cd088475decef2d91dfdba93544b3bcf7be0748d6b7c38a9293094"
+    },
+    {
+      "path": "scripts/test-molly-report-settings.mjs",
+      "bytes": 7288,
+      "sha256": "19cbc807c5454a140efe67d402e43af9f6891a7c340cdda9a48743e6571da302"
+    },
+    {
       "path": "scripts/test-molly-runtime-boundaries.mjs",
       "bytes": 16370,
       "sha256": "d62ba897e5e06330a46ae24db5b294446db7a93bc89d1dfa8d5d2bfb9c4d5121"
@@ -4869,8 +5014,8 @@
     },
     {
       "path": "scripts/test-molly-secretary-service.mjs",
-      "bytes": 10586,
-      "sha256": "303d130a54b4d9f410996a0bfb24bcc857c947e421bfca26e81b1983bcdabe5d"
+      "bytes": 10272,
+      "sha256": "3ffc8a15ac5dd6abddfc58e798bc6098214283791a693101f55dfa86e2e010ed"
     },
     {
       "path": "scripts/test-molly.mjs",
@@ -5089,8 +5234,8 @@
     },
     {
       "path": "scripts/test-secretary-report-presentation.mjs",
-      "bytes": 4631,
-      "sha256": "b94d28dbdd24fdf99bc5519e95ec82622d7fd5c66e2e6e870eb9882dc3a5e05e"
+      "bytes": 4659,
+      "sha256": "595347119f3bef8768816baf8c2fe972bad91f8afd50cd1dfebfb3c36bc8ec33"
     },
     {
       "path": "scripts/test-six-character-roles.mjs",
@@ -5169,8 +5314,8 @@
     },
     {
       "path": "scripts/test-user-facing-copy.mjs",
-      "bytes": 1768,
-      "sha256": "e90b3da5281583d4edb713e78e6fbe16ccb1026be454898e3e7bcc547befa324"
+      "bytes": 2150,
+      "sha256": "94b93089fa9d863671f4678a560d1a018e509ae60c07989a2896b4415809e072"
     },
     {
       "path": "scripts/test-voice-review.mjs",
@@ -5249,8 +5394,8 @@
     },
     {
       "path": "scripts/user-facing-copy-check.mjs",
-      "bytes": 7117,
-      "sha256": "fbead9715594d0eb58577eade8df24dad9f3735a813584ed2434fbb98dea3e38"
+      "bytes": 7643,
+      "sha256": "395cadc8bf0ad20c4d198d3283e9bbaa6791dea844ed4bfbf3a4d42a15919f84"
     },
     {
       "path": "scripts/validate-chen-acsm-foundation.mjs",
@@ -5364,8 +5509,8 @@
     },
     {
       "path": "server/npc/chen-prompt.ts",
-      "bytes": 13044,
-      "sha256": "ce0d0b3ae7c49e74d25d3d65b22d10d73a673775435d07b2c545ce2affa7b8fc"
+      "bytes": 13232,
+      "sha256": "d91ab66bcb7c59f1e52e43fbcb866369639ad3abc332c09700c2782243ac0800"
     },
     {
       "path": "server/npc/chen-task-repair.test.ts",
@@ -5424,8 +5569,8 @@
     },
     {
       "path": "server/npc/experience-reports-store.ts",
-      "bytes": 15763,
-      "sha256": "c4e670b4c69773f93442ddbde0167271f927af9dd5e6c9904ef1950d26fd4d18"
+      "bytes": 15861,
+      "sha256": "7f31d6a3c9f52ab1b72c34e05bdf3e37f19b0f490b0b1b947ac9f41b36152f47"
     },
     {
       "path": "server/npc/group-dialogue.ts",
@@ -5459,8 +5604,8 @@
     },
     {
       "path": "server/npc/group-task-memory.ts",
-      "bytes": 15364,
-      "sha256": "1e2108425d54b5aefd5a23cc4c1197822448b7552ad5f2a9ab567b2c3682e6c6"
+      "bytes": 15726,
+      "sha256": "df90e893b640b5ace7a4c6629b7865bd4ad78c404e60c53ad411b3273939d3a3"
     },
     {
       "path": "server/npc/groups-plugin.ts",
@@ -5479,8 +5624,8 @@
     },
     {
       "path": "server/npc/he-prompt.ts",
-      "bytes": 5762,
-      "sha256": "b32c40df3357c9ee8e24250144495c4e5585de8829ee25b4f9f25a21c63892b9"
+      "bytes": 5950,
+      "sha256": "503f3f597b1dee36e365701d4718ae2fb0ae8188a67f07acc5642104bad2681f"
     },
     {
       "path": "server/npc/he.test.ts",
@@ -5519,8 +5664,8 @@
     },
     {
       "path": "server/npc/liu-prompt.ts",
-      "bytes": 7518,
-      "sha256": "d7b56a044a0f57902648fe1628fb7fc28a910eec955cc362ae36dd33e82f2261"
+      "bytes": 7706,
+      "sha256": "b145a3a57f61f08995f60c59ef7abb0e0b86b241c89a28aa3274fa888156acd9"
     },
     {
       "path": "server/npc/local-asr.py",
@@ -5544,13 +5689,18 @@
     },
     {
       "path": "server/npc/molly-plugin.ts",
-      "bytes": 11884,
-      "sha256": "f3aa391db2fcac484737e17c3ff02a5ed0fbdd6e18b8e0d223dfa00a8515b16f"
+      "bytes": 12462,
+      "sha256": "ffa46ff47deba42186aa354d372f93d9efa9b0742b3341b30d89fa6c3b86cbcc"
     },
     {
       "path": "server/npc/molly-prompt.ts",
-      "bytes": 9066,
-      "sha256": "d1705f8a01fc059691f3a52dcd4a8e858b2d05ebd258c64d022888cb05dd02fb"
+      "bytes": 9380,
+      "sha256": "2c1df1a08c38919d876e7097ca71c89152a17f449b1a93dd6f36cf5bf0bb215a"
+    },
+    {
+      "path": "server/npc/molly-report-demos.ts",
+      "bytes": 10951,
+      "sha256": "b45ef1903ff722d204572ab36db56b06d5e2c1f9b68bc9a4311590c40248a9fb"
     },
     {
       "path": "server/npc/moment-interactions.ts",
@@ -5569,13 +5719,13 @@
     },
     {
       "path": "server/npc/moment-relationships.ts",
-      "bytes": 12977,
-      "sha256": "3d07d54c29210958c32fafa7dad1d2449f68a85b72b63194e032f828b53798d2"
+      "bytes": 13075,
+      "sha256": "e176b9e9118ba9ed5608579f3de3b3d9403644dfffd6c6902f1247a399fe7350"
     },
     {
       "path": "server/npc/moments-plugin.ts",
-      "bytes": 54954,
-      "sha256": "e522c8a56f822ba6fbe71032bca2b10c6649bd90933e5a509a2de342124eb67a"
+      "bytes": 55076,
+      "sha256": "532a5806fa68d243ff02b7afa4dddb31c3341e5914cf4f4335a16aaa608ca2e7"
     },
     {
       "path": "server/npc/moments.ts",
@@ -5629,8 +5779,8 @@
     },
     {
       "path": "server/npc/prompt.ts",
-      "bytes": 6736,
-      "sha256": "0e2a2dff8a18c78db273fe526f160befb35a3d3361ecde0c80be09001ab1fc27"
+      "bytes": 6924,
+      "sha256": "e50254a617d45b4cade94c42bb2c4371478380047b645261807d22ac6b146612"
     },
     {
       "path": "server/npc/qwen-audio.ts",
@@ -5649,8 +5799,8 @@
     },
     {
       "path": "server/npc/realtime-speech-context.ts",
-      "bytes": 11577,
-      "sha256": "6e92a59cc3fc059f17099a2638369618238bc3bbad3f5d6218defe6f864996a4"
+      "bytes": 11675,
+      "sha256": "986766902f93f746b410041b8cd62e98a2746e685a395584e63fb79e4a35849e"
     },
     {
       "path": "server/npc/realtime-speech-gateway.ts",
@@ -5669,8 +5819,13 @@
     },
     {
       "path": "server/npc/reply-context.ts",
-      "bytes": 6231,
-      "sha256": "9314eff24ff2374651546efc1aba52cf6a20cb9aa0b9933e99129f77583a762c"
+      "bytes": 6325,
+      "sha256": "f59f64147768bf63a8783e596500fa504bf717df4684b4e13958b4dd36169bfd"
+    },
+    {
+      "path": "server/npc/report-demo-context.ts",
+      "bytes": 1213,
+      "sha256": "7f630f139b420ae8bb761ec0d16892103fa83c72596f039eea2b59e4800dddce"
     },
     {
       "path": "server/npc/scheduled-moments.ts",
@@ -5684,8 +5839,8 @@
     },
     {
       "path": "server/npc/secretary-plugin.ts",
-      "bytes": 5163,
-      "sha256": "0f9e6fa58d724872cfb325d3bb158953489572c055641172ea9aa2482522e72a"
+      "bytes": 5740,
+      "sha256": "e7d6f2ef4ca0c302cc957d04bf351b03a85916b6ae6dc393f48cb8fe200eb373"
     },
     {
       "path": "server/npc/secretary-reports.ts",
@@ -5694,8 +5849,8 @@
     },
     {
       "path": "server/npc/secretary-service.ts",
-      "bytes": 16266,
-      "sha256": "92e7c84e6aeda14fceaf8a54e38394c9b29436dbdace91aff09ca02187019497"
+      "bytes": 16779,
+      "sha256": "37aebd8b93da00a33940785699a8abcf8ea7ce08df621e699215d5babd710ca9"
     },
     {
       "path": "server/npc/secretary-tasks.ts",
@@ -5754,8 +5909,8 @@
     },
     {
       "path": "server/npc/yuan-prompt.ts",
-      "bytes": 4840,
-      "sha256": "067962c7f70b6fa2869d543e05e0bc7d3dfb76de3babbbe85f060e9c32853008"
+      "bytes": 5024,
+      "sha256": "a5e2c8a6e1c5c168fec279a94eae24c31a914f5dd498b5b3eea1031151e89c60"
     },
     {
       "path": "server/npc/zhou-chef-auth.test.ts",
@@ -5769,8 +5924,8 @@
     },
     {
       "path": "server/npc/zhou-chef-prompt.ts",
-      "bytes": 17423,
-      "sha256": "d794a26bbea8885d4dd34f41188301a41e8aa35a106c45c0e19df977a271bdf5"
+      "bytes": 17615,
+      "sha256": "9ef1cf70a53457ae77178c0f95f471eb0f4c90e6be76c5953cba0f5e074f8548"
     },
     {
       "path": "server/npc/zhou-chef-task-repair.test.ts",
