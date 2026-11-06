@@ -1,6 +1,6 @@
 {
-  "date": "2026-11-06",
-  "description": "Desktop menu and shared chat canvas, compact report bubbles, borderless glass, consistent profile/sidebar text with smaller status, and training cues only in expanded task content; portable identity retained, private runtime excluded.",
+  "date": "2026-11-07",
+  "description": "Desktop receipts and week dates, single references, native profile overflow, shared calendar glass, pet dialog and report settings, and inline Moments interactions; portable identity retained and private runtime excluded.",
   "files": [
     {
       "path": ".env.example",
@@ -229,8 +229,8 @@
     },
     {
       "path": "app/task-calendar/task-calendar.css",
-      "bytes": 15572,
-      "sha256": "62793cfc40412ca1cd0fbe8094929a65be1eb63ff95de94825d5c15e842bc155"
+      "bytes": 15987,
+      "sha256": "a663fee673bb98a705de8b61e0e645ab382bcbdfe8c9c494d74963d899074274"
     },
     {
       "path": "app/zhiyu/anchored-popup-motion.ts",
@@ -244,8 +244,8 @@
     },
     {
       "path": "app/zhiyu/app-settings.tsx",
-      "bytes": 7986,
-      "sha256": "748fdb4274261de8e11bc610dc224cd29129782e28857deb4c9171919ca435d6"
+      "bytes": 8213,
+      "sha256": "29e73bcb1de24d997b4773184cc2a1016566f2aaaf516d2676df2f4974ee3c45"
     },
     {
       "path": "app/zhiyu/app.css",
@@ -254,8 +254,8 @@
     },
     {
       "path": "app/zhiyu/app.tsx",
-      "bytes": 128866,
-      "sha256": "9983bc00d7d610e4e32edf16863691824335f1368467a3dec2665bc2bc161849"
+      "bytes": 125965,
+      "sha256": "8574e4f89da5155dcf432ab5c0cc065855f41f2d7267762568ad441155c4ce9c"
     },
     {
       "path": "app/zhiyu/application-shell.tsx",
@@ -314,8 +314,8 @@
     },
     {
       "path": "app/zhiyu/chat-add-menu.tsx",
-      "bytes": 4406,
-      "sha256": "f30d3051a9b45377a03e91f5dc3ccec41ced40b4dd8867b386177c8e0d4dce9b"
+      "bytes": 4345,
+      "sha256": "afa038565673a073cda84f1851391e5afe03a0c66659789cd86b5bfb9d02cd83"
     },
     {
       "path": "app/zhiyu/chat-composer.css",
@@ -404,8 +404,8 @@
     },
     {
       "path": "app/zhiyu/desktop-bridge.ts",
-      "bytes": 2160,
-      "sha256": "7f661d5abd23319db6768d5ee5b9146232127e275933a9fb7f60a617f7a44d17"
+      "bytes": 2949,
+      "sha256": "8b266703113f6503ed1f5f0036861d235345383c08288098579aa5e731d6bed5"
     },
     {
       "path": "app/zhiyu/directory-divider.tsx",
@@ -504,13 +504,13 @@
     },
     {
       "path": "app/zhiyu/group-member-stack.css",
-      "bytes": 2438,
-      "sha256": "cd928d06f505729ebe9479835a2a0b3c1f3aeb22a3fa7726ad97f5380fbc2dd3"
+      "bytes": 2297,
+      "sha256": "1e904214737ff078e4cbd69c25fbbc26a5d4f86416afc1c3ca92a490c2475f41"
     },
     {
       "path": "app/zhiyu/group-member-stack.tsx",
-      "bytes": 5011,
-      "sha256": "cd9717fbacecf48049de8ba86a129ad164f8ab5bbec0b78f02fe8c7582e2bfe1"
+      "bytes": 5009,
+      "sha256": "3936249bbbe837d2de1090409beb4d7e55ab07342d9c032b9f2bc2d6144cb166"
     },
     {
       "path": "app/zhiyu/group-memory.ts",
@@ -603,6 +603,16 @@
       "sha256": "ac52131a8da3816e9c80870de6138521fac9c218b057127174ce5e54a0590e76"
     },
     {
+      "path": "app/zhiyu/message-receipt.css",
+      "bytes": 320,
+      "sha256": "0ae6cdfc892323f7df9d2fef9e6c2e54d294d6d9bdfd0b26e3c7a708702a2c8a"
+    },
+    {
+      "path": "app/zhiyu/message-receipt.tsx",
+      "bytes": 742,
+      "sha256": "164e8767cf5fa67642bee83f7fb836aa001831c4cc4c668fa550d3a91d8eb866"
+    },
+    {
       "path": "app/zhiyu/message-visibility.ts",
       "bytes": 3031,
       "sha256": "2d5905d23c9a2e7d12c16c97248b76fe1cfa39fce4d43c2a7f83c35429027c34"
@@ -623,14 +633,34 @@
       "sha256": "4c6a63e291c45d1afa5def745d0575ef43a9a32d0e3ce5989de0b08be876fa74"
     },
     {
+      "path": "app/zhiyu/moment-comment-editor.tsx",
+      "bytes": 3992,
+      "sha256": "ca018038ac0c5fa111b6a6583c20d9117c3dc7c5267f21fca18c618e66c3da15"
+    },
+    {
+      "path": "app/zhiyu/moment-post-interactions.tsx",
+      "bytes": 3372,
+      "sha256": "50c237c964a5bf59b1a7c613dcb055b056cfad5796bba8dec5f67d5e75ee7c76"
+    },
+    {
+      "path": "app/zhiyu/moments-refinement.css",
+      "bytes": 7363,
+      "sha256": "ce2a27773da58442eb1c61bf8872baff68994128f0a281358d06e24ecf1b5d77"
+    },
+    {
       "path": "app/zhiyu/morning-reminder-settings.css",
-      "bytes": 4547,
-      "sha256": "d7df7292b7e739b428f6629c214bfd149cd52e0bad994c762d5469230152a800"
+      "bytes": 5518,
+      "sha256": "d74902eb0b6d0bf551c60c561b43098039341c567bdce27a6dc0c1ab6c6ab7df"
     },
     {
       "path": "app/zhiyu/morning-reminder-settings.tsx",
-      "bytes": 9211,
-      "sha256": "6336a9212ffe3073956fa835dbf434c9262c92ba2dc8c5d34cad3863d9632307"
+      "bytes": 8368,
+      "sha256": "4cb95fafcde392bd39a9e7a2aa451145681b09b39aab45005be863564e37dc6c"
+    },
+    {
+      "path": "app/zhiyu/native-profile-popover.tsx",
+      "bytes": 10489,
+      "sha256": "4c125bc3dc352a4d8e0a8676d40962ff1f794361d5a6124442dcdb0e501a6aa0"
     },
     {
       "path": "app/zhiyu/npc-contact-card.css",
@@ -678,14 +708,19 @@
       "sha256": "1cd5e73caf1f0fda850b28c619bc1446f576313a437c5aec7d34f582beb228a5"
     },
     {
+      "path": "app/zhiyu/pets-dialog.tsx",
+      "bytes": 1355,
+      "sha256": "d4c7af97916028c87ab3f44805094033a561884e99c71ddbad2a13e0a0debb3e"
+    },
+    {
       "path": "app/zhiyu/pets.css",
-      "bytes": 15232,
-      "sha256": "45bae69715c1bfa34f93cdac6d3ac7513b9624d1ed4fba052abfee67135aba62"
+      "bytes": 17113,
+      "sha256": "9bae1e2ca559cb171f0e28c92ae387f84d17d175b2fe77aaab6c344239dfab9d"
     },
     {
       "path": "app/zhiyu/pets.tsx",
-      "bytes": 17645,
-      "sha256": "7409a29d56371ac8ebc5f8b23af5b6f78e730e271531d9d3fd7b3786fcf5525f"
+      "bytes": 17338,
+      "sha256": "d4c9964d41756c792362921c27378dcd1c6f72f407164158c0aa23a51dd42e26"
     },
     {
       "path": "app/zhiyu/pressable-icon-button.css",
@@ -739,8 +774,8 @@
     },
     {
       "path": "app/zhiyu/profile-popover.tsx",
-      "bytes": 8604,
-      "sha256": "e4b74bc9423da6a64bcf7e5e12af2eeb1dc87ef8e17d359ba496ddc0bda98d28"
+      "bytes": 9487,
+      "sha256": "d489b972c5ee6f65406b294a3e8099c126113ea7fa5fa131c34ca81e14758ef0"
     },
     {
       "path": "app/zhiyu/rail-navigation.css",
@@ -834,8 +869,8 @@
     },
     {
       "path": "app/zhiyu/task-board/config.ts",
-      "bytes": 3620,
-      "sha256": "bc0cccc374bb0519faad36d06191f2f602ed92d50c621b2d7625dbfa30965867"
+      "bytes": 3614,
+      "sha256": "96b8cb876f929a68c106dcb1de0bd985195ee48437e7f67dd9b7bc0f9a29816d"
     },
     {
       "path": "app/zhiyu/task-board/data-source.ts",
@@ -939,13 +974,13 @@
     },
     {
       "path": "app/zhiyu/theme-frosted.css",
-      "bytes": 5203,
-      "sha256": "e75d71498020ebf9e974ac2f1dfaff0d5109efc2f8b8dff8bad9f49bbd785802"
+      "bytes": 6229,
+      "sha256": "034470139cdcd00a48ba542c9f801df9306ecbeba2095e233f3d9078edecb687"
     },
     {
       "path": "app/zhiyu/theme-glass.css",
-      "bytes": 19542,
-      "sha256": "a470e63690ebbfc9458f5b99d7d2b6c105cb1ffd211aa443fdf5643bca5db7ad"
+      "bytes": 19782,
+      "sha256": "cb9b6cde1db59b70845cd6568726edc322e10a4d935d1c4a1eec35421812ffcc"
     },
     {
       "path": "app/zhiyu/theme-motion.css",
@@ -1024,8 +1059,8 @@
     },
     {
       "path": "app/zhiyu/xia-xia.tsx",
-      "bytes": 40228,
-      "sha256": "2c4d0297e86878bbe5184a106ecf67e844fc6aa0fc02bc8b42b5fc5c35309b67"
+      "bytes": 42899,
+      "sha256": "4f2e9b7e236ebf3dc5b6f2e61127084ac52fd9956d372b9c9ebfc0d5a64ba41e"
     },
     {
       "path": "components.json",
@@ -1534,8 +1569,8 @@
     },
     {
       "path": "desktop/main.js",
-      "bytes": 26048,
-      "sha256": "e2581663a50ea98f00d19fead3f59034c004c88b7809f99ed9f2b34475150fb7"
+      "bytes": 27109,
+      "sha256": "cefd869adb08e79593294e5a9b7e016b8f2f2c97d24b94b8b9a2fa22fa20ecd4"
     },
     {
       "path": "desktop/package-lock.json",
@@ -1544,13 +1579,18 @@
     },
     {
       "path": "desktop/package.json",
-      "bytes": 1107,
-      "sha256": "4dd63a5b0bebb5543af21ec2bd9b67d874a372c56915ee29b1bc3b2edd46bd7e"
+      "bytes": 1136,
+      "sha256": "f7ace022202d689c4a6dcc08bf28bf7a164dc42837744c1bd542603fb914cf5b"
     },
     {
       "path": "desktop/preload.js",
-      "bytes": 2777,
-      "sha256": "e787e28f180bc89187a8dd522c98bd0a4114e4e9c6a7e7afed275d8930e05c12"
+      "bytes": 4150,
+      "sha256": "a8cb993fd023bf5961f5b9b92c35e675d40524f81e2b61c3d48328a443ea8b4c"
+    },
+    {
+      "path": "desktop/profile-popover.cjs",
+      "bytes": 8326,
+      "sha256": "b8b2992d293d01b4b860e691a9d1e32d06110bdd4c0718ccfc0ac216539eda89"
     },
     {
       "path": "desktop/service-status.html",
@@ -1574,18 +1614,18 @@
     },
     {
       "path": "desktop/tests/app-recovery.test.cjs",
-      "bytes": 13036,
-      "sha256": "8fc6fc6b5ac3e866bb7d59f91820483049f9b2af60b29b16f9445465e0305ba7"
+      "bytes": 13140,
+      "sha256": "b8d5b732344174ae2ddbf24e268e58ff180aee6c104c33fed465019e732d009b"
     },
     {
       "path": "desktop/tests/camera-permissions.test.cjs",
-      "bytes": 9377,
-      "sha256": "90a03d6ffebe6669226d98b5c9c97a65578dcf6a70f38b62bd572f378fa9a116"
+      "bytes": 9462,
+      "sha256": "adb7e75d2477345210aeed8084f22ffbc238bd56606e0dd57d65eeff18d05905"
     },
     {
       "path": "desktop/tests/character-window.test.cjs",
-      "bytes": 7013,
-      "sha256": "7ffe81c9737ea8cd987f2ffc10615fd0118c7b4c4124dcbeffd7db3c9fb5d783"
+      "bytes": 7104,
+      "sha256": "ea5bc47e5681102abbdaa7f9ac77b43f1295374ef73165e4f0d9305f7f203127"
     },
     {
       "path": "desktop/tests/image-viewer-native-fixture.cjs",
@@ -1611,6 +1651,11 @@
       "path": "desktop/tests/local-identity.test.cjs",
       "bytes": 3750,
       "sha256": "ebb44a30ac55b1e6215eaadb86d23d9f197db8d6e66ab74acd273fbd883aaf61"
+    },
+    {
+      "path": "desktop/tests/profile-popover.test.cjs",
+      "bytes": 7970,
+      "sha256": "90bd703ec172766ea9882072f1e39ff7c0653a0d22904ef7de319831651f3dc9"
     },
     {
       "path": "desktop/tests/service-supervisor.test.cjs",
@@ -1701,6 +1746,11 @@
       "path": "docs/history/prototypes/studio-page.tsx.source",
       "bytes": 21707,
       "sha256": "9a85d959573efe460a60f0cb9ef45ac1a2abb2ec09ee5791f618e3b84c031535"
+    },
+    {
+      "path": "docs/interface-updates-20261107.md",
+      "bytes": 2163,
+      "sha256": "cadcfdffe24bb986f961914a5f3891282f515fdf499e631f4be0e10a5843c690"
     },
     {
       "path": "docs/molly-reports/README.md",
@@ -2261,6 +2311,11 @@
       "path": "lib/npc/contracts.ts",
       "bytes": 8618,
       "sha256": "859ccb8be6cb6790ae3cf0ba7aa0a2bc43f35e8ae459fe4a187832c69f793358"
+    },
+    {
+      "path": "lib/npc/conversation-time.ts",
+      "bytes": 1808,
+      "sha256": "20bc6e5cd800b4d0dd9306412b8f51be48ae64f92e43abd22ea35a9f70c79c85"
     },
     {
       "path": "lib/npc/delivery.ts",
@@ -3559,8 +3614,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 1730,
-      "sha256": "4d79642c5fea49efcf3d1719161b61561d336a804047ea3562603cbcc9417150"
+      "bytes": 1758,
+      "sha256": "64edf5b0f6de30da1f5f39b5f91eacd998c55f9fe0df7beb623b507fb5a52357"
     },
     {
       "path": "public/desktop-npc/assets/20260927/xu-xiaoman/01-face-front-v1.png",
@@ -4693,6 +4748,11 @@
       "sha256": "0d0297bf0be74c39a7a6987eec1a297a5d9c5d1d0fa3aa0a4805cb0f73cf76d3"
     },
     {
+      "path": "scripts/test-chat-reference-selection.mjs",
+      "bytes": 8989,
+      "sha256": "da5c757dc8eeaff4a73b5b4ac6ef2a7e1b59080e12c3ece8b0041a1789803846"
+    },
+    {
       "path": "scripts/test-chat-voice.mjs",
       "bytes": 8170,
       "sha256": "24f91f8134e8614e155f4d76c653f73ad3c4cdf0ba3f0f2ca22cb3d12ece1a73"
@@ -4788,6 +4848,11 @@
       "sha256": "3fa59759360cbf844c8badb26e778040d8f02a62707b8ca4b71bae1a27aedad0"
     },
     {
+      "path": "scripts/test-delivery-week-dates.mjs",
+      "bytes": 4108,
+      "sha256": "d6a7f18b91c1e344a98db529214c1591b5ac6fe6bac34d65f0fb46c8065193aa"
+    },
+    {
       "path": "scripts/test-dialogue-layering.mjs",
       "bytes": 5583,
       "sha256": "6b51f2f0f8e14cc008301bbc51394d5ed313b299f0521688c1268ae51842b6e1"
@@ -4846,6 +4911,11 @@
       "path": "scripts/test-group-media.mjs",
       "bytes": 10855,
       "sha256": "ad9ec42b724ccd98393bee83b68358df6911a48affef7f1d0874e6738df186a7"
+    },
+    {
+      "path": "scripts/test-group-member-stack-default.mjs",
+      "bytes": 3457,
+      "sha256": "d75a045a6da747fedc6f9ba1e5040511c731d46f2969077e5d848bbe9ae44954"
     },
     {
       "path": "scripts/test-group-mentioned-and-natural.mjs",
@@ -5024,8 +5094,8 @@
     },
     {
       "path": "scripts/test-molly-report-settings.mjs",
-      "bytes": 7288,
-      "sha256": "19cbc807c5454a140efe67d402e43af9f6891a7c340cdda9a48743e6571da302"
+      "bytes": 8162,
+      "sha256": "abe0e0d5bcd0d2c838992eb6904511054857ffc3b1d4e2da2d66607c28902926"
     },
     {
       "path": "scripts/test-molly-runtime-boundaries.mjs",
@@ -5088,9 +5158,19 @@
       "sha256": "2a62a9322b32f29f2cfe4846f4f359e8905f8062f00f948c7a18df5d51f7008b"
     },
     {
+      "path": "scripts/test-moments-refinement.mjs",
+      "bytes": 10494,
+      "sha256": "a5c316d28114520fd64b5d591a93694a4d79278457208f5d509d9f1a35b97cba"
+    },
+    {
       "path": "scripts/test-moments-trained-runtime.mjs",
       "bytes": 23141,
       "sha256": "068efbd742dd6ded846094eec480d22c9c0492442358f3c87f3adceefcc2bf31"
+    },
+    {
+      "path": "scripts/test-native-profile-surface.mjs",
+      "bytes": 3205,
+      "sha256": "fb86a4515f27e49582cd64e031ff7ff3d646194614f28993d9ba537e4cdba19a"
     },
     {
       "path": "scripts/test-npc-approved-style.mjs",
@@ -5156,6 +5236,11 @@
       "path": "scripts/test-npc-test-runtime.mjs",
       "bytes": 2965,
       "sha256": "b21c6c8749303660a30a11415aa4d62593ced1e39f75409ea61d474d2f2ae7f2"
+    },
+    {
+      "path": "scripts/test-pets-settings-entry.mjs",
+      "bytes": 7331,
+      "sha256": "9d45d987f4a52d09981b9d5580246d365e365644a4eefdfe7d107c8bfb5cc379"
     },
     {
       "path": "scripts/test-private-chat-history.mjs",
@@ -5234,8 +5319,8 @@
     },
     {
       "path": "scripts/test-profile-popover-layout.mjs",
-      "bytes": 17497,
-      "sha256": "94a557d915ce49a21c6a048b7ed4f07fefd8e46d5e3bdaf461a9d24c1c54adf5"
+      "bytes": 17591,
+      "sha256": "bed1a19a6c6200f9afb483177f85a33f797d2c3a299dd9dc64437279c77c163d"
     },
     {
       "path": "scripts/test-realtime-call-presentation.mjs",

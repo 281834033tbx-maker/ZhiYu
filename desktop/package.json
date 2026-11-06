@@ -22,6 +22,7 @@
       "main.js",
       "preload.js",
       "image-viewer.js",
+      "profile-popover.cjs",
       "service-supervisor.cjs",
       "window-recovery.cjs",
       "service-status.html",

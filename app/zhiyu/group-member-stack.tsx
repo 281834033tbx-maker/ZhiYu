@@ -17,8 +17,8 @@ const minimumCellWidth = 40;
 const minimumGap = 4;
 
 export default function GroupMemberStack({members, displayNames, renderFace, addAction}: Props) {
-  const [expanded, setExpanded] = useState(false);
-  const [reserved, setReserved] = useState(false);
+  const [expanded, setExpanded] = useState(true);
+  const [reserved, setReserved] = useState(true);
   const [width, setWidth] = useState(276);
   const container = useRef<HTMLDivElement>(null);
   const listId = useId();

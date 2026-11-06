@@ -45,8 +45,6 @@ const limitedPets: ExplorePet[] = [
   id: `limited-${String(index + 1).padStart(2, '0')}`, name, description: limitedCaptions[index],
   appearance: index, imageSrc: `/pets/limited/${slug}${slug === 'dragonfruit-ballerina' ? '-display' : ['revived-macaw', 'banana-salmon', 'mecha-toad'].includes(slug) ? '-cutout' : ''}.png`, limited: true, priceCny: 18,
 }));
-const requestedPetGrantAccountId = 'a2377326-0b08-4200-868c-39b2273ee7ad';
-const requestedPetGrant = limitedPets[1];
 const currentPetImages = new Map([...regularPets, ...limitedPets].map(pet => [pet.id, pet.imageSrc]));
 const adoptableIds = new Set([...regularPets, ...limitedPets].map(pet => pet.id));
 // Older Shenzhen pets came from the previous adoption catalog. Keep their saved records.
@@ -79,7 +77,7 @@ function UprightPaw({ size = 18 }: { size?: number }) {
   </svg>;
 }
 
-function parsePetState(raw:string|null,accountId:string):PetState {
+function parsePetState(raw:string|null):PetState {
     let loadedState = initialState;
     try {
       const saved = raw;
@@ -108,9 +106,6 @@ function parsePetState(raw:string|null,accountId:string):PetState {
         }
       }
     } catch { loadedState = initialState; }
-    if (accountId === requestedPetGrantAccountId && !loadedState.pets.some(pet => pet.id === requestedPetGrant.id)) {
-      loadedState = { ...loadedState, pets: [...loadedState.pets, requestedPetGrant], selectedId: requestedPetGrant.id, visible: true };
-    }
   return loadedState;
 }
 const subscribeHydrated=()=>()=>{};
@@ -119,20 +114,21 @@ function subscribePetState(onChange:()=>void) {
   window.addEventListener('storage',onChange);
   return()=>{window.removeEventListener(PET_STATE_CHANGED_EVENT,onChange);window.removeEventListener('storage',onChange);};
 }
-export default function PetPage({ accountId, dirWidth, onDirectoryWidthChange }: {
+export default function PetPage({ accountId, dirWidth, onDirectoryWidthChange, embedded=false }: {
   accountId: string;
   dirWidth: number;
   onDirectoryWidthChange: (width: number) => void;
+  embedded?: boolean;
 }) {
-  return <PetPageSession key={accountId} accountId={accountId} dirWidth={dirWidth} onDirectoryWidthChange={onDirectoryWidthChange}/>;
+  return <PetPageSession key={accountId} accountId={accountId} dirWidth={dirWidth} onDirectoryWidthChange={onDirectoryWidthChange} embedded={embedded}/>;
 }
-function PetPageSession({accountId,dirWidth,onDirectoryWidthChange}:{accountId:string;dirWidth:number;onDirectoryWidthChange:(width:number)=>void}) {
+function PetPageSession({accountId,dirWidth,onDirectoryWidthChange,embedded}:{accountId:string;dirWidth:number;onDirectoryWidthChange:(width:number)=>void;embedded:boolean}) {
   const hydrated=useSyncExternalStore(subscribeHydrated,()=>true,()=>false);
   const storageKey = petStorageKey(accountId);
   const raw=useSyncExternalStore(subscribePetState,()=>{try{return localStorage.getItem(storageKey);}catch{return null;}},()=>null);
-  const state=useMemo(()=>parsePetState(raw,accountId),[raw,accountId]);
+  const state=useMemo(()=>parsePetState(raw),[raw]);
   const [section, setSection] = useState<'mine' | 'explore'>('mine');
-  const [discover, setDiscover] = useState<'pets' | 'dungeons' | null>(null);
+  const [discover, setDiscover] = useState<'pets' | 'dungeons' | null>(embedded?'pets':null);
   const [notice, setNotice] = useState('');
   const [dialog, setDialog] = useState<'rename' | null>(null);
   const [draftName, setDraftName] = useState('');
@@ -151,7 +147,7 @@ function PetPageSession({accountId,dirWidth,onDirectoryWidthChange}:{accountId:s
   },[state,storageKey,hydrated]);
   const setState=(update:PetState|((current:PetState)=>PetState))=>{
     try {
-      const current=parsePetState(localStorage.getItem(storageKey),accountId);
+      const current=parsePetState(localStorage.getItem(storageKey));
       const next=typeof update==='function'?update(current):update;
       localStorage.setItem(storageKey,JSON.stringify(next));
       window.dispatchEvent(new Event(PET_STATE_CHANGED_EVENT));
@@ -192,14 +188,14 @@ function PetPageSession({accountId,dirWidth,onDirectoryWidthChange}:{accountId:s
   };
 
   return <>
-    <aside className="zy-directory zy-pet-directory" style={{ width: dirWidth }} aria-label="多功能区">
+    {!embedded&&<><aside className="zy-directory zy-pet-directory" style={{ width: dirWidth }} aria-label="多功能区">
       <div className="zy-pet-directory-heading"><strong>多功能区</strong></div>
       <nav className="zy-pet-directory-nav" aria-label="多功能区入口">
         <button type="button" className={discover === 'pets' ? 'is-active' : ''} aria-current={discover === 'pets' ? 'page' : undefined} onClick={() => setDiscover('pets')}><UprightPaw /><span>宠物</span></button>
         <button type="button" className={discover === 'dungeons' ? 'is-active' : ''} aria-current={discover === 'dungeons' ? 'page' : undefined} onClick={() => { setDiscover('dungeons'); setNotice(''); }}><BookOpen size={18} /><span>副本</span></button>
       </nav>
     </aside>
-    <DirectoryDivider width={dirWidth} onWidthChange={onDirectoryWidthChange} label="调整宠物导航宽度"/>
+    <DirectoryDivider width={dirWidth} onWidthChange={onDirectoryWidthChange} label="调整宠物导航宽度"/></>}
     {discover === 'dungeons' ? <Dungeons onBack={() => setDiscover('pets')} /> : discover === 'pets' ? <section className="zy-pets" aria-label={section === 'mine' ? '我的宠物' : '去领养'}>
       <div className="zy-pets-inner">
         <nav className="zy-pets-tabs" aria-label="宠物">

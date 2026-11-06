@@ -39,7 +39,7 @@ async function fixture(platform='darwin') {
       assert.equal(type,'camera');asks.push(type);if(askFailure)throw Error('synthetic unavailable permission');return answer;
     }},
   };
-  const context=vm.createContext({require:name=>name==='electron'?electron:name==='./image-viewer'?{registerImageViewer:()=>({close(){}})}:name==='./local-identity.cjs'?{resolveLocalIdentity:()=>'synthetic-desktop-owner'}
+  const context=vm.createContext({require:name=>name==='electron'?electron:name==='./profile-popover.cjs'?{registerProfilePopover:()=>({attach(){},close(){}})}:name==='./image-viewer'?{registerImageViewer:()=>({close(){}})}:name==='./local-identity.cjs'?{resolveLocalIdentity:()=>'synthetic-desktop-owner'}
     :name==='./window-recovery.cjs'?{attachWindowRecovery:win=>({load:url=>win.loadURL(url),dispose(){},recover(){}})}
     :name==='./service-supervisor.cjs'?require('../service-supervisor.cjs'):require(name),
     __dirname:path.join(root,'desktop'),process:{...process,platform,on(){},resourcesPath:root,env:{...process.env,ZHIYU_PROJECT:root}},

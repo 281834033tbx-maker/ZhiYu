@@ -79,6 +79,7 @@ function fixture({ lock = true, ensureResult = Promise.resolve(true), stopResult
         dispose: () => { if (!item.disposals) item.disposals++; } };
       item.controller = controller; controllers.push(item); return controller;
     } };
+    if (name === './profile-popover.cjs') return {registerProfilePopover:()=>({attach(){},close(){}})};
     if (name === './image-viewer') return { registerImageViewer: () => ({ close() {} }) };
     if (name === './local-identity.cjs') return { resolveLocalIdentity: () => 'synthetic-owner' };
     throw Error('Unexpected production dependency: ' + name);

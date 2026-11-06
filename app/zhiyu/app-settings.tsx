@@ -8,6 +8,7 @@ import type { Person } from './data';
 import { useTheme } from './theme';
 import { useFontSize } from './font-size';
 import type { FontSize } from './font-config';
+import {ReportScheduleSettings} from './morning-reminder-settings';
 import './app-settings.css';
 
 function LogoutConfirmation({ onCancel, onConfirm }: { onCancel: () => void; onConfirm: () => Promise<void> }) {
@@ -115,6 +116,10 @@ export default function AppSettings({ person, username, onLogout, onClose }: {
         <div className="zy-settings-font-select"><select id="zy-font-size" aria-label="字体大小" disabled={theme.transitioning} value={fontSize} onChange={event => setFontSize(event.target.value as FontSize)}>
           {(['small','medium','large'] as const).map(size => <option key={size} value={size}>{FONT_LABELS[size]}</option>)}
         </select><ChevronDown size={15} aria-hidden="true"/></div>
+      </section>
+      <section className="zy-settings-section zy-settings-report-section">
+        <h3>简报与周报</h3>
+        <ReportScheduleSettings/>
       </section>
       <section className="zy-settings-section zy-settings-version">
         <div><h3>版本信息</h3><span>{desktopPackage.version}</span></div>

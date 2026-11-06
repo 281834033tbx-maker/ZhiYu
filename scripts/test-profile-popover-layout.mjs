@@ -133,6 +133,7 @@ function fixture({width = 1194, height = 870, anchorRect = {left: 260, top: 150,
     require(specifier) {
       if (specifier === 'react') return hooks;
       if (specifier === './profile-popover.css') return {};
+      if (specifier === './native-profile-popover') return {default:()=>null};
       if (specifier === './anchored-popup-motion') return motionExports;
       throw Error(`Unexpected import in isolated component: ${specifier}`);
     },
@@ -152,7 +153,7 @@ function fixture({width = 1194, height = 870, anchorRect = {left: 260, top: 150,
   const defaultClose = () => {closed++;};
   function render(close = defaultClose, nextAnchor = anchor) {
     hookIndex = 0;
-    element = exports.default({title: 'Synthetic profile', anchor: nextAnchor, close, children: 'Synthetic profile content'});
+    element = exports.AnchoredProfilePopover({title: 'Synthetic profile', anchor: nextAnchor, close, children: 'Synthetic profile content'});
     element.props.ref.current = node;
     for (const commit of pendingEffects.splice(0)) commit();
     return element;

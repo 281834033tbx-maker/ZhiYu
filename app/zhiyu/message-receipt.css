@@ -1,0 +1,5 @@
+/* Keep the existing timestamp grey for delivery; a confirmed read is blue. */
+html[data-zy-theme] .zy-app.zy-desktop.zy-page-chat :is(.xx-group-meta,.zy-message-time)>.zy-message-receipt.is-read,
+.zy-chat-screenshot .xx-group-meta>.zy-message-receipt.is-read {
+  color:var(--zy-interaction-ink,var(--zy-nav-active));
+}

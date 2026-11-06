@@ -35,6 +35,11 @@ import { SelfProfileCard } from './self-profile-card';
 import {appendLocalCharacterMessage,localCharacterChatKey,localCharacterIds,readLocalCharacterChat} from './local-character-chat';
 import BrandEntrance from './brand-entrance';
 import ChatComposer from './chat-composer';
+import MessageReceipt from './message-receipt';
+import MomentPostInteractions from './moment-post-interactions';
+import MomentCommentEditor from './moment-comment-editor';
+import './moments-refinement.css';
+import {formatConversationTime} from '../../lib/npc/conversation-time';
 import VoiceBubble from './voice-bubble';
 import ChatImage from './chat-image';
 import XiaxiaChat from './xia-xia';
@@ -72,7 +77,6 @@ import {
 import {
   MessageCircle,
   MessageSquare,
-  MessageSquareMore,
   Users,
   Compass,
   LayoutGrid,
@@ -81,7 +85,6 @@ import {
   MoreHorizontal,
   Video,
   Paperclip,
-  CheckCheck,
   Reply,
   Heart,
   MapPin,
@@ -126,7 +129,6 @@ import { bubblePosition } from './message-bubbles';
 const DESKTOP_LIQUID_BASE_ENABLED = true;
 
 type Modal =
-  | { kind: 'comments'; postId: string }
   | { kind: 'publish' }
   | { kind: 'image'; images: string[]; index: number }
   | { kind: 'settings' }
@@ -193,23 +195,6 @@ function Avatar({
       )}
     </span>
   );
-}
-
-function formatConversationTime(value?: string) {
-  if (!value) return { label: '', yesterday: false };
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return { label: '', yesterday: false };
-  const formatter = new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' });
-  const parts = Object.fromEntries(formatter.formatToParts(date).map(part => [part.type, part.value]));
-  const dayNumber = (year: string, month: string, day: string) => Date.UTC(Number(year), Number(month) - 1, Number(day)) / 86400000;
-  const today = Object.fromEntries(formatter.formatToParts(new Date()).map(part => [part.type, part.value]));
-  const dayDiff = dayNumber(today.year, today.month, today.day) - dayNumber(parts.year, parts.month, parts.day);
-  if (dayDiff === 1) return { label: `昨天 ${new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', hour: '2-digit', minute: '2-digit', hour12: false }).format(date)}`, yesterday: true };
-  if (dayDiff >= 2) {
-    const weekday = new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', weekday: 'long' }).format(date);
-    return { label: weekday, yesterday: false };
-  }
-  return { label: new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', hour: '2-digit', minute: '2-digit', hour12: false }).format(date), yesterday: false };
 }
 
 function Dialog({
@@ -383,7 +368,7 @@ function MomentChatScreenshot({post,person}:{post:Post;person:Person}) {
               {group.map((line,index)=><div className="xx-message" data-bubble-position={bubblePosition(index>0,index<group.length-1)} key={line.id}><div className="xx-bubble">{line.text}</div></div>)}
             </div>
           </div>
-          <div className="xx-group-meta"><time dateTime={last.at}>{new Date(last.at).toLocaleTimeString('zh-CN',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',hour12:false})}</time><CheckCheck size={17} className="read" aria-label="已读"/></div>
+          <div className="xx-group-meta"><time dateTime={last.at}>{new Date(last.at).toLocaleTimeString('zh-CN',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',hour12:false})}</time><MessageReceipt unreadLabel="已发送，未提供已读回执"/></div>
         </div>;
       })}
     </div>
@@ -454,8 +439,8 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
 
   const [page, setPage] = useState<Page>('chat');
   const [selected, setSelected] = useState('');
-  const [reportQuote,setReportQuote]=useState<{characterId:string;messageId:string;text?:string}|null>(null);
-  const [taskConversation, setTaskConversation] = useState<{npcId:string;task:BoardTask}|null>(null);
+  const [reportQuote,setReportQuote]=useState<{characterId:string;messageId:string;text?:string;referenceId:string}|null>(null);
+  const [taskConversation, setTaskConversation] = useState<{npcId:string;task:BoardTask;referenceId:string}|null>(null);
   const taskBoard=useTaskBoard(account.id);
   const professionalBoardTasks=useProfessionalTasks(account.id);
   const hasTaskInProgress=taskBoard.ready&&taskBoard.model.tasks.some(task=>task.date===taskBoard.model.today&&task.status==='in_progress');
@@ -540,8 +525,12 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
   const [accepted, setAccepted] = useState<string[]>([]);
   const [comment, setComment] = useState('');
   const [commentReply,setCommentReply]=useState<{id:string;name:string}|null>(null);
+  const [momentCommentTarget,setMomentCommentTarget]=useState<{accountId:string;postId:string;id:string}|null>(null);
+  const momentCommentTargetRef=useRef<typeof momentCommentTarget>(null);
   const [interactionBusy,setInteractionBusy]=useState('');
   const commentRequest=useRef<{key:string;id:string}|null>(null);
+  // oxlint-disable-next-line react/react-compiler -- Comment drafts belong to one account, never the next signed-in owner.
+  useEffect(()=>{momentCommentTargetRef.current=null;setMomentCommentTarget(null);setComment('');setCommentReply(null);setInteractionBusy('');commentRequest.current=null;},[account.id]);
   const [postText, setPostText] = useState('');
   const [postLocation, setPostLocation] = useState('');
   const [uploads, setUploads] = useState<string[]>([]);
@@ -1256,6 +1245,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
   }
   async function interactWithPost(post:Post, action:'like'|'comment', text='') {
     if(interactionBusy)return false;
+    const expectedScope=groupAccountScope.current;
     if(post.source!=='npc-moment') {
       if(action==='like')patchPost(post.id,{liked:!post.liked,likeCount:(post.likeCount||Number(post.liked))+ (post.liked?-1:1)});
       else patchPost(post.id,{comments:[...post.comments,{id:uid(),actorId:'self',name:self.nickname||self.name,text,time:now(),replyTo:commentReply?.id,replyToName:commentReply?.name}]});
@@ -1268,11 +1258,19 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       const response=await npcFetch(`/api/npc/moments/${encodeURIComponent(post.id)}/interaction`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,liked:!post.liked,text,name:self.nickname||self.name,requestId:commentRequest.current?.id,replyTo:commentReply?.id})});
       if(!response.ok){const data=await response.json() as {error?:string};throw Error(data.error||'互动未成功');}
       const data=await response.json() as {items:Array<Post & {createdAt:number;status:string}>};
+      if(groupAccountScope.current!==expectedScope)return false;
       receiveNpcPosts(data.items.filter(p=>p.status==='published').map(p=>({...p,time:new Date(p.createdAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),location:'',source:'npc-moment'})));
       if(action==='comment')commentRequest.current=null;
       window.dispatchEvent(new Event('npc-moments-changed'));return true;
-    }catch(e){notify(reportUserFacingError(e,'save','main'));return false;}
-    finally{setInteractionBusy('');}
+    }catch(e){if(groupAccountScope.current===expectedScope)notify(reportUserFacingError(e,'save','main'));return false;}
+    finally{if(groupAccountScope.current===expectedScope)setInteractionBusy('');}
+  }
+  function beginMomentComment(post:Post,reply?:{id:string;name:string}) {
+    const target={accountId:account.id,postId:post.id,id:uid()};
+    momentCommentTargetRef.current=target;setMomentCommentTarget(target);setComment('');setCommentReply(reply||null);
+  }
+  function cancelMomentComment() {
+    momentCommentTargetRef.current=null;setMomentCommentTarget(null);setComment('');setCommentReply(null);
   }
   function patchPost(id: string, patch: Partial<Post>) {
     setPosts((ps) => ps.map((p) => (p.id === id ? { ...p, ...patch } : p)));
@@ -1386,10 +1384,6 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     ...(post.likes||[]).filter(like=>like.actorId!=='self').map(like=>({id:`like:${post.id}:${like.actorId}`,postId:post.id,name:like.name,action:'赞了你的动态',detail:post.text,time:post.createdAt||post.time,sortAt:Date.parse(post.createdAt||'')||0})),
     ...post.comments.filter(comment=>!!comment.actorId&&comment.actorId!=='self').map(comment=>({id:`comment:${post.id}:${comment.id}`,postId:post.id,name:comment.name,action:'评论了你的动态',detail:comment.text,time:comment.time,sortAt:Date.parse(comment.time)||Date.parse(post.createdAt||'')||0})),
   ]).sort((a,b)=>b.sortAt-a.sortAt).slice(0,30);
-  const activePost =
-    modal?.kind === 'comments'
-      ? posts.find((p) => p.id === modal.postId)
-      : null;
   const close = () => {
     setModal(null);
     setComment('');
@@ -1639,7 +1633,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
           onConfirmPlan={(planId,requestId)=>groupChats.confirmPlan(activeGroup.id,planId,requestId)}
           onReminder={(reminderId,operation,requestId)=>groupChats.reminder(activeGroup.id,reminderId,operation,requestId)}
         />}
-        {page === 'chat' && (selected === 'xia-xia'||selected === 'molly'||selected === 'yuan-xiaoman'||selected === 'liu'||selected === 'chen-nian'||selected === 'he-jiawei'||selected === 'zhou-chef') && <XiaxiaChat key={`${account.id}:${selected}`} onForward={beginForward} taskPageContext={taskConversation?.npcId===selected?taskPageContextFor(taskConversation.task):undefined} onDismissTaskPageContext={()=>setTaskConversation(null)} onOpenTasks={openTasks} onOpenGroup={id=>{const group=groupChats.groups.find(item=>item.id===id);if(group)openChat(groupPerson(group));else notify('群聊正在同步，请稍后再试。');}} displayName={person.name} character={selected} legacyDraft={selected==='zhou-chef'?drafts[selected]:undefined} onLegacyDraftConsumed={()=>setDrafts(previous=>({...previous,[selected]:''}))} companion={displayPet} onProfile={anchor=>openProfile(person,anchor)} reportQuote={reportQuote?.characterId===selected?reportQuote:undefined} onReportQuoteConsumed={()=>setReportQuote(null)} onOpenNpc={(id,quoteId,text)=>{const p=people.find(p=>p.id===id);if(p){if(quoteId)setReportQuote({characterId:id,messageId:quoteId,text});openChat(p);}}} onDesktop={()=>openDesktopCharacter(selected)} onCalendar={person.dialoguePurpose==='professional' && person.id!=='molly'?()=>openTaskCalendar(selected):undefined} desktopOpen={dockPersonId===selected} onRealtimeCall={()=>openDesktopCharacter(selected)} onCreateGroup={()=>openGroupDialog(person)} onBeforeSend={selected==='molly'?undefined:text=>interceptGroupRequest(text,selected)} muted={isChatMuted(selected)} onToggleMute={()=>{void toggleChatMute(selected);}} pinned={isChatPinned(selected)} onTogglePin={selected==='molly'?undefined:()=>{void toggleChatPin(selected);}} />}
+        {page === 'chat' && (selected === 'xia-xia'||selected === 'molly'||selected === 'yuan-xiaoman'||selected === 'liu'||selected === 'chen-nian'||selected === 'he-jiawei'||selected === 'zhou-chef') && <XiaxiaChat key={`${account.id}:${selected}`} onForward={beginForward} taskPageContext={taskConversation?.npcId===selected?taskPageContextFor(taskConversation.task):undefined} taskPageContextKey={taskConversation?.npcId===selected?taskConversation.referenceId:undefined} onDismissTaskPageContext={()=>setTaskConversation(null)} onOpenTasks={openTasks} onOpenGroup={id=>{const group=groupChats.groups.find(item=>item.id===id);if(group)openChat(groupPerson(group));else notify('群聊正在同步，请稍后再试。');}} displayName={person.name} character={selected} legacyDraft={selected==='zhou-chef'?drafts[selected]:undefined} onLegacyDraftConsumed={()=>setDrafts(previous=>({...previous,[selected]:''}))} companion={displayPet} onProfile={anchor=>openProfile(person,anchor)} reportQuote={reportQuote?.characterId===selected?reportQuote:undefined} onReportQuoteConsumed={referenceId=>setReportQuote(current=>!referenceId||current?.referenceId===referenceId?null:current)} onOpenNpc={(id,quoteId,text)=>{const p=people.find(p=>p.id===id);if(p){if(quoteId){setTaskConversation(null);setReportQuote({characterId:id,messageId:quoteId,text,referenceId:crypto.randomUUID()});}openChat(p);}}} onDesktop={()=>openDesktopCharacter(selected)} onCalendar={person.dialoguePurpose==='professional' && person.id!=='molly'?()=>openTaskCalendar(selected):undefined} desktopOpen={dockPersonId===selected} onRealtimeCall={()=>openDesktopCharacter(selected)} onCreateGroup={()=>openGroupDialog(person)} onBeforeSend={selected==='molly'?undefined:text=>interceptGroupRequest(text,selected)} muted={isChatMuted(selected)} onToggleMute={()=>{void toggleChatMute(selected);}} pinned={isChatPinned(selected)} onTogglePin={selected==='molly'?undefined:()=>{void toggleChatPin(selected);}} />}
         {page === 'chat' && !activeGroup && !selected.startsWith('group-') && selected !== '' && selected !== 'xia-xia' && selected !== 'molly' && selected !== 'yuan-xiaoman' && selected !== 'liu' && selected !== 'chen-nian' && selected !== 'he-jiawei' && selected !== 'zhou-chef' && (
           <section className="zy-chat" aria-label="聊天内容">
             <LocalChatHeader key={`${account.id}:${selected}`} messages={visibleMessages[selected]||[]} self={self} thread={thread} name={person.name} avatar={person.avatar} bio={person.bio} status={statusFor(person.id)} dialoguePurpose={person.dialoguePurpose} professionalTitle={person.professionalProfile?.title||person.professionalTitle} onProfile={anchor=>openProfile(person,anchor)}  onDesktop={()=>openDesktopCharacter(selected)} onCalendar={person.dialoguePurpose==='professional' && person.id!=='molly'?()=>openTaskCalendar(selected):undefined} desktopOpen={dockPersonId===selected} onCreateGroup={()=>openGroupDialog(person)} muted={isChatMuted(selected)} onToggleMute={()=>{void toggleChatMute(selected);}} pinned={isChatPinned(selected)} onTogglePin={()=>{void toggleChatPin(selected);}} onClear={()=>clearLocalChat(selected)}/>
@@ -1724,9 +1718,10 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                           {last && (
                             <small className="zy-message-time">
                               {m.time}
-                              <CheckCheck
+                              <MessageReceipt
                                 size={16}
-                                className={m.read ? 'read' : ''}
+                                read={!!m.read}
+                                unreadLabel={m.mine?'已保存至本机，未读':'未读'}
                               />
                               <span className="zy-sr">
                                 {m.read
@@ -1794,7 +1789,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
           </section>
         )}
         {page === 'me'&&<section className="zy-me-page" aria-label="我"><header><h1>我</h1></header><div className="zy-me-card"><button type="button" className="zy-me-avatar" onClick={event=>openProfile(self,event.currentTarget)} aria-label="编辑我的资料"><Avatar person={self} size={60}/></button><h2>{self.nickname||self.name}</h2><p>{self.bio}</p><button type="button" onClick={event=>openProfile(self,event.currentTarget)}>编辑资料</button></div><button className="zy-me-settings" type="button" onClick={()=>setModal({kind:'settings'})}>设置<ChevronRight size={18}/></button></section>}
-        {page === 'tasks' && <TaskBoard key={account.id} board={taskBoard} dirWidth={dirWidth} onDirectoryWidthChange={setDirWidth} onOpenConversation={(npcId,task)=>{const target=[molly,...people].find(item=>item.id===npcId);if(target){if(task){setTaskConversation({npcId,task});}else setTaskConversation(null);openChat(displayPerson(target));}}}/>}
+        {page === 'tasks' && <TaskBoard key={account.id} board={taskBoard} dirWidth={dirWidth} onDirectoryWidthChange={setDirWidth} onOpenConversation={(npcId,task)=>{const target=[molly,...people].find(item=>item.id===npcId);if(target){if(task){setReportQuote(null);setTaskConversation({npcId,task,referenceId:crypto.randomUUID()});}else setTaskConversation(null);openChat(displayPerson(target));}}}/>}
         {page === 'pets' && <PetPage accountId={account.id} dirWidth={dirWidth} onDirectoryWidthChange={setDirWidth} />}
         {page === 'moments' && (
           <section className="zy-moments" ref={feed} aria-label="好友动态">
@@ -1816,7 +1811,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                 <button type="button" className="zy-moments-tool" aria-label="发布动态" title="发布动态" onClick={()=>setModal({kind:'publish'})}><Camera size={19}/></button>
               </div>
               <button
-                className="zy-self-cover-avatar"
+                className="zy-self-cover-avatar zy-moments-cover-profile"
                 aria-label={filter ? `查看${personById(filter).name}的资料` : '查看我的资料'}
                 onClick={event => openProfile(filter ? personById(filter) : self, event.currentTarget.querySelector<HTMLElement>('.zy-avatar') || event.currentTarget)}
               >
@@ -1826,15 +1821,9 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                       ? personById(filter)
                       : self
                   }
-                  size={114}
+                  size={64}
                 />
               </button>
-            </div>
-            <div className="zy-moments-identity">
-              <h1 className={filter ? '' : 'zy-signature'}>
-                {filter ? personById(filter).name : self.nickname||self.account}
-              </h1>
-              <p>{filter ? personById(filter).bio : self.bio}</p>
             </div>
             <div className="zy-feed-stream">
               {filter && (
@@ -1860,17 +1849,16 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                                 ? { ...author, avatar: asset('moments', 7) }
                                 : author
                           }
-                          size={56}
-                          ring
+                          size={42}
                         />
                         <span>
                           <span>
                             <strong>{author.name}</strong>
-                            <time>{post.time}</time>
                           </span>
-                          <small>{author.bio}</small>
+                          {author.id!=='self'&&<small className="zy-character-status zy-moment-status">{statusFor(author.id)}</small>}
                         </span>
                       </button>
+                      <time className="zy-post-published-time" dateTime={post.createdAt}>{post.time}</time>
                       <div className="zy-menu-anchor">
                         <IconButton
                           label={`${author.name}动态更多操作`}
@@ -1924,34 +1912,13 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                         {post.location}
                       </div>
                     )}
-                    <div className="zy-post-actions">
-                      <IconButton
-                        label={`${post.liked ? '取消点赞' : '点赞'}${author.name}的动态`}
-                        pressed={post.liked}
-                        className={post.liked ? 'liked' : ''}
-                        disabled={interactionBusy===post.id}
-                        onClick={() => void interactWithPost(post,'like')}
-                      >
-                        <Heart
-                          size={23}
-                          fill={post.liked ? 'currentColor' : 'none'}
-                        />
-                        <span className="zy-interaction-count">{post.likeCount??Number(post.liked)}</span>
-                      </IconButton>
-                      <IconButton
-                        label={`评论${author.name}的动态`}
-                        className={post.comments.length ? 'commented' : ''}
-                        onClick={() => {
-                          setComment('');setCommentReply(null);
-                          setModal({ kind: 'comments', postId: post.id });
-                        }}
-                      >
-                        {post.comments.length ? <MessageSquareMore size={22} fill="currentColor" className="zy-comment-filled"/> : <MessageSquare size={22} />}
-                        <span className="zy-interaction-count">{post.comments.length}</span>
-                      </IconButton>
-                    </div>
-                    {!!post.likes?.length && <div className="zy-post-likers"><Heart size={13}/>{post.likes.map(l=>l.actorId==='self'?(self.nickname||self.name):personById(l.actorId).name).join('、')}</div>}
-                    {!!post.comments.length && <div className="zy-post-comments" aria-label="动态评论">{post.comments.map(c=><div className="zy-inline-comment" key={c.id}><button onClick={()=>{setCommentReply({id:c.id,name:c.name});setComment('');setModal({kind:'comments',postId:post.id});}}><strong>{c.actorId==='self'?(self.nickname||self.name):c.name}</strong>{c.replyToName && <span> 回复 <strong>{c.replyToName}</strong></span>}：{c.text}</button></div>)}</div>}
+                    <MomentPostInteractions post={post} authorName={author.name} selfName={self.nickname||self.name}
+                      actorName={(id,fallback)=>[molly,...allPeople].some(person=>person.id===id)?personById(id).name:fallback} busy={interactionBusy===post.id}
+                      onLike={()=>void interactWithPost(post,'like')} onComment={()=>beginMomentComment(post)} onReply={reply=>beginMomentComment(post,reply)}
+                      editor={momentCommentTarget?.accountId===account.id&&momentCommentTarget.postId===post.id?<MomentCommentEditor key={`${account.id}:${post.id}:${momentCommentTarget.id}`}
+                        value={comment} onChange={setComment} disabled={!!interactionBusy} replyName={commentReply?.name} onCancelReply={()=>setCommentReply(null)} onCancel={cancelMomentComment}
+                        onSubmit={async()=>{const target=momentCommentTargetRef.current;if(!target||target.accountId!==account.id||target.postId!==post.id||!comment.trim()||interactionBusy)return;
+                          if(await interactWithPost(post,'comment',comment.trim())&&momentCommentTargetRef.current?.id===target.id){setComment('');setCommentReply(null);}}}/>:undefined}/>
                   </article>
                 );
               })}
@@ -2010,58 +1977,6 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       />
       {modal?.kind === 'image' && (
         <Lightbox images={modal.images} start={modal.index} close={close} />
-      )}
-      {modal?.kind === 'comments' && activePost && (
-        <Dialog title="互动与评论" close={close} className="zy-comment-dialog">
-          <div className="zy-comment-context">
-            <strong>{personById(activePost.personId).name}</strong>
-            <p>{activePost.text}</p>
-          </div>
-          <div className="zy-comments">
-            {activePost.comments.length ? (
-              activePost.comments.map((c) => (
-                <div className="zy-comment" key={c.id}>
-                  <Avatar person={c.actorId&&c.actorId!=='self'?personById(c.actorId):{...self,name:c.name}} size={34} />
-                  <div>
-                    <strong>
-                      {c.name}
-                      <time>{c.time}</time>
-                    </strong>
-                    <p>{c.replyToName && <span>回复 {c.replyToName}： </span>}{c.text}</p>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="zy-empty">
-                <MessageCircle />
-                <p>还没有评论，留下第一句回应吧。</p>
-              </div>
-            )}
-          </div>
-          <form
-            className="zy-comment-form"
-            onSubmit={async (e) => {
-              e.preventDefault();
-              if (!comment.trim() || interactionBusy) return;
-              if(await interactWithPost(activePost,'comment',comment.trim())){setComment('');setCommentReply(null);}
-            }}
-          >
-            <input
-              aria-label="评论内容"
-              placeholder={commentReply?`回复 ${commentReply.name}…`:"写下一句回应…"}
-              value={comment}
-              maxLength={1000}
-              onChange={(e) => setComment(e.target.value)}
-            />
-            <button
-              className="zy-primary"
-              disabled={!comment.trim()||!!interactionBusy}
-              type="submit"
-            >
-              发送
-            </button>
-          </form>
-        </Dialog>
       )}
       {modal?.kind === 'publish' && (
         <Dialog title="记录此刻" close={close} className="zy-publish-dialog">

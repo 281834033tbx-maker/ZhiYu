@@ -99,6 +99,22 @@ const imageViewer = require('./image-viewer').registerImageViewer({
     sender.getURL().startsWith(URL)),
 });
 
+// The profile's React tree stays in the main renderer, while a strictly named
+// transparent child supplies screen space outside the main window's bounds.
+// oxlint-disable-next-line typescript/no-require-imports -- Native-only module.
+const profilePopover = require('./profile-popover.cjs').registerProfilePopover({
+  ipcMain,screen,baseURL:URL,getParent:()=>mainWindow,
+  allowExistingWindow:details=>{
+    try {
+      const target=new globalThis.URL(details.url),base=new globalThis.URL(URL);
+      if(target.origin!==base.origin||target.username||target.password)return false;
+      if(target.pathname==='/task-calendar')return ['zhiyu-task-calendar-compact','zhiyu-task-calendar-frosted'].includes(details.frameName)&&!!taskCalendarURL(target.href);
+      if(target.pathname==='/character-window')return details.frameName==='zhiyu-character'&&characterIds.has(target.searchParams.get('npc'));
+      return target.pathname==='/image-viewer'&&/^zhiyu-image-[\w-]+$/.test(details.frameName);
+    }catch{return false;}
+  },
+});
+
 function isTrustedWindow(event) {
   return [mainWindow, characterWindow].some(win =>
     win && !win.isDestroyed() && win.webContents === event.sender &&
@@ -539,6 +555,7 @@ void app.whenReady().then(async () => {
     },
   });
   mainWindow = win;
+  profilePopover.attach(win);
   configureMediaPermissions(win.webContents.session);
   win.webContents.on('did-create-window', (child, details) => trackTaskCalendarWindow(child, details.url));
   win.setMenuBarVisibility(false);

@@ -3,9 +3,30 @@
 import {useLayoutEffect, useRef, type KeyboardEvent, type ReactNode} from 'react';
 import {createAnchoredPopupMotion} from './anchored-popup-motion';
 import './profile-popover.css';
+import NativeProfilePopover from './native-profile-popover';
+
+type ProfilePopoverProps = {
+  title: string;
+  anchor: HTMLElement | null;
+  close: () => void;
+  className?: string;
+  children: ReactNode;
+};
+
+/** Native profiles may exceed the main App; browser cards retain safe bounds. */
+export default function ProfilePopover(props:ProfilePopoverProps) {
+  const bridge=typeof window==='undefined'?undefined:window.zhiyuDesktop;
+  if(props.anchor&&bridge?.platform==='darwin'&&bridge.profilePopoverControl==='native-v1'
+    &&bridge.prepareProfilePopover&&bridge.fitProfilePopover&&bridge.closeProfilePopover
+    &&!props.className?.includes('zy-self-profile-popover')) {
+    return <NativeProfilePopover {...props} anchor={props.anchor} className={props.className||''}
+      fallback={<AnchoredProfilePopover {...props}/>}/>;
+  }
+  return <AnchoredProfilePopover {...props}/>;
+}
 
 /** A non-modal top-layer card anchored to the actual avatar that opened it. */
-export default function ProfilePopover({title, anchor, close, className = '', children}: {
+export function AnchoredProfilePopover({title, anchor, close, className = '', children}: {
   title: string;
   anchor: HTMLElement | null;
   close: () => void;

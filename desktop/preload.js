@@ -3,9 +3,32 @@
 // oxlint-disable-next-line typescript/no-require-imports -- Native Electron / .cjs harness requires CommonJS at this boundary.
 const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('zhiyuDesktop', {
+// Chromium may inherit the opener's preload for about:blank. The profile's
+// script-created document needs no bridge of its own; only its opener fits it.
+const profileSurface = typeof window !== 'undefined' && window.location.href === 'about:blank'
+  && window.name.startsWith('zhiyu-profile-');
+if (!profileSurface) contextBridge.exposeInMainWorld('zhiyuDesktop', {
   platform: process.platform,
   nativeMaterial: process.argv.includes('--zhiyu-native-material'),
+  profilePopoverControl: process.argv.includes('--zhiyu-native-material') ? 'native-v1' : undefined,
+  prepareProfilePopover: payload => ipcRenderer.invoke('zhiyu:profile-prepare', payload),
+  fitProfilePopover: payload => ipcRenderer.invoke('zhiyu:profile-fit', payload),
+  closeProfilePopover: id => ipcRenderer.invoke('zhiyu:profile-close', id),
+  onProfilePopoverLayout: listener => {
+    const handler = (_event, value) => listener(value);
+    ipcRenderer.on('zhiyu:profile-layout', handler);
+    return () => ipcRenderer.removeListener('zhiyu:profile-layout', handler);
+  },
+  onProfilePopoverDismiss: listener => {
+    const handler = (_event, value) => listener(value.id);
+    ipcRenderer.on('zhiyu:profile-dismiss', handler);
+    return () => ipcRenderer.removeListener('zhiyu:profile-dismiss', handler);
+  },
+  onProfilePopoverClosed: listener => {
+    const handler = (_event, value) => listener(value.id);
+    ipcRenderer.on('zhiyu:profile-closed', handler);
+    return () => ipcRenderer.removeListener('zhiyu:profile-closed', handler);
+  },
   taskCalendarWindowControl: 'reveal-v1',
   revealTaskCalendarWindow: expectedURL => ipcRenderer.invoke('zhiyu:task-calendar-reveal', expectedURL),
   requestMicrophoneAccess: () => ipcRenderer.invoke('zhiyu:microphone-request'),

@@ -36,7 +36,7 @@ const electron = {
   ipcMain: { handle: (key, handler) => handlers.set(key, handler) },
 };
 const context = vm.createContext({
-  require: name => name === 'electron' ? electron : name === './image-viewer' ? {registerImageViewer:()=>({close(){}})}
+  require: name => name === 'electron' ? electron : name === './profile-popover.cjs' ? {registerProfilePopover:()=>({attach(){},close(){}})} : name === './image-viewer' ? {registerImageViewer:()=>({close(){}})}
     : name === './window-recovery.cjs' ? {attachWindowRecovery:win=>({load:url=>win.loadURL(url),dispose(){},recover(){}})}
     : name === './service-supervisor.cjs' ? require('../service-supervisor.cjs') : name === './local-identity.cjs' ? require('../local-identity.cjs') : require(name),
   process: { ...process, on() {}, resourcesPath: project, env: { ...process.env, ZHIYU_PROJECT: project, ZHIYU_NPC_ID: 'test-character-window' } },

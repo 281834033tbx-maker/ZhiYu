@@ -7,8 +7,8 @@ import ts from 'typescript';
 // There is no browser, actual account, network request or production write.
 const source=readFileSync('app/zhiyu/morning-reminder-settings.tsx','utf8');
 const compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
-const hooks=[],effects=[],posts=[];
-let cursor=0,serverSettings={enabled:true,time:'07:00',weeklyEnabled:true,weeklyDay:0,weeklyTime:'21:30'};
+const hooks=[],effects=[],posts=[],requests=[];
+let cursor=0,serverSettings={enabled:true,time:'07:00',weeklyEnabled:true,weeklyDay:0,weeklyTime:'21:30',city:{name:'合成城市',source:'manual'}};
 const jsx=(type,props)=>({type,props:props||{}});
 const react={
   useState(initial){const index=cursor++;if(!(index in hooks))hooks[index]=typeof initial==='function'?initial():initial;return [hooks[index],value=>{hooks[index]=typeof value==='function'?value(hooks[index]):value;}];},
@@ -23,7 +23,7 @@ const sandboxModule={exports:{}},dependencies={
   './auth-gate':{useAccount:()=>({account:{id:'isolated-settings-owner'}})},
   './npc-fetch':{npcFetch:(_url,init)=>{
     if(!init?.method||init.method==='GET')return Promise.resolve({ok:true,json:async()=>({settings:structuredClone(serverSettings)})});
-    const body=JSON.parse(init.body);let resolve;
+    const body=JSON.parse(init.body);requests.push(body);let resolve;
     const receipt=new Promise(done=>{resolve=done;});posts.push({body,resolve});return receipt;
   }},
   '../../lib/user-facing-errors':{reportUserFacingError:(_reason,_kind,label)=>`${label}失败，请重试`},
@@ -35,57 +35,61 @@ const nodes=value=>Array.isArray(value)?value.flatMap(nodes):value&&typeof value
 const text=value=>Array.isArray(value)?value.map(text).join(''):value&&typeof value==='object'&&'props'in value?text(value.props.children):typeof value==='string'||typeof value==='number'?String(value):'';
 const render=()=>{cursor=0;const tree=Dialog(root.props);while(effects.length)effects.shift()();return tree;};
 const settle=()=>new Promise(resolve=>setImmediate(resolve));
-const timeInputs=tree=>nodes(tree).filter(node=>node.type==='input'&&node.props.type==='time');
-const weeklyDay=tree=>nodes(tree).find(node=>node.type==='select');
-const button=(tree,label)=>nodes(tree).find(node=>node.type==='button'&&text(node)===label);
+const timeSelect=(tree,kind,part)=>nodes(tree).find(node=>node.type==='select'&&node.props['aria-label']===`${kind==='daily'?'简报':'周报'}时间${part==='hour'?'小时':'分钟'}`);
+const changeTime=(tree,kind,part,value)=>timeSelect(tree,kind,part).props.onChange({currentTarget:{value}});
+const valueTime=(tree,kind)=>timeSelect(tree,kind,'hour').props.value+':'+timeSelect(tree,kind,'minute').props.value;
+const weeklyDay=tree=>nodes(tree).find(node=>node.type==='select'&&node.props['aria-label']==='周报星期');
+const switchFor=(tree,label)=>nodes(tree).find(node=>node.type==='button'&&node.props.role==='switch'&&node.props['aria-label']===label);
 async function finishPost(success=true){const pending=posts.shift();assert.ok(pending,'Expected an in-flight request');if(success&&pending.body.action==='settings'){const {action:_action,...next}=pending.body;serverSettings=next;}pending.resolve({ok:success,json:async()=>success?{settings:structuredClone(serverSettings)}:{error:'synthetic save failure'}});await settle();return pending;}
 try {
   render();await settle();let tree=render();
-  assert.equal(timeInputs(tree)[0].props.value,'07:00');assert.equal(timeInputs(tree)[1].props.value,'21:30');
+  assert.equal(valueTime(tree,'daily'),'07:00');assert.equal(valueTime(tree,'weekly'),'21:30');
   assert.equal(weeklyDay(tree).props.value,0);
-  timeInputs(tree)[0].props.onInput({currentTarget:{value:'22:00'}});tree=render();
-  assert.equal(posts.length,1);assert.equal(timeInputs(tree)[0].props.disabled,false,'native hour/minute editing must keep its input active during save');
-  timeInputs(tree)[0].props.onInput({currentTarget:{value:'22:15'}});tree=render();
+  assert.equal(nodes(tree).filter(node=>node.type==='input'&&node.props.type==='time').length,0,'native AM/PM segments are not used');
+  assert.equal(nodes(tree).filter(node=>node.type==='select').length,5,'two explicit 24-hour times and one weekday');
+  assert.doesNotMatch(text(tree),/演示|重新生成|城市|AM|PM/,'product settings expose only switches and schedule controls');
+  assert.equal(nodes(timeSelect(tree,'daily','hour').props.children).filter(node=>node.type==='option').length,24);
+  changeTime(tree,'daily','hour','22');tree=render();
+  assert.equal(posts.length,1);assert.equal(timeSelect(tree,'daily','minute').props.disabled,false,'hour/minute controls stay editable while saving');
+  changeTime(tree,'daily','minute','15');tree=render();
   weeklyDay(tree).props.onChange({currentTarget:{value:'3'}});tree=render();
-  timeInputs(tree)[1].props.onInput({currentTarget:{value:'21:45'}});tree=render();
+  changeTime(tree,'weekly','minute','45');tree=render();
   assert.equal(posts.length,1,'settings requests are serial');
-  assert.equal(timeInputs(tree)[0].props.value,'22:15');assert.equal(weeklyDay(tree).props.value,3);
+  assert.equal(valueTime(tree,'daily'),'22:15');assert.equal(weeklyDay(tree).props.value,3);
   await finishPost();tree=render();
   assert.equal(posts.length,1,'newest edits are sent after the older receipt');
   assert.equal(posts[0].body.time,'22:15');assert.equal(posts[0].body.weeklyDay,3);assert.equal(posts[0].body.weeklyTime,'21:45');
-  assert.equal(timeInputs(tree)[0].props.value,'22:15','a stale receipt cannot overwrite a newer native input');
+  assert.equal(valueTime(tree,'daily'),'22:15','a stale receipt cannot overwrite a newer input');
   await finishPost();tree=render();assert.match(text(tree),/已保存/);
-  assert.equal(serverSettings.time,'22:15');assert.equal(serverSettings.weeklyDay,3);assert.equal(serverSettings.weeklyTime,'21:45');
-  console.log('PASS: deferred saves retain segmented hour/minute edits and combined weekday/time changes, with serial complete snapshots.');
+  assert.equal(serverSettings.time,'22:15');assert.equal(serverSettings.weeklyDay,3);assert.equal(serverSettings.weeklyTime,'21:45');assert.equal(serverSettings.city.name,'合成城市','hidden existing city is not erased by schedule edits');
+  console.log('PASS: explicit 24-hour controls serialize complete daily/weekly snapshots and keep newer edits.');
 
-  timeInputs(tree)[0].props.onInput({currentTarget:{value:'06:45'}});tree=render();
-  timeInputs(tree)[1].props.onInput({currentTarget:{value:'20:50'}});tree=render();
+  changeTime(tree,'daily','hour','06');tree=render();
+  changeTime(tree,'weekly','minute','50');tree=render();
   await finishPost(false);tree=render();
   assert.match(text(tree),/保存简报设置失败/);assert.doesNotMatch(text(tree),/已保存/);
-  assert.equal(timeInputs(tree)[0].props.value,'22:15');assert.equal(timeInputs(tree)[1].props.value,'21:45');
+  assert.equal(valueTime(tree,'daily'),'22:15');assert.equal(valueTime(tree,'weekly'),'21:45');
   assert.equal(posts.length,0,'failed writes do not continue from an unconfirmed state');
-  console.log('PASS: failed receipts show an error, restore the last confirmed settings and never claim the failed values were saved.');
+  console.log('PASS: failed receipts restore confirmed values without a false saved message.');
 
-  button(tree,'重新生成演示周报').props.onClick();tree=render();
-  assert.equal(posts[0].body.action,'regenerate-report-demo');
-  assert.equal(button(tree,'重新生成演示周报').props.disabled,true);
-  assert.equal(timeInputs(tree)[1].props.disabled,false);
-  timeInputs(tree)[1].props.onInput({currentTarget:{value:'23:10'}});tree=render();
-  assert.equal(posts.length,1);
-  await finishPost();tree=render();
-  assert.equal(posts.length,1,'settings entered while regenerating are drained afterwards');
-  assert.equal(posts[0].body.action,'settings');assert.equal(posts[0].body.weeklyTime,'23:10');
-  await finishPost();tree=render();assert.equal(timeInputs(tree)[1].props.value,'23:10');assert.match(text(tree),/已保存/);
-  console.log('PASS: regeneration remains guarded while editable settings are queued and subsequently persisted.');
-
-  button(tree,'重新生成演示简报').props.onClick();tree=render();
-  timeInputs(tree)[0].props.onInput({currentTarget:{value:'08:20'}});
-  for(const hook of hooks)hook?.cleanup?.(); // Closing the dialog before regeneration completes.
+  switchFor(tree,'今日简报').props.onClick();tree=render();
+  assert.equal(timeSelect(tree,'daily','hour').props.disabled,true);
+  assert.equal(timeSelect(tree,'weekly','hour').props.disabled,false);
+  await finishPost();tree=render();assert.equal(serverSettings.enabled,false);
+  switchFor(tree,'今日简报').props.onClick();tree=render();await finishPost();tree=render();
+  switchFor(tree,'周报').props.onClick();tree=render();
+  assert.equal(timeSelect(tree,'weekly','hour').props.disabled,true);assert.equal(weeklyDay(tree).props.disabled,true);assert.equal(timeSelect(tree,'daily','hour').props.disabled,false);
+  await finishPost();tree=render();assert.equal(serverSettings.weeklyEnabled,false);
+  switchFor(tree,'周报').props.onClick();tree=render();await finishPost();tree=render();
+  changeTime(tree,'daily','minute','20');tree=render();
+  changeTime(tree,'weekly','hour','23');tree=render();
+  for(const hook of hooks)hook?.cleanup?.();
   await finishPost();
-  assert.equal(posts.length,1,'closing settings must not discard an already requested queued change');
-  assert.equal(posts[0].body.time,'08:20');
-  await finishPost();assert.equal(serverSettings.time,'08:20');
-  console.log('PASS: closing a regenerating dialog still persists the settings change already queued by the user.');
+  assert.equal(posts.length,1,'closing settings does not discard a requested queued change');
+  assert.equal(posts[0].body.weeklyTime,'23:45');assert.equal(posts[0].body.time,'22:20');
+  await finishPost();assert.equal(serverSettings.weeklyTime,'23:45');assert.equal(serverSettings.time,'22:20');
+  assert.ok(requests.length>0&&requests.every(body=>body.action==='settings'),'UI sends no demo regeneration requests');
+  console.log('PASS: switches disable their time fields, and queued changes persist after close.');
 } finally {
   for(const hook of hooks)hook?.cleanup?.();
 }

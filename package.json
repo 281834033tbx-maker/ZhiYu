@@ -9,7 +9,7 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json",
-    "lint": "oxlint app lib server components hooks scripts desktop/main.js desktop/preload.js desktop/image-viewer.js desktop/service-supervisor.cjs desktop/window-recovery.cjs",
+    "lint": "oxlint app lib server components hooks scripts desktop/main.js desktop/preload.js desktop/image-viewer.js desktop/service-supervisor.cjs desktop/window-recovery.cjs desktop/profile-popover.cjs",
     "format": "oxfmt",
     "npc:exam": "node scripts/npc-exam.mjs",
     "lint:style": "node scripts/lint-style.mjs"

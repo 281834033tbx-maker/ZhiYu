@@ -2,7 +2,7 @@ import type {Category,CategoryGroup,DemoOverview,Npc,Plan} from './types';
 
 export const categoryGroups:CategoryGroup[] = [
   {id:'movement',name:'运动',order:0},{id:'food',name:'饮食',order:1},
-  {id:'life',name:'生活',order:2},{id:'appearance',name:'形象管理',order:3},
+  {id:'life',name:'生活',order:2},{id:'appearance',name:'形象',order:3},
 ];
 // Semantic colours intentionally use the existing App palette. The latest
 // human instruction overrides the document's illustrative red/orange palette.

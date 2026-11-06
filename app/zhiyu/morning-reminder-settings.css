@@ -34,3 +34,12 @@
 .zy-report-settings-demo h3 {font-size:calc(12px + var(--zy-font-adjust,0px));font-weight:600;color:var(--zy-muted);margin:4px 0 8px;}
 .zy-report-settings-demo>button {display:block;width:100%;margin:6px 0;text-align:left;font-size:calc(13px + var(--zy-font-adjust,0px));}
 .zy-report-settings-week select:focus-visible {outline:2px solid var(--zy-nav-active);outline-offset:3px;}
+
+/* Explicit 24-hour hour/minute controls never contain a clipped AM/PM field. */
+.zy-report-settings-inline {font-size:calc(13px + var(--zy-font-adjust,0px));}
+.zy-report-settings-inline .zy-report-settings-section:first-child {border-top:0;}
+.zy-report-settings-inline .zy-morning-settings-row {flex-wrap:wrap;gap:8px 16px;font-size:calc(13px + var(--zy-font-adjust,0px));}
+.zy-report-settings-time {min-width:0;margin:0;padding:0;border:0;display:inline-flex;align-items:center;gap:5px;flex:none;white-space:nowrap;}
+.zy-report-settings-time>select {box-sizing:border-box;width:58px;min-width:58px;height:34px;padding:3px 6px;border:.5px solid var(--zy-glass-line);border-radius:10px;background:var(--zy-glass-inner);color:var(--zy-ink);font:inherit;font-size:calc(13px + var(--zy-font-adjust,0px));}
+.zy-report-settings-week {flex-wrap:wrap;justify-content:flex-end;min-width:0;}
+.zy-report-settings-inline .zy-morning-settings-note {margin:8px 0 0;padding:8px 0 0;}

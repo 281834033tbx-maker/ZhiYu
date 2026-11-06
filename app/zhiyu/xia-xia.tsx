@@ -1,7 +1,8 @@
 'use client';
 /* eslint-disable next/no-img-element */
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { X, CheckCheck, Reply, RotateCcw } from 'lucide-react';
+import { X, Reply, RotateCcw } from 'lucide-react';
+import MessageReceipt, {messagesHaveReadReceipt} from './message-receipt';
 import {
   assets,
   type Part,
@@ -42,6 +43,37 @@ import {useReplyRetry} from './reply-retry';
 import {useFailedChatSends} from './chat-send-failures';
 
 type FailedSend={scope:string;turnId:string;body:Record<string,unknown>;text:string};
+type ReportQuote={characterId:string;messageId:string;text?:string;referenceId?:string};
+
+/** A newly selected external reference retires the old local selection, even
+ * before its message has reached the polling cache. Draft text is independent. */
+export function useExclusiveChatReference({taskPageContext,taskPageContextKey,reportQuote,messages,hiddenIds,excerpt,onDismissTaskPageContext,onReportQuoteConsumed}:{
+  taskPageContext?:TaskPageContext;taskPageContextKey?:string;reportQuote?:ReportQuote;messages:readonly ChatMessage[];hiddenIds?:readonly string[];
+  excerpt:(message:ChatMessage)=>string;onDismissTaskPageContext?:()=>void;onReportQuoteConsumed?:(referenceId?:string)=>void;
+}) {
+  const incomingKey=reportQuote?`report:${reportQuote.referenceId||reportQuote.messageId}`:taskPageContext?`task:${taskPageContextKey||taskPageContext.id}`:'';
+  const [selection,setSelection]=useState<{incomingKey:string;message:ChatMessage|null;id:string}>(()=>({incomingKey,message:null,id:''}));
+  // Guarded render adjustment prevents both an old selection flashing and its
+  // resurrection after the new external reference is cancelled.
+  if(selection.incomingKey!==incomingKey)setSelection({incomingKey,message:null,id:''});
+  const quoted=selection.incomingKey===incomingKey&&selection.message&&!hiddenIds?.includes(selection.message.id)?selection.message:null;
+  const reportMessage=reportQuote?messages.find(message=>message.id===reportQuote.messageId):undefined;
+  const validQuoted=reportQuote?{id:reportQuote.messageId,role:reportMessage?.role||'assistant',preview:reportMessage?excerpt(reportMessage):reportQuote.text||'报告内容正在同步…'}:quoted?{id:quoted.id,role:quoted.role,preview:excerpt(quoted)}:null;
+  const activeTaskPageContext=validQuoted?undefined:taskPageContext;
+  const referenceKey=reportQuote?incomingKey:quoted?`message:${selection.id}`:activeTaskPageContext?incomingKey:'';
+  const referenceKeyRef=useRef(referenceKey);
+  useLayoutEffect(()=>{referenceKeyRef.current=referenceKey;},[referenceKey]);
+  function dismissQuote() {
+    setSelection({incomingKey,message:null,id:''});
+    if(reportQuote)onReportQuoteConsumed?.(reportQuote.referenceId);
+  }
+  function quoteMessage(message:ChatMessage) {
+    if(taskPageContext)onDismissTaskPageContext?.();
+    if(reportQuote)onReportQuoteConsumed?.(reportQuote.referenceId);
+    setSelection({incomingKey:'',message,id:crypto.randomUUID()});
+  }
+  return {quoted,validQuoted,activeTaskPageContext,referenceKey,referenceKeyRef,dismissQuote,quoteMessage};
+}
 
 function TaskMessage({taskId,onOpen}:{taskId:string;onOpen?:(taskId:string)=>void}){const {account}=useAccount();return <ProfessionalTaskCard accountId={account.id} taskId={taskId} onOpen={onOpen}/>;}
 export function NpcPart({ part, characterId, onRetry, messageId, onOpenTask, onOpenNpc, onOpenChoice, onChoose, pendingIndex, choiceDisabled, choiceError }: { part: Part; characterId?:string; onRetry?:()=>void; messageId?:string; onOpenTask?:(taskId:string)=>void; onOpenNpc?:(id:string,quoteId?:string,prefill?:string)=>void; onOpenChoice?:(messageId:string)=>void; onChoose?:ChoiceChatProps['onChoose']; pendingIndex?:number; choiceDisabled?:boolean; choiceError?:string }) {
@@ -134,6 +166,7 @@ export default function XiaxiaChat({
   onLegacyDraftConsumed,
   onForward,
   taskPageContext,
+  taskPageContextKey,
   onDismissTaskPageContext,
   reportQuote,
   onReportQuoteConsumed,
@@ -160,9 +193,10 @@ export default function XiaxiaChat({
   onLegacyDraftConsumed?:()=>void;
   onForward?:(text:string)=>void;
   taskPageContext?:TaskPageContext;
+  taskPageContextKey?:string;
   onDismissTaskPageContext?:()=>void;
-  reportQuote?:{characterId:string;messageId:string;text?:string};
-  onReportQuoteConsumed?:()=>void;
+  reportQuote?:ReportQuote;
+  onReportQuoteConsumed?:(referenceId?:string)=>void;
 }) {
   const { account } = useAccount();
   const isHe = character === 'he-jiawei';
@@ -218,13 +252,10 @@ export default function XiaxiaChat({
   const visibleFailedSends=failedSends.filter(message=>message.scope===taskScope&&!savedTurnIds.has(message.turnId));
   useEffect(()=>{if(!data?.messages)return;const saved=new Set(data.messages.filter(message=>message.role==='user').map(message=>message.turnId));setFailedSends(current=>{const next=current.filter(message=>!saved.has(message.turnId));return next.length===current.length?current:next;});},[data?.messages,setFailedSends]);
   const [outgoing, setOutgoing] = useState('');
-  const [quoted,setQuoted]=useState<ChatMessage|null>(null);
-  const reportedQuote=reportQuote?.characterId===character?visibleMessages.find(message=>message.id===reportQuote.messageId):null;
-  const validQuoted = reportedQuote || (quoted && !hiddenMessages[character]?.includes(quoted.id) ? quoted : null);
-  const dismissQuote=()=>{setQuoted(null);onReportQuoteConsumed?.();};
+  const excerpt=(m:ChatMessage)=>m.part.type==='professional_task'||m.part.type==='choice'?searchMessageText(m,professionalTasks):m.part.type==='generated_photo'?(m.part.caption||'图片'):'text'in m.part?(m.part.text||'图片'):'图片';
+  const {validQuoted,activeTaskPageContext,referenceKey,referenceKeyRef,dismissQuote,quoteMessage}=useExclusiveChatReference({taskPageContext,taskPageContextKey,reportQuote:reportQuote?.characterId===character?reportQuote:undefined,messages:visibleMessages,hiddenIds:hiddenMessages[character],excerpt,onDismissTaskPageContext,onReportQuoteConsumed});
   const thread = useRef<HTMLDivElement>(null);
   const stickBottom = useRef(true);
-  const excerpt=(m:ChatMessage)=>m.part.type==='professional_task'||m.part.type==='choice'?searchMessageText(m,professionalTasks):m.part.type==='generated_photo'?(m.part.caption||'图片'):'text'in m.part?(m.part.text||'图片'):'图片';
   const [searchOpen,setSearchOpen]=useState(false);
   const [locationHighlight,setLocationHighlight]=useState<{top:number;height:number}|null>(null);
   const [locationRequest,setLocationRequest]=useState<{id:string}|null>(null);
@@ -475,7 +506,7 @@ export default function XiaxiaChat({
   function deleteMessage(message: ChatMessage) {
     try {
       hideMessage(account.id, character, message.id);
-      if (quoted?.id === message.id) setQuoted(null);
+      if (validQuoted?.id === message.id) dismissQuote();
       if (locationRequest?.id === message.id) {setLocationRequest(null); setLocationHighlight(null);}
     } catch (failure) {setError(reportUserFacingError(failure,'save','删除消息'));}
   }
@@ -498,14 +529,15 @@ export default function XiaxiaChat({
     if (typingTimer.current) clearTimeout(typingTimer.current);
     signalTyping(false);
     lastTyping.current = 0;
-    const retryKey=JSON.stringify({...payload,taskPageContext});
+    const selectedReferenceKey=referenceKey;
+    const retryKey=JSON.stringify({...payload,referenceKey:selectedReferenceKey,taskPageContext:activeTaskPageContext,replyTo:validQuoted?.id});
     if (retry.current?.text !== retryKey)
       retry.current = { text:retryKey, id: crypto.randomUUID() };
     const turnId=retry.current.id;
-    const body={ action: 'send', ...payload, turnId, ...(validQuoted?{replyTo:validQuoted.id}:{}), ...(taskPageContext?{taskPageContext}:{}) };
+    const body={ action: 'send', ...payload, turnId, ...(validQuoted?{replyTo:validQuoted.id}:activeTaskPageContext?{taskPageContext:activeTaskPageContext}:{}) };
     try {
       await post(body);
-      dismissQuote();
+      if(referenceKeyRef.current===selectedReferenceKey)dismissQuote();
       setFailedSends(current=>current.filter(message=>message.scope!==taskScope||message.turnId!==turnId));
       retry.current = null;
     } catch (e) {
@@ -565,7 +597,7 @@ export default function XiaxiaChat({
           {messageGroups(visibleMessages,boundary).map((group) => {
             const last = group[group.length - 1],
               mine = last.role === 'user',
-              read = group.every((m) => !!m.readAt);
+              read = messagesHaveReadReceipt(group);
             return (
               <div key={group[0].id} className={'xx-group ' + last.role}>
                 {group[0].id===boundary && <div className="zy-unread-line"><span/>未读消息<span/></div>}
@@ -593,7 +625,7 @@ export default function XiaxiaChat({
                       >
                         {m.replyTo && (()=>{const original=visibleMessages.find(item=>item.id===m.replyTo);return original?<button type="button" className="npc-quote" onClick={()=>jump(original.id)}><strong>{original.role==='user'?'你':name}</strong><span>{excerpt(original)}</span></button>:null;})()}
                         <RetryableMessage failed={mine&&m.id===lastUser?.id&&replyFailed} disabled={sending||choosing||!data?.available} onRetry={()=>void retryReply()}>
-                        <MessageActions text={m.part.type==='professional_task'||m.part.type==='choice'?searchMessageText(m,professionalTasks):m.part.type==='voice'||'text'in m.part?m.part.text:m.part.type==='generated_photo'?m.part.caption:('caption'in m.part?m.part.caption||'':'')} voice={m.part.type==='voice'} onQuote={()=>{onReportQuoteConsumed?.();setQuoted(m);}} onDelete={()=>deleteMessage(m)} onForward={onForward?()=>onForward(m.part.type==='professional_task'||m.part.type==='choice'?searchMessageText(m,professionalTasks):'text'in m.part?m.part.text:'caption'in m.part?m.part.caption||'':''):undefined}>
+                        <MessageActions text={m.part.type==='professional_task'||m.part.type==='choice'?searchMessageText(m,professionalTasks):m.part.type==='voice'||'text'in m.part?m.part.text:m.part.type==='generated_photo'?m.part.caption:('caption'in m.part?m.part.caption||'':'')} voice={m.part.type==='voice'} onQuote={()=>quoteMessage(m)} onDelete={()=>deleteMessage(m)} onForward={onForward?()=>onForward(m.part.type==='professional_task'||m.part.type==='choice'?searchMessageText(m,professionalTasks):'text'in m.part?m.part.text:'caption'in m.part?m.part.caption||'':''):undefined}>
                         {m.legacyContent?.image && <figure className="xx-media upload"><ChatImage messageId={m.id} src={m.legacyContent.image} alt="历史聊天图片"/></figure>}
                         {m.legacyContent?.audio && <div className="xx-bubble xx-bubble-voice"><VoiceBubble src={m.legacyContent.audio} durationSeconds={m.legacyContent.audioDurationSeconds}/></div>}
                         {m.legacyContent?.file && <div className="xx-bubble">{m.legacyContent.file}</div>}
@@ -609,13 +641,11 @@ export default function XiaxiaChat({
                 </div>
                 <div className="xx-group-meta">
                   <time dateTime={last.at}>{last.legacyTime || messageTime(last.at)}</time>
-                  <CheckCheck
+                  <MessageReceipt
                     size={17}
-                    className={read ? 'read' : ''}
-                    aria-label={read ? '已读' : mine ? '已送达，未读' : '未读'}
-                  >
-                    <title>{read ? '已读' : '未读'}</title>
-                  </CheckCheck>
+                    read={read}
+                    unreadLabel={mine?'已送达，未读':'未读'}
+                  />
                 </div>
               </div>
             );
@@ -642,8 +672,8 @@ export default function XiaxiaChat({
             {userFacingErrors.network}
           </div>
         )}
-        {taskPageContext&&<div className="npc-quote-draft npc-task-page-context" aria-label="当前任务上下文"><Reply size={15}/><span><strong>当前任务：{taskPageContext.title}</strong><small>{taskPageContext.summary.split('\n').slice(0,3).join(' · ')}</small></span><button type="button" onClick={()=>onOpenTasks?.('today')}>查看任务</button><button type="button" aria-label="取消任务上下文" onClick={onDismissTaskPageContext}><X size={16}/></button></div>}
-        {validQuoted && <div className="npc-quote-draft"><Reply size={15}/><span><strong>回复 {validQuoted.role==='user'?'你':name}</strong><small>{excerpt(validQuoted)}</small></span><button aria-label="取消引用" onClick={dismissQuote}><X size={16}/></button></div>}
+        {activeTaskPageContext&&<div className="npc-quote-draft npc-task-page-context" aria-label="当前任务上下文"><Reply size={15}/><span><strong>当前任务：{activeTaskPageContext.title}</strong><small>{activeTaskPageContext.summary.split('\n').slice(0,3).join(' · ')}</small></span><button type="button" onClick={()=>onOpenTasks?.('today')}>查看任务</button><button type="button" aria-label="取消任务上下文" onClick={onDismissTaskPageContext}><X size={16}/></button></div>}
+        {validQuoted && <div className="npc-quote-draft"><Reply size={15}/><span><strong>回复 {validQuoted.role==='user'?'你':name}</strong><small>{validQuoted.preview}</small></span><button aria-label="取消引用" onClick={dismissQuote}><X size={16}/></button></div>}
         <ChatComposer allowImages={!textOnly} allowVoice={!textOnly} value={draft} onChange={updateTyping} onSend={send} disabled={sending || choosing || !data?.available} label={'给'+shortName+'的消息'} placeholder={`和${shortName}说点什么…`} companion={companion} aboveInput={isChef||isChen||isLiu?<ProfessionalTaskEntry accountId={account.id} characterId={character} companion={!!companion} onOpen={setOpenTaskId}/>:undefined}/>
         {searchOpen&&<GroupChatSearch name={name} entries={searchEntries} onLocate={jump} onClose={()=>setSearchOpen(false)}/>}
         {openTaskId&&<ProfessionalTaskDetailsDialog accountId={account.id} taskId={openTaskId} onClose={()=>setOpenTaskId(null)} onViewMessage={jump}/>}
