@@ -25,6 +25,8 @@
       "service-supervisor.cjs",
       "window-recovery.cjs",
       "service-status.html",
+      "startup.html",
+      "startup-logo.png",
       "package.json",
       "local-identity.cjs"
     ],

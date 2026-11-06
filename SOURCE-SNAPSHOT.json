@@ -1,6 +1,6 @@
 {
-  "date": "2026-11-04",
-  "description": "Current source including fixed Molly daily brief and weekly report demonstrations, configuration and demo-history isolation; portable local identity retained, private runtime and native backups excluded.",
+  "date": "2026-11-06",
+  "description": "Current source including approved cool glass profiles and chat sidebars with unchanged transparency, full-width signatures, startup branding, inline status and whole-card reports; portable identity retained and private runtime excluded.",
   "files": [
     {
       "path": ".env.example",
@@ -254,8 +254,8 @@
     },
     {
       "path": "app/zhiyu/app.tsx",
-      "bytes": 128446,
-      "sha256": "1f8f948c47d4e32c83c0518a33b4decc59b238287830047f6286bc4e83464aa4"
+      "bytes": 128829,
+      "sha256": "c3daa1e5316dc742f873304f90f4b9b3d193e717aadf79b4ac92983423859e07"
     },
     {
       "path": "app/zhiyu/application-shell.tsx",
@@ -391,6 +391,11 @@
       "path": "app/zhiyu/choice-chat.tsx",
       "bytes": 1828,
       "sha256": "bdefcb40907d428284c4e1f2032d0264c32c812bdbf6cda99e7646d11cdb764f"
+    },
+    {
+      "path": "app/zhiyu/conversation-status.css",
+      "bytes": 689,
+      "sha256": "2bc8dabcadfbcca4a153750f76f06d68ee94f0d98ae4524efe2970c2b3d273da"
     },
     {
       "path": "app/zhiyu/data.ts",
@@ -609,13 +614,13 @@
     },
     {
       "path": "app/zhiyu/molly-report-cards.css",
-      "bytes": 10720,
-      "sha256": "20ec968990903c14d5fea1959f57d4c2d96fba330e22b9d29d781f0d792cb227"
+      "bytes": 10885,
+      "sha256": "9bcfbb3745b6b128c63290b1e02ddcf6b581366f97c5e38c7489fa0f5856ac79"
     },
     {
       "path": "app/zhiyu/molly-report-cards.tsx",
-      "bytes": 15115,
-      "sha256": "ff9342cd9041adfa78f0dce0e5cb9931181fae9064ff066c69914735e8d3084d"
+      "bytes": 15260,
+      "sha256": "607a31e35b698c7048a63d789e5313a2984d2f7d128c266149ffe2b89b705fbe"
     },
     {
       "path": "app/zhiyu/morning-reminder-settings.css",
@@ -729,8 +734,8 @@
     },
     {
       "path": "app/zhiyu/profile-popover.css",
-      "bytes": 550,
-      "sha256": "e91c5f41a663af131d60c4720ecaad7bd30109410e7cf7ff666487e546788d3e"
+      "bytes": 2176,
+      "sha256": "5f41992f874b00b67ff8911356b0adebbf41d16d1aa371b305715be5974c9e76"
     },
     {
       "path": "app/zhiyu/profile-popover.tsx",
@@ -799,8 +804,8 @@
     },
     {
       "path": "app/zhiyu/report-fold.tsx",
-      "bytes": 2979,
-      "sha256": "5336379219aabb3e079482a258d085910dace9ef197a6b36fe4b15c524e3c9aa"
+      "bytes": 3295,
+      "sha256": "77bb9b82172d7ee37e8bbdc3bea0f6f803ca6056259842e4112af9ac87b36a2e"
     },
     {
       "path": "app/zhiyu/saved-stickers.ts",
@@ -939,8 +944,8 @@
     },
     {
       "path": "app/zhiyu/theme-glass.css",
-      "bytes": 18413,
-      "sha256": "888e465aeb8e5cae72f983e72471bfc53af8e48a6d60941337cee2c22837121e"
+      "bytes": 19546,
+      "sha256": "ac4a83e359471e44263217b016c4318e2ff78bddef24983098b739b7fce75a84"
     },
     {
       "path": "app/zhiyu/theme-motion.css",
@@ -1529,8 +1534,8 @@
     },
     {
       "path": "desktop/main.js",
-      "bytes": 25959,
-      "sha256": "ae2bbca9e99e3d2292db23193046f21d4a9726f63a1893935415b12d1ffc0d6d"
+      "bytes": 26048,
+      "sha256": "e2581663a50ea98f00d19fead3f59034c004c88b7809f99ed9f2b34475150fb7"
     },
     {
       "path": "desktop/package-lock.json",
@@ -1539,8 +1544,8 @@
     },
     {
       "path": "desktop/package.json",
-      "bytes": 1059,
-      "sha256": "f6499302e33b0ed6bfc3446bf620aaffe92eb6c2a9de1f0894ea8a828ca3a032"
+      "bytes": 1107,
+      "sha256": "4dd63a5b0bebb5543af21ec2bd9b67d874a372c56915ee29b1bc3b2edd46bd7e"
     },
     {
       "path": "desktop/preload.js",
@@ -1558,9 +1563,19 @@
       "sha256": "aede2484326d5b4cccc17fe558e700e1acd0f0a2c68faf6e8edf3e55dc4a6f6d"
     },
     {
+      "path": "desktop/startup-logo.png",
+      "bytes": 129098,
+      "sha256": "efefed96e8aa76d30e4260372213d6e9a3ddd005d8508721494176d8ec6450a5"
+    },
+    {
+      "path": "desktop/startup.html",
+      "bytes": 1374,
+      "sha256": "29e340720ca351ee2165e9f9acf6d69952eca67d46ff7ed23e3d195a072f7d26"
+    },
+    {
       "path": "desktop/tests/app-recovery.test.cjs",
-      "bytes": 12939,
-      "sha256": "f749f70d7a0c420dc8aaa8f77324ff5cd4d49ff1f083507bccbdaac6db366e60"
+      "bytes": 13036,
+      "sha256": "8fc6fc6b5ac3e866bb7d59f91820483049f9b2af60b29b16f9445465e0305ba7"
     },
     {
       "path": "desktop/tests/camera-permissions.test.cjs",
@@ -1604,8 +1619,8 @@
     },
     {
       "path": "desktop/tests/window-recovery.test.cjs",
-      "bytes": 14297,
-      "sha256": "9cc633ad826790995ae2bcf72dace40ef50f3feab6ed821a89a51529d9abccf0"
+      "bytes": 17629,
+      "sha256": "fb97369f08c07f2e8be3cb5897dfd969c0fc5a6a2bb37174d732679c74f18706"
     },
     {
       "path": "desktop/update.command",
@@ -1614,8 +1629,8 @@
     },
     {
       "path": "desktop/window-recovery.cjs",
-      "bytes": 12192,
-      "sha256": "b2d9b5b60b998d9b3ff2ada0235f11755c29f7cd5a9c5126325d325a4077308c"
+      "bytes": 12803,
+      "sha256": "086ccabdad25547f9304f9f8812b91a740f92d56f4320f4ec0617e56c41a61dd"
     },
     {
       "path": "distribution/start.command",
@@ -1634,8 +1649,8 @@
     },
     {
       "path": "docs/app-recovery.md",
-      "bytes": 2759,
-      "sha256": "d718894d727051ea6a1e0e87fa6faff18cad7a7b4ce028d4e440fc48ee3abd1c"
+      "bytes": 3621,
+      "sha256": "0758c66e98d860a8b5b314c9e0699293abe0d2b1ebe64f9c6899dbc1675102f8"
     },
     {
       "path": "docs/design-spec.md",
@@ -1689,8 +1704,8 @@
     },
     {
       "path": "docs/molly-reports/README.md",
-      "bytes": 4569,
-      "sha256": "7bbbc9d4a45b49f4e46818ecbc49d56241a31584aac28673079fb555ad380b65"
+      "bytes": 5200,
+      "sha256": "fe9afa0f7222a6a74a304ecdf63ac4aaa65491b027a39c13c8026c229395b25f"
     },
     {
       "path": "docs/molly-reports/requirements/今日简报-需求文档-给Codex.md",
@@ -1731,6 +1746,11 @@
       "path": "docs/molly-reports/screenshots/weekly-dark.png",
       "bytes": 54450,
       "sha256": "fdbd88fafa4b39ffa3a97a38891c4b9855e9403b3c8720259fda43db911c4ea5"
+    },
+    {
+      "path": "docs/profile-glass.md",
+      "bytes": 990,
+      "sha256": "91627f10ab2b5476c7b6bc1f1ab40211ac4d4935ac6263f102c1e833bf286a2f"
     },
     {
       "path": "docs/qa/2026-11-03-after-contextual-regression.md",
@@ -4559,8 +4579,8 @@
     },
     {
       "path": "scripts/molly-reports-ui-fixture.mjs",
-      "bytes": 7002,
-      "sha256": "31f7072a286d460ecd3737a09ef1021e6647a4ac103ba4d90609703a2b9fed08"
+      "bytes": 7249,
+      "sha256": "57174aa9c476cefb5246b3921bb12b2f4729396c7a140c601765244ae135fc7e"
     },
     {
       "path": "scripts/musetalk-still-mps.py",
@@ -4991,6 +5011,11 @@
       "path": "scripts/test-molly-report-demos.mjs",
       "bytes": 9009,
       "sha256": "1fef51c163cd088475decef2d91dfdba93544b3bcf7be0748d6b7c38a9293094"
+    },
+    {
+      "path": "scripts/test-molly-report-expansion.mjs",
+      "bytes": 9205,
+      "sha256": "2edf71f5008cfab987e650f2683f814a2fd5bd95d46a3ef62ec499832e5f669d"
     },
     {
       "path": "scripts/test-molly-report-settings.mjs",

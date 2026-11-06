@@ -1,0 +1,7 @@
+.zy-app .zy-conversation-heading{min-width:0;gap:8px}
+.zy-conversation-identity{display:flex;align-items:center;flex:1;min-width:0;gap:7px;overflow:hidden}
+.zy-conversation-identity>strong{flex-shrink:0;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.zy-conversation-heading>time{flex-shrink:0}
+.zy-conversation-preview>small{min-height:1.55em}
+.zy-conversation-status{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--zy-interaction-ink);font-size:calc(12px + var(--zy-font-adjust,0px));font-weight:400;line-height:1.45}
+html[data-zy-theme] .zy-app.zy-desktop .zy-conversation-status{font-size:calc(11px + var(--zy-font-adjust,0px))}

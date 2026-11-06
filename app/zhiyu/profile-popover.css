@@ -12,3 +12,58 @@ html[data-zy-theme] .zy-app.zy-desktop .zy-dialog.zy-profile-popover.zy-anchored
 }
 .zy-anchored-profile-popover:not(:popover-open) { display:none; }
 .zy-anchored-profile-popover::backdrop { background:transparent; pointer-events:none; }
+
+/* One comfortable text column inside the established card width. */
+html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-npc-profile-card {
+  box-sizing:border-box;
+  width:100%;
+  margin:0;
+  padding:20px 24px;
+}
+html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-npc-profile-top {
+  gap:12px;
+  padding-bottom:16px;
+}
+html[data-zy-theme] body .zy-profile-popover.zy-dialog :is(dl.zy-friend-details,.zy-friend-details dl) {
+  display:grid;
+  grid-template-columns:64px minmax(0,1fr);
+  gap:8px 12px;
+  align-items:baseline;
+}
+html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-friend-details :is(.zy-profile-signature-label,.zy-profile-signature-value) {
+  grid-column:1 / -1;
+}
+html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-profile-signature-label {
+  margin-top:8px;
+}
+html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-profile-signature-value {
+  min-width:0;
+  margin:0;
+  line-height:1.65;
+  overflow-wrap:anywhere;
+  white-space:pre-wrap;
+  text-wrap:balance;
+}
+html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-friend-source {
+  grid-template-columns:64px minmax(0,1fr);
+  gap:12px;
+  align-items:center;
+}
+html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-npc-profile-actions {
+  gap:16px;
+  padding:12px 0 0;
+}
+html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-npc-profile-actions button {
+  flex:0 1 auto;
+  flex-direction:row;
+  width:auto;
+  min-width:80px;
+  height:40px;
+  min-height:40px;
+  gap:7px;
+}
+@media (max-width:360px) {
+  html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-npc-profile-card {
+    padding:16px 18px;
+  }
+}

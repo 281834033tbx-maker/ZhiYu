@@ -7,13 +7,14 @@ const { URL, pathToFileURL } = require('node:url');
 // changes session storage, permissions, preload settings, or navigation policy.
 function attachWindowRecovery(win, options) {
   const {
-    ensureService, statusFile, targetURL, isStopping = () => false,
+    ensureService, statusFile, startupFile = statusFile, targetURL, isStopping = () => false,
     log = () => {}, retryMs = 1000, maxRetryMs = 30000,
   } = options;
   const origin = new URL(targetURL);
   if (!['http:', 'https:'].includes(origin.protocol) || origin.username || origin.password)
     throw new TypeError('Window recovery requires a trusted application URL');
   const statusURL = pathToFileURL(statusFile).href;
+  const startupURL = pathToFileURL(startupFile).href;
   const baseDelay = Math.min(30000, Math.max(1, Number(retryMs) || 1000));
   const maxDelay = Math.min(30000, Math.max(baseDelay, Number(maxRetryMs) || 30000));
   const contents = win.webContents;
@@ -23,6 +24,7 @@ function attachWindowRecovery(win, options) {
   let healthy = false;
   let outsideOrigin = false;
   let showStatus = false;
+  let placeholderFile = statusFile;
   let failureEpoch = 0;
   let targetVersion = 0;
   let pendingNavigation = null;
@@ -62,7 +64,7 @@ function attachWindowRecovery(win, options) {
   }
 
   function isStatus(value) {
-    try { return new URL(value).href.split('#')[0] === statusURL; }
+    try { return [statusURL, startupURL].includes(new URL(value).href.split('#')[0]); }
     catch { return false; }
   }
 
@@ -145,9 +147,17 @@ function attachWindowRecovery(win, options) {
   }
 
   async function displayStatus() {
-    if (stopped() || !inScope() || isStatus(currentURL())) return;
-    try { await nativeLoad(() => win.loadFile(statusFile), 'status'); }
-    catch (error) { record('status-load-failed', { code: error?.code || 'load-failed' }); }
+    const file = placeholderFile;
+    if (stopped() || !inScope() || currentURL().split('#')[0] === pathToFileURL(file).href) return;
+    const stage = file === statusFile ? 'status' : 'startup';
+    try { await nativeLoad(() => win.loadFile(file), stage); }
+    catch (error) { record(`${stage}-load-failed`, { code: error?.code || 'load-failed' }); }
+  }
+
+  async function displayRecoveryStatus() {
+    placeholderFile = statusFile;
+    showStatus = false;
+    await displayStatus();
   }
 
   function scheduleRetry() {
@@ -175,7 +185,10 @@ function attachWindowRecovery(win, options) {
     try {
       const ready = await ensureService();
       if (stopped() || !inScope()) return false;
-      if (!ready) return false;
+      if (!ready) {
+        if (!healthy) await displayRecoveryStatus();
+        return false;
+      }
       // A background service check must not replace a live document or drafts.
       if (!healthy) {
         if (showStatus) {
@@ -214,6 +227,7 @@ function attachWindowRecovery(win, options) {
       record('recovery-failed', { code: error?.code || 'load-failed' });
       if (attemptedVersion !== null && attemptedVersion !== targetVersion && !stopped() && inScope())
         return attempt('target-changed');
+      if (!healthy && !stopped() && inScope()) await displayRecoveryStatus();
       return false;
     }
   }
@@ -249,6 +263,7 @@ function attachWindowRecovery(win, options) {
     }
     if (!initialized) {
       initialized = true;
+      placeholderFile = startupFile;
       showStatus = true;
     }
     outsideOrigin = false;
@@ -264,6 +279,7 @@ function attachWindowRecovery(win, options) {
     healthy = false;
     failureEpoch += 1;
     showStatus = true;
+    placeholderFile = statusFile;
     clearStable();
     void recover(reason);
   }

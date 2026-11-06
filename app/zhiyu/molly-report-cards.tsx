@@ -10,7 +10,7 @@ import {dailyTemplates,weeklyBlocks} from '../../lib/npc/molly-report-config';
 import {useAccount} from './auth-gate';
 import {people} from './data';
 import {npcFetch} from './npc-fetch';
-import {ReportFold, useReportFolds} from './report-fold';
+import {ReportSummary, ReportBody, ReportBlock, useReportExpansion} from './report-fold';
 import './molly-report-cards.css';
 
 type OpenNpc=(id:string,quoteId?:string,prefill?:string)=>void;
@@ -73,7 +73,7 @@ function ShoppingDialog({list,busy,error,onCheck,onClose,restoreFocus}:{list:Sho
 export function DailyBriefCard({brief:incoming,messageId,onOpenNpc,onOpenChoice}:{brief:DailyBrief;messageId:string;onOpenNpc?:OpenNpc;onOpenChoice?:(messageId:string)=>void}) {
   const {account}=useAccount(),[updated,setUpdated]=useState<{source:DailyBrief;brief:DailyBrief}|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState(''),[shoppingId,setShoppingId]=useState(''),[notice,setNotice]=useState('');
   const brief=updated?.source===incoming?updated.brief:incoming;
-  const working=useRef(false),shoppingAnchor=useRef<HTMLButtonElement|null>(null),folds=useReportFolds(account.id,messageId);
+  const working=useRef(false),shoppingAnchor=useRef<HTMLButtonElement|null>(null),expansion=useReportExpansion(account.id,messageId),contentId=useId();
   const restoreShoppingFocus=useCallback(()=>{if(shoppingAnchor.current?.isConnected)shoppingAnchor.current.focus();},[]);
   async function action(itemId:string,decision:ReportDemoAction['decision'],extra:Partial<ReportDemoAction>={}) {
     if(working.current)return;
@@ -96,29 +96,31 @@ export function DailyBriefCard({brief:incoming,messageId,onOpenNpc,onOpenChoice}
     }catch{setError('这条日程暂时没接上，稍后再点一下');}
     finally{working.current=false;setBusy(false);}
   }
-  const fold=(id:string,name:string,children:ReactNode)=><ReportFold key={id} id={id} name={dailyTemplates.blocks.find(block=>block.id===id)?.name||name} collapsed={folds.isCollapsed(id)} onToggle={()=>folds.toggle(id)}>{children}</ReportFold>;
+  const block=(id:string,name:string,children:ReactNode)=><ReportBlock key={id} id={id} name={dailyTemplates.blocks.find(item=>item.id===id)?.name||name}>{children}</ReportBlock>;
   const weather=brief.header.weather,shopping=brief.shopping.find(list=>list.id===shoppingId&&!list.done);
   const weatherText=weather?`${weather.low}–${weather.high}° ${weather.text}${weather.tip?`，${weather.tip}`:''}${brief.header.traffic?` · ${brief.header.traffic}`:''}`:'';
   const visibleShopping=brief.shopping.filter(list=>!list.done);
   return <><article className="zy-molly-report" aria-label="Molly 的今日安排" data-report-message={messageId} aria-busy={busy||undefined}>
-    <header className="zy-molly-report-header"><strong>{reportDate(brief.date,brief.date)} · {brief.header.city}</strong>{weatherText&&<p>{weatherText}</p>}</header>
-    {!!brief.pending.length&&fold('pending','待定',brief.pending.slice(0,3).map(item=><div className="zy-molly-report-pending" key={item.id}><span>{item.text}</span><span className="zy-molly-report-actions">{item.kind==='choose'?<ReportAction disabled={busy} onClick={()=>void action(item.id,'choose')}>去选</ReportAction>:<><ReportAction disabled={busy} confirm onClick={()=>void action(item.id,'confirm')}>确认</ReportAction><ReportAction disabled={busy} onClick={()=>void action(item.id,'dismiss')}>暂不</ReportAction></>}</span></div>))}
-    {!!brief.schedule.length&&fold('schedule','日程',sortBriefSchedule(brief.schedule,brief.date).map(item=><ScheduleRow key={item.id} item={item} date={brief.date} disabled={busy||!onOpenNpc} onOpen={()=>void quote(item.id)}/>))}
-    {!!visibleShopping.length&&fold('shopping','采购',visibleShopping.slice(0,3).map(list=><div className="zy-molly-report-row" key={list.id}><div className="zy-molly-report-row-copy"><span>{list.title}</span><small>{list.notes.join('、')}</small></div><button type="button" className="zy-molly-report-action" onClick={event=>{shoppingAnchor.current=event.currentTarget;setShoppingId(list.id);}}>清单</button></div>))}
-    {!!brief.bills.length&&fold('bills','缴费',brief.bills.map(bill=>{
+    <ReportSummary primary={<>{reportDate(brief.date,brief.date)} · {brief.header.city}</>} secondary={weatherText} label="今日简报" expanded={expansion.expanded} contentId={contentId} onToggle={expansion.toggle}/>
+    <ReportBody id={contentId} expanded={expansion.expanded}>
+    {!!brief.pending.length&&block('pending','待定',brief.pending.slice(0,3).map(item=><div className="zy-molly-report-pending" key={item.id}><span>{item.text}</span><span className="zy-molly-report-actions">{item.kind==='choose'?<ReportAction disabled={busy} onClick={()=>void action(item.id,'choose')}>去选</ReportAction>:<><ReportAction disabled={busy} confirm onClick={()=>void action(item.id,'confirm')}>确认</ReportAction><ReportAction disabled={busy} onClick={()=>void action(item.id,'dismiss')}>暂不</ReportAction></>}</span></div>))}
+    {!!brief.schedule.length&&block('schedule','日程',sortBriefSchedule(brief.schedule,brief.date).map(item=><ScheduleRow key={item.id} item={item} date={brief.date} disabled={busy||!onOpenNpc} onOpen={()=>void quote(item.id)}/>))}
+    {!!visibleShopping.length&&block('shopping','采购',visibleShopping.slice(0,3).map(list=><div className="zy-molly-report-row" key={list.id}><div className="zy-molly-report-row-copy"><span>{list.title}</span><small>{list.notes.join('、')}</small></div><button type="button" className="zy-molly-report-action" onClick={event=>{shoppingAnchor.current=event.currentTarget;setShoppingId(list.id);}}>清单</button></div>))}
+    {!!brief.bills.length&&block('bills','缴费',brief.bills.map(bill=>{
       const days=Math.round((Date.parse(bill.dueDate)-Date.parse(brief.date))/86400000),urgent=!bill.paid&&days<=3;
       const note=bill.paid?'已缴':`${reportRelativeDate(bill.dueDate,brief.date)}${bill.action}${bill.amount!==undefined?` · ¥${bill.amount.toLocaleString('zh-CN')}`:''}`;
       return <div className={'zy-molly-report-row zy-molly-report-bill'+(bill.paid?' is-paid':'')} key={bill.id}>{bill.paid&&<button type="button" className="zy-molly-report-bill-revert" tabIndex={-1} aria-label={`撤回${bill.name}已缴状态`} disabled={busy} onClick={()=>void action(bill.id,'bill-toggle')}/>}<div className="zy-molly-report-row-copy"><span className="zy-molly-report-bill-name">{bill.name}</span><small className={urgent?'is-danger':undefined}>{note}</small></div><ReportAction disabled={busy} label={bill.paid?`撤回${bill.name}已缴状态`:undefined} onClick={()=>void action(bill.id,'bill-toggle')}>{bill.button}</ReportAction></div>;
     }))}
-    {!!brief.progress.length&&fold('progress','进度',brief.progress.slice(0,3).map(item=><div className="zy-molly-report-progress" key={item.id}><div><span>{item.name}</span><small>{item.done}/{item.steps.length} 步</small></div><progress value={item.done} max={Math.max(1,item.steps.length)} aria-label={`${item.name}，${item.done}/${item.steps.length} 步`}/><small>{item.done>=item.steps.length?'全部完成':`下一步：${item.steps[item.done]}`}</small></div>))}
-    {!!brief.upcoming.length&&fold('upcoming','近期',[...brief.upcoming].sort((a,b)=>a.date.localeCompare(b.date)).slice(0,5).map(item=><div className="zy-molly-report-upcoming" key={item.id}><span>{item.text}</span><small>{reportDate(item.date,brief.date)} · {reportRelativeDate(item.date,brief.date)}</small></div>))}
-    {!!brief.interests.length&&fold('interests','关注',brief.interests.slice(0,2).map(item=><p className="zy-molly-report-interest" key={item.id}>{item.when} {item.text}</p>))}
+    {!!brief.progress.length&&block('progress','进度',brief.progress.slice(0,3).map(item=><div className="zy-molly-report-progress" key={item.id}><div><span>{item.name}</span><small>{item.done}/{item.steps.length} 步</small></div><progress value={item.done} max={Math.max(1,item.steps.length)} aria-label={`${item.name}，${item.done}/${item.steps.length} 步`}/><small>{item.done>=item.steps.length?'全部完成':`下一步：${item.steps[item.done]}`}</small></div>))}
+    {!!brief.upcoming.length&&block('upcoming','近期',[...brief.upcoming].sort((a,b)=>a.date.localeCompare(b.date)).slice(0,5).map(item=><div className="zy-molly-report-upcoming" key={item.id}><span>{item.text}</span><small>{reportDate(item.date,brief.date)} · {reportRelativeDate(item.date,brief.date)}</small></div>))}
+    {!!brief.interests.length&&block('interests','关注',brief.interests.slice(0,2).map(item=><p className="zy-molly-report-interest" key={item.id}>{item.when} {item.text}</p>))}
     {notice&&<output className="zy-molly-report-notice">{notice}</output>}{error&&!shopping&&<p className="zy-molly-report-error" role="alert">{error}</p>}
+    </ReportBody>
   </article>{shopping&&typeof document!=='undefined'&&createPortal(<ShoppingDialog list={shopping} busy={busy} error={error} onCheck={(groupIndex,index,checked)=>void action(shopping.id,'shopping-check',{groupIndex,index,checked})} onClose={()=>setShoppingId('')} restoreFocus={restoreShoppingFocus}/>,document.body)}</>;
 }
 
 export function WeeklyReportCard({report,messageId,onOpenNpc}:{report:WeeklyReport;messageId:string;onOpenNpc?:OpenNpc}) {
-  const {account}=useAccount(),folds=useReportFolds(account.id,messageId),[busy,setBusy]=useState(false),[error,setError]=useState(''),working=useRef(false);
+  const {account}=useAccount(),expansion=useReportExpansion(account.id,messageId),contentId=useId(),[busy,setBusy]=useState(false),[error,setError]=useState(''),working=useRef(false);
   async function quote(npcId:string) {
     if(!onOpenNpc||working.current)return;
     working.current=true;setBusy(true);setError('');
@@ -135,9 +137,11 @@ export function WeeklyReportCard({report,messageId,onOpenNpc}:{report:WeeklyRepo
     return rank(a.id)-rank(b.id);
   });
   return <article className="zy-molly-report" aria-label="Molly 的本周回顾" data-report-message={messageId}>
-    <header className="zy-molly-report-header"><strong>{reportDate(from,to,false)}–{reportDate(to,to,false)}</strong><p>{report.headline}</p></header>
-    {orderedBlocks.map(block=><ReportFold key={block.id} id={block.id} name={weeklyBlocks.find(config=>config.id===block.id)?.name||block.name} collapsed={folds.isCollapsed(block.id)} onToggle={()=>folds.toggle(block.id)}>{block.rows.map((row,index)=><div className="zy-molly-report-week-row" key={`${row.itemKey}:${index}`}><div><span>{row.label}</span>{block.id!=='urgent'&&row.value&&<strong>{row.value}</strong>}</div><small className={row.danger||block.id==='urgent'?'is-danger':undefined}>{row.note||'\u00a0'}</small></div>)}</ReportFold>)}
-    {!!report.comments.length&&<ReportFold id="comments" name="评语" collapsed={folds.isCollapsed('comments')} onToggle={()=>folds.toggle('comments')}>{report.comments.map(comment=><button type="button" className="zy-molly-report-comment" disabled={busy||!onOpenNpc} key={comment.npcId} onClick={()=>void quote(comment.npcId)}><ReportAvatar id={comment.npcId} name={comment.name}/><span><b>{comment.name}</b><span>{comment.text}</span></span></button>)}</ReportFold>}
+    <ReportSummary primary={<>{reportDate(from,to,false)}–{reportDate(to,to,false)}</>} secondary={report.headline} label="周报" expanded={expansion.expanded} contentId={contentId} onToggle={expansion.toggle}/>
+    <ReportBody id={contentId} expanded={expansion.expanded}>
+    {orderedBlocks.map(block=><ReportBlock key={block.id} id={block.id} name={weeklyBlocks.find(config=>config.id===block.id)?.name||block.name}>{block.rows.map((row,index)=><div className="zy-molly-report-week-row" key={`${row.itemKey}:${index}`}><div><span>{row.label}</span>{block.id!=='urgent'&&row.value&&<strong>{row.value}</strong>}</div><small className={row.danger||block.id==='urgent'?'is-danger':undefined}>{row.note||'\u00a0'}</small></div>)}</ReportBlock>)}
+    {!!report.comments.length&&<ReportBlock id="comments" name="评语">{report.comments.map(comment=><button type="button" className="zy-molly-report-comment" disabled={busy||!onOpenNpc} key={comment.npcId} onClick={()=>void quote(comment.npcId)}><ReportAvatar id={comment.npcId} name={comment.name}/><span><b>{comment.name}</b><span>{comment.text}</span></span></button>)}</ReportBlock>}
     {error&&<p className="zy-molly-report-error" role="alert">{error}</p>}
+    </ReportBody>
   </article>;
 }

@@ -102,6 +102,7 @@ test('ready creates and protects the original window before waiting for service;
   assert.equal(f.calls.ensure, 1); assert.equal(f.calls.monitor, 1);
   assert.equal(f.controllers[0].options.targetURL, 'http://localhost:3100/');
   assert.equal(f.controllers[0].options.statusFile, '/synthetic-project/desktop/service-status.html');
+  assert.equal(f.controllers[0].options.startupFile, '/synthetic-project/desktop/startup.html');
   assert.equal(f.windows[0].options.webPreferences.contextIsolation, true); assert.equal(f.windows[0].options.webPreferences.nodeIntegration, false);
   await f.options().probe(); assert.deepEqual(f.calls.probes, ['http://localhost:3100/api/desktop/health']);
   assert.equal(f.calls.cookies[0].url, 'http://localhost:3100/'); assert.equal(f.calls.cookies[0].value, 'synthetic-owner');

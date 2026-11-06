@@ -9,9 +9,11 @@ const { EventEmitter } = require('node:events');
 const { pathToFileURL } = require('node:url');
 const source = fs.readFileSync(path.join(__dirname, '../window-recovery.cjs'), 'utf8');
 const statusFile = path.join(__dirname, '../service-status.html');
+const startupFile = path.join(__dirname, '../startup.html');
 const flush = async () => { for (let i = 0; i < 30; i += 1) await Promise.resolve(); };
+const watchdog=setTimeout(()=>{console.error('Window recovery regression did not finish its fake-clock promises');process.exitCode=1;},2000);
 
-function harness() {
+function harness({startup = false} = {}) {
   let now = 0;
   let timerId = 0;
   const timers = new Map();
@@ -62,6 +64,7 @@ function harness() {
   const events = [];
   const recovery = context.module.exports.attachWindowRecovery(win, {
     targetURL: 'http://localhost:3100/character-window?npc=chen-nian#chat', statusFile,
+    ...(startup ? {startupFile} : {}),
     ensureService: () => { ensures += 1; return ensure(); },
     isStopping: () => stopping,
     log: (event, detail) => events.push({ event, detail }), retryMs: 2, maxRetryMs: 32,
@@ -74,6 +77,48 @@ function harness() {
 }
 
 (async () => {
+  {
+    const h = harness({startup:true}); let finish;
+    h.setEnsure(() => new Promise(resolve => { finish = resolve; }));
+    const pending = h.recovery.load(); await flush();
+    assert.deepEqual(h.win.files, [startupFile], 'normal cold start presents the branded startup page before the backend is ready');
+    assert.equal(h.win.urls.length, 0);
+    await h.clock.tick(45000);
+    assert.deepEqual(h.win.files, [startupFile], 'slow but pending startup is not reported as a connection failure');
+    finish(true); assert.equal(await pending, true);
+    assert.equal(h.win.files.includes(statusFile), false, 'normal readiness never flashes the failure copy');
+    h.recovery.dispose();
+  }
+  {
+    const h = harness({startup:true}); h.setEnsure(async () => false);
+    assert.equal(await h.recovery.load(), false);
+    assert.deepEqual(h.win.files, [startupFile, statusFile], 'a real backend failure switches startup to recovery status');
+    h.setEnsure(async () => true); await h.clock.tick(2);
+    assert.match(h.win.url, /^http:\/\/localhost:3100\//);
+    assert.equal(h.win.files.filter(file => file === startupFile).length, 1, 'retries do not replay the first-launch animation');
+    h.recovery.dispose();
+  }
+  {
+    const h = harness({startup:true}); h.win.rejectLoads = true;
+    assert.equal(await h.recovery.load(), false);
+    assert.equal(h.win.files[0], startupFile);
+    assert.equal(h.win.files.at(-1), statusFile, 'a real initial application navigation failure shows recovery status');
+    h.win.rejectLoads = false; await h.clock.tick(2);
+    h.win.webContents.emit('render-process-gone', {}, {reason:'crashed'});
+    await h.clock.tick(4);
+    assert.equal(h.win.files.filter(file => file === startupFile).length, 1);
+    assert.equal(h.win.files.at(-1), statusFile, 'later renderer faults use recovery, not first-launch branding');
+    h.recovery.dispose();
+  }
+  {
+    const h = harness({startup:true}); await h.recovery.load();
+    const pages=h.win.files.length, loads=h.win.urls.length;
+    h.setEnsure(async () => false);
+    const pending=h.recovery.recover('service-only-check');await h.clock.tick(2);
+    assert.equal(await pending, false);
+    assert.equal(h.win.files.length,pages); assert.equal(h.win.urls.length,loads,'a failed background health check cannot replace a healthy document or draft');
+    h.recovery.dispose();
+  }
   {
     const h = harness(); h.win.rejectLoads = true;
     assert.equal(await h.recovery.load(), false);
@@ -276,5 +321,12 @@ function harness() {
   const html = fs.readFileSync(statusFile, 'utf8');
   assert.match(html, /Content-Security-Policy/); assert.match(html, /default-src 'none'/);
   assert.ok(!/<script|onload=|onclick=/i.test(html)); assert.ok(!html.includes('/Users/'));
-  console.log('PASS window recovery: safe same-origin targets, single-flight failures, renderer/hang recovery, continuous bounded backoff, draft preservation, cancellation and script-free status.');
-})().catch(error => { console.error(error); process.exitCode = 1; });
+  const startup = fs.readFileSync(startupFile, 'utf8');
+  assert.match(startup, /default-src 'none'/); assert.match(startup, /img-src 'self'/);
+  assert.match(startup, /prefers-reduced-motion/); assert.match(startup, /正在打开智域/);
+  assert.ok(!/<script|onload=|onclick=/i.test(startup)); assert.ok(!/https?:|\/Users\//.test(startup));
+  assert.ok(!startup.includes('恢复连接'));
+  assert.ok(fs.readFileSync(path.join(__dirname, '../startup-logo.png')).equals(fs.readFileSync(path.join(__dirname, '../../public/zhiyu-logo.png'))), 'bundled startup image is the unchanged established logo');
+  clearTimeout(watchdog);
+  console.log('PASS window recovery: branded normal startup, real-failure recovery, safe same-origin targets, single-flight failures, renderer/hang recovery, continuous bounded backoff, draft preservation, cancellation and script-free local pages.');
+})().catch(error => { clearTimeout(watchdog);console.error(error); process.exitCode = 1; });

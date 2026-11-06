@@ -115,6 +115,7 @@ import {
   type Post,
 } from './data';
 import './app.css';
+import './conversation-status.css';
 
 
 
@@ -1553,14 +1554,17 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                         )}
                       </span>
                       <span className="zy-conversation-copy">
-                        <span>
-                          <strong>{p.name}{p.id === 'molly' && <span className="zy-system-label">系统</span>}</strong>
+                        <span className="zy-conversation-heading">
+                          <span className="zy-conversation-identity">
+                            <strong>{p.name}{p.id === 'molly' && <span className="zy-system-label">系统</span>}</strong>
+                            {!p.group&&<span className="zy-conversation-status" title={statusFor(p.id)}>{statusFor(p.id)}</span>}
+                          </span>
                           <time>
                             {p.id === 'molly' ? null : isChatPinned(p.id) ? <Pin size={13} aria-label="已置顶" /> : (()=>{const formatted=formatConversationTime(conversationAt(p.id));return <span className={formatted.yesterday?'is-yesterday':''}>{formatted.label}</span>;})()}
                           </time>
                         </span>
                         <span className="zy-conversation-preview"><small>
-                          {!p.group&&<>{statusFor(p.id)}{visibleMessages[p.id]?.at(-1)?.text?' · ':''}</>}{p.group ? groupPreview(visibleGroups.find(group=>group.id===p.id)!) : p.id === 'molly' ? visibleMessages.molly?.at(-1)?.text || '' : visibleMessages[p.id]?.at(-1)?.text || ''}
+                          {p.group ? groupPreview(visibleGroups.find(group=>group.id===p.id)!) : p.id === 'molly' ? visibleMessages.molly?.at(-1)?.text || '' : visibleMessages[p.id]?.at(-1)?.text || ''}
                         </small>{isChatMuted(p.id)&&<BellOff className="zy-conversation-muted-icon" aria-label="消息免打扰"/>}</span>
                       </span>
                     </button>
@@ -2143,11 +2147,11 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
             <input ref={profileBackgroundInput} hidden type="file" accept="image/png,image/jpeg,image/webp" aria-label="选择个人资料背景图片" onChange={e=>{const file=e.target.files?.[0];e.target.value='';if(file)void changeProfileBackground(file);}}/>
           </>:modal.person.id==='molly'?<div className="zy-npc-profile-card zy-molly-profile-card">
             <div className="zy-npc-profile-top"><Avatar person={modal.person} size={48}/><div className="zy-npc-identity"><h3>Molly</h3></div></div>
-            <dl className="zy-friend-details"><dt>状态</dt><dd>{statusFor('molly')}</dd><dt>个性签名</dt><dd>{modal.person.bio}</dd></dl><dl className="zy-friend-source"><dt>添加来源</dt><dd>{contactSourceLabel('default')}</dd></dl>
+            <dl className="zy-friend-details"><dt>状态</dt><dd>{statusFor('molly')}</dd><dt className="zy-profile-signature-label">个性签名</dt><dd className="zy-profile-signature-value">{modal.person.bio}</dd></dl><dl className="zy-friend-source"><dt>添加来源</dt><dd>{contactSourceLabel('default')}</dd></dl>
             <div className="zy-npc-profile-actions"><button type="button" onClick={()=>openChat(modal.person)}><MessageCircle strokeWidth={1.65}/>发消息</button></div>
           </div>:<div className="zy-npc-profile-card">
             <div className="zy-npc-profile-top"><Avatar person={modal.person} size={48}/><div className="zy-npc-identity"><h3>{displayPerson(modal.person).name}{modal.person.gender&&<span className={'zy-gender '+modal.person.gender} aria-label={modal.person.gender==='female'?'女生':'男生'}>{modal.person.gender==='female'?'♀':'♂'}</span>}</h3><p>{modal.person.account}</p>{modal.person.region&&<p>{modal.person.region}</p>}</div></div>
-            <section className="zy-friend-details"><h4>朋友资料</h4><InlineNameEdit key={`${account.id}:${modal.person.id}`} label="备注" value={remarks[modal.person.id] || modal.person.nickname || allPeople.find(item=>item.id===modal.person.id)?.name || modal.person.name} onSave={value=>saveContactRemark(modal.person.id,value)}/><dl><dt>状态</dt><dd>{statusFor(modal.person.id)}</dd><dt>个性签名</dt><dd>{modal.person.bio || '暂无个性签名'}</dd>{!modal.person.professionalProfile&&modal.person.professionalTitle&&<><dt>职业</dt><dd>{modal.person.professionalTitle}</dd></>}</dl></section>
+            <section className="zy-friend-details"><h4>朋友资料</h4><InlineNameEdit key={`${account.id}:${modal.person.id}`} label="备注" value={remarks[modal.person.id] || modal.person.nickname || allPeople.find(item=>item.id===modal.person.id)?.name || modal.person.name} onSave={value=>saveContactRemark(modal.person.id,value)}/><dl><dt>状态</dt><dd>{statusFor(modal.person.id)}</dd><dt className="zy-profile-signature-label">个性签名</dt><dd className="zy-profile-signature-value">{modal.person.bio || '暂无个性签名'}</dd>{!modal.person.professionalProfile&&modal.person.professionalTitle&&<><dt>职业</dt><dd>{modal.person.professionalTitle}</dd></>}</dl></section>
             {modal.person.professionalProfile && <ProfessionalProfile profile={modal.person.professionalProfile} />}
             <button type="button" className="zy-profile-moments" onClick={()=>{const id=modal.person.id;close();openMoments(id);}}><span className="zy-profile-moments-label">动态圈</span><span className="zy-profile-moments-content">{posts.filter(p=>p.personId===modal.person.id).flatMap(p=>p.images).slice(0,4).map((src,i)=><img key={`${src}-${i}`} src={src} alt="动态预览"/>)}</span><ChevronRight className="zy-profile-moments-chevron" size={15}/></button>
             {contactSourceLabel(modal.person.source,personNames)&&<dl className="zy-friend-source"><dt>添加来源</dt><dd>{contactSourceLabel(modal.person.source,personNames)}</dd></dl>}

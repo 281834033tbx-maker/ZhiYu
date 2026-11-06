@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+  <meta name="color-scheme" content="light dark">
+  <title>智域</title>
+  <style>
+    :root { color-scheme: light dark; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; background: #fff; color: #252628; }
+    body { min-height: 100vh; margin: 0; display: grid; place-items: center; }
+    main { display: grid; justify-items: center; gap: 20px; padding: 32px; text-align: center; }
+    img { display: block; width: 72px; height: 72px; object-fit: contain; animation: zhiyu-startup-breathe 1.8s ease-in-out infinite; }
+    p { margin: 0; font-size: 13px; font-weight: 400; }
+    @keyframes zhiyu-startup-breathe { 0%, 100% { opacity: .72; transform: scale(.98); } 50% { opacity: 1; transform: scale(1); } }
+    @media (prefers-color-scheme: dark) { :root { background: #232b28; color: #edf2ee; } }
+    @media (prefers-reduced-motion: reduce) { img { animation: none; } }
+  </style>
+</head>
+<body><main><img src="startup-logo.png" alt="智域" width="72" height="72"><p>正在打开智域…</p></main></body>
+</html>

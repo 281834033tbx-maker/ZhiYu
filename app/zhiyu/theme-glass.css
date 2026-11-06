@@ -36,6 +36,25 @@
   --zy-glass-backdrop:rgb(14 26 18 / 14%);
 }
 
+/* Approved 2026-11-06: cooler directory-family reflections on profiles and
+   chat sidebars only. Preserve every layer's alpha, stop and glass filter. */
+html[data-zy-theme='light'] body :is(.zy-profile-popover:not(.zy-self-profile-popover),.zy-private-drawer,.zy-group-drawer) {
+  --zy-glass-fill:
+    radial-gradient(ellipse at 100% 0%,rgb(202 197 223 / 30%),transparent 52%),
+    radial-gradient(ellipse at 0% 100%,rgb(166 204 196 / 30%),transparent 56%),
+    radial-gradient(ellipse at 100% 100%,rgb(194 188 216 / 24%),transparent 54%),
+    linear-gradient(135deg,rgb(255 255 255 / 12%),rgb(255 255 255 / 3%)),
+    rgb(218 227 228 / 48%);
+}
+html[data-zy-theme='dark'] body :is(.zy-profile-popover:not(.zy-self-profile-popover),.zy-private-drawer,.zy-group-drawer) {
+  --zy-glass-fill:
+    radial-gradient(ellipse at 100% 0%,rgb(143 145 181 / 18%),transparent 52%),
+    radial-gradient(ellipse at 0% 100%,rgb(103 165 157 / 15%),transparent 56%),
+    radial-gradient(ellipse at 100% 100%,rgb(153 140 184 / 19%),transparent 54%),
+    linear-gradient(135deg,rgb(255 255 255 / 7%),rgb(255 255 255 / 2%)),
+    rgb(65 76 81 / 52%);
+}
+
 /* body portals and native dialog/popover top layers share the same material.
    Scope to actual App windows, never generic HTML dialogs or the old Studio. */
 html[data-zy-theme]:has(:is(.zy-app.zy-desktop,.zy-character-window,.image-viewer)) body :is(

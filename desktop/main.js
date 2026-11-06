@@ -76,7 +76,9 @@ function protectWindow(win, targetURL) {
   let controller = recoveryControllers.get(win);
   if (!controller) {
     controller = attachWindowRecovery(win, {targetURL,ensureService:ensureServer,
-      statusFile:path.join(__dirname,'service-status.html'),isStopping:()=>stopping,log:logRecovery});
+      statusFile:path.join(__dirname,'service-status.html'),
+      ...(win===mainWindow?{startupFile:path.join(__dirname,'startup.html')}:{}),
+      isStopping:()=>stopping,log:logRecovery});
     recoveryControllers.set(win,controller);
     win.once('closed',()=>{controller.dispose();recoveryControllers.delete(win);});
   }

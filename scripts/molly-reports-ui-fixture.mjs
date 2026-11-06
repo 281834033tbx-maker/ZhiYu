@@ -28,6 +28,8 @@ function session(owner,character){
  const exists=db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?").get(table);
  const row=exists?db.prepare(`SELECT data FROM ${table} WHERE id=?`).get(`${owner}:${key}`):undefined;
  const state=row?JSON.parse(row.data):{messages:[],revision:0};
+ if(process.env.ZHIYU_CONVERSATION_STATUS_FIXTURE==='1'&&character==='chen-nian'&&!state.messages.length)
+  state.messages=[{id:'qa-status-preview',role:'assistant',at:'2026-11-04T08:00:00+08:00',part:{type:'text',text:'27，正当年呢😎'}}];
  return {messages:state.messages.filter(message=>!(state.privateHistoryHiddenIds||[]).includes(message.id)),pending:false,available:true,presence:'offline',debugAllowed:false,revision:state.revision,conversationId:key,deliveryError:''};
 }
 async function handle(req,res){
