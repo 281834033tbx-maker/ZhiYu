@@ -13,7 +13,7 @@ html[data-zy-theme] .zy-app.zy-desktop .zy-dialog.zy-profile-popover.zy-anchored
 .zy-anchored-profile-popover:not(:popover-open) { display:none; }
 .zy-anchored-profile-popover::backdrop { background:transparent; pointer-events:none; }
 
-/* One comfortable text column inside the established card width. */
+/* Compact details stay inside the established card width. */
 html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-npc-profile-card {
   box-sizing:border-box;
   width:100%;
@@ -30,19 +30,16 @@ html[data-zy-theme] body .zy-profile-popover.zy-dialog :is(dl.zy-friend-details,
   gap:8px 12px;
   align-items:baseline;
 }
-html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-friend-details :is(.zy-profile-signature-label,.zy-profile-signature-value) {
-  grid-column:1 / -1;
-}
 html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-profile-signature-label {
-  margin-top:8px;
+  margin:0;
 }
 html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-profile-signature-value {
   min-width:0;
   margin:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
   line-height:1.65;
-  overflow-wrap:anywhere;
-  white-space:pre-wrap;
-  text-wrap:balance;
 }
 html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-friend-source {
   grid-template-columns:64px minmax(0,1fr);
@@ -66,4 +63,30 @@ html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-npc-profile-actions b
   html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-npc-profile-card {
     padding:16px 18px;
   }
+}
+
+/* Body copy follows the 13px chat text scale in both themes. The person's
+   identity is distinguished by weight; the photo-based self card is separate. */
+html[data-zy-theme] body .zy-profile-popover.zy-dialog:not(.zy-self-profile-popover) .zy-npc-profile-card,
+html[data-zy-theme] body .zy-profile-popover.zy-dialog:not(.zy-self-profile-popover) .zy-npc-profile-card :is(.zy-friend-details,.zy-friend-details h4,.zy-friend-details dt,.zy-friend-details dd,.zy-friend-details input,.zy-inline-name-label,.zy-inline-name-value,.zy-inline-name-input,.zy-friend-source dt,.zy-friend-source dd,.zy-profile-moments,.zy-profile-moments-label,.zy-npc-identity h3,.zy-npc-identity p,.zy-npc-profile-actions button,.zy-professional-profile h2,.zy-professional-title,.zy-professional-summary,.zy-professional-certificates,.zy-professional-certificate-level,.zy-professional-certificates li p) {
+  font-size:calc(13px + var(--zy-font-adjust,0px));
+}
+html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-npc-profile-card .zy-friend-details .zy-inline-name-edit {
+  grid-template-columns:64px minmax(0,1fr);
+  gap:12px;
+  padding:6px 0;
+}
+html[data-zy-theme] .zy-app.zy-desktop :is(.zy-private-drawer,.zy-group-drawer),
+html[data-zy-theme] .zy-app.zy-desktop :is(.zy-private-drawer,.zy-group-drawer) :is(p,dt,dd,label,small,output,button,input,textarea,summary,strong,h2,h3,.zy-inline-name-label,.zy-group-drawer-field-title) {
+  font-size:calc(13px + var(--zy-font-adjust,0px));
+}
+
+/* Member names, announcement values and action labels use the same body scale
+   as the profile. Status labels and capsules sit one step below that scale. */
+html[data-zy-theme] .zy-app.zy-desktop :is(.zy-private-drawer,.zy-group-drawer) :is(.zy-group-member-stack-name,.zy-group-drawer-member>span,.zy-group-drawer-row-value,.zy-private-search>span,.zy-inline-name-value>span) {
+  font-size:calc(13px + var(--zy-font-adjust,0px));
+}
+html[data-zy-theme] body .zy-profile-popover.zy-dialog .zy-npc-profile-card .zy-friend-details dt:has(+ dd > .zy-character-status),
+html[data-zy-theme] .zy-app .zy-contact-profile-row:has(.zy-character-status)>span {
+  font-size:calc(12px + var(--zy-font-adjust,0px));
 }

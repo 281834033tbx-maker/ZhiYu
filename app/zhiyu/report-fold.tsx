@@ -1,7 +1,6 @@
 'use client';
 
 import {useCallback, useSyncExternalStore, type ReactNode} from 'react';
-import {ChevronDown} from 'lucide-react';
 
 const memory=new Map<string,boolean>();
 const listeners=new Map<string,Set<()=>void>>();
@@ -38,11 +37,11 @@ export function useReportExpansion(accountId:string,messageId:string) {
   return {expanded,toggle};
 }
 
-export function ReportSummary({primary,secondary,label,expanded,contentId,onToggle}:{primary:ReactNode;secondary?:ReactNode;label:string;expanded:boolean;contentId:string;onToggle:()=>void}) {
+export function ReportSummary({label,expanded,contentId,onToggle}:{label:string;expanded:boolean;contentId:string;onToggle:()=>void}) {
   return <header className="zy-molly-report-header">
     <button type="button" className="zy-molly-report-summary" aria-label={`${expanded?'收起':'展开'}${label}`} aria-expanded={expanded} aria-controls={contentId} onClick={onToggle}>
-      <span className="zy-molly-report-summary-copy"><strong>{primary}</strong>{secondary&&<span>{secondary}</span>}</span>
-      <ChevronDown size={14} strokeWidth={1.7} aria-hidden="true" className={expanded?'is-open':''}/>
+      <strong className="zy-molly-report-summary-copy">{label}</strong>
+      <span className="zy-molly-report-toggle" aria-hidden="true">{expanded?'收起':'展开'}</span>
     </button>
   </header>;
 }

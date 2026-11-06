@@ -8,8 +8,8 @@
     radial-gradient(ellipse at 100% 100%,rgb(204 184 230 / 24%),transparent 54%),
     linear-gradient(135deg,rgb(255 255 255 / 12%),rgb(255 255 255 / 3%)),
     rgb(219 230 220 / 48%);
-  --zy-glass-border:rgb(255 255 255 / 72%);
-  --zy-glass-highlight:rgb(255 255 255 / 48%);
+  --zy-glass-border:transparent;
+  --zy-glass-highlight:transparent;
   --zy-glass-secondary:#46564b;
   --zy-glass-muted:#526258;
   --zy-glass-accent-ink:#943b36;
@@ -25,8 +25,8 @@
     radial-gradient(ellipse at 100% 100%,rgb(164 138 207 / 19%),transparent 54%),
     linear-gradient(135deg,rgb(255 255 255 / 7%),rgb(255 255 255 / 2%)),
     rgb(67 83 73 / 52%);
-  --zy-glass-border:rgb(231 248 235 / 38%);
-  --zy-glass-highlight:rgb(243 255 246 / 24%);
+  --zy-glass-border:transparent;
+  --zy-glass-highlight:transparent;
   --zy-glass-secondary:#e0eae3;
   --zy-glass-muted:#cbdacf;
   --zy-glass-accent-ink:#ffc5b7;
@@ -38,7 +38,7 @@
 
 /* Approved 2026-11-06: cooler directory-family reflections on profiles and
    chat sidebars only. Preserve every layer's alpha, stop and glass filter. */
-html[data-zy-theme='light'] body :is(.zy-profile-popover:not(.zy-self-profile-popover),.zy-private-drawer,.zy-group-drawer) {
+html[data-zy-theme='light'] body :is(.zy-profile-popover:not(.zy-self-profile-popover),.zy-private-drawer,.zy-group-drawer,.zy-settings-dialog) {
   --zy-glass-fill:
     radial-gradient(ellipse at 100% 0%,rgb(202 197 223 / 30%),transparent 52%),
     radial-gradient(ellipse at 0% 100%,rgb(166 204 196 / 30%),transparent 56%),
@@ -46,7 +46,7 @@ html[data-zy-theme='light'] body :is(.zy-profile-popover:not(.zy-self-profile-po
     linear-gradient(135deg,rgb(255 255 255 / 12%),rgb(255 255 255 / 3%)),
     rgb(218 227 228 / 48%);
 }
-html[data-zy-theme='dark'] body :is(.zy-profile-popover:not(.zy-self-profile-popover),.zy-private-drawer,.zy-group-drawer) {
+html[data-zy-theme='dark'] body :is(.zy-profile-popover:not(.zy-self-profile-popover),.zy-private-drawer,.zy-group-drawer,.zy-settings-dialog) {
   --zy-glass-fill:
     radial-gradient(ellipse at 100% 0%,rgb(143 145 181 / 18%),transparent 52%),
     radial-gradient(ellipse at 0% 100%,rgb(103 165 157 / 15%),transparent 56%),

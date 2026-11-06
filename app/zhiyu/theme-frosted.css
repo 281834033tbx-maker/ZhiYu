@@ -16,8 +16,13 @@ html[data-zy-theme='light'] .zy-app.zy-desktop {
 html[data-zy-theme='light'] .zy-desktop-stage {
   background:#eef1f5;
 }
-html[data-zy-theme='light'][data-zy-native-material='macos'] .zy-desktop-stage {
+html[data-zy-theme][data-zy-native-material='macos'] .zy-desktop-stage {
   background:transparent;
+}
+/* Restore the original native frosted base. The added CSS lens must not
+   flatten the desktop's transmitted background or add a white glass rim. */
+html[data-zy-theme][data-zy-native-material='macos'] .zy-liquid-base-plate {
+  display:none;
 }
 /* 2026-10-21 板块1 透明：参考 Hermes「窗口透明」的数值（色调 96% → 只留 4% 底色），
    颜色与渐变停点原样不动，只把不透明度 48% 改成 4%（96% 透出桌面）。
@@ -68,7 +73,8 @@ html[data-zy-theme='light'] .zy-app.zy-desktop .zy-sliding-navigation .zy-nav-hi
 
 /* White chat, reference grey incoming messages and slightly greyer near-black
    outgoing messages. Group, NPC and local chats share the existing tokens. */
-html[data-zy-theme='light'] .zy-app.zy-desktop:is(.zy-page-chat,.zy-page-pets) {
+/* Every present and future navigation page inherits the chat canvas. */
+html[data-zy-theme='light'] .zy-app.zy-desktop {
   --zy-canvas:#fff;
   --zy-incoming:#f0f1f5;
   --zy-outgoing:#35373f;
@@ -77,6 +83,17 @@ html[data-zy-theme='light'] .zy-app.zy-desktop:is(.zy-page-chat,.zy-page-pets) {
   --zy-secondary:#626469;
   --zy-muted:#717378;
   --zy-line:#eaebef;
+}
+
+html[data-zy-theme] .zy-app.zy-desktop .zy-base > :not(.zy-directory):not(.zy-directory-divider) {
+  background-color:var(--zy-canvas);
+}
+/* Keep the bottom menu unpainted in every interaction state. */
+html[data-zy-theme] .zy-app.zy-desktop .zy-rail-bottom,
+html[data-zy-theme] .zy-app.zy-desktop .zy-rail-bottom:is(:hover,:focus,:active) {
+  background:transparent;
+  box-shadow:none;
+  border:0;
 }
 
 /* Keep the exact same hover/press/expanded states and animation definitions;

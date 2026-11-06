@@ -4,6 +4,7 @@ import {useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useStat
 import {Check, ChevronDown, ClipboardCheck, Minus, Pause, Play} from 'lucide-react';
 import {nextProfessionalTaskStep, professionalTaskProgress, type ProfessionalTask, type ProfessionalTaskStep} from '../../lib/npc/professional-task';
 import {professionalTaskStepContent, professionalTaskTimerView} from '../../lib/npc/professional-task-timer';
+import {trainingTitlePresentation} from '../../lib/npc/training-task-presentation';
 import {professionalTaskSessionView} from '../../lib/npc/professional-task-session';
 import {completeProfessionalTaskSessionForAccount, startProfessionalTaskSession, setProfessionalTaskStatus, setProfessionalTaskStep, setProfessionalTaskStepDate, setProfessionalTaskTimer, useProfessionalTasks} from './professional-task-store';
 import {professionalTaskCharacterName, shanghaiToday, taskDateLabel, taskScheduleOptions} from './task-items';
@@ -52,11 +53,13 @@ function stepCategory(step:ProfessionalTaskStep){
   if(/配菜|料汁|辅助|补充/.test(step.title))return 'accessory';
   return 'main';
 }
-function TaskStepContent({step}:{step:ProfessionalTaskStep}){
-  const {instructions,notes,completionCondition}=professionalTaskStepContent(step),training=step.training;
+function TaskStepContent({step,trainingTask}:{step:ProfessionalTaskStep;trainingTask:boolean}){
+  const content=professionalTaskStepContent(step),training=step.training;
+  const {notes,completionCondition}=content;
+  const instructions=[...new Set([...trainingTitlePresentation(step.title,trainingTask).cues,...content.instructions])];
   return <>{training&&<><section className="zy-professional-task-content is-target"><h4>练哪里</h4><p>{training.target}</p></section>
     <section className="zy-professional-task-content is-training"><h4>组数与次数</h4><p>{training.sets}组 · {training.reps}{training.restSeconds?` · 组间休息${training.restSeconds>=60?`${Math.round(training.restSeconds/60*10)/10}分钟`:`${training.restSeconds}秒`}`:''}</p>{training.effort&&<p>{training.effort}</p>}</section></>}
-    {(instructions.length>0||training?.recommendation)&&<section className="zy-professional-task-content"><h4>{training?'介绍':'操作'}</h4>{training?.recommendation&&<p className="zy-professional-task-recommendation">{training.recommendation}</p>}{instructions.map((text,index)=><p key={index}>{text}</p>)}</section>}
+    {(instructions.length>0||training?.recommendation)&&<section className="zy-professional-task-content"><h4>{trainingTask?'动作要点':'操作'}</h4>{training?.recommendation&&<p className="zy-professional-task-recommendation">{training.recommendation}</p>}{instructions.map((text,index)=><p key={index}>{text}</p>)}</section>}
     {notes.length>0&&<section className="zy-professional-task-content is-note"><h4>注意事项</h4>{notes.map((text,index)=><p key={index}>{text}</p>)}</section>}
     {completionCondition&&<section className="zy-professional-task-content is-condition"><h4>完成状态</h4><p>{completionCondition}</p></section>}</>;
 }
@@ -71,6 +74,7 @@ function StepDateCapsule({step,today,pending,disabled,onSchedule}:{step:Professi
 function TaskSteps({task,steps,expanded,onExpand,onComplete,onTimer,onSchedule,pending,now,showHints=true}:{task:ProfessionalTask;steps:ProfessionalTaskStep[];expanded:string;onExpand:(id:string)=>void;onComplete:(step:ProfessionalTaskStep)=>void;onTimer:(step:ProfessionalTaskStep,action:'start'|'pause'|'resume')=>void;onSchedule:(step:ProfessionalTaskStep,date:string)=>void;pending:Set<string>;now:number;showHints?:boolean}){
   const prefix=useId(),next=nextProfessionalTaskStep(task)?.id,today=shanghaiToday(now);
   return <ol className="zy-professional-task-steps">{steps.map(step=>{
+    const displayTitle=trainingTitlePresentation(step.title,task.characterId==='chen-nian').title;
     const done=!!step.completedAt,skipped=!!step.skippedAt,open=expanded===step.id,detailId=prefix+'-'+step.id,latest=step.hints.at(-1);
     const timer=professionalTaskTimerView(step,now),timing=!done&&!skipped&&task.status!=='cancelled'&&task.status!=='skipped'&&(timer.status==='running'||timer.status==='paused'),rest=timer.kind==='rest';
     const ready=timer.status==='idle'||(timer.status==='elapsed'&&timer.canRestart),duration=rest?step.training?.restSeconds||0:step.durationSeconds||0;
@@ -79,17 +83,17 @@ function TaskSteps({task,steps,expanded,onExpand,onComplete,onTimer,onSchedule,p
     const blocked=task.status==='cancelled'||task.status==='skipped'||task.status==='paused'||skipped||done||pending.has('status')||pending.has('timer:'+step.id),current=next===step.id&&task.status==='active';
     return <li key={step.id} className={'zy-professional-task-step'+(current?' is-current':'')+(done?' is-done':'')+(skipped?' is-skipped':'')+(timing?' is-timing':'')} data-step-id={step.id} data-step-category={stepCategory(step)}>
       <div className="zy-professional-task-row">
-        <button type="button" className={'zy-professional-task-check'+(done?' is-done':'')} aria-label={(skipped?'已跳过':done?'撤销完成':'完成')+'：'+step.title} aria-pressed={done} disabled={skipped||task.status==='skipped'||task.status==='cancelled'||(!done&&task.status==='paused')||pending.has('status')||pending.has('step:'+step.id)} onClick={()=>onComplete(step)}><span>{done?<Check size={10} strokeWidth={2.5}/>:skipped?<Minus size={10} strokeWidth={2}/>:null}</span></button>
-        <button type="button" className="zy-professional-task-expand" title={step.title} aria-label={step.title} aria-expanded={open} aria-controls={detailId} onClick={()=>onExpand(step.id)}><span className={'zy-professional-task-step-title'+(done?' is-done':'')}>{step.title}</span>{skipped&&<span className="zy-professional-task-skipped-label">已跳过</span>}</button>
+        <button type="button" className={'zy-professional-task-check'+(done?' is-done':'')} aria-label={(skipped?'已跳过':done?'撤销完成':'完成')+'：'+displayTitle} aria-pressed={done} disabled={skipped||task.status==='skipped'||task.status==='cancelled'||(!done&&task.status==='paused')||pending.has('status')||pending.has('step:'+step.id)} onClick={()=>onComplete(step)}><span>{done?<Check size={10} strokeWidth={2.5}/>:skipped?<Minus size={10} strokeWidth={2}/>:null}</span></button>
+        <button type="button" className="zy-professional-task-expand" title={displayTitle} aria-label={displayTitle} aria-expanded={open} aria-controls={detailId} onClick={()=>onExpand(step.id)}><span className={'zy-professional-task-step-title'+(done?' is-done':'')}>{displayTitle}</span>{skipped&&<span className="zy-professional-task-skipped-label">已跳过</span>}</button>
         {(step.scheduledDate||timer.showTimer)&&<div className="zy-professional-task-step-labels"><StepDateCapsule step={step} today={today} disabled={skipped||done||task.status==='skipped'||task.status==='cancelled'||task.status==='completed'} pending={pending.has('date:'+step.id)||pending.has('status')} onSchedule={date=>onSchedule(step,date)}/>
         {timer.showTimer&&!skipped&&<div className={'zy-professional-task-timer-controls'+(timing?' is-countdown':'')} data-timer-kind={rest?'rest':'duration'} title={rest?`组间休息已完成 ${timer.completedCycles||0}/${timer.maxCycles} 次`:undefined}>
-          <button type="button" className={'zy-professional-task-time'+(timing?' is-countdown':'')} disabled={blocked||!ready} aria-label={ready?(rest?'开始组间休息：':'开始计时：')+step.title+'，'+durationLabel(duration)+cycle:timer.status==='elapsed'?step.title+(rest?'组间休息已完成':'计时结束'):step.title+cycle+'剩余 '+countdown(timer.remainingSeconds)} onClick={()=>onTimer(step,'start')}>{timing&&<TimerRing progress={timer.progress} paused={timer.status==='paused'}/>}<span>{timerLabel}</span></button>
-          {timing&&<button type="button" className="zy-professional-task-timer-action" disabled={blocked} aria-label={(timer.status==='running'?'暂停计时':'继续计时')+'：'+step.title} onClick={()=>onTimer(step,timer.status==='running'?'pause':'resume')}>{timer.status==='running'?<Pause size={10} strokeWidth={2}/>:<Play size={10} strokeWidth={2}/>}</button>}
+          <button type="button" className={'zy-professional-task-time'+(timing?' is-countdown':'')} disabled={blocked||!ready} aria-label={ready?(rest?'开始组间休息：':'开始计时：')+displayTitle+'，'+durationLabel(duration)+cycle:timer.status==='elapsed'?step.title+(rest?'组间休息已完成':'计时结束'):step.title+cycle+'剩余 '+countdown(timer.remainingSeconds)} onClick={()=>onTimer(step,'start')}>{timing&&<TimerRing progress={timer.progress} paused={timer.status==='paused'}/>}<span>{timerLabel}</span></button>
+          {timing&&<button type="button" className="zy-professional-task-timer-action" disabled={blocked} aria-label={(timer.status==='running'?'暂停计时':'继续计时')+'：'+displayTitle} onClick={()=>onTimer(step,timer.status==='running'?'pause':'resume')}>{timer.status==='running'?<Pause size={10} strokeWidth={2}/>:<Play size={10} strokeWidth={2}/>}</button>}
         </div>}</div>}
         {task.characterId==='chen-nian'&&<FitnessDemonstrationButton step={step}/>}
-        <button type="button" className={'zy-professional-task-chevron-button'+(open?' is-open':'')} aria-label={(open?'收起':'展开')+'：'+step.title} aria-expanded={open} aria-controls={detailId} onClick={()=>onExpand(step.id)}><ChevronDown className="zy-professional-task-chevron" size={14} strokeWidth={1.7}/></button>
+        <button type="button" className={'zy-professional-task-chevron-button'+(open?' is-open':'')} aria-label={(open?'收起':'展开')+'：'+displayTitle} aria-expanded={open} aria-controls={detailId} onClick={()=>onExpand(step.id)}><ChevronDown className="zy-professional-task-chevron" size={14} strokeWidth={1.7}/></button>
       </div>
-      {open&&<div id={detailId} className="zy-professional-task-details"><TaskStepContent step={step}/>{showHints&&latest&&<div className="zy-professional-task-guidance"><span>{professionalTaskCharacterName(task)}的提示</span><p>{latest.text}</p></div>}</div>}
+      {open&&<div id={detailId} className="zy-professional-task-details"><TaskStepContent step={step} trainingTask={task.characterId==='chen-nian'}/>{showHints&&latest&&<div className="zy-professional-task-guidance"><span>{professionalTaskCharacterName(task)}的提示</span><p>{latest.text}</p></div>}</div>}
     </li>;
   })}</ol>;
 }

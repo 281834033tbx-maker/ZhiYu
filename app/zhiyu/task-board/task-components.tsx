@@ -7,6 +7,7 @@ import {Activity, Check, ChevronDown, ClipboardList, CookingPot, Droplet, Dumbbe
 import PressableIconButton from '../pressable-icon-button';
 import {useAnchoredPopupPresence} from '../anchored-popup-motion';
 import type {Task, Step, Category, Npc, TaskTimer, TaskView} from './types';
+import {trainingTitlePresentation} from '../../../lib/npc/training-task-presentation';
 import './task-components.css';
 
 export type TaskActions = {
@@ -42,6 +43,14 @@ const timeLeft = (endsAt:number|undefined,now:number) => endsAt?Math.max(0,Math.
 const clock = (seconds:number) => `${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;
 const restLabel = (seconds:number) => seconds>=60?`${Math.floor(seconds/60)}分${seconds%60?String(seconds%60)+'秒':''}`:`${seconds}秒`;
 const durationLabel = (seconds:number) => seconds%60===0?`${seconds/60} 分钟`:restLabel(seconds);
+const isTrainingTask=(task:Task)=>['fitness','recovery'].includes(task.categoryId);
+const taskTitle=(task:Task)=>trainingTitlePresentation(task.title,isTrainingTask(task)).title;
+const stepTitle=(task:Task,step:Step)=>trainingTitlePresentation(step.name,isTrainingTask(task)).title;
+function TrainingTaskNotes({task}:{task:Task}) {
+  if(!isTrainingTask(task))return null;
+  const cues=[...trainingTitlePresentation(task.title).cues,...(task.tip?[task.tip]:[])];
+  return cues.length?<p className="tb-single-note" aria-label="动作要点">{['动作要点',...new Set(cues)].join('\n')}</p>:null;
+}
 
 export function CategoryIcon({category,size=26}:{category:Category;size?:number}) {
   const Icon=iconMap[category.icon]||ClipboardList;
@@ -75,7 +84,7 @@ function Chevron({open,label,onClick,controls}:{open:boolean;label:string;onClic
 function CounterCircle({task,mode,onClick}:{task:Task;mode:TaskView;onClick:()=>void}) {
   const done=finished(task),disabled=mode==='future';
   const label=mode==='history'?(done?'补记为没做到：':'补记为已完成：'):done?'取消完成：':task.type==='count'?`记一次 ${task.count?.perTime||0}${task.count?.unit||''}：`:task.type==='steps'?'结束任务：':'完成：';
-  return <button type="button" className={'tb-status-circle'+(done?' is-done':'')+(mode==='history'?' is-history':'')} disabled={disabled} aria-label={disabled?'未来任务，暂不可完成：'+task.title:label+task.title} aria-pressed={done} onClick={event=>{event.stopPropagation();onClick();}}>{done&&<Check size={13} strokeWidth={2.5}/>}</button>;
+  return <button type="button" className={'tb-status-circle'+(done?' is-done':'')+(mode==='history'?' is-history':'')} disabled={disabled} aria-label={disabled?'未来任务，暂不可完成：'+taskTitle(task):label+taskTitle(task)} aria-pressed={done} onClick={event=>{event.stopPropagation();onClick();}}>{done&&<Check size={13} strokeWidth={2.5}/>}</button>;
 }
 function TaskContextMenu({task,point,onClose,onPin,trigger}:{task:Task;point:{x:number;y:number}|null;onClose:()=>void;onPin:()=>void;trigger:RefObject<HTMLButtonElement|null>}) {
   const menu=useRef<HTMLDivElement>(null);
@@ -105,8 +114,8 @@ export function TaskRow(props:TaskComponentProps) {
       <button ref={mainButton} type="button" className="tb-task-main" aria-expanded={expanded} aria-controls={id} onClick={()=>actions.onExpandTask(task)}
         onContextMenu={event=>{if(mode!=='today'||!actions.onPin)return;event.preventDefault();const r=event.currentTarget.getBoundingClientRect();setContextPoint({x:Math.max(8,Math.min(event.clientX||r.left+30,window.innerWidth-180)),y:Math.max(8,Math.min(event.clientY||r.bottom,window.innerHeight-58))});}}>
         <span className="tb-task-copy">
-        <span className="tb-task-name">{task.pinned&&mode==='today'&&<Pin className="tb-task-pin" size={14}/>}<span>{task.title}</span>{badgeVisible&&<span className="tb-step-badge">{steps}</span>}</span>
-        <span className="tb-task-meta"><NpcAvatar npc={npc} muted={done&&mode==='today'}/><span>{task.amount}{task.amount&&task.tip?' · ':''}{task.tip}</span></span>
+        <span className="tb-task-name">{task.pinned&&mode==='today'&&<Pin className="tb-task-pin" size={14}/>}<span>{taskTitle(task)}</span>{badgeVisible&&<span className="tb-step-badge">{steps}</span>}</span>
+        <span className="tb-task-meta"><NpcAvatar npc={npc} muted={done&&mode==='today'}/><span>{task.amount}{!isTrainingTask(task)&&task.amount&&task.tip?' · ':''}{!isTrainingTask(task)&&task.tip}</span></span>
         </span>
       <span className="tb-task-row-progress">
         {miss&&(task.missText||task.missReason)&&<span className="tb-missed-tag">{task.missText||'没做 · '+task.missReason}</span>}
@@ -114,7 +123,7 @@ export function TaskRow(props:TaskComponentProps) {
         {countVisible&&task.count&&<ProgressPill current={task.count.current} total={task.count.target} unit={task.count.unit} color={category.color}/>}
       </span>
       </button>
-      <Chevron open={expanded} controls={id} label={(expanded?'收起：':'展开：')+task.title} onClick={()=>actions.onExpandTask(task)}/>
+      <Chevron open={expanded} controls={id} label={(expanded?'收起：':'展开：')+taskTitle(task)} onClick={()=>actions.onExpandTask(task)}/>
     </div>
     <Disclosure open={expanded} id={id}><TaskExpand {...props}/></Disclosure>
     {actions.onPin&&<TaskContextMenu task={task} point={contextPoint} trigger={mainButton} onClose={closeContext} onPin={()=>actions.onPin?.(task)}/>}
@@ -142,15 +151,17 @@ function TaskFooter({task,category,mode,active=false,actions,now,today}:TaskComp
 }
 function StepDetails({step,task,mode,actions,now,timers}: {step:Step;task:Task;mode:TaskView;actions:TaskActions;now:number;timers?:Record<string,TaskTimer>}) {
   const timer=timers?.[`${task.id}:${step.id}`],remaining=timeLeft(timer?.endsAt,now);
+  const titleCues=trainingTitlePresentation(step.name,isTrainingTask(task)).cues.filter(cue=>!step.detail.includes(cue));
   return <div className="tb-step-details"><div className="tb-step-detail-copy">
+    {titleCues.length>0&&<p className="tb-single-note" aria-label="动作要点">{titleCues.join('\n')}</p>}
     {(step.sets||step.detail||step.actual)&&<div className="tb-set-line">{step.sets&&<span className="tb-set-buttons">{Array.from({length:step.sets.total},(_,index)=>{
       const done=index<step.sets!.done,current=index===step.sets!.done&&!step.done&&!finished(task);
-      return <button type="button" key={index} className={'tb-set'+(done?' is-done':'')+(current?' is-current':'')} disabled={mode!=='today'||finished(task)} aria-label={`${step.name}，第${index+1}组${done?'，已完成':''}`} aria-pressed={done} onClick={()=>actions.onSetClick(task,step,index)}>第{index+1}组{done&&<Check size={11}/>}</button>;
+      return <button type="button" key={index} className={'tb-set'+(done?' is-done':'')+(current?' is-current':'')} disabled={mode!=='today'||finished(task)} aria-label={`${stepTitle(task,step)}，第${index+1}组${done?'，已完成':''}`} aria-pressed={done} onClick={()=>actions.onSetClick(task,step,index)}>第{index+1}组{done&&<Check size={11}/>}</button>;
     })}</span>}<span className="tb-set-detail">{mode==='history'?(step.actual||step.detail):step.detail}</span></div>}
     {!!step.tips?.length&&<ul className="tb-step-tips">{step.tips.map((tip,index)=><li key={index}>{tip}</li>)}</ul>}
     {step.timerSeconds&&mode==='today'&&!finished(task)&&<button type="button" className="tb-action tb-action-white tb-step-timer" onClick={()=>actions.onTimerStart(task,step)}><Timer size={15}/>{remaining?`计时中 ${clock(remaining)}`:timer?'重新计时':`开始 ${durationLabel(step.timerSeconds)}计时`}</button>}
     {timer&&mode==='today'&&remaining===0&&<output className="tb-timer-finished">计时结束</output>}
-  </div>{step.image?<img className="tb-step-image" src={step.image} alt={step.name+'示意图'}/>:<span className="tb-step-image tb-step-image-placeholder" aria-hidden="true"><ImageIcon size={23}/></span>}</div>;
+  </div>{step.image?<img className="tb-step-image" src={step.image} alt={stepTitle(task,step)+'示意图'}/>:<span className="tb-step-image tb-step-image-placeholder" aria-hidden="true"><ImageIcon size={23}/></span>}</div>;
 }
 function StepRows(props:TaskComponentProps) {
   const {task,mode,expandedStepId,actions,now,rest,timers,active}=props;
@@ -158,19 +169,19 @@ function StepRows(props:TaskComponentProps) {
   const readonly=mode!=='today'||finished(task);
   const detailBase=useId();
   return <div className="tb-vertical-steps">{steps.map((step,index)=>{
-    const current=active&&index===currentIndex,open=mode!=='future'&&expandedStepId===step.id;
+    const current=active&&index===currentIndex,canExpand=mode!=='future'||isTrainingTask(task),open=canExpand&&expandedStepId===step.id;
     const remaining=rest?.taskId===task.id&&rest.stepId===step.id?timeLeft(rest.endsAt,now):0;
     const cookingTimer=timers?.[`${task.id}:${step.id}`],cookingRemaining=timeLeft(cookingTimer?.endsAt,now);
-    const tag=remaining?`休息中 ${clock(remaining)}`:cookingRemaining?`计时中 ${clock(cookingRemaining)}`:mode==='future'?step.detail:mode==='history'?(step.actual||step.detail):step.durationText||(step.restSeconds?'休息 '+restLabel(step.restSeconds):step.detail);
+    const tag=remaining?`休息中 ${clock(remaining)}`:cookingRemaining?`计时中 ${clock(cookingRemaining)}`:isTrainingTask(task)?step.durationText||(step.restSeconds?'休息 '+restLabel(step.restSeconds):''):mode==='future'?step.detail:mode==='history'?(step.actual||step.detail):step.durationText||(step.restSeconds?'休息 '+restLabel(step.restSeconds):step.detail);
     const detailsId=detailBase+'-'+index;
     return <div key={step.id} className={'tb-step'+(step.done?' is-done':'')+(current?' is-current':'')}>
       <div className="tb-step-line">
-        {mode==='future'?<span className="tb-step-number">{index+1}</span>:<button type="button" className={'tb-status-circle tb-step-circle'+(step.done?' is-done':'')} disabled={readonly} aria-label={(step.done?'取消步骤完成：':'完成步骤：')+step.name} aria-pressed={step.done} onClick={()=>actions.onStepToggle(task,step)}>{step.done&&<Check size={13} strokeWidth={2.5}/>}</button>}
-        {mode==='future'?<span className="tb-step-name">{step.name}</span>:<button type="button" className="tb-step-name tb-step-name-button" aria-expanded={open} aria-controls={detailsId} onClick={()=>actions.onExpandStep(step.id)}>{step.name}</button>}
+        {mode==='future'?<span className="tb-step-number">{index+1}</span>:<button type="button" className={'tb-status-circle tb-step-circle'+(step.done?' is-done':'')} disabled={readonly} aria-label={(step.done?'取消步骤完成：':'完成步骤：')+stepTitle(task,step)} aria-pressed={step.done} onClick={()=>actions.onStepToggle(task,step)}>{step.done&&<Check size={13} strokeWidth={2.5}/>}</button>}
+        {canExpand?<button type="button" className="tb-step-name tb-step-name-button" aria-expanded={open} aria-controls={detailsId} onClick={()=>actions.onExpandStep(step.id)}>{stepTitle(task,step)}</button>:<span className="tb-step-name">{stepTitle(task,step)}</span>}
         {tag&&<span className={'tb-step-tag'+(remaining||cookingRemaining?' is-counting':'')}>{tag}</span>}
-        {mode!=='future'&&<Chevron open={open} controls={detailsId} label={(open?'收起步骤：':'展开步骤：')+step.name} onClick={()=>actions.onExpandStep(step.id)}/>}
+        {canExpand&&<Chevron open={open} controls={detailsId} label={(open?'收起步骤：':'展开步骤：')+stepTitle(task,step)} onClick={()=>actions.onExpandStep(step.id)}/>}
       </div>
-      {mode!=='future'&&<Disclosure open={open} id={detailsId}><StepDetails step={step} task={task} mode={mode} actions={actions} now={now} timers={timers}/></Disclosure>}
+      {canExpand&&<Disclosure open={open} id={detailsId}><StepDetails step={step} task={task} mode={mode} actions={actions} now={now} timers={timers}/></Disclosure>}
     </div>;
   })}</div>;
 }
@@ -178,6 +189,7 @@ export function TaskExpand(props:TaskComponentProps) {
   const {task}=props;
   const count=task.count,segments=count?Math.max(1,Math.min(128,Math.ceil(count.target/count.perTime))):0;
   return <div className="tb-task-expand" style={styleColor(props.category.color)}>
+    <TrainingTaskNotes task={task}/>
     {task.type==='steps'?<StepRows {...props}/>:task.type==='count'&&count?<div className="tb-count-content"><ProgressPill current={count.current} total={count.target} unit={count.unit} color={props.category.color}/><div className="tb-count-segments" aria-label={`${count.current} / ${count.target}${count.unit}`} style={{gridTemplateColumns:`repeat(${segments},minmax(0,1fr))`}}>{Array.from({length:segments},(_,index)=><span key={index} className={count.current>=Math.min(count.target,(index+1)*count.perTime)?'is-filled':''}/>)}</div>{task.note&&<p className="tb-single-note">{task.note}</p>}</div>:<p className="tb-single-note">{task.note||[task.amount,task.tip].filter(Boolean).join('，')}</p>}
     <TaskFooter {...props}/>
   </div>;
@@ -186,13 +198,13 @@ export function ActiveTaskCard(props:TaskComponentProps) {
   const {task,category,npc,expanded,actions,now,rest}=props;
   const steps=task.steps||[],done=finished(task),current=task.status==='in_progress'?steps.findIndex(step=>!step.done&&!step.skipped):-1;
   const id=useId();
-  return <section className={'tb-active-card'+(done?' is-ended':'')} style={styleColor(category.color)} aria-label={'进行中任务：'+task.title} data-active-task-id={task.id}>
-    <header className="tb-active-header"><CategoryIcon category={category} size={40}/><button type="button" className="tb-active-copy" aria-expanded={expanded} aria-controls={id} onClick={()=>actions.onExpandTask(task)}><strong>{task.title}</strong><span className="tb-task-meta"><NpcAvatar npc={npc}/><span>{task.amount}{task.tip?' · '+task.tip:''}</span></span></button><ProgressPill current={stepDone(task)} total={steps.length} color={category.color}/><Chevron open={expanded} controls={id} label={(expanded?'收起进行中任务：':'展开进行中任务：')+task.title} onClick={()=>actions.onExpandTask(task)}/></header>
-    <div id={id}><Disclosure open={expanded}><StepRows {...props} active/></Disclosure><Disclosure open={!expanded}><div className="tb-horizontal-steps" style={{gridTemplateColumns:`repeat(${Math.min(6,Math.max(1,steps.length))},minmax(0,1fr))`}}>{steps.map((step,index)=>{
+  return <section className={'tb-active-card'+(done?' is-ended':'')} style={styleColor(category.color)} aria-label={'进行中任务：'+taskTitle(task)} data-active-task-id={task.id}>
+    <header className="tb-active-header"><CategoryIcon category={category} size={40}/><button type="button" className="tb-active-copy" aria-expanded={expanded} aria-controls={id} onClick={()=>actions.onExpandTask(task)}><strong>{taskTitle(task)}</strong><span className="tb-task-meta"><NpcAvatar npc={npc}/><span>{task.amount}{!isTrainingTask(task)&&task.tip?' · '+task.tip:''}</span></span></button><ProgressPill current={stepDone(task)} total={steps.length} color={category.color}/><Chevron open={expanded} controls={id} label={(expanded?'收起进行中任务：':'展开进行中任务：')+taskTitle(task)} onClick={()=>actions.onExpandTask(task)}/></header>
+    <div id={id}><Disclosure open={expanded}><TrainingTaskNotes task={task}/><StepRows {...props} active/></Disclosure><Disclosure open={!expanded}><div className="tb-horizontal-steps" style={{gridTemplateColumns:`repeat(${Math.min(6,Math.max(1,steps.length))},minmax(0,1fr))`}}>{steps.map((step,index)=>{
       const isCurrent=index===current,remaining=rest?.taskId===task.id&&rest.stepId===step.id?timeLeft(rest.endsAt,now):0;
       const ratio=step.done?1:step.sets&&step.sets.total?Math.min(1,step.sets.done/step.sets.total):0;
-      const detail=done&&!step.done?'没做':isCurrent&&step.sets?`第 ${Math.min(step.sets.total,step.sets.done+1)} 组${remaining?' · 休息 '+clock(remaining):''}`:isCurrent&&remaining?'休息 '+clock(remaining):step.detail;
-      return <div key={step.id} className={'tb-horizontal-step'+(step.done?' is-done':'')+(isCurrent?' is-current':'')+(done&&!step.done?' is-skipped':'')}><div className="tb-mini-track"><span style={{width:`${ratio*100}%`}}/></div><strong>{step.done&&<Check size={12}/>}<span>{step.name}</span></strong><small>{detail}</small></div>;
+      const detail=done&&!step.done?'没做':isCurrent&&step.sets?`第 ${Math.min(step.sets.total,step.sets.done+1)} 组${remaining?' · 休息 '+clock(remaining):''}`:isCurrent&&remaining?'休息 '+clock(remaining):isTrainingTask(task)?step.sets?`${step.sets.done} / ${step.sets.total} 组`:step.durationText||'':step.detail;
+      return <div key={step.id} className={'tb-horizontal-step'+(step.done?' is-done':'')+(isCurrent?' is-current':'')+(done&&!step.done?' is-skipped':'')}><div className="tb-mini-track"><span style={{width:`${ratio*100}%`}}/></div><strong>{step.done&&<Check size={12}/>}<span>{stepTitle(task,step)}</span></strong><small>{detail}</small></div>;
     })}</div></Disclosure></div>
     <TaskFooter {...props} active/>
   </section>;

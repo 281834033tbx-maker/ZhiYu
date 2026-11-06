@@ -66,7 +66,7 @@ export default function ChatHeader({name,avatar,status='',typing=false,typingNam
   <header className="xx-head unified-chat-head">
    <div className="chat-header-person chat-header-person-avatar-only">
     <button type="button" className="chat-header-avatar" disabled={!onProfile} aria-label={name+'的资料'} title="查看资料" onClick={event=>onProfile?.(event.currentTarget.querySelector<HTMLElement>('.xx-avatar')||event.currentTarget)}>{face}</button>
-    <span className="chat-header-copy"><strong>{name}<NpcTypeBadge purpose={dialoguePurpose} professionalTitle={professionalTitle}/></strong>{(status||typing)&&<small className={'zy-chat-header-status'+(typing?' is-typing':'')} role={typing?'status':undefined}>{typing?`${typingName?typingName+' ':''}正在输入…`:status}</small>}</span>
+    <span className="chat-header-copy"><strong>{name}<NpcTypeBadge purpose={dialoguePurpose} professionalTitle={professionalTitle}/></strong>{(status||typing)&&<small className={'zy-chat-header-status zy-character-status'+(typing?' is-typing':'')} role={typing?'status':undefined}>{typing?`${typingName?typingName+' ':''}正在输入…`:status}</small>}</span>
    </div>
    <div className="xx-call-actions" ref={root}>
     {onCalendar&&<PressableIconButton type="button" aria-label="查看历史任务日历" title="查看历史任务日历" onClick={onCalendar}><CalendarDays size={17} style={{width:17,height:17}} strokeWidth={1.7}/></PressableIconButton>}

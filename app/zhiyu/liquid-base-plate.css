@@ -26,6 +26,7 @@ html[data-zy-theme] .zy-app.zy-desktop.has-liquid-base-plate>.zy-rail { z-index:
   backdrop-filter:blur(6px) saturate(100%);
 }
 .zy-liquid-base-plate__rim {
+  display:none;
   position:absolute;
   inset:.5px;
   box-sizing:border-box;

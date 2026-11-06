@@ -560,7 +560,6 @@ export default function XiaxiaChat({
             <div className="xx-welcome">
               <img className="xx-avatar large" src={avatar} alt={shortName} />
               <h2>{name}</h2>
-              <p>{characterStatus}</p>
             </div>
           )}
           {messageGroups(visibleMessages,boundary).map((group) => {

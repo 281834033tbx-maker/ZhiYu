@@ -55,19 +55,29 @@ function nodes(value,{visible=false}={}){if(Array.isArray(value))return value.fl
 const copy=value=>Array.isArray(value)?value.map(copy).join(''):value&&typeof value==='object'&&'props'in value?copy(value.props.children):typeof value==='string'||typeof value==='number'?String(value):'';
 const render=(Card,props)=>{cursor=0;return expand(Card(props));};
 const toggles=tree=>nodes(tree).filter(node=>node.type==='button'&&typeof node.props['aria-expanded']==='boolean');
-for(const [Card,payload,property,id,expected] of [[cards.DailyBriefCard,daily,'brief','new-daily',['待定','日程','采购','缴费','进度','近期','关注']],[cards.WeeklyReportCard,weekly,'report','new-weekly',['要紧','身体','训练','饮食','做菜','护肤','账本','追踪','评语']]]){
+for(const [Card,payload,property,id,expected] of [[cards.DailyBriefCard,daily,'brief','new-daily',['城市天气','待定','日程','采购','缴费','进度','近期','关注']],[cards.WeeklyReportCard,weekly,'report','new-weekly',['本周概览','要紧','身体','训练','饮食','做菜','护肤','账本','追踪','评语']]]){
  slots=[];const props={[property]:payload,messageId:id,onOpenNpc:()=>{}};
  let tree=render(Card,props);const toggle=toggles(tree);
  assert.equal(toggle.length,1,'exactly one disclosure button per report');assert.equal(toggle[0].props['aria-expanded'],false);
  assert.equal(nodes(tree,{visible:true}).filter(node=>node.props['data-report-block']).length,0,'initial accessible view is summary only');
+ const title=property==='brief'?'今日简报':'本周汇报';
+ assert.equal(copy(toggle[0]),title+'展开','the compact disclosure contains only its four-character title and expand action');
+ const article=nodes(tree).find(node=>node.type==='article');
+ assert.ok(article.props.className.split(' ').includes('xx-bubble'),'reports share the actual normal-message bubble class');
  const content=nodes(tree).find(node=>node.props.className?.startsWith('zy-molly-report-body'));
  assert.equal(toggle[0].props['aria-controls'],content.props.id);assert.equal(content.props.inert,true);
  toggle[0].props.onClick();tree=render(Card,props);
  assert.equal(toggles(tree)[0].props['aria-expanded'],true);
+ assert.equal(copy(toggles(tree)[0]),title+'收起','expanded cards keep the title and offer an explicit collapse action');
  assert.deepEqual(nodes(tree,{visible:true}).filter(node=>node.type==='h4').map(copy),expected,'opening exposes every section directly');
  for(const block of nodes(tree).filter(node=>node.props['data-report-block']))assert.equal(nodes(block).filter(node=>node.type==='button'&&node.props['aria-expanded']!==undefined).length,0,'no per-section toggles');
- assert.equal(nodes(tree).filter(node=>node.type==='svg'&&node.props['data-icon']==='chevron').length,1,'only the summary arrow remains');
+ assert.equal(nodes(tree).filter(node=>node.type==='svg'&&node.props['data-icon']==='chevron').length,0,'disclosures use visible expand/collapse words, without section arrows');
  if(property==='brief'){
+   const weather=nodes(tree,{visible:true}).find(node=>node.props['data-report-block']==='weather');
+   assert.ok(copy(weather).includes(daily.header.city));
+   assert.ok(copy(weather).includes(`${daily.header.weather.low}–${daily.header.weather.high}° ${daily.header.weather.text}`));
+   assert.ok(copy(weather).includes(daily.header.traffic));
+   assert.ok(copy(weather).includes(daily.header.weather.tip));
    const confirm=nodes(tree).find(node=>node.type==='button'&&copy(node)==='确认');
    await confirm.props.onClick({stopPropagation(){}});await new Promise(resolve=>setTimeout(resolve,0));
    tree=render(Card,props);assert.equal(toggles(tree)[0].props['aria-expanded'],true,'an action receipt cannot collapse the report');
@@ -75,7 +85,14 @@ for(const [Card,payload,property,id,expected] of [[cards.DailyBriefCard,daily,'b
  }
  toggles(tree)[0].props.onClick();tree=render(Card,props);assert.equal(toggles(tree)[0].props['aria-expanded'],false);
 }
+slots=[];
+const noWeather={...daily,header:{...daily.header,weather:undefined}};
+let fallback=render(cards.DailyBriefCard,{brief:noWeather,messageId:'weather-missing'});
+toggles(fallback)[0].props.onClick();fallback=render(cards.DailyBriefCard,{brief:noWeather,messageId:'weather-missing'});
+const fallbackWeather=nodes(fallback,{visible:true}).find(node=>node.props['data-report-block']==='weather');
+assert.ok(copy(fallbackWeather).includes(daily.header.traffic),'traffic remains available independently of a weather reading');
+assert.ok(!copy(fallbackWeather).includes('undefined'),'a missing weather record never invents temperatures');
 assert.equal(apiCalls,1,'folding never invokes report APIs');
 currentAccount='second-view-owner';slots=[];assert.equal(toggles(render(cards.DailyBriefCard,{brief:daily,messageId:'new-daily'}))[0].props['aria-expanded'],false);
 cardFold.clear();
-console.log('PASS: daily and weekly summaries each have one accessible toggle; all seven/nine sections expand together with no section arrows, and action receipts preserve expansion.');
+console.log('PASS: daily and weekly summaries each have one accessible toggle; weather/overview lead all sections, compact titles toggle expand/collapse with no section arrows, and action receipts preserve expansion.');
