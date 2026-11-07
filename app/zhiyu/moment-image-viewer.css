@@ -1,0 +1,35 @@
+/* Moments remain in the App: this top-layer surface spans its complete viewport. */
+html[data-zy-theme] body dialog.zy-moment-image-viewer {
+  position:fixed;inset:0;box-sizing:border-box;width:100vw;height:100dvh;max-width:none;max-height:none;
+  margin:0;padding:0;overflow:hidden;border:0;border-radius:0;background:var(--zy-person-glass-fill);
+  color:var(--zy-ink);box-shadow:none;backdrop-filter:blur(14px) saturate(105%);-webkit-backdrop-filter:blur(14px) saturate(105%);
+  font-family:inherit;font-size:calc(13px + var(--zy-font-adjust,0px));
+}
+.zy-moment-image-viewer::backdrop {background:transparent;}
+.zy-moment-image-viewer:not([open]) {display:none;}
+.zy-moment-image-toolbar {position:absolute;top:16px;right:18px;z-index:2;display:flex;gap:10px;}
+.zy-moment-image-viewer button {display:grid;place-items:center;box-sizing:border-box;width:36px;height:36px;padding:0;border:0;border-radius:6px;background:transparent;color:inherit;cursor:pointer;}
+.zy-moment-image-viewer button:is(:hover,:focus-visible) {color:var(--zy-chat-control-accent);}
+.zy-moment-image-viewer button:focus-visible {outline:2px solid currentColor;outline-offset:3px;}
+.zy-moment-image-viewer button:disabled {opacity:.3;cursor:default;}
+.zy-moment-image-stage {position:absolute;inset:64px 72px 64px;display:flex;align-items:center;justify-content:center;}
+.zy-moment-image-stage>img {display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;user-select:none;}
+.zy-moment-image-viewer :is(.zy-moment-image-prev,.zy-moment-image-next) {position:absolute;top:50%;width:44px;height:56px;transform:translateY(-50%);}
+.zy-moment-image-prev {left:14px;}
+.zy-moment-image-next {right:14px;}
+.zy-moment-image-dots {position:absolute;bottom:14px;left:50%;display:flex;max-width:calc(100% - 100px);min-width:0;margin:0;padding:0;border:0;overflow:auto;transform:translateX(-50%);}
+.zy-moment-image-dots>button {width:24px;height:28px;flex:0 0 24px;}
+.zy-moment-image-dots i {box-sizing:border-box;width:7px;height:7px;border:1px solid var(--zy-secondary);border-radius:50%;background:transparent;}
+.zy-moment-image-dots>button[aria-pressed='true'] i {border-color:var(--zy-chat-control-accent);background:var(--zy-chat-control-accent);}
+.zy-moment-image-position {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.zy-moment-image-notice {position:absolute;bottom:52px;left:50%;max-width:calc(100% - 40px);padding:7px 12px;border-radius:10px;background:var(--zy-glass-fill);transform:translateX(-50%);text-align:center;}
+.zy-moment-image-error {position:absolute;margin:0;text-align:center;color:var(--zy-secondary);}
+@media(max-width:600px) {
+  .zy-moment-image-stage {inset:60px 42px 58px;}
+  .zy-moment-image-toolbar {top:12px;right:12px;}
+  .zy-moment-image-viewer :is(.zy-moment-image-prev,.zy-moment-image-next) {width:32px;height:48px;}
+  .zy-moment-image-prev {left:4px;}.zy-moment-image-next {right:4px;}
+}
+@media(prefers-reduced-transparency:reduce) {
+  html[data-zy-theme] body dialog.zy-moment-image-viewer {background:var(--zy-canvas);backdrop-filter:none;-webkit-backdrop-filter:none;}
+}

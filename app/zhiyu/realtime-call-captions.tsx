@@ -59,7 +59,7 @@ export function LocalCameraPreview({visible,pending,videoRef}:{visible:boolean;p
   </section>;
 }
 
-export function RealtimeCallEnd({visible,elapsedMs,reconnectLabel,onReconnect}:{visible:boolean;elapsedMs:number;reconnectLabel:string;onReconnect:()=>void}) {
+export function RealtimeCallEnd({visible,elapsedMs,reconnectLabel,onReconnect,title}:{visible:boolean;elapsedMs:number;reconnectLabel:string;onReconnect:()=>void;title?:string}) {
   const dialog=useRef<HTMLDialogElement>(null);
   useLayoutEffect(()=>{
     const element=dialog.current;
@@ -69,7 +69,7 @@ export function RealtimeCallEnd({visible,elapsedMs,reconnectLabel,onReconnect}:{
   },[visible]);
   if(!visible||typeof document==='undefined')return null;
   return createPortal(<dialog ref={dialog} className="zy-call-ended" aria-label="通话已结束" data-call-ended="true" onCancel={event=>event.preventDefault()}>
-    <h2>通话已结束 · {formatCallDuration(elapsedMs)}</h2>
+    <h2>{title||`通话已结束 · ${formatCallDuration(elapsedMs)}`}</h2>
     <button type="button" className="zy-call-glass-button" onClick={onReconnect}>{reconnectLabel}</button>
   </dialog>,document.body);
 }

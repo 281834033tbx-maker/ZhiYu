@@ -1,0 +1,26 @@
+/* Comment-only controls. Ordinary chat send buttons retain their own styles. */
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments form.zy-moments-comment-editor .zy-moments-comment-tools {
+  justify-content:flex-end;
+}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments form.zy-moments-comment-editor .zy-moments-comment-tools button {
+  color:var(--zy-muted);
+  opacity:1;
+}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments form.zy-moments-comment-editor .zy-moments-comment-tools .zy-moments-comment-send {
+  margin-left:0;
+}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments form.zy-moments-comment-editor .zy-moments-comment-tools .zy-moments-comment-emoji.is-active:enabled,
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments form.zy-moments-comment-editor .zy-moments-comment-tools .zy-moments-comment-send:enabled {
+  color:var(--zy-interaction-ink);
+}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments form.zy-moments-comment-editor .zy-moments-comment-tools button:disabled {
+  color:var(--zy-muted);
+  opacity:1;
+  cursor:default;
+}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments form.zy-moments-comment-editor .zy-moments-comment-emojis {
+  background:var(--zy-person-glass-fill);
+  border:0;
+  -webkit-backdrop-filter:blur(24px) saturate(125%);
+  backdrop-filter:blur(24px) saturate(125%);
+}

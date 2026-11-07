@@ -5,8 +5,10 @@ import './realtime-voice-call.css';
 export type RealtimeVoiceControlsProps = {
   muted:boolean;
   microphoneReady:boolean;
+  microphoneAvailable?:boolean;
   cameraEnabled:boolean;
   cameraPending:boolean;
+  cameraAvailable?:boolean;
   onToggleMute:()=>void;
   onHangup:()=>void;
   onToggleCamera:()=>void;
@@ -29,18 +31,19 @@ function HangupIcon() {
 }
 
 /** The parent owns permissions, streams and all call state changes. */
-export default function RealtimeVoiceControls({muted,microphoneReady,cameraEnabled,cameraPending,onToggleMute,onHangup,onToggleCamera}:RealtimeVoiceControlsProps) {
+export default function RealtimeVoiceControls({muted,microphoneReady,microphoneAvailable=true,cameraEnabled,cameraPending,cameraAvailable=true,onToggleMute,onHangup,onToggleCamera}:RealtimeVoiceControlsProps) {
+  const microphoneOff=!microphoneAvailable||muted;
   return <div className="zy-call-controls" aria-label="视频通话控制" data-call-controls="true">
     <button type="button" className={'zy-call-control'+(muted?' is-lit':'')} data-call-control="microphone"
-      aria-label={muted?'打开麦克风':'关闭麦克风'} aria-pressed={!muted} disabled={!microphoneReady} onClick={onToggleMute}>
-      <span className="zy-call-control-disc"><MicrophoneIcon muted={muted}/></span>
-      <span className="zy-call-control-label">{muted?'麦克风已关':'麦克风已开'}</span>
+      aria-label={!microphoneAvailable?'麦克风未启用':muted?'打开麦克风':'关闭麦克风'} aria-pressed={!microphoneOff} disabled={!microphoneReady} onClick={onToggleMute}>
+      <span className="zy-call-control-disc"><MicrophoneIcon muted={microphoneOff}/></span>
+      <span className="zy-call-control-label">{!microphoneAvailable?'麦克风未启用':muted?'麦克风已关':'麦克风已开'}</span>
     </button>
     <button type="button" className="zy-call-control is-hangup" data-call-control="hangup" aria-label="挂断" onClick={onHangup}>
       <span className="zy-call-control-disc"><HangupIcon/></span><span className="zy-call-control-label">挂断</span>
     </button>
     <button type="button" className={'zy-call-control'+(cameraEnabled?' is-lit':'')} data-call-control="camera"
-      aria-label={cameraEnabled?'关闭摄像头':'打开摄像头'} aria-pressed={cameraEnabled} aria-busy={cameraPending} disabled={cameraPending} onClick={onToggleCamera}>
+      aria-label={cameraEnabled?'关闭摄像头':'打开摄像头'} aria-pressed={cameraEnabled} aria-busy={cameraPending} disabled={!cameraAvailable||cameraPending} onClick={onToggleCamera}>
       <span className="zy-call-control-disc"><CameraIcon enabled={cameraEnabled}/></span>
       <span className="zy-call-control-label">{cameraPending?'正在打开':cameraEnabled?'摄像头已开':'摄像头已关'}</span>
     </button>

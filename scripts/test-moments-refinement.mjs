@@ -47,16 +47,27 @@ const react={
 const catalog=JSON.parse(readFileSync('app/zhiyu/emoji-data/catalog.json','utf8'));
 const commentEditor=load('app/zhiyu/moment-comment-editor.tsx',{
   react,'react/jsx-runtime':{jsx,jsxs:jsx},'lucide-react':icons,'./emoji-data/catalog.json':catalog,
+  './moment-comment-controls.css':{},
 },{requestAnimationFrame:callback=>callback()});
 let value='前后',submitted=0,cancelled=0,cancelReply=0,resolveSubmit;
 const props={onChange:next=>{value=next;},onSubmit:()=>{submitted++;return new Promise(resolve=>{resolveSubmit=resolve;});},onCancel:()=>cancelled++,onCancelReply:()=>cancelReply++,replyName:'朋友'};
 const render=(overrides={})=>{cursor=0;return commentEditor.default({...props,value,...overrides});};
 let form=render(),textarea=nodes(form).find(node=>node.type==='textarea');
+const tools=nodes(form).find(node=>node.props.className==='zy-moments-comment-tools');
+assert.equal(nodes(tools).filter(node=>node.type==='button').length,2,'the bottom toolbar has only emoji and send');
+assert.equal(nodes(form).some(node=>node.props['aria-label']==='取消评论'),false,'Escape retains cancellation without a third toolbar icon');
+const empty=render({value:'   '});
+assert.equal(nodes(empty).find(node=>node.props['aria-label']==='发送评论').props.disabled,true,'whitespace cannot send');
+assert.equal(nodes(empty).find(node=>node.props['aria-label']==='选择评论表情').props.className.includes('is-active'),false,'empty closed emoji control uses the muted state');
+form=render();textarea=nodes(form).find(node=>node.type==='textarea');
 const input={selectionStart:1,selectionEnd:1,focus:()=>{},setSelectionRange:(start,end)=>{input.selectionStart=start;input.selectionEnd=end;}};
 textarea.props.ref.current=input;
 nodes(form).find(node=>node.props['aria-label']==='选择评论表情').props.onClick();
 form=render();
 assert.equal(nodes(form).some(node=>node.type==='img'||node.type==='input'&&node.props.type==='file'),false,'the emoji editor exposes text only');
+assert.equal(nodes(form).some(node=>node.type==='label'||node.type==='input'&&node.props.type==='search'),false,'the emoji panel has no heading or search row');
+assert.equal(nodes(form).filter(node=>node.type==='button'&&node.props.title).length,catalog.items.length,'all catalog emojis remain available in the scrolling grid');
+assert.equal(nodes(form).find(node=>node.props['aria-label']==='选择评论表情').props.className.includes('is-active'),true);
 const emoji=nodes(form).find(node=>node.type==='button'&&node.props.title);
 emoji.props.onClick();assert.equal(value,'前'+emoji.props.children+'后','emoji text inserts at the caret');
 form=render();textarea=nodes(form).find(node=>node.type==='textarea');
@@ -71,9 +82,14 @@ const key=(key,extra={})=>({key,shiftKey:false,nativeEvent:{isComposing:false},p
 textarea.props.onKeyDown(key('Enter',{shiftKey:true}));textarea.props.onKeyDown(key('Enter',{nativeEvent:{isComposing:true}}));assert.equal(submitted,0);
 form.props.onSubmit({preventDefault:()=>{}});form.props.onSubmit({preventDefault:()=>{}});assert.equal(submitted,1,'a rapid double submit reuses the in-flight operation');
 resolveSubmit();await new Promise(resolve=>setImmediate(resolve));
-form=render();textarea=nodes(form).find(node=>node.type==='textarea');textarea.props.onKeyDown(key('Escape'));assert.equal(cancelled,1,'Escape closes the inline editor after the emoji panel is closed');
+form=render();assert.equal(nodes(form).find(node=>node.props['aria-label']==='选择评论表情').props['aria-expanded'],true,'a resolved callback alone is not a confirmed send receipt');
+textarea=nodes(form).find(node=>node.type==='textarea');textarea.props.onKeyDown(key('Escape'));assert.equal(cancelled,0,'first Escape closes the emoji panel');
+form=render();textarea=nodes(form).find(node=>node.type==='textarea');textarea.props.onKeyDown(key('Escape'));assert.equal(cancelled,1,'next Escape closes the inline editor');
 form=render({disabled:true});form.props.onSubmit({preventDefault:()=>{}});assert.equal(submitted,1,'a busy editor cannot submit');
 nodes(form).find(node=>node.props['aria-label']==='取消回复').props.onClick();assert.equal(cancelReply,1);
+form=render();nodes(form).find(node=>node.props['aria-label']==='选择评论表情').props.onClick();
+form=render({onSubmit:async()=>{throw Error('Synthetic rejected send');}});form.props.onSubmit({preventDefault:()=>{}});await new Promise(resolve=>setImmediate(resolve));
+form=render();assert.equal(value,'可发送','a rejected send keeps the draft');assert.equal(nodes(form).find(node=>node.props['aria-label']==='选择评论表情').props['aria-expanded'],true,'a rejected send keeps the panel');
 
 // Run the actual account-scoped API handler, including its failure path.
 const app=readFileSync('app/zhiyu/app.tsx','utf8');
@@ -81,7 +97,7 @@ const parsed=ts.createSourceFile('app.tsx',app,ts.ScriptTarget.Latest,true,ts.Sc
 let handler;function find(node){if(ts.isFunctionDeclaration(node)&&node.name?.text==='interactWithPost')handler=node.getText(parsed);ts.forEachChild(node,find);}find(parsed);assert.ok(handler);
 const scope={id:'account-a'},received=[],notices=[],patches=[];
 const context={exports:{},interactionBusy:'',groupAccountScope:{current:scope},self:{name:'我'},commentReply:{id:'friend-comment',name:'朋友'},commentRequest:{current:null},uid:()=> 'fixture-request',now:()=> '10:00',
-  patchPost:(...args)=>patches.push(args),receiveNpcPosts:items=>received.push(items),notify:message=>notices.push(message),reportUserFacingError:()=> '明确失败',window:{dispatchEvent:()=>{}},Event:class{},
+  patchPost:(...args)=>patches.push(args),receiveNpcPosts:items=>received.push(items),notify:message=>notices.push(message),reportUserFacingError:()=> '明确失败',momentTimestamp:value=>new Date(value).toISOString(),window:{dispatchEvent:()=>{}},Event:class{},
 };
 context.setInteractionBusy=value=>{context.interactionBusy=value;};
 let fail=true,finishRequest;context.npcFetch=()=>fail?Promise.resolve({ok:false,json:async()=>({error:'拒绝互动'})}):new Promise(resolve=>{finishRequest=resolve;});

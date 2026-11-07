@@ -1,15 +1,29 @@
 'use client';
-import {reportUserFacingError} from '../../lib/user-facing-errors';
-/* eslint-disable next/no-img-element */
-import {useEffect,useRef,useState} from 'react';
-import {Smile,Heart,Plus,X} from 'lucide-react';
-import {listStickers,saveSticker,removeSticker,type SavedSticker} from './saved-stickers';
+
+import {useEffect,useRef} from 'react';
 import catalog from './emoji-data/catalog.json';
-export default function EmojiPicker({onEmoji,onFile,onClose,allowImages=true}:{onEmoji:(s:string)=>void;onFile:(f:File)=>void;onClose:()=>void;allowImages?:boolean}){
- const [tab,setTab]=useState<'emoji'|'saved'>('emoji'),[items,setItems]=useState<SavedSticker[]>([]),[error,setError]=useState(''),[busy,setBusy]=useState(false);const input=useRef<HTMLInputElement>(null);
- useEffect(()=>{let alive=true;const refresh=()=>{void listStickers().then(data=>{if(alive)setItems(data);}).catch(e=>{if(alive)setError(reportUserFacingError(e,'media','读取表情'));});};refresh();window.addEventListener('zhiyu-stickers-changed',refresh);return()=>{alive=false;window.removeEventListener('zhiyu-stickers-changed',refresh);};},[]);
- return <section className="chat-sticker-panel" aria-label="表情面板"><div className="emoji-picker-tabs" role="tablist"><button type="button" role="tab" aria-selected={tab==='emoji'} aria-label="小表情" onClick={()=>setTab('emoji')}><Smile size={20}/></button>{allowImages&&<button type="button" role="tab" aria-selected={tab==='saved'} aria-label="收藏的表情包" onClick={()=>setTab('saved')}><Heart size={20}/></button>}<span>{tab==='emoji'?'小表情':'我的表情'}</span><button type="button" aria-label="关闭表情面板" onClick={onClose}><X size={16}/></button></div>
- {error&&<p role="alert">{error}</p>}
- {tab==='emoji'?<div role="tabpanel"><div className="emoji-grid">{catalog.items.map(item=><button type="button" key={item.emoji} title={item.name} aria-label={item.name} onMouseDown={e=>e.preventDefault()} onClick={()=>onEmoji(item.emoji)}>{item.emoji}</button>)}</div></div>:<div role="tabpanel"><div className="saved-sticker-grid">{items.map(item=><div key={item.id}><button type="button" aria-label={'发送'+item.name} onClick={async()=>{try{const blob=await (await fetch(item.data)).blob();onFile(new File([blob],item.name,{type:blob.type}));}catch{setError('表情读取失败');}}}><img src={item.data} alt={item.name}/></button><button type="button" className="remove-sticker" aria-label={'移除'+item.name} onClick={()=>{void removeSticker(item.id).catch(e=>setError(reportUserFacingError(e,'media','读取表情')));}}><X size={12}/></button></div>)}<button type="button" className="add-saved-sticker" aria-label="添加收藏表情" disabled={busy} onClick={()=>input.current?.click()}><Plus size={26}/></button></div>{!items.length&&<p className="saved-sticker-empty">收藏喜欢的图片，或点＋添加表情包</p>}<input ref={input} hidden type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple onChange={async e=>{const files=Array.from(e.target.files||[]);e.target.value='';setBusy(true);setError('');try{for(const file of files)await saveSticker(file,file.name);}catch(e){setError(reportUserFacingError(e,'save','收藏表情'));}finally{setBusy(false);}}}/></div>}
+import './emoji-picker.css';
+
+// Keep the composer contract stable; saved stickers remain stored separately.
+export default function EmojiPicker({onEmoji,onClose}:{onEmoji:(s:string)=>void;onFile:(f:File)=>void;onClose:()=>void;allowImages?:boolean}) {
+ const root=useRef<HTMLElement>(null);
+ useEffect(()=>{
+  const panel=root.current;if(!panel)return;
+  const document=panel.ownerDocument;
+  const trigger=panel.parentElement?.querySelector<HTMLButtonElement>('[aria-label="选择表情包"]');
+  const outside=(event:PointerEvent)=>{
+   const target=event.target as Node|null;
+   if(target&&!panel.contains(target)&&!trigger?.contains(target))onClose();
+  };
+  const key=(event:KeyboardEvent)=>{
+   if(event.key!=='Escape')return;
+   event.preventDefault();event.stopPropagation();onClose();trigger?.focus();
+  };
+  document.addEventListener('pointerdown',outside,true);
+  document.addEventListener('keydown',key);
+  return()=>{document.removeEventListener('pointerdown',outside,true);document.removeEventListener('keydown',key);};
+ },[onClose]);
+ return <section ref={root} className="chat-sticker-panel zy-emoji-only-panel" aria-label="表情面板">
+  <div className="emoji-grid zy-emoji-only-grid">{catalog.items.map(item=><button type="button" key={item.emoji} title={item.name} aria-label={item.name} onMouseDown={event=>event.preventDefault()} onClick={()=>onEmoji(item.emoji)}>{item.emoji}</button>)}</div>
  </section>;
 }

@@ -1,0 +1,41 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import vm from 'node:vm';
+import ts from 'typescript';
+
+// Execute the real picker with synthetic DOM events. No storage, image API,
+// browser, account, production data or network exists in this harness.
+const catalog=JSON.parse(readFileSync('app/zhiyu/emoji-data/catalog.json','utf8'));
+const jsx=(type,props)=>({type,props:props||{}});
+const nodes=value=>Array.isArray(value)?value.flatMap(nodes):value&&typeof value==='object'&&'props'in value?[value,...nodes(value.props.children)]:[];
+const source=readFileSync('app/zhiyu/emoji-picker.tsx','utf8');
+const compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
+const effects=[],listeners=new Map();let closed=0,focused=0,prevented=0,stopped=0;
+const triggerTarget={},insideTarget={},outsideTarget={};
+const trigger={contains:target=>target===triggerTarget,focus(){focused++;}};
+const document={addEventListener:(type,listener,capture)=>listeners.set(type,{listener,capture}),removeEventListener:(type,listener,capture)=>{const saved=listeners.get(type);assert.equal(saved.listener,listener);assert.equal(saved.capture,capture);listeners.delete(type);}};
+const panel={ownerDocument:document,parentElement:{querySelector:selector=>(assert.equal(selector,'[aria-label="选择表情包"]'),trigger)},contains:target=>target===insideTarget};
+const ref={current:panel},sandboxModule={exports:{}};
+const react={useRef:()=>ref,useEffect:effect=>effects.push(effect)};
+const dependencies={react,'react/jsx-runtime':{jsx,jsxs:jsx},'./emoji-data/catalog.json':{default:catalog},'./emoji-picker.css':{}};
+vm.runInNewContext(compiled,{module:sandboxModule,exports:sandboxModule.exports,require:name=>{assert.ok(name in dependencies,'The text-only picker must not load sticker storage or image helpers: '+name);return dependencies[name];}});
+const received=[];
+const tree=sandboxModule.exports.default({onEmoji:emoji=>received.push(emoji),onClose:()=>closed++,onFile(){assert.fail('Text emojis must not send image files');},allowImages:false});
+const buttons=nodes(tree).filter(node=>node.type==='button');
+assert.equal(buttons.length,catalog.items.length,'the entire catalogue is available, not a first-page slice');
+assert.equal(nodes(tree).filter(node=>node.type==='input'||node.props.role==='tab'||node.props.role==='tablist'||node.props.role==='tabpanel').length,0);
+assert.ok(!nodes(tree).some(node=>/关闭表情面板|收藏|搜索/.test(node.props['aria-label']||'')));
+assert.equal(buttons.at(-1).props['aria-label'],catalog.items.at(-1).name,'the final catalogue item can be reached by scrolling');
+buttons[0].props.onMouseDown({preventDefault(){prevented++;}});assert.equal(prevented,1,'picking a text emoji preserves the editor caret');
+buttons[0].props.onClick();buttons.at(-1).props.onClick();assert.deepEqual(received,[catalog.items[0].emoji,catalog.items.at(-1).emoji]);
+const cleanup=effects[0]();
+assert.equal(listeners.get('pointerdown').capture,true);
+listeners.get('pointerdown').listener({target:insideTarget});listeners.get('pointerdown').listener({target:triggerTarget});assert.equal(closed,0,'the panel and its own toggle are not outside clicks');
+listeners.get('pointerdown').listener({target:outsideTarget});assert.equal(closed,1);assert.equal(focused,0,'outside clicks retain their intended target focus');
+listeners.get('keydown').listener({key:'Enter'});assert.equal(closed,1);
+listeners.get('keydown').listener({key:'Escape',preventDefault(){prevented++;},stopPropagation(){stopped++;}});assert.equal(closed,2);assert.equal(stopped,1);assert.equal(focused,1,'Escape returns focus to the originating picker toggle');
+cleanup();assert.equal(listeners.size,0,'unmount removes all document handlers');
+const css=readFileSync('app/zhiyu/emoji-picker.css','utf8');
+assert.match(css,/\.chat-sticker-panel\.zy-emoji-only-panel\s*\{\s*background:white;/);
+assert.match(css,/grid-template-columns:repeat\(8,minmax\(0,1fr\)\)/);assert.match(css,/font-size:calc\(20px \+ var\(--zy-font-adjust,0px\)\)/);assert.match(css,/overflow-y:auto/);assert.ok(!css.includes('!important'));
+console.log('PASS: all text emojis, no image/storage/tab/search controls, preserved caret callback, outside/Escape cleanup, white scoped surface and eight-column 20px grid.');

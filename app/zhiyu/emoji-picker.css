@@ -1,0 +1,31 @@
+/* This text-only picker intentionally keeps a white canvas in every theme. */
+html[data-zy-theme] body :is(.zy-app.zy-desktop,.zy-app.zy-mobile,.zy-character-window) .chat-sticker-panel.zy-emoji-only-panel {
+ background:white;
+ border:0;
+ box-shadow:var(--zy-popup-shadow);
+ -webkit-backdrop-filter:none;
+ backdrop-filter:none;
+}
+html[data-zy-theme] body :is(.zy-app.zy-desktop,.zy-app.zy-mobile,.zy-character-window) .chat-sticker-panel.zy-emoji-only-panel>.zy-emoji-only-grid {
+ display:grid;
+ grid-template-columns:repeat(8,minmax(0,1fr));
+ grid-auto-rows:34px;
+ gap:2px 1px;
+ min-width:0;
+ min-height:0;
+ max-height:240px;
+ overflow-x:hidden;
+ overflow-y:auto;
+ overscroll-behavior:contain;
+}
+html[data-zy-theme] body :is(.zy-app.zy-desktop,.zy-app.zy-mobile,.zy-character-window) .chat-sticker-panel.zy-emoji-only-panel>.zy-emoji-only-grid>button {
+ font-size:calc(20px + var(--zy-font-adjust,0px));
+ background:transparent;
+}
+html[data-zy-theme] body :is(.zy-app.zy-desktop,.zy-app.zy-mobile,.zy-character-window) .chat-sticker-panel.zy-emoji-only-panel>.zy-emoji-only-grid>button:is(:hover,:focus-visible) {
+ background:color-mix(in srgb,var(--zy-interaction-ink) 9%,white);
+}
+html[data-zy-theme] body :is(.zy-app.zy-desktop,.zy-app.zy-mobile,.zy-character-window) .chat-sticker-panel.zy-emoji-only-panel>.zy-emoji-only-grid>button:focus-visible {
+ outline:2px solid var(--zy-interaction-ink);
+ outline-offset:-2px;
+}

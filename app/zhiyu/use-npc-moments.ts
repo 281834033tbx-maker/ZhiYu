@@ -2,7 +2,8 @@
 import { useEffect } from 'react';
 import { npcFetch } from './npc-fetch';
 import type { Post, Comment } from './data';
-type Item={id:string;personId:string;status:string;text:string;createdAt:number;images:string[];chatScreenshot?:Post['chatScreenshot'];liked?:boolean;likes?:{actorId:string;name:string}[];likeCount?:number;comments?:Comment[]};
+import {momentTimestamp} from '../../lib/npc/moment-time';
+type Item={id:string;personId:string;status:string;text:string;createdAt:number;location?:string;images:string[];chatScreenshot?:Post['chatScreenshot'];liked?:boolean;likes?:{actorId:string;name:string}[];likeCount?:number;comments?:Comment[]};
 export function useNpcMoments(ready:boolean,onPosts:(posts:Post[])=>void) {
   useEffect(()=>{
     if(!ready)return;
@@ -13,7 +14,7 @@ export function useNpcMoments(ready:boolean,onPosts:(posts:Post[])=>void) {
       try {
         const response=await npcFetch('/api/npc/moments');if(!response.ok)return;
         const data=await response.json() as {items:Item[]};
-        if(!cancelled)onPosts(data.items.filter(i=>i.status==='published').map(i=>({id:i.id,personId:i.personId,time:new Date(i.createdAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),text:i.text,images:i.images,chatScreenshot:i.chatScreenshot,source:'npc-moment',location:'',liked:i.liked||false,likes:i.likes||[],likeCount:i.likeCount||0,comments:i.comments||[]})));
+        if(!cancelled)onPosts(data.items.filter(i=>i.status==='published').map(i=>({id:i.id,personId:i.personId,createdAt:momentTimestamp(i.createdAt),time:momentTimestamp(i.createdAt)?new Date(i.createdAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'',text:i.text,images:i.images,chatScreenshot:i.chatScreenshot,source:'npc-moment',location:typeof i.location==='string'?i.location:'',liked:i.liked||false,likes:i.likes||[],likeCount:i.likeCount||0,comments:i.comments||[]})));
       } catch { /* Keep the last loaded feed and retry on the next interval. */ }
       finally{fetching=false;}
     };

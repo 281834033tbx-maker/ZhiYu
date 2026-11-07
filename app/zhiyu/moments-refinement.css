@@ -6,14 +6,20 @@ html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moments-cover-profile {
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moments-cover-profile::before {content:none;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moments-cover-profile:active {transform:none;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-feed-stream {padding-top:52px;}
-html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post {margin-bottom:48px;}
-html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post>header {align-items:center;gap:12px;margin-bottom:16px;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post {display:grid;grid-template-columns:42px minmax(0,1fr);column-gap:14px;align-items:start;margin-bottom:48px;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-avatar {display:block;align-self:start;box-sizing:border-box;width:42px;height:42px;padding:0;border:0;border-radius:50%;background:transparent;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-avatar:is(:hover,:focus,:active) {background:transparent;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-avatar:focus-visible {outline:2px solid var(--zy-interaction-ink);outline-offset:4px;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-content {min-width:0;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-content>header {display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:12px;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person {gap:12px;background:transparent;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person:is(:hover,:focus-visible,:active) {background:transparent;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person>span:last-child {display:flex;flex-direction:column;align-items:flex-start;gap:5px;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person strong {font-size:calc(14px + var(--zy-font-adjust,0px));font-weight:600;color:var(--zy-ink);}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person .zy-moment-status {margin:0;color:var(--zy-interaction-ink);font-size:calc(11px + var(--zy-font-adjust,0px));line-height:1.5;}
-html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-published-time {margin-left:auto;flex-shrink:0;color:var(--zy-muted);font-size:calc(11px + var(--zy-font-adjust,0px));font-variant-numeric:tabular-nums;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-metadata {display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;margin-top:12px;color:var(--zy-muted);font-size:calc(11px + var(--zy-font-adjust,0px));}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-published-time {color:var(--zy-muted);font-size:inherit;font-variant-numeric:tabular-nums;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-metadata .zy-location {margin:0;font-size:inherit;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-actions {gap:24px;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-actions .zy-icon,
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-actions .zy-icon:is(:hover,:focus,:focus-visible,:active) {
@@ -24,7 +30,7 @@ html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post .zy-post-actions>but
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post .zy-post-actions>button.zy-icon:not(.liked):not(.commented):is(:hover,:focus,:focus-visible,:active) {color:var(--zy-ink);background:transparent;box-shadow:none;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-actions .zy-icon:is(.liked,.commented) {color:var(--zy-chat-control-accent);}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-actions .zy-icon:is(.liked,.commented) .zy-interaction-count {background:linear-gradient(110deg,var(--zy-moment-accent-start,var(--zy-chat-control-accent)),var(--zy-moment-accent-end,var(--zy-chat-control-accent)));-webkit-background-clip:text;background-clip:text;color:transparent;}
-html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moment-interaction-box {margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--zy-incoming);color:var(--zy-ink);font-size:calc(13px + var(--zy-font-adjust,0px));line-height:1.7;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moment-interaction-box {margin-top:12px;padding:12px 14px;border-radius:10px;background:color-mix(in srgb,var(--zy-incoming) 55%,var(--zy-canvas));color:var(--zy-ink);font-size:calc(13px + var(--zy-font-adjust,0px));line-height:1.7;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moment-interaction-box .zy-post-likers {gap:7px;margin:0;padding:0;color:var(--zy-ink);font-size:inherit;line-height:inherit;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moment-interaction-box .zy-post-comments {margin:0;padding:0;border-radius:0;background:transparent;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moment-interaction-box .zy-post-likers+.zy-post-comments {margin-top:8px;padding-top:8px;border-top:1px solid var(--zy-line);}
@@ -45,6 +51,6 @@ html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moments-comment-emojis>di
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moments-comment-emojis>div>button {display:grid;place-items:center;min-width:0;min-height:30px;padding:3px;border:0;border-radius:6px;background:transparent;font:inherit;font-size:calc(20px + var(--zy-font-adjust,0px));cursor:pointer;}
 @media(max-width:600px) {
   html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-feed-stream {max-width:calc(100% - 32px);}
-  html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post>header {flex-wrap:wrap;}
+  html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-content>header {flex-wrap:wrap;}
   html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-published-time {font-size:calc(11px + var(--zy-font-adjust,0px));}
 }

@@ -3,6 +3,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {Send,Smile,X} from 'lucide-react';
 import catalog from './emoji-data/catalog.json';
+import './moment-comment-controls.css';
 
 const limit=1000;
 
@@ -11,9 +12,9 @@ export default function MomentCommentEditor({value,onChange,onSubmit,onCancel,re
   replyName?:string;onCancelReply:()=>void;disabled?:boolean;
 }) {
   const input=useRef<HTMLTextAreaElement>(null),working=useRef(false);
-  const [emojiOpen,setEmojiOpen]=useState(false),[query,setQuery]=useState('');
+  const [emojiOpen,setEmojiOpen]=useState(false);
   useEffect(()=>{input.current?.focus();},[]);
-  const emojis=catalog.items.filter(item=>!query||`${item.name} ${item.keywords}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase())).slice(0,120);
+  const hasText=!!value.trim();
   function insert(text:string) {
     const start=input.current?.selectionStart??value.length,end=input.current?.selectionEnd??value.length;
     if(value.length-(end-start)+text.length>limit)return;
@@ -24,7 +25,9 @@ export default function MomentCommentEditor({value,onChange,onSubmit,onCancel,re
     event.preventDefault();
     if(disabled||working.current||!value.trim())return;
     working.current=true;
-    try {await onSubmit();setEmojiOpen(false);}finally{working.current=false;}
+    // Only the owner can confirm success and close this editor. A failed send
+    // retains its text and emoji panel; never clear it on promise resolution.
+    try {await onSubmit();}catch{/* The owner reports the send error. */}finally{working.current=false;}
   }
   function dismiss(event:{key:string;preventDefault:()=>void;stopPropagation:()=>void}) {
     if(event.key==='Escape'){event.preventDefault();event.stopPropagation();if(emojiOpen)setEmojiOpen(false);else onCancel();}
@@ -37,15 +40,12 @@ export default function MomentCommentEditor({value,onChange,onSubmit,onCancel,re
         onPaste={event=>{if(event.clipboardData.files.length){event.preventDefault();const text=event.clipboardData.getData('text/plain');if(text)insert(text);}}}
         onDrop={event=>{if(event.dataTransfer.files.length)event.preventDefault();}}/>
       <div className="zy-moments-comment-tools">
-        <button type="button" className="zy-moments-comment-emoji" aria-label="选择评论表情" aria-expanded={emojiOpen} disabled={disabled} onKeyDown={dismiss} onMouseDown={event=>event.preventDefault()} onClick={()=>setEmojiOpen(open=>!open)}><Smile size={18}/></button>
-        <button type="button" aria-label="取消评论" disabled={disabled} onKeyDown={dismiss} onClick={onCancel}><X size={16}/></button>
-        <button type="submit" className="zy-moments-comment-send" aria-label="发送评论" disabled={disabled||!value.trim()} onKeyDown={dismiss}><Send size={17}/></button>
+        <button type="button" className={'zy-moments-comment-emoji'+(emojiOpen||hasText?' is-active':'')} aria-label="选择评论表情" aria-expanded={emojiOpen} disabled={disabled} onKeyDown={dismiss} onMouseDown={event=>event.preventDefault()} onClick={()=>setEmojiOpen(open=>!open)}><Smile size={18}/></button>
+        <button type="submit" className="zy-moments-comment-send" aria-label="发送评论" disabled={disabled||!hasText} onKeyDown={dismiss}><Send size={17}/></button>
       </div>
     </div>
     {emojiOpen&&<section className="zy-moments-comment-emojis" aria-label="评论表情">
-      <label><span>表情</span><input type="search" aria-label="搜索评论表情" placeholder="搜索表情" value={query} onKeyDown={dismiss} onChange={event=>setQuery(event.target.value)}/></label>
-      <div>{emojis.map(item=><button type="button" key={item.emoji} title={item.name} aria-label={item.name} onKeyDown={dismiss} onMouseDown={event=>event.preventDefault()} onClick={()=>insert(item.emoji)}>{item.emoji}</button>)}</div>
-      {!emojis.length&&<p>没有找到这个表情</p>}
+      <div>{catalog.items.map(item=><button type="button" key={item.emoji} title={item.name} aria-label={item.name} onKeyDown={dismiss} onMouseDown={event=>event.preventDefault()} onClick={()=>insert(item.emoji)}>{item.emoji}</button>)}</div>
     </section>}
   </form>;
 }

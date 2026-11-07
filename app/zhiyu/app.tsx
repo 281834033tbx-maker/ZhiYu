@@ -38,9 +38,11 @@ import ChatComposer from './chat-composer';
 import MessageReceipt from './message-receipt';
 import MomentPostInteractions from './moment-post-interactions';
 import MomentCommentEditor from './moment-comment-editor';
+import MomentImageViewer from './moment-image-viewer';
 import PhosphorActionIcon from './phosphor-action-icon';
 import './moments-refinement.css';
 import {formatConversationTime} from '../../lib/npc/conversation-time';
+import {formatMomentTime,momentTimestamp} from '../../lib/npc/moment-time';
 import VoiceBubble from './voice-bubble';
 import ChatImage from './chat-image';
 import XiaxiaChat from './xia-xia';
@@ -129,7 +131,7 @@ const DESKTOP_LIQUID_BASE_ENABLED = true;
 
 type Modal =
   | { kind: 'publish' }
-  | { kind: 'image'; images: string[]; index: number }
+  | { kind: 'image'|'moment-image'; images: string[]; index: number }
   | { kind: 'settings' }
   | { kind: 'profile'; person: Person; anchor: HTMLElement | null }
   | null;
@@ -1258,7 +1260,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       if(!response.ok){const data=await response.json() as {error?:string};throw Error(data.error||'互动未成功');}
       const data=await response.json() as {items:Array<Post & {createdAt:number;status:string}>};
       if(groupAccountScope.current!==expectedScope)return false;
-      receiveNpcPosts(data.items.filter(p=>p.status==='published').map(p=>({...p,time:new Date(p.createdAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),location:'',source:'npc-moment'})));
+      receiveNpcPosts(data.items.filter(p=>p.status==='published').map(p=>({...p,createdAt:momentTimestamp(p.createdAt),time:momentTimestamp(p.createdAt)?new Date(p.createdAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'',location:typeof p.location==='string'?p.location:'',source:'npc-moment'})));
       if(action==='comment')commentRequest.current=null;
       window.dispatchEvent(new Event('npc-moments-changed'));return true;
     }catch(e){if(groupAccountScope.current===expectedScope)notify(reportUserFacingError(e,'save','main'));return false;}
@@ -1833,23 +1835,18 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
               )}
               {currentPosts.map((post) => {
                 const author = personById(post.personId);
+                const publishedTime=post.createdAt?formatMomentTime(post.createdAt):post.time;
                 return (
                   <article className={`zy-post ${post.personId==='self'?'is-self':'is-npc'}`} key={post.id} id={post.id}>
+                    <button type="button" className="zy-post-avatar" aria-label={`查看${author.name}的资料`} onClick={event=>openProfile(author,event.currentTarget.querySelector<HTMLElement>('.zy-avatar')||event.currentTarget)}>
+                      <Avatar person={post.personId==='lin'?{...author,avatar:asset('moments',3)}:post.personId==='shen'?{...author,avatar:asset('moments',7)}:author} size={42}/>
+                    </button>
+                    <div className="zy-post-content">
                     <header>
                       <button
                         className="zy-post-person"
                         onClick={event => openProfile(author, event.currentTarget.querySelector<HTMLElement>('.zy-avatar') || event.currentTarget)}
                       >
-                        <Avatar
-                          person={
-                            post.personId === 'lin'
-                              ? { ...author, avatar: asset('moments', 3) }
-                              : post.personId === 'shen'
-                                ? { ...author, avatar: asset('moments', 7) }
-                                : author
-                          }
-                          size={42}
-                        />
                         <span>
                           <span>
                             <strong>{author.name}</strong>
@@ -1857,7 +1854,6 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                           {author.id!=='self'&&<small className="zy-character-status zy-moment-status">{statusFor(author.id)}</small>}
                         </span>
                       </button>
-                      <time className="zy-post-published-time" dateTime={post.createdAt}>{post.time}</time>
                       <div className="zy-menu-anchor">
                         <IconButton
                           label={`${author.name}动态更多操作`}
@@ -1901,23 +1897,25 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                     <Media
                       post={post}
                       open={(images, index) =>
-                        setModal({ kind: 'image', images, index })
+                        setModal({ kind: 'moment-image', images, index })
                       }
                     />
                     <MomentChatScreenshot post={post} person={author}/>
-                    {post.location && (
-                      <div className="zy-location">
+                    {(publishedTime||post.location)&&<div className="zy-post-metadata">
+                      {publishedTime&&<time className="zy-post-published-time" dateTime={momentTimestamp(post.createdAt)}>{publishedTime}</time>}
+                      {post.location&&<div className="zy-location">
                         <MapPin size={16} />
                         {post.location}
-                      </div>
-                    )}
+                      </div>}
+                    </div>}
                     <MomentPostInteractions post={post} authorName={author.name} selfName={self.nickname||self.name}
                       actorName={(id,fallback)=>[molly,...allPeople].some(person=>person.id===id)?personById(id).name:fallback} busy={interactionBusy===post.id}
                       onLike={()=>void interactWithPost(post,'like')} onComment={()=>beginMomentComment(post)} onReply={reply=>beginMomentComment(post,reply)}
                       editor={momentCommentTarget?.accountId===account.id&&momentCommentTarget.postId===post.id?<MomentCommentEditor key={`${account.id}:${post.id}:${momentCommentTarget.id}`}
                         value={comment} onChange={setComment} disabled={!!interactionBusy} replyName={commentReply?.name} onCancelReply={()=>setCommentReply(null)} onCancel={cancelMomentComment}
                         onSubmit={async()=>{const target=momentCommentTargetRef.current;if(!target||target.accountId!==account.id||target.postId!==post.id||!comment.trim()||interactionBusy)return;
-                          if(await interactWithPost(post,'comment',comment.trim())&&momentCommentTargetRef.current?.id===target.id){setComment('');setCommentReply(null);}}}/>:undefined}/>
+                          if(await interactWithPost(post,'comment',comment.trim())&&momentCommentTargetRef.current?.id===target.id)cancelMomentComment();}}/>:undefined}/>
+                    </div>
                   </article>
                 );
               })}
@@ -1976,6 +1974,9 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       />
       {modal?.kind === 'image' && (
         <Lightbox images={modal.images} start={modal.index} close={close} />
+      )}
+      {modal?.kind === 'moment-image' && (
+        <MomentImageViewer images={modal.images} start={modal.index} close={close} />
       )}
       {modal?.kind === 'publish' && (
         <Dialog title="记录此刻" close={close} className="zy-publish-dialog">
@@ -2081,6 +2082,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
   );
   return <PageErrorBoundary><div className="zy-dual-preview"><div className="zy-desktop-slot">{renderClient()}</div></div></PageErrorBoundary>;
 }
+
 function Lightbox({
   images,
   start,

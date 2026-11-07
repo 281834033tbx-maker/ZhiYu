@@ -158,22 +158,6 @@ function CharacterWindowSession({personId}:{personId:string|null}) {
   }, []);
 
   useEffect(() => {
-    // This layout overlays the scene without changing the native window's
-    // established outer geometry, including after hangup restores the composer.
-    if(!personId||personId==='yuan-xiaoman')return;
-    const updateChromeHeight = () => {
-      if (!titlebar.current || !composer.current) return;
-      const height = titlebar.current.getBoundingClientRect().height + composer.current.getBoundingClientRect().height;
-      void window.zhiyuDesktop?.setCharacterChromeHeight?.(height);
-    };
-    const observer = new ResizeObserver(updateChromeHeight);
-    if (titlebar.current) observer.observe(titlebar.current);
-    if (composer.current) observer.observe(composer.current);
-    updateChromeHeight();
-    return () => observer.disconnect();
-  }, [personId]);
-
-  useEffect(() => {
     if (!personId || !liveCharacters.has(personId)) return;
     let active = true;
     let polling = false;
@@ -253,7 +237,7 @@ function CharacterWindowSession({personId}:{personId:string|null}) {
     ? data?.messages.map(message=>({id:message.id,mine:message.role==='user',text:messageText(message.part)})) || null
     : localMessages?.map(message=>({id:message.id,mine:message.mine,text:message.text|| (message.image?'[图片]':message.audio?'[语音]':'[消息]')})) || null;
   const visibleMessages=floatingChat?.key===chatKey?floatingChat.messages:[];
-  const realtimeLayout=personId==='yuan-xiaoman';
+  const realtimeLayout=!!person;
   const callActive=realtimeLayout&&(callPresentation?.key!==chatKey||callPresentation.active);
   const onCallBusyChange=useCallback((busy:boolean)=>setCallBusy(previous=>previous?.key===chatKey&&previous.busy===busy?previous:{key:chatKey,busy}),[chatKey]);
   useContinuousUse({accountId:account.id,characterId:personId||'molly',enabled:!!personId&&!authChanged,busy:!!(callBusy?.key===chatKey&&callBusy.busy)||!!data?.pending});
@@ -354,11 +338,11 @@ function CharacterWindowSession({personId}:{personId:string|null}) {
           ><div className="zy-character-window-chat-bubble"><span>{message.text}</span></div></div>)}
         </div>
       </aside>}
-      {personId==='yuan-xiaoman'&&person&&<RealtimeVoiceCall key={chatKey}
-        name={person.nickname||person.name} character={person.id} gender={person.gender} authorize={verifyAuthentication} onCallActiveChange={onCallActiveChange} onBusyChange={onCallBusyChange}/>}
+      {person&&<RealtimeVoiceCall key={chatKey}
+        name={person.nickname||person.name} character={person.id} gender={person.gender} available={personId==='yuan-xiaoman'} authorize={verifyAuthentication} onCallActiveChange={onCallActiveChange} onBusyChange={onCallBusyChange}/>}
+      {person&&<div className="zy-character-call-disclosure"><AiDisclosure/></div>}
     </div>
-    {callActive&&<div className="zy-character-call-disclosure"><AiDisclosure/></div>}
-    <section ref={composer} className="zy-character-window-composer" aria-label="发送消息">
+    {!realtimeLayout&&<section ref={composer} className="zy-character-window-composer" aria-label="发送消息">
       {syncError?.key===chatKey&&<div className="chat-compose-error" role="alert">{syncError.text}</div>}
       <ChatComposer
         value={draft}
@@ -367,9 +351,9 @@ function CharacterWindowSession({personId}:{personId:string|null}) {
         allowImages={!personId || !textOnlyCharacters.has(personId)}
         allowVoice={false}
         disabled={!personId || (isLive&&!data?.available) || (!isLive&&!localMessages)}
-        label={`给${person?.realName || person?.name || '智友'}的消息`}
-        placeholder={`和${person?.realName || person?.name || '智友'}说点什么…`}
+        label="给智友的消息"
+        placeholder="和智友说点什么…"
       />
-    </section>
+    </section>}
   </main>;
 }
