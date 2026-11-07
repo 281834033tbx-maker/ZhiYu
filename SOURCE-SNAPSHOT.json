@@ -1,6 +1,6 @@
 {
   "date": "2026-11-07",
-  "description": "Desktop receipts and week dates, single references, native profile overflow, shared calendar glass, pet dialog and report settings, and inline Moments interactions; portable identity retained and private runtime excluded.",
+  "description": "Desktop interface refinements and approved Phosphor A action icons; original input send buttons and portable local identity retained, private runtime excluded.",
   "files": [
     {
       "path": ".env.example",
@@ -254,8 +254,8 @@
     },
     {
       "path": "app/zhiyu/app.tsx",
-      "bytes": 125965,
-      "sha256": "8574e4f89da5155dcf432ab5c0cc065855f41f2d7267762568ad441155c4ce9c"
+      "bytes": 126013,
+      "sha256": "ce5faf4a83bc7af67de540b5fced10a430bf3ee5ed26027fb6f5dded0cc604ff"
     },
     {
       "path": "app/zhiyu/application-shell.tsx",
@@ -329,8 +329,8 @@
     },
     {
       "path": "app/zhiyu/chat-header.tsx",
-      "bytes": 6642,
-      "sha256": "3f204726701ab2ef93035b60fbdf19bcf6b726969e54d97e030279af9341fb58"
+      "bytes": 6701,
+      "sha256": "fe2fb89b5f2ad61804ffb3c54f25ac04c8338bbc1039745b8d3d654745367397"
     },
     {
       "path": "app/zhiyu/chat-icon-controls.css",
@@ -639,8 +639,8 @@
     },
     {
       "path": "app/zhiyu/moment-post-interactions.tsx",
-      "bytes": 3372,
-      "sha256": "50c237c964a5bf59b1a7c613dcb055b056cfad5796bba8dec5f67d5e75ee7c76"
+      "bytes": 2706,
+      "sha256": "6e235f24433760e66d2e2c5fa6ea199d788814ef98a488ac149a6b9184fda31e"
     },
     {
       "path": "app/zhiyu/moments-refinement.css",
@@ -721,6 +721,11 @@
       "path": "app/zhiyu/pets.tsx",
       "bytes": 17338,
       "sha256": "d4c9964d41756c792362921c27378dcd1c6f72f407164158c0aa23a51dd42e26"
+    },
+    {
+      "path": "app/zhiyu/phosphor-action-icon.tsx",
+      "bytes": 2595,
+      "sha256": "5077480b5ae51ad8ad873cc1f67c6f98d886e4bbaee796ae3e246ab1e01d4f39"
     },
     {
       "path": "app/zhiyu/pressable-icon-button.css",
@@ -1749,8 +1754,13 @@
     },
     {
       "path": "docs/interface-updates-20261107.md",
-      "bytes": 2163,
-      "sha256": "cadcfdffe24bb986f961914a5f3891282f515fdf499e631f4be0e10a5843c690"
+      "bytes": 3336,
+      "sha256": "2a19e13760d0e36d93c3520ec15746c7740a6f4fdc7a569253ef87fadf5a49b9"
+    },
+    {
+      "path": "docs/licenses/phosphor-icons-MIT.txt",
+      "bytes": 1071,
+      "sha256": "b5b1f1da112d18ea2147decfd48ddc1bf2b5aeb6c265381579340e95b15a2bb2"
     },
     {
       "path": "docs/molly-reports/README.md",
@@ -5159,8 +5169,8 @@
     },
     {
       "path": "scripts/test-moments-refinement.mjs",
-      "bytes": 10494,
-      "sha256": "a5c316d28114520fd64b5d591a93694a4d79278457208f5d509d9f1a35b97cba"
+      "bytes": 10592,
+      "sha256": "6b985407c87f6e307c6e3323b6304c4a8a34bec7c038f238148dd0e0ac981a6b"
     },
     {
       "path": "scripts/test-moments-trained-runtime.mjs",
@@ -5241,6 +5251,11 @@
       "path": "scripts/test-pets-settings-entry.mjs",
       "bytes": 7331,
       "sha256": "9d45d987f4a52d09981b9d5580246d365e365644a4eefdfe7d107c8bfb5cc379"
+    },
+    {
+      "path": "scripts/test-phosphor-action-icons.mjs",
+      "bytes": 7061,
+      "sha256": "3b73a061276aff89c2d32185bf1c69c0697de8d8f4819f4ded7fd4728675dd21"
     },
     {
       "path": "scripts/test-private-chat-history.mjs",

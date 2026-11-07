@@ -16,6 +16,7 @@ function load(file,dependencies,extra={}) {
 const icons=new Proxy({},{get:(_,name)=>name});
 const presentation=load('app/zhiyu/moment-post-interactions.tsx',{
   react:{useId:()=> 'fixture'},'react/jsx-runtime':{jsx,jsxs:jsx},'lucide-react':icons,
+  './phosphor-action-icon':{__esModule:true,default:props=>jsx('synthetic-phosphor-icon',props)},
 });
 const post={id:'fixture-post',personId:'fixture-npc',source:'npc-moment',liked:false,likeCount:3,likes:[{actorId:'friend',name:'朋友'}],comments:[{id:'friend-comment',actorId:'friend',name:'朋友',text:'原有评论',time:'10:00'}]};
 assert.equal(presentation.hasOwnMomentComment(post),false,'another person’s comment must not activate my comment icon');

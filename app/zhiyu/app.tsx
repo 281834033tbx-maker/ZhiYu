@@ -38,6 +38,7 @@ import ChatComposer from './chat-composer';
 import MessageReceipt from './message-receipt';
 import MomentPostInteractions from './moment-post-interactions';
 import MomentCommentEditor from './moment-comment-editor';
+import PhosphorActionIcon from './phosphor-action-icon';
 import './moments-refinement.css';
 import {formatConversationTime} from '../../lib/npc/conversation-time';
 import VoiceBubble from './voice-bubble';
@@ -75,7 +76,6 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 import {
-  MessageCircle,
   MessageSquare,
   Users,
   Compass,
@@ -83,7 +83,6 @@ import {
   Menu,
   Search,
   MoreHorizontal,
-  Video,
   Paperclip,
   Reply,
   Heart,
@@ -1784,7 +1783,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                 {friend.added && <div className="zy-contact-profile-row"><span>添加时间</span><p>{friend.added}</p></div>}
               </section>
               </>}
-              <div className="zy-contact-profile-actions"><button type="button" onClick={() => openChat(friend)}><MessageCircle size={20} strokeWidth={1.65}/>发消息</button>{friend.id !== 'molly' && <button type="button" aria-label={`打开${friend.name}的桌面人物`} onClick={() => openDesktopCharacter(friend.id)}><Video size={20} strokeWidth={1.65}/>视频</button>}</div>
+              <div className="zy-contact-profile-actions"><button type="button" onClick={() => openChat(friend)}><PhosphorActionIcon name="message" size={20}/>发消息</button>{friend.id !== 'molly' && <button type="button" aria-label={`打开${friend.name}的桌面人物`} onClick={() => openDesktopCharacter(friend.id)}><PhosphorActionIcon name="video" size={20}/>视频</button>}</div>
             </div>
           </section>
         )}
@@ -2061,14 +2060,14 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
           </>:modal.person.id==='molly'?<div className="zy-npc-profile-card zy-molly-profile-card">
             <div className="zy-npc-profile-top"><Avatar person={modal.person} size={48}/><div className="zy-npc-identity"><h3>Molly</h3></div></div>
             <dl className="zy-friend-details"><dt>状态</dt><dd><span className="zy-character-status">{statusFor('molly')}</span></dd><dt className="zy-profile-signature-label">个性签名</dt><dd className="zy-profile-signature-value" title={modal.person.bio || '暂无个性签名'}>{modal.person.bio}</dd></dl><dl className="zy-friend-source"><dt>添加来源</dt><dd>{contactSourceLabel('default')}</dd></dl>
-            <div className="zy-npc-profile-actions"><button type="button" onClick={()=>openChat(modal.person)}><MessageCircle strokeWidth={1.65}/>发消息</button></div>
+            <div className="zy-npc-profile-actions"><button type="button" onClick={()=>openChat(modal.person)}><PhosphorActionIcon name="message"/>发消息</button></div>
           </div>:<div className="zy-npc-profile-card">
             <div className="zy-npc-profile-top"><Avatar person={modal.person} size={48}/><div className="zy-npc-identity"><h3>{displayPerson(modal.person).name}{modal.person.gender&&<span className={'zy-gender '+modal.person.gender} aria-label={modal.person.gender==='female'?'女生':'男生'}>{modal.person.gender==='female'?'♀':'♂'}</span>}</h3><p>{modal.person.account}</p>{modal.person.region&&<p>{modal.person.region}</p>}</div></div>
             <section className="zy-friend-details"><h4>朋友资料</h4><InlineNameEdit key={`${account.id}:${modal.person.id}`} label="备注" value={remarks[modal.person.id] || modal.person.nickname || allPeople.find(item=>item.id===modal.person.id)?.name || modal.person.name} onSave={value=>saveContactRemark(modal.person.id,value)}/><dl><dt>状态</dt><dd><span className="zy-character-status">{statusFor(modal.person.id)}</span></dd><dt className="zy-profile-signature-label">个性签名</dt><dd className="zy-profile-signature-value" title={modal.person.bio || '暂无个性签名'}>{modal.person.bio || '暂无个性签名'}</dd>{!modal.person.professionalProfile&&modal.person.professionalTitle&&<><dt>职业</dt><dd>{modal.person.professionalTitle}</dd></>}</dl></section>
             {modal.person.professionalProfile && <ProfessionalProfile profile={modal.person.professionalProfile} />}
             <button type="button" className="zy-profile-moments" onClick={()=>{const id=modal.person.id;close();openMoments(id);}}><span className="zy-profile-moments-label">动态圈</span><span className="zy-profile-moments-content">{posts.filter(p=>p.personId===modal.person.id).flatMap(p=>p.images).slice(0,4).map((src,i)=><img key={`${src}-${i}`} src={src} alt="动态预览"/>)}</span><ChevronRight className="zy-profile-moments-chevron" size={15}/></button>
             {contactSourceLabel(modal.person.source,personNames)&&<dl className="zy-friend-source"><dt>添加来源</dt><dd>{contactSourceLabel(modal.person.source,personNames)}</dd></dl>}
-            <div className="zy-npc-profile-actions"><button type="button" onClick={()=>openChat(modal.person)}><MessageCircle strokeWidth={1.65}/>发消息</button><button type="button" aria-label={`打开${displayPerson(modal.person).name}的桌面人物`} onClick={()=>{const id=modal.person.id;close();openDesktopCharacter(id);}}><Video strokeWidth={1.65}/>视频</button></div>
+            <div className="zy-npc-profile-actions"><button type="button" onClick={()=>openChat(modal.person)}><PhosphorActionIcon name="message"/>发消息</button><button type="button" aria-label={`打开${displayPerson(modal.person).name}的桌面人物`} onClick={()=>{const id=modal.person.id;close();openDesktopCharacter(id);}}><PhosphorActionIcon name="video"/>视频</button></div>
           </div>}
         </ProfilePopover>
       )}

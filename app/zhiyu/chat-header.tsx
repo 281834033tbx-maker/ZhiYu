@@ -1,7 +1,8 @@
 'use client';
 /* eslint-disable next/no-img-element */
 import {useEffect,useId,useRef,useState} from 'react';
-import {CalendarDays,ChevronRight,MoreHorizontal,Video} from 'lucide-react';
+import {CalendarDays,ChevronRight,MoreHorizontal} from 'lucide-react';
+import PhosphorActionIcon from './phosphor-action-icon';
 import PressableIconButton from './pressable-icon-button';
 import {useAnchoredPopupPresence} from './anchored-popup-motion';
 import NpcTypeBadge from './npc-type-badge';
@@ -70,7 +71,7 @@ export default function ChatHeader({name,avatar,status='',typing=false,typingNam
    </div>
    <div className="xx-call-actions" ref={root}>
     {onCalendar&&<PressableIconButton type="button" aria-label="查看历史任务日历" title="查看历史任务日历" onClick={onCalendar}><CalendarDays size={17} style={{width:17,height:17}} strokeWidth={1.7}/></PressableIconButton>}
-    {onDesktop&&<PressableIconButton type="button" aria-label="打开桌面人物" title="打开桌面人物" aria-pressed={!!desktopOpen} onClick={onDesktop}><Video size={20} strokeWidth={1.7}/></PressableIconButton>}
+    {onDesktop&&<PressableIconButton type="button" aria-label="打开桌面人物" title="打开桌面人物" aria-pressed={!!desktopOpen} onClick={onDesktop}><PhosphorActionIcon name="video" size={20}/></PressableIconButton>}
     <PressableIconButton ref={drawerToggle} type="button" aria-label="更多选项" title="更多选项" aria-expanded={drawerOpen} aria-controls={drawerId} onClick={()=>setDrawerOpen(value=>!value)}><MoreHorizontal size={20} strokeWidth={1.7}/></PressableIconButton>
     {drawerPresent&&<aside ref={drawer} id={drawerId} className="zy-private-drawer" aria-label="聊天设置" aria-hidden={!drawerOpen} inert={!drawerOpen}>
      <button type="button" className="zy-private-person" aria-label={`查看${name}的资料`} disabled={!onProfile} onClick={event=>onProfile?.(event.currentTarget.querySelector<HTMLElement>('.xx-avatar')||event.currentTarget)}>{face}</button>

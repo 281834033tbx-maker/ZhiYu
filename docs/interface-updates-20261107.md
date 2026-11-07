@@ -12,3 +12,12 @@
 - 群成员默认展开，保留折叠与再展开；动态使用共用的点赞和评论区域，用户自己的点赞及评论有明确状态。评论支持文字、表情和回复，不增加图片上传或虚构服务端回执。
 
 验证使用合成账号、内存或临时运行目录，不向真实人物发送测试消息，不接入真实支付、模型或正式用户数据库。源码发布保留可移植的本机身份初始化，排除本机账号专属赠送分支、认证、运行库、日志与应用包。
+
+
+## 同日补充：已确认的 A 组图标
+
+点赞、评论、资料中的“发消息”及视频入口采用 Phosphor Icons 的 regular 轮廓，分别为 [heart](https://github.com/phosphor-icons/core/blob/main/assets/regular/heart.svg)、[chat-circle-dots](https://github.com/phosphor-icons/core/blob/main/assets/regular/chat-circle-dots.svg)、[chats-circle](https://github.com/phosphor-icons/core/blob/main/assets/regular/chats-circle.svg) 和 [video-camera](https://github.com/phosphor-icons/core/blob/main/assets/regular/video-camera.svg)。保留既有点击逻辑、色彩与选中反馈。普通聊天输入框的纸飞机发送按钮，以及评论提交按钮，继续使用原有图形。
+
+SVG 按 [Phosphor Icons core](https://github.com/phosphor-icons/core) 的 MIT 许可证使用，完整版权及许可文本保存在 [phosphor-icons-MIT.txt](licenses/phosphor-icons-MIT.txt)。本次不增加图标运行时依赖。
+
+Mac 原生资料卡已在桌面 App 核对：保持主窗口尺寸，可展开完整专业资料并滚动到末尾；备注编辑取消、Esc 关闭及主窗外部点击关闭均可用。该验证没有重置或迁移用户历史。
