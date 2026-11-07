@@ -12,9 +12,9 @@ html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person {gap:12px;bac
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person:is(:hover,:focus-visible,:active) {background:transparent;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person>span:last-child {display:flex;flex-direction:column;align-items:flex-start;gap:5px;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person strong {font-size:calc(14px + var(--zy-font-adjust,0px));font-weight:600;color:var(--zy-ink);}
-html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person .zy-moment-status {margin:0;color:var(--zy-interaction-ink);font-size:calc(12px + var(--zy-font-adjust,0px));line-height:1.5;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person .zy-moment-status {margin:0;color:var(--zy-interaction-ink);font-size:calc(11px + var(--zy-font-adjust,0px));line-height:1.5;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-published-time {margin-left:auto;flex-shrink:0;color:var(--zy-muted);font-size:calc(11px + var(--zy-font-adjust,0px));font-variant-numeric:tabular-nums;}
-html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-actions {gap:12px;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-actions {gap:24px;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-actions .zy-icon,
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-actions .zy-icon:is(:hover,:focus,:focus-visible,:active) {
   gap:6px;min-width:30px;padding:3px 0;border:0;border-radius:0;background:transparent;box-shadow:none;color:var(--zy-ink);

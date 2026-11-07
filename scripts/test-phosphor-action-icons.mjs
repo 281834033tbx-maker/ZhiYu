@@ -27,6 +27,12 @@ for(const [name,digest] of Object.entries(approved)){
   assert.equal(tree.props['aria-hidden'],'true');assert.equal(tree.props.focusable,'false');
   assert.equal(path.props.fill,'currentColor');assert.equal(path.props.stroke,'none','a filled outline must not inherit a legacy SVG stroke or fill:none');
 }
+for(const [name,digest] of Object.entries({like:'778dced40f08dce990d7e65186d7e7f391c1d46acbc1d94e72ad9033ac102a8e',comment:'c95dac61f193d309575e83f7bfbf0d132ba81a804b0b7766fed16abcd7db430b'})){
+ const solid=Icon({name,filled:true,gradient:true}),path=nodes(solid).find(node=>node.type==='path');
+ assert.equal(hash(path.props.d),digest,'selected '+name+' uses the official solid geometry');
+ assert.notEqual(hash(path.props.d),approved[name],'selected icons must be solid shapes, not recolored outlines');
+ assert.equal(path.props.stroke,'none');
+}
 const first=Icon({name:'like',gradient:true}),second=Icon({name:'comment',gradient:true});
 const gradient=tree=>nodes(tree).find(node=>node.type==='linearGradient'),paint=tree=>nodes(tree).find(node=>node.type==='path');
 assert.notEqual(gradient(first).props.id,gradient(second).props.id,'different active icons do not share a paint-server id');
@@ -41,12 +47,26 @@ let liked=0,commented=0;
 const tree=presentation.default({post,authorName:'作者',selfName:'我',actorName:(_,fallback)=>fallback,busy:false,onLike:()=>liked++,onComment:()=>commented++,onReply:()=>{}});
 const actualIcons=nodes(tree).filter(node=>node.type===Icon);
 assert.deepEqual(actualIcons.map(node=>[node.props.name,node.props.size,!!node.props.gradient]),[['like',23,true],['comment',22,true],['like',13,false]],'active actions and the small liker-list heart share the same official family at their existing sizes');
+assert.deepEqual(actualIcons.map(node=>!!node.props.filled),[true,true,false],'own actions are solid while the liker-list marker remains an outline');
+const neutralTree=presentation.default({post:{...post,liked:false,comments:[]},authorName:'作者',selfName:'我',actorName:(_,fallback)=>fallback,busy:false,onLike:()=>{},onComment:()=>{},onReply:()=>{}});
+assert.ok(nodes(neutralTree).filter(node=>node.type===Icon).every(node=>!node.props.filled&&!node.props.gradient),'unliked and uncommented actions restore the regular outlines');
 nodes(tree).find(node=>node.props['aria-label']==='取消点赞作者的动态').props.onClick();nodes(tree).find(node=>node.props['aria-label']==='评论作者的动态').props.onClick();assert.equal(liked,1);assert.equal(commented,1);
 let opened=0;
 const Header=load('app/zhiyu/chat-header.tsx',{...runtime,'./phosphor-action-icon':phosphorModule,'lucide-react':new Proxy({},{get:(_,name)=>name}),
   './pressable-icon-button':{__esModule:true,default:()=>{}},'./anchored-popup-motion':{useAnchoredPopupPresence:()=>false},'./npc-type-badge':{__esModule:true,default:()=>{}},'../../lib/user-facing-errors':{},'./private-chat-settings.css':{},'./user-facing-ui.css':{},
 }).default;
 const header=Header({name:'合成人物',onDesktop:()=>opened++,desktopOpen:true});
+const typingHeader=Header({name:'陈年',avatar:'/synthetic.png',status:'研究进阶',typing:true,dialoguePurpose:'professional'});
+const restoredHeader=Header({name:'陈年',avatar:'/synthetic.png',status:'研究进阶',typing:false,dialoguePurpose:'professional'});
+assert.equal(nodes(typingHeader).find(node=>node.type==='strong').props.children[0],'对方正在输入中...');
+assert.equal(nodes(restoredHeader).find(node=>node.type==='strong').props.children[0],'陈年','typing end restores the actual name');
+for(const state of [typingHeader,restoredHeader]){
+ const capsule=nodes(state).find(node=>node.type==='small'&&node.props.className==='zy-chat-header-status zy-character-status');
+ assert.equal(capsule.props.children,'研究进阶','the presence capsule is independent of typing');
+ assert.ok(nodes(state).some(node=>node.props['aria-label']==='陈年的资料'),'the profile retains the real NPC identity');
+ assert.ok(nodes(state).some(node=>node.type==='img'&&node.props.alt==='陈年'));
+}
+assert.equal(nodes(Header({name:'陈年',typing:true})).filter(node=>node.type==='small').length,0,'typing must not create a presence capsule');
 const video=nodes(header).find(node=>node.props['aria-label']==='打开桌面人物');
 assert.equal(video.props['aria-pressed'],true);assert.equal(video.props.children.type,Icon);assert.equal(video.props.children.props.name,'video');assert.equal(video.props.children.props.size,20);video.props.onClick();assert.equal(opened,1,'the new video icon retains the existing call entrance callback');
 

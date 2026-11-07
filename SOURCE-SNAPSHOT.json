@@ -1,6 +1,6 @@
 {
   "date": "2026-11-07",
-  "description": "Desktop interface refinements and approved Phosphor A action icons; original input send buttons and portable local identity retained, private runtime excluded.",
+  "description": "Desktop refinements with private-chat typing title, compact status capsules and official selected fill icons; ordinary send buttons and portable local identity retained, private runtime excluded.",
   "files": [
     {
       "path": ".env.example",
@@ -329,8 +329,8 @@
     },
     {
       "path": "app/zhiyu/chat-header.tsx",
-      "bytes": 6701,
-      "sha256": "fe2fb89b5f2ad61804ffb3c54f25ac04c8338bbc1039745b8d3d654745367397"
+      "bytes": 6598,
+      "sha256": "96ea12c970affecd2ff59a0caf1932af61faf36438073b32eb7ef64fac87f45d"
     },
     {
       "path": "app/zhiyu/chat-icon-controls.css",
@@ -394,8 +394,8 @@
     },
     {
       "path": "app/zhiyu/conversation-status.css",
-      "bytes": 1081,
-      "sha256": "f4b12e7f554185de8de6a8bb41ff15f481f699dea7e3612d5eed4151202aab6f"
+      "bytes": 1095,
+      "sha256": "955ea11b6732ee9060174cffb34772b66ca71ab22258808d06b848066cfaf057"
     },
     {
       "path": "app/zhiyu/data.ts",
@@ -639,13 +639,13 @@
     },
     {
       "path": "app/zhiyu/moment-post-interactions.tsx",
-      "bytes": 2706,
-      "sha256": "6e235f24433760e66d2e2c5fa6ea199d788814ef98a488ac149a6b9184fda31e"
+      "bytes": 2746,
+      "sha256": "c6faa3ac8d3cc88d35d04b566d5c24cb1c4c96fcf51d397d03095b21c71f358c"
     },
     {
       "path": "app/zhiyu/moments-refinement.css",
       "bytes": 7363,
-      "sha256": "ce2a27773da58442eb1c61bf8872baff68994128f0a281358d06e24ecf1b5d77"
+      "sha256": "03b83ca67695e0242e495e5e6114e764e92767ac45510d5e63f6ec4bf9d30798"
     },
     {
       "path": "app/zhiyu/morning-reminder-settings.css",
@@ -724,8 +724,8 @@
     },
     {
       "path": "app/zhiyu/phosphor-action-icon.tsx",
-      "bytes": 2595,
-      "sha256": "5077480b5ae51ad8ad873cc1f67c6f98d886e4bbaee796ae3e246ab1e01d4f39"
+      "bytes": 3264,
+      "sha256": "40dd3e5162263bb9820f9e372ef506b7977a331524a894a501112dc5870381c4"
     },
     {
       "path": "app/zhiyu/pressable-icon-button.css",
@@ -1754,8 +1754,8 @@
     },
     {
       "path": "docs/interface-updates-20261107.md",
-      "bytes": 3336,
-      "sha256": "2a19e13760d0e36d93c3520ec15746c7740a6f4fdc7a569253ef87fadf5a49b9"
+      "bytes": 4241,
+      "sha256": "fdb9039b1b97b1b2cc9578f63e139a209f501b3cb7c586a333d07a808347db0d"
     },
     {
       "path": "docs/licenses/phosphor-icons-MIT.txt",
@@ -5254,8 +5254,8 @@
     },
     {
       "path": "scripts/test-phosphor-action-icons.mjs",
-      "bytes": 7061,
-      "sha256": "3b73a061276aff89c2d32185bf1c69c0697de8d8f4819f4ded7fd4728675dd21"
+      "bytes": 9303,
+      "sha256": "32c6c660ea5451080984d4f73c84081438d8cd2dc76505095873005f6e0b3dc3"
     },
     {
       "path": "scripts/test-private-chat-history.mjs",

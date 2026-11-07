@@ -21,3 +21,11 @@
 SVG 按 [Phosphor Icons core](https://github.com/phosphor-icons/core) 的 MIT 许可证使用，完整版权及许可文本保存在 [phosphor-icons-MIT.txt](licenses/phosphor-icons-MIT.txt)。本次不增加图标运行时依赖。
 
 Mac 原生资料卡已在桌面 App 核对：保持主窗口尺寸，可展开完整专业资料并滚动到末尾；备注编辑取消、Esc 关闭及主窗外部点击关闭均可用。该验证没有重置或迁移用户历史。
+
+
+## 同日补充：私聊输入提示
+
+NPC 正在输入时，私聊顶部姓名位置临时显示“对方正在输入中...”；输入结束后恢复人物姓名。下方胶囊继续显示人物原有状态，头像、人物类型标记、群聊标题与发送按钮保持原样。
+
+
+状态胶囊整体字号再缩小一档，并同步收紧内边距，颜色及透明度沿用原值；Molly 的“系统”标签保持原样。动态点赞与评论按钮之间的间距加宽，按钮内图标与数字的距离不变。自己点赞或发表评论后，使用官方 [heart-fill](https://github.com/phosphor-icons/core/blob/main/assets/fill/heart-fill.svg) 和 [chat-circle-dots-fill](https://github.com/phosphor-icons/core/blob/main/assets/fill/chat-circle-dots-fill.svg) 实心图形及现有渐变；未互动状态保留 A 组 regular 轮廓。官方 fill 变体继续适用同一份 MIT 许可。

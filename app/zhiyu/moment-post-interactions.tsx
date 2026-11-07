@@ -22,10 +22,10 @@ export default function MomentPostInteractions({post,authorName,selfName,actorNa
   return <>
     <div className="zy-post-actions">
       <button type="button" className={'zy-icon'+(post.liked?' liked':'')} aria-label={`${post.liked?'取消点赞':'点赞'}${authorName}的动态`} aria-pressed={post.liked} disabled={busy} onClick={onLike}>
-        <PhosphorActionIcon name="like" size={23} gradient={post.liked}/><span className="zy-interaction-count">{post.likeCount??Number(post.liked)}</span>
+        <PhosphorActionIcon name="like" size={23} gradient={post.liked} filled={post.liked}/><span className="zy-interaction-count">{post.likeCount??Number(post.liked)}</span>
       </button>
       <button type="button" className={'zy-icon'+(ownComment?' commented':'')} aria-label={`评论${authorName}的动态`} aria-pressed={ownComment} onClick={onComment}>
-        <PhosphorActionIcon name="comment" size={22} gradient={ownComment}/><span className="zy-interaction-count">{post.comments.length}</span>
+        <PhosphorActionIcon name="comment" size={22} gradient={ownComment} filled={ownComment}/><span className="zy-interaction-count">{post.comments.length}</span>
       </button>
     </div>
     {(likes.length>0||post.comments.length>0||editor)&&<section className="zy-moment-interaction-box" aria-label="点赞与评论">
