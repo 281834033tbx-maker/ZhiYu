@@ -1,6 +1,6 @@
 {
-  "date": "2026-11-07",
-  "description": "Moments content-column alignment, accurate elapsed dates, inline comment/emoji refinements, in-window image viewing, and shared character-call presentation; portable desktop identity and ordinary input send controls retained.",
+  "date": "2026-11-08",
+  "description": "Settings/report time and task portrait consistency, compact pets/Moments/chat labels, truthful interaction timer and native profile edge refinements; public portable identity and absence of private pet grants retained.",
   "files": [
     {
       "path": ".env.example",
@@ -239,13 +239,13 @@
     },
     {
       "path": "app/zhiyu/app-settings.css",
-      "bytes": 5942,
-      "sha256": "b25f547b3882981528c289785a1584e18d774c0176ffdaf4af4ee7ed0d0a4aeb"
+      "bytes": 6318,
+      "sha256": "d90586b23cec6a1d796a466c575da0e0adfae1f1483ac2c0620fd719e548f60d"
     },
     {
       "path": "app/zhiyu/app-settings.tsx",
-      "bytes": 8213,
-      "sha256": "29e73bcb1de24d997b4773184cc2a1016566f2aaaf516d2676df2f4974ee3c45"
+      "bytes": 9366,
+      "sha256": "c6f60316d5e05ebfa824d3f02f8ec4c99aff74162eda1d652a0317886718b386"
     },
     {
       "path": "app/zhiyu/app.css",
@@ -254,8 +254,8 @@
     },
     {
       "path": "app/zhiyu/app.tsx",
-      "bytes": 126666,
-      "sha256": "ac1922be264023ac9e6a6b4003c16d7cf5c50936bba45852619283c059d8fa95"
+      "bytes": 124988,
+      "sha256": "0157c7bcd93182c322550ee300284d59f6aad8fa0bda170acf9455d59fbec4d4"
     },
     {
       "path": "app/zhiyu/application-shell.tsx",
@@ -328,9 +328,14 @@
       "sha256": "49db2aec77c1ee7207686161482bdf0f64f5b1a6d455c1e7e73a093076fd719c"
     },
     {
+      "path": "app/zhiyu/chat-header-typography.css",
+      "bytes": 550,
+      "sha256": "3fb71d56280ffb6c0cd59c42d0c77376d1013643524c69001d89ec1f905d6b74"
+    },
+    {
       "path": "app/zhiyu/chat-header.tsx",
-      "bytes": 6598,
-      "sha256": "96ea12c970affecd2ff59a0caf1932af61faf36438073b32eb7ef64fac87f45d"
+      "bytes": 6637,
+      "sha256": "15021f31a07b05bf0a8ff8341c7a6f77a2bfa6aa69be751bedabb9b76a101ee1"
     },
     {
       "path": "app/zhiyu/chat-icon-controls.css",
@@ -664,23 +669,23 @@
     },
     {
       "path": "app/zhiyu/moments-refinement.css",
-      "bytes": 8373,
-      "sha256": "bbfde0652af3104de22818a46c21491ba2e882f965fd69b27649d3a83b10a0fb"
+      "bytes": 8709,
+      "sha256": "34914975b724f0565df35214a724429765fbae12d64cccd0435e140b4c71c8e3"
     },
     {
       "path": "app/zhiyu/morning-reminder-settings.css",
-      "bytes": 5518,
-      "sha256": "d74902eb0b6d0bf551c60c561b43098039341c567bdce27a6dc0c1ab6c6ab7df"
+      "bytes": 5505,
+      "sha256": "a2f276bb68420cdeb419540b28f541013f2b8cacbe9fb5127c0e295f8a113526"
     },
     {
       "path": "app/zhiyu/morning-reminder-settings.tsx",
-      "bytes": 8368,
-      "sha256": "4cb95fafcde392bd39a9e7a2aa451145681b09b39aab45005be863564e37dc6c"
+      "bytes": 8499,
+      "sha256": "c146ad56f5235efa1bfb66d57be3101514b3fb96872f4822f7a58155c75be623"
     },
     {
       "path": "app/zhiyu/native-profile-popover.tsx",
-      "bytes": 10489,
-      "sha256": "4c125bc3dc352a4d8e0a8676d40962ff1f794361d5a6124442dcdb0e501a6aa0"
+      "bytes": 10470,
+      "sha256": "5d4b3b89a08316d0a4ec6ca6131b4c5436ce0af3a6cedfec93cce605079453b3"
     },
     {
       "path": "app/zhiyu/npc-contact-card.css",
@@ -729,18 +734,18 @@
     },
     {
       "path": "app/zhiyu/pets-dialog.tsx",
-      "bytes": 1355,
-      "sha256": "d4c7af97916028c87ab3f44805094033a561884e99c71ddbad2a13e0a0debb3e"
+      "bytes": 1529,
+      "sha256": "09aa9485882fd8a53d02c6aa0dade5092370a6593e6393354d1731e4c7a565e0"
     },
     {
       "path": "app/zhiyu/pets.css",
-      "bytes": 17113,
-      "sha256": "9bae1e2ca559cb171f0e28c92ae387f84d17d175b2fe77aaab6c344239dfab9d"
+      "bytes": 27891,
+      "sha256": "f759ed819a7597a4f01b2f277d74daa8bbaf81d7040b14c2553e24b95bcc79bf"
     },
     {
       "path": "app/zhiyu/pets.tsx",
-      "bytes": 17338,
-      "sha256": "d4c9964d41756c792362921c27378dcd1c6f72f407164158c0aa23a51dd42e26"
+      "bytes": 18803,
+      "sha256": "11851d4737610c878da5e71a267d530192cff8f12c228fa2f13274c72ea96e26"
     },
     {
       "path": "app/zhiyu/phosphor-action-icon.tsx",
@@ -784,8 +789,8 @@
     },
     {
       "path": "app/zhiyu/professional-task.css",
-      "bytes": 22795,
-      "sha256": "cb6dec5bc6e01d28a2f0585e2bbc4bcd0526716f73966e7cfbc4f209addce75c"
+      "bytes": 22950,
+      "sha256": "adde49ba9d24760191b4ec8f6c8d51b754c5182cfddbd9bdf45a6c58a599988b"
     },
     {
       "path": "app/zhiyu/professional-task.tsx",
@@ -814,8 +819,8 @@
     },
     {
       "path": "app/zhiyu/realtime-call-captions.tsx",
-      "bytes": 4683,
-      "sha256": "e18b848e421de660683ac07a0475eac0b44fbe91f77fbac473fde7d6553eb8c7"
+      "bytes": 4721,
+      "sha256": "8e0959ac3f1aa4b6e1f0acf80e92b97af4cea274ea2bc200c37aadf8b9affe27"
     },
     {
       "path": "app/zhiyu/realtime-speech-settings.css",
@@ -834,13 +839,13 @@
     },
     {
       "path": "app/zhiyu/realtime-voice-call.css",
-      "bytes": 9239,
-      "sha256": "c7152d0438038dc1509eabae676ed32b47de5e5ddf8545faded053c5c44fce17"
+      "bytes": 9238,
+      "sha256": "96c697880a457bbad4ac996d6871e3ffabbdd00155a5f30fe3b1cad7b5785358"
     },
     {
       "path": "app/zhiyu/realtime-voice-call.tsx",
-      "bytes": 23828,
-      "sha256": "668eba7334a57e896ee5b21b4917b41ceff7173838e4b4cd31ad351e357b63b7"
+      "bytes": 24621,
+      "sha256": "9496ec973d2c67fc9692afdf42310e2d9e1dc1d992aa319d9b279605e4322fc0"
     },
     {
       "path": "app/zhiyu/realtime-voice-controls.tsx",
@@ -866,6 +871,11 @@
       "path": "app/zhiyu/report-fold.tsx",
       "bytes": 3144,
       "sha256": "131649712c0d74a0c9bf4d279bfff3ca1d8e2ff33c809c0f950b33280f6451ae"
+    },
+    {
+      "path": "app/zhiyu/report-schedule-store.ts",
+      "bytes": 4224,
+      "sha256": "6ec27b29e8beb98c9bf11206da424fa209ac02a4d4970edbd1086fe70d819e85"
     },
     {
       "path": "app/zhiyu/saved-stickers.ts",
@@ -894,8 +904,8 @@
     },
     {
       "path": "app/zhiyu/task-board/config.ts",
-      "bytes": 3614,
-      "sha256": "96b8cb876f929a68c106dcb1de0bd985195ee48437e7f67dd9b7bc0f9a29816d"
+      "bytes": 3134,
+      "sha256": "9c30983cf701459a1cab56b15a2fa710c0ceefa259dd0c954e09786611ca957d"
     },
     {
       "path": "app/zhiyu/task-board/data-source.ts",
@@ -934,13 +944,13 @@
     },
     {
       "path": "app/zhiyu/task-board/task-board.tsx",
-      "bytes": 12928,
-      "sha256": "03aca4f6a155de164920897f7fe1e30ca076982bc5760308a91cfc3f902314a0"
+      "bytes": 13154,
+      "sha256": "4f8f62edd21236a5615d4b2371582fadfa6a4b6d4d5ad17b0ceb67b5a2c71c77"
     },
     {
       "path": "app/zhiyu/task-board/task-components.css",
-      "bytes": 20609,
-      "sha256": "36bf7f1c9c9a1e2ed18863736c0ca6169db384dcd3d9b41deb273bd5c304e36a"
+      "bytes": 20790,
+      "sha256": "bb5c438227be226f0c9ea8a67c4936d9cb40aa27916787d6eeb175234e267813"
     },
     {
       "path": "app/zhiyu/task-board/task-components.tsx",
@@ -1614,8 +1624,8 @@
     },
     {
       "path": "desktop/profile-popover.cjs",
-      "bytes": 8326,
-      "sha256": "b8b2992d293d01b4b860e691a9d1e32d06110bdd4c0718ccfc0ac216539eda89"
+      "bytes": 8392,
+      "sha256": "b996219cb52b6b14739902cb74d6b4a834dfb1944c6468f36e8c30b919dfafb8"
     },
     {
       "path": "desktop/service-status.html",
@@ -1679,8 +1689,8 @@
     },
     {
       "path": "desktop/tests/profile-popover.test.cjs",
-      "bytes": 7970,
-      "sha256": "90bd703ec172766ea9882072f1e39ff7c0653a0d22904ef7de319831651f3dc9"
+      "bytes": 9047,
+      "sha256": "73cebf293a9bb3e90fd5b01da5b59828d933eea2452a7b244593b99778bf0676"
     },
     {
       "path": "desktop/tests/service-supervisor.test.cjs",
@@ -2256,6 +2266,11 @@
       "path": "docs/redesign/identity-review-20261104.json",
       "bytes": 21432,
       "sha256": "96b3389eac1a21ae82b2b4e81810a161569525a908e6f69a8150ea4e7506926d"
+    },
+    {
+      "path": "docs/redesign/interface-refinements-20261108.md",
+      "bytes": 1722,
+      "sha256": "81ef46063201a5432e97b57c6de7a7a3dfbfde181c5d716319cd738255aaa309"
     },
     {
       "path": "docs/redesign/moments-and-emoji-20261107.md",
@@ -4674,8 +4689,8 @@
     },
     {
       "path": "scripts/lint-style.mjs",
-      "bytes": 2350,
-      "sha256": "90e948a697b36b5a6d5ad171dcdc318dfa702ed0de136e017218cd4686c22d9c"
+      "bytes": 2821,
+      "sha256": "4ee9c20cba96a34bb0c7df383045d3ece43c2b26ae137cf2c031d1d4f90487dd"
     },
     {
       "path": "scripts/molly-reports-ui-fixture.mjs",
@@ -4774,8 +4789,13 @@
     },
     {
       "path": "scripts/test-character-call-layout.mjs",
-      "bytes": 8026,
-      "sha256": "14bac6c71374ccf7b38f614ea5ee9b92a9e6ebf6b64c95559cfe5df1d9552732"
+      "bytes": 8348,
+      "sha256": "b27f0e3affb5072731711175a56aa8bca108f38265b72993328211a48ecd5e61"
+    },
+    {
+      "path": "scripts/test-character-interaction-timer.mjs",
+      "bytes": 11518,
+      "sha256": "993407eaf8f123e17d95755b523d66452321374eaef411fd05f3f3ad14d7c799"
     },
     {
       "path": "scripts/test-chat-layout-quotes.cjs",
@@ -5144,8 +5164,8 @@
     },
     {
       "path": "scripts/test-molly-report-settings.mjs",
-      "bytes": 8162,
-      "sha256": "abe0e0d5bcd0d2c838992eb6904511054857ffc3b1d4e2da2d66607c28902926"
+      "bytes": 8735,
+      "sha256": "0baad184afa2a7722d65cbab639d54c95fefb849ea82d85094138431ffe32c0f"
     },
     {
       "path": "scripts/test-molly-runtime-boundaries.mjs",
@@ -5174,8 +5194,8 @@
     },
     {
       "path": "scripts/test-moment-feed-metadata.mjs",
-      "bytes": 8132,
-      "sha256": "55e28585ab78adc7beef708f6b50c4b097d2fc6dad219c4ce51d13aadc6a8ebe"
+      "bytes": 8449,
+      "sha256": "559d39ce08ff959db124bed3965b463f188f82eb89deab3b5b531bd4275c2ae2"
     },
     {
       "path": "scripts/test-moment-image-viewer.mjs",
@@ -5219,8 +5239,8 @@
     },
     {
       "path": "scripts/test-moments-refinement.mjs",
-      "bytes": 12733,
-      "sha256": "a9572baddb1b67b5119534e126a94d4d7924b3719d6a6ccc081388c22c7c9fcf"
+      "bytes": 12670,
+      "sha256": "23d5a4d92828ee9214e33cf7be353f3e1ba9433d3a8c45406b012ba0b6eb0fda"
     },
     {
       "path": "scripts/test-moments-trained-runtime.mjs",
@@ -5229,8 +5249,8 @@
     },
     {
       "path": "scripts/test-native-profile-surface.mjs",
-      "bytes": 3205,
-      "sha256": "fb86a4515f27e49582cd64e031ff7ff3d646194614f28993d9ba537e4cdba19a"
+      "bytes": 4732,
+      "sha256": "5ed4a2eb3056820713ce1d4e07a28bdd7fe57f2c19bfdba5dec418f0e259924d"
     },
     {
       "path": "scripts/test-npc-approved-style.mjs",
@@ -5299,8 +5319,8 @@
     },
     {
       "path": "scripts/test-pets-settings-entry.mjs",
-      "bytes": 7331,
-      "sha256": "9d45d987f4a52d09981b9d5580246d365e365644a4eefdfe7d107c8bfb5cc379"
+      "bytes": 13135,
+      "sha256": "7333bd4825c6401818f5c9ac0f53578d5d84e2125bae0c2f4379815946a9b6ea"
     },
     {
       "path": "scripts/test-phosphor-action-icons.mjs",
@@ -5416,6 +5436,11 @@
       "path": "scripts/test-secretary-report-presentation.mjs",
       "bytes": 4659,
       "sha256": "595347119f3bef8768816baf8c2fe972bad91f8afd50cd1dfebfb3c36bc8ec33"
+    },
+    {
+      "path": "scripts/test-settings-task-schedule.mjs",
+      "bytes": 16607,
+      "sha256": "543624b69b877eb6f409c23038409475b196837902df8d4c260c1a644a36f529"
     },
     {
       "path": "scripts/test-six-character-roles.mjs",

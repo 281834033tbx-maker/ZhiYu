@@ -46,7 +46,9 @@ assert.ok(avatar);assert.ok(content);assert.match(avatar.getText(parsed),/size=\
 const contentText=content.getText(parsed),header=content.children.find(node=>ts.isJsxElement(node)&&node.openingElement.tagName.getText(parsed)==='header');
 assert.ok(header);assert.ok(!header.getText(parsed).includes('zy-post-published-time'),'time is not in the name header');
 assert.ok(contentText.indexOf('zy-post-caption')<contentText.indexOf('<Media'));assert.ok(contentText.indexOf('<Media')<contentText.indexOf('zy-post-metadata'));assert.ok(contentText.indexOf('zy-post-metadata')<contentText.indexOf('<MomentPostInteractions'));
-assert.match(contentText,/statusFor\(author.id\)/,'the status capsule keeps the current character source');
+assert.ok(!contentText.includes('zy-moment-status'),'the first caption line follows the name without a live-status row');
+assert.ok(!header.getText(parsed).includes('动态更多操作'),'post headers expose no overflow menu');
+assert.match(app,/className="zy-moments-cover-name">\{filter \? personById\(filter\).name : self.nickname\|\|self.name\}/,'the cover shows the current display name, including a changed nickname');
 assert.match(app,/const publishedTime=post.createdAt\?formatMomentTime\(post.createdAt\):post.time/,'legacy posts retain their old label; new posts use the actual render clock rather than the previous 30-second status tick');
 assert.match(app,/aria-label="动态地点"/);assert.match(app,/placeholder="添加地点（可选）"/);assert.match(app,/location:postLocation.trim\(\)/,'existing optional city/place input and published value remain connected');
 const css=readFileSync('app/zhiyu/moments-refinement.css','utf8');assert.match(css,/grid-template-columns:42px minmax\(0,1fr\)/);assert.match(css,/\.zy-post-avatar\s*\{[^}]*border-radius:50%/);assert.match(css,/background:color-mix\(in srgb,var\(--zy-incoming\) 55%,var\(--zy-canvas\)\)/,'the lighter interaction box uses both theme tokens instead of hard-coded white');

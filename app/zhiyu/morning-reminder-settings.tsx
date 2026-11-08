@@ -6,12 +6,13 @@ import {useAccount} from './auth-gate';
 import {npcFetch} from './npc-fetch';
 import {reportUserFacingError} from '../../lib/user-facing-errors';
 import type {SecretarySettings} from '../../lib/npc/experience';
+import {reportScheduleDefaults,reportScheduleStore} from './report-schedule-store';
 import './morning-reminder-settings.css';
 
 type Settings = SecretarySettings;
 type SettingsResponse = {settings?:Settings;error?:string};
 const validTime = (time:string) => /^([01]\d|2[0-3]):[0-5]\d$/.test(time);
-const defaults:Settings = {enabled:true,time:'07:00',weeklyEnabled:true,weeklyDay:0,weeklyTime:'21:30'};
+const defaults:Settings = reportScheduleDefaults;
 function responseSettings(result:SettingsResponse):Settings {
   const settings=result.settings;
   if(!settings || typeof settings.enabled!=='boolean' || !validTime(settings.time)) throw Error('设置暂时无法同步');
@@ -41,7 +42,7 @@ function SettingsDialog({accountId,onClose,inline=false}:{accountId:string;onClo
       const result=await response.json() as SettingsResponse;
       if(!response.ok)throw Error(result.error||'设置暂时无法同步');
       const next=responseSettings(result);
-      if(alive.current){settingsRef.current=next;confirmedRef.current=next;setSettings(next);setLoadError(false);}
+      if(alive.current){settingsRef.current=next;confirmedRef.current=next;setSettings(next);setLoadError(false);reportScheduleStore.publish(accountId,next);}
     }).catch(reason=>{if(alive.current&&!controller.signal.aborted){setLoadError(true);setError(reportUserFacingError(reason,'load','读取简报设置'));}})
       .finally(()=>{if(alive.current&&!controller.signal.aborted)setLoading(false);});
     return()=>{alive.current=false;controller.abort();};
@@ -63,6 +64,7 @@ function SettingsDialog({accountId,onClose,inline=false}:{accountId:string;onClo
         const pending=queuedSettings.current;queuedSettings.current=null;
         const confirmed=responseSettings(await request({action:'settings',...pending}));
         confirmedRef.current=confirmed;
+        reportScheduleStore.publish(accountId,confirmed);
         if(alive.current&&!queuedSettings.current){settingsRef.current=confirmed;setSettings(confirmed);setFeedback('已保存');}
       }
     } catch(reason) {

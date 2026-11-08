@@ -3,6 +3,8 @@
 import {useCallback, useMemo, useRef, useState} from 'react';
 import {CalendarDays, CalendarCheck, History, Plus, Search, ChevronDown, X} from 'lucide-react';
 import PressableIconButton from '../pressable-icon-button';
+import {useAccount} from '../auth-gate';
+import {useReportSchedule,weeklyReviewScheduleLabel} from '../report-schedule-store';
 import type {useTaskBoard} from './use-task-board';
 import DirectoryDivider from '../directory-divider';
 import {categoryGroups, categories, npcs, plans} from './config';
@@ -23,6 +25,8 @@ export default function TaskBoard({board,dirWidth,onDirectoryWidthChange,onOpenC
   onOpenConversation:(npcId:string,task?:Task)=>void;
 }) {
   const {model,dispatch,now,ready,storageError}=board;
+  const {account}=useAccount();
+  const weeklySchedule=useReportSchedule(account.id);
   const [query,setQuery]=useState('');
   const [confirmId,setConfirmId]=useState<string|null>(null);
   const [confirmAnchor,setConfirmAnchor]=useState<HTMLElement|null>(null);
@@ -86,7 +90,7 @@ export default function TaskBoard({board,dirWidth,onDirectoryWidthChange,onOpenC
         <section className="zy-tb-plans" aria-labelledby="zy-tb-plans-title"><h2 id="zy-tb-plans-title">我的计划</h2>{plans.map(plan=><div className="zy-tb-plan" key={plan.id}><div><span>{plan.name}</span><small>{plan.progressText}</small></div><div className="zy-tb-plan-track"><i style={{width:`${plan.progress*100}%`,background:plan.color}}/></div></div>)}</section>
         <div className="zy-tb-category-groups">{[...categoryGroups].sort((a,b)=>a.order-b.order).map(group=><section key={group.id} aria-label={group.name}><h2>{group.name}</h2>{categories.filter(category=>category.groupId===group.id).map(category=><button type="button" key={category.id} aria-pressed={categoryFilter===category.id} className={categoryFilter===category.id?'is-active':''} onClick={()=>dispatch({type:'set-category',categoryId:categoryFilter===category.id?undefined:category.id})}><CategoryIcon category={category}/><span>{category.name}</span><small>{countsFor(category.id)||'—'}</small></button>)}</section>)}</div>
       </div>
-      <div className="zy-tb-weekly-review"><NpcAvatar npc={npcs.find(npc=>npc.id==='molly')!} size={28}/><div><strong>本周复盘</strong><span>Molly · {model.page.weeklyReview.time}</span></div></div>
+      <div className="zy-tb-weekly-review"><NpcAvatar npc={npcs.find(npc=>npc.id==='molly')!} size={28}/><div><strong>本周复盘</strong><span>Molly · {weeklyReviewScheduleLabel(weeklySchedule)}</span></div></div>
     </aside>
     <DirectoryDivider width={dirWidth} onWidthChange={onDirectoryWidthChange} label="调整任务指引栏宽度"/>
     <section ref={content} className="zy-task-board-content" aria-label={view==='today'?'今天的任务':view==='future'?'未来的任务':'任务历史'}>

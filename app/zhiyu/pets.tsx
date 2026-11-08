@@ -4,7 +4,7 @@ import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore, type
 import Image from 'next/image';
 import {reportUserFacingError} from '../../lib/user-facing-errors';
 import DirectoryDivider from './directory-divider';
-import { BookOpen, Check, PawPrint, Pencil, X } from 'lucide-react';
+import { BookOpen, Check, ChevronLeft, PawPrint, Pencil, X } from 'lucide-react';
 import Dungeons from './dungeons';
 import { PET_STATE_CHANGED_EVENT, petStorageKey, type StoredPetState } from './pet-storage';
 import { petDisplayFrames } from './pet-display-frames';
@@ -166,7 +166,7 @@ function PetPageSession({accountId,dirWidth,onDirectoryWidthChange,embedded}:{ac
       if (current.pets.some(item => item.id === pet.id)) return current;
       return { ...current, pets: [...current.pets, pet], selectedId: pet.id, visible: true };
     });
-    if(saved)setNotice(`${pet.name}已加入“我的宠物”。`);
+    if(saved){setNotice(`${pet.name}已加入“我的宠物”。`);if(embedded)setSection('mine');}
   };
 
   const openDialog = () => {
@@ -196,27 +196,30 @@ function PetPageSession({accountId,dirWidth,onDirectoryWidthChange,embedded}:{ac
       </nav>
     </aside>
     <DirectoryDivider width={dirWidth} onWidthChange={onDirectoryWidthChange} label="调整宠物导航宽度"/></>}
-    {discover === 'dungeons' ? <Dungeons onBack={() => setDiscover('pets')} /> : discover === 'pets' ? <section className="zy-pets" aria-label={section === 'mine' ? '我的宠物' : '去领养'}>
+    {discover === 'dungeons' ? <Dungeons onBack={() => setDiscover('pets')} /> : discover === 'pets' ? <section className={'zy-pets'+(embedded?' zy-pets-embedded':'')} aria-label={section === 'mine' ? '我的宠物' : '去领养'}>
       <div className="zy-pets-inner">
-        <nav className="zy-pets-tabs" aria-label="宠物">
+        {!embedded&&<nav className="zy-pets-tabs" aria-label="宠物">
           <button type="button" className={section === 'mine' ? 'is-active' : ''} aria-current={section === 'mine' ? 'page' : undefined} onClick={() => { setSection('mine'); setNotice(''); }}>我的宠物</button>
           <button type="button" className={section === 'explore' ? 'is-active' : ''} aria-current={section === 'explore' ? 'page' : undefined} onClick={() => { setSection('explore'); setNotice(''); }}>去领养</button>
-        </nav>
+        </nav>}
+        {embedded&&section==='explore'&&<div className="zy-pets-catalog-navigation"><button type="button" onClick={()=>{setSection('mine');setNotice('');}}><ChevronLeft size={16}/>我的宠物</button><span>挑选一位新伙伴</span></div>}
         {section === 'mine' ? <>
           {selected ? <div className="zy-pets-preview">
-            <span className="zy-pets-preview-label">当前展示</span>
+            <span className="zy-pets-preview-label">{embedded&&!state.visible?'当前选择 · 已隐藏':'当前展示'}</span>
             <PetArt appearance={selected.appearance} imageSrc={selected.imageSrc} label={selected.name} limited={isLimitedPet(selected)} className="zy-pets-preview-art" />
             <div className="zy-pets-preview-details">
-              <div className="zy-pets-preview-name"><strong>{selected.name}</strong><button type="button" title="修改宠物名字" aria-label="修改宠物名字" onClick={openDialog}><Pencil size={14} /></button></div>
-              <p>{selected.description}</p>
+              <div className="zy-pets-preview-name"><strong title={selected.name}>{selected.name}</strong><button type="button" title="修改宠物名字" aria-label="修改宠物名字" onClick={openDialog}><Pencil size={14} /></button></div>
+              {embedded&&<p className="zy-pets-preview-kind">{isLimitedPet(selected)?'限定宠物':'普通宠物'}</p>}
+              {(!embedded||selected.description!=='普通宠物')&&<p className="zy-pets-preview-description">{selected.description}</p>}
               <span>{moods[selected.appearance]}</span>
+              {embedded&&<label className="zy-pets-display-toggle"><input type="checkbox" checked={state.visible} aria-label="在聊天中显示宠物" onChange={event=>{const visible=event.target.checked;setState(current=>({...current,visible}));}}/><span>在聊天中显示</span></label>}
             </div>
           </div> : <div className="zy-pets-empty"><PawPrint size={27} /><h2>还没有领养宠物</h2><p>去领养里挑一只喜欢的伙伴吧。</p><button type="button" onClick={() => setSection('explore')}>去领养</button></div>}
-          <div className="zy-pets-section-heading"><div><h2>我的仓库</h2><p>{pets.length ? `${pets.length} 只宠物 · 选择卡片切换展示` : '领养后会显示在这里'}</p></div></div>
-          <div className="zy-pets-grid">{pets.map(pet => <button key={pet.id} type="button" className={`zy-pet-card ${pet.id === selected?.id ? 'is-selected' : ''}`} aria-pressed={pet.id === selected?.id} onClick={() => setState(current => ({ ...current, selectedId: pet.id, visible: true }))}>
-            {(pet.limited || pet.limitedRegion) && <span className="zy-pet-limited-badge">限定宠物</span>}
-            {pet.id === selected?.id && <span className="zy-pet-selected-label"><Check size={13} />当前展示</span>}
-            <PetArt appearance={pet.appearance} imageSrc={pet.imageSrc} label={pet.name} limited={isLimitedPet(pet)} /><strong>{pet.name}</strong><span className="zy-pet-description">{pet.description}</span><span className="zy-pet-mood">{moods[pet.appearance]}</span>
+          {(!embedded||pets.length>0)&&<div className="zy-pets-section-heading"><div><h2>{embedded?'已领养':'我的仓库'}{embedded&&<small>{pets.length}</small>}</h2>{!embedded&&<p>{pets.length ? `${pets.length} 只宠物 · 选择卡片切换展示` : '领养后会显示在这里'}</p>}</div>{embedded&&<button type="button" className="zy-pets-adopt-link" onClick={()=>{setSection('explore');setNotice('');}}>去领养</button>}</div>}
+          <div className={'zy-pets-grid'+(embedded?' zy-pets-owned-grid':'')}>{pets.map(pet => <button key={pet.id} type="button" className={`zy-pet-card ${embedded?'zy-pet-owned-option ':''}${pet.id === selected?.id ? 'is-selected' : ''}`} aria-pressed={pet.id === selected?.id} onClick={() => setState(current => ({ ...current, selectedId: pet.id, visible: true }))}>
+            {!embedded&&(pet.limited || pet.limitedRegion) && <span className="zy-pet-limited-badge">限定宠物</span>}
+            {pet.id === selected?.id && <span className="zy-pet-selected-label"><Check size={13} />{embedded?'已选中':'当前展示'}</span>}
+            <PetArt appearance={pet.appearance} imageSrc={pet.imageSrc} label={pet.name} limited={isLimitedPet(pet)} /><strong title={pet.name}>{pet.name}</strong><span className="zy-pet-description">{embedded?(isLimitedPet(pet)?'限定宠物':'普通宠物'):pet.description}</span>{!embedded&&<span className="zy-pet-mood">{moods[pet.appearance]}</span>}
           </button>)}</div>
         </> : <>
           <div className="zy-pets-section-heading zy-pets-limited-heading"><div><h2>限定宠物</h2><p>这还是地球生物么？？</p></div></div>
@@ -229,8 +232,9 @@ function PetPageSession({accountId,dirWidth,onDirectoryWidthChange,embedded}:{ac
             const owned = pets.some(item => item.id === pet.id);
             return <div key={pet.id} className="zy-pet-card zy-pet-discover-card"><PetArt appearance={pet.appearance} imageSrc={pet.imageSrc} label={pet.name} limited={isLimitedPet(pet)} /><strong>{pet.name}</strong><button type="button" disabled={owned} onClick={() => adopt(pet)}>{owned ? '已领养' : '领养'}</button></div>;
           })}</div></div>
-          {notice && <output className="zy-pets-notice">{notice}</output>}
         </>}
+        {notice && <output className="zy-pets-notice" aria-live="polite">{notice}</output>}
+        {error&&!dialog&&<p className="zy-pets-error" role="alert">{error}</p>}
       </div>
     </section> : <section className="zy-chat zy-chat-empty" aria-label="多功能区"><div className="zy-empty-logo"><Image unoptimized width={160} height={160} src="/zhiyu-logo.png" alt="智域" /></div></section>}
     {dialog && <dialog ref={renameDialog} className="zy-pets-dialog-backdrop" aria-label="重命名宠物" style={{width:"100vw",height:"100dvh",maxWidth:"none",maxHeight:"none",margin:0,border:0}} onCancel={event=>{event.preventDefault();setDialog(null);}} onPointerDown={event => { if (event.target === event.currentTarget) setDialog(null); }}>

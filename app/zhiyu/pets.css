@@ -1,9 +1,10 @@
 .zy-page-pets .zy-base { background: #f2f2f2; }
-.zy-dialog.zy-pets-catalog-dialog {box-sizing:border-box;width:min(800px,calc(100vw - 40px));max-height:calc(100dvh - 48px);padding:0;overflow:hidden;display:flex;flex-direction:column;border:0;border-radius:12px;background:var(--zy-glass-fill);color:var(--zy-ink);box-shadow:var(--zy-popup-shadow);}
+.zy-dialog.zy-pets-catalog-dialog {box-sizing:border-box;width:min(600px,calc(100vw - 32px));max-height:calc(100dvh - 48px);padding:0;overflow:hidden;display:flex;flex-direction:column;border:0;border-radius:12px;background:var(--zy-glass-fill);color:var(--zy-ink);box-shadow:var(--zy-popup-shadow);-webkit-app-region:no-drag;pointer-events:auto;}
 .zy-pets-catalog-dialog:not([open]) {display:none;}
-.zy-pets-catalog-dialog>header {display:flex;align-items:center;justify-content:space-between;gap:20px;flex:none;padding:20px 24px 14px;}
+.zy-pets-catalog-dialog>header {position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:20px;flex:none;padding:16px 20px 12px;-webkit-app-region:no-drag;pointer-events:auto;}
 .zy-pets-catalog-dialog>header h2 {margin:0;font-size:calc(16px + var(--zy-font-adjust,0px));font-weight:600;}
-.zy-pets-catalog-dialog>header button {display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;border-radius:6px;background:transparent;color:var(--zy-secondary);cursor:pointer;}
+.zy-pets-catalog-dialog>header button {position:relative;z-index:2;display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;border-radius:6px;background:transparent;color:var(--zy-secondary);cursor:pointer;-webkit-app-region:no-drag;pointer-events:auto;}
+.zy-pets-catalog-dialog>header button>svg {pointer-events:none;-webkit-app-region:no-drag;}
 .zy-pets-catalog-dialog>.zy-pets {flex:1;min-height:0;background:transparent;}
 .zy-pets-catalog-dialog .zy-pets-inner {width:calc(100% - 40px);padding:0 0 24px;}
 .zy-pets-catalog-dialog .zy-pets-tabs {background:var(--zy-glass-fill);}
@@ -140,3 +141,73 @@ html[data-zy-theme='dark'] .zy-pets-create { border-color: #4a4a4c; background: 
 html[data-zy-theme='dark'] .zy-pet-card.is-limited { border-color: #594a67; background: #29272c; }
 html[data-zy-theme='dark'] .zy-pet-caption { color: #c5abd9; }
 html[data-zy-theme='dark'] .zy-pet-discover-card > button:disabled { border-color: #5e5064; background: #403948; color: #ded0e2; }
+
+/* The embedded manager keeps the same person glass, with a smaller hierarchy.
+   Shared adoption/state logic and the full-page catalog remain unchanged. */
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-embedded {font-size:calc(13px + var(--zy-font-adjust,0px));scrollbar-width:none;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-embedded::-webkit-scrollbar {display:none;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-inner {padding-bottom:20px;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview {min-height:0;margin:0;padding:14px 16px 16px;grid-template-columns:112px minmax(0,1fr);gap:10px 16px;align-items:center;border:0;background:var(--zy-glass-inner);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview-label {position:static;grid-column:1/-1;font-size:calc(13px + var(--zy-font-adjust,0px));color:var(--zy-secondary);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview-art {width:112px;height:112px;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview-details {width:100%;min-width:0;align-items:flex-start;justify-self:stretch;text-align:left;gap:7px;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview-name {max-width:100%;min-width:0;gap:6px;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview-name strong {min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:calc(14px + var(--zy-font-adjust,0px));color:var(--zy-ink);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview-name button {flex:none;color:var(--zy-secondary);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview-name button:hover {background:var(--zy-glass-hover);color:var(--zy-ink);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview-details p {margin:0;font-size:calc(13px + var(--zy-font-adjust,0px));line-height:1.5;color:var(--zy-secondary);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview-description {display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview-details>span {padding:3px 8px;border-radius:999px;font-size:calc(13px + var(--zy-font-adjust,0px));background:var(--zy-glass-inner);color:var(--zy-secondary);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-display-toggle {display:flex;align-items:center;gap:7px;margin-top:3px;color:var(--zy-secondary);font-size:calc(13px + var(--zy-font-adjust,0px));cursor:pointer;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-display-toggle input {position:relative;appearance:none;flex:none;box-sizing:border-box;width:30px;height:18px;margin:0;padding:0;border:0;border-radius:999px;background:color-mix(in srgb,var(--zy-muted) 35%,var(--zy-glass-inner));cursor:pointer;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-display-toggle input::before {content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--zy-canvas);transition:transform 160ms ease;}
+/* This dialog is a body portal; --zy-nav-active exists at :root, unlike the
+   chat-only --zy-interaction-ink, so the checked track is always painted. */
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-display-toggle input:checked {background:var(--zy-nav-active);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-display-toggle input[type='checkbox']:focus-visible {outline:2px solid var(--zy-nav-active);outline-offset:2px;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-display-toggle input:checked::before {transform:translateX(12px);}
+html[data-zy-theme] body .zy-pets-catalog-dialog :is(.zy-pets-display-toggle input,.zy-pet-owned-option,.zy-pets-adopt-link,.zy-pets-catalog-navigation button):focus-visible {outline:2px solid var(--zy-interaction-ink);outline-offset:2px;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-section-heading {margin:20px 0 10px;gap:12px;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-section-heading h2 {display:flex;align-items:center;gap:8px;font-size:calc(14px + var(--zy-font-adjust,0px));color:var(--zy-ink);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-section-heading small {font-size:calc(13px + var(--zy-font-adjust,0px));font-weight:400;color:var(--zy-muted);}
+html[data-zy-theme] body .zy-pets-catalog-dialog :is(.zy-pets-adopt-link,.zy-pets-catalog-navigation button) {display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:28px;padding:3px 8px;border:0;border-radius:6px;background:transparent;color:var(--zy-interaction-ink);font:inherit;font-size:calc(13px + var(--zy-font-adjust,0px));cursor:pointer;}
+html[data-zy-theme] body .zy-pets-catalog-dialog :is(.zy-pets-adopt-link,.zy-pets-catalog-navigation button):hover {background:var(--zy-glass-hover);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-grid {grid-template-columns:repeat(auto-fill,minmax(min(126px,100%),1fr));gap:10px;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-card {border:1px solid var(--zy-glass-line);background:var(--zy-glass-inner);color:var(--zy-ink);box-shadow:none;transform:none;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-card:hover {border-color:var(--zy-interaction-ink);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-owned-option {min-height:142px;padding:24px 10px 12px;gap:0;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-owned-option.is-selected {border-color:var(--zy-interaction-ink);background:var(--zy-glass-hover);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-owned-option :is(.zy-pet-art,.zy-pet-image) {width:64px;height:64px;margin:0;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-card strong {max-width:100%;margin-top:7px;overflow:hidden;text-overflow:ellipsis;font-size:calc(13px + var(--zy-font-adjust,0px));line-height:1.5;color:var(--zy-ink);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-owned-option strong {white-space:nowrap;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-description {margin-top:2px;font-size:calc(13px + var(--zy-font-adjust,0px));color:var(--zy-secondary);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-selected-label {top:6px;right:8px;gap:2px;font-size:calc(13px + var(--zy-font-adjust,0px));color:var(--zy-interaction-ink);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-catalog-navigation {display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-catalog-navigation span {font-size:calc(13px + var(--zy-font-adjust,0px));color:var(--zy-muted);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-section-heading>div p {font-size:calc(13px + var(--zy-font-adjust,0px));color:var(--zy-secondary);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-limited-heading {margin-top:0;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-discover-card {min-height:178px;padding:16px 10px 12px;gap:4px;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-discover-card.is-limited {min-height:208px;padding-top:32px;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-discover-card :is(.zy-pet-art,.zy-pet-image) {width:76px;height:76px;margin:0;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-caption {min-height:36px;margin:3px 0 6px;font-size:calc(13px + var(--zy-font-adjust,0px));color:var(--zy-secondary);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-limited-badge {top:8px;left:8px;padding:2px 6px;border:0;border-radius:6px;background:var(--zy-glass-inner);box-shadow:none;color:var(--zy-secondary);font-size:calc(13px + var(--zy-font-adjust,0px));font-weight:400;}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-discover-card>button {min-height:28px;min-width:0;width:100%;padding:3px 8px;border:1px solid var(--zy-glass-line);background:var(--zy-glass-inner);color:var(--zy-interaction-ink);font-size:calc(13px + var(--zy-font-adjust,0px));}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-discover-card>button:hover:not(:disabled) {border-color:var(--zy-interaction-ink);background:var(--zy-glass-hover);color:var(--zy-interaction-ink);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pet-discover-card>button:disabled {border-color:var(--zy-glass-line);background:transparent;color:var(--zy-muted);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-empty {min-height:180px;margin:0;padding:20px;border:0;background:var(--zy-glass-inner);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-empty p {font-size:calc(13px + var(--zy-font-adjust,0px));color:var(--zy-secondary);}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-empty button {border-color:var(--zy-glass-line);background:var(--zy-glass-inner);color:var(--zy-interaction-ink);font-size:calc(13px + var(--zy-font-adjust,0px));}
+html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-notice {display:block;margin:12px 0 0;padding:8px 10px;font-size:calc(13px + var(--zy-font-adjust,0px));background:var(--zy-glass-inner);color:var(--zy-secondary);}
+html[data-zy-theme] body .zy-pets-dialog {border:0;background:var(--zy-glass-fill);color:var(--zy-ink);box-shadow:var(--zy-popup-shadow);}
+html[data-zy-theme] body .zy-pets-dialog :is(label,input,.zy-pets-error,.zy-pets-dialog-actions button) {font-size:calc(13px + var(--zy-font-adjust,0px));}
+html[data-zy-theme] body .zy-pets-dialog input {height:34px;border-color:var(--zy-glass-line);background:var(--zy-glass-inner);color:var(--zy-ink);}
+html[data-zy-theme] body .zy-pets-dialog-actions button {border-color:var(--zy-glass-line);background:var(--zy-glass-inner);color:var(--zy-ink);}
+html[data-zy-theme] body .zy-pets-dialog-actions button[type='submit'] {border-color:var(--zy-interaction-ink);background:var(--zy-interaction-ink);color:var(--zy-canvas);}
+@container pet-content (max-width: 380px) {
+ html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview {grid-template-columns:80px minmax(0,1fr);gap:8px 12px;padding:12px;}
+ html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview-art {width:80px;height:80px;}
+ html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-preview-details {gap:5px;}
+}
+@media (prefers-reduced-motion: reduce) {
+ html[data-zy-theme] body .zy-pets-catalog-dialog .zy-pets-display-toggle input::before {transition:none;}
+}

@@ -20,8 +20,9 @@
 .zy-professional-task-step.is-current{border-color:color-mix(in srgb,var(--zy-pt-accent,#e66562) 60%,var(--zy-line,#e3e5dd))}
 .zy-professional-task-step.is-done{opacity:.76}
 .zy-professional-task-row{display:flex;align-items:center;min-height:47px;gap:1px;padding:0 3px}
-.zy-professional-task .zy-professional-task-check,.zy-professional-task-dialog .zy-professional-task-check{display:grid;place-items:center;width:28px;min-height:44px;flex:none;padding:0;border:0;border-radius:10px;background:transparent;color:var(--zy-pt-muted,var(--zy-muted,#73776d))}
-.zy-professional-task-check>span{display:grid;place-items:center;width:18px;height:18px;border:1.4px solid currentColor;border-radius:50%;color:inherit;background:transparent}
+.zy-professional-task .zy-professional-task-check,.zy-professional-task-dialog .zy-professional-task-check{position:relative;display:grid;place-items:center;width:32px;min-height:44px;flex:none;padding:0;border:0;border-radius:10px;background:transparent;color:var(--zy-pt-muted,var(--zy-muted,#73776d))}
+.zy-professional-task-check>span{display:grid;place-items:center;width:16px;height:16px;border:1.25px solid currentColor;border-radius:50%;color:inherit;background:transparent}
+.zy-professional-task-check::after{content:'';position:absolute;left:50%;top:50%;width:32px;height:44px;transform:translate(-50%,-50%)}
 .zy-professional-task-check.is-done>span{color:#fff;border-color:var(--zy-pt-accent);background:var(--zy-pt-accent)}
 .zy-professional-task button:disabled,.zy-professional-task-dialog button:disabled,.zy-professional-task-confirm button:disabled{cursor:default}
 .zy-professional-task-check:disabled,.zy-professional-task-timer-action:disabled{opacity:.45}

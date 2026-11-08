@@ -38,7 +38,7 @@ for(const id of ids) {
 }
 
 const Controls=load('app/zhiyu/realtime-voice-controls.tsx',{...runtime,'./realtime-voice-call.css':{}}).default;
-const slots=[],effects=[],timers=[];let cursor=0,devices=0,sockets=0,authorized=0;
+const slots=[],effects=[],timers=[],intervals=[];let cursor=0,devices=0,sockets=0,authorized=0;
 const hooks={
  useState(initial){const i=cursor++;if(!(i in slots))slots[i]=typeof initial==='function'?initial():initial;return [slots[i],next=>{slots[i]=typeof next==='function'?next(slots[i]):next;}];},
  useRef(initial){const i=cursor++;return slots[i]??={current:initial};},useCallback:value=>value,useEffect:effect=>effects.push(effect),useReducer:(_reducer,_value,initialize)=>[initialize(),()=>{}],
@@ -46,14 +46,17 @@ const hooks={
 const Timer=()=>null,Preview=()=>null,Captions=()=>null,End=()=>null;
 const live=load('app/zhiyu/realtime-voice-call.tsx',{...runtime,react:hooks,
  '../../lib/user-facing-errors':{userFacingError:value=>value},'./realtime-voice-audio':{RealtimePcmPlayer:class{constructor(){assert.fail('No audio player should start during layout tests');}}},
- './realtime-voice-controls':{default:Controls},'../../lib/npc/realtime-call-presentation':{createCallCaptionWindow:()=>({}),callCaptionWindowReducer(){},getCallCaptionFrame:()=>({hidden:true}),callElapsedMs:()=>0},
+ './realtime-voice-controls':{default:Controls},'../../lib/npc/realtime-call-presentation':{createCallCaptionWindow:()=>({}),callCaptionWindowReducer(){},getCallCaptionFrame:()=>({hidden:true}),callElapsedMs:()=>0,formatCallDuration:()=> '00:00'},
  './realtime-call-captions':{LocalCameraPreview:Preview,RealtimeCallCaptions:Captions,RealtimeCallEnd:End,RealtimeCallTimer:Timer},'./desktop-bridge':{},'./realtime-voice-call.css':{},
-},{window:{},navigator:{mediaDevices:{getUserMedia(){devices++;assert.fail('No actual microphone/camera request');}}},WebSocket:class{constructor(){sockets++;assert.fail('No realtime connection');}},setTimeout:callback=>(timers.push(callback),timers.length),clearTimeout(){},setInterval(){assert.fail('No active call timer without a real ready receipt');},clearInterval(){},DOMException});
+},{window:{},navigator:{mediaDevices:{getUserMedia(){devices++;assert.fail('No actual microphone/camera request');}}},WebSocket:class{constructor(){sockets++;assert.fail('No realtime connection');}},setTimeout:callback=>(timers.push(callback),timers.length),clearTimeout(){},setInterval:callback=>(intervals.push(callback),intervals.length),clearInterval(){},DOMException});
 const props={name:'合成人物',character:'chen-nian',available:false,authorize:async()=>{authorized++;assert.fail('An unsupported NPC must not initiate call authorization');}};
 const render=()=>{cursor=0;effects.length=0;return live.default(props);};
 let tree=render();const cleanups=effects.map(effect=>effect()).filter(Boolean);
 assert.equal(timers.length,0);assert.equal(devices,0);assert.equal(sockets,0);assert.equal(authorized,0);assert.equal(tree.props['data-call-state'],'unavailable');
-assert.equal(nodes(tree).filter(node=>node.type===Timer).length,0,'unsupported calls never display a fabricated connecting/duration timer');
+const interactionTimer=nodes(tree).find(node=>node.type===Timer);
+assert.ok(interactionTimer,'every open character scene has a window interaction timer');
+assert.equal(interactionTimer.props.connecting,false);assert.equal(interactionTimer.props.connected,false,'unsupported interaction time never claims voice connection');
+assert.equal(intervals.length,1,'the interaction timer runs independently of device availability');
 assert.equal(nodes(tree).find(node=>node.type===Captions).props.message.text,'暂不支持语音通话，可在聊天页交流');
 const controls=nodes(tree).find(node=>node.type===Controls),buttons=nodes(Controls(controls.props)).filter(node=>node.type==='button');
 assert.equal(buttons.find(node=>node.props['data-call-control']==='microphone').props.disabled,true);
@@ -63,7 +66,7 @@ assert.equal(buttons.find(node=>node.props['data-call-control']==='camera').prop
 assert.ok(!buttons.find(node=>node.props['data-call-control']==='hangup').props.disabled);
 await controls.props.onToggleCamera();assert.equal(devices,0);
 controls.props.onHangup();tree=render();const end=nodes(tree).find(node=>node.type===End);
-assert.equal(end.props.visible,true);assert.equal(end.props.title,'已结束人物互动');assert.equal(end.props.reconnectLabel,'返回人物画面');
+assert.equal(end.props.visible,true);assert.equal(end.props.title,'已结束人物互动 · 00:00');assert.equal(end.props.reconnectLabel,'返回人物画面');
 await end.props.onReconnect();tree=render();assert.equal(tree.props['data-call-state'],'unavailable');assert.equal(devices,0);assert.equal(sockets,0);
 cleanups.forEach(cleanup=>cleanup());
 slots.length=0;cursor=0;effects.length=0;timers.length=0;

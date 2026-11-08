@@ -7,6 +7,9 @@
   font-size:calc(14px + var(--zy-font-adjust,0px));overflow:auto;
 }
 .zy-settings-dialog { width:384px; }
+.zy-settings-dialog,.zy-logout-dialog,.zy-settings-dialog>header { -webkit-app-region:no-drag; }
+.zy-settings-dialog>header>button { position:relative;z-index:1;pointer-events:auto;-webkit-app-region:no-drag; }
+.zy-settings-dialog>header>button>svg { pointer-events:none;-webkit-app-region:no-drag; }
 .zy-settings-dialog::backdrop { background:rgb(25 24 23 / 25%);backdrop-filter:blur(4px); }
 .zy-settings-dialog>header { display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid #f0f0f2; }
 .zy-settings-dialog h2 { margin:0;font-size:calc(16px + var(--zy-font-adjust,0px));font-weight:600; }
@@ -22,7 +25,7 @@
 .zy-settings-account>div { display:flex;flex-direction:column;gap:4px;flex:1;min-width:0; }
 .zy-settings-account strong { font-size:calc(14px + var(--zy-font-adjust,0px));font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
 .zy-settings-account>div>span,.zy-settings-version>div>span { display:block;font-size:calc(13px + var(--zy-font-adjust,0px));color:#8b8b93;overflow-wrap:anywhere; }
-.zy-settings-button { flex-shrink:0;padding:8px 13px;border:0;border-radius:6px;background:#ededee;color:#171719;font:inherit;font-size:calc(13px + var(--zy-font-adjust,0px));line-height:1.4;white-space:nowrap;cursor:pointer; }
+.zy-settings-button { flex-shrink:0;padding:8px 13px;border:1px solid var(--zy-glass-line);border-radius:10px;background:#ededee;color:#171719;font:inherit;font-size:calc(13px + var(--zy-font-adjust,0px));line-height:1.4;white-space:nowrap;cursor:pointer; }
 .zy-settings-button:hover { background:#e3e3e5; }
 .zy-settings-control-row { display:flex;justify-content:space-between;align-items:center;gap:20px;min-height:78px; }
 .zy-settings-switch { display:flex;align-items:center;flex-shrink:0;width:38px;height:23px;border:0;border-radius:12px;padding:3px;background:#c8c8cd;cursor:pointer;transition:background-color 180ms ease; }
@@ -31,12 +34,12 @@
 .zy-settings-switch[aria-checked='true']>span { transform:translateX(15px); }
 .zy-settings-switch:disabled { cursor:wait; }
 .zy-settings-font-select { position:relative;display:flex;align-items:center;color:#76767e; }
-.zy-settings-font-select>select { appearance:none;padding:6px 28px 6px 15px;border:1px solid #dddddf;border-radius:6px;background:transparent;color:#252528;font:inherit;cursor:pointer; }
+.zy-settings-font-select>select { appearance:none;padding:6px 28px 6px 15px;border:1px solid var(--zy-glass-line);border-radius:10px;background:transparent;color:#252528;font:inherit;cursor:pointer; }
 .zy-settings-font-select>svg { position:absolute;right:8px;pointer-events:none; }
 .zy-settings-version { display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px; }
 .zy-settings-version>div>span { margin-top:6px; }
 .zy-settings-version>output { flex-basis:100%;margin:0;color:#76767e;font-size:calc(12px + var(--zy-font-adjust,0px));line-height:1.6; }
-.zy-settings-dialog :is(button,select):focus-visible,.zy-logout-dialog button:focus-visible { outline:2px solid #ed7468;outline-offset:3px; }
+.zy-settings-dialog :is(button,select):focus-visible,.zy-logout-dialog button:focus-visible { outline:2px solid var(--zy-interaction-ink);outline-offset:3px; }
 .zy-settings-dialog :is(button,select):disabled { opacity:.65;cursor:wait; }
 .zy-logout-dialog { width:362px;padding:35px 28px 28px;border-radius:10px; }
 .zy-logout-dialog::backdrop { background:rgb(25 24 23 / 14%); }
@@ -52,7 +55,7 @@ html[data-zy-theme='dark'] .zy-settings-section h3 { color:#eeeef0; }
 html[data-zy-theme='dark'] .zy-settings-dialog>header>button:hover { background:#3b3b3f;color:#eeeef0; }
 html[data-zy-theme='dark'] :is(.zy-settings-button,.zy-logout-dialog>footer>button:not(.zy-logout-confirm)) { background:#3b3b3f;color:#eeeef0; }
 html[data-zy-theme='dark'] .zy-settings-button:hover { background:#47474c; }
-html[data-zy-theme='dark'] .zy-settings-font-select>select { color:#eeeef0;border-color:#4c4c51; }
+html[data-zy-theme='dark'] .zy-settings-font-select>select { color:#eeeef0;border-color:var(--zy-glass-line); }
 html[data-zy-theme='dark'] .zy-settings-font-select option { color:#eeeef0;background:#28282b; }
 @media(max-width:420px) { .zy-settings-dialog>header { padding:16px 18px; }.zy-settings-content { padding:0 18px; }.zy-settings-account { gap:9px; }.zy-settings-button { padding:8px 10px; } }
 @media(prefers-reduced-motion:reduce) { .zy-settings-switch,.zy-settings-switch>span { transition:none; } }

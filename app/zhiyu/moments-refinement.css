@@ -1,7 +1,13 @@
-/* 2026-11-07: a cover-led feed, compact identities and one inline conversation area. */
+/* The cover name uses the established 13px profile text scale. */
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moments-cover-identity {
+  position:absolute;right:clamp(24px,5vw,64px);bottom:-20px;display:flex;align-items:center;gap:14px;max-width:calc(100% - 48px);
+}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moments-cover-name {
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--zy-on-outgoing);font-size:calc(13px + var(--zy-font-adjust,0px));font-weight:600;text-shadow:0 1px 3px var(--zy-outgoing);
+}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moments-cover-profile {
-  left:auto;right:clamp(24px,5vw,64px);bottom:-18px;transform:none;
-  width:64px;height:64px;border:0;background:transparent;
+  position:static;inset:auto;transform:none;flex:0 0 80px;
+  width:80px;height:80px;border:0;background:transparent;
 }
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moments-cover-profile::before {content:none;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-moments-cover-profile:active {transform:none;}
@@ -11,12 +17,12 @@ html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-avatar {display:bloc
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-avatar:is(:hover,:focus,:active) {background:transparent;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-avatar:focus-visible {outline:2px solid var(--zy-interaction-ink);outline-offset:4px;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-content {min-width:0;}
-html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-content>header {display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:12px;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-content>header {display:flex;align-items:start;margin-bottom:4px;}
+html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-content>.zy-post-caption {margin:0 0 14px;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person {gap:12px;background:transparent;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person:is(:hover,:focus-visible,:active) {background:transparent;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person>span:last-child {display:flex;flex-direction:column;align-items:flex-start;gap:5px;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person strong {font-size:calc(14px + var(--zy-font-adjust,0px));font-weight:600;color:var(--zy-ink);}
-html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-person .zy-moment-status {margin:0;color:var(--zy-interaction-ink);font-size:calc(11px + var(--zy-font-adjust,0px));line-height:1.5;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-metadata {display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;margin-top:12px;color:var(--zy-muted);font-size:calc(11px + var(--zy-font-adjust,0px));}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-published-time {color:var(--zy-muted);font-size:inherit;font-variant-numeric:tabular-nums;}
 html[data-zy-theme] .zy-app.zy-desktop .zy-moments .zy-post-metadata .zy-location {margin:0;font-size:inherit;}

@@ -10,6 +10,7 @@ import type {DialoguePurpose} from '../../lib/npc/dialogue-purpose';
 import {reportUserFacingError} from '../../lib/user-facing-errors';
 import './private-chat-settings.css';
 import './user-facing-ui.css';
+import './chat-header-typography.css';
 
 type ChatHeaderProps = {
  name:string; avatar?:string; bio:string;

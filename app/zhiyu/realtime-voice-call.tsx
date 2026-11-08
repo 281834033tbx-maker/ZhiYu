@@ -4,7 +4,7 @@ import {userFacingError} from '../../lib/user-facing-errors';
 import { RealtimePcmPlayer } from './realtime-voice-audio';
 import RealtimeVoiceControls from './realtime-voice-controls';
 import type { RealtimeCaption } from '../../lib/npc/realtime-transcript';
-import {callCaptionWindowReducer,createCallCaptionWindow,getCallCaptionFrame,callElapsedMs} from '../../lib/npc/realtime-call-presentation';
+import {callCaptionWindowReducer,createCallCaptionWindow,getCallCaptionFrame,callElapsedMs,formatCallDuration} from '../../lib/npc/realtime-call-presentation';
 import {LocalCameraPreview,RealtimeCallCaptions,RealtimeCallEnd,RealtimeCallTimer,type RealtimeCaptionMessage} from './realtime-call-captions';
 import './desktop-bridge';
 import './realtime-voice-call.css';
@@ -71,6 +71,8 @@ export default function RealtimeVoiceCall({ name, character, gender='female', au
   const [microphoneDenied, setMicrophoneDenied] = useState(false);
   const [readyAt,setReadyAt]=useState<number|null>(null);
   const [endedAt,setEndedAt]=useState<number|null>(null);
+  const [interactionStartedAt,setInteractionStartedAt]=useState(()=>Date.now());
+  const [interactionEndedAt,setInteractionEndedAt]=useState<number|null>(null);
   const [now,setNow]=useState(()=>Date.now());
   const [cameraEnabled,setCameraEnabled]=useState(false);
   const [cameraPending,setCameraPending]=useState(false);
@@ -88,6 +90,7 @@ export default function RealtimeVoiceCall({ name, character, gender='female', au
   const startRef=useRef<()=>Promise<void>>(async()=>{});
   const active=state==='connecting'||state==='listening'||state==='thinking'||state==='speaking';
   const ready=active&&state!=='connecting';
+  const interactionActive=state!=='ended';
 
   const stopCamera=useCallback(()=>{
     cameraRequest.current++;
@@ -152,10 +155,10 @@ export default function RealtimeVoiceCall({ name, character, gender='female', au
   useEffect(()=>{onCallActiveChange?.(state==='idle'||active);},[active,state,onCallActiveChange]);
   useEffect(()=>{onBusyChange?.(state==='connecting'||state==='thinking'||state==='speaking');},[state,onBusyChange]);
   useEffect(()=>{
-    if(!active)return;
-    const timer=setInterval(()=>{const time=Date.now();setNow(time);updateCaptions({type:'tick',now:time});},250);
+    if(!interactionActive)return;
+    const timer=setInterval(()=>{const time=Date.now();setNow(time);if(active)updateCaptions({type:'tick',now:time});},250);
     return()=>clearInterval(timer);
-  },[active]);
+  },[active,interactionActive]);
   useEffect(()=>{
     if(state==='listening'||state==='thinking'||state==='speaking')updateCaptions({type:'phase',phase:state,now:Date.now()});
   },[state]);
@@ -373,7 +376,7 @@ export default function RealtimeVoiceCall({ name, character, gender='female', au
           setNotice(userFacingError(message.message,'media'));
         } else if (message.type === 'ended') {
           release(session);
-          setEndedAt(Date.now());
+          const time=Date.now();setEndedAt(time);setInteractionEndedAt(time);
           setState('ended');
         }
       };
@@ -405,14 +408,22 @@ export default function RealtimeVoiceCall({ name, character, gender='female', au
 
   function close() {
     if (sessionRef.current) release(sessionRef.current, true);
-    stopCamera();setEndedAt(Date.now());
+    stopCamera();const time=Date.now();setEndedAt(previous=>previous??time);setInteractionEndedAt(time);
     mutedRef.current = false;
     setMuted(false);
     setNotice('');
     setState('ended');
   }
 
-  const elapsedMs=callElapsedMs(readyAt,now,endedAt);
+  function reconnect() {
+    const time=Date.now();setInteractionStartedAt(time);setInteractionEndedAt(null);setNow(time);
+    if(available)void start();else setState('idle');
+  }
+
+  // The visible clock measures this window interaction, including waiting.
+  // Keep ready-only voice timing separate; an open scene is not a connected call.
+  const voiceElapsedMs=callElapsedMs(readyAt,now,endedAt);
+  const interactionElapsedMs=callElapsedMs(interactionStartedAt,now,interactionEndedAt);
   const frame=getCallCaptionFrame(captionWindow);
   let message:RealtimeCaptionMessage|undefined;
   if(!available)message={text:'暂不支持语音通话，可在聊天页交流',tone:'notice'};
@@ -420,14 +431,14 @@ export default function RealtimeVoiceCall({ name, character, gender='female', au
   else if(cameraError)message={text:cameraError,tone:'error',...(cameraDenied?{action:{label:'打开系统摄像头设置',onClick:()=>void window.zhiyuDesktop?.openCameraSettings?.()}}:{})};
   else if(notice)message={text:notice,tone:'notice'};
   else if(state==='idle'||state==='connecting')message={text:'正在接通…',tone:'notice'};
-  return <section className="zy-realtime-scene" aria-label={`与${name}人物互动`} data-call-state={!available&&state!=='ended'?'unavailable':state}>
+  return <section className="zy-realtime-scene" aria-label={`与${name}人物互动`} data-call-state={!available&&state!=='ended'?'unavailable':state} data-voice-elapsed-ms={voiceElapsedMs}>
     {state!=='ended'&&<>
-      {!available?<output className="zy-call-timer is-connecting" aria-label="人物互动">{name}</output>:(state==='idle'||active)&&<RealtimeCallTimer elapsedMs={elapsedMs} connecting={readyAt===null}/>}
+      <RealtimeCallTimer elapsedMs={interactionElapsedMs} connecting={available&&(state==='idle'||state==='connecting')} connected={available&&ready}/>
       <LocalCameraPreview visible={cameraEnabled||cameraPending} pending={cameraPending} videoRef={cameraVideo}/>
       <RealtimeCallCaptions {...frame} hidden={message?false:frame.hidden} message={message}/>
       <RealtimeVoiceControls muted={muted} microphoneReady={available&&ready} microphoneAvailable={available} cameraEnabled={cameraEnabled} cameraPending={cameraPending} cameraAvailable={available}
         onToggleMute={toggleMute} onHangup={close} onToggleCamera={()=>void toggleCamera()}/>
     </>}
-    <RealtimeCallEnd visible={state==='ended'} elapsedMs={elapsedMs} reconnectLabel={available?`再打给${gender==='male'?'他':'她'}`:'返回人物画面'} title={available?undefined:'已结束人物互动'} onReconnect={()=>available?void start():setState('idle')}/>
+    <RealtimeCallEnd visible={state==='ended'} elapsedMs={interactionElapsedMs} reconnectLabel={available?`再打给${gender==='male'?'他':'她'}`:'返回人物画面'} title={`已结束人物互动 · ${formatCallDuration(interactionElapsedMs)}`} onReconnect={reconnect}/>
   </section>;
 }

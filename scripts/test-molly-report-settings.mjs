@@ -7,7 +7,7 @@ import ts from 'typescript';
 // There is no browser, actual account, network request or production write.
 const source=readFileSync('app/zhiyu/morning-reminder-settings.tsx','utf8');
 const compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
-const hooks=[],effects=[],posts=[],requests=[];
+const hooks=[],effects=[],posts=[],requests=[],published=[];
 let cursor=0,serverSettings={enabled:true,time:'07:00',weeklyEnabled:true,weeklyDay:0,weeklyTime:'21:30',city:{name:'合成城市',source:'manual'}};
 const jsx=(type,props)=>({type,props:props||{}});
 const react={
@@ -28,6 +28,7 @@ const sandboxModule={exports:{}},dependencies={
   }},
   '../../lib/user-facing-errors':{reportUserFacingError:(_reason,_kind,label)=>`${label}失败，请重试`},
   './morning-reminder-settings.css':{},
+  './report-schedule-store':{reportScheduleDefaults:{enabled:true,time:'07:00',weeklyEnabled:true,weeklyDay:0,weeklyTime:'21:30'},reportScheduleStore:{publish:(accountId,settings)=>published.push({accountId,settings:structuredClone(settings)})}},
 };
 vm.runInNewContext(compiled,{module:sandboxModule,exports:sandboxModule.exports,require:name=>{assert.ok(name in dependencies,'Unexpected settings dependency '+name);return dependencies[name];},console,AbortController},{filename:'morning-reminder-settings.tsx'});
 const root=sandboxModule.exports.default({onClose(){}}),Dialog=root.type;
@@ -61,12 +62,14 @@ try {
   assert.equal(posts[0].body.time,'22:15');assert.equal(posts[0].body.weeklyDay,3);assert.equal(posts[0].body.weeklyTime,'21:45');
   assert.equal(valueTime(tree,'daily'),'22:15','a stale receipt cannot overwrite a newer input');
   await finishPost();tree=render();assert.match(text(tree),/已保存/);
+  assert.equal(published.at(-1).accountId,'isolated-settings-owner');assert.equal(published.at(-1).settings.weeklyTime,'21:45','confirmed saves immediately notify the same-account task display');
   assert.equal(serverSettings.time,'22:15');assert.equal(serverSettings.weeklyDay,3);assert.equal(serverSettings.weeklyTime,'21:45');assert.equal(serverSettings.city.name,'合成城市','hidden existing city is not erased by schedule edits');
   console.log('PASS: explicit 24-hour controls serialize complete daily/weekly snapshots and keep newer edits.');
 
   changeTime(tree,'daily','hour','06');tree=render();
   changeTime(tree,'weekly','minute','50');tree=render();
   await finishPost(false);tree=render();
+  assert.equal(published.at(-1).settings.weeklyTime,'21:45','a failed save never publishes an optimistic schedule');
   assert.match(text(tree),/保存简报设置失败/);assert.doesNotMatch(text(tree),/已保存/);
   assert.equal(valueTime(tree,'daily'),'22:15');assert.equal(valueTime(tree,'weekly'),'21:45');
   assert.equal(posts.length,0,'failed writes do not continue from an unconfirmed state');

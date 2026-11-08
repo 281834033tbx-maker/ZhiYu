@@ -29,4 +29,14 @@ const browser=componentFixture();assert.equal(browser.exports.default(browser.pr
 const native=componentFixture(bridge),result=native.exports.default(native.props);assert.equal(result.type,'NativeProfile');assert.equal(result.props.children,'Synthetic profile body');assert.equal(result.props.anchor,native.props.anchor);
 assert.equal(result.props.fallback.type,native.exports.AnchoredProfilePopover,'unavailable child retains the original usable web profile');
 const photo=native.exports.default({...native.props,className:'zy-self-profile-popover'});assert.equal(photo.type,native.exports.AnchoredProfilePopover,'the photo card keeps its independent gesture surface');
-console.log('PASS native profile surface: preload guard, bounded IPC, listener cleanup, native selection and browser/photo fallbacks.');
+const nativeSource=fs.readFileSync('app/zhiyu/native-profile-popover.tsx','utf8');
+const nativeCompiled=ts.transpileModule(nativeSource,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.React,jsxFactory:'fixtureElement'}}).outputText;
+let stateIndex=0;const nativeExports={},surface={popup:{closed:false},host:{synthetic:true},id:'synthetic-profile'};
+const nativeDependencies={react:{useState:()=>[stateIndex++===0?surface:false,()=>{}],useRef:initial=>({current:initial}),useLayoutEffect(){}},'react-dom':{createPortal:(content,host)=>{assert.equal(host,surface.host);return content;}},'./anchored-popup-motion':{}};
+vm.runInNewContext(nativeCompiled,{exports:nativeExports,require:name=>{assert.ok(name in nativeDependencies,'Unexpected native profile dependency '+name);return nativeDependencies[name];},fixtureElement:(type,props)=>({type,props})});
+const content=nativeExports.default({...native.props,fallback:null});
+assert.equal(content.props.style.margin,0,'native content starts exactly at the material window edge');
+assert.equal(content.props.style.padding,0);assert.equal(content.props.style.width,'100%');assert.equal(content.props.style.maxWidth,'100%');
+assert.equal(content.props.style.overflow,'auto','only screen-height clipping requires native card scrolling');
+assert.ok(!nativeSource.includes('value.height-24')&&!nativeSource.includes('value.width-24'),'fit no longer reserves a second inner shadow gutter');
+console.log('PASS native profile surface: preload guard, bounded IPC, listener cleanup, native selection and browser/photo fallbacks, edge-to-edge native card with unchanged scrolling.');

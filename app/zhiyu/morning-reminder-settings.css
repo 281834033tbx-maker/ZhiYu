@@ -10,7 +10,7 @@
 .zy-morning-settings-switch span{width:14px;height:14px;border-radius:50%;background:var(--zy-on-outgoing);box-shadow:none;transition:transform .14s}
 .zy-morning-settings-switch[aria-checked='true']{background:var(--zy-nav-active)}
 .zy-morning-settings-switch[aria-checked='true'] span{transform:translateX(14px)}
-.zy-morning-settings button:focus-visible,.zy-morning-settings input:focus-visible{outline:2px solid var(--zy-nav-active);outline-offset:3px}
+.zy-morning-settings :is(button,input,select):focus-visible{outline:2px solid var(--zy-interaction-ink);outline-offset:3px}
 .zy-morning-settings button:disabled,.zy-morning-settings input:disabled{opacity:.5;cursor:default}
 .zy-morning-settings>p.zy-morning-settings-note{margin:14px 0 0;padding-top:14px;border-top:.5px solid var(--zy-glass-line);font-size:calc(11px + var(--zy-font-adjust,0px));line-height:1.8}
 .zy-morning-settings-status{min-height:27px;padding-top:8px;color:var(--zy-secondary);font-size:calc(11px + var(--zy-font-adjust,0px))}
@@ -33,7 +33,7 @@
 .zy-report-settings-city button,.zy-report-settings-demo>button {border:0;border-radius:10px;background:var(--zy-glass-inner);color:var(--zy-nav-active);font:inherit;padding:8px 10px;cursor:pointer;}
 .zy-report-settings-demo h3 {font-size:calc(12px + var(--zy-font-adjust,0px));font-weight:600;color:var(--zy-muted);margin:4px 0 8px;}
 .zy-report-settings-demo>button {display:block;width:100%;margin:6px 0;text-align:left;font-size:calc(13px + var(--zy-font-adjust,0px));}
-.zy-report-settings-week select:focus-visible {outline:2px solid var(--zy-nav-active);outline-offset:3px;}
+.zy-report-settings-week select:focus-visible {outline:2px solid var(--zy-interaction-ink);outline-offset:3px;}
 
 /* Explicit 24-hour hour/minute controls never contain a clipped AM/PM field. */
 .zy-report-settings-inline {font-size:calc(13px + var(--zy-font-adjust,0px));}

@@ -72,7 +72,7 @@
   pointer-events:auto;
 }
 .zy-call-control { display:flex; flex-direction:column; align-items:center; gap:8px; width:76px; margin:0; padding:0; border:0; background:transparent; color:#fff; font:inherit; cursor:pointer; touch-action:manipulation; }
-.zy-call-control-disc { display:grid; place-items:center; flex:0 0 64px; width:64px; height:64px; border-radius:12px; background:rgba(255,255,255,.16); box-shadow:none; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); transition:background 200ms ease,transform 150ms ease,filter 150ms ease; }
+.zy-call-control-disc { display:grid; place-items:center; flex:0 0 64px; width:64px; height:64px; border-radius:50%; background:rgba(255,255,255,.16); box-shadow:none; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); transition:background 200ms ease,transform 150ms ease,filter 150ms ease; }
 .zy-call-control-disc svg { display:block; flex:none; overflow:visible; }
 .zy-call-control-label { font-size:calc(12px + var(--zy-font-adjust,0px)); font-weight:400; line-height:16px; color:rgba(255,255,255,.78); white-space:nowrap; }
 .zy-call-control.is-lit .zy-call-control-disc { background:rgba(255,255,255,.94); color:#1c1c20; box-shadow:none; }

@@ -4,7 +4,6 @@
 // oxlint-disable-next-line typescript/no-require-imports -- Native Electron module.
 const {randomUUID} = require('node:crypto');
 const PREFIX = 'zhiyu-profile-';
-const PADDING = 12;
 const finite = value => typeof value === 'number' && Number.isFinite(value);
 const clamp = (value, low, high) => Math.max(low, Math.min(value, high));
 
@@ -19,13 +18,15 @@ function profileBounds(parentBounds, anchor, width, naturalHeight, area, zoom = 
   const left = parentBounds.x + anchor.x * z;
   const top = parentBounds.y + anchor.y * z;
   const bottom = top + anchor.height * z;
-  const w = Math.min(Math.ceil((width + PADDING * 2) * z), Math.max(1, area.width - margin * 2));
-  const h = Math.min(Math.ceil((naturalHeight + PADDING * 2) * z), Math.max(1, area.height - margin * 2));
+  // The native material ends at the card edge. OS shadow lives outside these
+  // bounds; an inner CSS shadow gutter would itself receive a gray vibrancy fill.
+  const w = Math.min(Math.ceil(width * z), Math.max(1, area.width - margin * 2));
+  const h = Math.min(Math.ceil(naturalHeight * z), Math.max(1, area.height - margin * 2));
   const below = area.y + area.height - margin - bottom - gap;
   const above = top - gap - area.y - margin;
   const side = h <= below || below >= above ? 'bottom' : 'top';
-  const x = Math.round(clamp(left - PADDING * z, area.x + margin, area.x + area.width - margin - w));
-  const y = Math.round(clamp(side === 'bottom' ? bottom + gap - PADDING * z : top - gap - h + PADDING * z,
+  const x = Math.round(clamp(left, area.x + margin, area.x + area.width - margin - w));
+  const y = Math.round(clamp(side === 'bottom' ? bottom + gap : top - gap - h,
     area.y + margin, area.y + area.height - margin - h));
   return {bounds:{x,y,width:w,height:h},layout:{width:w / z,height:h / z,
     anchorX:(left + anchor.width * z / 2 - x) / z,anchorY:(top + anchor.height * z / 2 - y) / z,side}};
@@ -101,7 +102,7 @@ function registerProfilePopover({ipcMain,screen,baseURL,getParent,allowExistingW
         const area = screen.getDisplayMatching(bounds).workArea;
         const placement = profileBounds(bounds,prepared.anchor,prepared.width,prepared.height,area,zoom);
         return {action:'allow',overrideBrowserWindowOptions:{...placement.bounds,parent,show:false,frame:false,transparent:true,
-          backgroundColor:'#00000000',hasShadow:false,resizable:false,minimizable:false,maximizable:false,fullscreenable:false,skipTaskbar:true,
+          backgroundColor:'#00000000',hasShadow:true,resizable:false,minimizable:false,maximizable:false,fullscreenable:false,skipTaskbar:true,
           ...(process.platform === 'darwin' ? {vibrancy:'under-window',visualEffectState:'active'} : {}),
           webPreferences:{preload:'',nodeIntegration:false,contextIsolation:true,sandbox:true,webSecurity:true}}};
       }

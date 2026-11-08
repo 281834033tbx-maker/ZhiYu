@@ -97,9 +97,7 @@ import {
   ArrowLeft,
   RefreshCw,
   Bell,
-  Bookmark,
   Copy,
-  EyeOff,
   Check,
   BellOff,
   CalendarCheck,
@@ -1811,6 +1809,8 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                 </div>
                 <button type="button" className="zy-moments-tool" aria-label="发布动态" title="发布动态" onClick={()=>setModal({kind:'publish'})}><Camera size={19}/></button>
               </div>
+              <div className="zy-moments-cover-identity">
+              <span className="zy-moments-cover-name">{filter ? personById(filter).name : self.nickname||self.name}</span>
               <button
                 className="zy-self-cover-avatar zy-moments-cover-profile"
                 aria-label={filter ? `查看${personById(filter).name}的资料` : '查看我的资料'}
@@ -1822,9 +1822,10 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                       ? personById(filter)
                       : self
                   }
-                  size={64}
+                  size={80}
                 />
               </button>
+              </div>
             </div>
             <div className="zy-feed-stream">
               {filter && (
@@ -1845,53 +1846,15 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                     <header>
                       <button
                         className="zy-post-person"
+                        aria-label={`查看${author.name}的资料`}
                         onClick={event => openProfile(author, event.currentTarget.querySelector<HTMLElement>('.zy-avatar') || event.currentTarget)}
                       >
                         <span>
                           <span>
                             <strong>{author.name}</strong>
                           </span>
-                          {author.id!=='self'&&<small className="zy-character-status zy-moment-status">{statusFor(author.id)}</small>}
                         </span>
                       </button>
-                      <div className="zy-menu-anchor">
-                        <IconButton
-                          label={`${author.name}动态更多操作`}
-                          onClick={() => toggleMenu(post.id)}
-                        >
-                          <MoreHorizontal size={20} />
-                        </IconButton>
-                        {menu === post.id && (
-                          <div className="zy-menu">
-                            <button
-                              onClick={() => {
-                                patchPost(post.id, { saved: !post.saved });
-                                setMenu('');
-                                notify(
-                                  post.saved ? '已取消收藏' : '已收藏到本机',
-                                );
-                              }}
-                            >
-                              <Bookmark />
-                              {post.saved ? '取消收藏' : '收藏'}
-                            </button>
-                            <button onClick={() => copy(post.text)}>
-                              <Copy />
-                              复制动态文案
-                            </button>
-                            <button
-                              onClick={() => {
-                                setHidden((ids) => [...ids, post.personId]);
-                                setMenu('');
-                                notify('已隐藏该好友动态，可在设置中恢复');
-                              }}
-                            >
-                              <EyeOff />
-                              不看该好友
-                            </button>
-                          </div>
-                        )}
-                      </div>
                     </header>
                     {post.text && <p className="zy-post-caption">{post.text}</p>}
                     <Media

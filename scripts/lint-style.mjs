@@ -17,7 +17,10 @@ for(const file of walk('app')){
   if(d.important)fail('禁止 important');
   if(!themeFiles.has(path.basename(file)))for(const color of collectColors(d.value))if(!allowedColors.has(color))fail('新增颜色 '+color);
   if(d.prop==='font'&&/\dpx/.test(d.value)&&!/^.*calc\((?:11|12|13|14|16|20|28)px \+ var\(--zy-font-adjust,\s*0px\)\)/.test(d.value))fail('font简写字号也必须跟随设置');
-  if(d.prop==='font-size'&&!/^(?:inherit|calc\((?:11|12|13|14|16|20|28)px \+ var\(--zy-font-adjust,\s*0px\)\))$/.test(d.value))fail('字号必须使用七档和字号设置');
+  // The user requested a smaller chat-header status on 2026-11-08. This
+  // micro label is the sole 10px exception; all other text keeps seven steps.
+  const compactHeaderStatus=file==='app/zhiyu/chat-header-typography.css'&&d.parent.selector==='html[data-zy-theme] body .zy-app.zy-desktop.zy-page-chat .unified-chat-head .chat-header-person-avatar-only .chat-header-copy .zy-character-status'&&d.value==='calc(10px + var(--zy-font-adjust,0px))';
+  if(d.prop==='font-size'&&!compactHeaderStatus&&!/^(?:inherit|calc\((?:11|12|13|14|16|20|28)px \+ var\(--zy-font-adjust,\s*0px\)\))$/.test(d.value))fail('字号必须使用七档和字号设置');
   if(d.prop==='font-weight'&&!/^(?:400|600|inherit|normal)$/.test(d.value))fail('字重只允许400或600');
   if(d.prop==='border-radius'){
    const selector=d.parent.selector||'';

@@ -33,7 +33,8 @@ test('a one-shot nonce admits only the prepared about:blank child, preserving on
  const request={url:'about:blank',frameName:token.name},allowed=f.parent.openHandler(request);
  assert.equal(allowed.action,'allow');assert.equal(f.parent.openHandler(request).action,'deny','nonce cannot be reused even before did-create-window');
  const o=allowed.overrideBrowserWindowOptions;
- assert.equal(o.parent,f.parent);assert.equal(o.transparent,true);assert.equal(o.frame,false);assert.equal(o.show,false);assert.equal(o.resizable,false);assert.equal(o.webPreferences.nodeIntegration,false);assert.equal(o.webPreferences.contextIsolation,true);assert.equal(o.webPreferences.webSecurity,true);assert.equal(o.webPreferences.sandbox,true);assert.equal(o.webPreferences.preload,'');
+ assert.equal(o.parent,f.parent);assert.equal(o.transparent,true);assert.equal(o.frame,false);assert.equal(o.show,false);assert.equal(o.hasShadow,true);assert.equal(o.resizable,false);assert.equal(o.webPreferences.nodeIntegration,false);assert.equal(o.webPreferences.contextIsolation,true);assert.equal(o.webPreferences.webSecurity,true);assert.equal(o.webPreferences.sandbox,true);assert.equal(o.webPreferences.preload,'');
+ if(process.platform==='darwin')assert.equal(o.vibrancy,'under-window','the original glass material remains native');
  assert.equal(f.parent.openHandler({url:'http://localhost:3100/task-calendar?npc=chen-nian',frameName:'zhiyu-task-calendar-frosted'}).action,'allow');
  assert.equal(f.parent.openHandler({url:'http://localhost:3100/unrelated',frameName:'other'}).action,'deny');
  const child=f.create(token);assert.equal(child.openHandler({url:'https://other.example'}).action,'deny');
@@ -55,7 +56,7 @@ test('main-window motion/zoom reanchors the child; minimize, navigation, crash a
   const f=fixture(),token=f.prepare();f.parent.openHandler({url:'about:blank',frameName:token.name});const child=f.create(token);
   f.call('fit',{id:token.id,anchor:{x:350,y:60,width:48,height:48},height:300});const oldX=child.bounds.x;
   f.parent.bounds={...f.parent.bounds,x:250};f.parent.emit('move');assert.equal(child.bounds.x,oldX+50);
-  f.parent.zoom=1.25;f.parent.emit('resize');assert.equal(child.zoom,1.25);assert.equal(child.bounds.width,Math.ceil(301.5*1.25));
+  f.parent.zoom=1.25;f.parent.emit('resize');assert.equal(child.zoom,1.25);assert.equal(child.bounds.width,Math.ceil(277.5*1.25));
   if(reason==='navigation')f.parent.webContents.emit('did-start-navigation',{},'http://localhost:3100/',false,true);
   else if(reason==='crash')child.webContents.emit('render-process-gone');else f.parent.emit(reason);
   assert.equal(child.destroyed,true,reason);assert.ok(f.events.some(e=>e.channel==='zhiyu:profile-closed'&&e.value.id===token.id));f.controller.close();
@@ -71,4 +72,15 @@ test('placement handles negative monitor origins and zoom without changing paren
  const parent={x:-1400,y:100,width:800,height:420},area={x:-1600,y:24,width:1600,height:1000};
  const before=JSON.stringify(parent),result=profileBounds(parent,{x:60,y:70,width:40,height:40},277.5,850,area,1.25);
  assert.ok(result.bounds.x>=area.x);assert.ok(result.bounds.x+result.bounds.width<=area.x+area.width);assert.ok(result.bounds.y>=area.y);assert.ok(result.bounds.y+result.bounds.height<=area.y+area.height);assert.equal(JSON.stringify(parent),before);assert.ok(Number.isFinite(result.layout.anchorX));
+});
+test('native bounds wrap only the card, with no vibrancy-painted shadow gutter',()=>{
+ const parent={x:200,y:150,width:700,height:450},anchor={x:350,y:60,width:48,height:48},area={x:0,y:24,width:1440,height:1000};
+ const fit=profileBounds(parent,anchor,277.5,300,area);
+ assert.deepEqual(fit.bounds,{x:550,y:268,width:278,height:300});
+ assert.equal(fit.layout.anchorX,24);assert.equal(fit.layout.anchorY,-34);assert.equal(fit.layout.height,300);
+ const zoomed=profileBounds(parent,anchor,277.5,300,area,1.25);
+ assert.equal(zoomed.bounds.width,Math.ceil(277.5*1.25));assert.equal(zoomed.bounds.height,375);
+ assert.equal(zoomed.bounds.x,Math.round(parent.x+anchor.x*1.25));
+ const tall=profileBounds(parent,anchor,277.5,800,area);assert.equal(tall.bounds.height,800);assert.ok(tall.bounds.height>parent.height);
+ const screen=profileBounds(parent,anchor,277.5,12000,area);assert.equal(screen.bounds.height,area.height-16);
 });

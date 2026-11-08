@@ -109,6 +109,6 @@ context.interactionBusy='';const fresh=context.exports.interactWithPost(post,'co
 assert.equal(await context.exports.interactWithPost({...post,source:undefined},'comment','本地回复'),true);assert.equal(patches.at(-1)[1].comments.at(-1).replyTo,'friend-comment');assert.equal(patches.at(-1)[1].comments.at(-1).actorId,'self');
 assert.ok(!app.includes("modal?.kind === 'comments'"),'comments no longer open an unrelated modal');
 assert.match(app,/momentCommentTargetRef\.current\?\.id===target\.id/,'a reply from an older editor cannot erase a newer draft');
-assert.match(app,/className="zy-character-status zy-moment-status">\{statusFor\(author.id\)\}/,'post status reuses the existing character status source');
+assert.ok(!app.includes('zy-moment-status'),'Moments omit chat-only live status capsules');
 assert.ok(!app.includes('zy-moments-identity'),'the old centered name/signature block is absent');
 console.log('PASS: cover/feed identity, own interaction state, shared inline area, text emoji editor, duplicate-submit guard, reply preservation, API failure and account-switch isolation.');

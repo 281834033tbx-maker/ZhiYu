@@ -1,0 +1,11 @@
+/* 2026-11-08: a quieter name/status hierarchy beside the unchanged chat avatar. */
+html[data-zy-theme] body .zy-app.zy-desktop.zy-page-chat .unified-chat-head .chat-header-person-avatar-only .chat-header-copy strong {
+  font-size:calc(14px + var(--zy-font-adjust,0px));
+  line-height:20px;
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-page-chat .unified-chat-head .chat-header-person-avatar-only .chat-header-copy .zy-character-status {
+  font-size:calc(10px + var(--zy-font-adjust,0px));
+  line-height:1.4;
+  margin-top:2px;
+  padding:0 5px;
+}

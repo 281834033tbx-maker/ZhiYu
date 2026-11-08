@@ -15,15 +15,13 @@ export const categories:Category[] = [
   {id:'sleep',name:'睡眠',groupId:'life',color:'var(--zy-secondary, #626469)',icon:'Moon'},
   {id:'skin',name:'皮肤管理',groupId:'appearance',color:'var(--zy-chat-control-accent, #e66562)',icon:'Droplet',verb:'护肤'},
 ];
-function placeholder(initial:string,background:string,color:string) {
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" rx="32" fill="${background}"/><text x="32" y="33" fill="${color}" font-family="system-ui,PingFang SC,sans-serif" font-size="28" text-anchor="middle" dominant-baseline="middle">${initial}</text></svg>`;
-  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
-}
+// Reuse the same current, approved portraits as publicGroupDirectory/chat.
+// Initials remain a generic component fallback; these four entries use photos.
 export const npcs:Npc[] = [
-  {id:'chen-nian',name:'陈年',initial:'陈',background:'#FCE3CF',color:'#8A4310',avatar:placeholder('陈','#FCE3CF','#8A4310')},
-  {id:'liu',name:'柳智敏',initial:'柳',background:'#D9F0E1',color:'#1F6B3E',avatar:placeholder('柳','#D9F0E1','#1F6B3E')},
-  {id:'zhou-chef',name:'赵一帆',initial:'赵',background:'#FBEBC8',color:'#7A4E05',avatar:placeholder('赵','#FBEBC8','#7A4E05')},
-  {id:'molly',name:'Molly',initial:'M',background:'#2C2C2E',color:'#FFFFFF',avatar:placeholder('M','#2C2C2E','#FFFFFF')},
+  {id:'chen-nian',name:'陈年',avatar:'/npc/chen-nian/avatar-20260926.png'},
+  {id:'liu',name:'柳智敏',avatar:'/stitch/6ee1d45916762d31.jpg'},
+  {id:'zhou-chef',name:'赵一帆',avatar:'/desktop-npc/scenes/zhou-chef-night-sofa-20261005-v1.png'},
+  {id:'molly',name:'Molly',avatar:'/stitch/molly-avatar-v2.png'},
 ];
 export const plans:Plan[] = [
   {id:'muscle',name:'3 个月增肌',color:categories[0].color,progress:.33,progressText:'第 4/12 周'},

@@ -43,9 +43,9 @@ export function RealtimeCallCaptions({previous,current,waiting=false,hidden=fals
   </section>;
 }
 
-export function RealtimeCallTimer({elapsedMs,connecting}:{elapsedMs:number;connecting:boolean}) {
-  return <output className={'zy-call-timer'+(connecting?' is-connecting':'')} aria-label={connecting?'语音连接中':'通话时长 '+formatCallDuration(elapsedMs)} aria-live="off" data-call-timer="true" data-call-connecting={connecting}>
-    <span className="zy-call-timer-dot" aria-hidden="true"/><span>{connecting?'连接中':formatCallDuration(elapsedMs)}</span>
+export function RealtimeCallTimer({elapsedMs,connecting=false,connected=false}:{elapsedMs:number;connecting?:boolean;connected?:boolean}) {
+  return <output className={'zy-call-timer'+(!connected?' is-connecting':'')} aria-label={'人物互动时长 '+formatCallDuration(elapsedMs)} aria-live="off" data-call-timer="true" data-call-connecting={connecting} data-voice-connected={connected}>
+    <span className="zy-call-timer-dot" aria-hidden="true"/><span>{formatCallDuration(elapsedMs)}</span>
   </output>;
 }
 
@@ -68,7 +68,7 @@ export function RealtimeCallEnd({visible,elapsedMs,reconnectLabel,onReconnect,ti
     return()=>{if(element.open)element.close();};
   },[visible]);
   if(!visible||typeof document==='undefined')return null;
-  return createPortal(<dialog ref={dialog} className="zy-call-ended" aria-label="通话已结束" data-call-ended="true" onCancel={event=>event.preventDefault()}>
+  return createPortal(<dialog ref={dialog} className="zy-call-ended" aria-label={title||'通话已结束'} data-call-ended="true" onCancel={event=>event.preventDefault()}>
     <h2>{title||`通话已结束 · ${formatCallDuration(elapsedMs)}`}</h2>
     <button type="button" className="zy-call-glass-button" onClick={onReconnect}>{reconnectLabel}</button>
   </dialog>,document.body);

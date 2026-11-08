@@ -43,7 +43,7 @@ export default function NativeProfilePopover({title,anchor,close,className,child
         if(!alive){void bridge?.closeProfilePopover?.(id);return;}
         removeClosed=bridge?.onProfilePopoverClosed?.(closed=>{if(alive&&!unavailable.current&&closed===id)latestClose.current();});
         removeDismiss=bridge?.onProfilePopoverDismiss?.(closed=>{if(closed===id)requestClose.current();});
-        popup=window.open('about:blank',prepared.name,'popup,width=302,height=264');
+        popup=window.open('about:blank',prepared.name,'popup,width=278,height=240');
         if(!popup||popup.closed){fail();return;}
         // A renamed, navigated or independently created document cannot host this tree.
         if(popup.location.href!=='about:blank'){fail();return;}
@@ -85,8 +85,8 @@ export default function NativeProfilePopover({title,anchor,close,className,child
     const motion=createAnchoredPopupMotion(node,()=>layout.current?{x:layout.current.anchorX,y:layout.current.anchorY}:null);
     const applyLayout=(value:ProfilePopoverLayout)=>{
       if(!alive||dismissing)return;layout.current=value;
-      node.style.maxHeight=`${Math.max(1,value.height-24)}px`;
-      node.style.maxWidth=`${Math.max(1,value.width-24)}px`;
+      node.style.maxHeight=`${Math.max(1,value.height)}px`;
+      node.style.maxWidth=`${Math.max(1,value.width)}px`;
       node.dataset.anchorSide=value.side;
       if(!opened){opened=true;node.style.visibility='visible';node.focus({preventScroll:true});motion.play(true);}
       else motion.reanchor();
@@ -152,7 +152,7 @@ export default function NativeProfilePopover({title,anchor,close,className,child
   // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role, jsx-a11y/no-noninteractive-element-interactions
   return createPortal(<div ref={card} role="dialog" aria-modal="false" aria-label={title} tabIndex={-1}
     className={`zy-dialog zy-profile-popover zy-native-profile-content ${className}`} onKeyDown={keyDown}
-    style={{position:'relative',inset:'auto',boxSizing:'border-box',width:277.5,maxWidth:'calc(100% - 24px)',maxHeight:'none',margin:12,padding:0,overflow:'auto',overscrollBehavior:'contain',outline:'none',visibility:'hidden'}}>
+    style={{position:'relative',inset:'auto',boxSizing:'border-box',width:'100%',maxWidth:'100%',maxHeight:'none',margin:0,padding:0,overflow:'auto',overscrollBehavior:'contain',outline:'none',visibility:'hidden'}}>
     <div ref={natural}>{children}</div>
   </div>,surface.host);
 }

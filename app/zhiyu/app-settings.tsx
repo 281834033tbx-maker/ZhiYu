@@ -43,10 +43,15 @@ export default function AppSettings({ person, username, onLogout, onClose }: {
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [updateStatus, setUpdateStatus] = useState('');
   const backdropPointer = useRef<number | null>(null);
+  const closeButton = useRef<HTMLButtonElement>(null);
+  const closing = useRef(false);
+  const transitionClosePointer = useRef<{id:number;x:number;y:number}|null>(null);
   useEffect(() => { const dialog = ref.current; dialog?.showModal(); return () => dialog?.close(); }, []);
   const closeSettings = useCallback(() => {
-    if (logoutOpen) return;
+    if (logoutOpen || closing.current) return;
+    closing.current = true;
     backdropPointer.current = null;
+    transitionClosePointer.current = null;
     // Closing during the reveal completes its chosen theme and removes the
     // native transition layer before the modal leaves the top layer.
     if (transitioning) setTheme(chosenTheme);
@@ -69,7 +74,13 @@ export default function AppSettings({ person, username, onLogout, onClose }: {
     backdropPointer.current = null;
     if (dismiss) closeSettings();
   }, [logoutOpen, isOutsideDialog, closeSettings]);
-  const cancelBackdropPointer = useCallback(() => { backdropPointer.current = null; }, []);
+  const cancelBackdropPointer = useCallback(() => { backdropPointer.current = null; transitionClosePointer.current = null; }, []);
+  const isOnCloseButton = useCallback((event: BackdropPointerEvent) => {
+    const button=closeButton.current;
+    if(!button||button.disabled)return false;
+    const bounds=button.getBoundingClientRect();
+    return event.clientX>=bounds.left&&event.clientX<=bounds.right&&event.clientY>=bounds.top&&event.clientY<=bounds.bottom;
+  },[]);
   useEffect(() => {
     if (logoutOpen) {
       cancelBackdropPointer();
@@ -78,8 +89,16 @@ export default function AppSettings({ person, username, onLogout, onClose }: {
     if (!theme.transitioning) return;
     // Native ViewTransition hit testing can retarget to html/body. During its
     // reveal only, use the live dialog bounds rather than the retargeted node.
-    const down = (event: PointerEvent) => startBackdropPointer(event);
-    const up = (event: PointerEvent) => finishBackdropPointer(event);
+    const down = (event: PointerEvent) => {
+      transitionClosePointer.current=event.isPrimary&&event.button===0&&isOnCloseButton(event)?{id:event.pointerId,x:event.clientX,y:event.clientY}:null;
+      startBackdropPointer(event);
+    };
+    const up = (event: PointerEvent) => {
+      const press=transitionClosePointer.current;transitionClosePointer.current=null;
+      if(press&&press.id===event.pointerId&&event.isPrimary&&event.button===0&&isOnCloseButton(event)&&Math.hypot(event.clientX-press.x,event.clientY-press.y)<=6){
+        backdropPointer.current=null;closeSettings();
+      }else finishBackdropPointer(event);
+    };
     document.addEventListener('pointerdown', down, true);
     document.addEventListener('pointerup', up, true);
     document.addEventListener('pointercancel', cancelBackdropPointer, true);
@@ -88,13 +107,13 @@ export default function AppSettings({ person, username, onLogout, onClose }: {
       document.removeEventListener('pointerup', up, true);
       document.removeEventListener('pointercancel', cancelBackdropPointer, true);
     };
-  }, [theme.transitioning, logoutOpen, startBackdropPointer, finishBackdropPointer, cancelBackdropPointer]);
+  }, [theme.transitioning, logoutOpen, startBackdropPointer, finishBackdropPointer, cancelBackdropPointer, isOnCloseButton, closeSettings]);
   return <dialog ref={ref} className="zy-settings-dialog" aria-labelledby="zy-settings-title" aria-busy={theme.transitioning}
     onCancel={event => { event.preventDefault(); if (event.target === event.currentTarget) closeSettings(); }}
     onPointerDown={event => startBackdropPointer(event, event.target === event.currentTarget)}
     onPointerUp={event => finishBackdropPointer(event, event.target === event.currentTarget)}
     onPointerCancel={cancelBackdropPointer}>
-    <header><h2 id="zy-settings-title">设置</h2><button type="button" aria-label="关闭设置" disabled={theme.transitioning} onClick={closeSettings}><X size={19}/></button></header>
+    <header><h2 id="zy-settings-title">设置</h2><button ref={closeButton} type="button" aria-label="关闭设置" onClick={closeSettings}><X size={19}/></button></header>
     <div className="zy-settings-content">
       <section className="zy-settings-section">
         <h3>账号</h3>
