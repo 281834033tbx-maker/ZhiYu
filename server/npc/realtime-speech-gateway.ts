@@ -10,6 +10,10 @@ import { readRealtimeSpeechConfig, type RealtimeSpeechConfig } from './realtime-
 import { readXiaomanRealtimeVoiceSettings, RealtimeVoiceConfigError } from './realtime-speech-voice';
 import { REALTIME_INITIAL_PAYLOAD_BYTES, REALTIME_PROVIDER_CONTEXT_TOKENS, realtimeHistoryBudget, realtimeInstructions } from './realtime-speech-budget';
 import { RealtimeInputTranscriptAssembler } from '../../lib/npc/realtime-transcript';
+import {initBetaVoiceUsage,noteBetaVoiceReady,endBetaVoiceCall} from './beta-usage-events';
+import {isTrustedHost,isTrustedMutation,lookupBetaAccount} from './beta-identity';
+import {isDialogueCrisisInput,hasUnreceiptedCompletion} from '../../lib/npc/dialogue-output-guard';
+import {guardRealtimeSpeechText,type RealtimeTextGuardInput} from './realtime-text-guard';
 
 const CALL_PATH = '/api/npc/realtime-speech/call';
 const LOCAL_PROTOCOL = 'vite-zhiyu-realtime-v1';
@@ -38,7 +42,11 @@ export type RealtimeSpeechContext = {
 
 type GatewayOptions = {
   loadContext: (root: string, ownerId: string) => RealtimeSpeechContext | Promise<RealtimeSpeechContext>;
+  /** Synchronous trusted host refresh after current final ASR, before output. */
+  updateContextForInput?: (root:string,ownerId:string,userText:string)=>RealtimeSpeechContext;
   recordEvent?: (root: string, ownerId: string, callId: string, event: Record<string, unknown>) => void | Promise<void>;
+  /** The ordinary text runner is injectable for isolated channel tests. */
+  runTextRewrite?:RealtimeTextGuardInput['runRaw'];
 };
 
 type ActiveCall = { finish: () => void; dispose: () => void };
@@ -87,6 +95,13 @@ function identifier(value: unknown): string | undefined {
   return typeof value === 'string' && value.length > 0 && value.length <= 256 ? value : undefined;
 }
 
+function inputTranscriptText(event: Record<string, unknown>): string | undefined {
+  for (const field of ['transcript', 'text', 'delta', 'content']) {
+    const value = event[field];
+    if (typeof value === 'string' && value.length > 0) return value;
+  }
+}
+
 function providerFailure(event: Record<string, unknown>) {
   const detail = object(event.error);
   const rawCode = detail.code ?? detail.status_code ?? event.code ?? event.status_code;
@@ -104,21 +119,11 @@ function providerFailure(event: Record<string, unknown>) {
 }
 
 function ownerFor(req: IncomingMessage, db: DatabaseSync): string | null {
-  const token = req.headers.cookie?.split(';').map(part => part.trim())
-    .find(part => part.startsWith('zhiyu_auth='))?.slice('zhiyu_auth='.length);
-  if (!token || !/^[a-f0-9]{64}$/.test(token)) return null;
-  const digest = createHash('sha256').update(token).digest('hex');
-  const row = db.prepare(`SELECT a.owner_id, s.expires_at FROM zhiyu_auth_sessions s
-    JOIN zhiyu_accounts a ON a.id=s.account_id WHERE s.token_digest=?`)
-    .get(digest) as { owner_id: string; expires_at: number } | undefined;
-  return row && row.expires_at > Date.now() ? row.owner_id : null;
+  return lookupBetaAccount(req,db)?.owner_id||null;
 }
 
 function validOrigin(req: IncomingMessage): boolean {
-  const host = req.headers.host ?? '';
-  if (!/^(?:localhost|127\.0\.0\.1)(?::\d{1,5})?$/.test(host)) return false;
-  try { return req.headers.origin === new URL(`http://${host}`).origin; }
-  catch { return false; }
+  return isTrustedHost(req)&&isTrustedMutation(req);
 }
 
 function rejectUpgrade(socket: Duplex, status: number) {
@@ -166,8 +171,9 @@ function sessionPayload(context: RealtimeSpeechContext, config: RealtimeSpeechCo
   return payload;
 }
 
+type CallUsage={ready:(callId:string,at:number)=>void;ended:(callId:string,at:number)=>void};
 function attachCall(client: NodeWebSocket, root: string, ownerId: string, config: RealtimeSpeechConfig,
-  options: GatewayOptions, released: () => void): ActiveCall {
+  options: GatewayOptions, released: () => void, usage?:CallUsage): ActiveCall {
   const callId = randomUUID();
   const ownerHash = textHash(ownerId).slice(0, 16);
   let sentInstructionsHash: string | undefined;
@@ -187,16 +193,23 @@ function attachCall(client: NodeWebSocket, root: string, ownerId: string, config
   let messageWindow = Date.now();
   let messageCount = 0;
   let state: 'listening' | 'thinking' | 'speaking' = 'listening';
-  // The provider's delta label does not distinguish every interim hypothesis
-  // shape. Use conservative three-hypothesis compatibility for unmarked input;
-  // explicit whole-text fields/results remain authoritative snapshots.
-  const inputTranscripts=new RealtimeInputTranscriptAssembler(randomUUID,'auto');
+  // Seeduplex's official Web demo replaces the user's current question on
+  // input_audio_transcription.delta; only assistant output deltas append.
+  // Use that provider contract, including non-prefix ASR corrections.
+  const inputTranscripts=new RealtimeInputTranscriptAssembler(randomUUID,'snapshot');
   let assistantText = '';
   let responseId: string | undefined;
   let audioDelivered = false;
   let audioCompleted = false;
   const canceledResponses = new Set<string>();
   let dropPendingResponse = false;
+  let inputEpoch=0,responseEpoch=0,responseVersion=0;
+  let activeInputTurnId:string|undefined;
+  let completedInput:{turnId:string;text:string;epoch:number}|undefined;
+  let crisisBlockedEpoch:number|undefined;
+  let sessionRole='',sessionStyle='';
+  const pendingFinals=new Set<string>();
+  const inputAliases=new Map<string,string>();
   let finishTimer: ReturnType<typeof setTimeout> | undefined;
   let endedRecorded = false;
   let historyWarningSent = false;
@@ -220,6 +233,7 @@ function attachCall(client: NodeWebSocket, root: string, ownerId: string, config
   const recordEnded = () => {
     if (endedRecorded) return;
     endedRecorded = true;
+    try{usage?.ended(callId,Date.now());}catch{send({type:'notice',message:'本次通话统计暂时无法保存。'});}
     record({ type: 'ended' });
   };
   const setState = (next: typeof state) => {
@@ -267,21 +281,67 @@ function attachCall(client: NodeWebSocket, root: string, ownerId: string, config
   }, 15000);
   const startupTimer = setTimeout(() => finish('通话启动超时，请重新开始。'), 15000);
 
-  const updateAssistant = (text: string, final: boolean, turnId?: string) => {
-    if (turnId && canceledResponses.has(turnId)) return;
-    if (turnId && turnId !== responseId) {
-      responseId = turnId;
-      assistantText = '';
-      audioDelivered = false;
-      audioCompleted = false;
-      dropPendingResponse = false;
+  const rememberCanceled=(id:string)=>{
+    canceledResponses.add(id);
+    if(canceledResponses.size>64)canceledResponses.delete(canceledResponses.values().next().value!);
+  };
+  const activateInput=(turnId:string)=>{
+    if(activeInputTurnId===turnId)return;
+    activeInputTurnId=turnId;
+    inputEpoch++;responseVersion++;
+    completedInput=undefined;crisisBlockedEpoch=undefined;
+    if(responseId)rememberCanceled(responseId);
+    if(state==='speaking'||state==='thinking'){
+      dropPendingResponse=true;audioCompleted=false;
+      sendUpstream({type:'response.cancel'});
     }
-    responseId ??= randomUUID();
-    if ((turnId && canceledResponses.has(turnId)) || dropPendingResponse) return;
+    send({type:'interrupt'});record({type:'interrupt',turnId:responseId});setState('listening');
+  };
+  const beginResponse=(turnId?:string)=>{
+    if(crisisBlockedEpoch===inputEpoch||turnId&&canceledResponses.has(turnId))return false;
+    if(turnId&&turnId!==responseId){
+      if(responseId)rememberCanceled(responseId);
+      responseId=turnId;assistantText='';audioDelivered=false;audioCompleted=false;dropPendingResponse=false;
+      responseEpoch=inputEpoch;responseVersion++;
+    }
+    if(!responseId){responseId=randomUUID();responseEpoch=inputEpoch;responseVersion++;}
+    return responseEpoch===inputEpoch&&!dropPendingResponse;
+  };
+  const deliverFinal=(text:string,id:string,epoch:number,version:number,userText?:string)=>{
+    if(pendingFinals.has(id))return;
+    pendingFinals.add(id);
+    // Provider finales can repeat. Bound the dedup set to this call's recent
+    // responses; a new ASR invalidates work that is still awaiting its rewrite.
+    if(pendingFinals.size>64)pendingFinals.delete(pendingFinals.values().next().value!);
+    void guardRealtimeSpeechText({root,text,userText,turnId:id,characterId:CHARACTER,systemRole:sessionRole,speakingStyle:sessionStyle,runRaw:options.runTextRewrite}).then(result=>{
+      if(ending||disposed||epoch!==inputEpoch||version!==responseVersion||responseId!==id||canceledResponses.has(id))return;
+      assistantText=result.text;
+      const event={type:'transcript',role:'assistant',text:result.text,final:true,turnId:id};
+      send(event);record(event);
+      if(crisisBlockedEpoch===epoch)setState('listening');
+    }).catch(()=>{
+      if(ending||disposed||epoch!==inputEpoch||version!==responseVersion||responseId!==id)return;
+      send({type:'notice',message:'这句回复暂时无法显示，请再说一次。'});
+    });
+  };
+  const updateAssistant = (text: string, final: boolean, turnId?: string) => {
+    if(!beginResponse(turnId))return;
+    if (turnId && canceledResponses.has(turnId)) return;
+    if(pendingFinals.has(responseId!))return;
     assistantText = (final ? text : assistantText + text).slice(0, 12000);
+    if(final){
+      const current=completedInput?.epoch===responseEpoch?completedInput:undefined;
+      return deliverFinal(assistantText,responseId!,responseEpoch,responseVersion,current?.text);
+    }
+    // Do not briefly display an unverified “done” assertion while the final
+    // text is still awaiting its one rewrite and deterministic cleanup.
+    if(hasUnreceiptedCompletion(assistantText,{turnId:responseId}))return;
     const event = { type: 'transcript', role: 'assistant', text: assistantText, final, turnId: responseId };
     send(event);
-    if (final) record(event);
+  };
+  const rememberInputAlias=(event:Record<string,unknown>,turnId:string)=>{
+    const id=identifier(event.item_id);
+    if(id){inputAliases.set(id,turnId);if(inputAliases.size>64)inputAliases.delete(inputAliases.keys().next().value!);}
   };
 
   const onProviderEvent = (event: Record<string, unknown>) => {
@@ -305,6 +365,7 @@ function attachCall(client: NodeWebSocket, root: string, ownerId: string, config
       lastInput = Date.now();
       clearTimeout(startupTimer);
       send({ type: 'ready', callId, inputSampleRate: 16000, outputSampleRate: 24000, channels: 1, format: 'pcm_s16le' });
+      try{usage?.ready(callId,Date.now());}catch{send({type:'notice',message:'本次通话统计暂时无法保存。'});}
       send({ type: 'state', state: 'listening' });
       if (muted) sendUpstream({ type: 'input_audio_mute.commit' });
       return;
@@ -318,37 +379,55 @@ function attachCall(client: NodeWebSocket, root: string, ownerId: string, config
     }
     if (type === 'conversation.item.input_audio_transcription.started') {
       const started=inputTranscripts.start(identifier(event.item_id),identifier(event.event_id));
+      rememberInputAlias(event,started.turnId);
       if(!started.fresh)return;
-      if (state === 'speaking' || state === 'thinking') {
-        if (responseId) canceledResponses.add(responseId);
-        if (canceledResponses.size > 64) canceledResponses.delete(canceledResponses.values().next().value!);
-        dropPendingResponse = true;
-        audioCompleted = false;
-        sendUpstream({ type: 'response.cancel' });
-      }
-      send({ type: 'interrupt' });
-      record({ type: 'interrupt', turnId: responseId });
-      setState('listening');
+      activateInput(started.turnId);
       return;
     }
     if (type === 'conversation.item.input_audio_transcription.delta' || type === 'conversation.item.input_audio_transcription.result') {
-      const snapshot=typeof event.transcript==='string'?event.transcript:typeof event.text==='string'?event.text:undefined;
-      const partial=inputTranscripts.update({kind:snapshot!==undefined||type.endsWith('.result')?'snapshot':'delta',
-        itemId:identifier(event.item_id),eventId:identifier(event.event_id),text:snapshot??(typeof event.delta==='string'?event.delta:undefined)});
-      if(partial)send(partial);
+      const partial=inputTranscripts.update({kind:type.endsWith('.result')?'snapshot':'delta',
+        itemId:identifier(event.item_id),eventId:identifier(event.event_id),text:inputTranscriptText(event)});
+      if(partial){rememberInputAlias(event,partial.turnId);if(partial.turnId===inputTranscripts.currentTurnId)activateInput(partial.turnId);send(partial);}
       return;
     }
     if (type === 'conversation.item.input_audio_transcription.completed') {
       const completed=inputTranscripts.update({kind:'complete',itemId:identifier(event.item_id),eventId:identifier(event.event_id),
-        text:typeof event.transcript==='string'?event.transcript:typeof event.text==='string'?event.text:undefined});
+        text:inputTranscriptText(event)});
       if(!completed)return;
+      rememberInputAlias(event,completed.turnId);
       send(completed);
       record(completed);
-      if (state !== 'speaking'&&completed.turnId===inputTranscripts.currentTurnId) setState('thinking');
+      if(completed.turnId!==inputTranscripts.currentTurnId)return;
+      if(options.updateContextForInput) {
+        try {
+          const context=options.updateContextForInput(root,ownerId,completed.text);
+          sessionRole=context.systemRole;sessionStyle=context.speakingStyle;
+          const payload=sessionPayload(context,{...config,...readXiaomanRealtimeVoiceSettings(root,config.voice)});
+          // Official full-duplex protocol supports session.update during a
+          // call. Update only config, never replay dialog_context/history.
+          sendUpstream({type:'session.update',session:payload.session});
+        } catch {send({type:'notice',message:'本轮称呼与安排资料暂时未能更新，请稍后再试。'});}
+      }
+      activateInput(completed.turnId);
+      completedInput={turnId:completed.turnId,text:completed.text,epoch:inputEpoch};
+      if(isDialogueCrisisInput(completed.text)){
+        const candidate=responseEpoch===inputEpoch?assistantText:'';
+        if(responseId)rememberCanceled(responseId);
+        sendUpstream({type:'response.cancel'});
+        send({type:'interrupt'});record({type:'interrupt',turnId:responseId});
+        crisisBlockedEpoch=inputEpoch;
+        responseId=randomUUID();responseEpoch=inputEpoch;responseVersion++;
+        assistantText='';audioDelivered=false;audioCompleted=false;dropPendingResponse=true;
+        setState('thinking');
+        deliverFinal(candidate,responseId,inputEpoch,responseVersion,completed.text);
+      }else if(state!=='speaking')setState('thinking');
       return;
     }
     if (type === 'conversation.item.input_audio_transcription.failed') {
-      inputTranscripts.fail(identifier(event.item_id));
+      const itemId=identifier(event.item_id),failedTurn=itemId?(inputAliases.get(itemId)||itemId):activeInputTurnId;
+      inputTranscripts.fail(itemId);
+      if(failedTurn!==activeInputTurnId)return;
+      completedInput=undefined;inputEpoch++;responseVersion++;
       send({ type: 'notice', message: '这句话没听清，请再说一次。' });
       setState('listening');
       return;
@@ -356,21 +435,12 @@ function attachCall(client: NodeWebSocket, root: string, ownerId: string, config
     if (type === 'response.output_text.delta' && typeof event.delta === 'string') return updateAssistant(event.delta, false, turnId);
     if (type === 'response.output_text.done' && typeof event.text === 'string') return updateAssistant(event.text, true, turnId);
     if (type === 'response.output_audio.started') {
-      if (turnId && canceledResponses.has(turnId)) return;
-      if (turnId && turnId !== responseId) {
-        responseId = turnId; assistantText = ''; dropPendingResponse = false; audioDelivered = false; audioCompleted = false;
-      }
-      if ((turnId && canceledResponses.has(turnId)) || dropPendingResponse) return;
+      if(!beginResponse(turnId))return;
       setState('speaking');
       return;
     }
     if (type === 'response.output_audio.delta') {
-      if (turnId && canceledResponses.has(turnId)) return;
-      if (turnId && turnId !== responseId) {
-        responseId = turnId; assistantText = ''; dropPendingResponse = false; audioDelivered = false; audioCompleted = false;
-      }
-      if ((turnId && canceledResponses.has(turnId)) || dropPendingResponse) return;
-      responseId ??= randomUUID();
+      if(!beginResponse(turnId))return;
       if (typeof event.delta !== 'string' || event.delta.length > MAX_UPSTREAM_MESSAGE_BYTES
         || !/^[A-Za-z0-9+/]*={0,2}$/.test(event.delta) || event.delta.length % 4 !== 0) {
         return finish('实时语音音频格式异常，请重新开始。');
@@ -409,6 +479,7 @@ function attachCall(client: NodeWebSocket, root: string, ownerId: string, config
     starting = true;
     const context = await options.loadContext(root, ownerId);
     if (ending || disposed) return;
+    sessionRole=context.systemRole;sessionStyle=context.speakingStyle;
     const voiceSettings = readXiaomanRealtimeVoiceSettings(root, config.voice);
     const payload = sessionPayload(context, { ...config, ...voiceSettings });
     sentInstructionsHash = textHash(payload.session.instructions);
@@ -515,7 +586,8 @@ export function npcRealtimeSpeechGateway(options: GatewayOptions): Plugin {
       const root = server.config.root;
       const httpServer = server.httpServer;
       if (!httpServer) return;
-      const db = new DatabaseSync(join(root, '.npc-runtime/state.sqlite'), { readOnly: true });
+      const db = new DatabaseSync(join(root, '.npc-runtime/state.sqlite'));
+      db.exec('PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;');initBetaVoiceUsage(db);
       const calls = new Map<string, ActiveCall>();
       const sockets = new WebSocketServer({ noServer: true, maxPayload: 8192, perMessageDeflate: false, clientTracking: false });
       const upgrade = (req: IncomingMessage, socket: Duplex, head: Buffer) => {
@@ -537,7 +609,7 @@ export function npcRealtimeSpeechGateway(options: GatewayOptions): Plugin {
           sockets.handleUpgrade(req, socket, head, client => {
             const call = attachCall(client, root, ownerId, config, options, () => {
               if (calls.get(ownerId) === call) calls.delete(ownerId);
-            });
+            },{ready:(id,at)=>noteBetaVoiceReady(db,ownerId,id,CHARACTER,at),ended:(id,at)=>endBetaVoiceCall(db,ownerId,id,at)});
             calls.set(ownerId, call);
           });
         } catch { rejectUpgrade(socket, 400); }

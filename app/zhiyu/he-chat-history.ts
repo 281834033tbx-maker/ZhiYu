@@ -1,3 +1,5 @@
+
+import {accountStorage} from './account-storage';
 import type { Message } from './data';
 import { localCharacterChatKey } from './local-character-chat';
 import { npcFetch } from './npc-fetch';
@@ -13,10 +15,10 @@ function records(value: unknown): Message[] {
 
 /** Archive old local messages once per snapshot; never clear their original keys. */
 export async function ensureHeChatHistory(accountId: string): Promise<void> {
-  const local = localStorage.getItem(localCharacterChatKey(accountId, 'he-jiawei'));
-  const archive = localStorage.getItem(`zhiyu-stitch-desktop-v2:${accountId}`);
+  const local = accountStorage(accountId).getItem(localCharacterChatKey(accountId, 'he-jiawei'));
+  const archive = accountStorage(accountId).getItem(`zhiyu-stitch-desktop-v2:${accountId}`);
   const backupKey = `zhiyu-he-pre-ai-history:v1:${accountId}`;
-  const backup = localStorage.getItem(backupKey);
+  const backup = accountStorage(accountId).getItem(backupKey);
   let old: Message[];
   try {
     const saved = archive ? JSON.parse(archive) : null;
@@ -37,7 +39,7 @@ export async function ensureHeChatHistory(accountId: string): Promise<void> {
   }
   // An optional second local copy must not block the migration when storage is full.
   // The source keys remain intact; the API persists all bytes before live previews replace the archive.
-  if (!backup && old.length) { try { localStorage.setItem(backupKey, JSON.stringify(old)); } catch { /* Preserve existing source keys. */ } }
+  if (!backup && old.length) { try { accountStorage(accountId).setItem(backupKey, JSON.stringify(old)); } catch { /* Preserve existing source keys. */ } }
   // Only legacy records affect the signature. The App's live preview changes on every poll.
   const signature = JSON.stringify(old);
   if (completed.get(accountId) === signature) return;

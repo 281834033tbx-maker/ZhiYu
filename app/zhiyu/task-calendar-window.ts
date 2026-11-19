@@ -6,7 +6,7 @@ import {allPeople} from './data';
 const calendarWindowName = 'zhiyu-task-calendar-compact';
 // A material change needs a fresh native child instead of reusing the old opaque window.
 const calendarMacWindowName = 'zhiyu-task-calendar-frosted';
-const calendarPeople = () => new Set(allPeople.filter(person => person.dialoguePurpose === 'professional' && person.id !== 'molly').map(person => person.id));
+const calendarPeople = () => new Set(['molly', ...allPeople.filter(person => person.dialoguePurpose === 'professional' && person.id !== 'molly').map(person => person.id)]);
 let calendarWindow: Window | null = null;
 let calendarTarget = '';
 let lifecycleAccount = '';

@@ -27,8 +27,10 @@ export default function TaskCalendarClient() {
   const [projection, setProjection] = useState<CalendarResponse | null>(null);
   const [loading, setLoading] = useState(true), [error, setError] = useState('');
   const [refresh, setRefresh] = useState(0);
+  const [category, setCategory] = useState('');
   const character = route ? [molly, ...allPeople].find(person => person.id === route.npc) : undefined;
-  const planName = character ? taskCalendarPlanName(character) : '专业计划';
+  const selectedCategory = character?.id === 'molly' ? allPeople.find(person => person.id === category && ['chen-nian', 'liu', 'zhou-chef'].includes(person.id)) : undefined;
+  const planName = character ? taskCalendarPlanName(selectedCategory || character) : '专业计划';
   const scopeError = route && (!character || (route.expectedAccount && route.expectedAccount !== account.id))
     ? character ? '账号已变化，请从聊天重新打开任务日历。' : '请选择已有的人物打开任务日历。' : '';
 
@@ -79,10 +81,15 @@ export default function TaskCalendarClient() {
   }, [account.id, route, character, refresh]);
 
   const visible = !scopeError && projection?.accountId === account.id && projection.characterId === route?.npc ? projection : null;
-  const days = useMemo<ReadonlyMap<string, TaskCalendarDay>>(() => new Map((visible?.days || []).map(day => [day.date, {
-    completed: day.completed, skipped: day.skipped, total: day.total, percent: day.percent,
-    tasks: day.entries.map(entry => ({id: entry.entryId || entry.taskId, title: entry.title, status: entry.status, timingKind: entry.timingKind, execution: entry.execution, steps: entry.steps.map(step => ({id: step.id, title: step.title, completed: step.completed, ...(step.skipped ? {skipped:true} : {}), ...(step.training ? {training: {target: step.training.target}} : {})})), completed: entry.completed, skipped: entry.skipped, total: entry.total, percent: entry.percent})),
-  }])), [visible]);
+  const days = useMemo<ReadonlyMap<string, TaskCalendarDay>>(() => new Map((visible?.days || []).flatMap(day => {
+    const entries = day.entries.filter(entry => !selectedCategory || entry.characterId === selectedCategory.id);
+    if (!entries.length) return [];
+    const completed = entries.reduce((sum, entry) => sum + entry.completed, 0), skipped = entries.reduce((sum, entry) => sum + entry.skipped, 0), total = entries.reduce((sum, entry) => sum + entry.total, 0);
+    return [[day.date, {
+      completed, skipped, total, percent: total ? completed === total ? 100 : Math.min(99, Math.round(completed / total * 100)) : 0,
+      tasks: entries.map(entry => ({id: entry.entryId || entry.taskId, characterId: entry.characterId, title: entry.title, status: entry.status, timingKind: entry.timingKind, execution: entry.execution, steps: entry.steps.map(step => ({id: step.id, title: step.title, completed: step.completed, ...(step.skipped ? {skipped:true} : {}), ...(step.training ? {training: {target: step.training.target}} : {})})), completed: entry.completed, skipped: entry.skipped, total: entry.total, percent: entry.percent})),
+    }]];
+  })), [visible, selectedCategory]);
   const today = visible?.today || dateInShanghai();
-  return <TaskCalendarView key={`${account.id}:${route?.npc || ''}`} character={character ? {...character, planName} : {id: '', name: '智域'}} months={visible?.months || [today.slice(0, 7)]} days={days} today={today} loading={!scopeError && loading} error={scopeError || error} nativeChrome={route?.nativeChrome} onContentHeightChange={fitTaskCalendarWindowToContent} onRefresh={() => setRefresh(value => value + 1)}/>;
+  return <TaskCalendarView key={`${account.id}:${route?.npc || ''}`} character={character ? {...character, planName} : {id: '', name: '智域'}} months={visible?.months || [today.slice(0, 7)]} days={days} today={today} loading={!scopeError && loading} error={scopeError || error} nativeChrome={route?.nativeChrome} onContentHeightChange={fitTaskCalendarWindowToContent} onRefresh={() => setRefresh(value => value + 1)} categoryControl={character?.id === 'molly' ? <select className="zy-task-history-category" aria-label="选择专业分类" value={selectedCategory?.id || ''} onChange={event => setCategory(event.target.value)}><option value="">全部</option><option value="chen-nian">健身</option><option value="liu">营养</option><option value="zhou-chef">烹饪</option></select> : undefined}/>;
 }

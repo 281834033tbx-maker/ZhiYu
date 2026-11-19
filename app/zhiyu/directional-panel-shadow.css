@@ -1,0 +1,3 @@
+.zy-directional-panel-shadow{position:absolute;display:block;z-index:0;pointer-events:none;overflow:visible;opacity:.55;transition:opacity 200ms cubic-bezier(.2,.8,.2,1)}
+.zy-directional-panel-shadow[data-shadow-active='true']{opacity:1}
+@media(prefers-reduced-motion:reduce){.zy-directional-panel-shadow{transition:none}}

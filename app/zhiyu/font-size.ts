@@ -1,5 +1,7 @@
 'use client';
 
+
+import {accountStorage} from './account-storage';
 import { useEffect, useState } from 'react';
 import { FONT_SIZE_STORAGE_KEY, type FontSize } from './font-config';
 
@@ -7,7 +9,7 @@ const CHANGED = 'zhiyu-font-size-changed';
 let localFallback: FontSize | null = null;
 function readFontSize(): FontSize {
   try {
-    const value = localStorage.getItem(FONT_SIZE_STORAGE_KEY);
+    const value = accountStorage().getItem(FONT_SIZE_STORAGE_KEY);
     return value === 'small' || value === 'medium' || value === 'large' ? value : localFallback ?? 'medium';
   } catch { return localFallback ?? 'medium'; }
 }
@@ -33,7 +35,7 @@ export function useFontSize() {
     };
   }, []);
   const setFontSize = (value: FontSize) => {
-    try { localStorage.setItem(FONT_SIZE_STORAGE_KEY, value); localFallback = null; } catch { localFallback = value; }
+    try { accountStorage().setItem(FONT_SIZE_STORAGE_KEY, value); localFallback = null; } catch { localFallback = value; }
     document.documentElement.dataset.zyFontSize = value;
     updateFontSize(value);
     window.dispatchEvent(new CustomEvent(CHANGED, { detail: value }));

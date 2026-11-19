@@ -1,0 +1,10 @@
+/* Desktop-only lighting. Reuse the palette and opacity of the original
+   shadow roles; the cast is shifted towards the lower left. */
+html[data-zy-theme]:has(.zy-layout-v3),
+html[data-zy-theme][data-zy-window-surface='topbar'] {
+  --zy-popup-shadow:var(--zy-directional-popup-shadow);
+  --zy-composer-ring-near:var(--zy-directional-composer-near);
+  --zy-composer-ring-far:var(--zy-directional-composer-far);
+  --zy-composer-ring-near-focus:var(--zy-directional-composer-near-focus);
+  --zy-composer-ring-far-focus:var(--zy-directional-composer-far-focus);
+}

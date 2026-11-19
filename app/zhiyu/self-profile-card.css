@@ -1,5 +1,10 @@
 /* Keep the positioning box clear so the entire visible surface can shrink. */
-html[data-zy-theme] .zy-profile-popover.zy-dialog.zy-self-profile-popover { border-color: transparent; background: transparent; }
+html[data-zy-theme] body .zy-profile-popover.zy-dialog.zy-self-profile-popover.zy-anchored-profile-popover {
+  border-color:transparent;
+  background:transparent;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
 .zy-self-profile-card {
   --zy-ink: #fff;
   --zy-secondary: #fff;

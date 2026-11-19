@@ -1,55 +1,46 @@
-/* Approved 2026-10-10: pearl / grey-green frosted surfaces with a little
-   peach, mint and lilac reflection. This is a CSS glass approximation.
-   Keep geometry, top-layer behavior and the user's photo profile card intact. */
+/* 2026-11-09: shared cool cyan / lilac reflections for temporary surfaces.
+   The user requested a closer match to the main directory; layer alpha,
+   blur, motion, geometry and the main navigation material stay unchanged. */
 :root {
   --zy-person-glass-fill:
-    radial-gradient(ellipse at 100% 0%,rgb(202 197 223 / 30%),transparent 52%),
-    radial-gradient(ellipse at 0% 100%,rgb(166 204 196 / 30%),transparent 56%),
-    radial-gradient(ellipse at 100% 100%,rgb(194 188 216 / 24%),transparent 54%),
+    radial-gradient(ellipse at 100% 0%,rgb(192 186 221 / 30%),transparent 52%),
+    radial-gradient(ellipse at 0% 100%,rgb(157 193 207 / 30%),transparent 56%),
+    radial-gradient(ellipse at 100% 100%,rgb(182 184 216 / 24%),transparent 54%),
     linear-gradient(135deg,rgb(255 255 255 / 12%),rgb(255 255 255 / 3%)),
-    rgb(218 227 228 / 48%);
-  --zy-glass-fill:
-    radial-gradient(ellipse at 100% 0%,rgb(255 218 192 / 30%),transparent 52%),
-    radial-gradient(ellipse at 0% 100%,rgb(159 218 199 / 30%),transparent 56%),
-    radial-gradient(ellipse at 100% 100%,rgb(204 184 230 / 24%),transparent 54%),
-    linear-gradient(135deg,rgb(255 255 255 / 12%),rgb(255 255 255 / 3%)),
-    rgb(219 230 220 / 48%);
+    rgb(220 224 235 / 48%);
+  --zy-glass-fill:var(--zy-person-glass-fill);
   --zy-glass-border:transparent;
   --zy-glass-highlight:transparent;
-  --zy-glass-secondary:#46564b;
-  --zy-glass-muted:#526258;
+  --zy-glass-secondary:#4d5669;
+  --zy-glass-muted:#626b80;
   --zy-glass-accent-ink:#943b36;
-  --zy-glass-inner:rgb(255 255 255 / 12%);
-  --zy-glass-hover:rgb(255 255 255 / 22%);
-  --zy-glass-line:rgb(73 98 79 / 17%);
-  --zy-glass-backdrop:rgb(33 47 38 / 8%);
+  --zy-glass-inner:rgb(244 246 255 / 12%);
+  --zy-glass-hover:rgb(174 185 213 / 22%);
+  --zy-glass-line:rgb(88 103 135 / 17%);
+  --zy-glass-backdrop:rgb(36 43 65 / 8%);
+  --zy-glass-focus:#527b98;
 }
 :root[data-zy-theme='dark'] {
   --zy-person-glass-fill:
-    radial-gradient(ellipse at 100% 0%,rgb(143 145 181 / 18%),transparent 52%),
-    radial-gradient(ellipse at 0% 100%,rgb(103 165 157 / 15%),transparent 56%),
-    radial-gradient(ellipse at 100% 100%,rgb(153 140 184 / 19%),transparent 54%),
+    radial-gradient(ellipse at 100% 0%,rgb(135 138 179 / 18%),transparent 52%),
+    radial-gradient(ellipse at 0% 100%,rgb(100 151 176 / 15%),transparent 56%),
+    radial-gradient(ellipse at 100% 100%,rgb(143 136 183 / 19%),transparent 54%),
     linear-gradient(135deg,rgb(255 255 255 / 7%),rgb(255 255 255 / 2%)),
-    rgb(65 76 81 / 52%);
-  --zy-glass-fill:
-    radial-gradient(ellipse at 100% 0%,rgb(227 173 139 / 18%),transparent 52%),
-    radial-gradient(ellipse at 0% 100%,rgb(103 191 164 / 15%),transparent 56%),
-    radial-gradient(ellipse at 100% 100%,rgb(164 138 207 / 19%),transparent 54%),
-    linear-gradient(135deg,rgb(255 255 255 / 7%),rgb(255 255 255 / 2%)),
-    rgb(67 83 73 / 52%);
+    rgb(61 68 84 / 52%);
+  --zy-glass-fill:var(--zy-person-glass-fill);
   --zy-glass-border:transparent;
   --zy-glass-highlight:transparent;
-  --zy-glass-secondary:#e0eae3;
-  --zy-glass-muted:#cbdacf;
+  --zy-glass-secondary:#dfe4f1;
+  --zy-glass-muted:#c2cbdf;
   --zy-glass-accent-ink:#ffc5b7;
-  --zy-glass-inner:rgb(235 251 240 / 4%);
-  --zy-glass-hover:rgb(235 251 240 / 9%);
-  --zy-glass-line:rgb(225 246 231 / 18%);
-  --zy-glass-backdrop:rgb(14 26 18 / 14%);
+  --zy-glass-inner:rgb(235 241 255 / 4%);
+  --zy-glass-hover:rgb(182 196 231 / 9%);
+  --zy-glass-line:rgb(221 231 255 / 18%);
+  --zy-glass-backdrop:rgb(13 18 32 / 14%);
+  --zy-glass-focus:#83a9c5;
 }
 
-/* Approved 2026-11-06: cooler directory-family reflections on profiles and
-   chat sidebars only. Preserve every layer's alpha, stop and glass filter. */
+/* These existing surfaces share the current common material. */
 html[data-zy-theme='light'] body :is(.zy-profile-popover:not(.zy-self-profile-popover),.zy-private-drawer,.zy-group-drawer,.zy-settings-dialog,.zy-pets-catalog-dialog,.zy-task-history,.zy-task-history-details) {
   --zy-glass-fill:var(--zy-person-glass-fill);
 }
@@ -125,9 +116,9 @@ html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(
   border-color:var(--zy-glass-line);
   color:var(--zy-ink);
 }
-/* Inputs with their own outline disabled retain a visible coral focus edge. */
+/* Inputs keep a visible mist-blue focus edge on the cool glass. */
 html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-contact-create-search:focus-within,.zy-contact-create-goal>textarea:focus) {
-  border-color:var(--zy-chat-control-accent,#e66562);
+  border-color:var(--zy-glass-focus);
   box-shadow:none;
 }
 html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-comment-form input,.zy-publish-editor>textarea,.zy-pets-dialog>input)::placeholder { color:var(--zy-glass-muted); }
@@ -198,8 +189,8 @@ html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-theme-preview.dark :is(b,em
 /* Popovers in the separate image viewer use the same material; media stays
    unfiltered. Its toolbar and frame follow the shared palette as well. */
 html[data-zy-theme] :is(.image-viewer,.image-viewer-empty,.image-viewer .viewer-stage,.image-viewer .viewer-loading,.image-viewer .viewer-error) { background:var(--zy-canvas); color:var(--zy-ink); }
-html[data-zy-theme] .image-viewer :is(.viewer-toolbar,.viewer-history) { background:var(--zy-sidebar); color:var(--zy-ink); border-color:var(--zy-line); }
-html[data-zy-theme] .image-viewer .viewer-toolbar button:not(.close):not(.minimize):not(.maximize):hover { background:var(--zy-hover); }
+html[data-zy-theme] .image-viewer :is(.viewer-toolbar,.viewer-history) { background:var(--zy-glass-fill); color:var(--zy-ink); border-color:var(--zy-glass-line); -webkit-backdrop-filter:blur(24px) saturate(125%); backdrop-filter:blur(24px) saturate(125%); }
+html[data-zy-theme] .image-viewer .viewer-toolbar button:not(.close):not(.minimize):not(.maximize):hover { background:var(--zy-glass-hover); }
 html[data-zy-theme] .viewer-forward :is(label,header button) { color:var(--zy-ink); }
 html[data-zy-theme] .viewer-forward>label input { background:var(--zy-glass-inner); color:var(--zy-ink); border-color:var(--zy-glass-line); }
 html[data-zy-theme] .viewer-forward footer { border-color:var(--zy-glass-line); }
@@ -246,3 +237,9 @@ html[data-zy-theme] body :is(.zy-private-drawer,.zy-group-drawer) :is(small,dd,o
 /* The dedicated speech settings page has its own card, without an App shell. */
 html[data-zy-theme] body .zy-realtime-page-card {color:var(--zy-ink);}
 html[data-zy-theme] body .zy-realtime-page-card :is(.zy-realtime-intro p,.zy-realtime-connection summary,.zy-realtime-field-note,.zy-realtime-footer small,.zy-realtime-stage-note) {color:var(--zy-glass-muted);}
+
+/* Contact hover remains a tint of the same glass, never an opaque white row. */
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-contact-create-option:is(:hover,:focus-within) { background:var(--zy-glass-hover); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-contact-create-remove { background:var(--zy-glass-inner); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body .zy-contact-create-remove:hover:not(:disabled) { background:var(--zy-glass-hover); }
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-dialog,.zy-dialog button,.zy-dialog input,.zy-dialog textarea,.zy-dialog select) { -webkit-app-region:no-drag; }

@@ -1,0 +1,62 @@
+/* Shared paint and focus feedback. Native glass alpha, the directory gradient,
+   dimensions, and semantic selection/error states stay in their own layers. */
+:root {
+  --zy-surface-low:color-mix(in srgb,var(--zy-ink) 1.5%,var(--zy-canvas));
+  --zy-surface-raised:color-mix(in srgb,var(--zy-ink) 3%,var(--zy-canvas));
+  --zy-disclosure-duration:280ms;
+  --zy-disclosure-easing:cubic-bezier(.2,.8,.2,1);
+}
+
+/* These are opaque inner surfaces, not another tint on native glass. Keep
+   border width so removing decoration cannot move text or controls. */
+html[data-zy-theme] body .zy-app.zy-desktop :is(.relationship-value,.relationship-unlock-card,.zy-pets-preview,.zy-pet-card:not(.is-selected):not(.is-limited)) {
+  background:var(--zy-surface-low);
+  border-color:transparent;
+}
+html[data-zy-theme] body .zy-app.zy-desktop .relationship-unlock-card.is-open {
+  background:var(--zy-surface-raised);
+}
+html[data-zy-theme]:has(.zy-app.zy-desktop) body :is(.zy-task-stat,.zy-task-card) {
+  border-color:transparent;
+}
+
+/* The common SVG surface draws a continuous one-pixel directory-colour edge.
+   Focus deepens only these near-edge shadows; it never changes the outline. */
+html[data-zy-theme] body .zy-app .chat-text-entry,
+html[data-zy-theme] body .zy-app.zy-desktop.zy-page-chat .chat-text-entry {
+  border:1px solid transparent;
+  background:transparent;
+  box-shadow:var(--zy-composer-ring-near),var(--zy-composer-ring-far);
+  transition:box-shadow 200ms cubic-bezier(.2,.8,.2,1);
+}
+html[data-zy-theme] body .zy-app .chat-text-entry:focus-within,
+html[data-zy-theme] body .zy-app.zy-desktop.zy-page-chat .chat-text-entry:focus-within {
+  box-shadow:var(--zy-composer-ring-near-focus),var(--zy-composer-ring-far-focus);
+}
+
+/* The installed Chinese system fonts are discrete faces. Only emphasis moves
+   from Semibold to Medium in dark mode; small body text remains Regular. */
+html[data-zy-theme='dark'] body :is(.zy-app,.zy-dialog,.zy-task-history,.image-viewer) {
+  font-weight:var(--zy-weight-body);
+}
+html[data-zy-theme='dark'] body :is(.zy-app,.zy-dialog,.zy-task-history,.image-viewer) :is(h1,h2,h3,h4,strong,b,.zy-professional-task-step-title,.zy-professional-task-time,.zy-professional-task-count,.zy-professional-task-percent,.zy-task-history-step-title,.tb-step-badge,.tb-task-row-progress,.tb-step.is-current .tb-step-name,.tb-horizontal-step.is-current>small) {
+  font-weight:var(--zy-weight-strong);
+}
+
+/* Numerals keep their advance width while the value changes. Labels and
+   surrounding prose retain their existing font, size, and wrapping behavior. */
+html[data-zy-theme] body :is(.zy-app,.zy-dialog,.zy-task-history,.image-viewer) :is(time,.zy-call-timer,.zy-contact-count,.zy-professional-task-count,.zy-professional-task-percent,.zy-professional-task-time,.zy-professional-task-entry-progress,.zy-professional-task-entry-time,.tb-progress-pill,.tb-step-tag,.tb-step-timer,.tb-timer-finished,.zy-tb-views strong,.zy-tb-category-groups small,.zy-molly-report-progress small,.zy-task-history-stats-count,.zy-post-actions button>span,.message-duration,.voice-duration,[data-zy-number]) {
+  font-variant-numeric:tabular-nums;
+}
+
+/* All three already use 0fr -> 1fr, so content below follows their real
+   intrinsic height instead of a guessed fixed max-height. */
+html[data-zy-theme] body :is(.zy-molly-report-body,.zy-tb-day-expansion),
+html[data-zy-theme] body .zy-task-board .tb-disclosure {
+  transition:grid-template-rows var(--zy-disclosure-duration) var(--zy-disclosure-easing),opacity 180ms ease-out;
+}
+@media(prefers-reduced-motion:reduce) {
+  html[data-zy-theme] body .zy-app .chat-text-entry,
+  html[data-zy-theme] body :is(.zy-molly-report-body,.zy-tb-day-expansion),
+  html[data-zy-theme] body .zy-task-board .tb-disclosure { transition:none; }
+}

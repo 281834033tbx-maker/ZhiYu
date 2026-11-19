@@ -71,7 +71,7 @@ export function readSecretaryTasks(db:DatabaseSync,owner:string,now=Date.now()):
     }catch{readErrors++;}
   }
   if(tables.has('npc_group_chats'))for(const row of db.prepare('SELECT data FROM npc_group_chats WHERE owner=?').all(owner) as {data:string}[]){
-    try{const group=JSON.parse(row.data) as GroupChat;if(!group.leftAt)groups.push(group);}catch{readErrors++;}
+    try{const group=JSON.parse(row.data) as GroupChat;if(!group.leftAt&&!group.demonstration)groups.push(group);}catch{readErrors++;}
   }
   const completions=readSecretaryCompletions(db,owner);
   const skips=readGroupTaskSkips(db,owner);

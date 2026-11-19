@@ -5,16 +5,17 @@ import type {GroupChat} from '../../../lib/npc/group-chat';
 import type {ProfessionalTask} from '../../../lib/npc/professional-task';
 import type {useTaskBoard} from './use-task-board';
 import {projectLiveBoardTasks} from './live-task-import';
+import {validContentResetAt} from '../../../lib/npc/content-reset';
 
-/** Subscribe to the existing account-scoped task feeds. A creation snapshot is
- * appended once; routine polls never overwrite the presentation's local progress. */
+/** The arrangement system exposes every retained persisted source at its real
+ * original date. Only an explicit account reset excludes older sources; normal
+ * polls never overwrite local completion, edits or append positions. */
 export function useLiveTaskImport(board:ReturnType<typeof useTaskBoard>,professionalTasks:readonly ProfessionalTask[],groups:readonly GroupChat[]) {
   const {ready,model,dispatch}=board;
-  const since=model.liveImport?.since;
+  const since=validContentResetAt(model.contentResetAt)?new Date(model.contentResetAt).toISOString():undefined;
   const tasks=useMemo(()=>projectLiveBoardTasks(professionalTasks,groups,since),[professionalTasks,groups,since]);
   useEffect(()=>{
     if(!ready)return;
-    if(!since){dispatch({type:'enable-live-import',now:Date.now()});return;}
-    if(tasks.length)dispatch({type:'import-tasks',tasks});
+    if(tasks.length)dispatch({type:'import-arrangement-records',tasks});
   },[ready,since,tasks,dispatch]);
 }

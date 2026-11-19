@@ -18,7 +18,7 @@ export function reconcileGroupTaskExpiry(db:DatabaseSync,owner:string,now=Date.n
   if(!hasTable(db,'npc_group_chats'))return false;
   const groups:GroupChat[]=[];
   for(const row of db.prepare('SELECT data FROM npc_group_chats WHERE owner=?').all(owner) as {data:string}[]){
-    try{const group=JSON.parse(row.data) as GroupChat;if(group&&typeof group==='object'&&!group.leftAt)groups.push(group);}
+    try{const group=JSON.parse(row.data) as GroupChat;if(group&&typeof group==='object'&&!group.leftAt&&!group.demonstration)groups.push(group);}
     catch{/* The task reader separately records corrupt-source readErrors. */}
   }
   const completed=Object.fromEntries(hasTable(db,'npc_secretary_completions')

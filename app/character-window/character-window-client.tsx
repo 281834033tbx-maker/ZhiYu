@@ -18,6 +18,8 @@ import {reportUserFacingError} from '../../lib/user-facing-errors';
 import './character-window.css';
 import {useContinuousUse} from '../zhiyu/use-continuous-use';
 import {AiDisclosure} from '../zhiyu/user-facing-ui';
+import CaptionCaseWindow from './caption-case-window';
+import {readCaptionCase} from './caption-case-intent';
 
 const liveCharacters = new Set(['chen-nian', 'yuan-xiaoman', 'xia-xia', 'liu', 'molly', 'he-jiawei', 'zhou-chef']);
 const textOnlyCharacters = new Set(['he-jiawei', 'zhou-chef']);
@@ -51,7 +53,11 @@ function readWindowPerson() {
 export default function CharacterWindowClient() {
   const {account}=useAccount();
   const personId=useSyncExternalStore(subscribeLocation,readWindowPerson,()=>null);
-  return <CharacterWindowSession key={`${account.id}:${personId||''}`} personId={personId}/>;
+  return <CharacterWindowEntry key={`${account.id}:${personId||''}`} personId={personId} accountId={account.id}/>;
+}
+function CharacterWindowEntry({personId,accountId}:{personId:string|null;accountId:string}) {
+  const [preview]=useState(()=>personId==='yuan-xiaoman'?readCaptionCase(accountId):null);
+  return preview?<CaptionCaseWindow accountId={accountId} preview={preview}/>:<CharacterWindowSession personId={personId}/>;
 }
 function CharacterWindowSession({personId}:{personId:string|null}) {
   const {account}=useAccount();
@@ -68,6 +74,7 @@ function CharacterWindowSession({personId}:{personId:string|null}) {
   const titlebar = useRef<HTMLDivElement>(null);
   const composer = useRef<HTMLElement>(null);
   const chatBox = useRef<HTMLDivElement>(null);
+  const followChatBottom=useRef(true),chatScrollKey=useRef('');
   const stream = useRef<{ key: string; seen: Set<string>; initialized: boolean } | null>({key:`${account.id}:${personId||''}`,seen:new Set(),initialized:false});
   const authentication = useRef<AuthenticationScope | null>(null);
 
@@ -246,9 +253,10 @@ function CharacterWindowSession({personId}:{personId:string|null}) {
   useEffect(()=>{
     const box=chatBox.current;
     if(!box){setChatOverflowing(false);return;}
+    if(chatScrollKey.current!==chatKey){chatScrollKey.current=chatKey;followChatBottom.current=true;}
     setChatOverflowing(box.scrollHeight>box.clientHeight+1);
-    box.scrollTo({top:box.scrollHeight,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
-  },[floatingChat?.messages]);
+    if(followChatBottom.current)box.scrollTo({top:box.scrollHeight,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  },[floatingChat?.messages,chatKey]);
 
   useEffect(()=>{
     if(!personId || !incomingMessages)return;
@@ -329,7 +337,7 @@ function CharacterWindowSession({personId}:{personId:string|null}) {
             ? <img className="zy-character-window-avatar" src={source} alt={person?.realName || person?.name || '智友'} draggable={false} />
             : personId==='zhou-chef'&&<div className="zy-character-window-avatar" style={{color:'#fff',display:'grid',placeContent:'center',textAlign:'center'}}><h1>赵一帆</h1></div>}
       {visibleMessages.length>0&&<aside className="zy-character-window-chat" role="log" aria-label={`${person?.name||'人物'}的新消息`} aria-live="polite">
-        <div ref={chatBox} className={`zy-character-window-chat-scroll${chatOverflowing?' is-overflowing':''}`}>
+        <div ref={chatBox} className={`zy-character-window-chat-scroll${chatOverflowing?' is-overflowing':''}`} onScroll={event=>{const box=event.currentTarget;followChatBottom.current=box.scrollHeight-box.scrollTop-box.clientHeight<80;}}>
           {visibleMessages.map((message,index)=><div
             className={`zy-character-window-chat-message ${message.mine?'is-mine':'is-npc'}`}
             data-bubble-position={bubblePosition(!!(index&&visibleMessages[index-1].mine===message.mine),!!(visibleMessages[index+1]&&visibleMessages[index+1].mine===message.mine))}

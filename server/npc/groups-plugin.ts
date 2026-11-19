@@ -1,3 +1,9 @@
+import {finishGroupArrangement} from './arrangement-dialogue';
+import {arrangementsFor} from './arrangements-plugin';
+import {persistBetaGroupPlanConfirmation} from './beta-task-events';
+import {privatePreferences} from './private-dialogue-experience';
+import {dialoguePreferenceNpcIds} from './dialogue-preferences';
+import {initBetaUsage,persistBetaGroupMessage} from './beta-usage-events';
 import {scheduleGroupDelivery,deliveryView} from '../../lib/npc/delivery';
 import type { Plugin } from 'vite';
 import type { IncomingMessage, ServerResponse } from 'node:http';
@@ -6,13 +12,15 @@ import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
 import { groupNpcCatalog, type GroupChat, type GroupCreateInput, type GroupMember, type GroupMessage } from '../../lib/npc/group-chat';
+import {createFridayDinnerRecord,groupForOrdinaryDialogue,isAuthoredGroupMessage,splitFridayDinnerHistory,FRIDAY_DINNER_DEMO_REQUEST,FRIDAY_DINNER_DEMO_SCENARIO} from '../../lib/npc/friday-dinner-demo';
+import {canApplyCutOpeningRecord,createCutOpeningMessages,CUT_OPENING_SCENARIO} from '../../lib/npc/cut-opening-record';
 import { nameGroupWithMolly, validGroupName, type GroupNamer } from './group-naming';
-import { generateGroupDialogue, parseGroupDialogue, groupOperationalSpeakers, groupParticipationPlan, validDate, validTime, type GroupDialogueContext, type GroupDialogueRunner, type GroupDialogueOutput } from './group-dialogue';
+import { generateGroupDialogue, parseGroupDialogue, groupOperationalSpeakers, groupParticipationPlan, groupSuppressedSpeech, validDate, validTime, type GroupDialogueContext, type GroupDialogueRunner, type GroupDialogueOutput } from './group-dialogue';
 import type { GroupParticipationPlan } from './group-routing';
 import { TaskMemoryStore } from './group-task-memory';
 import { shanghaiDate, reminderOccurrence, reminderStillCurrent, explicitTimeMatches, explicitConfirmation, reminderSuppressed } from './group-reminders';
 import { userPart } from './media';
-import { groupMediaInputs } from './group-media';
+import { groupMessageInputText, groupMediaInputs } from './group-media';
 import { observeGroupActivity,recordGroupSocialExpressions } from './social-continuity';
 
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
@@ -20,7 +28,9 @@ const GROUP_ID = /^group-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9
 const directory = new Map<string, (typeof groupNpcCatalog)[number]>(groupNpcCatalog.map(person => [person.id, person]));
 const MAX_BODY_BYTES = 384 * 1024;
 type GroupRow = { data: string; input_hash: string };
-type StoredGroup = GroupChat & { openingDone?: boolean; hiddenBefore?: number; generationEpoch?: number };
+type StoredGroup = GroupChat & { openingDone?: boolean; hiddenBefore?: number; generationEpoch?: number;
+  cutOpeningRecordArchive?:{messages:GroupMessage[];recordMessages:GroupMessage[];hiddenBefore?:number;openingDone?:boolean};
+};
 type GroupJob = { seq: number; owner: string; group_id: string; request_id: string; kind: 'opening' | 'message' | 'confirmation' | 'reminder'; status: string; data: string; error: string };
 type JobInput = { messageId?: string; inputHash?: string; reminderId?: string; occurrence?: string; participationPlan?:GroupParticipationPlan };
 
@@ -89,6 +99,7 @@ export class GroupChatStore {
     private uuid: () => string = randomUUID,
     private dialogue: GroupDialogueRunner = generateGroupDialogue,
   ) {
+    initBetaUsage(db);
     db.exec(`CREATE TABLE IF NOT EXISTS npc_group_chats (
       owner TEXT NOT NULL, id TEXT NOT NULL, request_id TEXT NOT NULL, input_hash TEXT NOT NULL,
       data TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL,
@@ -114,7 +125,7 @@ export class GroupChatStore {
   }
 
   private expose(row: GroupRow): GroupChat {
-    const { openingDone: _openingDone, hiddenBefore = 0, generationEpoch: _generationEpoch, ...group } = JSON.parse(row.data) as StoredGroup;
+    const { openingDone: _openingDone, hiddenBefore = 0, generationEpoch: _generationEpoch, cutOpeningRecordArchive:_archive, ...group } = JSON.parse(row.data) as StoredGroup;
     return { ...group, createdBy: 'molly', chatEnabled: group.chatEnabled === true, messages: (group.messages || []).slice(hiddenBefore) };
   }
 
@@ -136,8 +147,13 @@ export class GroupChatStore {
     if (group.leftAt) throw new GroupRequestError(410, '你已退出此群');
   }
 
+  private editable(group: StoredGroup) {
+    if(group.demonstration)throw new GroupRequestError(403,'这组记录尚未完成更新，请重新打开聊天记录。');
+  }
+
   get(owner: string, id: unknown): GroupChat {
-    const { openingDone: _openingDone, hiddenBefore = 0, generationEpoch: _generationEpoch, ...group } = this.stored(owner, id);
+    const { openingDone: _openingDone, hiddenBefore = 0, generationEpoch: _generationEpoch, cutOpeningRecordArchive:_archive, ...group } = this.stored(owner, id);
+    if(group.demonstration)return {...group,messages:group.messages,pending:false,error:''};
     const jobs = this.db.prepare("SELECT status,error,data,created_at FROM npc_group_jobs WHERE owner=? AND group_id=? AND status IN ('queued','running','failed') ORDER BY seq").all(owner, group.id) as { status: string; error: string;data:string;created_at:string }[];
     const now=this.now(),future=group.messages.slice(hiddenBefore).filter(message=>!message.deliveryCancelled&&(message.deliverAt||0)>now).sort((a,b)=>a.deliverAt!-b.deliverAt!),next=future[0];
     const preparing=!group.leftAt&&!!jobs[0]&&['queued','running'].includes(jobs[0].status);
@@ -159,6 +175,139 @@ export class GroupChatStore {
     this.owner(owner);
     return (this.db.prepare('SELECT id FROM npc_group_chats WHERE owner=? ORDER BY updated_at DESC,id DESC').all(owner) as { id: string }[])
       .map(row => this.get(owner, row.id)).filter(group => !group.leftAt);
+  }
+
+  /** Explicit, account-scoped import or one-time revision upgrade; never a model job. */
+  importRecord(owner:string,value:Record<string,unknown>):GroupChat {
+    this.owner(owner);
+    onlyFields(value,['scenario','self']);
+    if(value.scenario!==FRIDAY_DINNER_DEMO_SCENARIO)throw new GroupRequestError(400,'聊天记录不存在');
+    const self=objectBody(value.self);
+    onlyFields(self,['name','avatar']);
+    if(self.name!=='我'||self.avatar!==undefined&&!validAvatar(self.avatar))throw new GroupRequestError(400,'无效群成员');
+    const previous=this.db.prepare('SELECT data,input_hash FROM npc_group_chats WHERE owner=? AND request_id=?')
+      .get(owner,FRIDAY_DINNER_DEMO_REQUEST) as GroupRow|undefined;
+    if(previous){
+      const group=this.stored(owner,this.expose(previous).id);
+      if(group.authoredRecord?.scenario!==FRIDAY_DINNER_DEMO_SCENARIO&&group.demonstration?.scenario!==FRIDAY_DINNER_DEMO_SCENARIO)
+        throw new GroupRequestError(409,'聊天记录来源不匹配');
+      let changed=false,upgraded=false;
+      if(!group.authoredRecord){
+        const fresh=createFridayDinnerRecord({id:group.id,createdAt:group.createdAt,now:this.now()});
+        let hiddenCount=0;
+        group.messages=group.messages.flatMap((message,index)=>{
+          const revised=fresh.messages.filter(item=>item.authoredRecord?.sourceMessageId===message.id);
+          const {displayTime:_displayTime,demonstrationAction:_demonstrationAction,recordAction:_recordAction,...original}=message;
+          const parts=revised.length?revised.map(part=>({...original,...part})):[message];
+          if(index<(group.hiddenBefore||0))hiddenCount+=parts.length;
+          return parts;
+        });
+        if(group.hiddenBefore!==undefined)group.hiddenBefore=hiddenCount;
+        group.authoredRecord={...fresh.authoredRecord!,orderChange:group.demonstration?.orderChange||'pending'};
+        group.name=fresh.name;group.goal=fresh.goal;group.purpose=fresh.purpose;group.namingSource='imported-record';
+        group.chatEnabled=true;group.openingDone=true;
+        group.generationEpoch=(group.generationEpoch||0)+1;
+        delete group.demonstration;
+        changed=true;upgraded=true;
+      }else if(group.authoredRecord.revision<3){
+        const expanded=splitFridayDinnerHistory(group.messages,group.hiddenBefore);
+        group.messages=expanded.messages;
+        if(expanded.hiddenBefore!==undefined)group.hiddenBefore=expanded.hiddenBefore;
+        group.authoredRecord={...group.authoredRecord,revision:3,messageIds:group.messages.filter(message=>message.authoredRecord?.sourceMessageId).map(message=>message.id)};
+        changed=true;
+      }
+      if(group.leftAt){delete group.leftAt;changed=true;}
+      if(changed){
+        this.db.exec('BEGIN IMMEDIATE');
+        try{
+          this.save(owner,group);
+          if(upgraded)this.db.prepare("UPDATE npc_group_jobs SET status='cancelled',error='' WHERE owner=? AND group_id=? AND status IN ('queued','running','failed')").run(owner,group.id);
+          this.db.exec('COMMIT');
+        }catch(error){this.db.exec('ROLLBACK');throw error;}
+      }
+      return this.get(owner,group.id);
+    }
+    if(this.closed)throw new GroupRequestError(503,'群聊服务已关闭，请重新打开后重试。');
+    const at=new Date(this.now()).toISOString();
+    const group:StoredGroup={...createFridayDinnerRecord({id:`group-${this.uuid()}`,createdAt:at,now:this.now(),
+      ...(typeof self.avatar==='string'?{selfAvatar:self.avatar}:{})}),openingDone:true};
+    if(!GROUP_ID.test(group.id))throw new Error('Invalid generated record group ID');
+    const hash=createHash('sha256').update(FRIDAY_DINNER_DEMO_SCENARIO).digest('hex');
+    this.db.prepare('INSERT OR IGNORE INTO npc_group_chats VALUES(?,?,?,?,?,?,?)')
+      .run(owner,group.id,FRIDAY_DINNER_DEMO_REQUEST,hash,JSON.stringify(group),at,at);
+    const row=this.db.prepare('SELECT data,input_hash FROM npc_group_chats WHERE owner=? AND request_id=?')
+      .get(owner,FRIDAY_DINNER_DEMO_REQUEST) as GroupRow|undefined;
+    if(!row||row.input_hash!==hash)throw new GroupRequestError(409,'聊天记录来源不匹配');
+    return this.get(owner,this.expose(row).id);
+  }
+
+  /** Replace only this explicitly selected group's presentation, with a reversible full archive. */
+  importCutOpeningRecord(owner:string,value:Record<string,unknown>):GroupChat {
+    onlyFields(value,['groupId','requestId']);
+    const group=this.stored(owner,value.groupId);
+    this.joined(group);
+    if(!canApplyCutOpeningRecord(group))throw new GroupRequestError(400,'请选择包含这五位智友的原减脂群');
+    if(this.closed)throw new GroupRequestError(503,'群聊服务已关闭，请重新打开后重试。');
+    return this.mutate(owner,group,value.requestId,'import-cut-opening-record',{scenario:CUT_OPENING_SCENARIO},()=>{
+      if(group.cutOpeningRecord?.active)return;
+      if(!group.cutOpeningRecordArchive){
+        const recordMessages=createCutOpeningMessages(this.now(),group);
+        group.cutOpeningRecordArchive={messages:structuredClone(group.messages),recordMessages,
+          ...(group.hiddenBefore===undefined?{}:{hiddenBefore:group.hiddenBefore}),
+          ...(group.openingDone===undefined?{}:{openingDone:group.openingDone})};
+        group.cutOpeningRecord={scenario:CUT_OPENING_SCENARIO,revision:1,active:true,
+          importedAt:new Date(this.now()).toISOString(),messageIds:recordMessages.map(message=>message.id),hasArchive:true};
+        group.messages=structuredClone(recordMessages);
+        group.hiddenBefore=0;
+      }else{
+        const archive=group.cutOpeningRecordArchive,oldIds=new Set(archive.messages.map(message=>message.id)),recordIds=new Set(archive.recordMessages.map(message=>message.id));
+        const later=group.messages.filter(message=>!oldIds.has(message.id)&&!recordIds.has(message.id));
+        const previousHidden=group.hiddenBefore||0;
+        group.messages=[...structuredClone(archive.recordMessages),...later];
+        group.hiddenBefore=previousHidden>(archive.hiddenBefore||0)&&previousHidden>=archive.messages.length
+          ?archive.recordMessages.length+Math.max(0,previousHidden-archive.messages.length):0;
+        group.cutOpeningRecord={...group.cutOpeningRecord!,active:true,hasArchive:true};
+      }
+      group.openingDone=true;
+      group.generationEpoch=(group.generationEpoch||0)+1;
+      this.db.prepare("UPDATE npc_group_jobs SET status='cancelled',error='' WHERE owner=? AND group_id=? AND status IN ('queued','running','failed')").run(owner,group.id);
+    });
+  }
+
+  /** Restore the archived history without discarding ordinary messages written after the import. */
+  restoreCutOpeningRecord(owner:string,value:Record<string,unknown>):GroupChat {
+    onlyFields(value,['groupId','requestId']);
+    const group=this.stored(owner,value.groupId);
+    this.joined(group);
+    if(!group.cutOpeningRecord||group.cutOpeningRecord.scenario!==CUT_OPENING_SCENARIO||!group.cutOpeningRecordArchive)
+      throw new GroupRequestError(400,'没有可恢复的改前记录');
+    if(this.closed)throw new GroupRequestError(503,'群聊服务已关闭，请重新打开后重试。');
+    return this.mutate(owner,group,value.requestId,'restore-cut-opening-record',{scenario:CUT_OPENING_SCENARIO},()=>{
+      if(!group.cutOpeningRecord!.active)return;
+      const archive=group.cutOpeningRecordArchive!,recordIds=new Set(group.cutOpeningRecord!.messageIds),oldIds=new Set(archive.messages.map(message=>message.id));
+      const later=group.messages.filter(message=>!recordIds.has(message.id)&&!oldIds.has(message.id));
+      const hidden=group.hiddenBefore||0;
+      group.messages=[...structuredClone(archive.messages),...later];
+      group.hiddenBefore=hidden>0?archive.messages.length+Math.max(0,hidden-archive.recordMessages.length):(archive.hiddenBefore||0);
+      group.openingDone=archive.openingDone??true;
+      group.cutOpeningRecord={...group.cutOpeningRecord!,active:false,hasArchive:true};
+      group.generationEpoch=(group.generationEpoch||0)+1;
+      this.db.prepare("UPDATE npc_group_jobs SET status='cancelled',error='' WHERE owner=? AND group_id=? AND status IN ('queued','running','failed')").run(owner,group.id);
+    });
+  }
+
+  /** A receipt for this imported card only; it neither places nor cancels an order. */
+  confirmRecordOrder(owner:string,value:Record<string,unknown>):GroupChat {
+    onlyFields(value,['groupId','requestId']);
+    const group=this.stored(owner,value.groupId);
+    this.joined(group);
+    const record=group.authoredRecord||group.demonstration;
+    if(record?.scenario!==FRIDAY_DINNER_DEMO_SCENARIO)throw new GroupRequestError(400,'订单调整记录不存在');
+    if(typeof value.requestId!=='string'||!UUID.test(value.requestId))throw new GroupRequestError(400,'无效订单调整请求编号');
+    if(record.orderChange==='confirmed')return this.get(owner,group.id);
+    return this.mutate(owner,group,value.requestId,'confirm-record-order',{scenario:FRIDAY_DINNER_DEMO_SCENARIO},()=>{
+      record.orderChange='confirmed';
+    });
   }
 
   create(owner: string, value: unknown): Promise<GroupChat> {
@@ -223,6 +372,7 @@ export class GroupChatStore {
     if (typeof groupId !== 'string' || !GROUP_ID.test(groupId) || !validGroupName(name)) throw new GroupRequestError(400, '无效群名');
     const group = this.stored(owner, groupId);
     this.joined(group);
+    this.editable(group);
     group.name = name;
     group.updatedAt = new Date(this.now()).toISOString();
     this.save(owner, group);
@@ -254,6 +404,7 @@ export class GroupChatStore {
     onlyFields(value, ['groupId', 'purpose', 'pinned', 'announcement', 'muted', 'requestId']);
     const group = this.stored(owner, value.groupId);
     this.joined(group);
+    if(group.demonstration&&(Object.hasOwn(value,'purpose')||Object.hasOwn(value,'announcement')))this.editable(group);
     const hasPurpose = Object.hasOwn(value, 'purpose'), hasPinned = Object.hasOwn(value, 'pinned');
     const hasAnnouncement = Object.hasOwn(value, 'announcement'), hasMuted = Object.hasOwn(value, 'muted');
     if (!hasPurpose && !hasPinned && !hasAnnouncement && !hasMuted) throw new GroupRequestError(400, '请选择要修改的群设置');
@@ -280,6 +431,7 @@ export class GroupChatStore {
     onlyFields(value, ['groupId', 'addIds', 'removeIds', 'requestId']);
     const group = this.stored(owner, value.groupId);
     this.joined(group);
+    this.editable(group);
     const allowedNpc = (id: unknown) => typeof id === 'string' && id !== 'molly' && directory.has(id);
     if (!Array.isArray(value.addIds) || !Array.isArray(value.removeIds)
       || value.addIds.length > groupNpcCatalog.length || value.removeIds.length > groupNpcCatalog.length
@@ -314,6 +466,7 @@ export class GroupChatStore {
   open(owner: string, id: unknown): GroupChat {
     const group = this.stored(owner, id);
     this.joined(group);
+    if(group.demonstration)return this.get(owner,group.id);
     if (!group.chatEnabled) { group.chatEnabled = true; this.save(owner, group); }
     if (!group.openingDone) this.enqueue(owner, group.id, 'opening', 'opening', {});
     return this.get(owner, group.id);
@@ -332,6 +485,7 @@ export class GroupChatStore {
     if (value.replyTo !== undefined && (typeof value.replyTo !== 'string' || !value.replyTo.trim() || value.replyTo.length > 180)) throw new GroupRequestError(400, '无效引用消息');
     const group = this.stored(owner, value.groupId);
     this.joined(group);
+    this.editable(group);
     if (!Array.isArray(value.mentionIds) || value.mentionIds.length > group.members.length
       || value.mentionIds.some(id => typeof id !== 'string' || !group.members.some(member => member.id === id))) throw new GroupRequestError(400, '无效@成员');
     const mentions = [...new Set(value.mentionIds as string[])];
@@ -362,15 +516,18 @@ export class GroupChatStore {
       text: part?.type==='voice'?part.text:value.text.trim(), ...(part?{part}:{}), mentionIds: mentions, requestId: value.requestId, at: new Date(this.now()).toISOString(),
       ...(quote ? {replyTo, quote} : {}) };
     group.messages.push(message);
-    this.save(owner, group);
-    this.taskMemory.record(owner, group.id, message.id, message.text!, message.at);
-    this.enqueue(owner, group.id, value.requestId, 'message', { messageId: message.id, inputHash: hash });
+    persistBetaGroupMessage(this.db,{ownerId:owner,groupId:group.id,requestId:value.requestId,recipientIds:group.members.filter(member=>member.id!=='user').map(member=>member.id),at:this.now()},()=>{
+      this.save(owner, group);
+      this.taskMemory.record(owner, group.id, message.id, message.text!, message.at);
+      this.enqueue(owner, group.id, value.requestId as string, 'message', { messageId: message.id, inputHash: hash });
+    });
     return this.get(owner, group.id);
   }
 
   retry(owner: string, id: unknown): GroupChat {
     const group = this.stored(owner, id);
     this.joined(group);
+    if(group.demonstration)return this.get(owner,group.id);
     this.db.prepare("UPDATE npc_group_jobs SET status='queued',error='' WHERE owner=? AND group_id=? AND status='failed'").run(owner, group.id);
     return this.get(owner, group.id);
   }
@@ -379,6 +536,7 @@ export class GroupChatStore {
     onlyFields(value, ['groupId', 'planId', 'requestId']);
     const group = this.stored(owner, value.groupId);
     this.joined(group);
+    this.editable(group);
     if (typeof value.requestId !== 'string' || !UUID.test(value.requestId) || !group.plan || value.planId !== group.plan.id) throw new GroupRequestError(400, '无效计划确认');
     const previousEvent = group.messages.find(message => message.requestId === value.requestId);
     if (previousEvent) {
@@ -389,7 +547,7 @@ export class GroupChatStore {
       type: 'event', event: { kind: 'plan-confirmed', planId: group.plan.id }, requestId: value.requestId, at: new Date(this.now()).toISOString() };
     group.messages.push(event);
     group.plan.status = 'confirmed'; group.plan.confirmedAt = event.at; group.plan.confirmationMessageId = event.id;
-    this.save(owner, group);
+    persistBetaGroupPlanConfirmation(this.db,{owner,groupId:group.id,planId:group.plan.id,at:this.now()},()=>this.save(owner,group));
     this.enqueue(owner, group.id, value.requestId, 'confirmation', { messageId: event.id });
     return this.get(owner, group.id);
   }
@@ -398,6 +556,7 @@ export class GroupChatStore {
     onlyFields(value, ['groupId', 'reminderId', 'operation', 'requestId']);
     const group = this.stored(owner, value.groupId);
     this.joined(group);
+    this.editable(group);
     if (typeof value.requestId !== 'string' || !UUID.test(value.requestId) || !['confirm', 'pause', 'resume', 'cancel'].includes(value.operation as string)) throw new GroupRequestError(400, '无效提醒操作');
     const previousEvent = group.messages.find(message => message.requestId === value.requestId);
     if (previousEvent) {
@@ -427,6 +586,7 @@ export class GroupChatStore {
     onlyFields(value, ['groupId', 'requestId']);
     const group = this.stored(owner, value.groupId);
     this.joined(group);
+    this.editable(group);
     return this.mutate(owner, group, value.requestId, 'clear', {}, () => {
       group.hiddenBefore = group.messages.length;
       group.generationEpoch = (group.generationEpoch || 0) + 1;
@@ -496,6 +656,10 @@ export class GroupChatStore {
     if (this.closed || this.active.has(key)) return;
     const job = this.db.prepare("SELECT * FROM npc_group_jobs WHERE owner=? AND group_id=? AND status IN ('queued','failed') ORDER BY seq LIMIT 1").get(owner, groupId) as GroupJob | undefined;
     if (!job || job.status === 'failed') return;
+    if(this.stored(owner,groupId).demonstration){
+      this.db.prepare("UPDATE npc_group_jobs SET status='cancelled',error='' WHERE owner=? AND group_id=? AND status IN ('queued','running','failed')").run(owner,groupId);
+      return;
+    }
     if(this.stored(owner,groupId).messages.some(message=>!message.deliveryCancelled&&(message.deliverAt||0)>this.now()))return;
     this.active.add(key);
     this.db.prepare("UPDATE npc_group_jobs SET status='running' WHERE seq=?").run(job.seq);
@@ -504,17 +668,25 @@ export class GroupChatStore {
       const storedSnapshot = this.stored(owner, groupId);
       const generationEpoch = storedSnapshot.generationEpoch || 0;
       if (storedSnapshot.leftAt) { this.db.prepare("UPDATE npc_group_jobs SET status='cancelled',error='' WHERE seq=?").run(job.seq); return; }
-      const group = this.get(owner, groupId);
+      const displayedGroup=this.get(owner,groupId);
+      const group=groupForOrdinaryDialogue(displayedGroup);
       const incoming = group.messages.find(message => message.id === input.messageId);
+      if(input.messageId&&!incoming&&displayedGroup.messages.some(message=>message.id===input.messageId&&isAuthoredGroupMessage(displayedGroup,message))){
+        this.db.prepare("UPDATE npc_group_jobs SET status='cancelled',error='' WHERE seq=?").run(job.seq);return;
+      }
       const reminder = group.reminders?.find(item => item.id === input.reminderId);
       if (job.kind === 'reminder' && (!group.members.some(member => member.id === 'zhou-chef') || !reminderStillCurrent(reminder, input.occurrence!, this.now()))) {
         this.db.prepare("UPDATE npc_group_jobs SET status='done' WHERE seq=?").run(job.seq); return;
       }
       const media=groupMediaInputs(this.root,owner,group,incoming);
       const socialContexts=observeGroupActivity(this.db,owner,group,incoming,this.now());
-      const dialogueContext:GroupDialogueContext={ group, kind: job.kind, incoming, facts: this.taskMemory.collect(owner), reminder, now: this.now(), ...media, socialContexts };
+      const preferences=privatePreferences(this.db,this.root,this.now);
+      const characterExperience=Object.fromEntries(group.members.filter(member=>(dialoguePreferenceNpcIds as readonly string[]).includes(member.id))
+        .map(member=>[member.id,preferences.prompt(owner,member.id,{channel:'group'})]));
+      const dialogueContext:GroupDialogueContext={ group, kind: job.kind, incoming, facts: this.taskMemory.collect(owner), reminder, now: this.now(), ...media, socialContexts, characterExperience };
       const output = await this.dialogue(this.root,dialogueContext);
       const participation=groupParticipationPlan(output);
+      const speechSuppressed=groupSuppressedSpeech(output);
       if (this.closed) return;
       const fresh = this.stored(owner, groupId);
       const currentJob = this.db.prepare('SELECT status FROM npc_group_jobs WHERE seq=?').get(job.seq) as { status: string } | undefined;
@@ -546,7 +718,7 @@ export class GroupChatStore {
         fresh.messages.push({ id: this.uuid(), senderId: member.id, senderName: member.name, type: 'text', text: message.text, mentionIds: message.mentionIds, at });
         acceptedMessages.push(message);
       }
-      if (job.kind === 'opening' && acceptedMessages[0]?.senderId !== 'molly') {
+      if (job.kind === 'opening' && acceptedMessages[0]?.senderId !== 'molly'&&!speechSuppressed.has('molly')) {
         // A member change can invalidate Molly's @ assignment while leaving a
         // later NPC sentence valid. Discard that entire old opening and let
         // the same persisted job generate a fresh Molly-first introduction.
@@ -560,7 +732,7 @@ export class GroupChatStore {
       // Required replies are obligations of the current join instances. A
       // removed/rejoined actor cannot speak from an old snapshot; every still
       // present required actor must nevertheless have an accepted own reply.
-      if(participation?.requiredReplyIds.some(id=>stillJoined(id)&&!acceptedMessages.some(message=>message.senderId===id)))
+      if(participation?.requiredReplyIds.some(id=>!speechSuppressed.has(id)&&stillJoined(id)&&!acceptedMessages.some(message=>message.senderId===id)))
         throw new Error('本轮必要群回应在成员变化后未完整接受');
       const safeOutput = { ...output, messages: acceptedMessages };
       if (output.socialExpressions) safeOutput.socialExpressions=output.socialExpressions.filter(response=>stillJoined(response.characterId)
@@ -581,7 +753,7 @@ export class GroupChatStore {
       const operational=currentPlan?groupOperationalSpeakers(parseGroupDialogue({messages:acceptedMessages,
         ...(safeOutput.socialExpressions?{socialExpressions:safeOutput.socialExpressions}:{}),
       },{...dialogueContext,group:{...fresh,members:fresh.members.filter(member=>stillJoined(member.id))},
-        socialContexts:socialContexts.filter(item=>stillJoined(item.characterId)),participationPlan:currentPlan},currentPlan)):groupOperationalSpeakers(output);
+        socialContexts:socialContexts.filter(item=>stillJoined(item.characterId)),participationPlan:currentPlan},currentPlan,speechSuppressed)):groupOperationalSpeakers(output);
       // Production results carry the parser's exact at-speaking-time authority.
       // In-process injected runners are trusted, but still need a surviving
       // responsible speaker; removed actors cannot leave executable effects.
@@ -601,7 +773,11 @@ export class GroupChatStore {
       if (job.kind === 'opening') fresh.openingDone = true;
       this.db.exec('BEGIN IMMEDIATE');
       try {
-        this.save(owner, fresh);
+        const arrangementBefore=fresh.messages.slice(beforeMessages).map(message=>message.id).join(':');
+      if(job.kind==='message'&&incoming?.senderId==='user')finishGroupArrangement({db:this.db,store:arrangementsFor(this.root)?.using(this.db),owner,group:fresh,before:beforeMessages,incoming:groupMessageInputText(incoming),sourceId:incoming.id,turnId:incoming.id,now:this.now()});
+        if(fresh.messages.slice(beforeMessages).map(message=>message.id).join(':')!==arrangementBefore)scheduleGroupDelivery(fresh.messages,beforeMessages,Date.parse(at),this.now());
+        if(safeOutput.confirmPlan&&fresh.plan?.status==='confirmed')persistBetaGroupPlanConfirmation(this.db,{owner,groupId:fresh.id,planId:fresh.plan.id,at:this.now()},()=>this.save(owner,fresh));
+        else this.save(owner, fresh);
         if (incoming && safeOutput.socialExpressions?.length) recordGroupSocialExpressions(this.db,owner,groupId,incoming.id,safeOutput,this.now());
         this.db.prepare("UPDATE npc_group_jobs SET status='done',error='',data=? WHERE seq=?")
           .run(JSON.stringify({...input,...(participation?{participationPlan:participation}:{})}),job.seq);
@@ -618,7 +794,7 @@ export class GroupChatStore {
     if (this.closed) return;
     for (const row of this.db.prepare('SELECT owner,id FROM npc_group_chats').all() as { owner: string; id: string }[]) {
       const group = this.stored(row.owner, row.id);
-      if (group.leftAt) continue;
+      if (group.leftAt||group.demonstration) continue;
       let changed = false;
       for (const reminder of group.reminders || []) {
         if (!group.members.some(member => member.id === 'zhou-chef')) continue;
@@ -697,6 +873,10 @@ export function groupChatsLocal(deps: { namer?: GroupNamer; now?: () => number; 
           const body = objectBody(parsed);
           const { action, ...input } = body;
           if (action === 'remember') { store.remember(owner, input); return reply(res, 200, { ok: true }); }
+          if (action === 'import-record'||action==='import-demo') return reply(res,200,{group:store.importRecord(owner,input)});
+          if (action === 'import-cut-opening-record') return reply(res,200,{group:store.importCutOpeningRecord(owner,input)});
+          if (action === 'restore-cut-opening-record') return reply(res,200,{group:store.restoreCutOpeningRecord(owner,input)});
+          if (action === 'confirm-record-order'||action==='confirm-demo-order') return reply(res,200,{group:store.confirmRecordOrder(owner,input)});
           if (action === 'create') return reply(res, 200, { group: launch(owner, await store.create(owner, input)) });
           if (action === 'rename') {
             onlyFields(input, ['groupId', 'name']);

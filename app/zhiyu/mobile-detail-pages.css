@@ -1,0 +1,46 @@
+/* Mobile detail pages share one full-phone slide, without moving the page below. */
+html[data-zy-theme] .zy-app.zy-desktop.zy-mobile .zy-mobile-detail-page {
+ position:absolute;z-index:70;inset:0;display:flex;flex-direction:column;box-sizing:border-box;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:var(--zy-m-detail-safe-top,0px) 0 0;overflow:hidden;border:0;border-radius:0;background:var(--zy-m-chat-bg);color:var(--zy-m-ink);box-shadow:none;outline:0;animation:zy-m-detail-in 300ms cubic-bezier(.22,.8,.25,1) both;
+}
+html[data-zy-theme] .zy-app.zy-desktop.zy-mobile .zy-mobile-detail-page.is-closing {animation:zy-m-detail-out 260ms cubic-bezier(.22,.8,.25,1) both;}
+.zy-mobile .zy-mobile-detail-page>.zy-mobile-header {flex:none;background:var(--zy-m-chat-bg);}
+.zy-mobile .zy-mobile-detail-scroll {flex:1;min-height:0;box-sizing:border-box;padding:14px 0 120px;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;}
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop.is-mobile-overlay-detail>.zy-mobile-nav {display:flex;z-index:80;}
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop.is-mobile-overlay-detail>.zy-base {pointer-events:none;}
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop .zy-mobile-detail-page :is(.zy-private-drawer,.zy-group-drawer) {position:static;inset:auto;display:block;box-sizing:border-box;width:100%;height:auto;min-height:0;max-height:none;padding:0 20px;overflow:visible;border:0;border-radius:0;background:var(--zy-m-chat-bg);color:var(--zy-m-ink);box-shadow:none;animation:none;transform:none;}
+.zy-mobile .zy-mobile-detail-page .zy-private-drawer {font-size:calc(14px + var(--zy-font-adjust,0px));line-height:1.55;}
+.zy-mobile .zy-mobile-detail-page .zy-private-drawer>.zy-private-person {display:flex;align-items:center;justify-content:flex-start;width:100%;height:64px;margin:0 0 20px;padding:0;border:0;background:transparent;}
+.zy-mobile .zy-mobile-detail-page .zy-private-person>.xx-avatar {display:block;width:64px;height:64px;border-radius:50%;object-fit:cover;}
+.zy-mobile .zy-mobile-detail-page .zy-private-drawer>.zy-private-search {display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;width:100%;padding:18px 0;border:0;border-top:.5px solid var(--zy-m-chat-line);border-bottom:.5px solid var(--zy-m-chat-line);background:none;color:var(--zy-m-ink);font:inherit;text-align:left;}
+.zy-mobile .zy-mobile-detail-page .zy-private-switches {border-color:var(--zy-m-chat-line);}
+.zy-mobile .zy-mobile-detail-page .zy-private-drawer>:is(.zy-private-clear,.zy-private-remove) {display:block;box-sizing:border-box;width:100%;min-height:54px;padding:18px 0;border:0;border-bottom:.5px solid var(--zy-m-chat-line);border-radius:0;background:none;color:var(--zy-m-danger);font:inherit;text-align:center;}
+.zy-mobile .zy-mobile-detail-page .zy-private-drawer>button:disabled {opacity:.45;cursor:default;}
+.zy-mobile .zy-mobile-detail-page .zy-group-drawer>header {display:none;}
+.zy-mobile .zy-mobile-detail-page .zy-group-drawer :is(.zy-group-drawer-details,.zy-group-drawer-switches,.zy-group-drawer-search-row,.zy-group-drawer-actions) {background:var(--zy-m-chat-bg);border-color:var(--zy-m-chat-line);}
+.zy-mobile .zy-mobile-detail-page .zy-group-drawer :is(.zy-group-drawer-field-title,.zy-inline-name-label,.zy-inline-name-value,.zy-group-drawer-row-value,.zy-group-drawer-search-row,.zy-group-drawer-pin) {color:var(--zy-m-ink);}
+.zy-mobile .zy-mobile-detail-page .zy-group-drawer-member-face {background:var(--zy-m-incoming);}
+.zy-mobile .zy-mobile-detail-page .zy-group-drawer-member-face img {display:block;width:100%;height:100%;object-fit:cover;}
+.zy-mobile .zy-mobile-detail-page .zy-group-drawer-member-face>svg {width:22px;height:22px;}
+/* A restored list is already present behind the chat; do not push, dim or replay it. */
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop .zy-mobile-page-underlay {transform:none;filter:none;transition:none;}
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop .zy-mobile-page-underlay .zy-mobile-entry {animation:none;opacity:1;}
+/* Constrain every face, including unavailable images, before intrinsic media loads. */
+html[data-zy-theme] body .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-group-head .zy-group-header-person {display:flex;flex:1;min-width:0;overflow:hidden;gap:9px;}
+.zy-mobile .zy-group-head .zy-mobile-group-avatars {display:flex;align-items:center;flex:0 0 52px;box-sizing:border-box;width:52px;height:34px;overflow:hidden;}
+.zy-mobile .zy-mobile-group-avatars>span {position:relative;display:grid;place-items:center;box-sizing:border-box;flex:0 0 26px;width:26px;height:26px;overflow:hidden;border:1px solid var(--zy-m-chat-bg);border-radius:50%;background:var(--zy-m-incoming);}
+.zy-mobile .zy-mobile-group-avatars>span+span {margin-left:-13px;}
+.zy-mobile .zy-mobile-group-avatars>span>:is(img,svg) {display:block;box-sizing:border-box;width:100%;height:100%;min-width:0;max-width:100%;max-height:100%;object-fit:cover;}
+.zy-mobile .zy-group-head .chat-header-copy {flex:1;min-width:0;overflow:hidden;}
+html[data-zy-theme] body .zy-phone-content .zy-app.zy-desktop.zy-mobile .zy-group-head .chat-header-copy>strong {display:block;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.zy-mobile .zy-group-head .xx-call-actions {flex:0 0 40px;}
+.zy-mobile .zy-mobile-restore-contact {display:flex;align-items:center;gap:12px;padding:12px 16px;}
+.zy-mobile .zy-mobile-restore-contact>strong {flex:1;font-size:calc(14px + var(--zy-font-adjust,0px));font-weight:400;}
+.zy-mobile .zy-mobile-restore-contact>button {padding:8px;border:0;border-radius:10px;background:var(--zy-m-incoming);color:var(--zy-m-accent);font-size:calc(12px + var(--zy-font-adjust,0px));}
+@keyframes zy-m-detail-in {from{transform:translateX(100%);}to{transform:translateX(0);}}
+@keyframes zy-m-detail-out {from{transform:translateX(0);}to{transform:translateX(100%);}}
+@media(prefers-reduced-motion:reduce) {html[data-zy-theme] .zy-app.zy-desktop.zy-mobile .zy-mobile-detail-page,html[data-zy-theme] .zy-app.zy-desktop.zy-mobile .zy-mobile-detail-page.is-closing {animation:none;transition:none;}}
+/* The revealed list keeps its own wash during the return slide, while the
+   status plane and the conversation above it keep the chat's solid color. */
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop.zy-page-chat.is-mobile-detail .zy-directory.zy-mobile-page-underlay {isolation:isolate;background:transparent;}
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop.zy-page-chat.is-mobile-detail .zy-directory.zy-mobile-page-underlay::before {content:none;}
+.zy-mobile.is-mobile-overlay-detail dialog:modal {pointer-events:auto;}

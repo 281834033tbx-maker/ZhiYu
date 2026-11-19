@@ -1,5 +1,6 @@
 import { publicGroupDirectory } from './character-directory';
 import type { assets, Part } from './contracts';
+import type {ArrangementMessageMetadata} from './arrangement-chat';
 
 /** IDs are requests; media URLs and transcripts are always derived by the server. */
 export type GroupSendMedia = { imageId?: string; audioId?: string; assetId?: keyof typeof assets };
@@ -25,7 +26,7 @@ export type GroupMessageQuote = {
   mentionIds?: string[];
 };
 
-export type GroupMessage = {
+export type GroupMessage = ArrangementMessageMetadata & {
   id: string;
   senderId: string;
   senderName: string;
@@ -35,6 +36,13 @@ export type GroupMessage = {
   /** Canonical, owner-validated user media. Existing text-only history stays unchanged. */
   part?: GroupMediaPart;
   at: string;
+  /** Fixed presentation labels are used only by an explicitly imported demo. */
+  displayTime?: string;
+  demonstrationAction?: 'order-change';
+  /** Historical presentation state for an explicitly authored record only. */
+  readAt?: string;
+  recordAction?: 'order-change';
+  authoredRecord?: {scenario:'friday-dinner-v1'|'three-month-cut-opening-v1';revision:1|2|3;sourceMessageId?:string};
   typingAt?:number;
   deliverAt?:number;
   deliveryCancelled?:boolean;
@@ -85,7 +93,25 @@ export type GroupChat = {
   chatEnabled: boolean;
   members: GroupMember[];
   messages: GroupMessage[];
-  namingSource: 'molly-model';
+  namingSource: 'molly-model' | 'fixed-demo' | 'imported-record';
+  /** Internal source boundary; later genuine messages and tasks remain ordinary. */
+  authoredRecord?: {
+    scenario:'friday-dinner-v1';
+    revision:2|3;
+    orderChange:'pending'|'confirmed';
+    messageIds:string[];
+  };
+  /** Explicitly applied user-written opening; its recoverable archive is server-only. */
+  cutOpeningRecord?: {
+    scenario:'three-month-cut-opening-v1';revision:1;active:boolean;
+    importedAt:string;messageIds:string[];hasArchive:boolean;
+  };
+  /** A scripted screenshot record. It must not generate dialogue or real task effects. */
+  demonstration?: {
+    scenario: 'friday-dinner-v1';
+    displayRange: '周五 16:00～16:02';
+    orderChange: 'pending' | 'confirmed';
+  };
   pending?: boolean;
   typingName?:string;
   typingAfter?:number;

@@ -1,5 +1,7 @@
 'use client';
 
+
+import {accountStorage} from './account-storage';
 import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore, type SyntheticEvent } from 'react';
 import Image from 'next/image';
 import {reportUserFacingError} from '../../lib/user-facing-errors';
@@ -8,6 +10,7 @@ import { BookOpen, Check, ChevronLeft, PawPrint, Pencil, X } from 'lucide-react'
 import Dungeons from './dungeons';
 import { PET_STATE_CHANGED_EVENT, petStorageKey, type StoredPetState } from './pet-storage';
 import { petDisplayFrames } from './pet-display-frames';
+import {useDialogLightDismiss} from './use-dialog-light-dismiss';
 import './pets.css';
 
 type Pet = { id: string; name: string; description: string; appearance: number; imageSrc?: string; limited?: boolean; limitedRegion?: string; limitedCode?: number };
@@ -15,7 +18,6 @@ type PetState = StoredPetState;
 type ExplorePet = Pet & { priceCny?: number };
 
 const initialState: PetState = { pets: [], selectedId: '', visible: true };
-const moods = ['状态不错', '有点饿了', '想出去玩', '有点渴了', '想安静待着', '有点烦躁'];
 const regularDisplaySlugs = new Set([
   'african-lion', 'spotted-hyena', 'three-toed-sloth', 'tibetan-fox',
   'bengal-cat', 'devon-rex', 'siberian-husky', 'king-cobra',
@@ -45,11 +47,41 @@ const limitedPets: ExplorePet[] = [
   id: `limited-${String(index + 1).padStart(2, '0')}`, name, description: limitedCaptions[index],
   appearance: index, imageSrc: `/pets/limited/${slug}${slug === 'dragonfruit-ballerina' ? '-display' : ['revived-macaw', 'banana-salmon', 'mecha-toad'].includes(slug) ? '-cutout' : ''}.png`, limited: true, priceCny: 18,
 }));
+const isRequestedGrantAccount=(_accountId:string)=>false;
 const currentPetImages = new Map([...regularPets, ...limitedPets].map(pet => [pet.id, pet.imageSrc]));
 const adoptableIds = new Set([...regularPets, ...limitedPets].map(pet => pet.id));
 // Older Shenzhen pets came from the previous adoption catalog. Keep their saved records.
 const isAdoptedPet = (pet: Pet) => adoptableIds.has(pet.id) || pet.id.startsWith('limited-shenzhen-');
 const isLimitedPet = (pet: Pet) => Boolean(pet.limited || pet.limitedRegion || pet.id.startsWith('limited-'));
+
+const isRetiredBananaPet=(pet:Pet)=>{
+  if(pet.id==='limited-shenzhen-banana-gorilla')return true;
+  try{return typeof pet.imageSrc==='string'&&new URL(pet.imageSrc,'https://zhiyu.invalid').pathname==='/pets/shenzhen/banana-gorilla.png';}catch{return false;}
+};
+
+/** Pure, idempotent catalog merge. The caller owns the account authorization. */
+export function grantFormalLimitedPets(state:PetState):PetState {
+  const kept=state.pets.filter(pet=>!isRetiredBananaPet(pet));
+  const missing=limitedPets.filter(pet=>!kept.some(owned=>owned.id===pet.id));
+  const pets=[...kept,...missing.map(({id,name,description,appearance,imageSrc})=>({id,name,description,appearance,imageSrc,limited:true}))];
+  const selectedId=pets.some(pet=>pet.id===state.selectedId&&isAdoptedPet(pet))?state.selectedId:pets.find(isAdoptedPet)?.id||'';
+  return kept.length===state.pets.length&&!missing.length&&selectedId===state.selectedId?state:{...state,pets,selectedId};
+}
+
+function hasCatalogRefresh(raw:string):boolean {
+  try {
+    const parsed=JSON.parse(raw) as Partial<PetState>;
+    const pets=Array.isArray(parsed.pets)?parsed.pets:[];
+    const valid=pets.filter(pet=>typeof pet?.id==='string'&&typeof pet.name==='string'&&typeof pet.description==='string'&&Number.isInteger(pet.appearance)&&pet.appearance>=0&&pet.appearance<6);
+    return pets.some(pet=>pet&&isRetiredBananaPet(pet))||limitedPets.some(pet=>!valid.some(owned=>owned.id===pet.id));
+  }catch{return true;}
+}
+
+function backUpRequestedCatalog(storageKey:string,raw:string|null,accountId:string) {
+  if(!isRequestedGrantAccount(accountId)||raw===null||!hasCatalogRefresh(raw))return;
+  const backupKey=storageKey+':before-limited-refresh-20261109';
+  if(accountStorage(accountId).getItem(backupKey)===null)accountStorage(accountId).setItem(backupKey,raw);
+}
 
 function PetArt({ appearance, imageSrc, label, limited = false, className = '' }: { appearance: number; imageSrc?: string; label: string; limited?: boolean; className?: string }) {
   const clipId = useId();
@@ -77,7 +109,7 @@ function UprightPaw({ size = 18 }: { size?: number }) {
   </svg>;
 }
 
-function parsePetState(raw:string|null):PetState {
+function parsePetState(raw:string|null,accountId:string):PetState {
     let loadedState = initialState;
     try {
       const saved = raw;
@@ -106,6 +138,7 @@ function parsePetState(raw:string|null):PetState {
         }
       }
     } catch { loadedState = initialState; }
+    if (isRequestedGrantAccount(accountId)) loadedState=grantFormalLimitedPets(loadedState);
   return loadedState;
 }
 const subscribeHydrated=()=>()=>{};
@@ -125,8 +158,8 @@ export default function PetPage({ accountId, dirWidth, onDirectoryWidthChange, e
 function PetPageSession({accountId,dirWidth,onDirectoryWidthChange,embedded}:{accountId:string;dirWidth:number;onDirectoryWidthChange:(width:number)=>void;embedded:boolean}) {
   const hydrated=useSyncExternalStore(subscribeHydrated,()=>true,()=>false);
   const storageKey = petStorageKey(accountId);
-  const raw=useSyncExternalStore(subscribePetState,()=>{try{return localStorage.getItem(storageKey);}catch{return null;}},()=>null);
-  const state=useMemo(()=>parsePetState(raw),[raw]);
+  const raw=useSyncExternalStore(subscribePetState,()=>{try{return accountStorage(accountId).getItem(storageKey);}catch{return null;}},()=>null);
+  const state=useMemo(()=>parsePetState(raw,accountId),[raw,accountId]);
   const [section, setSection] = useState<'mine' | 'explore'>('mine');
   const [discover, setDiscover] = useState<'pets' | 'dungeons' | null>(embedded?'pets':null);
   const [notice, setNotice] = useState('');
@@ -135,6 +168,7 @@ function PetPageSession({accountId,dirWidth,onDirectoryWidthChange,embedded}:{ac
   const [error, setError] = useState('');
 
   const renameDialog=useRef<HTMLDialogElement>(null),nameInput=useRef<HTMLInputElement>(null);
+  useDialogLightDismiss(renameDialog,()=>setDialog(null),!dialog);
   useEffect(()=>{
     const node=renameDialog.current;if(!node||!dialog)return;
     node.showModal();nameInput.current?.focus();
@@ -143,13 +177,18 @@ function PetPageSession({accountId,dirWidth,onDirectoryWidthChange,embedded}:{ac
   useEffect(()=>{
     if(!hydrated)return;
     const normalized=JSON.stringify(state);
-    try{if(localStorage.getItem(storageKey)!==normalized){localStorage.setItem(storageKey,normalized);window.dispatchEvent(new Event(PET_STATE_CHANGED_EVENT));}}catch(cause){console.error('[智域] 读取宠物存储',cause);}
-  },[state,storageKey,hydrated]);
+    try {
+      const currentRaw=accountStorage(accountId).getItem(storageKey);
+      if(currentRaw!==raw)return;
+      if(currentRaw!==normalized){backUpRequestedCatalog(storageKey,currentRaw,accountId);accountStorage(accountId).setItem(storageKey,normalized);window.dispatchEvent(new Event(PET_STATE_CHANGED_EVENT));}
+    }catch(cause){console.error('[智域] 读取宠物存储',cause);}
+  },[state,storageKey,hydrated,raw,accountId]);
   const setState=(update:PetState|((current:PetState)=>PetState))=>{
     try {
-      const current=parsePetState(localStorage.getItem(storageKey));
+      const currentRaw=accountStorage(accountId).getItem(storageKey),current=parsePetState(currentRaw,accountId);
       const next=typeof update==='function'?update(current):update;
-      localStorage.setItem(storageKey,JSON.stringify(next));
+      backUpRequestedCatalog(storageKey,currentRaw,accountId);
+      accountStorage(accountId).setItem(storageKey,JSON.stringify(next));
       window.dispatchEvent(new Event(PET_STATE_CHANGED_EVENT));
       return true;
     }catch(cause){setError(reportUserFacingError(cause,'save','保存宠物'));return false;}
@@ -211,7 +250,6 @@ function PetPageSession({accountId,dirWidth,onDirectoryWidthChange,embedded}:{ac
               <div className="zy-pets-preview-name"><strong title={selected.name}>{selected.name}</strong><button type="button" title="修改宠物名字" aria-label="修改宠物名字" onClick={openDialog}><Pencil size={14} /></button></div>
               {embedded&&<p className="zy-pets-preview-kind">{isLimitedPet(selected)?'限定宠物':'普通宠物'}</p>}
               {(!embedded||selected.description!=='普通宠物')&&<p className="zy-pets-preview-description">{selected.description}</p>}
-              <span>{moods[selected.appearance]}</span>
               {embedded&&<label className="zy-pets-display-toggle"><input type="checkbox" checked={state.visible} aria-label="在聊天中显示宠物" onChange={event=>{const visible=event.target.checked;setState(current=>({...current,visible}));}}/><span>在聊天中显示</span></label>}
             </div>
           </div> : <div className="zy-pets-empty"><PawPrint size={27} /><h2>还没有领养宠物</h2><p>去领养里挑一只喜欢的伙伴吧。</p><button type="button" onClick={() => setSection('explore')}>去领养</button></div>}
@@ -219,7 +257,7 @@ function PetPageSession({accountId,dirWidth,onDirectoryWidthChange,embedded}:{ac
           <div className={'zy-pets-grid'+(embedded?' zy-pets-owned-grid':'')}>{pets.map(pet => <button key={pet.id} type="button" className={`zy-pet-card ${embedded?'zy-pet-owned-option ':''}${pet.id === selected?.id ? 'is-selected' : ''}`} aria-pressed={pet.id === selected?.id} onClick={() => setState(current => ({ ...current, selectedId: pet.id, visible: true }))}>
             {!embedded&&(pet.limited || pet.limitedRegion) && <span className="zy-pet-limited-badge">限定宠物</span>}
             {pet.id === selected?.id && <span className="zy-pet-selected-label"><Check size={13} />{embedded?'已选中':'当前展示'}</span>}
-            <PetArt appearance={pet.appearance} imageSrc={pet.imageSrc} label={pet.name} limited={isLimitedPet(pet)} /><strong title={pet.name}>{pet.name}</strong><span className="zy-pet-description">{embedded?(isLimitedPet(pet)?'限定宠物':'普通宠物'):pet.description}</span>{!embedded&&<span className="zy-pet-mood">{moods[pet.appearance]}</span>}
+            <PetArt appearance={pet.appearance} imageSrc={pet.imageSrc} label={pet.name} limited={isLimitedPet(pet)} /><strong title={pet.name}>{pet.name}</strong><span className="zy-pet-description">{embedded?(isLimitedPet(pet)?'限定宠物':'普通宠物'):pet.description}</span>
           </button>)}</div>
         </> : <>
           <div className="zy-pets-section-heading zy-pets-limited-heading"><div><h2>限定宠物</h2><p>这还是地球生物么？？</p></div></div>
@@ -237,7 +275,7 @@ function PetPageSession({accountId,dirWidth,onDirectoryWidthChange,embedded}:{ac
         {error&&!dialog&&<p className="zy-pets-error" role="alert">{error}</p>}
       </div>
     </section> : <section className="zy-chat zy-chat-empty" aria-label="多功能区"><div className="zy-empty-logo"><Image unoptimized width={160} height={160} src="/zhiyu-logo.png" alt="智域" /></div></section>}
-    {dialog && <dialog ref={renameDialog} className="zy-pets-dialog-backdrop" aria-label="重命名宠物" style={{width:"100vw",height:"100dvh",maxWidth:"none",maxHeight:"none",margin:0,border:0}} onCancel={event=>{event.preventDefault();setDialog(null);}} onPointerDown={event => { if (event.target === event.currentTarget) setDialog(null); }}>
+    {dialog && <dialog ref={renameDialog} className="zy-pets-dialog-backdrop zy-pets-rename-dialog" aria-label="重命名宠物" onCancel={event=>{event.preventDefault();event.stopPropagation();setDialog(null);}}>
       <form className="zy-pets-dialog" onSubmit={savePet} aria-label="重命名宠物">
         <div className="zy-pets-dialog-heading"><h2>重命名宠物</h2><button type="button" aria-label="关闭" onClick={() => setDialog(null)}><X size={19} /></button></div>
         <label htmlFor="zy-pet-name">宠物名字</label><input ref={nameInput} id="zy-pet-name" maxLength={16} value={draftName} onChange={event => { setDraftName(event.target.value); setError(''); }} placeholder="给它起个名字" />

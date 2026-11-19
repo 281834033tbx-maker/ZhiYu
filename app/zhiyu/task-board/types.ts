@@ -12,6 +12,8 @@ export interface Step {
 }
 export interface Task {
   id:string; title:string; categoryId:string; npcId:string; type:TaskType;
+  /** Public attribution supplied by a future professional's persisted plan. */
+  publisherName?:string; publisherAvatar?:string;
   amount:string; tip?:string; date:string; repeat?:'daily'; order:number;
   pinned?:boolean; status:TaskStatus; steps?:Step[];
   count?:{current:number; target:number; perTime:number; unit:'ml'|'步'|'次'};
@@ -19,13 +21,17 @@ export interface Task {
   /** Imported snapshots keep their first append position independently of status. */
   appendOrder?:number;
   source?:{key:string;kind:'professional'|'group';id:string;createdAt:string;originalDate?:string;revision?:number};
+  /** Explicitly authored records are user-maintained board data, not execution evidence. */
+  manualRecord?:{id:string;name:string;importedAt:string};
 }
 export interface TaskPageState {
   view:TaskView; futureRange:7|30; historyFilter:'all'|'done'|'missed';
+  /** Omitted means the actual Shanghai today; a selected date never changes the clock. */
+  selectedDate?:string;
   categoryFilter?:string; activeTaskId?:string; activeExpanded:boolean;
   expandedTaskIds:string[]; expandedStepId?:string; weeklyReview:{time:string};
 }
-export interface TaskTimer {taskId:string; stepId:string; endsAt:number}
+export interface TaskTimer {taskId:string; stepId:string; endsAt:number; pausedRemainingMs?:number}
 /** Optional mock-source metadata. Live sources omit it; views then derive
  * their summaries and calendar entirely from the supplied task records. */
 export interface DemoOverview {
@@ -35,17 +41,28 @@ export interface DemoOverview {
 }
 export interface TaskBoardModel {
   version:1; today:string; tasks:Task[]; page:TaskPageState;
+  /** Missing only in legacy snapshots, which migrate their original displayed plans once. */
+  plans?:Plan[];
   rest?:TaskTimer; timers:Record<string,TaskTimer>; historyLoadedDays:number;
   demoOverview?:DemoOverview;
   /** Persisted opt-in cutoff; opening the board never imports historical tasks. */
   liveImport?:{since:string};
+  /** Explicit account maintenance reset; never interpreted as a new demo. */
+  contentResetAt?:number;
 }
 export type TaskBoardAction =
   | {type:'hydrate'; model:TaskBoardModel}
   | {type:'reset'; now?:number}
   | {type:'enable-live-import'; now:number}
   | {type:'import-tasks'; tasks:Task[]}
+  /** Arrangement sections include retained historical sources without
+   * resurrecting anything older than an explicit content-reset epoch. */
+  | {type:'import-arrangement-records'; tasks:Task[]}
   | {type:'set-view'; view:TaskView}
+  | {type:'set-selected-date'; date?:string}
+  | {type:'import-manual-record'; record:ManualTaskRecord; now?:number}
+  | {type:'upsert-plan'; plan:Plan}
+  | {type:'delete-plan'; planId:string}
   | {type:'set-future-range'; range:7|30}
   | {type:'set-history-filter'; filter:'all'|'done'|'missed'}
   | {type:'set-category'; categoryId?:string}
@@ -53,8 +70,13 @@ export type TaskBoardAction =
   | {type:'toggle-active-expanded'}
   | {type:'expand-step'; stepId?:string}
   | {type:'pin'; taskId:string}
-  | {type:'start'|'finish'|'toggle-status'|'increment-count'|'complete-count'; taskId:string; now?:number}
+  | {type:'start'|'pause'|'finish'|'toggle-status'|'increment-count'|'complete-count'; taskId:string; now?:number}
   | {type:'toggle-step'; taskId:string; stepId:string; now?:number}
   | {type:'set-step-set'; taskId:string; stepId:string; index:number; now?:number}
   | {type:'start-timer'; taskId:string; stepId:string; now?:number}
+  | {type:'pause-timer'|'resume-timer'; taskId:string; stepId:string; now?:number}
   | {type:'load-history'; throughDate?:string};
+
+export interface ManualTaskRecord {
+  version:1; name:string; recordId:string; selectedDate:string; tasks:Task[]; plans:Plan[];
+}

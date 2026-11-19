@@ -1,8 +1,9 @@
 import type {Category,CategoryGroup,DemoOverview,Npc,Plan} from './types';
+import {publicGroupDirectory} from '../../../lib/npc/character-directory';
 
 export const categoryGroups:CategoryGroup[] = [
   {id:'movement',name:'运动',order:0},{id:'food',name:'饮食',order:1},
-  {id:'life',name:'生活',order:2},{id:'appearance',name:'形象',order:3},
+  {id:'life',name:'生活',order:2},{id:'appearance',name:'形象管理',order:3},
 ];
 // Semantic colours intentionally use the existing App palette. The latest
 // human instruction overrides the document's illustrative red/orange palette.
@@ -14,15 +15,12 @@ export const categories:Category[] = [
   {id:'shopping',name:'采购',groupId:'life',color:'var(--zy-interaction-ink, #527b98)',icon:'ShoppingBag',verb:'采购'},
   {id:'sleep',name:'睡眠',groupId:'life',color:'var(--zy-secondary, #626469)',icon:'Moon'},
   {id:'skin',name:'皮肤管理',groupId:'appearance',color:'var(--zy-chat-control-accent, #e66562)',icon:'Droplet',verb:'护肤'},
+  {id:'chores',name:'家务',groupId:'life',color:'var(--zy-interaction-ink, #527b98)',icon:'ClipboardList'},
+  {id:'bills',name:'账单',groupId:'life',color:'var(--zy-secondary, #626469)',icon:'Activity'},
+  {id:'family',name:'家人',groupId:'life',color:'var(--zy-nav-active, #2e6252)',icon:'HeartPulse'},
 ];
-// Reuse the same current, approved portraits as publicGroupDirectory/chat.
-// Initials remain a generic component fallback; these four entries use photos.
-export const npcs:Npc[] = [
-  {id:'chen-nian',name:'陈年',avatar:'/npc/chen-nian/avatar-20260926.png'},
-  {id:'liu',name:'柳智敏',avatar:'/stitch/6ee1d45916762d31.jpg'},
-  {id:'zhou-chef',name:'赵一帆',avatar:'/desktop-npc/scenes/zhou-chef-night-sofa-20261005-v1.png'},
-  {id:'molly',name:'Molly',avatar:'/stitch/molly-avatar-v2.png'},
-];
+// Project the existing seven chat identities; do not maintain another roster.
+export const npcs:Npc[] = publicGroupDirectory();
 export const plans:Plan[] = [
   {id:'muscle',name:'3 个月增肌',color:categories[0].color,progress:.33,progressText:'第 4/12 周'},
   {id:'cuisine',name:'学会 10 道家常菜',color:categories[3].color,progress:.6,progressText:'6/10 道'},

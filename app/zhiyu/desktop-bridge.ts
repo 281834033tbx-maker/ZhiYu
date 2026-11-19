@@ -4,13 +4,24 @@ export type ImageViewerState = ImageViewerPayload & {history: boolean; pinned: b
 export type ImageActionResult = {ok?: boolean; canceled?: boolean; error?: string};
 export type ProfilePopoverAnchor = {x:number;y:number;width:number;height:number};
 export type ProfilePopoverLayout = {id?:string;width:number;height:number;anchorX:number;anchorY:number;side:'top'|'bottom'};
+export type TopbarState = {visible:boolean;authenticated:boolean};
+export type MainWindowResizeEdge='n'|'s'|'e'|'w'|'ne'|'nw'|'se'|'sw';
 export type ZhiyuDesktopBridge = {
   platform: string;
   mobilePreview?: boolean;
   nativeMaterial?: boolean;
-  profilePopoverControl?: 'native-v1';
+  setAuthWindowMode?: (authMode:boolean,checking?:boolean)=>Promise<boolean>;
+  beginMainWindowResize?: (edge:MainWindowResizeEdge,gesture:number)=>Promise<boolean>;
+  updateMainWindowResize?: (gesture:number)=>Promise<boolean>;
+  finishMainWindowResize?: (gesture:number)=>Promise<boolean>;
+  getTopbarState?: ()=>Promise<TopbarState|null>;
+  setTopbarVisible?: (visible:boolean)=>Promise<TopbarState>;
+  notifyTopbarMessageSent?: ()=>Promise<boolean>;
+  onTopbarState?: (listener:(state:TopbarState)=>void)=>()=>void;
+  onTopbarOpenMolly?: (listener:()=>void)=>()=>void;
+  profilePopoverControl?: 'native-v1'|'native-v2';
   prepareProfilePopover?: (payload:{anchor:ProfilePopoverAnchor;width:number}) => Promise<{id:string;name:string}|null>;
-  fitProfilePopover?: (payload:{id:string;anchor:ProfilePopoverAnchor;height:number}) => Promise<ProfilePopoverLayout|null>;
+  fitProfilePopover?: (payload:{id:string;anchor:ProfilePopoverAnchor;height:number;ready?:boolean;reducedMotion?:boolean}) => Promise<ProfilePopoverLayout|null>;
   closeProfilePopover?: (id:string) => Promise<boolean>;
   onProfilePopoverLayout?: (listener:(layout:ProfilePopoverLayout&{id:string})=>void) => ()=>void;
   onProfilePopoverDismiss?: (listener:(id:string)=>void) => ()=>void;

@@ -1,4 +1,5 @@
 'use client';
+import {useDialogLightDismiss} from './use-dialog-light-dismiss';
 
 import {useEffect, useId, useRef, useState, type ReactNode} from 'react';
 import {Search, X} from 'lucide-react';
@@ -32,6 +33,7 @@ export default function GroupChatSearch({name, memberCount, entries, onLocate, o
   const input = useRef<HTMLInputElement>(null);
   const titleId = useId();
   const [query, setQuery] = useState('');
+  useDialogLightDismiss(dialog,onClose);
   useEffect(() => {
     const node = dialog.current;
     node?.showModal();

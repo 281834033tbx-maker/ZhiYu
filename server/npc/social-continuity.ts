@@ -1,6 +1,7 @@
 import type {DatabaseSync} from 'node:sqlite';
 import {createHash} from 'node:crypto';
 import type {GroupChat,GroupMessage} from '../../lib/npc/group-chat';
+import {isAuthoredGroupMessage} from '../../lib/npc/friday-dinner-demo';
 import {ensureContact} from '../../lib/npc/contact-life';
 import {applySocialExpression,ensureSocial,socialClose,socialEligible,type SocialHost,type SocialIncident,type SocialExpression,type SocialFeeling} from '../../lib/npc/social-continuity';
 
@@ -52,6 +53,7 @@ function pending(s:Stored,now:number){
 }
 /** The caller supplies its already persisted, current visible group. No private text leaves this function. */
 export function observeGroupActivity(db:DatabaseSync,owner:string,group:GroupChat,incoming:GroupMessage|undefined,now:number):GroupSocialContext[]{
+  if(group.demonstration||incoming&&isAuthoredGroupMessage(group,incoming))return [];
   if(!incoming||incoming.senderId!=='user'||!['text','image','sticker','voice'].includes(incoming.type)||group.leftAt||!group.messages.some(m=>m.id===incoming.id&&m.senderId==='user'))return [];
   const sourceAt=Date.parse(incoming.at);if(!Number.isFinite(sourceAt)||sourceAt>now)return [];
   const contexts:GroupSocialContext[]=[];

@@ -74,8 +74,8 @@ export default function ChatAddMenu({onCreateGroup}: {
   }
 
   return <>
-    <PressableIconButton ref={trigger} rotateOnClick type="button" className="zy-chat-add-trigger" aria-label="添加与任务" title="添加与任务" aria-haspopup="menu" aria-expanded={open} aria-controls={open ? menuId : undefined} onClick={() => setOpen(value => !value)}><Plus size={20} strokeWidth={1.7}/></PressableIconButton>
-    {present && createPortal(<div ref={menu} id={menuId} className="zy-chat-add-menu" role="menu" tabIndex={-1} aria-label="添加与任务" aria-hidden={!open} inert={!open} style={position} onKeyDown={menuKeys}>
+    <PressableIconButton ref={trigger} rotateOnClick type="button" className="zy-chat-add-trigger" aria-label="添加与安排" title="添加与安排" aria-haspopup="menu" aria-expanded={open} aria-controls={open ? menuId : undefined} onClick={() => setOpen(value => !value)}><Plus size={20} strokeWidth={1.7}/></PressableIconButton>
+    {present && createPortal(<div ref={menu} id={menuId} className="zy-chat-add-menu" role="menu" tabIndex={-1} aria-label="添加与安排" aria-hidden={!open} inert={!open} style={position} onKeyDown={menuKeys}>
       <button type="button" role="menuitem" onClick={() => {setOpen(false); onCreateGroup();}}><UsersRound size={17} strokeWidth={1.65}/><span>发起群聊</span></button>
       <button type="button" role="menuitem" onClick={() => {setOpen(false); setPetsOpen(true);}}><PawPrint size={17} strokeWidth={1.65}/><span>宠物</span></button>
     </div>, document.body)}

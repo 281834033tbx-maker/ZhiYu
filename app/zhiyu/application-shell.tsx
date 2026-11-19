@@ -4,6 +4,13 @@ import {useEffect, useState, type ReactNode} from 'react';
 import {usePathname} from 'next/navigation';
 import {BatteryFull, Signal, Wifi} from 'lucide-react';
 import AuthGate from './auth-gate';
+import {installContinuousCorners} from './continuous-corners';
+import BetaActivityTracker from './beta-activity';
+import SpringScroll from './spring-scroll';
+import MagneticEntry from './magnetic-entry';
+import ScrollReveal from './scroll-reveal';
+import './scroll-reveal.css';
+import './beta-mobile-viewport.css';
 
 function PhoneFrame({children}: {children: ReactNode}) {
   const [clock, setClock] = useState('--:--');
@@ -13,7 +20,7 @@ function PhoneFrame({children}: {children: ReactNode}) {
     const timer = setInterval(update, 15_000);
     return () => clearInterval(timer);
   }, []);
-  return <div className="zy-phone-preview">
+  return <div className="zy-phone-preview zy-phone-mobile">
     <div className="zy-phone-shell">
       <div className="zy-phone-screen">
       <div className="zy-phone-status" aria-hidden="true">
@@ -29,7 +36,10 @@ function PhoneFrame({children}: {children: ReactNode}) {
 }
 
 export default function ApplicationShell({children}: {children: ReactNode}) {
-  const mobile = usePathname() === '/mobile';
-  const protectedContent = <AuthGate>{children}</AuthGate>;
-  return mobile ? <PhoneFrame>{protectedContent}</PhoneFrame> : protectedContent;
+  useEffect(()=>installContinuousCorners(document),[]);
+  const pathname=usePathname();
+  const mobile = pathname === '/mobile';
+  if(pathname==='/admin'||pathname?.startsWith('/admin/')||pathname==='/survey-preview')return children;
+  const protectedContent = <AuthGate><BetaActivityTracker/><ScrollReveal/>{children}</AuthGate>;
+  return <><SpringScroll/><MagneticEntry/>{mobile ? <PhoneFrame>{protectedContent}</PhoneFrame> : protectedContent}</>;
 }

@@ -1,6 +1,45 @@
 /* The approved pearl / grey-green palette keeps the existing geometry and
    coral brand accents. Floating surfaces are shared in theme-glass.css. */
 :root {
+  /* Shared with the reflective sign-in card; these are the directory's
+     existing three stops, extracted without changing its color or alpha. */
+  --zy-directory-tone-start:#7fb5ae;
+  --zy-directory-tone-middle:#b4bfbc;
+  --zy-directory-tone-end:#b2a0ca;
+  /* Sign-in paints share the directory palette; local styles use these roles. */
+  --zy-auth-paper:#f9fafc;
+  --zy-auth-ink:#303b43;
+  --zy-auth-secondary:#626d78;
+  --zy-auth-base:#f1f4f6;
+  --zy-auth-accent:#527b98;
+  --zy-auth-input-fill:rgb(255 255 255 / 65%);
+  --zy-auth-input-ring-near:0 0 2px 1px rgb(66 83 96 / 9%);
+  --zy-auth-input-ring-far:0 0 8px 4px rgb(66 83 96 / 2%);
+  --zy-auth-input-ring-near-focus:0 0 2px 1px rgb(66 83 96 / 19%);
+  --zy-auth-input-ring-far-focus:0 0 8px 4px rgb(66 83 96 / 7%);
+  --zy-auth-button-focus:rgb(82 123 152 / 55%);
+  --zy-auth-primary-ink:#243d42;
+  --zy-auth-primary-strength:77%;
+  --zy-auth-primary-mix:#fff;
+  --zy-auth-secondary-fill:rgb(255 255 255 / 62%);
+  --zy-auth-secondary-hover:rgb(255 255 255 / 82%);
+  --zy-auth-secondary-shadow:0 0 0 1px rgb(88 103 135 / 8%);
+  --zy-auth-error-ink:#b74e53;
+  --zy-auth-error-shadow:0 0 0 1px rgb(183 78 83 / 45%),0 0 0 4px rgb(183 78 83 / 7%);
+  --zy-auth-error-shadow-focus:0 0 0 1px rgb(183 78 83 / 65%),0 0 0 4px rgb(183 78 83 / 12%);
+  --zy-reflective-shadow:0 32px 64px -24px rgb(28 43 53 / 30%),0 8px 18px -10px rgb(28 43 53 / 20%);
+  --zy-reflective-rim:rgb(246 252 255 / 58%);
+  --zy-reflective-rim-shadow:inset 0 1px 0 rgb(255 255 255 / 75%),inset 0 -1px 1px rgb(38 49 55 / 22%);
+  --zy-reflective-ink:#202d35;
+  --zy-reflective-ink-shadow:0 1px 0 rgb(255 255 255 / 47%);
+  --zy-reflective-mark-line:rgb(38 54 64 / 55%);
+  --zy-reflective-mark-shadow:0 1px 0 rgb(255 255 255 / 36%);
+  --zy-weight-body:400;
+  --zy-weight-strong:600;
+  --zy-composer-ring-near:0 0 1px 1px rgb(57 74 91 / 6%);
+  --zy-composer-ring-far:0 0 3px 1px rgb(57 74 91 / 3%);
+  --zy-composer-ring-near-focus:0 0 2px 1px rgb(57 74 91 / 14%);
+  --zy-composer-ring-far-focus:0 0 4px 1px rgb(57 74 91 / 8%);
   --zy-canvas:#f1f4f0; --zy-sidebar:#e5ebe4; --zy-rail:#d9e2d9;
   --zy-incoming:#e5ebe4; --zy-outgoing:#2e3a32; --zy-on-outgoing:#f1f4f0;
   --zy-ink:#252c27; --zy-secondary:#58645c; --zy-muted:#66746b;
@@ -11,11 +50,41 @@
   --zy-nav-active:#2e6252;
   --zy-layer-shadow:-8px 0 16px -7px rgb(31 39 34 / 12%), 0 8px 18px -15px rgb(31 39 34 / 8%);
   --zy-popup-shadow:0 9px 28px #0002;
+  --zy-directional-popup-shadow:-8px 8px 16px -16px #0002;
+  --zy-directional-composer-near:-1px 1px 2px -2px rgb(57 74 91 / 6%);
+  --zy-directional-composer-far:-2px 2px 4px -4px rgb(57 74 91 / 3%);
+  --zy-directional-composer-near-focus:-1px 1px 2px -2px rgb(57 74 91 / 14%);
+  --zy-directional-composer-far-focus:-2px 2px 4px -4px rgb(57 74 91 / 8%);
   --zy-composer-shadow:0 2px 8px rgb(31 39 34 / 5%);
   --zy-chat-control-ink:#242322;
   --zy-chat-control-accent:#e66562;
 }
 :root[data-zy-theme='dark'] {
+  --zy-auth-paper:#242b38;
+  --zy-auth-ink:#e5e9f1;
+  --zy-auth-secondary:#b7c1d0;
+  --zy-auth-base:#252c39;
+  --zy-auth-accent:#83a9c5;
+  --zy-auth-input-fill:rgb(235 241 255 / 5%);
+  --zy-auth-input-ring-near:0 0 2px 1px rgb(198 211 231 / 12%);
+  --zy-auth-input-ring-far:0 0 8px 4px rgb(198 211 231 / 2%);
+  --zy-auth-input-ring-near-focus:0 0 2px 1px rgb(198 211 231 / 26%);
+  --zy-auth-input-ring-far-focus:0 0 8px 4px rgb(198 211 231 / 8%);
+  --zy-auth-primary-ink:#f1f4fb;
+  --zy-auth-primary-strength:40%;
+  --zy-auth-primary-mix:transparent;
+  --zy-auth-secondary-fill:rgb(235 241 255 / 5%);
+  --zy-auth-secondary-hover:rgb(235 241 255 / 8%);
+  --zy-auth-secondary-shadow:0 0 0 1px rgb(221 231 255 / 8%);
+  --zy-auth-error-ink:#f48686;
+  /* PingFang/YaHei supply a real Medium face. Body stays at Regular so
+     small Chinese glyphs do not fall back to an overly thin Light face. */
+  --zy-weight-body:400;
+  --zy-weight-strong:500;
+  --zy-composer-ring-near:0 0 1px 1px rgb(0 0 0 / 18%);
+  --zy-composer-ring-far:0 0 3px 1px rgb(0 0 0 / 10%);
+  --zy-composer-ring-near-focus:0 0 2px 1px rgb(0 0 0 / 34%);
+  --zy-composer-ring-far-focus:0 0 4px 1px rgb(0 0 0 / 22%);
   --zy-canvas:#232b28; --zy-sidebar:#313b35; --zy-rail:#29332d;
   --zy-incoming:#37423b; --zy-outgoing:#37423b; --zy-on-outgoing:#edf2ee;
   --zy-ink:#edf2ee; --zy-secondary:#b9c7bd; --zy-muted:#a3b4a8;
@@ -26,6 +95,11 @@
   --zy-nav-active:#91ac9a;
   --zy-layer-shadow:-6px 0 14px -8px rgb(0 0 0 / 26%), 0 8px 18px -16px rgb(0 0 0 / 18%);
   --zy-popup-shadow:0 9px 28px rgb(0 0 0 / 28%);
+  --zy-directional-popup-shadow:-8px 8px 16px -16px rgb(0 0 0 / 28%);
+  --zy-directional-composer-near:-1px 1px 2px -2px rgb(0 0 0 / 18%);
+  --zy-directional-composer-far:-2px 2px 4px -4px rgb(0 0 0 / 10%);
+  --zy-directional-composer-near-focus:-1px 1px 2px -2px rgb(0 0 0 / 34%);
+  --zy-directional-composer-far-focus:-2px 2px 4px -4px rgb(0 0 0 / 22%);
   --zy-composer-shadow:0 2px 8px rgb(0 0 0 / 14%);
   --zy-chat-control-ink:#b9c7bd;
 }
@@ -38,7 +112,7 @@ html[data-zy-theme] .zy-desktop-stage,
 html[data-zy-theme] .zy-desktop-slot>.zy-app.zy-desktop { background:var(--zy-rail); }
 /* 2026-10-21 板块1 透明（暗色）：底板只留 4% 底色，颜色仍取 --zy-rail。
    4% = Hermes「窗口透明」色调 96% 的等效值（100 − 96）。 */
-html[data-zy-theme='dark'] .zy-desktop-slot>.zy-app.zy-desktop { background:color-mix(in srgb, var(--zy-rail) 4%, transparent); }
+html[data-zy-theme='dark'] .zy-desktop-slot>.zy-app.zy-desktop { background:color-mix(in srgb, var(--zy-rail) calc(4% * var(--zy-classic-strength,1)), transparent); }
 html[data-zy-theme] .zy-desktop .zy-base { position:relative; z-index:1; margin:3px 3px 3px 0; border-radius:12px; background:var(--zy-sidebar); box-shadow:var(--zy-layer-shadow); }
 html[data-zy-theme] .zy-app.zy-desktop :is(.xx-layout,.zy-chat) { margin:0; border-radius:0 12px 12px 0; overflow:hidden; }
 html[data-zy-theme] .zy-app.zy-desktop :is(.zy-contact-detail,.zy-pets) { margin:0; border-radius:0 12px 12px 0; }

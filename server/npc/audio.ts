@@ -1,6 +1,6 @@
 import type {Plugin} from 'vite';
-import {mkdirSync,readFileSync,writeFileSync,existsSync} from 'node:fs';
-import {join} from 'node:path';
+import {mkdirSync,readFileSync,writeFileSync,existsSync,lstatSync,realpathSync,renameSync,rmSync} from 'node:fs';
+import {join,sep} from 'node:path';
 import {mediaUser} from './media';
 import {translateText} from './codex';
 import {transcribeDoubao, synthesizeDoubao} from './doubao-audio';
@@ -18,6 +18,20 @@ export function audioExtension(b:Buffer){
  return null;
 }
 export const audioMime=(ext:string)=>({webm:'audio/webm',mp4:'audio/mp4',ogg:'audio/ogg',wav:'audio/wav',mp3:'audio/mpeg'}[ext]||'application/octet-stream');
+function ownedRecording(dir:string,id:string){
+ try{
+  if(!audioPattern.test(id)||lstatSync(dir).isSymbolicLink())return null;
+  const file=join(dir,id),info=lstatSync(file),canonical=realpathSync(dir)+sep;
+  if(!info.isFile()||info.isSymbolicLink()||info.size<12||info.size>12*1024*1024||!realpathSync(file).startsWith(canonical))return null;
+  const metaFile=file+'.json';let metadata:Record<string,unknown>={};
+  if(existsSync(metaFile)){
+   const info=lstatSync(metaFile);
+   if(!info.isFile()||info.isSymbolicLink()||info.size>64000||!realpathSync(metaFile).startsWith(canonical))return null;
+   try{const parsed:unknown=JSON.parse(readFileSync(metaFile,'utf8'));if(parsed&&typeof parsed==='object'&&!Array.isArray(parsed))metadata=parsed as Record<string,unknown>;}catch{}
+  }
+  return {file,metaFile,metadata};
+ }catch{return null;}
+}
 export {audioReady};
 export async function audioRequest(path:string,body:FormData|string){
  if(!audioReady())throw Error('语音服务未配置：请在本机 .env.local 设置 NPC_AUDIO_API_KEY，再重启程序');
@@ -63,13 +77,28 @@ export function npcAudio(deps={transcribe,translate:translateText}):Plugin{
     res.setHeader('Content-Type',audioMime(id.split('.').pop()!));res.setHeader('Cache-Control','private, no-store');res.setHeader('X-Content-Type-Options','nosniff');res.end(readFileSync(join(dir,id)));return;
    }
    if(req.method!=='POST'||req.headers.origin!==base.origin)return reply(403,{error:'请求来源不匹配'});
-   if(!['/upload','/translate'].includes(path))return reply(404,{error:'接口不存在'});
+   if(!['/upload','/translate','/transcribe'].includes(path))return reply(404,{error:'接口不存在'});
    if(active.has(user))return reply(409,{error:'正在处理上一条，请稍等'});
    active.add(user);
    try{
     const limit=path==='/upload'?12*1024*1024:20000;let size=0;const chunks:Buffer[]=[];
     for await(const c of req){size+=c.length;if(size>limit)return reply(413,{error:'内容过大'});chunks.push(Buffer.from(c));}
     const bytes=Buffer.concat(chunks);
+    if(path==='/transcribe'){
+     let body:unknown;try{body=JSON.parse(bytes.toString());}catch{return reply(400,{error:'语音内容无效'});}
+     const id=body&&typeof body==='object'&&!Array.isArray(body)?(body as {audioId?:unknown}).audioId:undefined;
+     if(typeof id!=='string'||!audioPattern.test(id))return reply(400,{error:'语音内容无效'});
+     const recording=ownedRecording(dir,id);if(!recording)return reply(404,{error:'语音不存在'});
+     const stored=recording.metadata.text;
+     if(typeof stored==='string'&&stored.trim()&&stored.length<=4000)return reply(200,{text:stored.trim()});
+     const audio=readFileSync(recording.file),extension=id.split('.').pop()!;
+     if(audioExtension(audio)!==extension)return reply(400,{error:'音频格式不支持'});
+     const result=await deps.transcribe(audio,extension);
+     if(typeof result!=='string'||!result.trim()||result.length>4000)return reply(422,{error:'没有识别到有效语音，请重试'});
+     const text=result.trim(),temporary=recording.metaFile+'.'+crypto.randomUUID()+'.tmp';
+     try{writeFileSync(temporary,JSON.stringify({...recording.metadata,text}),{flag:'wx',mode:0o600});renameSync(temporary,recording.metaFile);}finally{rmSync(temporary,{force:true});}
+     return reply(200,{text});
+    }
     if(path==='/translate'){
      const body=JSON.parse(bytes.toString());if(typeof body.text!=='string'||!body.text.trim()||body.text.length>4000||!['zh','en'].includes(body.target))return reply(400,{error:'翻译内容无效'});
      return reply(200,{text:await deps.translate(root,body.text,body.target)});

@@ -1,0 +1,22 @@
+.zy-arrangement-card{position:relative;display:flex;align-items:center;gap:12px;min-width:220px;max-width:100%;padding:14px;border-radius:12px;background:var(--zy-incoming);color:var(--zy-ink)}
+.zy-arrangement-card button{font:inherit;cursor:pointer;border:0;background:none}
+.zy-arrangement-card-open{display:flex;align-items:center;gap:10px;flex:1;min-width:0;padding:0;color:inherit;text-align:left}
+.zy-arrangement-card-open>span:nth-child(2){display:grid;gap:5px;min-width:0;flex:1}
+.zy-arrangement-card-open strong{overflow-wrap:anywhere;font-size:inherit;font-weight:600;line-height:1.4}
+.zy-arrangement-card-open small{font-size:calc(12px + var(--zy-font-adjust,0px));color:var(--zy-secondary)}
+.zy-arrangement-card-icon{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:10px;background:var(--zy-canvas);color:var(--zy-interaction-ink)}
+.zy-arrangement-card-open>svg{flex:none;color:var(--zy-secondary)}
+.zy-arrangement-card .zy-arrangement-card-revoke{flex:none;padding:6px 0 6px 8px;color:var(--zy-interaction-ink);font-size:calc(12px + var(--zy-font-adjust,0px))}
+.zy-arrangement-card-revoke:disabled{color:var(--zy-muted);cursor:default}
+.zy-arrangement-card.is-revoked .zy-arrangement-card-open{opacity:.62}
+.zy-arrangement-feedback{display:block;flex-basis:100%;font-size:calc(12px + var(--zy-font-adjust,0px));color:var(--zy-chat-control-accent)}
+.zy-arrangement-card:has(.zy-arrangement-feedback){flex-wrap:wrap}
+.zy-arrangement-offer{margin:5px 0 0;font-size:inherit;color:inherit}
+.zy-arrangement-offer>p{margin:0 0 10px;line-height:1.55}
+.zy-arrangement-offer-options{display:flex;gap:8px}
+.zy-arrangement-offer-options>button{min-width:66px;min-height:34px;padding:6px 18px;border:1px solid var(--zy-line);border-radius:999px;background:var(--zy-canvas);color:var(--zy-ink);font:inherit;cursor:pointer;transition:background 160ms}
+.zy-arrangement-offer-options>button:disabled{opacity:.55;cursor:default}
+.zy-arrangement-offer-options>button:hover{background:var(--zy-selected)}
+.zy-arrangement-offer-result{display:inline-flex;align-items:center;gap:5px;font-size:calc(12px + var(--zy-font-adjust,0px));color:var(--zy-secondary)}
+.zy-mobile .zy-arrangement-card{min-width:210px;padding:12px;border-radius:12px;background:var(--zy-m-incoming);color:var(--zy-m-ink)}
+.zy-mobile .zy-arrangement-card-icon,.zy-mobile .zy-arrangement-offer-options>button{background:var(--zy-m-chat-bg)}

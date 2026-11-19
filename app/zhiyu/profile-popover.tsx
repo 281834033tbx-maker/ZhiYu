@@ -16,7 +16,7 @@ type ProfilePopoverProps = {
 /** Native profiles may exceed the main App; browser cards retain safe bounds. */
 export default function ProfilePopover(props:ProfilePopoverProps) {
   const bridge=typeof window==='undefined'?undefined:window.zhiyuDesktop;
-  if(props.anchor&&bridge?.platform==='darwin'&&bridge.profilePopoverControl==='native-v1'
+  if(props.anchor&&bridge?.platform==='darwin'&&bridge.profilePopoverControl==='native-v2'
     &&bridge.prepareProfilePopover&&bridge.fitProfilePopover&&bridge.closeProfilePopover
     &&!props.className?.includes('zy-self-profile-popover')) {
     return <NativeProfilePopover {...props} anchor={props.anchor} className={props.className||''}

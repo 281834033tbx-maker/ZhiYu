@@ -1,15 +1,18 @@
 'use client';
 
-import {useLayoutEffect,useRef,type Ref} from 'react';
+import {useLayoutEffect,useRef,useState,type Ref} from 'react';
 import {createPortal} from 'react-dom';
 import {formatCallDuration} from '../../lib/npc/realtime-call-presentation';
+import {splitCaptionUpdate} from './caption-reveal';
 import './realtime-voice-call.css';
 
 export type RealtimeCaptionLine = {id:string;role:'user'|'assistant';text:string};
 export type RealtimeCaptionMessage = {text:string;tone:'error'|'notice';action?:{label:string;onClick:()=>void}};
 
-function CaptionLine({line,previous=false}:{line:RealtimeCaptionLine;previous?:boolean}) {
+function CaptionLine({line,previous=false,softenText=false}:{line:RealtimeCaptionLine;previous?:boolean;softenText?:boolean}) {
   const clip=useRef<HTMLDivElement>(null);
+  const [reveal,setReveal]=useState(()=>({text:line.text,revision:0,...splitCaptionUpdate('',line.text)}));
+  if(reveal.text!==line.text)setReveal({text:line.text,revision:reveal.revision+1,...splitCaptionUpdate(reveal.text,line.text)});
   useLayoutEffect(()=>{if(clip.current)clip.current.scrollTop=clip.current.scrollHeight;},[line.text]);
   useLayoutEffect(()=>{
     const element=clip.current;
@@ -20,16 +23,18 @@ function CaptionLine({line,previous=false}:{line:RealtimeCaptionLine;previous?:b
     return()=>observer.disconnect();
   },[]);
   return <div ref={clip} className={'zy-caption-line '+(previous?'zy-caption-prev':'zy-caption-current')+' is-'+line.role} data-caption-id={line.id} data-caption-role={line.role}>
-    <p>{line.text}</p>
+    <p>{softenText&&!previous?<>{reveal.before}{reveal.added&&<span key={reveal.revision} className="zy-caption-ink">{reveal.added}</span>}{reveal.after}</>:line.text}</p>
   </div>;
 }
 
-export function RealtimeCallCaptions({previous,current,waiting=false,hidden=false,message}: {
+export function RealtimeCallCaptions({previous,current,waiting=false,hidden=false,message,softenText=false}: {
   previous?:RealtimeCaptionLine|null;
   current?:RealtimeCaptionLine|null;
   waiting?:boolean;
   hidden?:boolean;
   message?:RealtimeCaptionMessage|null;
+  /** Enabled by the video scene only; ordinary chat and voice surfaces keep their existing behavior. */
+  softenText?:boolean;
 }) {
   return <section className={'zy-call-captions'+(hidden?' is-hidden':'')} aria-label="通话字幕" aria-live={hidden?'off':'polite'} aria-atomic="false" aria-hidden={hidden} inert={hidden} data-caption-hidden={hidden}>
     {message?<div className={'zy-caption-message is-'+message.tone} data-caption-message={message.tone}>
@@ -38,7 +43,7 @@ export function RealtimeCallCaptions({previous,current,waiting=false,hidden=fals
     </div>:<>
       {previous?.text&&<CaptionLine key={'previous:'+previous.role+':'+previous.id} line={previous} previous/>}
       {waiting?<output className="zy-caption-current zy-caption-waiting" aria-label="正在准备回复" data-caption-waiting="true"><i aria-hidden="true"/><i aria-hidden="true"/><i aria-hidden="true"/></output>
-        :current?.text?<CaptionLine key={'current:'+current.role+':'+current.id} line={current}/>:null}
+        :current?.text?<CaptionLine key={'current:'+current.role+':'+current.id} line={current} softenText={softenText}/>:null}
     </>}
   </section>;
 }

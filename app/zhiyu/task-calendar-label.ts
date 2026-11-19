@@ -1,4 +1,5 @@
 export function taskCalendarPlanName(character: {id: string; professionalTitle?: string; professionalProfile?: {title: string}}): string {
+  if (character.id === 'molly') return '任务日历';
   if (character.id === 'chen-nian') return '健身计划';
   if (character.id === 'zhou-chef') return '烹饪计划';
   const title = character.professionalTitle || character.professionalProfile?.title || '';

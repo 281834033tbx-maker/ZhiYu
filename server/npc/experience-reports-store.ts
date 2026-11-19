@@ -62,7 +62,7 @@ export class ExperienceReportsStore {
   const city=await this.weather.lookup(query.trim(),source as ReportCity['source']);
   return city|| (source==='manual'?parseReportCity({name:query,source:'manual'}):undefined);
  }
- private inputs(owner:string):ReportInputs {
+ readInputs(owner:string):ReportInputs {
   const now=this.clock(),snapshot=readSecretaryTasks(this.db,owner,now),convs:ReportConversation[]=[];
   for(const [, ,id] of conversations){const row=this.load(owner,id);if(row)convs.push({characterId:id,state:{...row.state,messages:factualHistoryMessages(privateHistoryMessages(row.state))}});}
   const measurements:ReportMeasurement[]=[];
@@ -108,7 +108,7 @@ export class ExperienceReportsStore {
   if(this.active.has(key)||this.db.prepare('SELECT 1 FROM npc_experience_reports WHERE owner=? AND id=?').get(owner,reportId))return false;
   if(kind==='morning'&&this.db.prepare('SELECT 1 FROM npc_secretary_occurrences WHERE owner=? AND date=?').get(owner,date))return false;
   if(kind==='morning'&&!settings.city){this.requestCity(owner);return false;}
-  const input=this.inputs(owner);if(input.snapshot.readErrors)return false;
+  const input=this.readInputs(owner);if(input.snapshot.readErrors)return false;
   const report=buildSecretaryReport(kind,input);
   this.active.add(key);
   try{

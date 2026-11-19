@@ -1,0 +1,104 @@
+/* 2026-11-15: the mobile cover starts behind the status bar. Keep the same
+   viewport when a profile overlays it, so opening/returning never shifts the feed. */
+.zy-phone-mobile .zy-phone-content:has(main.zy-mobile.zy-page-moments) {
+  inset:0;
+  padding-top:0;
+}
+.zy-phone-mobile main.zy-mobile.zy-page-moments {
+  --zy-m-detail-safe-top:47px;
+}
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop .zy-moments .zy-moments-cover {
+  height:287px;
+  min-height:287px;
+  margin-bottom:0;
+}
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop .zy-moments .zy-moments-cover-identity {
+  bottom:18px;
+  align-items:flex-end;
+}
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop .zy-moments .zy-moments-cover-name {
+  padding-bottom:3px;
+}
+/* A photo-only post gets the same four-pixel separation as the caption in
+   a text post. Captions keep their existing margins. */
+.zy-mobile .zy-post-content>header+.zy-mobile-moment-media {
+  margin-top:4px;
+}
+@media (max-width:600px) {
+  html:not([data-zy-mobile-native='true']) .zy-phone-mobile main.zy-mobile.zy-page-moments {
+    --zy-m-detail-safe-top:env(safe-area-inset-top,0px);
+  }
+  html:not([data-zy-mobile-native='true']) .zy-mobile .zy-mobile-moments-back {
+    top:calc(8px + env(safe-area-inset-top,0px));
+  }
+  html[data-zy-theme]:not([data-zy-mobile-native='true']) .zy-mobile.zy-app.zy-desktop .zy-moments .zy-moments-tools {
+    top:calc(8px + env(safe-area-inset-top,0px));
+  }
+}
+
+/* 2026-11-16: crop only the painted cover. Its original 287px layout box,
+   avatar and first post stay fixed; 18px + half of the 64px avatar = 50px. */
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop .zy-moments .zy-moments-cover>img {
+  height:calc(100% - 50px);
+}
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop .zy-moments :is(.zy-post-person strong,.zy-post-likers,.zy-post-likers strong,.zy-inline-comment strong) {
+  color:var(--zy-m-ink);
+  font-weight:600;
+}
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop .zy-moments .zy-inline-comment button {
+  color:var(--zy-m-ink);
+}
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop .zy-moments .zy-mobile-post-actions {
+  box-sizing:border-box;
+  width:89px;
+  min-width:89px;
+  height:30px;
+  gap:0;
+  padding:0 4px;
+}
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop .zy-moments .zy-mobile-post-actions>button {
+  flex:0 0 40px;
+  box-sizing:border-box;
+  width:40px;
+  min-width:40px;
+  height:30px;
+  padding:0;
+}
+.zy-mobile .zy-mobile-post-actions>i {
+  flex:0 0 1px;
+}
+.zy-mobile .zy-mobile-comment-compose {
+  position:absolute;
+  inset:0;
+  z-index:85;
+  pointer-events:none;
+}
+.zy-mobile .zy-mobile-comment-compose>.zy-m-composer {
+  pointer-events:auto;
+}
+.zy-mobile .zy-mobile-comment-reply {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:0 12px 8px;
+  padding:6px 12px;
+  border-radius:10px;
+  background:var(--zy-m-incoming);
+  color:var(--zy-m-ink);
+  font-size:calc(12px + var(--zy-font-adjust,0px));
+}
+.zy-mobile .zy-mobile-comment-reply>span {flex:1;min-width:0;}
+.zy-mobile .zy-mobile-comment-reply>button {display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;background:transparent;color:inherit;}
+.zy-mobile .zy-mobile-comment-media {margin-top:4px;}
+.zy-mobile .zy-mobile-comment-media .chat-image-open {max-width:150px;max-height:190px;}
+.zy-mobile .zy-mobile-comment-media .chat-image-open img {display:block;width:auto;height:auto;max-width:150px;max-height:190px;object-fit:contain;}
+.zy-mobile .zy-mobile-comment-media .zy-m-voice-bubble {max-width:150px;}
+.zy-mobile .zy-mobile-comment-compose {pointer-events:none;}
+.zy-mobile .zy-mobile-comment-compose .zy-m-composer {pointer-events:auto;}
+/* The cropped cover keeps the real nickname on the photo, while the avatar
+   keeps its original rectangle and the feed's first row does not move. */
+html[data-zy-theme] .zy-mobile.zy-app.zy-desktop .zy-moments .zy-moments-cover-name {
+  align-self:flex-start;
+  margin:0;
+  padding:0;
+}

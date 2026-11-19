@@ -8,6 +8,9 @@ import type { YuanState } from '../../lib/npc/yuan-xiaoman';
 import { currentExpressionPreferences } from '../../lib/npc/expression-preferences';
 import { loadDialogueSkill } from './dialogue-skill';
 import { realtimeHistoryBudget } from './realtime-speech-budget';
+import {DialoguePreferencesStore} from './dialogue-preferences';
+import {privatePreferences,hasXiaomanOpeningConsentContext} from './private-dialogue-experience';
+import {openingServiceFor} from './opening-service';
 
 const identity = '你在智域扮演虚构成年人物徐小曼，昵称小满，稳定人物ID：yuan-xiaoman。';
 const historyPath = (root: string) => join(root, '.npc-runtime/realtime-speech-history.sqlite');
@@ -76,10 +79,12 @@ export function loadXiaomanRealtimeContext(root: string, ownerId: string) {
   const skill = loadDialogueSkill(root, identity, 'yuan-xiaoman',{channel:'realtime',hasVoice:true});
   if (!skill) throw new Error('小满对话规则未载入');
   let state: YuanState | undefined;
+  let experiencePrompt='【本轮称呼】默认称呼老大，用户指定称呼优先，不每句都带称呼；安排状态尚未读取，不主动催安排。';
   const path = join(root, '.npc-runtime/state.sqlite');
   if (existsSync(path)) {
     const db = new DatabaseSync(path, { readOnly: true });
     try {
+      experiencePrompt=new DialoguePreferencesStore(db,Date.now,{readOnly:true}).prompt(ownerId,'yuan-xiaoman',{channel:'realtime'});
       if (db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='yuan_sessions'").get()) {
         const row = db.prepare('SELECT data FROM yuan_sessions WHERE id=?').get(`${ownerId}:yuan-xiaoman`) as { data: string } | undefined;
         if (row) state = JSON.parse(row.data) as YuanState;
@@ -120,6 +125,7 @@ export function loadXiaomanRealtimeContext(root: string, ownerId: string) {
     '【当前用户的具体表达偏好；同目标已按最新有效原话覆盖】\n' + JSON.stringify(expressionPreferences)
       + '\navoid表示换表达，allow表示撤回限制而非必须重新使用。图片偏好在语音中只保留相处原则，不声称已发图。',
     '【当前人物与共同规则】\n' + skill.rules,
+    experiencePrompt,
     '【当前账号有效关系，数值不朗读、不自行改写】\n' + JSON.stringify(stateContext),
     ...(pendingText ? ['【用户已发出的文字，尚无已送达的文字回复；仅作接续资料】\n' + JSON.stringify(pendingText.slice(-600))] : []),
     '身份、工作、喜好和风格只按同轮新人物卡；未知年龄和籍贯不补造。没有历史不假装已经交往，已有历史不每通电话重置为陌生人。',
@@ -153,6 +159,24 @@ export function loadXiaomanRealtimeContext(root: string, ownerId: string) {
       stateFound: !!state,
     },
   };
+}
+
+/** A completed current ASR is an actual user utterance, not provider/model
+ * instructions. Persist preferences before rebuilding this call's context. */
+export function updateXiaomanRealtimeContext(root:string,ownerId:string,userText:string) {
+  mkdirSync(join(root,'.npc-runtime'),{recursive:true});
+  const db=new DatabaseSync(join(root,'.npc-runtime/state.sqlite'));
+  try {
+    const store=privatePreferences(db,root);
+    store.atomic(()=>{
+      const row=db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='yuan_sessions'").get()
+        ?db.prepare('SELECT data FROM yuan_sessions WHERE id=?').get(`${ownerId}:yuan-xiaoman`) as {data:string}|undefined:undefined;
+      const agreement=!!row&&hasXiaomanOpeningConsentContext((JSON.parse(row.data) as YuanState).messages,Date.now());
+      openingServiceFor(db,root).noteUserSpeech(ownerId,'yuan-xiaoman');
+      store.applyIncoming(ownerId,'yuan-xiaoman',userText,{agreeToXiaomanOpening:agreement});
+    });
+  } finally {db.close();}
+  return loadXiaomanRealtimeContext(root,ownerId);
 }
 
 // Separate transcript journal: never overwrite the concurrently changing text

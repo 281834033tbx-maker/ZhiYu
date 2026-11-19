@@ -1,0 +1,20 @@
+/* Restore the pre-2026-11-11 full-height navigation using the original theme
+   rules. The only directory-header change is the removed duplicate profile. */
+html[data-zy-theme]:has(.zy-layout-classic),
+html[data-zy-theme]:has(.zy-layout-classic) body { background:transparent;overflow:hidden; }
+html[data-zy-theme] body .zy-desktop-slot>.zy-app.zy-desktop.zy-layout-classic { position:relative; }
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-classic>.zy-base>.zy-directory { padding-top:40px; }
+
+/* Optional extra translucency starts at zero, preserving the original paint
+   exactly until the user previews or saves a change. Never fade text/icons. */
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-classic[data-zy-classic-translucency]>.zy-base,
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-classic[data-zy-classic-translucency]>.zy-base>.zy-task-board { background:transparent; }
+html[data-zy-theme='dark'] body .zy-app.zy-desktop.zy-layout-classic[data-zy-classic-translucency] .zy-directory {
+  --directory-background:transparent;
+  background:color-mix(in srgb,var(--zy-sidebar) var(--zy-classic-alpha),transparent);
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-classic[data-zy-classic-translucency]>.zy-base>:is(.xx-layout,.zy-chat,.zy-contact-detail,.zy-pets,.zy-moments,.zy-me-page,.zy-user-facing-error),
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-classic[data-zy-classic-translucency] .zy-task-board-content {
+  background:color-mix(in srgb,var(--zy-canvas) var(--zy-classic-alpha),transparent);
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-classic[data-zy-classic-translucency].zy-page-chat>.zy-base>:is(.xx-layout,.zy-chat) :is(.xx-chat,.unified-chat-head,.xx-thread,.zy-thread,.zy-chat-empty,.zy-composer-area) { background:transparent; }

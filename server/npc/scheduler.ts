@@ -1,3 +1,7 @@
+import {privateDialoguePrompt} from './private-dialogue-experience';
+import {commitPrivateArrangement} from './arrangement-dialogue';
+import {arrangementsFor} from './arrangements-plugin';
+import type {DatabaseSync} from 'node:sqlite';
 import { scheduleDelivery } from '../../lib/npc/delivery';
 import { partInput, imageInputs } from './media';
 import type { NpcState } from '../../lib/npc/contracts';
@@ -15,6 +19,7 @@ import { contactDecision, prepareContactTurn, completeContactTurn, assertContact
 
 export type Runtime = {
   root: string;
+  db?:DatabaseSync;
   load: (id: string) => NpcState;
   save: (id: string, state: NpcState, revision: number) => void;
   generate: (root: string, prompt: string, options?: {images?:string[]; requestId?:string}) => Promise<unknown>;
@@ -57,7 +62,7 @@ export async function runScheduledTurn(runtime: Runtime, id: string) {
     const result = parseOutput(
       await runtime.generate(
         runtime.root,
-        buildPrompt(runtime.root, state, incoming, kind, contactKind),
+        runtime.db?privateDialoguePrompt(runtime.db,runtime.root,id.split(':')[0],'xia-xia',buildPrompt(runtime.root, state, incoming, kind, contactKind),incoming,kind==='proactive',clock):buildPrompt(runtime.root, state, incoming, kind, contactKind),
         { requestId: job, images: imageInputs(runtime.root,id.split(':')[0],state.messages.slice(-80)) },
       ),
       incoming,
@@ -96,7 +101,8 @@ export async function runScheduledTurn(runtime: Runtime, id: string) {
     completeContactTurn(fresh, now, contactKind, fresh.messages.slice(before), result.event, incoming);
     if (result.action === 'end_conversation') fresh.contactLife!.quietUntil = now + 2 * 3600000;
     nextLife.nextProactiveAt = fresh.contactLife!.nextAt;
-    runtime.save(id, fresh, fresh.revision);
+    if(runtime.db&&kind==='queued')commitPrivateArrangement({db:runtime.db,store:arrangementsFor(runtime.root),owner:id.split(':')[0],characterId:'xia-xia',state:fresh,before,incoming,turnId:job,now,startedAt:start},()=>runtime.save(id,fresh,fresh.revision));
+    else runtime.save(id,fresh,fresh.revision);
     return true;
   } catch {
     const fresh = runtime.load(id);

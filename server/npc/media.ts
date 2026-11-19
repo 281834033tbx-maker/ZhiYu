@@ -37,6 +37,7 @@ export function userPart(root:string, user:string, body:Record<string,unknown>):
   return text ? {type:'text',text} : null;
 }
 export function partInput(p:Part) {
+  if(p.type==='team_card')return '[图片]';
   if(p.type==='choice')return choicePlainText(p);
   if(p.type==='professional_task')return '[已发布的任务卡：'+p.taskId+']';
   if(p.type==='voice')return '[语音转写，可能有识别误差，不代表已感知声线或情绪] '+p.text;

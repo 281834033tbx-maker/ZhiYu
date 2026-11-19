@@ -43,15 +43,17 @@ function projectStep(step:ProfessionalTaskStep,key:string):Step {
     ...(duration?{timerSeconds:duration,durationText:`${duration} 秒`}:{})};
 }
 const professionalStatus:Record<ProfessionalTask['status'],TaskStatus>={active:'todo',paused:'paused',completed:'done',cancelled:'ended',skipped:'missed'};
-function projectProfessional(task:ProfessionalTask):Task|undefined {
-  if(!task.id||!['chen-nian','zhou-chef','liu'].includes(task.characterId)||!validTime(task.createdAt)||!Array.isArray(task.steps)||!professionalStatus[task.status])return;
+export type BoardProfessionalTask=Omit<ProfessionalTask,'characterId'>&{characterId:string;publisherName?:string;publisherAvatar?:string;category?:string};
+function projectProfessional(task:BoardProfessionalTask):Task|undefined {
+  if(!task.id||!task.characterId||!validTime(task.createdAt)||!Array.isArray(task.steps)||!professionalStatus[task.status])return;
   const key=`professional:${task.characterId}:${task.id}`;
   const dates=task.steps.map(step=>step.scheduledDate).filter(validDate).sort();
   const originalDate=dates[0]||(validDate(task.assignedDate)?task.assignedDate:dateOf(task.createdAt));
   const steps=task.steps.map(step=>projectStep(step,key));
   const completedTimes=task.steps.map(step=>step.completedAt).filter(validTime).sort();
   return {id:identifier('professional',key),title:task.title,
-    categoryId:task.characterId==='chen-nian'?'fitness':task.characterId==='liu'?'nutrition':'cooking',npcId:task.characterId,
+    categoryId:task.characterId==='chen-nian'?'fitness':task.characterId==='liu'?'nutrition':task.characterId==='zhou-chef'?'cooking':task.category||'professional',npcId:task.characterId,
+    ...(task.publisherName?{publisherName:task.publisherName}:{}),...(task.publisherAvatar?{publisherAvatar:task.publisherAvatar}:{}),
     type:steps.length?'steps':'single',amount:steps.length?`${steps.length} 个步骤`:'',date:originalDate,order:0,
     status:professionalStatus[task.status],...(steps.length?{steps}:{}),
     ...(task.status==='completed'&&completedTimes.length?{completedAt:completedTimes.at(-1)}:{}),
@@ -97,7 +99,7 @@ function projectPlan(group:GroupChat,reminders:ReturnType<typeof confirmedRemind
   }));
 }
 function projectGroup(group:GroupChat,since?:string):Task[] {
-  if(group.leftAt)return [];
+  if(group.leftAt||group.demonstration)return [];
   const reminders=confirmedReminders(group),planRows=projectPlan(group,reminders),cutoff=Date.parse(since||'');
   // An old plan excluded by the board's cutoff cannot swallow a newly
   // confirmed reminder. The reducer independently enforces the same cutoff.
@@ -122,7 +124,7 @@ function projectGroup(group:GroupChat,since?:string):Task[] {
  * server-saved confirmation pointer. Message text, candidate plans and
  * navigation cards cannot create tasks. The optional cutoff is used solely
  * to avoid deduplicating a new reminder against an excluded old plan. */
-export function projectLiveBoardTasks(professional:readonly ProfessionalTask[],groups:readonly GroupChat[],since?:string):Task[] {
+export function projectLiveBoardTasks(professional:readonly BoardProfessionalTask[],groups:readonly GroupChat[],since?:string):Task[] {
   const tasks=[...professional.map(projectProfessional).filter((task):task is Task=>!!task),...groups.flatMap(group=>projectGroup(group,since))];
   const known=new Set<string>();
   return tasks.filter(task=>{const key=task.source!.key;if(known.has(key))return false;known.add(key);return true;})

@@ -18,7 +18,15 @@ html[data-zy-theme='dark'] .message-context-menu .message-action-divider{backgro
 html[data-zy-theme='dark'] .message-context-menu button.message-action-delete{color:#ff777b}
 .message-transcript,.message-translation{display:block;margin-top:6px;padding:10px 12px;background:#f3f1ef;border-radius:10px;color:#353331;font-size:calc(13px + var(--zy-font-adjust,0px));line-height:1.6;white-space:pre-wrap;max-width:420px}
 .message-transcript small,.message-translation small{display:block;color:#8a8580;font-size:calc(11px + var(--zy-font-adjust,0px));margin-bottom:4px}
-.message-translation button{background:none;border:0;color:inherit;cursor:pointer}
+.message-translation button,.message-transcript button{background:none;border:0;color:inherit;font:inherit;cursor:pointer}
+.message-actions.is-mobile{-webkit-touch-callout:none;touch-action:pan-y pinch-zoom;user-select:none}
+.message-actions.is-mobile.has-voice{display:flex;flex-direction:column;align-items:flex-start}
+:is(.user,.mine) .message-actions.is-mobile.has-voice{align-items:flex-end}
+html[data-zy-theme] body .zy-app.zy-mobile .message-actions.is-mobile .message-transcript{box-sizing:border-box;max-width:min(340px,100%);margin-top:7px;padding:0;border:0;border-radius:0;background:none;color:var(--zy-m-ink);font-size:calc(13px + var(--zy-font-adjust,0px));line-height:1.6;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere;user-select:text}
+html[data-zy-theme] body .zy-app.zy-mobile .message-actions.is-mobile .message-transcript small{color:var(--zy-m-muted)}
+html[data-zy-theme] body .zy-app.zy-mobile .message-actions.is-mobile .message-transcript-error{color:var(--zy-m-danger)}
+html[data-zy-theme] body .zy-app.zy-mobile .message-actions.is-mobile .message-transcript button{text-decoration:underline;text-underline-offset:2px}
+.message-context-menu.is-mobile button{min-height:40px}
 .npc-voice{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:12px;background:#f3f1ef;max-width:290px}
 .npc-voice audio{width:250px;max-width:100%;height:36px}
 .npc-voice small{font-size:calc(11px + var(--zy-font-adjust,0px));color:#8b8580}

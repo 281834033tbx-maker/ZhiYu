@@ -1,4 +1,5 @@
 'use client';
+import {useDialogLightDismiss} from './use-dialog-light-dismiss';
 import {reportUserFacingError} from '../../lib/user-facing-errors';
 
 import {useEffect, useId, useRef, useState, type ReactNode, type SubmitEvent} from 'react';
@@ -27,6 +28,7 @@ export default function MessageForwardDialog({text, targets, onSend, onClose}: {
   const titleId = useId();
   const radioName = useId();
   const chosen = targets.find(target => target.id === selectedId);
+  useDialogLightDismiss(dialog,onClose,busy);
   const filtered = targets.filter(target => target.name.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
   const unavailable = (target: ForwardTarget) => target.disabled || (target.pending && !attemptedTargets.includes(target.id) ? '成员正在回复，请稍后再试' : '');
   useEffect(() => {

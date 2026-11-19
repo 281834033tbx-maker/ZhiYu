@@ -1,0 +1,15 @@
+.zy-native-window-resize{position:fixed;inset:0;z-index:200;pointer-events:none;background:transparent}
+.zy-native-window-resize-edge{position:absolute;display:block;pointer-events:auto;background:transparent;touch-action:none;user-select:none;-webkit-app-region:no-drag}
+.zy-native-window-resize-edge:is(.n,.s){left:14px;right:14px;height:8px;cursor:ns-resize}
+.zy-native-window-resize-edge:is(.e,.w){top:14px;bottom:14px;width:8px;cursor:ew-resize}
+.zy-native-window-resize-edge.n{top:0}
+.zy-native-window-resize-edge.s{bottom:0}
+.zy-native-window-resize-edge.e{right:0}
+.zy-native-window-resize-edge.w{left:0}
+.zy-native-window-resize-edge:is(.ne,.nw,.se,.sw){width:14px;height:14px}
+.zy-native-window-resize-edge:is(.ne,.nw){top:0}
+.zy-native-window-resize-edge:is(.se,.sw){bottom:0}
+.zy-native-window-resize-edge:is(.ne,.se){right:0}
+.zy-native-window-resize-edge:is(.nw,.sw){left:0}
+.zy-native-window-resize-edge:is(.nw,.se){cursor:nwse-resize}
+.zy-native-window-resize-edge:is(.ne,.sw){cursor:nesw-resize}

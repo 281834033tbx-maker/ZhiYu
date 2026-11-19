@@ -2,6 +2,10 @@ import { DatabaseSync } from 'node:sqlite';
 import { randomUUID } from 'node:crypto';
 import { generate, generateRaw } from './codex';
 import { momentActors, loadMomentRules, momentProfessionalEvidence } from './moment-policy';
+import {assets} from '../../lib/npc/contracts';
+import {userPart} from './media';
+import type {MomentCommentMedia} from '../../lib/npc/moment-comment';
+import {validMomentCommentUpload} from './moment-comment-media';
 
 export type SocialPost = {id:string;personId:string;text:string;status:string;images:string[];imageDescriptions?:string[];createdAt?:number};
 export type MomentActorContext = {visible?:boolean;paused?:boolean;busy?:boolean;relationship?:string;energy?:string;interests?:string[];sharedPublicEvents?:string[]};
@@ -25,12 +29,20 @@ export class MomentInteractions {
       CREATE TABLE IF NOT EXISTS npc_moment_social_jobs(id TEXT PRIMARY KEY,owner TEXT NOT NULL,post TEXT NOT NULL,kind TEXT NOT NULL,source TEXT NOT NULL,status TEXT NOT NULL,attempts INTEGER NOT NULL DEFAULT 0,at INTEGER NOT NULL,UNIQUE(owner,post,kind,source));
       CREATE TABLE IF NOT EXISTS npc_moment_social_evidence(owner TEXT NOT NULL,post TEXT NOT NULL,actor TEXT NOT NULL,kind TEXT NOT NULL,source TEXT NOT NULL,reason TEXT NOT NULL,at INTEGER NOT NULL,PRIMARY KEY(owner,post,actor,kind,source));
       CREATE TABLE IF NOT EXISTS npc_moment_social_seen(owner TEXT NOT NULL,post TEXT NOT NULL,actor TEXT NOT NULL,at INTEGER NOT NULL,PRIMARY KEY(owner,post,actor));`);
+    // An additive side table keeps every existing comment and positional
+    // INSERT unchanged. Text-only API objects retain their original shape.
+    db.exec('CREATE TABLE IF NOT EXISTS npc_moment_comment_media(comment TEXT PRIMARY KEY,owner TEXT NOT NULL,data TEXT NOT NULL)');
   }
   view(owner:string,post:SocialPost) {
     const likes=this.db.prepare('SELECT actor AS actorId,name FROM npc_moment_likes WHERE owner=? AND post=? ORDER BY at').all(owner,post.id) as {actorId:string;name:string}[];
     const rows=this.db.prepare('SELECT * FROM npc_moment_comments WHERE owner=? AND post=? ORDER BY at,rowid').all(owner,post.id) as CommentRow[];
     // Explicit public whitelist: evidence, state and source metadata never enter this API.
-    return {likes,liked:likes.some(l=>l.actorId==='self'),likeCount:likes.length,comments:rows.map(c=>({id:c.id,actorId:c.actor,name:c.name,text:c.text,time:new Date(c.at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),replyTo:c.reply_to,replyToName:rows.find(r=>r.id===c.reply_to)?.name}))};
+    return {likes,liked:likes.some(l=>l.actorId==='self'),likeCount:likes.length,comments:rows.map(c=>({id:c.id,actorId:c.actor,name:c.name,text:c.text,time:new Date(c.at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),replyTo:c.reply_to,replyToName:rows.find(r=>r.id===c.reply_to)?.name,...this.commentMedia(owner,c.id)}))};
+  }
+  private commentMedia(owner:string,id:string):{media?:MomentCommentMedia} {
+    const row=this.db.prepare('SELECT data FROM npc_moment_comment_media WHERE owner=? AND comment=?').get(owner,id) as {data:string}|undefined;
+    if(!row)return {};
+    try{return {media:JSON.parse(row.data) as MomentCommentMedia};}catch{return {};}
   }
   observe(owner:string,posts:SocialPost[]) {
     for(const post of posts.filter(p=>p.status==='published'))
@@ -43,14 +55,33 @@ export class MomentInteractions {
       else this.db.prepare("DELETE FROM npc_moment_likes WHERE owner=? AND post=? AND actor='self'").run(owner,post.id);
       return true;
     }
-    if(body.action!=='comment' || typeof body.text!=='string' || !body.text.trim() || body.text.length>1000 || typeof body.requestId!=='string' || !/^[a-f0-9-]{36}$/.test(body.requestId))return false;
+    if(body.action!=='comment' || typeof body.text!=='string' || body.text.length>1000 || typeof body.requestId!=='string' || !/^[a-f0-9-]{36}$/.test(body.requestId))return false;
+    const mediaKeys=['imageId','audioId','assetId'].filter(key=>body[key]!==undefined);
+    if(mediaKeys.length>1)return false;
+    let text=body.text.trim(),media:MomentCommentMedia|undefined;
+    if(mediaKeys.length){
+      // User-supplied URLs, transcripts, durations and account IDs never
+      // authorize attachments. Resolve the existing owner-checked upload.
+      if(body.imageId!==undefined&&!validMomentCommentUpload(this.root,owner,'image',body.imageId))return false;
+      if(body.audioId!==undefined&&!validMomentCommentUpload(this.root,owner,'audio',body.audioId))return false;
+      const part=userPart(this.root,owner,body);
+      if(!part)return false;
+      if(part.type==='upload')media={type:'image',url:part.url};
+      else if(part.type==='voice'){if(!part.url)return false;text=part.text;media={type:'voice',url:part.url,...(part.durationSeconds?{durationSeconds:part.durationSeconds}:{})};}
+      else if(part.type==='sticker')media={type:'sticker',url:assets[part.assetId].url};
+      else return false;
+    }
+    if(!text&&!media)return false;
     const parent=typeof body.replyTo==='string'?this.db.prepare('SELECT id FROM npc_moment_comments WHERE owner=? AND post=? AND id=?').get(owner,post.id,body.replyTo) as {id:string}|undefined:undefined;
     if(body.replyTo && !parent)return false;
-    const text=body.text.trim(),requestId=body.requestId;
+    const requestId=body.requestId;
     this.transaction(()=>{
       const id=randomUUID();
       const inserted=this.db.prepare('INSERT OR IGNORE INTO npc_moment_comments VALUES(?,?,?,?,?,?,?,?,?)').run(id,owner,post.id,'self',name,text,this.now(),parent?.id||null,requestId);
-      if(inserted.changes)this.enqueueReply(owner,post.id,id);
+      if(inserted.changes){
+        if(media)this.db.prepare('INSERT INTO npc_moment_comment_media VALUES(?,?,?)').run(id,owner,JSON.stringify(media));
+        this.enqueueReply(owner,post.id,id);
+      }
     });
     return true;
   }

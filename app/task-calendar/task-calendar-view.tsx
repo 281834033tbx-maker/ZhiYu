@@ -2,15 +2,17 @@
 /* eslint-disable next/no-img-element */
 /* oxlint-disable jsx-a11y/prefer-tag-over-role -- The custom month chooser uses a keyboard-operated listbox; dates are a named group. */
 
-import {useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent} from 'react';
+import {useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode} from 'react';
 import {Apple, CalendarDays, ChefHat, Check, ChevronDown, Dumbbell, Ellipsis, Minus, X} from 'lucide-react';
 import PressableIconButton from '../zhiyu/pressable-icon-button';
+import {LoadingSkeleton} from '../zhiyu/loading-state';
 import {calendarDayLabels, calendarMonthCells, calendarMonthStats} from './task-calendar-summary';
 import './task-calendar.css';
 
 export type TaskCalendarStep = Readonly<{id: string; title: string; completed: boolean; skipped?: boolean; training?: Readonly<{target: string}>}>;
 export type TaskCalendarTask = Readonly<{
   id: string;
+  characterId?: string;
   title: string;
   steps: readonly TaskCalendarStep[];
   completed: number;
@@ -38,6 +40,7 @@ export type TaskCalendarViewProps = {
   onRefresh?: () => void;
   nativeChrome?: boolean;
   onContentHeightChange?: (height: number) => void;
+  categoryControl?: ReactNode;
 };
 
 const weekdays = ['1', '2', '3', '4', '5', '6', '7'];
@@ -64,7 +67,7 @@ function dayDurationSummary(day: TaskCalendarDay) {
     return [`${label}：${Math.floor(minutes / 60)}小时${minutes % 60}分${state}`];
   }).join(' · ');
 }
-export default function TaskCalendarView({character, months, days, today, loading = false, error, onRefresh, nativeChrome = false, onContentHeightChange}: TaskCalendarViewProps) {
+export default function TaskCalendarView({character, months, days, today, loading = false, error, onRefresh, nativeChrome = false, onContentHeightChange, categoryControl}: TaskCalendarViewProps) {
   const page = useRef<HTMLElement>(null), toolbar = useRef<HTMLElement>(null), content = useRef<HTMLDivElement>(null);
   const available = useMemo(() => [...new Set([...months, today.slice(0, 7)])].filter(validMonth).sort(), [months, today]);
   const [selectedMonth, setSelectedMonth] = useState(today.slice(0, 7));
@@ -141,6 +144,7 @@ export default function TaskCalendarView({character, months, days, today, loadin
     {nativeChrome && <header className="zy-task-history-titlebar" aria-label={`${planName}窗口标题栏`}><PlanIcon size={14} strokeWidth={1.6} aria-hidden="true"/></header>}
     <header ref={toolbar} className="zy-task-history-toolbar">
           <h1>{planName}</h1>
+          <div className="zy-task-history-toolbar-controls">{categoryControl}
           <div ref={monthControl} className="zy-task-history-month-control">
             <button ref={monthTrigger} type="button" className="zy-task-history-month-trigger" aria-label={`选择月份，当前${fullMonthLabel(month)}`} aria-haspopup="listbox" aria-expanded={monthOpen} aria-controls={monthOpen ? listId : undefined} onKeyDown={monthKeys} onClick={() => setMonthOpen(value => !value)}>{monthLabel(month)}<ChevronDown size={14} strokeWidth={1.7}/></button>
             {monthOpen && <div ref={monthList} id={listId} className="zy-task-history-month-list" role="listbox" tabIndex={-1} aria-label="选择月份" onKeyDown={monthKeys}>
@@ -149,6 +153,7 @@ export default function TaskCalendarView({character, months, days, today, loadin
                 {available.filter(value => value.startsWith(`${year}-`)).map(value => <button type="button" role="option" key={value} aria-label={fullMonthLabel(value)} aria-selected={value === month} onClick={() => selectMonth(value)}>{monthLabel(value)}{value === month && <Check size={13} strokeWidth={1.7}/>}</button>)}
               </div>)}
             </div>}
+          </div>
           </div>
     </header>
     <div ref={content} className="zy-task-history-content">
@@ -173,7 +178,7 @@ export default function TaskCalendarView({character, months, days, today, loadin
       </section>
       <section className="zy-task-history-stats" aria-label={`${monthLabel(month)}任务分类统计`} aria-busy={loading}>
         <header className="zy-task-history-stats-heading"><h2>本月统计</h2><span>完成 / 记录</span></header>
-        {error ? <p className="zy-task-history-stats-empty">记录暂时无法读取</p> : loading && !stats.total ? <p className="zy-task-history-stats-empty">正在读取记录…</p> : <>
+        {error ? <p className="zy-task-history-stats-empty">记录暂时无法读取</p> : loading && !stats.total ? <LoadingSkeleton label="正在读取任务记录" variant="compact" rows={3}/> : <>
           <ul className="zy-task-history-stats-list">{stats.rows.map(row => <li key={row.id} data-category={row.id} aria-label={`${row.label}，完成${row.count}次，共${row.total}次记录`}>
             <span className="zy-task-history-stats-label">{row.label}</span>
             <span className="zy-task-history-stats-track" aria-hidden="true"><span className="zy-task-history-stats-record" style={{width: `${row.total / largestCount * 100}%`}}/><span className="zy-task-history-stats-completed" style={{width: `${row.count / largestCount * 100}%`}}/></span>

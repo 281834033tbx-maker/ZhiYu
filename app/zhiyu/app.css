@@ -434,20 +434,6 @@
   display: grid;
   place-items: center;
 }
-.zy-chat-welcome {
-  text-align: center;
-  padding: 100px 0;
-  color: #928a83;
-}
-.zy-chat-welcome h2 {
-  font-size: calc(20px + var(--zy-font-adjust,0px));
-  color: #333;
-  margin: 18px 0 8px;
-}
-.zy-chat-welcome small {
-  display: block;
-  margin: 20px;
-}
 .zy-message-photo {
   max-width: 300px;
   max-height: 300px;
@@ -1707,8 +1693,6 @@
 .zy-app .xx-compose textarea::placeholder { color: #757074; }
 .zy-app .xx-compose textarea,
 .zy-app .zy-composer textarea { caret-color: #c74559; }
-.zy-app .xx-welcome h2 { font-size: calc(16px + var(--zy-font-adjust,0px)); font-weight: 600; color: var(--detail-ink); }
-.zy-app .xx-welcome p { font-size: calc(13px + var(--zy-font-adjust,0px)); color: var(--detail-secondary); line-height: 1.7; }
 .zy-app .npc-quote { color: #626469; border-left-color: #e87961; background: #e9e9eb; }
 .zy-app .npc-quote strong { color: #a74b38; }
 .zy-app .npc-reply-action { color: #65676c; }

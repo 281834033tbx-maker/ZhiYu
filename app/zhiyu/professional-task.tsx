@@ -8,10 +8,11 @@ import {trainingTitlePresentation} from '../../lib/npc/training-task-presentatio
 import {professionalTaskSessionView} from '../../lib/npc/professional-task-session';
 import {completeProfessionalTaskSessionForAccount, startProfessionalTaskSession, setProfessionalTaskStatus, setProfessionalTaskStep, setProfessionalTaskStepDate, setProfessionalTaskTimer, useProfessionalTasks} from './professional-task-store';
 import {professionalTaskCharacterName, shanghaiToday, taskDateLabel, taskScheduleOptions} from './task-items';
+import {getCharacter} from '../../lib/npc/character-directory';
 import {FitnessDemonstrationButton} from './fitness-demonstration';
 import './professional-task.css';
 
-const taskStatusLabel=(status:ProfessionalTask['status'])=>({active:'本次任务进度',paused:'任务已暂停',completed:'全部步骤已完成',cancelled:'任务已结束',skipped:'当日未完成，已跳过'}[status]);
+const taskStatusLabel=(status:ProfessionalTask['status'])=>({active:'本次安排进度',paused:'安排已暂停',completed:'全部步骤已完成',cancelled:'安排已结束',skipped:'当日未完成，已跳过'}[status]);
 type ExpansionState={open:string;automatic?:string;manual:boolean;listeners:Set<()=>void>};
 const expansions=new Map<string,ExpansionState>();
 function expansionState(key:string,initial?:string){
@@ -108,7 +109,7 @@ function useTaskActions(accountId:string,task:ProfessionalTask){
     finally{working.current.delete(key);setPending(new Set(working.current));}
   }
   const complete=(step:ProfessionalTaskStep)=>perform('step:'+step.id,()=>setProfessionalTaskStep(accountId,task.id,step.id,!step.completedAt),'完成状态未保存，请稍后重试。');
-  const status=(value:ProfessionalTask['status'])=>perform('status',()=>setProfessionalTaskStatus(accountId,task.id,value),'任务状态未保存，请稍后重试。');
+  const status=(value:ProfessionalTask['status'])=>perform('status',()=>setProfessionalTaskStatus(accountId,task.id,value),'安排状态未保存，请稍后重试。');
   const timer=(step:ProfessionalTaskStep,action:'start'|'pause'|'resume')=>perform('timer:'+step.id,()=>setProfessionalTaskTimer(accountId,task.id,step.id,action),'计时状态未保存，请稍后重试。');
   const schedule=(step:ProfessionalTaskStep,date:string)=>perform('date:'+step.id,()=>setProfessionalTaskStepDate(accountId,task.id,step.id,date),'日期未保存，请稍后重试。');
   const startSession=()=>perform('session',()=>startProfessionalTaskSession(accountId,task.id),'开始状态未保存，请稍后重试。');
@@ -120,16 +121,16 @@ function TaskSessionStart({task,pending,onStart,onFinish,now}:{task:Professional
   const view=professionalTaskSessionView(task,now);
   if(!view)return null;
   const noun=view.kind==='training'?'训练':'做饭';
-  const label=pending.has('session')?'保存中…':task.status==='skipped'?'已跳过':task.status==='cancelled'?'任务已结束':task.status==='completed'?`${noun}完成`
+  const label=pending.has('session')?'保存中…':task.status==='skipped'?'已跳过':task.status==='cancelled'?'安排已结束':task.status==='completed'?`${noun}完成`
     :view.status==='running'?`${noun}中`:view.reason?.startsWith('尚未到')?view.reason:view.status==='completed'&&!view.canStart?`${noun}完成`
-    :view.status==='skipped'?'已跳过':view.status==='cancelled'?'任务已结束':view.status==='paused'&&task.status==='active'?`继续${noun}`:view.startLabel;
+    :view.status==='skipped'?'已跳过':view.status==='cancelled'?'安排已结束':view.status==='paused'&&task.status==='active'?`继续${noun}`:view.startLabel;
   const canFinish=view.kind==='cooking'&&view.session?.status==='running'&&task.status==='active';
-  return <button type="button" className="zy-professional-task-session-start" disabled={(!view.canStart&&!canFinish)||pending.has('session')||pending.has('session-complete')||pending.has('status')} title={canFinish?'完成本次做饭的所有任务':view.reason} onClick={event=>{if(canFinish)onFinish({sessionId:view.session!.id,anchor:event.currentTarget});else onStart();}}>{view.status==='running'?<span className="zy-professional-task-session-dot" aria-hidden="true"/>:<Play size={10} strokeWidth={2} aria-hidden="true"/>}{label}</button>;
+  return <button type="button" className="zy-professional-task-session-start" disabled={(!view.canStart&&!canFinish)||pending.has('session')||pending.has('session-complete')||pending.has('status')} title={canFinish?'完成本次做饭的所有安排':view.reason} onClick={event=>{if(canFinish)onFinish({sessionId:view.session!.id,anchor:event.currentTarget});else onStart();}}>{view.status==='running'?<span className="zy-professional-task-session-dot" aria-hidden="true"/>:<Play size={10} strokeWidth={2} aria-hidden="true"/>}{label}</button>;
 }
 /** A chat message refers to the task ID; its persisted state stays available outside the thread. */
 export function ProfessionalTaskCard({accountId,taskId,onOpen,showCharacter=false}:{accountId:string;taskId:string;onOpen?:(taskId:string)=>void;showCharacter?:boolean}){
   const tasks=useProfessionalTasks(accountId),task=tasks.find(item=>item.id===taskId);
-  if(!task)return <section className="zy-professional-task" aria-label="任务"><p className="zy-professional-task-status">任务正在同步…</p></section>;
+  if(!task)return <section className="zy-professional-task" aria-label="安排"><p className="zy-professional-task-status">安排正在同步…</p></section>;
   return <TaskCard key={task.id} accountId={accountId} task={task} onOpen={onOpen} showCharacter={showCharacter}/>;
 }
 function TaskCard({accountId,task,onOpen,showCharacter}:{accountId:string;task:ProfessionalTask;onOpen?:(taskId:string)=>void;showCharacter:boolean}){
@@ -137,19 +138,19 @@ function TaskCard({accountId,task,onOpen,showCharacter}:{accountId:string;task:P
   const [confirmComplete,setConfirmComplete]=useState<SessionConfirmation|null>(null);
   const [dialogOpen,setDialogOpen]=useState(false),steps=task.steps.slice(0,4);
   const open=()=>{if(onOpen)onOpen(task.id);else setDialogOpen(true);};
-  return <><section className="zy-professional-task" aria-label={task.title+'任务'} data-task-id={task.id}>
-    <header className="zy-professional-task-head"><div className="zy-professional-task-heading"><h3>{task.title}</h3><TaskCount task={task}/></div><TaskProgress task={task}/><p>{taskStatusLabel(task.status)}</p></header>
+  return <><section className="zy-professional-task" aria-label={task.title+'安排'} data-task-id={task.id}>
+    <header className="zy-professional-task-head"><div className="zy-professional-task-heading"><h3>{task.title}</h3><TaskCount task={task}/></div><p>计划 · {getCharacter(task.characterId)?.name||task.characterId}</p><TaskProgress task={task}/><p>{taskStatusLabel(task.status)}</p></header>
     {error&&!confirmComplete&&<p role="alert" className="zy-professional-task-error">{error}</p>}
     <TaskSteps task={task} steps={steps} expanded={expanded} onExpand={toggle} onComplete={step=>void complete(step)} onTimer={(step,action)=>void timer(step,action)} onSchedule={(step,date)=>void schedule(step,date)} pending={pending} now={now} showHints={false}/>
-    {task.steps.length>4&&<div className="zy-professional-task-preview-more" aria-label="还有更多任务步骤"><span/><span/><span/></div>}
-    <footer className="zy-professional-task-footer"><TaskSessionStart task={task} pending={pending} now={now} onStart={()=>void startSession()} onFinish={setConfirmComplete}/><button type="button" className="zy-professional-task-more" onClick={open}>查看全部任务</button></footer>
+    {task.steps.length>4&&<div className="zy-professional-task-preview-more" aria-label="还有更多安排步骤"><span/><span/><span/></div>}
+    <footer className="zy-professional-task-footer"><TaskSessionStart task={task} pending={pending} now={now} onStart={()=>void startSession()} onFinish={setConfirmComplete}/><button type="button" className="zy-professional-task-more" onClick={open}>查看全部安排</button></footer>
   </section>{dialogOpen&&<ProfessionalTaskDetailsDialog accountId={accountId} taskId={task.id} showCharacter={showCharacter} onClose={()=>setDialogOpen(false)}/>} {confirmComplete&&<CompleteSessionConfirmation confirmation={confirmComplete} pending={pending.has('session-complete')} error={error} onCancel={()=>setConfirmComplete(null)} onConfirm={()=>{void completeSession(confirmComplete.sessionId).then(saved=>{if(saved)setConfirmComplete(null);});}}/>}</>;
 }
 export function ProfessionalTaskDetailsDialog({accountId,taskId,onClose,onViewMessage,onReturnChat,showCharacter=false}:{accountId:string;taskId:string;onClose:()=>void;onViewMessage?:(messageId:string)=>void;onReturnChat?:()=>void;showCharacter?:boolean}){
   const task=useProfessionalTasks(accountId).find(item=>item.id===taskId);
   return task?<TaskDetailsDialog key={task.id} accountId={accountId} task={task} onClose={onClose} onViewMessage={onViewMessage} onReturnChat={onReturnChat} showCharacter={showCharacter}/>:null;
 }
-function EndTaskConfirmation({onCancel,onConfirm,pending,error,restoreFocus,title='是否结束当前任务？',pendingLabel='结束中…'}:{onCancel:()=>void;onConfirm:()=>void;pending:boolean;error:string;restoreFocus:()=>void;title?:string;pendingLabel?:string}){
+function EndTaskConfirmation({onCancel,onConfirm,pending,error,restoreFocus,title='是否结束当前安排？',pendingLabel='结束中…'}:{onCancel:()=>void;onConfirm:()=>void;pending:boolean;error:string;restoreFocus:()=>void;title?:string;pendingLabel?:string}){
   const dialog=useRef<HTMLDialogElement>(null),cancel=useRef<HTMLButtonElement>(null),titleId=useId();
   useLayoutEffect(()=>{const node=dialog.current;node?.showModal();cancel.current?.focus();return()=>{node?.close();restoreFocus();};},[restoreFocus]);
   return <dialog ref={dialog} className="zy-dialog zy-professional-task-confirm" aria-labelledby={titleId} onCancel={event=>{event.preventDefault();if(!pending)onCancel();}} onPointerDown={event=>{if(pending||event.target!==event.currentTarget||event.button!==0)return;const rect=event.currentTarget.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)onCancel();}}>
@@ -159,7 +160,7 @@ function EndTaskConfirmation({onCancel,onConfirm,pending,error,restoreFocus,titl
 }
 function CompleteSessionConfirmation({confirmation,...props}:{confirmation:SessionConfirmation;onCancel:()=>void;onConfirm:()=>void;pending:boolean;error:string}){
   const restoreFocus=useCallback(()=>{if(confirmation.anchor.isConnected)confirmation.anchor.focus({preventScroll:true});},[confirmation.anchor]);
-  return <EndTaskConfirmation {...props} restoreFocus={restoreFocus} title="是否确定完成所有任务？" pendingLabel="完成中…"/>;
+  return <EndTaskConfirmation {...props} restoreFocus={restoreFocus} title="是否确定完成所有安排？" pendingLabel="完成中…"/>;
 }
 function TaskDetailsDialog({accountId,task,onClose,onViewMessage,onReturnChat,showCharacter}:{accountId:string;task:ProfessionalTask;onClose:()=>void;onViewMessage?:(messageId:string)=>void;onReturnChat?:()=>void;showCharacter:boolean}){
   const dialog=useRef<HTMLDialogElement>(null),endButton=useRef<HTMLButtonElement>(null),returnButton=useRef<HTMLButtonElement>(null),titleId=useId();
@@ -172,11 +173,11 @@ function TaskDetailsDialog({accountId,task,onClose,onViewMessage,onReturnChat,sh
   const message=()=>{if(latest?.messageIds[0]&&onViewMessage)onViewMessage(latest.messageIds[0]);if(onReturnChat)onReturnChat();else onClose();};
   return <dialog ref={dialog} className="zy-dialog zy-professional-task-dialog" aria-labelledby={titleId} onCancel={event=>{event.preventDefault();if(!confirmEnd&&!confirmComplete)onClose();}} onPointerDown={event=>{if(confirmEnd||confirmComplete||event.target!==event.currentTarget||event.button!==0)return;const rect=event.currentTarget.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)onClose();}}>
     <header className="zy-professional-task-dialog-head"><div><h2 id={titleId}>{task.title}</h2>{showCharacter&&<p>{professionalTaskCharacterName(task)}</p>}</div><TaskCount task={task}/></header>
-    <div className="zy-professional-task-dialog-summary"><TaskProgress task={task}/><p>{taskStatusLabel(task.status)}{task.status==='paused'&&<button type="button" className="zy-professional-task-resume" disabled={pending.has('status')} onClick={()=>void status('active')}>继续任务</button>}</p></div>
+    <div className="zy-professional-task-dialog-summary"><TaskProgress task={task}/><p>{taskStatusLabel(task.status)}{task.status==='paused'&&<button type="button" className="zy-professional-task-resume" disabled={pending.has('status')} onClick={()=>void status('active')}>继续安排</button>}</p></div>
     {error&&!confirmEnd&&!confirmComplete&&<p role="alert" className="zy-professional-task-error">{error}</p>}
     {hasNew&&<output className="zy-professional-task-dialog-notice">有新提示<button type="button" onClick={()=>{setSeenHint(latest.id);if(expanded!==latest.stepId)toggle(latest.stepId);}}>查看步骤</button><button type="button" onClick={message}>查看消息</button></output>}
     <div className="zy-professional-task-dialog-list"><TaskSteps task={task} steps={task.steps} expanded={expanded} onExpand={toggle} onComplete={step=>void complete(step)} onTimer={(step,action)=>void timer(step,action)} onSchedule={(step,date)=>void schedule(step,date)} pending={pending} now={now}/></div>
-    <footer className="zy-professional-task-dialog-footer"><TaskSessionStart task={task} pending={pending} now={now} onStart={()=>void startSession()} onFinish={setConfirmComplete}/>{['active','paused'].includes(task.status)&&<button ref={endButton} type="button" className="zy-professional-task-end" disabled={pending.has('status')} onClick={()=>setConfirmEnd(true)}>结束任务</button>}<button ref={returnButton} type="button" className="zy-professional-task-return" onClick={onReturnChat||onClose}>返回聊天</button></footer>
+    <footer className="zy-professional-task-dialog-footer"><TaskSessionStart task={task} pending={pending} now={now} onStart={()=>void startSession()} onFinish={setConfirmComplete}/>{['active','paused'].includes(task.status)&&<button ref={endButton} type="button" className="zy-professional-task-end" disabled={pending.has('status')} onClick={()=>setConfirmEnd(true)}>结束安排</button>}<button ref={returnButton} type="button" className="zy-professional-task-return" onClick={onReturnChat||onClose}>返回聊天</button></footer>
     {confirmEnd&&<EndTaskConfirmation pending={pending.has('status')} error={error} restoreFocus={restoreConfirmationFocus} onCancel={()=>setConfirmEnd(false)} onConfirm={()=>{void status('cancelled').then(saved=>{if(saved)setConfirmEnd(false);});}}/>}
     {confirmComplete&&<CompleteSessionConfirmation confirmation={confirmComplete} pending={pending.has('session-complete')} error={error} onCancel={()=>setConfirmComplete(null)} onConfirm={()=>{void completeSession(confirmComplete.sessionId).then(saved=>{if(saved)setConfirmComplete(null);});}}/>}
   </dialog>;
@@ -203,9 +204,9 @@ export function ProfessionalTaskEntry({accountId,characterId='zhou-chef',compani
   const open=(id:string)=>{setPicker(false);if(onOpen)onOpen(id);else setTaskId(id);};
   const first=tasks[0],{completed,total}=professionalTaskProgress(first);
   return <><div ref={anchor} className={'zy-professional-task-entry'+(companion?' has-companion':'')+(activeTimer?' has-timer':'')}>
-    <button ref={trigger} type="button" aria-label={activeTimer?'查看计时任务：'+activeTimer.task.title+'，'+activeTimer.step.title+'，剩余 '+countdown(activeTimer.timer.remainingSeconds)+(activeTimer.timer.status==='paused'?'，已暂停':''):tasks.length===1?'查看任务：'+first.title:'查看 '+tasks.length+' 项任务'} aria-expanded={!activeTimer&&tasks.length>1?picker:undefined} aria-controls={picker?pickerId:undefined} onKeyDown={event=>{if(event.key==='Escape'&&picker){event.preventDefault();event.stopPropagation();setPicker(false);}}} onClick={()=>activeTimer?open(activeTimer.task.id):tasks.length===1?open(first.id):setPicker(!picker)}>
-      {activeTimer?<><TimerRing progress={activeTimer.timer.progress} paused={activeTimer.timer.status==='paused'}/><span className="zy-professional-task-entry-time">{countdown(activeTimer.timer.remainingSeconds)}</span>{activeTimer.timer.status==='paused'&&<Pause size={10} strokeWidth={2}/>} {timers.length>1&&<span className="zy-professional-task-entry-timer-count">+{timers.length-1}</span>}</>:<><ClipboardCheck size={20} strokeWidth={1.6}/><span className="zy-professional-task-entry-label">{tasks.length===1?first.title:'任务 '+tasks.length}</span>{tasks.length===1&&<span className="zy-professional-task-entry-progress">{completed}/{total}</span>}</>}
+    <button ref={trigger} type="button" aria-label={activeTimer?'查看计时安排：'+activeTimer.task.title+'，'+activeTimer.step.title+'，剩余 '+countdown(activeTimer.timer.remainingSeconds)+(activeTimer.timer.status==='paused'?'，已暂停':''):tasks.length===1?'查看安排：'+first.title:'查看 '+tasks.length+' 项安排'} aria-expanded={!activeTimer&&tasks.length>1?picker:undefined} aria-controls={picker?pickerId:undefined} onKeyDown={event=>{if(event.key==='Escape'&&picker){event.preventDefault();event.stopPropagation();setPicker(false);}}} onClick={()=>activeTimer?open(activeTimer.task.id):tasks.length===1?open(first.id):setPicker(!picker)}>
+      {activeTimer?<><TimerRing progress={activeTimer.timer.progress} paused={activeTimer.timer.status==='paused'}/><span className="zy-professional-task-entry-time">{countdown(activeTimer.timer.remainingSeconds)}</span>{activeTimer.timer.status==='paused'&&<Pause size={10} strokeWidth={2}/>} {timers.length>1&&<span className="zy-professional-task-entry-timer-count">+{timers.length-1}</span>}</>:<><ClipboardCheck size={20} strokeWidth={1.6}/><span className="zy-professional-task-entry-label">{tasks.length===1?first.title:'安排 '+tasks.length}</span>{tasks.length===1&&<span className="zy-professional-task-entry-progress">{completed}/{total}</span>}</>}
     </button>
-    {picker&&!activeTimer&&<div id={pickerId} className="zy-professional-task-picker" aria-label="进行中的任务">{tasks.map(task=>{const progress=professionalTaskProgress(task);return <button key={task.id} type="button" onKeyDown={event=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();setPicker(false);trigger.current?.focus();}}} onClick={()=>open(task.id)}><span>{task.title}{task.status==='paused'?' · 已暂停':''}</span><span>{progress.completed}/{progress.total}</span></button>;})}</div>}
+    {picker&&!activeTimer&&<div id={pickerId} className="zy-professional-task-picker" aria-label="进行中的安排">{tasks.map(task=>{const progress=professionalTaskProgress(task);return <button key={task.id} type="button" onKeyDown={event=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();setPicker(false);trigger.current?.focus();}}} onClick={()=>open(task.id)}><span>{task.title}{task.status==='paused'?' · 已暂停':''}</span><span>{progress.completed}/{progress.total}</span></button>;})}</div>}
   </div>{taskId&&<ProfessionalTaskDetailsDialog accountId={accountId} taskId={taskId} onClose={()=>setTaskId(null)}/>}</>;
 }

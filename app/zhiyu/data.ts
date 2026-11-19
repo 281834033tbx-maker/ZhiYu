@@ -61,7 +61,7 @@ export type Message = {
   file?: string;
   read?: boolean;
 };
-export type Comment = { id: string; name: string; text: string; time: string; actorId?:string; replyTo?:string|null; replyToName?:string };
+export type Comment = { id: string; name: string; text: string; time: string; actorId?:string; replyTo?:string|null; replyToName?:string;media?:import('../../lib/npc/moment-comment').MomentCommentMedia };
 export type Post = {
   createdAt?: string;
   source?: 'npc-moment';
@@ -83,16 +83,8 @@ export type Post = {
   comments: Comment[];
 };
 export const self: Person = {
-  id: 'self',
-  name: 'Jayden',
-  nickname: 'Jayden',
-  avatar: asset('chat', 1),
-  bio: '船停在岸边最安全，但这不是造船的目的。',
-  account: 'creatorBoxuan',
-  region: '上海市 · 上海市',
-  added: '',
-  online: true,
-  letter: 'J',
+  id: 'self', name: '我', nickname: '我', avatar: '/zhiyu-logo.png',
+  bio: '', account: 'zhiyu_user', region: '', added: '', online: true, letter: 'W',
 };
 export const molly: Person = {
   id: 'molly', source:'default', name: 'Molly', nickname: 'Molly', avatar: '/stitch/molly-avatar-v2.png', bio: '以后你只管做决定，剩下的我和团队来',
@@ -192,23 +184,5 @@ export const now = () =>
 export const initialMessages: Record<string, Message[]> = {
   liu: [],
 };
-export const initialPosts: Post[] = [
-  {
-    id: 'post-1',
-    personId: 'lin',
-    time: '今天 15:24',
-    text: '今天，收集了一些光的形状。',
-    location: '上海 · PRADA 荣宅',
-    images: [asset('moments', 4), asset('moments', 5), asset('moments', 6)],
-    liked: false,
-    comments: [
-      {
-        id: 'c1',
-        name: 'Jayden',
-        text: '光束那张太有秩序感了，层次感很赞！',
-        time: '10分钟前',
-      },
-    ],
-  },
-];
+export const initialPosts: Post[] = [];
 export const previewImages = [10, 11, 12, 13].map((i) => asset('contacts', i));

@@ -1,0 +1,17 @@
+.zy-dialog.zy-cut-opening-dialog {box-sizing:border-box;width:min(620px,calc(100vw - 40px));max-height:calc(100dvh - 48px);padding:0;border:1px solid var(--zy-glass-line);border-radius:12px;background:var(--zy-glass-fill);color:var(--zy-ink);box-shadow:var(--zy-popup-shadow),inset 0 1px 0 var(--zy-glass-highlight);overflow:hidden;font:calc(13px + var(--zy-font-adjust,0px))/1.65 'PingFang SC','Microsoft YaHei',sans-serif;}
+.zy-cut-opening-dialog>header {display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:.5px solid var(--zy-glass-line);}
+.zy-cut-opening-dialog h2 {margin:0;font-size:calc(16px + var(--zy-font-adjust,0px));font-weight:600;}
+.zy-cut-opening-dialog>header button {display:flex;align-items:center;justify-content:center;flex:none;width:28px;height:28px;padding:0;border:0;border-radius:6px;background:transparent;color:var(--zy-secondary);cursor:pointer;}
+.zy-cut-opening-body {max-height:calc(100dvh - 210px);overflow-y:auto;padding:16px 22px;}
+.zy-cut-opening-body>p {margin:0 0 14px;color:var(--zy-secondary);font-size:calc(12px + var(--zy-font-adjust,0px));}
+.zy-cut-opening-preview {display:flex;flex-direction:column;gap:14px;margin:0;padding:0;list-style:none;}
+.zy-cut-opening-preview>li {padding:12px 14px;border-radius:10px;background:var(--zy-glass-inner);}
+.zy-cut-opening-preview>li>strong {color:var(--zy-secondary);font-size:calc(12px + var(--zy-font-adjust,0px));font-weight:600;}
+.zy-cut-opening-preview p {margin:5px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;}
+.zy-cut-opening-preview blockquote {display:flex;flex-direction:column;gap:3px;margin:8px 0;padding:8px 10px;border-left:2px solid var(--zy-glass-line);border-radius:6px;background:var(--zy-glass-hover);color:var(--zy-secondary);font-size:calc(12px + var(--zy-font-adjust,0px));}
+.zy-cut-opening-preview blockquote strong {font-weight:600;}
+.zy-cut-opening-dialog>footer {display:flex;justify-content:flex-end;gap:10px;padding:14px 22px;border-top:.5px solid var(--zy-glass-line);}
+.zy-cut-opening-dialog>footer button {min-height:36px;padding:7px 14px;border:0;border-radius:10px;background:var(--zy-glass-inner);color:var(--zy-ink);font:inherit;cursor:pointer;}
+.zy-cut-opening-dialog>footer .zy-group-submit {background:var(--zy-nav-active);color:var(--zy-on-outgoing);}
+.zy-cut-opening-dialog button:disabled {opacity:.5;cursor:default;}
+.zy-cut-opening-dialog button:focus-visible {outline:2px solid var(--zy-interaction-ink);outline-offset:3px;}

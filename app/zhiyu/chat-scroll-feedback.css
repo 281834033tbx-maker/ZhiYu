@@ -1,0 +1,11 @@
+/* Wheel/touch inertia belongs to the platform. Contain chaining, not elasticity. */
+:is(.xx-thread,.zy-thread,.zy-list-scroll,.zy-address-list,.zy-moments,.zy-character-window-chat-scroll,.viewer-thumbnails,.image-viewer-forward-contacts) { overscroll-behavior:contain; }
+.generated-photo-placeholder { position:relative; }
+.zy-latest-message-slot { position:relative; flex:none; height:0; z-index:4; }
+.zy-chat-return-latest {
+  position:absolute; right:20px; bottom:12px; padding:7px 12px;
+  border:0; border-radius:999px; background:var(--zy-canvas); color:var(--zy-secondary);
+  box-shadow:var(--zy-popup-shadow); cursor:pointer;
+  font:inherit; font-size:calc(12px + var(--zy-font-adjust,0px)); font-variant-numeric:tabular-nums;
+}
+.zy-chat-return-latest:focus-visible { outline:2px solid var(--zy-interaction-ink); outline-offset:3px; }

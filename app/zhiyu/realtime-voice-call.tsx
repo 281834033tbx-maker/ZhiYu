@@ -35,6 +35,8 @@ export type RealtimeVoiceCallProps = {
   gender?: 'female'|'male';
   authorize: () => Promise<boolean>;
   available?:boolean;
+  mobile?:boolean;
+  onEnd?:()=>void;
   onCallActiveChange?: (active: boolean) => void;
   onBusyChange?: (busy:boolean)=>void;
 };
@@ -62,7 +64,7 @@ function safeError(message: string) {
   return permissionHints.has(message)?message:userFacingError(message,'media');
 }
 
-export default function RealtimeVoiceCall({ name, character, gender='female', authorize,available=true, onCallActiveChange,onBusyChange }: RealtimeVoiceCallProps) {
+export default function RealtimeVoiceCall({ name, character, gender='female', authorize,available=true, mobile=false,onEnd,onCallActiveChange,onBusyChange }: RealtimeVoiceCallProps) {
   const [state, setState] = useState<CallState>('idle');
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
@@ -413,6 +415,7 @@ export default function RealtimeVoiceCall({ name, character, gender='female', au
     setMuted(false);
     setNotice('');
     setState('ended');
+    if(mobile)onEnd?.();
   }
 
   function reconnect() {
@@ -428,14 +431,20 @@ export default function RealtimeVoiceCall({ name, character, gender='female', au
   let message:RealtimeCaptionMessage|undefined;
   if(!available)message={text:'暂不支持语音通话，可在聊天页交流',tone:'notice'};
   else if(error)message={text:error,tone:'error',...(microphoneDenied?{action:{label:'打开系统麦克风设置',onClick:()=>void window.zhiyuDesktop?.openMicrophoneSettings?.()}}:{})};
-  else if(cameraError)message={text:cameraError,tone:'error',...(cameraDenied?{action:{label:'打开系统摄像头设置',onClick:()=>void window.zhiyuDesktop?.openCameraSettings?.()}}:{})};
+  else if(cameraError)message={text:cameraError,tone:'error',...(cameraDenied&&(!mobile||!!window.zhiyuDesktop?.openCameraSettings)?{action:{label:'打开系统摄像头设置',onClick:()=>void window.zhiyuDesktop?.openCameraSettings?.()}}:{})};
   else if(notice)message={text:notice,tone:'notice'};
   else if(state==='idle'||state==='connecting')message={text:'正在接通…',tone:'notice'};
+  if(mobile)return <section className="zy-realtime-scene zy-mobile-realtime" aria-label={`与${name}人物互动`} data-call-state={!available&&state!=='ended'?'unavailable':state}>
+    <LocalCameraPreview visible={cameraEnabled||cameraPending} pending={cameraPending} videoRef={cameraVideo}/>
+    <RealtimeCallCaptions {...frame} hidden={message?false:frame.hidden} message={message} softenText/>
+    <RealtimeCallTimer elapsedMs={interactionElapsedMs} connecting={available&&(state==='idle'||state==='connecting')} connected={available&&ready}/>
+    <RealtimeVoiceControls muted={muted} microphoneReady={available&&ready} microphoneAvailable={available} cameraEnabled={cameraEnabled} cameraPending={cameraPending} cameraAvailable={available&&ready} onToggleMute={toggleMute} onHangup={close} onToggleCamera={()=>void toggleCamera()}/>
+  </section>;
   return <section className="zy-realtime-scene" aria-label={`与${name}人物互动`} data-call-state={!available&&state!=='ended'?'unavailable':state} data-voice-elapsed-ms={voiceElapsedMs}>
     {state!=='ended'&&<>
       <RealtimeCallTimer elapsedMs={interactionElapsedMs} connecting={available&&(state==='idle'||state==='connecting')} connected={available&&ready}/>
       <LocalCameraPreview visible={cameraEnabled||cameraPending} pending={cameraPending} videoRef={cameraVideo}/>
-      <RealtimeCallCaptions {...frame} hidden={message?false:frame.hidden} message={message}/>
+      <RealtimeCallCaptions {...frame} hidden={message?false:frame.hidden} message={message} softenText/>
       <RealtimeVoiceControls muted={muted} microphoneReady={available&&ready} microphoneAvailable={available} cameraEnabled={cameraEnabled} cameraPending={cameraPending} cameraAvailable={available}
         onToggleMute={toggleMute} onHangup={close} onToggleCamera={()=>void toggleCamera()}/>
     </>}

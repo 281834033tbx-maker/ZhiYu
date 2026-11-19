@@ -1,10 +1,12 @@
-/** Fixed demonstration transport. These cards never mutate real task or health data. */
+/** Shared report-card transport. Sources and permitted actions are checked by
+ * the server-owned message event, never inferred from a card's type alone. */
 export type OpenerCategory = 'birthday'|'pending'|'due'|'changed'|'weather'|'weekend'|'monday'|'busy'|'empty'|'normal';
 export interface WeatherLine { low:number;high:number;text:string;tip?:string }
 export interface ScheduleItem {
  id:string;time:string;category:'pet'|'meal'|'meal_out'|'supplement'|'water'|'training'|'sleep'|'parcel'|'housekeeping'|'pickup'|'work'|'travel'|'shopping'|'other';
  text:string;sub?:{kind:'place'|'timing'|'duration'|'reason'|'amount';text:string};tag?:'每天'|`每周${string}`|'新增'|'顺延'|'改期';ownerId:string;routineId?:string;
- /** Only explicit next-day rows carry a date; display the second-line 明天 marker. */
+ /** Scheduled snapshots always carry their actual date. Legacy demonstrations
+  * may omit it and keep their original 07:00-to-next-morning presentation. */
  date?:string;
 }
 export type ScheduleChange = {kind:'replace'|'add'|'remove';scheduleId?:string;item?:ScheduleItem};
@@ -30,7 +32,7 @@ export function reportDate(date:string,referenceDate:string,weekday=true){const 
 export function reportRelativeDate(date:string,referenceDate:string){const days=Math.max(0,Math.round((parseDay(date)-parseDay(referenceDate))/86400000));return days===0?'今天':days===1?'明天':days<60?`${days}天后`:`${Math.floor(days/30)}个月后`;}
 export function sortBriefSchedule(items:ScheduleItem[],date:string,sendTime='07:00'){
  const minutes=(time:string)=>{if(time==='全天')return -1;if(time==='上午')return 539;if(time==='下午')return 839;if(time==='晚上')return 1139;const [h,m]=time.split(':').map(Number);return h*60+m;};
- const start=minutes(sendTime),value=(item:ScheduleItem)=>{const n=minutes(item.time);return n===-1?-1:(item.date&&item.date>date?1440+n:n<start?n+1440:n);};
+ const start=minutes(sendTime),value=(item:ScheduleItem)=>{const n=minutes(item.time);return item.date?(parseDay(item.date)-parseDay(date))/60000+n:n===-1?-1:n<start?n+1440:n;};
  return items.map((item,index)=>({item,index})).sort((a,b)=>value(a.item)-value(b.item)||a.index-b.index).map(row=>row.item);
 }
 export function shoppingPlainText(list:ShoppingList){return [`${list.title}（${list.notes.join('、')}）`,...SHOPPING_GROUPS.flatMap(group=>{const row=list.groups.find(item=>item.group===group);return row?.items.length?[`${group}：${row.items.map(item=>`${item.name} ${item.qty.replace(/\s+/gu,'')}`).join('、')}`]:[];})].join('\n');}

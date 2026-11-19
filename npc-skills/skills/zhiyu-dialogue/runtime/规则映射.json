@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "residentCharacters": 2815,
+  "residentCharacters": 2986,
   "mapping": [
     {
       "source": "core/01-说话立场.md",
@@ -3444,6 +3444,10 @@
   "revisions": {
     "core/05 repeated insults": "R11: real last-7-day record, third repetition and apology weighting owned by code",
     "core/07 sequencing": "R14: first ask what happened; do not invent match details",
-    "modes/companion section4": "R19: one confirmation, respect real-world relationships and release"
+    "modes/companion section4": "R19: one confirmation, respect real-world relationships and release",
+    "20261117 exam round 1-2": "R18: hotline and contact in the first reply; R20: examples teach tone only, no copying facts; Molly distress = -1 plus 小满 contact card; training pause only as a proposal",
+    "20261117 exam round 3": "Molly distress includes tired/bad news; 夏夏 recommends directly without A/B; professional no gender assumption; stance, gift and comfort examples",
+    "20261117 exam round 4": "R04: \"should I\" questions require 要我说 stance; 柳 favorite food direct; Molly finding people sends real contact card; unconfirmed cancel asks once",
+    "20261117 API exam": "R12: no own hobby in serious moments, no invented user belongings; 何嘉伟 breakup example shows user apology; 小满 examples avoid banned 先别 forms"
   }
 }

@@ -1,0 +1,3 @@
+/* A short edge displacement is independent of content reveal/slide transforms. */
+.zy-spring-scrolling {will-change:translate;}
+@media(prefers-reduced-motion:reduce) {.zy-spring-scrolling {translate:none;will-change:auto;}}

@@ -1,11 +1,13 @@
 'use client';
-import {useState} from 'react';
+import {useContext,useState} from 'react';
 import Image from 'next/image';
 import {Cloud,CloudRain,CloudSnow,Sun} from 'lucide-react';
 import type {PublicSession} from '../../lib/npc/contracts';
 import type {ReportCity,ReportDecision,ReportMetric,SecretaryReport} from '../../lib/npc/experience';
 import {useAccount} from './auth-gate';
 import {npcFetch} from './npc-fetch';
+import {MobileComposerContext} from './mobile-composer-context';
+import {MobileSubmitButton} from './mobile-effects';
 import './secretary-report.css';
 export {DailyBriefCard,WeeklyReportCard} from './molly-report-cards';
 
@@ -18,6 +20,7 @@ async function secretaryRequest(accountId:string,body:Record<string,unknown>){
  if(!response.ok)throw Error('秘书请求未完成');return result;
 }
 export function CityPicker({city,onSaved,onClose}:{city?:ReportCity;onSaved?:(city:ReportCity)=>void;onClose?:()=>void}){
+ const mobile=useContext(MobileComposerContext);
  const {account}=useAccount(),[name,setName]=useState(city?.name||''),[candidate,setCandidate]=useState<ReportCity>(),[manual,setManual]=useState(!!city),[busy,setBusy]=useState(false),[error,setError]=useState('');
  async function locate(){
   if(busy)return;setBusy(true);setError('');
@@ -39,9 +42,19 @@ export function CityPicker({city,onSaved,onClose}:{city?:ReportCity;onSaved?:(ci
    onSaved?.(result.settings?.city||next);onClose?.();
   }catch{setError('没保存上，再试一次');}finally{setBusy(false);}
  }
+ async function mobileSave(value?:ReportCity){
+  if(busy||!name.trim()&&!value)throw Error('City request pending');
+  setBusy(true);setError('');
+  const next=value||(await secretaryRequest(account.id,{action:'locate-city',source:'manual',query:name.trim()})).city;
+  if(!next)throw Error('City missing');
+  const result=await secretaryRequest(account.id,{action:'city',city:next});
+  return result.settings?.city||next;
+ }
+ function mobileSaved(next:ReportCity){setBusy(false);onSaved?.(next);onClose?.();}
+ function mobileFailed(){setBusy(false);setError('没保存上，再试一次');}
  return <div className="zy-report-city-picker">
-  <div className="zy-report-city-actions"><button type="button" disabled={busy} onClick={()=>candidate?void save(candidate):void locate()}>{busy?'稍等一下':candidate?`用当前定位：${candidate.name}`:'用当前定位'}</button><button type="button" disabled={busy} onClick={()=>setManual(true)}>我自己输入</button></div>
-  {manual&&<form onSubmit={event=>{event.preventDefault();void save();}}><label>我自己输入<input aria-label="早报城市" value={name} maxLength={40} placeholder="输入城市" disabled={busy} onChange={event=>{setName(event.target.value);setCandidate(undefined);}}/></label><button type="submit" disabled={busy||!name.trim()}>确定</button></form>}
+  <div className="zy-report-city-actions">{mobile&&candidate?<MobileSubmitButton disabled={busy} onSubmit={()=>mobileSave(candidate)} onComplete={mobileSaved} onError={mobileFailed}>{`用当前定位：${candidate.name}`}</MobileSubmitButton>:<button type="button" disabled={busy} onClick={()=>candidate?void save(candidate):void locate()}>{busy?'稍等一下':candidate?`用当前定位：${candidate.name}`:'用当前定位'}</button>}<button type="button" disabled={busy} onClick={()=>setManual(true)}>我自己输入</button></div>
+  {manual&&<form onSubmit={event=>{event.preventDefault();if(mobile)event.currentTarget.querySelector<HTMLButtonElement>('.zy-mobile-submit-button')?.click();else void save();}}><label>我自己输入<input aria-label="早报城市" value={name} maxLength={40} placeholder="输入城市" disabled={busy} onChange={event=>{setName(event.target.value);setCandidate(undefined);}}/></label>{mobile?<MobileSubmitButton disabled={busy||!name.trim()} onSubmit={()=>mobileSave()} onComplete={mobileSaved} onError={mobileFailed}>确定</MobileSubmitButton>:<button type="submit" disabled={busy||!name.trim()}>确定</button>}</form>}
   {error&&<p role="alert">{error}</p>}{onClose&&<button type="button" className="zy-report-city-close" onClick={onClose}>收起</button>}
  </div>;
 }

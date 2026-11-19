@@ -34,6 +34,9 @@ html[data-zy-theme='dark'] .zy-task-history {background:var(--history-glass-fill
 .zy-task-history-month {display:flex;flex:0 0 auto;flex-direction:column;min-width:0;padding:18px 16px;border:1px solid var(--zy-glass-line);border-radius:12px;background:var(--zy-glass-inner);box-shadow:none;}
 .zy-task-history-toolbar {display:flex;align-items:center;justify-content:space-between;gap:18px;flex-shrink:0;min-height:32px;margin:0 0 22px;padding:0 4px;}
 .zy-task-history-toolbar h1 {min-width:0;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:calc(16px + var(--zy-font-adjust,0px));font-weight:400;letter-spacing:0;}
+.zy-task-history-toolbar-controls {display:flex;align-items:center;gap:14px;min-width:0;}
+.zy-task-history-category {min-height:30px;max-width:108px;border:1px solid var(--zy-line);border-radius:6px;padding:3px 7px;background:var(--zy-glass-inner);color:inherit;cursor:pointer;}
+.zy-task-history-category:focus-visible {outline:2px solid var(--zy-interaction-ink);outline-offset:3px;}
 .zy-task-history-month-control {position:relative;min-width:0;flex-shrink:0;}
 .zy-task-history-month-trigger {display:flex;align-items:center;gap:7px;min-height:30px;border:0;border-radius:6px;padding:0 2px 0 7px;background:transparent;font-size:calc(14px + var(--zy-font-adjust,0px));font-weight:400;letter-spacing:-.1px;cursor:pointer;}
 .zy-task-history-month-trigger>svg {flex-shrink:0;}

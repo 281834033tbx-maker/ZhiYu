@@ -1,29 +1,9 @@
 import { sites } from '@openai/sites-vite-plugin';
+import {zhiyuRuntimePlugins} from './server/beta/runtime';
 import tailwindcss from '@tailwindcss/postcss';
 import vinext from 'vinext';
 import { defineConfig, loadEnv } from 'vite';
 import hostingConfig from './.openai/hosting.json';
-import { npcMoments } from './server/npc/moments-plugin';
-import { npcImageWorker } from './server/npc/image-worker';
-import { npcAudio } from './server/npc/audio';
-import { npcVoiceWorker } from './server/npc/voice-worker';
-import { npcMedia } from './server/npc/media';
-import { npcLocal } from './server/npc/plugin';
-import { liuLocal } from './server/npc/liu-plugin';
-import { yuanLocal } from './server/npc/yuan-plugin';
-import { mollyLocal } from './server/npc/molly-plugin';
-import { chenLocal } from './server/npc/chen-plugin';
-import { heLocal } from './server/npc/he-plugin';
-import { chefLocal } from './server/npc/zhou-chef-plugin';
-import { authLocal } from './server/npc/auth-plugin';
-import { groupChatsLocal } from './server/npc/groups-plugin';
-import { secretaryLocal } from './server/npc/secretary-plugin';
-import { dialogueHealth } from './server/npc/dialogue-health';
-import { localServiceHealth } from './server/npc/local-service-health';
-import { npcQwenLocalWorker } from './server/npc/qwen-local-worker';
-import { npcRealtimeSpeechSettings } from './server/npc/realtime-speech-settings';
-import { npcRealtimeSpeechGateway } from './server/npc/realtime-speech-gateway';
-import { loadXiaomanRealtimeContext, recordXiaomanRealtimeEvent } from './server/npc/realtime-speech-context';
 
 const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
   '00000000-0000-4000-8000-000000000000';
@@ -61,7 +41,7 @@ const localBindingConfig = {
 export default defineConfig(async ({mode}) => {
   const providerEnv=loadEnv(mode,process.cwd(),'');
   for(const key of [
-    'NPC_TEXT_PROVIDER','DEEPSEEK_API_KEY','DEEPSEEK_MODEL',
+    'NPC_TEXT_PROVIDER','DEEPSEEK_API_KEY','DEEPSEEK_MODEL','DEEPSEEK_THINKING',
     'WEATHER_API_KEY','WEATHER_API_HOST',
     'NPC_AUDIO_PROVIDER','NPC_AUDIO_API_KEY','NPC_ASR_MODEL','NPC_TTS_MODEL',
     'NPC_VOICE_XIA_XIA','NPC_VOICE_YUAN','NPC_VOICE_MOLLY','NPC_VOICE_LIU',
@@ -79,7 +59,8 @@ export default defineConfig(async ({mode}) => {
   process.env.MINIFLARE_REGISTRY_PATH ??= '.wrangler/registry';
 
   // Wrangler snapshots its log path while the Cloudflare plugin is imported.
-  const { cloudflare } = await import('@cloudflare/vite-plugin');
+  const nodeRelease=process.env.ZHIYU_NODE_SERVER==='1';
+  const { cloudflare } = nodeRelease ? {cloudflare:null} : await import('@cloudflare/vite-plugin');
 
   return {
     css: { postcss: { plugins: [tailwindcss()] } },
@@ -102,34 +83,13 @@ export default defineConfig(async ({mode}) => {
       },
     },
     plugins: [
-      localServiceHealth(),
-      dialogueHealth(),
-      authLocal(),
-      groupChatsLocal(),
-      secretaryLocal(),
-      // Realtime credentials/context stay in the local Node service; the
-      // browser uses an authenticated PCM socket for Xiaoman's voice calls.
-      npcRealtimeSpeechSettings(),
-      npcRealtimeSpeechGateway({ loadContext: loadXiaomanRealtimeContext, recordEvent: recordXiaomanRealtimeEvent }),
-      npcMedia(),
-      npcAudio(),
-      npcVoiceWorker(),
-      npcQwenLocalWorker(),
-      npcLocal(),
-      mollyLocal(),
-      yuanLocal(),
-      liuLocal(),
-      chenLocal(),
-      heLocal(),
-      chefLocal(),
-      npcImageWorker(),
-      npcMoments(),
+      ...zhiyuRuntimePlugins(),
       vinext(),
-      sites(),
-      cloudflare({
+      ...(nodeRelease?[]:[sites(),
+      cloudflare!({
         viteEnvironment: { name: 'rsc', childEnvironments: ['ssr'] },
         config: localBindingConfig,
-      }),
+      })]),
     ],
   };
 });

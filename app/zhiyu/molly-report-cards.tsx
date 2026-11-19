@@ -1,6 +1,7 @@
 'use client';
 
-import {useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode} from 'react';
+import {recordBetaFeature} from './beta-events';
+import {useCallback, useContext, useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode} from 'react';
 import {createPortal} from 'react-dom';
 import Image from 'next/image';
 import {Copy, X} from 'lucide-react';
@@ -11,7 +12,10 @@ import {useAccount} from './auth-gate';
 import {people} from './data';
 import {npcFetch} from './npc-fetch';
 import {ReportSummary, ReportBody, ReportBlock, useReportExpansion} from './report-fold';
+import {MobileComposerContext} from './mobile-composer-context';
+import {MobileSubmitButton} from './mobile-effects';
 import './molly-report-cards.css';
+import './mobile-report.css';
 
 type OpenNpc=(id:string,quoteId?:string,prefill?:string)=>void;
 type DemoReceipt={brief?:DailyBrief;choiceMessageId?:string;characterId?:string;messageId?:string;text?:string;notice?:string};
@@ -26,12 +30,14 @@ function ReportAvatar({id,name}:{id:string;name?:string}) {
   return <span className="zy-molly-report-avatar" title={label}>{avatar?<Image src={avatar} width={22} height={22} alt={label} unoptimized/>:<span aria-label={label}>{label.slice(0,1)}</span>}</span>;
 }
 
-function ReportAction({children,confirm=false,disabled,onClick,label}:{children:string;confirm?:boolean;disabled:boolean;onClick:()=>void;label?:string}) {
+function ReportAction({children,confirm=false,disabled,onClick,label,onSubmit,onComplete,onError}:{children:string;confirm?:boolean;disabled:boolean;onClick:()=>void;label?:string;onSubmit?:()=>Promise<DemoReceipt>;onComplete?:(receipt:DemoReceipt)=>void;onError?:()=>void}) {
+  const mobile=useContext(MobileComposerContext);
+  if(mobile&&confirm&&onSubmit)return <MobileSubmitButton className="zy-m-report-confirm" disabled={disabled} aria-label={label||children} onSubmit={onSubmit} onComplete={onComplete} onError={onError}>{children}</MobileSubmitButton>;
   return <button type="button" className={'zy-molly-report-action'+(confirm?' is-confirm':'')} disabled={disabled} aria-label={label} onClick={event=>{event.stopPropagation();onClick();}}>{children}</button>;
 }
 
 function ScheduleRow({item,date,disabled,onOpen}:{item:ScheduleItem;date:string;disabled:boolean;onOpen:()=>void}) {
-  const nextDay=!!item.date&&item.date>date||/^\d\d:\d\d$/u.test(item.time)&&item.time<'07:00';
+  const nextDay=item.date?item.date>date:/^\d\d:\d\d$/u.test(item.time)&&item.time<'07:00';
   const changed=item.tag==='新增'||item.tag==='顺延'||item.tag==='改期';
   return <button type="button" className="zy-molly-report-schedule" onClick={onOpen} disabled={disabled} aria-label={`${item.time}${nextDay?' 明天':''} ${item.text}，和${people.find(person=>person.id===item.ownerId)?.name||'Molly'}聊这件事`}>
     <span className="zy-molly-report-schedule-time"><span>{item.time}</span><small>{nextDay?'明天':'\u00a0'}</small></span>
@@ -72,7 +78,8 @@ function ShoppingDialog({list,busy,error,onCheck,onClose,restoreFocus}:{list:Sho
 
 export function DailyBriefCard({brief:incoming,messageId,onOpenNpc,onOpenChoice}:{brief:DailyBrief;messageId:string;onOpenNpc?:OpenNpc;onOpenChoice?:(messageId:string)=>void}) {
   const {account}=useAccount(),[updated,setUpdated]=useState<{source:DailyBrief;brief:DailyBrief}|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState(''),[shoppingId,setShoppingId]=useState(''),[notice,setNotice]=useState('');
-  const brief=updated?.source===incoming?updated.brief:incoming;
+  const [mobilePendingBrief,setMobilePendingBrief]=useState<DailyBrief|null>(null);
+  const brief=mobilePendingBrief||(updated?.source===incoming?updated.brief:incoming);
   const working=useRef(false),shoppingAnchor=useRef<HTMLButtonElement|null>(null),expansion=useReportExpansion(account.id,messageId),contentId=useId();
   const restoreShoppingFocus=useCallback(()=>{if(shoppingAnchor.current?.isConnected)shoppingAnchor.current.focus();},[]);
   async function action(itemId:string,decision:ReportDemoAction['decision'],extra:Partial<ReportDemoAction>={}) {
@@ -85,6 +92,20 @@ export function DailyBriefCard({brief:incoming,messageId,onOpenNpc,onOpenChoice}
       if(receipt.choiceMessageId){if(onOpenChoice)onOpenChoice(receipt.choiceMessageId);else onOpenNpc?.('molly');}
     }catch{setError('这一步没保存上，再点一次');}
     finally{working.current=false;setBusy(false);}
+  }
+  async function confirmMobile(itemId:string) {
+    if(working.current)throw Error('Report action pending');
+    working.current=true;setBusy(true);setError('');setNotice('');setMobilePendingBrief(brief);
+    return reportRequest(account.id,{action:'report-demo-action',messageId,itemId,decision:'confirm'});
+  }
+  function completeMobileConfirmation(receipt:DemoReceipt) {
+    if(receipt.brief)setUpdated({source:incoming,brief:receipt.brief});
+    if(receipt.notice)setNotice(receipt.notice);
+    setMobilePendingBrief(null);working.current=false;setBusy(false);
+    if(receipt.choiceMessageId){if(onOpenChoice)onOpenChoice(receipt.choiceMessageId);else onOpenNpc?.('molly');}
+  }
+  function failMobileConfirmation() {
+    setMobilePendingBrief(null);working.current=false;setBusy(false);setError('这一步没保存上，再点一次');
   }
   async function quote(itemId:string) {
     if(!onOpenNpc||working.current)return;
@@ -101,11 +122,11 @@ export function DailyBriefCard({brief:incoming,messageId,onOpenNpc,onOpenChoice}
   const weatherText=[weather?`${weather.low}–${weather.high}° ${weather.text}${weather.tip?`，${weather.tip}`:''}`:'',brief.header.traffic].filter(Boolean).join(' · ');
   const visibleShopping=brief.shopping.filter(list=>!list.done);
   return <><article className={'xx-bubble zy-molly-report'+(expansion.expanded?' is-expanded':'')} aria-label="Molly 的今日安排" data-report-message={messageId} aria-busy={busy||undefined}>
-    <ReportSummary label="今日简报" expanded={expansion.expanded} contentId={contentId} onToggle={expansion.toggle}/>
+    <ReportSummary label="今日简报" expanded={expansion.expanded} contentId={contentId} onToggle={()=>{if(!expansion.expanded)recordBetaFeature(account,'brief_viewed',{npcId:'molly'});expansion.toggle();}}/>
     <ReportBody id={contentId} expanded={expansion.expanded}>
-    {block('weather','城市天气',<div className="zy-molly-report-overview"><strong>{reportDate(brief.date,brief.date)} · {brief.header.city}</strong>{weatherText&&<p>{weatherText}</p>}</div>)}
-    {!!brief.pending.length&&block('pending','待定',brief.pending.slice(0,3).map(item=><div className="zy-molly-report-pending" key={item.id}><span>{item.text}</span><span className="zy-molly-report-actions">{item.kind==='choose'?<ReportAction disabled={busy} onClick={()=>void action(item.id,'choose')}>去选</ReportAction>:<><ReportAction disabled={busy} confirm onClick={()=>void action(item.id,'confirm')}>确认</ReportAction><ReportAction disabled={busy} onClick={()=>void action(item.id,'dismiss')}>暂不</ReportAction></>}</span></div>))}
-    {!!brief.schedule.length&&block('schedule','日程',sortBriefSchedule(brief.schedule,brief.date).map(item=><ScheduleRow key={item.id} item={item} date={brief.date} disabled={busy||!onOpenNpc} onOpen={()=>void quote(item.id)}/>))}
+    {block('weather','城市天气',<div className="zy-molly-report-overview"><strong>{reportDate(brief.date,brief.date)} · {brief.header.city}</strong><p>{weatherText||'天气暂无数据'}</p></div>)}
+    {!!brief.pending.length&&block('pending','待定',brief.pending.slice(0,3).map(item=><div className="zy-molly-report-pending" key={item.id}><span>{item.text}</span><span className="zy-molly-report-actions">{item.kind==='choose'?<ReportAction disabled={busy} onClick={()=>void action(item.id,'choose')}>去选</ReportAction>:<><ReportAction disabled={busy} confirm onClick={()=>void action(item.id,'confirm')} onSubmit={()=>confirmMobile(item.id)} onComplete={completeMobileConfirmation} onError={failMobileConfirmation}>确认</ReportAction><ReportAction disabled={busy} onClick={()=>void action(item.id,'dismiss')}>暂不</ReportAction></>}</span></div>))}
+    {block('schedule','日程',brief.schedule.length?sortBriefSchedule(brief.schedule,brief.date).map(item=><ScheduleRow key={item.id} item={item} date={brief.date} disabled={busy||!onOpenNpc} onOpen={()=>void quote(item.id)}/>):<p>今天暂无已确认的安排</p>)}
     {!!visibleShopping.length&&block('shopping','采购',visibleShopping.slice(0,3).map(list=><div className="zy-molly-report-row" key={list.id}><div className="zy-molly-report-row-copy"><span>{list.title}</span><small>{list.notes.join('、')}</small></div><button type="button" className="zy-molly-report-action" onClick={event=>{shoppingAnchor.current=event.currentTarget;setShoppingId(list.id);}}>清单</button></div>))}
     {!!brief.bills.length&&block('bills','缴费',brief.bills.map(bill=>{
       const days=Math.round((Date.parse(bill.dueDate)-Date.parse(brief.date))/86400000),urgent=!bill.paid&&days<=3;
@@ -138,7 +159,7 @@ export function WeeklyReportCard({report,messageId,onOpenNpc}:{report:WeeklyRepo
     return rank(a.id)-rank(b.id);
   });
   return <article className={'xx-bubble zy-molly-report'+(expansion.expanded?' is-expanded':'')} aria-label="Molly 的本周回顾" data-report-message={messageId}>
-    <ReportSummary label="本周汇报" expanded={expansion.expanded} contentId={contentId} onToggle={expansion.toggle}/>
+    <ReportSummary label="本周汇报" expanded={expansion.expanded} contentId={contentId} onToggle={()=>{if(!expansion.expanded)recordBetaFeature(account,'weekly_viewed',{npcId:'molly'});expansion.toggle();}}/>
     <ReportBody id={contentId} expanded={expansion.expanded}>
     <ReportBlock id="overview" name="本周概览"><div className="zy-molly-report-overview"><strong>{reportDate(from,to,false)}–{reportDate(to,to,false)}</strong>{report.headline&&<p>{report.headline}</p>}</div></ReportBlock>
     {orderedBlocks.map(block=><ReportBlock key={block.id} id={block.id} name={weeklyBlocks.find(config=>config.id===block.id)?.name||block.name}>{block.rows.map((row,index)=><div className="zy-molly-report-week-row" key={`${row.itemKey}:${index}`}><div><span>{row.label}</span>{block.id!=='urgent'&&row.value&&<strong>{row.value}</strong>}</div><small className={row.danger||block.id==='urgent'?'is-danger':undefined}>{row.note||'\u00a0'}</small></div>)}</ReportBlock>)}

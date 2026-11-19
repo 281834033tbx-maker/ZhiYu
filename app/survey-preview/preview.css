@@ -1,0 +1,6 @@
+.zy-survey-preview > header { justify-content:space-between; }
+.zy-survey-preview a { color:var(--zy-ink); font-size:calc(13px + var(--zy-font-adjust,0px)); white-space:nowrap; }
+.zy-survey-preview-tabs { display:flex; flex-wrap:wrap; gap:10px; margin:24px 0 16px; }
+.zy-survey-preview-tabs button { min-height:44px; padding:10px 16px; border:1px solid var(--zy-line); border-radius:12px; background:var(--zy-incoming); color:var(--zy-ink); font:inherit; cursor:pointer; }
+.zy-survey-preview-tabs button[aria-pressed=true] { background:var(--zy-selected); border-color:var(--zy-directory-tone-start); }
+@supports (corner-shape:squircle) { .zy-survey-preview-tabs button { corner-shape:squircle; } }

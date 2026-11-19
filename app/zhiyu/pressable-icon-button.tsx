@@ -1,6 +1,7 @@
 'use client';
 
 import {useEffect, useImperativeHandle, useRef, useState, type ComponentPropsWithRef, type CSSProperties} from 'react';
+import {animateSpring,type SpringState} from './spring-motion';
 import './chat-icon-controls.css';
 import './pressable-icon-button.css';
 
@@ -19,12 +20,15 @@ export default function PressableIconButton({
   const listeners=useRef<(()=>void)|null>(null);
   const timer=useRef<ReturnType<typeof setTimeout>|null>(null);
   const alive=useRef(true);
+  const response=useRef<ReturnType<typeof animateSpring>|null>(null);
+  const pressure=useRef<SpringState>({position:1,velocity:0});
   const [state,setState]=useState<PressState>('idle');
   const [quarterTurns,setQuarterTurns]=useState(0);
   useImperativeHandle(ref,()=>button.current!,[]);
 
   function cleanup() {
     listeners.current?.();listeners.current=null;
+    response.current?.cancel();response.current=null;
     if(timer.current!==null){clearTimeout(timer.current);timer.current=null;}
   }
 
@@ -33,15 +37,15 @@ export default function PressableIconButton({
     press.current=null;cleanup();
     if(!alive.current)return;
     setState('release');
-    timer.current=setTimeout(()=>{
-      timer.current=null;
-      if(alive.current&&!press.current)setState('idle');
-    },360);
+    response.current=animateSpring({from:pressure.current.position,to:1,velocity:Math.max(.6,pressure.current.velocity),stiffness:380,damping:19,
+      positionTolerance:.0002,velocityTolerance:.003,onUpdate:next=>{pressure.current=next;button.current?.style.setProperty('--zy-pressure-scale',String(next.position));},
+      onComplete:()=>{response.current=null;if(alive.current&&!press.current)setState('idle');}});
   }
 
   function begin(next:Press) {
     if(disabled||press.current||!button.current)return;
     cleanup();press.current=next;setState('pressed');
+    pressure.current={position:.96,velocity:0};button.current.style.setProperty('--zy-pressure-scale','.96');
     const node=button.current;
     const document=node.ownerDocument;
     const window=document.defaultView;

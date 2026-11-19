@@ -2,6 +2,7 @@ import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import {join,resolve} from 'node:path';
 import type {DialoguePurpose} from '../../lib/npc/dialogue-purpose';
+import {isDialogueCrisisInput} from '../../lib/npc/dialogue-output-guard';
 import {parseAnqiujinRecipeLibrary,type AnqiujinRecipeLibrary} from './chef-recipe-library';
 import {parseWesternDessertRecipeLibrary,type WesternDessertRecipeLibrary} from './chef-western-dessert-library';
 import {parseChenFitnessLibrary,type ChenFitnessLibrary} from './chen-fitness-library';
@@ -73,7 +74,7 @@ export function dialogueSceneModules(mode:DialogueProfile['mode'],context:Dialog
   if(context.channel==='proactive'||context.channel==='moment')modules.push('11-主动消息与动态.md');
   if(context.hasImage||context.hasVoice)modules.push('09-图片与语音.md');
   if(context.intent==='comfort'||/(?:难过|委屈|被(?:裁|甩|骂|欺负)|失恋|分手|想哭|崩溃|没戏|好累|不开心|伤心|矫情|倾诉|烦死)/u.test(text))modules.push('04-安慰.md');
-  if(context.intent==='crisis'||/(?:想死|不想活|活着.{0,6}(?:没意思|没意义)|伤害自己|自杀|自残|轻生|结束生命|跳楼)/u.test(text))modules.push('12-危机.md');
+  if(context.intent==='crisis'||isDialogueCrisisInput(text))modules.push('12-危机.md');
   return modules;
 }
 function reader(root:string,sources:DialogueSkillSource[]){

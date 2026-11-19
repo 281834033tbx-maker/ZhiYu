@@ -1,3 +1,5 @@
+
+import {accountStorage} from './account-storage';
 export type StoredPet = {
   id: string;
   name: string;
@@ -22,7 +24,7 @@ export const petStorageKey = (accountId: string) => `zhiyu-pets-v1:${accountId}`
 
 export function readDisplayedPet(accountId: string): DisplayPet | null {
   try {
-    const raw = localStorage.getItem(petStorageKey(accountId));
+    const raw = accountStorage(accountId).getItem(petStorageKey(accountId));
     if (!raw) return null;
     const state = JSON.parse(raw) as Partial<StoredPetState>;
     if (state.visible === false || !Array.isArray(state.pets) || typeof state.selectedId !== 'string') return null;

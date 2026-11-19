@@ -11,7 +11,13 @@ import './zhiyu/font-size.css';
 import './zhiyu/theme-surfaces.css';
 import './zhiyu/theme-glass.css';
 import './zhiyu/theme-frosted.css';
+import './zhiyu/theme-mobile.css';
 import './zhiyu/mobile.css';
+import './zhiyu/mobile-moments-fixes.css';
+import './zhiyu/mobile-detail-pages.css';
+import './zhiyu/ui-materials.css';
+import './zhiyu/directional-surface-tokens.css';
+import './zhiyu/chat-scroll-feedback.css';
 
 export const metadata: Metadata = {
   title: '智域 · AI 社交客户端',

@@ -31,7 +31,9 @@ function relatedHypothesis(previous:string|undefined,next:string) {
 }
 
 /** ASR state belongs to an input item, not to the latest sentence globally.
- * Explicit snapshots replace hypotheses; documented delta packets append.
+ * Explicit snapshots replace hypotheses; incremental delta packets append.
+ * A provider whose delta events contain the current complete hypothesis must
+ * select snapshot mode, including when ASR corrections change the prefix.
  * Auto compatibility requires two consecutive strict prefix extensions
  * (three hypotheses), excluding simple token loops, before treating a delta
  * chain as cumulative. A single "不要" + "不要这样" remains two fragments.
@@ -43,28 +45,64 @@ function relatedHypothesis(previous:string|undefined,next:string) {
 export class RealtimeInputTranscriptAssembler {
   private readonly turns=new Map<string,InputTurn>();
   private readonly starts=new Map<string,string>();
+  private readonly itemAliases=new Map<string,string>();
+  private unboundId?:string;
   private activeId?:string;
   private sequence=0;
-  constructor(private readonly makeId:()=>string=()=>`input-${++this.sequence}`,private readonly deltaMode:'incremental'|'auto'='auto') {}
+  constructor(private readonly makeId:()=>string=()=>`input-${++this.sequence}`,private readonly deltaMode:'incremental'|'snapshot'|'auto'='auto') {}
 
   get currentTurnId(){return this.activeId;}
-  private create(turnId:string) {
+  private create(turnId:string,unbound=false) {
     const turn:InputTurn={turnId,text:'',final:false,snapshotDeltas:false,snapshotBase:'',prefixGrowths:0,events:new Set()};
     this.turns.set(turnId,turn);this.activeId=turnId;
-    if(this.turns.size>64)this.turns.delete(this.turns.keys().next().value!);
+    this.unboundId=unbound?turnId:undefined;
+    if(this.turns.size>64) {
+      const oldest=this.turns.keys().next().value!;
+      this.turns.delete(oldest);
+      for(const [alias,canonical] of this.itemAliases)if(canonical===oldest)this.itemAliases.delete(alias);
+    }
     return turn;
+  }
+  private knownItem(itemId?:string) {
+    if(!itemId)return;
+    return this.itemAliases.get(itemId)||(this.turns.has(itemId)?itemId:undefined);
+  }
+  private bindItem(itemId:string,turnId:string) {
+    // Keep the first emitted ID stable: changing it after a partial has
+    // rendered would make one utterance appear as two separate caption rows.
+    if(itemId!==turnId) {
+      this.itemAliases.set(itemId,turnId);
+      if(this.itemAliases.size>64)this.itemAliases.delete(this.itemAliases.keys().next().value!);
+    }
+    if(this.unboundId===turnId)this.unboundId=undefined;
+    return turnId;
+  }
+  private resolveItem(itemId?:string) {
+    if(!itemId)return;
+    const known=this.knownItem(itemId);
+    if(known)return known;
+    const pending=this.unboundId&&this.unboundId===this.activeId?this.turns.get(this.unboundId):undefined;
+    if(pending)return this.bindItem(itemId,pending.turnId);
+    return itemId;
   }
   start(itemId?:string,eventId?:string):{turnId:string;fresh:boolean} {
     const trace=identifier(eventId),known=trace?this.starts.get(trace):undefined;
-    const turnId=identifier(itemId)||known||this.makeId();
-    if(this.turns.has(turnId))return {turnId,fresh:false};
-    this.create(turnId);
+    const providerId=identifier(itemId);
+    const pendingStart=known&&known===this.unboundId&&known===this.activeId?this.turns.get(known):undefined;
+    // A distinct started event is an utterance boundary. Only a replay of
+    // the same pending start can supply its missing item ID here; ordinary
+    // partial/final events can bind it through resolveItem below.
+    const turnId=(providerId?this.knownItem(providerId)||(pendingStart&&!pendingStart.final?known:providerId):known)||this.makeId();
+    if(providerId)this.bindItem(providerId,turnId);
     if(trace){this.starts.set(trace,turnId);if(this.starts.size>64)this.starts.delete(this.starts.keys().next().value!);}
+    if(this.turns.has(turnId))return {turnId,fresh:false};
+    this.create(turnId,!providerId);
     return {turnId,fresh:true};
   }
   update(update:InputUpdate):RealtimeInputTranscript|undefined {
-    const turnId=identifier(update.itemId)||this.activeId||this.makeId();
-    const turn=this.turns.get(turnId)||this.create(turnId);
+    const providerId=identifier(update.itemId);
+    const turnId=this.resolveItem(providerId)||this.activeId||this.makeId();
+    const turn=this.turns.get(turnId)||this.create(turnId,!providerId);
     if(turn.final)return;
     const fingerprint=eventFingerprint(update);
     if(fingerprint&&turn.events.has(fingerprint))return;
@@ -74,7 +112,7 @@ export class RealtimeInputTranscriptAssembler {
       if(text!==undefined)turn.text=text;
       turn.final=true;
     } else if(text===undefined) return;
-    else if(update.kind==='snapshot') {
+    else if(update.kind==='snapshot'||this.deltaMode==='snapshot') {
       turn.text=text;turn.snapshotDeltas=false;turn.snapshotBase='';turn.lastDelta=undefined;turn.prefixGrowths=0;turn.candidateStart=undefined;
     }
     else {
@@ -102,7 +140,7 @@ export class RealtimeInputTranscriptAssembler {
     return {type:'transcript',role:'user',text:turn.text,final:turn.final,turnId};
   }
   fail(itemId?:string) {
-    const turn=this.turns.get(identifier(itemId)||this.activeId||'');
+    const turn=this.turns.get(this.resolveItem(identifier(itemId))||this.activeId||'');
     if(turn)turn.final=true;
   }
 }

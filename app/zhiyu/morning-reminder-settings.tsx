@@ -7,10 +7,12 @@ import {npcFetch} from './npc-fetch';
 import {reportUserFacingError} from '../../lib/user-facing-errors';
 import type {SecretarySettings} from '../../lib/npc/experience';
 import {reportScheduleDefaults,reportScheduleStore} from './report-schedule-store';
+import {LoadingSkeleton} from './loading-state';
+import {MobileSwitch} from './mobile-effects';
 import './morning-reminder-settings.css';
 
 type Settings = SecretarySettings;
-type SettingsResponse = {settings?:Settings;error?:string};
+type SettingsResponse = {settings?:Settings;error?:string;messageId?:string};
 const validTime = (time:string) => /^([01]\d|2[0-3]):[0-5]\d$/.test(time);
 const defaults:Settings = reportScheduleDefaults;
 function responseSettings(result:SettingsResponse):Settings {
@@ -19,21 +21,24 @@ function responseSettings(result:SettingsResponse):Settings {
   return {...defaults,...settings};
 }
 
-export default function MorningReminderSettings({onClose}:{onClose:()=>void}) {
+export default function MorningReminderSettings({onClose,mobile=false}:{onClose:()=>void;mobile?:boolean}) {
   const {account}=useAccount();
-  return <SettingsDialog key={account.id} accountId={account.id} onClose={onClose}/>;
+  return <SettingsDialog key={account.id} accountId={account.id} onClose={onClose} mobile={mobile}/>;
 }
-export function ReportScheduleSettings() {
+export function ReportScheduleSettings({mobile=false}:{mobile?:boolean}={}) {
   const {account}=useAccount();
-  return <SettingsDialog key={account.id} accountId={account.id} onClose={()=>{}} inline/>;
+  return <SettingsDialog key={account.id} accountId={account.id} onClose={()=>{}} inline mobile={mobile}/>;
 }
-function SettingsDialog({accountId,onClose,inline=false}:{accountId:string;onClose:()=>void;inline?:boolean}) {
+function SettingsDialog({accountId,onClose,inline=false,mobile=false}:{accountId:string;onClose:()=>void;inline?:boolean;mobile?:boolean}) {
+  const {account}=useAccount();
   const dialog=useRef<HTMLDialogElement>(null),alive=useRef(true),busy=useRef(false);
+  const sendingTemplateRef=useRef(false);
   const titleId=useId(),descriptionId=useId();
   const [settings,setSettings]=useState<Settings>(defaults);
   const settingsRef=useRef<Settings>(defaults),confirmedRef=useRef<Settings>(defaults),queuedSettings=useRef<Settings|null>(null);
   const [loading,setLoading]=useState(true),[saving,setSaving]=useState(false),[loadError,setLoadError]=useState(false);
   const [error,setError]=useState(''),[feedback,setFeedback]=useState(''),[retry,setRetry]=useState(0);
+  const [sendingTemplate,setSendingTemplate]=useState(false),[templateError,setTemplateError]=useState(''),[templateFeedback,setTemplateFeedback]=useState('');
   useEffect(()=>{if(inline)return;const node=dialog.current;node?.showModal();return()=>node?.close();},[inline]);
   useEffect(()=>{
     alive.current=true;
@@ -72,6 +77,17 @@ function SettingsDialog({accountId,onClose,inline=false}:{accountId:string;onClo
       if(alive.current){setSettings(confirmedRef.current);setError(reportUserFacingError(reason,'save','保存简报设置'));}
     } finally {busy.current=false;if(alive.current)setSaving(false);}
   }
+  async function sendDailyTemplate() {
+    if(loading||loadError||busy.current||sendingTemplateRef.current)return;
+    sendingTemplateRef.current=true;setSendingTemplate(true);setTemplateError('');setTemplateFeedback('');
+    try {
+      const result=await request({action:'regenerate-report-demo',kind:'daily'});
+      if(typeof result.messageId!=='string'||!result.messageId)throw Error('模板消息暂时无法确认');
+      if(alive.current)setTemplateFeedback('已发送到 Molly 对话');
+    } catch(reason) {
+      if(alive.current)setTemplateError(reportUserFacingError(reason,'send','发送简报模板'));
+    } finally {sendingTemplateRef.current=false;if(alive.current)setSendingTemplate(false);}
+  }
   // Controls use explicit 24-hour parts, avoiding native AM/PM clipping.
   // Save from the latest ref so quick hour/minute edits stay in one queue.
   function saveTime(key:'time'|'weeklyTime',part:'hour'|'minute',value:string) {
@@ -89,19 +105,27 @@ function SettingsDialog({accountId,onClose,inline=false}:{accountId:string;onClo
     </fieldset>;
   };
   const content=<>
+    {loading?<LoadingSkeleton label="正在同步简报与周报设置" rows={4} variant="compact" className="zy-settings-loading"/>:<>
     <section className="zy-report-settings-section" aria-label="今日简报设置">
-      <div className="zy-morning-settings-row"><label htmlFor={titleId+'-enabled'}>今日简报</label><button type="button" id={titleId+'-enabled'} role="switch" aria-checked={settings.enabled} aria-label="今日简报" className="zy-morning-settings-switch" disabled={disabled} onClick={()=>void save({enabled:!settings.enabled})}><span/></button></div>
+      <div className="zy-morning-settings-row"><label htmlFor={titleId+'-enabled'}>今日简报</label>{mobile?<MobileSwitch id={titleId+'-enabled'} label="今日简报" checked={settings.enabled} disabled={disabled} onChange={enabled=>void save({enabled})}/>:<button type="button" id={titleId+'-enabled'} role="switch" aria-checked={settings.enabled} aria-label="今日简报" className="zy-morning-settings-switch" disabled={disabled} onClick={()=>void save({enabled:!settings.enabled})}><span/></button>}</div>
       <div className="zy-morning-settings-row"><span>每天发送时间</span>{timePicker('time','简报时间',!settings.enabled)}</div>
     </section>
     <section className="zy-report-settings-section" aria-label="周报设置">
-      <div className="zy-morning-settings-row"><label htmlFor={titleId+'-weekly'}>周报</label><button type="button" id={titleId+'-weekly'} role="switch" aria-checked={settings.weeklyEnabled} aria-label="周报" className="zy-morning-settings-switch" disabled={disabled} onClick={()=>void save({weeklyEnabled:!settings.weeklyEnabled})}><span/></button></div>
+      <div className="zy-morning-settings-row"><label htmlFor={titleId+'-weekly'}>周报</label>{mobile?<MobileSwitch id={titleId+'-weekly'} label="周报" checked={!!settings.weeklyEnabled} disabled={disabled} onChange={weeklyEnabled=>void save({weeklyEnabled})}/>:<button type="button" id={titleId+'-weekly'} role="switch" aria-checked={settings.weeklyEnabled} aria-label="周报" className="zy-morning-settings-switch" disabled={disabled} onClick={()=>void save({weeklyEnabled:!settings.weeklyEnabled})}><span/></button>}</div>
       <div className="zy-morning-settings-row"><span>每周发送时间</span><div className="zy-report-settings-week"><select aria-label="周报星期" value={settings.weeklyDay} disabled={disabled||!settings.weeklyEnabled} onChange={event=>void save({weeklyDay:Number(event.currentTarget.value)})}>{['日','一','二','三','四','五','六'].map((day,index)=><option key={day} value={index}>周{day}</option>)}</select>{timePicker('weeklyTime','周报时间',!settings.weeklyEnabled)}</div></div>
     </section>
     <p id={descriptionId} className="zy-morning-settings-note">北京时间 · 修改后自动保存</p>
+    {account.storageMode!=='server'&&<section className="zy-report-settings-section zy-report-settings-demo" aria-label="今日简报模板示例">
+      <h3>原版模板示例</h3>
+      <p className="zy-report-settings-demo-note">使用固定示例内容，查看之前的简报格式。</p>
+      <button type="button" disabled={disabled||saving||sendingTemplate} onClick={()=>void sendDailyTemplate()}>{sendingTemplate?'发送中…':'发送今日简报模板'}</button>
+      <div className="zy-morning-settings-status" aria-live="polite">{templateError?<p role="alert">{templateError}</p>:templateFeedback}</div>
+    </section>}
+    </>}
     <div className="zy-morning-settings-status" aria-live="polite">{error?<p role="alert">{error}{loadError&&<button type="button" onClick={()=>{setLoading(true);setError('');setRetry(value=>value+1);}}>重新同步</button>}</p>:loading?'正在同步…':saving?'保存中…':feedback}</div>
   </>;
-  if(inline)return <div className="zy-morning-settings zy-report-settings-inline" aria-label="简报与周报设置">{content}</div>;
-  return <dialog ref={dialog} className="zy-dialog zy-morning-settings" aria-labelledby={titleId} aria-describedby={descriptionId} onCancel={event=>{event.preventDefault();onClose();}} onPointerDown={event=>{if(event.target!==event.currentTarget||event.button!==0)return;const rect=event.currentTarget.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)onClose();}}>
+  if(inline)return <div className={'zy-morning-settings zy-report-settings-inline'+(mobile?' zy-mobile-report-settings':'')} aria-label="简报与周报设置">{content}</div>;
+  return <dialog ref={dialog} className={'zy-dialog zy-morning-settings'+(mobile?' zy-mobile-report-settings':'')} aria-labelledby={titleId} aria-describedby={descriptionId} onCancel={event=>{event.preventDefault();onClose();}} onPointerDown={event=>{if(event.target!==event.currentTarget||event.button!==0)return;const rect=event.currentTarget.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)onClose();}}>
     <header><h2 id={titleId}>简报与周报</h2><button type="button" aria-label="关闭简报设置" onClick={onClose}><X size={18} strokeWidth={1.7}/></button></header>
     {content}
   </dialog>;

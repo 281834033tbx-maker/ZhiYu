@@ -1,0 +1,10 @@
+/* Only the explicitly imported static screenshot conversation is compacted. */
+.zy-group-demo-label { display:inline-block;margin-left:8px;padding:1px 6px;border-radius:6px;background:var(--zy-hover);color:var(--zy-secondary);font-size:calc(11px + var(--zy-font-adjust,0px));font-weight:400;vertical-align:middle; }
+.zy-group-demo-range { color:var(--zy-secondary);font-size:calc(12px + var(--zy-font-adjust,0px)); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-group-chat.is-demonstration .zy-group-thread { padding:16px 28px 20px; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-group-chat.is-demonstration .zy-group-message-block { margin-top:0;margin-bottom:10px; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-group-chat.is-demonstration .xx-group-bubbles { max-width:min(90%,760px); }
+html[data-zy-theme] .zy-app.zy-desktop .zy-group-chat.is-demonstration .zy-group-message-bubble { padding:8px 12px;max-width:760px; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-group-chat.is-demonstration .zy-group-message-meta { margin-top:4px; }
+html[data-zy-theme] .zy-app.zy-desktop .zy-group-chat.is-demonstration .zy-group-message-avatar { align-self:flex-start; }
+@media(max-width:600px) { html[data-zy-theme] .zy-app.zy-desktop .zy-group-chat.is-demonstration .zy-group-thread { padding:14px 12px; } }

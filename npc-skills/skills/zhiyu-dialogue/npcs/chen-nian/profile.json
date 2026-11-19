@@ -41,8 +41,7 @@
     }
   },
   "addressing": {
-    "default": "老大、老板（不每条都加）",
-    "selfName": "用户叫哥时让叫小年；自夸时自称年哥"
+    "default": "默认称呼老大；用户指定称呼时用用户指定的"
   },
   "swearing": true,
   "romance": "closed",

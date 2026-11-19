@@ -1,0 +1,14 @@
+/* No opacity/visibility defaults: content is readable before JS, during
+   restoration, and if animation support is unavailable. WAAPI owns the effect. */
+.zy-app [data-zy-scroll-reveal='active'],
+.zy-dialog [data-zy-scroll-reveal='active'],
+dialog.zy-settings-dialog [data-zy-scroll-reveal='active'] {
+  will-change:opacity,translate;
+}
+@media(prefers-reduced-motion:reduce) {
+  .zy-app [data-zy-scroll-reveal='active'],
+  .zy-dialog [data-zy-scroll-reveal='active'],
+  dialog.zy-settings-dialog [data-zy-scroll-reveal='active'] {
+    will-change:auto;
+  }
+}

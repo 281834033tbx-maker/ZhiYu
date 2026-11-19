@@ -33,3 +33,47 @@ html[data-zy-theme] body dialog.zy-moment-image-viewer {
 @media(prefers-reduced-transparency:reduce) {
   html[data-zy-theme] body dialog.zy-moment-image-viewer {background:var(--zy-canvas);backdrop-filter:none;-webkit-backdrop-filter:none;}
 }
+
+/* Shared image frames morph in place; background and controls follow the same
+   opening/closing phase without transforming any underlying page. */
+html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer {transition:background-color 280ms ease,backdrop-filter 280ms ease,-webkit-backdrop-filter 280ms ease;}
+html[data-zy-theme] body dialog.zy-image-motion-viewer:is([data-image-phase='pending'],[data-image-phase='closing']) {background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;}
+.zy-image-motion-viewer :is(.zy-moment-image-toolbar,.zy-moment-image-prev,.zy-moment-image-next,.zy-moment-image-dots) {z-index:6;transition:opacity 120ms ease;}
+.zy-image-motion-viewer:is([data-image-phase='pending'],[data-image-phase='opening'],[data-image-phase='closing']) :is(.zy-moment-image-toolbar,.zy-moment-image-prev,.zy-moment-image-next,.zy-moment-image-dots) {opacity:0;pointer-events:none;}
+.zy-image-motion-viewer .zy-moment-image-stage {cursor:zoom-out;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;}
+.zy-image-motion-frame {position:absolute;z-index:5;box-sizing:border-box;overflow:hidden;pointer-events:none;transform-origin:top left;}
+.zy-image-motion-frame>img {display:block;width:100%;height:100%;max-width:none;max-height:none;margin:0;object-fit:cover;user-select:none;pointer-events:none;}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-mobile dialog.zy-moment-image-viewer.zy-image-motion-viewer .zy-moment-image-stage {inset:calc(60px + var(--zy-m-detail-safe-top,0px)) 0 58px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-x:hidden;overflow-y:auto;}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-mobile dialog.zy-moment-image-viewer.zy-image-motion-viewer>.zy-moment-image-toolbar {top:calc(12px + var(--zy-m-detail-safe-top,0px));}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-mobile dialog.zy-image-motion-viewer .zy-moment-image-stage>img {flex:none;width:100%;height:auto;max-width:100%;max-height:none;margin:auto 0;object-fit:contain;}
+.zy-phone-mobile .zy-phone-screen:has(.zy-mobile-image-viewer) {background:var(--zy-m-chat-bg);}
+.zy-phone-mobile .zy-phone-screen:has(.zy-mobile-image-viewer)::before {content:none;}
+@media(prefers-reduced-motion:reduce) {
+ html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer,.zy-image-motion-viewer :is(.zy-moment-image-toolbar,.zy-moment-image-prev,.zy-moment-image-next,.zy-moment-image-dots) {transition:none;animation:none;}
+}
+.zy-moment-image-viewer.zy-image-motion-viewer>button.zy-moment-image-dismiss-area {position:absolute;inset:0;z-index:0;width:100%;height:100%;border-radius:0;cursor:zoom-out;}
+.zy-moment-image-viewer.zy-image-motion-viewer>button.zy-moment-image-stage {z-index:1;width:auto;height:auto;padding:0;border:0;border-radius:0;background:transparent;color:inherit;text-align:initial;}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-mobile dialog.zy-moment-image-viewer.zy-image-motion-viewer:is([data-image-phase='pending'],[data-image-phase='closing']) {background:transparent;}
+@media(prefers-reduced-motion:reduce) {
+ html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer,
+ html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer *,
+ html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer *::before,
+ html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer *::after {transition:none;animation:none;}
+}
+.zy-image-motion-viewer .zy-moment-image-notice {z-index:7;pointer-events:none;}
+/* Explicit sibling layers keep full-bleed image hit areas below controls. */
+html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer {isolation:isolate;}
+html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer>button.zy-moment-image-dismiss-area {position:absolute;inset:0;z-index:0;width:100%;height:100%;}
+html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer>button.zy-moment-image-stage {position:absolute;z-index:10;}
+html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer>.zy-image-motion-frame {z-index:20;}
+html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer>.zy-moment-image-toolbar {position:absolute;z-index:30;}
+html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer>button:is(.zy-moment-image-prev,.zy-moment-image-next) {position:absolute;top:50%;z-index:30;}
+html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer>.zy-moment-image-dots {position:absolute;z-index:30;}
+html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer[data-image-phase='open']>:is(.zy-moment-image-toolbar,.zy-moment-image-prev,.zy-moment-image-next,.zy-moment-image-dots) {pointer-events:auto;}
+html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer>.zy-moment-image-notice {z-index:31;}
+/* Center arrows without transform: the app's generic pressed-button transform
+   must not replace translateY(-50%) between pointerdown and pointerup. */
+html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer>button:is(.zy-moment-image-prev,.zy-moment-image-next) {margin-top:-28px;transform:none;}
+html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer>button:is(.zy-moment-image-stage,.zy-moment-image-dismiss-area) {transform:none;}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-mobile dialog.zy-moment-image-viewer.zy-image-motion-viewer>button:is(.zy-moment-image-prev,.zy-moment-image-next) {margin-top:-24px;}
+@media(max-width:600px) {html[data-zy-theme] body dialog.zy-moment-image-viewer.zy-image-motion-viewer>button:is(.zy-moment-image-prev,.zy-moment-image-next) {margin-top:-24px;}}

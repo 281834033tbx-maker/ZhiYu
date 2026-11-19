@@ -5,6 +5,7 @@ import type { ChoicePart } from './choice-chat';
 import type { TaskPageContext } from './task-page-context';
 import type {SecretaryReport,CharacterStatus} from './experience';
 import type {DailyBrief,WeeklyReport} from './molly-reports';
+import type {ArrangementMessageMetadata} from './arrangement-chat';
 export const labels = {
   familiarity: '熟悉',
   affection: '好感',
@@ -104,6 +105,8 @@ export type GeneratedPhoto = {type:'generated_photo'; jobId:string; prompt:strin
   referenceCharacters?:string[];
   status:'pending'|'generating'|'ready'|'failed'; url?:string; error?:string; attempts:number; startedAt?:number};
 export type Part = (
+  /** Host-authored opening-art slot, left empty until the user supplies the poster. */
+  | {type:'team_card';version:1}
   | {type:'daily_brief';brief:DailyBrief;text:string}
   | {type:'weekly_report';report:WeeklyReport;text:string}
   | {type:'secretary_report';report:SecretaryReport;text:string}
@@ -115,7 +118,7 @@ export type Part = (
   | { type: 'text' | 'emoji'; text: string }
   | { type: 'upload'; url: string; text: string }
   | { type: 'sticker' | 'photo'; assetId: keyof typeof assets; caption?: string }) & {replyTo?: string};
-export type ChatMessage = {
+export type ChatMessage = ArrangementMessageMetadata & {
   /** Imported local messages retain their original clock and attachments. */
   legacyTime?: string;
   chronologyUnknown?: boolean;

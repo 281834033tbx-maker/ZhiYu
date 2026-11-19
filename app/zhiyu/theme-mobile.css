@@ -1,0 +1,97 @@
+/* 2026-11-15 · The supplied mobile specification. These roles never change
+   desktop theme values. The phone alias also paints the status-bar plane. */
+.zy-mobile,
+.zy-phone-mobile {
+  --zy-m-ink:#252628;
+  --zy-m-secondary:#596575;
+  --zy-m-muted:#626469;
+  --zy-m-chat-muted:#717378;
+  --zy-m-list-bg:#eef1f5;
+  --zy-m-list-wash:linear-gradient(90deg,#7fb5ae 0%,#b4bfbc 48%,#b2a0ca 100%);
+  --zy-m-list-mask:linear-gradient(180deg,rgb(0 0 0 / 78%) 0%,rgb(0 0 0 / 55%) 28%,rgb(0 0 0 / 25%) 65%,rgb(0 0 0 / 4%) 100%);
+  --zy-m-list-line:rgb(73 98 79 / 17%);
+  --zy-m-pinned:var(--zy-pinned);
+  --zy-m-field:#ffffff;
+  --zy-m-chat-bg:#ffffff;
+  --zy-m-chat-line:#eaebef;
+  --zy-m-incoming:#f0f1f5;
+  --zy-m-outgoing:#35373f;
+  --zy-m-on-outgoing:#fafafc;
+  --zy-m-accent:#527b98;
+  --zy-m-edge:#83a9c5;
+  --zy-m-pro-ink:#35373f;
+  --zy-m-pro-bg:#e7e8ed;
+  --zy-m-unread:#f34f59;
+  --zy-m-nav-dot:#ee3639;
+  --zy-m-like:#e05168;
+  --zy-m-brand:linear-gradient(135deg,#F96F49,#E05168);
+  --zy-m-check-off:#c9cbd1;
+  --zy-m-danger:#943b36;
+  --zy-m-switch-on:#2e6252;
+  --zy-m-switch-off:#d5d7dc;
+  --zy-m-success:#2F8F5B;
+  --zy-m-progress:linear-gradient(110deg,#add0ca,#b4aed0);
+  --zy-m-rec-bar:linear-gradient(180deg,#f49373,#e47a96);
+  --zy-m-rec-pill:#f0f1f0;
+  --zy-m-backdrop:rgb(33 47 38 / 8%);
+  --zy-m-capsule:linear-gradient(110deg,rgb(255 255 255 / 92%),rgb(246 247 251 / 88%));
+  --zy-m-capsule-edge:rgb(255 255 255 / 90%);
+  --zy-m-capsule-shadow:-6px 8px 22px rgb(31 39 34 / 16%),-1px 2px 4px rgb(31 39 34 / 6%),0 0 0 0.5px rgb(73 98 79 / 10%);
+  --zy-m-capsule-hold:linear-gradient(110deg,rgb(223 228 236 / 96%),rgb(214 220 230 / 94%));
+  --zy-m-capsule-fallback:#ffffff;
+  --zy-m-nav-gap:#ffffff;
+  --zy-m-row-press:rgb(73 98 79 / 8%);
+  --zy-m-entry-edge:0 0 0 0.5px rgb(73 98 79 / 12%);
+  --zy-m-card-translucent:rgb(255 255 255 / 70%);
+  --zy-m-white:#ffffff;
+  --zy-m-switch-shadow:0 1px 3px rgb(0 0 0 / 18%);
+  --zy-m-spinner-track:rgb(255 255 255 / 30%);
+  --zy-m-rec-shadow:0 9px 28px rgb(31 39 34 / 12%);
+  --zy-m-rec-action:rgb(30 30 32 / 42%);
+  --zy-m-photo-circle:rgb(30 30 32 / 22%);
+  --zy-m-drawer-shadow:0 9px 28px #0002;
+  --zy-m-glass-muted:#526258;
+  --zy-m-group-check-off:#9aa3ad;
+  --zy-m-cover-notification:rgb(37 38 40 / 42%);
+  --zy-m-cover-name-shadow:0 1px 6px rgb(0 0 0 / 35%);
+  --zy-m-cover-tool-shadow:0 1px 3px rgb(0 0 0 / 40%);
+  --zy-m-call-shade:linear-gradient(180deg,rgb(30 30 32 / 55%) 0%,rgb(30 30 32 / 0%) 22%,rgb(30 30 32 / 0%) 52%,rgb(30 30 32 / 78%) 100%);
+  --zy-m-call-minimize-shadow:0 1px 3px rgb(0 0 0 / 45%);
+  --zy-m-call-caption:rgb(30 30 32 / 46%);
+  --zy-m-call-caption-previous:rgb(30 30 32 / 30%);
+  --zy-m-call-timer:rgb(255 255 255 / 18%);
+  --zy-m-call-timer-edge:rgb(255 255 255 / 28%);
+  --zy-m-call-control-on:rgb(255 255 255 / 92%);
+  --zy-m-call-control-off:rgb(255 255 255 / 22%);
+  --zy-m-call-mini-shadow:0 9px 28px rgb(31 39 34 / 28%);
+  --zy-m-call-ripple-start:0 0 0 0 rgb(249 111 73 / 42%),0 0 0 0 rgb(224 81 104 / 26%);
+  --zy-m-call-ripple-end:0 0 0 12px rgb(249 111 73 / 0%),0 0 6px 16px rgb(224 81 104 / 0%);
+  --zy-m-call-ripple-static:0 0 0 4px rgb(240 96 88 / 22%);
+  --zy-m-hardware:#1e1e20;
+}
+
+html[data-zy-theme='dark'] :is(.zy-mobile,.zy-phone-mobile) {
+  --zy-m-ink:#edf2ee;
+  --zy-m-secondary:#b9c7bd;
+  --zy-m-muted:#a3b4a8;
+  --zy-m-chat-muted:#a3b4a8;
+  --zy-m-list-bg:linear-gradient(180deg,#38453c 0%,#313b35 40%,#2d3831 100%);
+  --zy-m-list-wash:none;
+  --zy-m-list-line:rgb(255 255 255 / 6%);
+  --zy-m-pinned:#354239;
+  --zy-m-field:#435248;
+  --zy-m-chat-bg:var(--zy-canvas);
+  --zy-m-chat-line:rgb(255 255 255 / 6%);
+  --zy-m-incoming:var(--zy-incoming);
+  --zy-m-outgoing:var(--zy-outgoing);
+  --zy-m-on-outgoing:var(--zy-on-outgoing);
+  --zy-m-pro-bg:#45494f;
+  --zy-m-pro-ink:#fafafc;
+  --zy-m-capsule:linear-gradient(110deg,rgb(56 69 60 / 78%),rgb(45 56 49 / 74%));
+  --zy-m-capsule-edge:rgb(225 246 231 / 18%);
+  --zy-m-capsule-shadow:-6px 8px 22px rgb(0 0 0 / 32%);
+  --zy-m-capsule-hold:linear-gradient(rgb(255 255 255 / 6%),rgb(255 255 255 / 6%)),linear-gradient(110deg,rgb(56 69 60 / 78%),rgb(45 56 49 / 74%));
+  --zy-m-capsule-fallback:#313b35;
+  --zy-m-nav-gap:#313b35;
+  --zy-m-card-translucent:var(--zy-incoming);
+}

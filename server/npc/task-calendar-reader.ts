@@ -1,5 +1,6 @@
 import type {DatabaseSync} from 'node:sqlite';
 import type {ProfessionalTask} from '../../lib/npc/professional-task';
+import type {GroupChat} from '../../lib/npc/group-chat';
 import {isTaskCalendarDate, projectTaskCalendar} from '../../lib/npc/task-calendar';
 
 export const TASK_CALENDAR_CHARACTERS = new Set(['molly', 'chen-nian', 'zhou-chef', 'he-jiawei', 'yuan-xiaoman', 'liu', 'xia-xia', 'zhao-yifan']);
@@ -33,12 +34,18 @@ export function readTaskCalendar(db: DatabaseSync, account: {owner_id: string; c
     }
   }
   if (tables.has('npc_group_chats')) {
-    const rows = db.prepare('SELECT created_at FROM npc_group_chats WHERE owner=?').all(account.owner_id) as {created_at: string}[];
-    for (const row of rows) remember(row.created_at);
+    const rows = db.prepare('SELECT created_at,data FROM npc_group_chats WHERE owner=?').all(account.owner_id) as {created_at: string;data:string}[];
+    for (const row of rows) {
+      let demonstration=false;
+      try{demonstration=!!(JSON.parse(row.data) as GroupChat).demonstration;}catch{/* Preserve the legacy usage fallback for an unreadable record. */}
+      if(!demonstration)remember(row.created_at);
+    }
   }
   const projection = projectTaskCalendar({tasks, now, accountCreatedAt: account.created_at, firstUsageAt});
   return {...projection, days: projection.days.map(day => {
-    const entries = day.entries.filter(entry => entry.characterId === characterId);
+    // Molly is the signed-in owner's consolidated read-only calendar. The
+    // existing per-professional scopes still expose only their own records.
+    const entries = day.entries.filter(entry => characterId === 'molly' || entry.characterId === characterId);
     const completed = entries.reduce((sum, entry) => sum + entry.completed, 0);
     const skipped = entries.reduce((sum, entry) => sum + entry.skipped, 0);
     const total = entries.reduce((sum, entry) => sum + entry.total, 0);

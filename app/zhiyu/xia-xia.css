@@ -62,12 +62,6 @@
   border-radius: 50%;
   flex-shrink: 0;
 }
-.xx-avatar.large {
-  width: 70px;
-  height: 70px;
-  font-size: calc(28px + var(--zy-font-adjust,0px));
-  margin: auto;
-}
 .xx-test-link {
   display: flex;
   align-items: center;
@@ -83,20 +77,6 @@
   padding: 28px 36px;
   min-height: 0;
   scrollbar-width: thin;
-}
-.xx-welcome {
-  text-align: center;
-  color: #aaa39b;
-  margin: 9vh 0;
-}
-.xx-welcome h2 {
-  font-size: calc(20px + var(--zy-font-adjust,0px));
-  font-weight: 600;
-  color: #514944;
-  margin: 18px 0 8px;
-}
-.xx-welcome p {
-  font-size: calc(13px + var(--zy-font-adjust,0px));
 }
 .xx-message {
   display: flex;

@@ -117,6 +117,10 @@ export function useGroupChats(accountId: string, enabled = true) {
   }, [scope, performMutation]);
 
   const create = useCallback((input: GroupCreateInput) => mutate({action: 'create', ...input}), [mutate]);
+  const importRecord = useCallback((avatar?: string) => mutate({action:'import-record', scenario:'friday-dinner-v1', self:{name:'我', ...(avatar?{avatar}:{})}}), [mutate]);
+  const importCutOpeningRecord = useCallback((groupId: string, requestId: string) => mutate({action:'import-cut-opening-record', groupId, requestId}), [mutate]);
+  const restoreCutOpeningRecord = useCallback((groupId: string, requestId: string) => mutate({action:'restore-cut-opening-record', groupId, requestId}), [mutate]);
+  const confirmRecordOrder = useCallback((groupId: string, requestId: string) => mutate({action:'confirm-record-order', groupId, requestId}), [mutate]);
   const rename = useCallback((groupId: string, name: string) => mutate({action: 'rename', groupId, name}), [mutate]);
   const settings = useCallback((groupId: string, patch: {purpose?: string; pinned?: boolean; announcement?: string; muted?: boolean}, requestId: string) => mutate({action: 'settings', groupId, ...patch, requestId}), [mutate]);
   const clear = useCallback((groupId: string, requestId: string) => mutate({action: 'clear', groupId, requestId}), [mutate]);
@@ -156,6 +160,10 @@ export function useGroupChats(accountId: string, enabled = true) {
     error: visible ? state.error : '',
     refresh,
     create,
+    importRecord,
+    importCutOpeningRecord,
+    restoreCutOpeningRecord,
+    confirmRecordOrder,
     rename,
     settings,
     clear,

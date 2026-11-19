@@ -76,7 +76,7 @@ export function taskCalendarRange(groups: readonly GroupChat[], tasks: readonly 
   const sourceDates: string[] = [];
   const remember = (value: unknown) => { if (validTaskDate(value)) sourceDates.push(value); };
   for (const group of groups) {
-    if (group.leftAt) continue;
+    if (group.leftAt||group.demonstration) continue;
     for (const day of group.plan?.days || []) if (day.breakfast?.trim() || day.lunch?.trim() || day.dinner?.trim()) remember(day.date);
     for (const reminder of group.reminders || []) if (reminder.status !== 'cancelled' && reminder.timezone === 'Asia/Shanghai' && validTaskDate(reminder.startDate) && validTaskDate(reminder.endDate)) remember(reminder.startDate);
   }
@@ -121,7 +121,7 @@ export function groupTasksForToday(groups: GroupChat[], today: string): {
   group: GroupChat; days: GroupPlanDay[]; reminders: GroupReminder[];
 }[] {
   if (!validTaskDate(today)) return [];
-  return groups.filter(group => !group.leftAt).map(group => ({
+  return groups.filter(group => !group.leftAt&&!group.demonstration).map(group => ({
     group,
     days: group.plan?.days.filter(day => day.date === today) || [],
     reminders: (group.reminders || []).filter(reminder => reminder.status !== 'cancelled'

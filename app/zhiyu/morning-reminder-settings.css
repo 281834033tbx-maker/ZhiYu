@@ -32,6 +32,7 @@
 .zy-report-settings-city input {width:130px;}
 .zy-report-settings-city button,.zy-report-settings-demo>button {border:0;border-radius:10px;background:var(--zy-glass-inner);color:var(--zy-nav-active);font:inherit;padding:8px 10px;cursor:pointer;}
 .zy-report-settings-demo h3 {font-size:calc(12px + var(--zy-font-adjust,0px));font-weight:600;color:var(--zy-muted);margin:4px 0 8px;}
+.zy-report-settings-demo-note {margin:4px 0 8px;color:var(--zy-secondary);font-size:calc(12px + var(--zy-font-adjust,0px));line-height:1.6;}
 .zy-report-settings-demo>button {display:block;width:100%;margin:6px 0;text-align:left;font-size:calc(13px + var(--zy-font-adjust,0px));}
 .zy-report-settings-week select:focus-visible {outline:2px solid var(--zy-interaction-ink);outline-offset:3px;}
 

@@ -1,5 +1,7 @@
 'use client';
 
+
+import {accountStorage} from './account-storage';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { flushSync } from 'react-dom';
 import { Check, Moon, Sun } from 'lucide-react';
@@ -19,7 +21,7 @@ const ThemeContext = createContext<ThemeValue | null>(null);
 
 function readPreference(): Theme | null | undefined {
   try {
-    const value = localStorage.getItem(THEME_STORAGE_KEY);
+    const value = accountStorage().getItem(THEME_STORAGE_KEY);
     return value === 'light' || value === 'dark' ? value : null;
   } catch { return undefined; }
 }
@@ -67,7 +69,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const storage = (event: StorageEvent) => {
       if (event.key !== THEME_STORAGE_KEY && event.key !== null) return;
       localPreferenceRef.current = null;
-      const incoming = event.key === THEME_STORAGE_KEY ? event.newValue : null;
+      if(event.key===null){lastChoiceRef.current=null;sync();return;}
+      const incoming = event.newValue;
       lastChoiceRef.current = incoming === 'light' || incoming === 'dark' ? incoming : null;
       syncValue(lastChoiceRef.current ?? (system.matches ? 'dark' : 'light'));
     };
@@ -91,7 +94,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const setTheme = (value: Theme, origin?: ThemeOrigin) => {
     lastChoiceRef.current = value;
     try {
-      localStorage.setItem(THEME_STORAGE_KEY, value);
+      accountStorage().setItem(THEME_STORAGE_KEY, value);
       localPreferenceRef.current = null;
     } catch { localPreferenceRef.current = value; }
     stopMotion();

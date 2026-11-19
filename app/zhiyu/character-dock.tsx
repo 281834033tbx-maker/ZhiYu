@@ -1,5 +1,7 @@
 'use client';
 
+
+import {accountStorage} from './account-storage';
 /* eslint-disable next/no-img-element -- Existing NPC portraits and project-owned cutouts are local assets. */
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type SyntheticEvent } from 'react';
 import { ArrowDownRight, ArrowUpRight, Heart, Send, X } from 'lucide-react';
@@ -75,7 +77,7 @@ function CharacterDockSession({ person, accountId, size, onSize, onClose, onOpen
   const acceptRef = useRef(accept);
   useLayoutEffect(()=>{acceptRef.current=accept;},[accept]);
 
-  const savedOutfit=useSyncExternalStore(subscribeOutfit,()=>{try{return localStorage.getItem(outfitKey)==='denim'?'denim':'casual';}catch{return 'casual';}},()=>'casual');
+  const savedOutfit=useSyncExternalStore(subscribeOutfit,()=>{try{return accountStorage(accountId).getItem(outfitKey)==='denim'?'denim':'casual';}catch{return 'casual';}},()=>'casual');
   const outfit=changedOutfit||savedOutfit;
 
   const changeOutfit = useCallback((next: Outfit) => {
@@ -84,11 +86,11 @@ function CharacterDockSession({ person, accountId, size, onSize, onClose, onOpen
     setBubble('');
     changeTimer.current = setTimeout(() => {
       setChangedOutfit(next);
-      try { localStorage.setItem(outfitKey, next);window.dispatchEvent(new Event(outfitChanged)); } catch { /* storage may be disabled */ }
+      try { accountStorage(accountId).setItem(outfitKey, next);window.dispatchEvent(new Event(outfitChanged)); } catch { /* storage may be disabled */ }
       setActivity('idle');
       setAway(false);
     }, 1100);
-  }, [outfitKey]);
+  }, [outfitKey,accountId]);
 
   const processSession=useCallback((next:PublicSession)=>{
     const messages = next.messages;

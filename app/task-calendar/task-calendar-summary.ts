@@ -1,7 +1,7 @@
 /** Read-only presentation helpers. Counts describe saved task records, not exercise sets. */
 type SummaryStep = Readonly<{title: string; completed: boolean; skipped?: boolean; training?: Readonly<{target: string}>}>;
 type SummaryTask = Readonly<{
-  id: string; title: string; steps: readonly SummaryStep[]; status?: string;
+  id: string; characterId?: string; title: string; steps: readonly SummaryStep[]; status?: string;
   execution?: Readonly<{status: string}>;
 }>;
 type SummaryDay = Readonly<{tasks: readonly SummaryTask[]}>;
@@ -35,13 +35,15 @@ const nutritionCategories = [
   {id: 'water', label: '饮水', pattern: /饮水|喝水/},
 ] as const;
 const otherCategory = {id: 'other', label: '其他'};
-type PlanKind = 'fitness' | 'cooking' | 'nutrition' | 'other';
-const planKind = (name: string): PlanKind => /健身|训练|运动/.test(name) ? 'fitness'
+const professionalCategories = [{id: 'fitness', label: '健身'}, {id: 'nutrition', label: '营养'}, {id: 'cooking', label: '烹饪'}] as const;
+type PlanKind = 'fitness' | 'cooking' | 'nutrition' | 'all' | 'other';
+const planKind = (name: string): PlanKind => name === '任务日历' ? 'all' : /健身|训练|运动/.test(name) ? 'fitness'
   : /烹饪|做饭|料理/.test(name) ? 'cooking' : /营养|饮食|餐食/.test(name) ? 'nutrition' : 'other';
 const categoryOrder = (kind: PlanKind): readonly Category[] => kind === 'fitness' ? fitnessCategories
-  : kind === 'cooking' ? cookingCategories : kind === 'nutrition' ? nutritionCategories : [];
+  : kind === 'cooking' ? cookingCategories : kind === 'nutrition' ? nutritionCategories : kind === 'all' ? professionalCategories : [];
 const defaultCategories = (kind: PlanKind): readonly Category[] => kind === 'fitness' ? fitnessCategories.slice(0, 6)
-  : kind === 'cooking' ? cookingCategories : kind === 'nutrition' ? nutritionCategories.slice(0, 3) : [];
+  : kind === 'cooking' ? cookingCategories : kind === 'nutrition' ? nutritionCategories.slice(0, 3) : kind === 'all' ? professionalCategories : [];
+const taskKind = (task: SummaryTask): PlanKind => task.characterId === 'chen-nian' ? 'fitness' : task.characterId === 'liu' ? 'nutrition' : task.characterId === 'zhou-chef' ? 'cooking' : 'other';
 const matching = (text: string, categories: readonly (Category & {pattern: RegExp})[]): Category[] => categories.filter(category => category.pattern.test(text));
 const validDate = (value: string) => datePattern.test(value)
   && Number.isFinite(Date.parse(`${value}T00:00:00Z`))
@@ -63,6 +65,11 @@ export function calendarMonthCells(month: string): {date: string; inMonth: boole
 
 function taskCategorySteps(task: SummaryTask, kind: PlanKind): Map<string, {category: Category; steps: SummaryStep[]}> {
   const groups = new Map<string, {category: Category; steps: SummaryStep[]}>();
+  if (kind === 'all') {
+    const category = professionalCategories.find(category => category.id === taskKind(task)) || otherCategory;
+    groups.set(category.id, {category, steps: [...task.steps]});
+    return groups;
+  }
   const titleCategories = kind === 'fitness' ? matching(task.title, fitnessCategories)
     : kind === 'cooking' ? matching(task.title, cookingCategories)
       : kind === 'nutrition' ? matching(task.title, nutritionCategories) : [];
@@ -97,9 +104,10 @@ export function calendarDayLabels(day: SummaryDay | undefined, planName: string)
   if (!day) return [];
   const kind = planKind(planName), labels = new Set<string>();
   for (const task of day.tasks.filter(task => task.steps.length > 0)) {
-    if (kind === 'fitness' || kind === 'nutrition') {
-      for (const {category} of taskCategorySteps(task, kind).values()) labels.add(category.id === 'other'
-        ? kind === 'fitness' ? '训练' : shortTitle(task.title) : category.label);
+    const entryKind = kind === 'all' ? taskKind(task) : kind;
+    if (entryKind === 'fitness' || entryKind === 'nutrition') {
+      for (const {category} of taskCategorySteps(task, entryKind).values()) labels.add(category.id === 'other'
+        ? entryKind === 'fitness' ? '训练' : shortTitle(task.title) : category.label);
     } else labels.add(shortTitle(task.title));
   }
   return [...labels];

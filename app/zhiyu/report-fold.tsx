@@ -1,14 +1,16 @@
 'use client';
 
+
+import {accountStorage} from './account-storage';
 import {useCallback, useSyncExternalStore, type ReactNode} from 'react';
 
 const memory=new Map<string,boolean>();
 const listeners=new Map<string,Set<()=>void>>();
-function readExpanded(key:string,messageId:string):boolean {
+function readExpanded(key:string,messageId:string,accountId:string):boolean {
   if(memory.has(key))return memory.get(key)!;
   let expanded=false;
   try {
-    const value=JSON.parse(window.localStorage.getItem(key)||'null') as {messageId?:unknown;expanded?:unknown}|null;
+    const value=JSON.parse(accountStorage(accountId).getItem(key)||'null') as {messageId?:unknown;expanded?:unknown}|null;
     if(value?.messageId===messageId&&typeof value.expanded==='boolean')expanded=value.expanded;
   } catch { /* Denied or invalid storage leaves new cards collapsed and usable. */ }
   memory.set(key,expanded);return expanded;
@@ -27,13 +29,13 @@ export function useReportExpansion(accountId:string,messageId:string) {
       window.removeEventListener('storage',onStorage);
     };
   },[key]);
-  const snapshot=useCallback(()=>readExpanded(key,messageId),[key,messageId]);
+  const snapshot=useCallback(()=>readExpanded(key,messageId,accountId),[key,messageId,accountId]);
   const expanded=useSyncExternalStore(subscribe,snapshot,()=>false);
   const toggle=useCallback(()=>{
-    const next=!readExpanded(key,messageId);memory.set(key,next);
-    try {window.localStorage.setItem(key,JSON.stringify({messageId,expanded:next}));}catch{/* The current chat still remembers the choice. */}
+    const next=!readExpanded(key,messageId,accountId);memory.set(key,next);
+    try {accountStorage(accountId).setItem(key,JSON.stringify({messageId,expanded:next}));}catch{/* The current chat still remembers the choice. */}
     listeners.get(key)?.forEach(notify=>notify());
-  },[key,messageId]);
+  },[key,messageId,accountId]);
   return {expanded,toggle};
 }
 

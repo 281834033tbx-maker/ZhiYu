@@ -1,8 +1,9 @@
 'use client';
+import {installContinuousCorners} from './continuous-corners';
 
 import {useLayoutEffect,useRef,useState,type ReactNode,type KeyboardEvent} from 'react';
 import {createPortal} from 'react-dom';
-import {createAnchoredPopupMotion} from './anchored-popup-motion';
+import {waitForProfileStyles} from './native-profile-readiness';
 import type {ProfilePopoverAnchor,ProfilePopoverLayout} from './desktop-bridge';
 
 type Surface={popup:Window;host:HTMLElement;id:string};
@@ -14,12 +15,13 @@ export default function NativeProfilePopover({title,anchor,close,className,child
 }) {
   const [surface,setSurface]=useState<Surface|null>(null),[failed,setFailed]=useState(false);
   const card=useRef<HTMLDivElement>(null),natural=useRef<HTMLDivElement>(null),latestClose=useRef(close);
-  const requestClose=useRef<()=>void>(()=>{}),layout=useRef<ProfilePopoverLayout|null>(null),unavailable=useRef(false),restoreFocus=useRef(false);
+  const requestClose=useRef<()=>void>(()=>{}),unavailable=useRef(false),restoreFocus=useRef(false);
   useLayoutEffect(()=>{latestClose.current=close;});
   useLayoutEffect(()=>{
     if(failed)return;
     const bridge=window.zhiyuDesktop;unavailable.current=false;restoreFocus.current=false;
     let alive=true,popup:Window|null=null,id='',headObserver:MutationObserver|null=null;
+    const assets=new AbortController();
     let removeClosed:(()=>void)|undefined,removeDismiss:(()=>void)|undefined;
     const fail=()=>{
       unavailable.current=true;
@@ -35,6 +37,7 @@ export default function NativeProfilePopover({title,anchor,close,className,child
       }
     };
     let themeObserver:MutationObserver|null=null;
+    let removeCorners:(()=>void)|undefined;
     void (async()=>{
       try {
         const prepared=await bridge?.prepareProfilePopover?.({anchor:anchorBox(anchor),width:277.5});
@@ -65,13 +68,15 @@ export default function NativeProfilePopover({title,anchor,close,className,child
         doc.body.appendChild(host);
         headObserver=new MutationObserver(syncStyles);headObserver.observe(document.head,{subtree:true,childList:true,characterData:true});
         themeObserver=new MutationObserver(syncTheme);themeObserver.observe(document.documentElement,{attributes:true,attributeFilter:['data-zy-theme','data-zy-font-size','data-zy-native-material']});
-        setSurface({popup,host,id});
+        await waitForProfileStyles(doc,assets.signal);
+        if(alive&&!popup.closed)removeCorners=installContinuousCorners(doc);
+        if(alive&&!popup.closed)setSurface({popup,host,id});
       }catch{if(alive)fail();}
     })();
     const pageEnd=()=>{if(id)void bridge?.closeProfilePopover?.(id);};
     window.addEventListener('pagehide',pageEnd);
     return()=>{
-      alive=false;headObserver?.disconnect();themeObserver?.disconnect();removeClosed?.();removeDismiss?.();
+      alive=false;assets.abort();headObserver?.disconnect();themeObserver?.disconnect();removeClosed?.();removeDismiss?.();removeCorners?.();
       window.removeEventListener('pagehide',pageEnd);
       if(id)void bridge?.closeProfilePopover?.(id);
       if(popup&&!popup.closed)popup.close();
@@ -81,15 +86,20 @@ export default function NativeProfilePopover({title,anchor,close,className,child
   useLayoutEffect(()=>{
     if(failed||!surface||!card.current||!natural.current)return;
     const bridge=window.zhiyuDesktop,node=card.current,content=natural.current,doc=surface.popup.document;
-    let alive=true,frame:number|null=null,inFlight=false,again=false,dismissing=false,fitGeneration=0,opened=false;
-    const motion=createAnchoredPopupMotion(node,()=>layout.current?{x:layout.current.anchorX,y:layout.current.anchorY}:null);
+    let alive=true,frame:number|null=null,paintFrame:number|null=null,inFlight=false,again=false,dismissing=false,fitGeneration=0,laidOut=false,ready=false,focused=false;
     const applyLayout=(value:ProfilePopoverLayout)=>{
-      if(!alive||dismissing)return;layout.current=value;
+      if(!alive||dismissing)return;
       node.style.maxHeight=`${Math.max(1,value.height)}px`;
       node.style.maxWidth=`${Math.max(1,value.width)}px`;
       node.dataset.anchorSide=value.side;
-      if(!opened){opened=true;node.style.visibility='visible';node.focus({preventScroll:true});motion.play(true);}
-      else motion.reanchor();
+      if(!laidOut){
+        laidOut=true;node.style.visibility='visible';
+        // Use the visible opener's frames: a hidden child may throttle its RAF.
+        // Native material and DOM content then fade together as one window.
+        paintFrame=requestAnimationFrame(()=>{paintFrame=requestAnimationFrame(()=>{
+          paintFrame=null;if(!alive||dismissing)return;ready=true;scheduleFit();
+        });});
+      }
     };
     const finishClose=()=>{
       void bridge?.closeProfilePopover?.(surface.id);
@@ -100,7 +110,7 @@ export default function NativeProfilePopover({title,anchor,close,className,child
       if(!alive||dismissing)return;dismissing=true;
       const focused=doc.activeElement;
       if(focused&&node.contains(focused)&&typeof (focused as HTMLElement).blur==='function')(focused as HTMLElement).blur();
-      motion.play(false,finishClose);
+      node.inert=true;finishClose();
     };
     requestClose.current=dismiss;
     const fit=async()=>{
@@ -110,9 +120,9 @@ export default function NativeProfilePopover({title,anchor,close,className,child
       if(inFlight){again=true;return;}
       inFlight=true;const generation=++fitGeneration;
       try {
-        const value=await bridge?.fitProfilePopover?.({id:surface.id,anchor:anchorBox(anchor),height:Math.max(1,content.scrollHeight)});
+        const value=await bridge?.fitProfilePopover?.({id:surface.id,anchor:anchorBox(anchor),height:Math.max(1,content.scrollHeight),ready,reducedMotion:window.matchMedia('(prefers-reduced-motion: reduce)').matches});
         if(!alive||generation!==fitGeneration)return;
-        if(value)applyLayout(value);
+        if(value){applyLayout(value);if(ready&&!focused){focused=true;node.focus({preventScroll:true});}}
         else if(!surface.popup.closed){unavailable.current=true;setSurface(null);setFailed(true);void bridge?.closeProfilePopover?.(surface.id);}
       }catch{if(alive){unavailable.current=true;setSurface(null);setFailed(true);void bridge?.closeProfilePopover?.(surface.id);}}finally{inFlight=false;if(again&&alive){again=false;scheduleFit();}}
     };
@@ -133,9 +143,10 @@ export default function NativeProfilePopover({title,anchor,close,className,child
     doc.addEventListener('load',scheduleFit,true);void doc.fonts.ready.then(scheduleFit);
     scheduleFit();
     return()=>{
-      alive=false;fitGeneration++;motion.dispose();observer.disconnect();childMutation.disconnect();removeLayout?.();
+      alive=false;fitGeneration++;observer.disconnect();childMutation.disconnect();removeLayout?.();
       if(requestClose.current===dismiss)requestClose.current=()=>{};
       if(frame!==null)cancelAnimationFrame(frame);
+      if(paintFrame!==null)cancelAnimationFrame(paintFrame);
       document.removeEventListener('pointerdown',outside);doc.removeEventListener('keydown',key);
       window.removeEventListener('resize',scheduleFit);window.removeEventListener('scroll',dismiss,true);
       anchor.removeEventListener('zy-profile-toggle',dismiss);anchor.removeEventListener('zy-profile-replace',replace);

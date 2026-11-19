@@ -1,4 +1,6 @@
 'use client';
+
+import {accountStorage} from '../zhiyu/account-storage';
 /* eslint-disable next/no-img-element -- This viewer must display the exact original media. */
 import {useCallback,useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {ArrowLeft,ArrowRight,Grid3X3,Download,MoreHorizontal,Pin,Copy,Forward,Heart,X,Minus,Maximize2} from 'lucide-react';
@@ -7,7 +9,11 @@ import {molly,people} from '../zhiyu/data';
 import {appendLocalCharacterMessage,localCharacterIds} from '../zhiyu/local-character-chat';
 import {npcFetch} from '../zhiyu/npc-fetch';
 import {saveSticker} from '../zhiyu/saved-stickers';
+import {useDialogLightDismiss} from '../zhiyu/use-dialog-light-dismiss';
 import type {ImageViewerState} from '../zhiyu/desktop-bridge';
+import {animateSpring,resistBounds} from '../zhiyu/spring-motion';
+import {afterImageDecode} from '../zhiyu/media-loading';
+import {LoadingSkeleton} from '../zhiyu/loading-state';
 import './image-viewer.css';
 
 export default function ImageViewerClient() {
@@ -23,9 +29,11 @@ export default function ImageViewerClient() {
   const stage=useRef<HTMLDivElement>(null),image=useRef<HTMLImageElement>(null);
   const menuRef=useRef<HTMLDivElement>(null),menuButton=useRef<HTMLButtonElement>(null);
   const forwardDialog=useRef<HTMLDialogElement>(null);
+  useDialogLightDismiss(forwardDialog,()=>setForward(false),!forward||busy);
   const timer=useRef<ReturnType<typeof setTimeout>|null>(null);
   const locked=useRef(false),alive=useRef(true);
   const transform=useRef({scale:1,x:0,y:0,width:0,height:0});
+  const panMotion=useRef<{x?:ReturnType<typeof animateSpring>;y?:ReturnType<typeof animateSpring>}>({});
   const latest=useRef(state);
   useLayoutEffect(()=>{latest.current=state;},[state]);
   const forwardRetry=useRef<{key:string;turnId:string;imageId?:string} | null>(null);
@@ -47,7 +55,7 @@ export default function ImageViewerClient() {
     }
     const key=new URLSearchParams(location.search).get('key');
     if(!key)return;
-    try{const raw=localStorage.getItem(`zhiyu-image-popup:${key}`);localStorage.removeItem(`zhiyu-image-popup:${key}`);
+    try{const raw=accountStorage().getItem(`zhiyu-image-popup:${key}`);accountStorage().removeItem(`zhiyu-image-popup:${key}`);
       if(raw){const snapshot=JSON.parse(raw) as ImageViewerState;queueMicrotask(()=>{if(active)setState(snapshot);});}
     }catch{queueMicrotask(()=>{if(active)say('无法读取图片，请重新打开');});}
   },[say]);
@@ -63,22 +71,28 @@ export default function ImageViewerClient() {
     else if(action==='close')window.close();
     else if(action==='maximize')void (document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()).catch(()=>say('浏览器无法进入全屏'));
   },[say]);
-  function paint() {
+  function cancelPan() {panMotion.current.x?.cancel();panMotion.current.y?.cancel();panMotion.current={};}
+  function panBounds() {
+    const box=stage.current,value=transform.current;
+    return {x:Math.max(0,(value.width*value.scale-(box?.clientWidth||0))/2),y:Math.max(0,(value.height*value.scale-(box?.clientHeight||0))/2)};
+  }
+  function paint(constrain=true) {
     const box=stage.current,img=image.current,value=transform.current;if(!box||!img)return;
-    const maxX=Math.max(0,(value.width*value.scale-box.clientWidth)/2);
-    const maxY=Math.max(0,(value.height*value.scale-box.clientHeight)/2);
-    value.x=Math.max(-maxX,Math.min(maxX,value.x));value.y=Math.max(-maxY,Math.min(maxY,value.y));
+    const bounds=panBounds();
+    if(constrain){value.x=Math.max(-bounds.x,Math.min(bounds.x,value.x));value.y=Math.max(-bounds.y,Math.min(bounds.y,value.y));}
     img.style.transform=`translate(-50%,-50%) translate(${value.x}px,${value.y}px) scale(${value.scale})`;
     box.dataset.zoomed=String(value.scale>1.001);
   }
   function layout() {
     const box=stage.current,img=image.current;if(!box||!img||!img.naturalWidth)return;
+    cancelPan();
     const base=Math.min(box.clientWidth/img.naturalWidth,box.clientHeight/img.naturalHeight);
     transform.current.width=img.naturalWidth*base;transform.current.height=img.naturalHeight*base;
     img.style.width=`${transform.current.width}px`;img.style.height=`${transform.current.height}px`;paint();
   }
   function zoom(factor:number,clientX?:number,clientY?:number) {
     const box=stage.current;if(!box||!image.current?.naturalWidth)return;
+    cancelPan();
     const value=transform.current,rect=box.getBoundingClientRect();
     const next=Math.max(.1,Math.min(8,value.scale*factor)),ratio=next/value.scale;
     const anchorX=(clientX??rect.left+rect.width/2)-rect.left-rect.width/2;
@@ -87,6 +101,7 @@ export default function ImageViewerClient() {
     value.scale=next;paint();
   }
   useLayoutEffect(()=>{
+    cancelPan();
     transform.current={scale:1,x:0,y:0,width:0,height:0};
   },[current?.id]);
   useEffect(()=>{
@@ -100,18 +115,37 @@ export default function ImageViewerClient() {
     const gestureChange=(event:Event)=>{event.preventDefault();const scale=(event as Event & {scale:number}).scale;
       if(scale>0){zoom(scale/gestureScale);gestureScale=scale;}};
     const pointers=new Map<number,{x:number;y:number}>();
+    let panStart:{x:number;y:number;originX:number;originY:number;at:number;lastX:number;lastY:number;vx:number;vy:number}|null=null;
     const distance=()=>{const [a,b]=[...pointers.values()];return a&&b?Math.hypot(a.x-b.x,a.y-b.y):0;};
-    const down=(event:PointerEvent)=>{if(event.button!==0||locked.current)return;box.setPointerCapture(event.pointerId);pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});};
+    const resetPanStart=(point:{x:number;y:number})=>{const value=transform.current;panStart={x:point.x,y:point.y,originX:value.x,originY:value.y,lastX:value.x,lastY:value.y,at:performance.now(),vx:0,vy:0};};
+    const down=(event:PointerEvent)=>{if(event.button!==0||locked.current||!image.current?.naturalWidth)return;cancelPan();box.setPointerCapture(event.pointerId);pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});resetPanStart({x:event.clientX,y:event.clientY});};
     const move=(event:PointerEvent)=>{
       const previous=pointers.get(event.pointerId);if(!previous)return;
       const oldDistance=distance();pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
-      if(pointers.size===2&&oldDistance>0){const points=[...pointers.values()];zoom(distance()/oldDistance,(points[0].x+points[1].x)/2,(points[0].y+points[1].y)/2);}
-      else{transform.current.x+=event.clientX-previous.x;transform.current.y+=event.clientY-previous.y;paint();}
+      if(pointers.size===2&&oldDistance>0){const points=[...pointers.values()];zoom(distance()/oldDistance,(points[0].x+points[1].x)/2,(points[0].y+points[1].y)/2);panStart=null;}
+      else if(panStart&&transform.current.scale>1.001){
+        const bounds=panBounds(),value=transform.current,at=performance.now(),seconds=Math.max(.001,(at-panStart.at)/1000);
+        value.x=resistBounds(panStart.originX+event.clientX-panStart.x,-bounds.x,bounds.x,box.clientWidth);
+        value.y=resistBounds(panStart.originY+event.clientY-panStart.y,-bounds.y,bounds.y,box.clientHeight);
+        panStart.vx=panStart.vx*.25+(value.x-panStart.lastX)/seconds*.75;panStart.vy=panStart.vy*.25+(value.y-panStart.lastY)/seconds*.75;
+        panStart.lastX=value.x;panStart.lastY=value.y;panStart.at=at;paint(false);
+      }
     };
-    const up=(event:PointerEvent)=>pointers.delete(event.pointerId);
+    const up=(event:PointerEvent)=>{
+      if(!pointers.delete(event.pointerId))return;
+      if(pointers.size){resetPanStart([...pointers.values()][0]);return;}
+      const gesture=panStart;panStart=null;if(!gesture)return;
+      const bounds=panBounds(),value=transform.current,stale=event.type!=='pointerup'||performance.now()-gesture.at>100;
+      for(const axis of ['x','y'] as const){
+        const velocity=stale?0:Math.max(-5000,Math.min(5000,axis==='x'?gesture.vx:gesture.vy));
+        const limit=bounds[axis],current=value[axis];
+        const to=current<-limit?-limit:current>limit?limit:Math.max(-limit,Math.min(limit,current+velocity*.16));
+        panMotion.current[axis]=animateSpring({from:current,to,velocity,stiffness:240,damping:30,onUpdate:state=>{transform.current[axis]=state.position;paint(false);}});
+      }
+    };
     box.addEventListener('wheel',wheel,{passive:false});box.addEventListener('gesturestart',gestureStart,{passive:false});box.addEventListener('gesturechange',gestureChange,{passive:false});
-    box.addEventListener('pointerdown',down);box.addEventListener('pointermove',move);box.addEventListener('pointerup',up);box.addEventListener('pointercancel',up);
-    return()=>{observer.disconnect();box.removeEventListener('wheel',wheel);box.removeEventListener('gesturestart',gestureStart);box.removeEventListener('gesturechange',gestureChange);box.removeEventListener('pointerdown',down);box.removeEventListener('pointermove',move);box.removeEventListener('pointerup',up);box.removeEventListener('pointercancel',up);};
+    box.addEventListener('pointerdown',down);box.addEventListener('pointermove',move);box.addEventListener('pointerup',up);box.addEventListener('pointercancel',up);box.addEventListener('lostpointercapture',up);
+    return()=>{cancelPan();observer.disconnect();box.removeEventListener('wheel',wheel);box.removeEventListener('gesturestart',gestureStart);box.removeEventListener('gesturechange',gestureChange);box.removeEventListener('pointerdown',down);box.removeEventListener('pointermove',move);box.removeEventListener('pointerup',up);box.removeEventListener('pointercancel',up);box.removeEventListener('lostpointercapture',up);};
   },[hasImages]);
   useEffect(()=>{if(state?.history)document.querySelector('.viewer-thumbnails [aria-current=true]')?.scrollIntoView({block:'nearest'});},[state?.history,current?.id]);
   useEffect(()=>{
@@ -121,7 +155,7 @@ export default function ImageViewerClient() {
       if(event.key==='ArrowLeft'){event.preventDefault();select(currentState.index-1);}
       if(event.key==='ArrowRight'){event.preventDefault();select(currentState.index+1);}
       if(event.key==='Escape')control('close');
-      if(['+','=','-','0'].includes(event.key)){event.preventDefault();if(event.key==='0'){transform.current.scale=1;transform.current.x=0;transform.current.y=0;paint();}else zoom(event.key==='-'?1/1.2:1.2);}
+      if(['+','=','-','0'].includes(event.key)){event.preventDefault();if(event.key==='0'){cancelPan();transform.current.scale=1;transform.current.x=0;transform.current.y=0;paint();}else zoom(event.key==='-'?1/1.2:1.2);}
     };window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);
   },[forward,menu,control,select]);
   useEffect(()=>{
@@ -213,13 +247,14 @@ export default function ImageViewerClient() {
       <button aria-label="固定图片窗口" aria-pressed={state.pinned} title={desktop?(state.pinned?'取消置顶':'窗口置顶'):'置顶仅支持智域桌面版'} disabled={!desktop} className={state.pinned?'active':''} onClick={()=>void window.zhiyuDesktop?.toggleImagePin()}><Pin/></button>
     </header>
     <div className="viewer-body">
-      <div ref={stage} className="viewer-stage" aria-label="图片画布" onDoubleClick={()=>{if(busy)return;transform.current.x=0;transform.current.y=0;transform.current.scale=transform.current.scale>1?1:2;paint();}} onContextMenu={event=>{event.preventDefault();if(!busy)setMenu(true);}}>
-        <img key={current.id+':'+reload} ref={image} src={current.src} alt={current.alt} draggable={false} className={loaded===current.id?'is-loaded':''} onLoad={event=>{
-          const img=event.currentTarget;setLoaded(current.id);setFailed('');layout();
+      <div ref={stage} className="viewer-stage" aria-label="图片画布" aria-busy={loaded!==current.id&&failed!==current.id} onDoubleClick={()=>{if(busy)return;cancelPan();transform.current.x=0;transform.current.y=0;transform.current.scale=transform.current.scale>1?1:2;paint();}} onContextMenu={event=>{event.preventDefault();if(!busy)setMenu(true);}}>
+        <img key={current.id+':'+reload} ref={image} src={current.src} alt={current.alt} draggable={false} className={'zy-media-reveal '+(loaded===current.id?'is-loaded':'')} onLoad={event=>{
+          const img=event.currentTarget;afterImageDecode(img,()=>{if(image.current!==img||latest.current?.images[latest.current.index]?.id!==current.id)return;setLoaded(current.id);setFailed('');layout();
           if(window.zhiyuDesktop?.fitImageViewer)void window.zhiyuDesktop.fitImageViewer({id:current.id,width:img.naturalWidth,height:img.naturalHeight});
           else if(!document.fullscreenElement){const sidebar=state.history?216:0;const scale=Math.min(1,(screen.availWidth*.75-sidebar)/img.naturalWidth,(screen.availHeight*.75-34)/img.naturalHeight);window.resizeTo(Math.round(img.naturalWidth*scale)+sidebar+window.outerWidth-window.innerWidth,Math.round(img.naturalHeight*scale)+34+window.outerHeight-window.innerHeight);}
+          });
         }} onError={()=>setFailed(current.id)}/>
-        {loaded!==current.id&&failed!==current.id&&<output className="viewer-loading">正在加载图片…</output>}
+        {loaded!==current.id&&failed!==current.id&&<LoadingSkeleton label="正在加载图片" variant="media"/>}
         {failed===current.id&&<div className="viewer-error" role="alert"><p>图片加载失败</p><button onClick={()=>{setFailed('');setReload(value=>value+1);}}>重新加载</button></div>}
       </div>
       {state.history&&<aside className="viewer-history" aria-label="聊天历史图片">

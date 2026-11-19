@@ -1,0 +1,3 @@
+.zy-mobile .zy-molly-report .zy-m-report-confirm { min-width:34px;height:34px;font-size:calc(13px + var(--zy-font-adjust,0px)); }
+.zy-mobile .zy-molly-report .zy-m-report-confirm[data-submit-phase='idle'] { width:56px; }
+.zy-mobile .zy-report-city-picker .zy-mobile-submit-wrap { align-self:center; }

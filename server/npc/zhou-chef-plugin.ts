@@ -1,3 +1,8 @@
+import {openPrivateDialogue, commitPrivateDialogueInput, privateDialoguePrompt} from './private-dialogue-experience';
+import {commitPrivateArrangement} from './arrangement-dialogue';
+import {arrangementsFor} from './arrangements-plugin';
+import {persistBetaProfessionalState} from './beta-task-events';
+import {initBetaUsage,persistBetaPrivateMessage} from './beta-usage-events';
 import {statusFromState} from '../../lib/npc/character-status';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
 import {parseTaskPageContext} from '../../lib/npc/task-page-context';
@@ -34,11 +39,12 @@ export function chefLocal(deps?: { now?: () => number; generate?: typeof generat
       const now = deps?.now || Date.now;
       mkdirSync(join(root, '.npc-runtime'), { recursive: true });
       const db = new DatabaseSync(join(root, '.npc-runtime/state.sqlite'));
+      initBetaUsage(db);
       db.exec('PRAGMA journal_mode=WAL; CREATE TABLE IF NOT EXISTS zhou_chef_sessions (id TEXT PRIMARY KEY, data TEXT NOT NULL)');
       const taskMemory = new TaskMemoryStore(db);
       const save = (id: string, state: ChefState) => {
         state.revision++;
-        db.prepare('INSERT OR REPLACE INTO zhou_chef_sessions VALUES (?,?)').run(id, JSON.stringify(state));
+        persistBetaProfessionalState(db,{sessionId:id,npcId:'zhou-chef',table:'zhou_chef_sessions',after:state,at:now()},()=>db.prepare('INSERT OR REPLACE INTO zhou_chef_sessions VALUES (?,?)').run(id, JSON.stringify(state)));
       };
       const load = (id: string): ChefState => {
         const row = db.prepare('SELECT data FROM zhou_chef_sessions WHERE id=?').get(id) as { data: string } | undefined;
@@ -126,7 +132,7 @@ export function chefLocal(deps?: { now?: () => number; generate?: typeof generat
           // One task-protocol repair follows the generator's own technical review.
           // Both attempts use the exact same real input/context/capability snapshot.
           const frozen = structuredClone(state);
-          const basePrompt = chefPrompt(root, frozen, incoming, startedAt, taskEvent);
+          const basePrompt = privateDialoguePrompt(db,root,id.split(':')[0],'zhou-chef',chefPrompt(root, frozen, incoming, startedAt, taskEvent),incoming,false,now);
           const evidence = chefApplicationEvidence(frozen);
           const frozenTaskEvidence = chefTaskDelegationEvidence(frozen, startedAt, ids);
           let prompt = basePrompt;
@@ -170,7 +176,7 @@ export function chefLocal(deps?: { now?: () => number; generate?: typeof generat
               scheduleDelivery(candidate.messages, before, startedAt, now(),{characterId:'zhou-chef'});
               candidate.queue = candidate.queue.filter(turn => !ids.includes(turn));
               candidate.error = ''; candidate.retryAt = 0;
-              save(id, candidate);
+              commitPrivateArrangement({db,store:arrangementsFor(root),owner:id.split(':')[0],characterId:'zhou-chef',state:candidate,before:before,incoming,turnId:job,now:now(),startedAt:startedAt},()=>save(id,candidate));
               return;
             } catch (error) {
               if (!(error instanceof ProfessionalTaskError)) throw error;
@@ -225,7 +231,7 @@ export function chefLocal(deps?: { now?: () => number; generate?: typeof generat
           const user = /(?:^|; )zhiyu_npc=([a-f0-9-]{36})(?:;|$)/i.exec(req.headers.cookie || '')?.[1];
           if (!user || !UUID.test(user)) return reply(401, { error: '请先登录智域' });
           const id = `${user}:zhou-chef`;
-          if (req.method === 'GET') return reply(200, expose(load(id)));
+          if (req.method === 'GET') {openPrivateDialogue(db,root,user,'zhou-chef',now); return reply(200, expose(load(id)));}
           if (req.method !== 'POST') return reply(405, { error: '不支持的方法' });
           let raw = '';
           for await (const chunk of req) {
@@ -333,7 +339,7 @@ export function chefLocal(deps?: { now?: () => number; generate?: typeof generat
             // Preserve the chat input even if optional shared-task sync fails;
             // group collect can later recover it from this exact user source.
             // Generated answers never enter TaskMemoryStore.
-            save(id, state);
+            persistBetaPrivateMessage(db,{ownerId:user,npcId:'zhou-chef',turnId:body.turnId,messages:privateHistoryMessages(state),at:now()},()=>commitPrivateDialogueInput(db,root,user,'zhou-chef',state,(body.text as string).trim(),()=>save(id,state),now));
             try {
               taskMemory.record(user, 'zhou-chef', message.id, body.text.trim(), message.at);
               if (state.taskMemorySyncError) { delete state.taskMemorySyncError; save(id, state); }

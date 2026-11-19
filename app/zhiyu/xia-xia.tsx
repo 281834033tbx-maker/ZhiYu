@@ -1,8 +1,9 @@
 'use client';
 /* eslint-disable next/no-img-element */
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { X, Reply, RotateCcw } from 'lucide-react';
 import MessageReceipt, {messagesHaveReadReceipt} from './message-receipt';
+import TeamCard from './team-card';
 import {
   assets,
   type Part,
@@ -16,12 +17,14 @@ import { useChatView } from './chat-view-store';
 import ChatImage from './chat-image';
 import ChatImagePlaceholder from './chat-image-placeholder';
 import NpcContactCard from './npc-contact-card';
+import {ArrangementMessage} from './arrangement-message';
 import {ImageGallery,chatGallery} from './image-gallery';
 import MessageActions from './message-actions';
 import {hideMessage, useMessageVisibility} from './message-visibility';
 import { bubblePosition } from './message-bubbles';
 import ChatComposer, {type ComposePayload} from './chat-composer';
 import VoiceBubble from './voice-bubble';
+import {MobileComposerContext} from './mobile-composer-context';
 import { npcFetch } from './npc-fetch';
 import { useAccount } from './auth-gate';
 import { ensureHeChatHistory } from './he-chat-history';
@@ -37,10 +40,13 @@ import ChoiceChat, {type ChoiceChatProps} from './choice-chat';
 import type {TaskPageContext} from '../../lib/npc/task-page-context';
 import {resolveCharacterStatus} from '../../lib/npc/character-status';
 import {reportUserFacingError,userFacingError,userFacingErrors} from '../../lib/user-facing-errors';
-import {ChatIdentityNotice,RetryableMessage} from './user-facing-ui';
+import {RetryableMessage} from './user-facing-ui';
 import SecretaryReportCard,{CityRequest,DailyBriefCard,WeeklyReportCard} from './secretary-report';
 import {useReplyRetry} from './reply-retry';
 import {useFailedChatSends} from './chat-send-failures';
+import {formatMessageTime} from './message-time';
+import {LoadingSkeleton} from './loading-state';
+import './chat-scroll-feedback.css';
 
 type FailedSend={scope:string;turnId:string;body:Record<string,unknown>;text:string};
 type ReportQuote={characterId:string;messageId:string;text?:string;referenceId?:string};
@@ -77,16 +83,17 @@ export function useExclusiveChatReference({taskPageContext,taskPageContextKey,re
 
 function TaskMessage({taskId,onOpen}:{taskId:string;onOpen?:(taskId:string)=>void}){const {account}=useAccount();return <ProfessionalTaskCard accountId={account.id} taskId={taskId} onOpen={onOpen}/>;}
 export function NpcPart({ part, characterId, onRetry, messageId, onOpenTask, onOpenNpc, onOpenChoice, onChoose, pendingIndex, choiceDisabled, choiceError }: { part: Part; characterId?:string; onRetry?:()=>void; messageId?:string; onOpenTask?:(taskId:string)=>void; onOpenNpc?:(id:string,quoteId?:string,prefill?:string)=>void; onOpenChoice?:(messageId:string)=>void; onChoose?:ChoiceChatProps['onChoose']; pendingIndex?:number; choiceDisabled?:boolean; choiceError?:string }) {
+  if(part.type==='team_card')return <TeamCard messageId={messageId}/>;
   if(part.type==='daily_brief')return messageId?<DailyBriefCard messageId={messageId} brief={part.brief} onOpenNpc={onOpenNpc} onOpenChoice={onOpenChoice}/>:null;
   if(part.type==='weekly_report')return messageId?<WeeklyReportCard messageId={messageId} report={part.report} onOpenNpc={onOpenNpc}/>:null;
   if(part.type==='secretary_report')return <SecretaryReportCard report={part.report} onOpenNpc={onOpenNpc}/>;
   if(part.type==='city_request')return <CityRequest text={part.text}/>;
   if(part.type==='choice')return <ChoiceChat part={part} characterId={characterId} onChoose={onChoose} pendingIndex={pendingIndex} disabled={choiceDisabled} error={choiceError}/>;
   if(part.type==='professional_task')return characterId&&!allowsCharacterChoice(characterId)
-    ? <div className="xx-bubble">历史任务消息</div>
+    ? <div className="xx-bubble">历史安排消息</div>
     : <TaskMessage taskId={part.taskId} onOpen={onOpenTask}/>;
-  if(part.type==='voice')return part.status==='ready'&&part.url?<div className="xx-bubble xx-bubble-voice"><VoiceBubble src={part.url} durationSeconds={part.durationSeconds}/></div>:part.status==='failed'?<button type="button" className="zy-voice-retry" disabled={!onRetry} onClick={onRetry}>语音没发出去，点一下重发</button>:<output className="xx-bubble zy-voice-placeholder" aria-label="语音正在准备"><i aria-hidden="true"/><i aria-hidden="true"/><i aria-hidden="true"/></output>;
-  if(part.type==='generated_photo')return <figure className="xx-media generated-photo">{part.status==='ready'&&part.url?.trim()?<><ChatImage messageId={messageId} src={part.url} alt={`${people.find(person=>person.id===characterId)?.name||'智友'}发的照片`}/>{part.caption&&<div className="xx-bubble xx-media-caption">{part.caption}</div>}</>:part.status==='failed'?<ChatImagePlaceholder label="图片没发出去" onRetry={onRetry}/>:part.status==='ready'?<ChatImagePlaceholder/>:<output className={'generated-photo-placeholder '+part.status} aria-label="图片加载中"><span className="photo-spinner" aria-hidden="true"/></output>}</figure>;
+  if(part.type==='voice')return part.status==='ready'&&part.url?<div className="xx-bubble xx-bubble-voice"><VoiceBubble src={part.url} durationSeconds={part.durationSeconds} transcript={part.text}/></div>:part.status==='failed'?<button type="button" className="zy-voice-retry" disabled={!onRetry} onClick={onRetry}>语音没发出去，点一下重发</button>:<output className="xx-bubble zy-voice-placeholder" aria-label="语音正在准备"><i aria-hidden="true"/><i aria-hidden="true"/><i aria-hidden="true"/></output>;
+  if(part.type==='generated_photo')return <figure className="xx-media generated-photo">{part.status==='ready'&&part.url?.trim()?<><ChatImage messageId={messageId} src={part.url} alt={`${people.find(person=>person.id===characterId)?.name||'智友'}发的照片`}/>{part.caption&&<div className="xx-bubble xx-media-caption">{part.caption}</div>}</>:part.status==='failed'?<ChatImagePlaceholder label="图片没发出去" onRetry={onRetry}/>:part.status==='ready'?<ChatImagePlaceholder/>:<output className={'generated-photo-placeholder '+part.status} aria-label="正在准备图片" aria-busy="true"><LoadingSkeleton label="正在准备图片" variant="media"/></output>}</figure>;
 
   if (part.type === 'text' || part.type === 'emoji')
     return (
@@ -119,20 +126,13 @@ function messageGroups(messages: ChatMessage[], boundary?:string|null) {
   }
   return groups;
 }
-function messageTime(at: string) {
-  const date = new Date(at),
-    today = new Date().toDateString() === date.toDateString();
-  return (
-    (today ? '今天 ' : date.toLocaleDateString('zh-CN') + ' ') +
-    date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
-  );
-}
 function searchMessageText(message:ChatMessage,tasks:readonly ProfessionalTask[]=[]) {
   const part=message.part;
   let text:string;
   switch(part.type){
+    case 'team_card':text='[图片]';break;
     case 'choice':text=choicePlainText(part);break;
-    case 'professional_task':text='[任务] '+(tasks.find(task=>task.id===part.taskId)?.title||'任务');break;
+    case 'professional_task':text='[安排] '+(tasks.find(task=>task.id===part.taskId)?.title||'安排');break;
     case 'voice':text='[语音]'+(part.text?' '+part.text:'');break;
     case 'upload':text='[图片]'+(part.text?' '+part.text:'');break;
     case 'generated_photo':text='[图片]'+(part.caption?' '+part.caption:'');break;
@@ -170,6 +170,7 @@ export default function XiaxiaChat({
   onDismissTaskPageContext,
   reportQuote,
   onReportQuoteConsumed,
+  threadSupplement,
 }: {
   mirror?: boolean;
   character?: 'xia-xia' | 'molly' | 'yuan-xiaoman' | 'liu' | 'chen-nian' | 'he-jiawei' | 'zhou-chef';
@@ -197,6 +198,7 @@ export default function XiaxiaChat({
   onDismissTaskPageContext?:()=>void;
   reportQuote?:ReportQuote;
   onReportQuoteConsumed?:(referenceId?:string)=>void;
+  threadSupplement?:import('react').ReactNode;
 }) {
   const { account } = useAccount();
   const isHe = character === 'he-jiawei';
@@ -256,6 +258,8 @@ export default function XiaxiaChat({
   const {validQuoted,activeTaskPageContext,referenceKey,referenceKeyRef,dismissQuote,quoteMessage}=useExclusiveChatReference({taskPageContext,taskPageContextKey,reportQuote:reportQuote?.characterId===character?reportQuote:undefined,messages:visibleMessages,hiddenIds:hiddenMessages[character],excerpt,onDismissTaskPageContext,onReportQuoteConsumed});
   const thread = useRef<HTMLDivElement>(null);
   const stickBottom = useRef(true);
+  const scrollSnapshot=useRef({key:'',count:0});
+  const [newMessagesBelow,setNewMessagesBelow]=useState(0);
   const [searchOpen,setSearchOpen]=useState(false);
   const [locationHighlight,setLocationHighlight]=useState<{top:number;height:number}|null>(null);
   const [locationRequest,setLocationRequest]=useState<{id:string}|null>(null);
@@ -436,8 +440,11 @@ export default function XiaxiaChat({
   useEffect(() => {
     const el = thread.current;
     if (!el) return;
-    const toBottom = () => { el.scrollTop = el.scrollHeight; };
-    stickBottom.current = true;
+    const count=data?.messages.length||0,key=account.id+':'+endpoint;
+    if(scrollSnapshot.current.key!==key){stickBottom.current=true;setNewMessagesBelow(0);}
+    else if(!stickBottom.current&&count>scrollSnapshot.current.count){const added=count-scrollSnapshot.current.count;setNewMessagesBelow(value=>value+added);}
+    scrollSnapshot.current={key,count};
+    const toBottom = () => { if(stickBottom.current)el.scrollTop = el.scrollHeight; };
     toBottom();
     const raf = requestAnimationFrame(toBottom);
     const onImgLoad = (e: Event) => {
@@ -446,6 +453,7 @@ export default function XiaxiaChat({
     el.addEventListener('load', onImgLoad, true);
     const onScroll = () => {
       stickBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+      if(stickBottom.current)setNewMessagesBelow(0);
     };
     el.addEventListener('scroll', onScroll, { passive: true });
     return () => {
@@ -453,7 +461,7 @@ export default function XiaxiaChat({
       el.removeEventListener('load', onImgLoad, true);
       el.removeEventListener('scroll', onScroll);
     };
-  }, [data?.messages.length, sending]);
+  }, [data?.messages.length, sending,endpoint,account.id]);
   useEffect(() => {
     if (sending || mirror) return;
     let alive = true;
@@ -492,7 +500,7 @@ export default function XiaxiaChat({
   async function retryFailedSend(message:FailedSend){
     const key=message.scope+':'+message.turnId;
     if(message.scope!==taskScope||retryLocks.current.has(key)||sending)return;
-    retryLocks.current.add(key);setOutgoing('');setSending(true);setError('');
+    retryLocks.current.add(key);stickBottom.current=true;setNewMessagesBelow(0);setOutgoing('');setSending(true);setError('');
     try {await post(message.body);setFailedSends(current=>current.filter(item=>item.scope!==message.scope||item.turnId!==message.turnId));if(retry.current?.id===message.turnId)retry.current=null;}
     catch(cause){reportUserFacingError(cause,'send','重新发送消息');const restored=await refreshSession().catch(()=>null);if(restored?.messages.some(item=>item.role==='user'&&item.turnId===message.turnId))setFailedSends(current=>current.filter(item=>item.scope!==message.scope||item.turnId!==message.turnId));}
     finally{retryLocks.current.delete(key);setSending(false);}
@@ -516,6 +524,7 @@ export default function XiaxiaChat({
     setFailedSends(current=>current.filter(message=>message.scope!==taskScope));
     if(locationTimer.current)clearTimeout(locationTimer.current);
   }
+  const mobile=useContext(MobileComposerContext);
   async function send(payload: ComposePayload) {
     const text = payload.text;
     if ((!text && !payload.imageId && !payload.assetId && !payload.audioId) || sending || choiceLocks.current.has(taskScope)) return;
@@ -523,6 +532,7 @@ export default function XiaxiaChat({
     // Keep the original draft when a consent dialog is cancelled.
     if (text && !payload.imageId && !payload.assetId && !payload.audioId && onBeforeSend && await onBeforeSend(text)) return;
     setError('');
+    stickBottom.current=true;setNewMessagesBelow(0);
     setSending(true);
     setOutgoing(payload.audioId?'[语音]':text || '[图片]');
     setDraft('');
@@ -543,7 +553,9 @@ export default function XiaxiaChat({
     } catch (e) {
       reportUserFacingError(e,'send','发送消息');
       const restored=await refreshSession().catch(()=>null);
-      if(!restored?.messages.some(message=>message.role==='user'&&message.turnId===turnId))setFailedSends(current=>[...current.filter(message=>message.scope!==taskScope||message.turnId!==turnId),{scope:taskScope,turnId,body,text:payload.audioId?'[语音]':text||'[图片]'}]);
+      if(mobile&&restored?.messages.some(message=>message.role==='user'&&message.turnId===turnId)){retry.current=null;return;}
+      if(!mobile&&!restored?.messages.some(message=>message.role==='user'&&message.turnId===turnId))setFailedSends(current=>[...current.filter(message=>message.scope!==taskScope||message.turnId!==turnId),{scope:taskScope,turnId,body,text:payload.audioId?'[语音]':text||'[图片]'}]);
+      if(mobile)throw e;
     } finally {
       setSending(false);
     }
@@ -582,24 +594,18 @@ export default function XiaxiaChat({
     }
   }
   return (
-    <ImageGallery conversationId={character} images={gallery}><div className="xx-layout">
+    <ImageGallery conversationId={character} images={gallery}><div className={'xx-layout'+(mobile?' zy-mobile-chat-page':'')}>
       <section className="xx-chat" aria-label={shortName + '聊天'}>
         <ChatHeader name={name} avatar={avatar} bio={profile?.bio||''} status={characterStatus} typing={isTyping} dialoguePurpose={isMolly?undefined:profile?.dialoguePurpose} professionalTitle={profile?.professionalProfile?.title||profile?.professionalTitle} onProfile={onProfile} onDesktop={onDesktop} desktopOpen={desktopOpen} onCalendar={onCalendar} onCreateGroup={onCreateGroup} muted={muted} onToggleMute={onToggleMute} pinned={pinned} onTogglePin={onTogglePin} onSearch={()=>setSearchOpen(true)} onClear={clearHistory}/>
         <div className="xx-thread" ref={thread} aria-live="polite">
           {locationHighlight&&<div className="zy-private-location-highlight" aria-hidden="true" style={{top:locationHighlight.top,height:locationHighlight.height}}/>}
-          <ChatIdentityNotice name={profile?.name||name} purpose={profile?.dialoguePurpose} molly={isMolly}/>
-          {!visibleMessages.length && (
-            <div className="xx-welcome">
-              <img className="xx-avatar large" src={avatar} alt={shortName} />
-              <h2>{name}</h2>
-            </div>
-          )}
-          {messageGroups(visibleMessages,boundary).map((group) => {
+          {messageGroups(visibleMessages,boundary).map((group,groupIndex,groups) => {
             const last = group[group.length - 1],
               mine = last.role === 'user',
               read = messagesHaveReadReceipt(group);
             return (
               <div key={group[0].id} className={'xx-group ' + last.role}>
+                {mobile&&(groupIndex===0||Date.parse(group[0].at)-Date.parse(groups[groupIndex-1].at(-1)!.at)>=300000)&&<div className="xx-time-divider"><time dateTime={group[0].at}>{formatMessageTime(group[0].at)}</time></div>}
                 {group[0].id===boundary && <div className="zy-unread-line"><span/>未读消息<span/></div>}
                 <div className="xx-group-row">
                   {!mine && (
@@ -625,22 +631,23 @@ export default function XiaxiaChat({
                       >
                         {m.replyTo && (()=>{const original=visibleMessages.find(item=>item.id===m.replyTo);return original?<button type="button" className="npc-quote" onClick={()=>jump(original.id)}><strong>{original.role==='user'?'你':name}</strong><span>{excerpt(original)}</span></button>:null;})()}
                         <RetryableMessage failed={mine&&m.id===lastUser?.id&&replyFailed} disabled={sending||choosing||!data?.available} onRetry={()=>void retryReply()}>
-                        <MessageActions text={m.part.type==='professional_task'||m.part.type==='choice'?searchMessageText(m,professionalTasks):m.part.type==='voice'||'text'in m.part?m.part.text:m.part.type==='generated_photo'?m.part.caption:('caption'in m.part?m.part.caption||'':'')} voice={m.part.type==='voice'} onQuote={()=>quoteMessage(m)} onDelete={()=>deleteMessage(m)} onForward={onForward?()=>onForward(m.part.type==='professional_task'||m.part.type==='choice'?searchMessageText(m,professionalTasks):'text'in m.part?m.part.text:'caption'in m.part?m.part.caption||'':''):undefined}>
+                        <MessageActions text={m.part.type==='professional_task'||m.part.type==='choice'?searchMessageText(m,professionalTasks):m.part.type==='voice'||'text'in m.part?m.part.text:m.part.type==='generated_photo'?m.part.caption:('caption'in m.part?m.part.caption||'':'')} voice={m.part.type==='voice'||!!m.legacyContent?.audio} voiceSrc={m.part.type==='voice'?m.part.url:m.legacyContent?.audio} accountId={account.id} onQuote={()=>quoteMessage(m)} onDelete={()=>deleteMessage(m)} onForward={onForward?()=>onForward(m.part.type==='professional_task'||m.part.type==='choice'?searchMessageText(m,professionalTasks):'text'in m.part?m.part.text:'caption'in m.part?m.part.caption||'':''):undefined}>
                         {m.legacyContent?.image && <figure className="xx-media upload"><ChatImage messageId={m.id} src={m.legacyContent.image} alt="历史聊天图片"/></figure>}
-                        {m.legacyContent?.audio && <div className="xx-bubble xx-bubble-voice"><VoiceBubble src={m.legacyContent.audio} durationSeconds={m.legacyContent.audioDurationSeconds}/></div>}
+                        {m.legacyContent?.audio && <div className="xx-bubble xx-bubble-voice"><VoiceBubble src={m.legacyContent.audio} durationSeconds={m.legacyContent.audioDurationSeconds} transcript={'text'in m.part?m.part.text:undefined}/></div>}
                         {m.legacyContent?.file && <div className="xx-bubble">{m.legacyContent.file}</div>}
-                        {(!m.legacyContent || ('text' in m.part && m.part.text)) && <NpcPart messageId={m.id} characterId={character} part={m.part} onOpenTask={setOpenTaskId} onOpenNpc={onOpenNpc} onOpenChoice={id=>{void refreshSession().then(()=>jump(id)).catch(failure=>setError(reportUserFacingError(failure,'load','打开演示选择')));}} onChoose={allowsCharacterChoice(character)&&!mirror&&!mine?index=>void choose(m,index):undefined} pendingIndex={choiceState?.key===taskScope&&choiceState.messageId===m.id?choiceState.index:undefined} choiceDisabled={mirror||mine||sending||choosing||(!data?.available&&!(m.part.type==='choice'&&m.part.reportDemoChoice))} choiceError={choiceState?.key===taskScope&&choiceState.messageId===m.id&&choiceState.error?userFacingError(choiceState.error):undefined} onRetry={()=>void retryPart(m.part,m.id)} />}
+                        {(!m.arrangementOffer||('text' in m.part&&!!m.part.text))&&(!m.legacyContent || ('text' in m.part && m.part.text)) && <NpcPart messageId={m.id} characterId={character} part={m.part} onOpenTask={setOpenTaskId} onOpenNpc={onOpenNpc} onOpenChoice={id=>{void refreshSession().then(()=>jump(id)).catch(failure=>setError(reportUserFacingError(failure,'load','打开演示选择')));}} onChoose={allowsCharacterChoice(character)&&!mirror&&!mine?index=>void choose(m,index):undefined} pendingIndex={choiceState?.key===taskScope&&choiceState.messageId===m.id?choiceState.index:undefined} choiceDisabled={mirror||mine||sending||choosing||(!data?.available&&!(m.part.type==='choice'&&m.part.reportDemoChoice))} choiceError={choiceState?.key===taskScope&&choiceState.messageId===m.id&&choiceState.error?userFacingError(choiceState.error):undefined} onRetry={()=>void retryPart(m.part,m.id)} />}
                         </MessageActions>
                         </RetryableMessage>
-                        {!mine&&m.taskLinks?.length&&onOpenTasks?<div className="xx-task-link-bubbles" aria-label="查看任务">{m.taskLinks.map(link=><button key={link.scope} type="button" className="xx-bubble xx-task-link-bubble" onClick={()=>onOpenTasks(link.scope)}><span className="xx-task-link-label">{link.label}</span></button>)}</div>:null}
+                        {!mine&&m.taskLinks?.length&&onOpenTasks?<div className="xx-task-link-bubbles" aria-label="查看安排">{m.taskLinks.map(link=><button key={link.scope} type="button" className="xx-bubble xx-task-link-bubble" onClick={()=>onOpenTasks(link.scope)}><span className="xx-task-link-label">{link.label.replace(/任务/gu,'安排')}</span></button>)}</div>:null}
                         {!mine&&m.secretaryEvent?.kind==='group'&&m.secretaryEvent.groupId&&onOpenGroup?<div className="xx-task-links"><button type="button" onClick={()=>{if(m.secretaryEvent?.groupId)onOpenGroup(m.secretaryEvent.groupId);}}>进入群聊</button></div>:null}
                         {m.recommendations?.map(candidate => <NpcContactCard key={candidate.id} candidate={candidate} onOpen={onOpenNpc}/>)}
+                        {!mine&&<ArrangementMessage message={m} disabled={sending||choosing}/>}
                       </div>
                     ))}
                   </div>
                 </div>
                 <div className="xx-group-meta">
-                  <time dateTime={last.at}>{last.legacyTime || messageTime(last.at)}</time>
+                  <time dateTime={last.at}>{last.legacyTime || formatMessageTime(last.at)}</time>
                   <MessageReceipt
                     size={17}
                     read={read}
@@ -657,8 +664,10 @@ export default function XiaxiaChat({
             </div>
           )}
           {visibleFailedSends.map(message=><div className="xx-group user" key={message.turnId}><div className="zy-failed-message"><button type="button" className="zy-message-retry" aria-label="重新发送这条消息" title="消息没发出去，点一下重试" disabled={sending||choosing} onClick={()=>void retryFailedSend(message)}><RotateCcw size={16}/></button><div className="xx-bubble">{message.text}</div></div></div>)}
+          {threadSupplement}
           <div ref={end} />
         </div>
+        {newMessagesBelow>0&&<div className="zy-latest-message-slot"><button type="button" className="zy-chat-return-latest" onClick={()=>{stickBottom.current=true;setNewMessagesBelow(0);if(thread.current)thread.current.scrollTop=thread.current.scrollHeight;}}>{newMessagesBelow} 条新消息 · 回到底部</button></div>}
         {error && (
           <div className="xx-notice" role="alert">
             {error}
@@ -672,7 +681,7 @@ export default function XiaxiaChat({
             {userFacingErrors.network}
           </div>
         )}
-        {activeTaskPageContext&&<div className="npc-quote-draft npc-task-page-context" aria-label="当前任务上下文"><Reply size={15}/><span><strong>当前任务：{activeTaskPageContext.title}</strong><small>{activeTaskPageContext.summary.split('\n').slice(0,3).join(' · ')}</small></span><button type="button" onClick={()=>onOpenTasks?.('today')}>查看任务</button><button type="button" aria-label="取消任务上下文" onClick={onDismissTaskPageContext}><X size={16}/></button></div>}
+        {activeTaskPageContext&&<div className="npc-quote-draft npc-task-page-context" aria-label="当前安排上下文"><Reply size={15}/><span><strong>当前安排：{activeTaskPageContext.title}</strong><small>{activeTaskPageContext.summary.split('\n').slice(0,3).join(' · ')}</small></span><button type="button" onClick={()=>onOpenTasks?.('today')}>查看安排</button><button type="button" aria-label="取消安排上下文" onClick={onDismissTaskPageContext}><X size={16}/></button></div>}
         {validQuoted && <div className="npc-quote-draft"><Reply size={15}/><span><strong>回复 {validQuoted.role==='user'?'你':name}</strong><small>{validQuoted.preview}</small></span><button aria-label="取消引用" onClick={dismissQuote}><X size={16}/></button></div>}
         <ChatComposer allowImages={!textOnly} allowVoice={!textOnly} value={draft} onChange={updateTyping} onSend={send} disabled={sending || choosing || !data?.available} label={'给'+shortName+'的消息'} placeholder={`和${shortName}说点什么…`} companion={companion} aboveInput={isChef||isChen||isLiu?<ProfessionalTaskEntry accountId={account.id} characterId={character} companion={!!companion} onOpen={setOpenTaskId}/>:undefined}/>
         {searchOpen&&<GroupChatSearch name={name} entries={searchEntries} onLocate={jump} onClose={()=>setSearchOpen(false)}/>}

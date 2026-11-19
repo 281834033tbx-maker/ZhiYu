@@ -1,14 +1,16 @@
 'use client';
-import {useCallback,useEffect,useRef,useState} from 'react';
+import {useCallback,useContext,useEffect,useRef,useState} from 'react';
 import {npcFetch} from './npc-fetch';
+import {MobileComposerContext} from './mobile-composer-context';
 import './voice-bubble.css';
 
 function validSeconds(value?:number){return typeof value==='number'&&Number.isFinite(value)&&value>0?Math.ceil(value):null;}
 function label(seconds:number|null){return seconds===null?'…':seconds<60?`${seconds}"`:`${Math.floor(seconds/60)}′${String(seconds%60).padStart(2,'0')}″`;}
 
-type Props={src:string;durationSeconds?:number};
+type Props={src:string;durationSeconds?:number;transcript?:string};
 export default function VoiceBubble(props:Props){return <VoiceBubbleRecording key={`${props.src}:${props.durationSeconds||''}`} {...props}/>;}
 function VoiceBubbleRecording({src,durationSeconds}:Props){
+ const mobile=useContext(MobileComposerContext);
  const audio=useRef<HTMLAudioElement>(null),objectUrl=useRef<string|null>(null),loading=useRef<Promise<string>|null>(null),abort=useRef<AbortController|null>(null);
  const [seconds,setSeconds]=useState<number|null>(()=>validSeconds(durationSeconds));
  const [playing,setPlaying]=useState(false),[failed,setFailed]=useState(false);
@@ -54,8 +56,8 @@ function VoiceBubbleRecording({src,durationSeconds}:Props){
   if(objectUrl.current){play(objectUrl.current);return;}
   void ensureLoaded().then(play).catch(()=>setFailed(true));
  }
- return <div className="voice-bubble-wrap">
-  <button type="button" className={'voice-bubble'+(playing?' is-playing':'')} onClick={toggle} aria-label={`${playing?'暂停':'播放'}语音，${seconds===null?'时长加载中':`${seconds}秒`}`} aria-pressed={playing}>
+ return <div className={'voice-bubble-wrap'+(mobile?' is-mobile':'')}>
+  <button type="button" className={'voice-bubble'+(playing?' is-playing':'')+(mobile?' is-mobile':'')} onClick={toggle} aria-label={`${playing?'暂停':'播放'}语音，${seconds===null?'时长加载中':`${seconds}秒`}`} aria-pressed={playing}>
    <span className="voice-bubble-duration">{label(seconds)}</span>
    <svg className="voice-bubble-waves" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
     <circle className="voice-wave-one" cx="12.7" cy="8.5" r="1.1" fill="currentColor"/>

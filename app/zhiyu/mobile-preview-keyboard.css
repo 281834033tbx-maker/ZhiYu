@@ -1,0 +1,23 @@
+.zy-mobile .zy-m-preview-keyboard { box-sizing:border-box; display:flex; flex-direction:column; width:100%; padding:4px 6px 12px; border-top:.5px solid var(--zy-m-chat-line); background:var(--zy-m-incoming); color:var(--zy-m-ink); pointer-events:auto; user-select:none; -webkit-user-select:none; }
+.zy-mobile .zy-m-preview-keyboard-tools { display:flex; flex:none; align-items:center; gap:6px; height:22px; }
+.zy-mobile .zy-m-preview-keyboard-tools>button { display:grid; place-items:center; width:40px; height:22px; padding:0; border:0; background:none; color:var(--zy-m-secondary); }
+.zy-mobile .zy-m-preview-keyboard-tools>.zy-m-preview-keyboard-language { width:44px; border-radius:6px; background:var(--zy-m-capsule-fallback); color:var(--zy-m-ink); font-size:calc(12px + var(--zy-font-adjust,0px)); }
+.zy-mobile .zy-m-preview-keyboard-tools>output { flex:1; min-width:0; overflow:hidden; color:var(--zy-m-secondary); font-size:calc(12px + var(--zy-font-adjust,0px)); text-overflow:ellipsis; white-space:nowrap; }
+.zy-mobile .zy-m-preview-keyboard-tools>.zy-m-preview-keyboard-clear { width:32px; font-size:calc(12px + var(--zy-font-adjust,0px)); }
+.zy-mobile .zy-m-preview-keyboard-candidates { display:flex; flex:none; align-items:center; gap:14px; height:32px; margin-bottom:4px; overflow-x:auto; overscroll-behavior:contain; scrollbar-width:none; }
+.zy-mobile .zy-m-preview-keyboard-candidates::-webkit-scrollbar { display:none; }
+.zy-mobile .zy-m-preview-keyboard-candidates>button { display:flex; flex:none; align-items:baseline; gap:5px; height:30px; max-width:100%; padding:0 3px; border:0; background:none; color:var(--zy-m-ink); font-family:inherit; font-size:calc(16px + var(--zy-font-adjust,0px)); white-space:nowrap; cursor:pointer; }
+.zy-mobile .zy-m-preview-keyboard-candidates>button>span { overflow:hidden; text-overflow:ellipsis; }
+.zy-mobile .zy-m-preview-keyboard-candidates>button:first-child { color:var(--zy-m-accent); }
+.zy-mobile .zy-m-preview-keyboard-candidates small,.zy-mobile .zy-m-preview-keyboard-candidates>span,.zy-mobile .zy-m-preview-keyboard-candidates>output { flex:none; color:var(--zy-m-secondary); font-size:calc(12px + var(--zy-font-adjust,0px)); }
+.zy-mobile .zy-m-preview-keyboard-rows { display:grid; flex:1; min-height:0; grid-template-rows:repeat(4,minmax(0,1fr)); gap:6px; }
+.zy-mobile .zy-m-preview-keyboard-row { display:flex; min-height:0; gap:5px; }
+.zy-mobile .zy-m-preview-keyboard-row.row-2:not(.is-symbols) { padding:0 15px; }
+.zy-mobile .zy-m-preview-keyboard-row>button { display:grid; place-items:center; box-sizing:border-box; flex:1; min-width:0; padding:0; border:0; border-radius:6px; background:var(--zy-m-field); color:var(--zy-m-ink); font-family:inherit; font-size:calc(20px + var(--zy-font-adjust,0px)); font-weight:400; line-height:1; cursor:pointer; touch-action:manipulation; }
+.zy-mobile .zy-m-preview-keyboard-row>button:active { background:var(--zy-m-capsule-hold); }
+.zy-mobile .zy-m-preview-keyboard-row>.zy-m-preview-keyboard-function { flex:0 0 42px; background:var(--zy-m-capsule-fallback); font-size:calc(14px + var(--zy-font-adjust,0px)); }
+.zy-mobile .zy-m-preview-keyboard-row>.zy-m-preview-keyboard-space { flex:1; font-size:calc(14px + var(--zy-font-adjust,0px)); }
+.zy-mobile .zy-m-preview-keyboard-row>.is-punctuation { flex:0 0 30px; font-size:calc(14px + var(--zy-font-adjust,0px)); }
+.zy-mobile .zy-m-preview-keyboard-row>.zy-m-preview-keyboard-send { flex:0 0 64px; background:var(--zy-m-outgoing); color:var(--zy-m-on-outgoing); font-size:calc(14px + var(--zy-font-adjust,0px)); }
+.zy-mobile .zy-m-preview-keyboard-row>button:disabled { opacity:.5; cursor:default; }
+.zy-mobile .zy-m-preview-keyboard button:focus-visible { outline:2px solid var(--zy-m-accent); outline-offset:1px; }

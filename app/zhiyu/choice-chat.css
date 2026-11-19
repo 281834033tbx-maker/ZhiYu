@@ -1,15 +1,15 @@
 /* Bubble geometry, background, body size and body color stay with xx-bubble. */
-.zy-choice-chat { min-width:0; }
+.zy-choice-chat { min-width:0; font-size:calc(13px + var(--zy-font-adjust,0px)); }
 .zy-choice-question { margin-bottom:8px; }
 .zy-choice-options { display:flex; flex-direction:column; gap:6px; min-width:0; margin:0; padding:0; border:0; }
 .zy-choice-option {
-  display:flex; align-items:center; gap:9px; width:100%; min-width:0;
+  display:flex; align-items:center; gap:9px; width:100%; min-width:0; min-height:36px;
   padding:7px 10px; border:1px solid rgb(0 0 0 / 10%); border-radius:12px;
   background:rgb(255 255 255 / 38%); color:inherit; font:inherit;
-  font-weight:600; line-height:inherit; text-align:left; cursor:pointer;
+  font-size:calc(13px + var(--zy-font-adjust,0px)); font-weight:600; line-height:inherit; text-align:left; cursor:pointer;
 }
 .zy-choice-number {
-  display:inline-grid; place-items:center; flex:0 0 21px; width:21px; height:21px;
+  display:inline-grid; place-items:center; flex:0 0 18px; width:18px; height:18px;
   border:1px solid rgb(0 0 0 / 18%); border-radius:50%; line-height:1;
 }
 .zy-choice-label { min-width:0; white-space:pre-wrap; overflow-wrap:anywhere; }

@@ -29,9 +29,9 @@ html[data-zy-theme][data-zy-native-material='macos'] .zy-liquid-base-plate {
    图标/logo/文字各自不透明，不受影响；磨砂模糊由 macOS 原生材质提供。 */
 html[data-zy-theme='light'] .zy-desktop-slot>.zy-app.zy-desktop {
   background:linear-gradient(180deg,
-    rgb(139 179 178 / 4%) 0%,
-    rgb(171 195 200 / 4%) 48%,
-    rgb(211 220 232 / 4%) 100%);
+    rgb(139 179 178 / calc(4% * var(--zy-classic-strength,1))) 0%,
+    rgb(171 195 200 / calc(4% * var(--zy-classic-strength,1))) 48%,
+    rgb(211 220 232 / calc(4% * var(--zy-classic-strength,1))) 100%);
 }
 html[data-zy-theme='light'] .zy-app.zy-desktop .zy-base {
   background:transparent;
@@ -49,7 +49,7 @@ html[data-zy-theme='light'] .zy-app.zy-desktop .zy-rail {
 }
 html[data-zy-theme='light'] .zy-app.zy-desktop .zy-directory {
   --directory-background:transparent;
-  background:rgb(246 247 251 / 42%);
+  background:rgb(246 247 251 / calc(42% * var(--zy-classic-strength,1)));
 }
 /* The directory keeps its horizontal teal/purple gradient, distinct from
    the vertical base plate. Icons, logos and text retain full opacity. */
@@ -59,8 +59,9 @@ html[data-zy-theme='light'] .zy-app.zy-desktop .zy-directory::before {
   inset:0;
   z-index:-1;
   pointer-events:none;
+  opacity:var(--zy-classic-strength,1);
   border-radius:inherit;
-  background:linear-gradient(90deg,#7fb5ae 0%,#b4bfbc 48%,#b2a0ca 100%);
+  background:linear-gradient(90deg,var(--zy-directory-tone-start) 0%,var(--zy-directory-tone-middle) 48%,var(--zy-directory-tone-end) 100%);
   -webkit-mask-image:linear-gradient(180deg,rgb(0 0 0 / 78%) 0%,rgb(0 0 0 / 55%) 28%,rgb(0 0 0 / 25%) 65%,rgb(0 0 0 / 4%) 100%);
   mask-image:linear-gradient(180deg,rgb(0 0 0 / 78%) 0%,rgb(0 0 0 / 55%) 28%,rgb(0 0 0 / 25%) 65%,rgb(0 0 0 / 4%) 100%);
 }

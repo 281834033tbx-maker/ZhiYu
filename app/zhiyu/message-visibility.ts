@@ -1,5 +1,7 @@
 'use client';
 
+
+import {accountStorage} from './account-storage';
 import {useCallback, useSyncExternalStore} from 'react';
 
 type HiddenMessages = Readonly<Record<string, readonly string[]>>;
@@ -14,7 +16,7 @@ export function hiddenMessagesKey(accountId: string) {
 function readHiddenMessages(accountId: string): HiddenMessages {
   if (!accountId || typeof window === 'undefined') return empty;
   let raw: string | null;
-  try {raw = localStorage.getItem(hiddenMessagesKey(accountId));} catch {return empty;}
+  try {raw = accountStorage(accountId).getItem(hiddenMessagesKey(accountId));} catch {return empty;}
   const cached = snapshots.get(accountId);
   if (cached?.raw === raw) return cached.value;
   let value: HiddenMessages = empty;
@@ -39,7 +41,7 @@ export function hideMessage(accountId: string, threadId: string, messageId: stri
   if (previous[threadId]?.includes(messageId)) return;
   const next = {...previous, [threadId]: [...(previous[threadId] || []), messageId]};
   // Only a display preference is written. Original messages and NPC memory stay intact.
-  try {localStorage.setItem(hiddenMessagesKey(accountId), JSON.stringify(next));}
+  try {accountStorage(accountId).setItem(hiddenMessagesKey(accountId), JSON.stringify(next));}
   catch {throw new Error('删除未保存，本机存储不可用，请稍后再试。');}
   window.dispatchEvent(new CustomEvent(changeEvent, {detail: {accountId}}));
 }

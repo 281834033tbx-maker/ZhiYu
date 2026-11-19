@@ -1,6 +1,6 @@
 'use client';
 
-import {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type Dispatch, type KeyboardEvent, type RefObject} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type Dispatch, type KeyboardEvent, type ReactNode, type RefObject} from 'react';
 import {ChevronLeft, ChevronRight} from 'lucide-react';
 import PressableIconButton from '../pressable-icon-button';
 import {categories, npcs} from './config';
@@ -18,6 +18,7 @@ type Props = {
   actions:TaskActions;
   scrollRef?:RefObject<HTMLElement|null>;
   onMonthChange?:(month:string)=>void;
+  renderTask?:(task:Task)=>ReactNode;
 };
 type DayState = 'complete'|'partial'|'empty';
 const weekdays = ['周日','周一','周二','周三','周四','周五','周六'];
@@ -49,7 +50,7 @@ function seedCalendarState(date:string,overview?:DemoOverview):DayState {
 
 /** Display the supplied source. Demo aggregates are used only when that source
  * explicitly supplies its demoOverview; real task records are never filled in. */
-export default function HistoryView({model,dispatch,now,query,actions,scrollRef,onMonthChange}:Props) {
+export default function HistoryView({model,dispatch,now,query,actions,scrollRef,onMonthChange,renderTask}:Props) {
   const node=useRef<HTMLElement>(null),sentinel=useRef<HTMLDivElement>(null);
   const pendingScroll=useRef<string|null>(null),pendingFocus=useRef<string|null>(null);
   const overview=model.demoOverview,isDemo=!!overview,yesterday=shiftBoardDate(model.today,-1);
@@ -190,13 +191,13 @@ export default function HistoryView({model,dispatch,now,query,actions,scrollRef,
   }
   const leading=(new Date(month+'-01T00:00:00Z').getUTCDay()+6)%7;
   const minimumMonth=earliestDate.slice(0,7);
-  return <section ref={node} className="zy-tb-history" aria-label="历史任务">
+  return <section ref={node} className="zy-tb-history" aria-label="历史安排">
     <header className="zy-tb-history-heading">
       <div><h1>历史</h1><p>{monthName(month)}完成 {stats.completed} 项</p></div>
-      <SegmentedControl label="历史任务筛选" value={model.page.historyFilter} options={[...filters]}
+      <SegmentedControl label="历史安排筛选" value={model.page.historyFilter} options={[...filters]}
         onChange={value=>dispatch({type:'set-history-filter',filter:value as 'all'|'done'|'missed'})}/>
     </header>
-    <section className="zy-tb-history-calendar-card" aria-label={monthName(month)+'任务日历与统计'}>
+    <section className="zy-tb-history-calendar-card" aria-label={monthName(month)+'安排日历与统计'}>
       <div className="zy-tb-history-calendar">
         <header>
           <PressableIconButton type="button" aria-label="上个月" disabled={month<=minimumMonth} onClick={()=>changeMonth(-1)}><ChevronLeft size={16}/></PressableIconButton>
@@ -208,7 +209,7 @@ export default function HistoryView({model,dispatch,now,query,actions,scrollRef,
           {Array.from({length:leading},(_,index)=><span key={'blank-'+index}/>)}
           {dates.map((date,index)=>{
             const status=stats.states[index],selected=date===selectedDate;
-            const stateLabel=status==='complete'?'全部完成':status==='partial'?'部分完成':'没有任务';
+            const stateLabel=status==='complete'?'全部完成':status==='partial'?'部分完成':'没有安排';
             return <button type="button" key={date} data-calendar-date={date}
               className={'is-'+status+(selected?' is-selected':'')}
               aria-label={monthDay(date)+'，'+stateLabel} aria-pressed={selected}
@@ -221,20 +222,20 @@ export default function HistoryView({model,dispatch,now,query,actions,scrollRef,
       </div>
       <div className="zy-tb-history-overview">
         <dl><div><dt>{stats.rate}%</dt><dd>{monthName(month)}完成率</dd></div><div><dt>{stats.streak}<small> 天</small></dt><dd>最长连续全勤</dd></div><div><dt>{stats.trainings}</dt><dd>次训练</dd></div></dl>
-        <div className="zy-tb-history-legend" aria-label="日历图例"><span><i className="is-complete"/>全部完成</span><span><i className="is-partial"/>部分</span><span><i className="is-empty"/>没有任务</span></div>
+        <div className="zy-tb-history-legend" aria-label="日历图例"><span><i className="is-complete"/>全部完成</span><span><i className="is-partial"/>部分</span><span><i className="is-empty"/>没有安排</span></div>
       </div>
     </section>
     <div className="zy-tb-history-days">
-      {visibleDays.map(day=><section key={day.date} data-history-date={day.date} className="zy-tb-history-day" aria-label={monthDay(day.date)+'任务'}>
+      {visibleDays.map(day=><section key={day.date} data-history-date={day.date} className="zy-tb-history-day" aria-label={monthDay(day.date)+'安排'}>
         <header><h2>{day.date===shiftBoardDate(model.today,-1)?'昨天':monthDay(day.date)}</h2><span>{weekday(day.date)}</span>{day.tasks.length>0&&<div className="zy-tb-history-day-progress"><ProgressPill current={day.tasks.filter(isTaskFinished).length} total={day.tasks.length} label={monthDay(day.date)+'完成进度'}/></div>}</header>
-        {day.visible.map(task=><TaskRow key={task.id} task={task} category={categories.find(item=>item.id===task.categoryId)||categories[0]} npc={npcs.find(item=>item.id===task.npcId)||npcs[0]} mode="history"
+        {day.visible.map(task=>renderTask?renderTask(task):<TaskRow key={task.id} task={task} category={categories.find(item=>item.id===task.categoryId)||categories[0]} npc={npcs.find(item=>item.id===task.npcId)||npcs[0]} mode="history"
           expanded={model.page.expandedTaskIds.includes(task.id)} expandedStepId={model.page.expandedStepId}
           now={now} rest={model.rest} timers={model.timers} actions={actions}/>)}
-        {!day.visible.length&&<p className="zy-tb-history-empty">{day.tasks.length?'这一天没有符合筛选的任务。':'这一天没有任务。'}</p>}
+        {!day.visible.length&&<p className="zy-tb-history-empty">{day.tasks.length?'这一天没有符合筛选的安排。':'这一天没有安排。'}</p>}
       </section>)}
-      {!visibleDays.some(day=>day.visible.length)&&<output className="zy-tb-history-search-empty">没有找到符合条件的历史任务。</output>}
+      {!visibleDays.some(day=>day.visible.length)&&<output className="zy-tb-history-search-empty">没有找到符合条件的历史安排。</output>}
     </div>
     <div ref={sentinel} className="zy-tb-history-sentinel" aria-hidden="true"/>
-    <output className="zy-tb-history-status" aria-live="polite">{isDemo?'已读取最近 '+model.historyLoadedDays+' 天的历史记录':'已显示 '+allHistory.length+' 条历史任务'}</output>
+    <output className="zy-tb-history-status" aria-live="polite">{isDemo?'已读取最近 '+model.historyLoadedDays+' 天的历史记录':'已显示 '+allHistory.length+' 条历史安排'}</output>
   </section>;
 }

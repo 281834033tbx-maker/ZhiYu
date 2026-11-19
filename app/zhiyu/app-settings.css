@@ -28,6 +28,8 @@
 .zy-settings-button { flex-shrink:0;padding:8px 13px;border:1px solid var(--zy-glass-line);border-radius:10px;background:#ededee;color:#171719;font:inherit;font-size:calc(13px + var(--zy-font-adjust,0px));line-height:1.4;white-space:nowrap;cursor:pointer; }
 .zy-settings-button:hover { background:#e3e3e5; }
 .zy-settings-control-row { display:flex;justify-content:space-between;align-items:center;gap:20px;min-height:78px; }
+.zy-settings-topbar-section>.zy-settings-control-row { min-height:32px; }
+.zy-settings-topbar-error { margin:10px 0 0;color:var(--zy-glass-muted);font-size:calc(12px + var(--zy-font-adjust,0px));line-height:1.5; }
 .zy-settings-switch { display:flex;align-items:center;flex-shrink:0;width:38px;height:23px;border:0;border-radius:12px;padding:3px;background:#c8c8cd;cursor:pointer;transition:background-color 180ms ease; }
 .zy-settings-switch>span { width:17px;height:17px;flex-shrink:0;border-radius:50%;background:#fff;box-shadow:none;transform:translateX(0);transition:transform 180ms ease; }
 .zy-settings-switch[aria-checked='true'] { background:#ed7468; }

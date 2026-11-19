@@ -1,5 +1,7 @@
 'use client';
 
+
+import {accountStorage} from './account-storage';
 import { useEffect, useRef, type PointerEvent } from 'react';
 
 const storageKey = 'zhiyu-window-size';
@@ -20,11 +22,11 @@ export default function WindowResize() {
   }
   function save() {
     const rect = windowElement()?.getBoundingClientRect();
-    if (rect) try { localStorage.setItem(storageKey, JSON.stringify({ width: rect.width, height: rect.height })); } catch { /* Storage may be disabled. */ }
+    if (rect) try { accountStorage().setItem(storageKey, JSON.stringify({ width: rect.width, height: rect.height })); } catch { /* Storage may be disabled. */ }
   }
   useEffect(() => {
     try {
-      const size = JSON.parse(localStorage.getItem(storageKey) || 'null');
+      const size = JSON.parse(accountStorage().getItem(storageKey) || 'null');
       if (size && Number.isFinite(size.width) && Number.isFinite(size.height)) apply(size.width, size.height);
     } catch { /* Fall back to the original window size. */ }
     const fit = () => {
@@ -59,7 +61,7 @@ export default function WindowResize() {
       onDoubleClick={() => {
         const el = windowElement();
         if (el) { el.style.width = ''; el.style.height = ''; }
-        try { localStorage.removeItem(storageKey); } catch { /* Optional persistence. */ }
+        try { accountStorage().removeItem(storageKey); } catch { /* Optional persistence. */ }
       }}
       onKeyDown={e => {
         const rect = windowElement()?.getBoundingClientRect();

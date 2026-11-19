@@ -1,3 +1,8 @@
+import {openPrivateDialogue, commitPrivateDialogueInput, privateDialoguePrompt} from './private-dialogue-experience';
+import {commitPrivateArrangement} from './arrangement-dialogue';
+import {arrangementsFor} from './arrangements-plugin';
+import {persistBetaProfessionalState} from './beta-task-events';
+import {initBetaUsage,persistBetaPrivateMessage} from './beta-usage-events';
 import {statusFromState} from '../../lib/npc/character-status';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
 import {parseTaskPageContext} from '../../lib/npc/task-page-context';
@@ -39,12 +44,13 @@ export function chenLocal(deps?: {
       const now = deps?.now || Date.now;
       mkdirSync(join(root, '.npc-runtime'), { recursive: true });
       const db = new DatabaseSync(join(root, '.npc-runtime/state.sqlite'));
+      initBetaUsage(db);
       db.exec(
         'PRAGMA journal_mode=WAL; CREATE TABLE IF NOT EXISTS chen_sessions (id TEXT PRIMARY KEY, data TEXT NOT NULL)',
       );
       const save = (id: string, s: ChenState) => {
         s.revision=(s.revision||0)+1;
-        db.prepare('INSERT OR REPLACE INTO chen_sessions VALUES (?,?)').run(id,JSON.stringify(s));
+        persistBetaProfessionalState(db,{sessionId:id,npcId:'chen-nian',table:'chen_sessions',after:s,at:now()},()=>db.prepare('INSERT OR REPLACE INTO chen_sessions VALUES (?,?)').run(id,JSON.stringify(s)));
       };
       const load = (id: string): ChenState => {
         const row = db
@@ -117,7 +123,7 @@ export function chenLocal(deps?: {
           || (taskEvent&&!fresh.taskEvents.some(event=>event.id===taskEvent.id&&event.revision===taskEvent.revision));
         const discardStale=(fresh:ChenState)=>{if(!stale(fresh))return false;fresh.pending=null;save(id,fresh);return true;};
         try {
-          const frozen=structuredClone(s),basePrompt=chenPrompt(root,frozen,incoming,startedAt,taskEvent);
+          const frozen=structuredClone(s),basePrompt=privateDialoguePrompt(db,root,id.split(':')[0],'chen-nian',chenPrompt(root,frozen,incoming,startedAt,taskEvent),incoming,false,now);
           const evidence=chenTaskDelegationEvidence(frozen,startedAt,ids);
           let prompt=basePrompt;
           for(let attempt=1;attempt<=2;attempt++) {
@@ -147,7 +153,7 @@ export function chenLocal(deps?: {
               reconcileProfessionalTaskState(candidate,now());
               scheduleDelivery(candidate.messages,before,startedAt,now(),{characterId:'chen-nian'});
               candidate.queue=candidate.queue.filter(turn=>!ids.includes(turn));candidate.error='';candidate.retryAt=0;
-              save(id,candidate);return;
+              commitPrivateArrangement({db,store:arrangementsFor(root),owner:id.split(':')[0],characterId:'chen-nian',state:candidate,before:before,incoming,turnId:job,now:now(),startedAt:startedAt},()=>save(id,candidate));return;
             } catch(error) {
               if(!(error instanceof ProfessionalTaskError))throw error;
               diagnoseTaskFailure(job,stage,error,attempt);
@@ -235,6 +241,7 @@ export function chenLocal(deps?: {
             return changed;
           };
           if (req.method === 'GET') {
+            openPrivateDialogue(db,root,user,'chen-nian',now);
             const s = load(id);
             if (applyControls(s)) save(id, s);
             return reply(200, expose(s));
@@ -338,7 +345,8 @@ export function chenLocal(deps?: {
             s.queue.push(body.turnId);
             s.error = '';
             s.retryAt = 0;
-            save(id, s);
+            if(earlySharingScenario)save(id,s);
+            else persistBetaPrivateMessage(db,{ownerId:user,npcId:'chen-nian',turnId:body.turnId,messages:privateHistoryMessages(s),at:now()},()=>commitPrivateDialogueInput(db,root,user,'chen-nian',s,(body.text as string).trim(),()=>save(id,s),now));
           }
           reply(200, expose(s));
           void run(id);

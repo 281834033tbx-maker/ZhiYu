@@ -58,8 +58,9 @@ export function defaultReportTeam(report:SecretaryReport,participants:ReturnType
   return [{characterId,name:person.name,avatar:person.avatar,text,quoteId:`${report.id}:team:${characterId}`}];});
 }
 /** All arithmetic is deterministic; no model response is allowed to alter these fields. */
-export function buildSecretaryReport(kind:SecretaryReport['kind'],input:ReportInputs):SecretaryReport {
- const {startDate,endDate}=reportRange(kind,input.now),rows=reportOccurrences(input,startDate,endDate),records=(input.measurements||[]).filter(row=>validTaskDate(row.date));
+export function buildSecretaryReport(kind:SecretaryReport['kind'],input:ReportInputs,range?:{startDate:string;endDate:string}):SecretaryReport {
+ if(range&&(kind!=='weekly'||!validTaskDate(range.startDate)||!validTaskDate(range.endDate)||shiftTaskDate(range.startDate,6)!==range.endDate))throw Error('周报日期范围无效');
+ const {startDate,endDate}=range||reportRange(kind,input.now),rows=reportOccurrences(input,startDate,endDate),records=(input.measurements||[]).filter(row=>validTaskDate(row.date));
  const training=metric(rows.filter(r=>r.kind==='training')),nutrition=dayMetric(rows.filter(r=>r.kind==='nutrition')),cooking=metric(rows.filter(r=>r.kind==='cooking'));
  const totals=[training,nutrition,cooking],planned=totals.reduce((n,m)=>n+m.planned,0),completed=totals.reduce((n,m)=>n+m.completed,0);
  const periodRecords=records.filter(r=>r.date>=startDate&&r.date<=endDate).sort((a,b)=>a.date.localeCompare(b.date));

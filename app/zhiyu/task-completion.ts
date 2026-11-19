@@ -1,4 +1,6 @@
 'use client';
+
+import {accountStorage} from './account-storage';
 import {useCallback, useSyncExternalStore} from 'react';
 export type TaskCompletions = Readonly<Record<string, true>>;
 export const TASK_COMPLETION_CHANGED = 'zhiyu-task-completion-changed';
@@ -8,7 +10,7 @@ export function taskCompletionKey(accountId: string) {return `zhiyu-task-complet
 export function readTaskCompletions(accountId: string): TaskCompletions {
   if (!accountId || typeof window === 'undefined') return empty;
   let raw: string | null;
-  try {raw = localStorage.getItem(taskCompletionKey(accountId));} catch {return empty;}
+  try {raw = accountStorage(accountId).getItem(taskCompletionKey(accountId));} catch {return empty;}
   const cached = snapshots.get(accountId);
   if (cached?.raw === raw) return cached.value;
   let value = empty;
@@ -25,7 +27,7 @@ export function setTaskComplete(accountId: string, taskId: string, completed: bo
   if (!!previous[taskId] === completed) return;
   const next = {...previous};
   if (completed) next[taskId] = true; else delete next[taskId];
-  try {localStorage.setItem(taskCompletionKey(accountId), JSON.stringify(next));}
+  try {accountStorage(accountId).setItem(taskCompletionKey(accountId), JSON.stringify(next));}
   catch {throw new Error('完成状态未保存，请稍后重试。');}
   window.dispatchEvent(new CustomEvent(TASK_COMPLETION_CHANGED, {detail: {accountId}}));
 }
@@ -35,7 +37,7 @@ export function mergeTaskCompletions(accountId:string,remote:Record<string,true>
   const previous=readTaskCompletions(accountId),next={...previous};
   for(const id of taskIds){const completed=id in pending?pending[id]:remote[id]===true;if(completed)next[id]=true;else delete next[id];}
   if(JSON.stringify(previous)===JSON.stringify(next))return;
-  try{localStorage.setItem(taskCompletionKey(accountId),JSON.stringify(next));}catch{throw Error('完成状态未保存到本机，请稍后重试。');}
+  try{accountStorage(accountId).setItem(taskCompletionKey(accountId),JSON.stringify(next));}catch{throw Error('完成状态未保存到本机，请稍后重试。');}
   window.dispatchEvent(new CustomEvent(TASK_COMPLETION_CHANGED,{detail:{accountId}}));
 }
 export function useTaskCompletions(accountId: string) {

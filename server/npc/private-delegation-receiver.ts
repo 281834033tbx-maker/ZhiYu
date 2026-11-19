@@ -87,6 +87,7 @@ function previousNutritionPlan(db: DatabaseSync, owner: string, state: PrivateSt
   const groups=db.prepare('SELECT data FROM npc_group_chats WHERE owner=? ORDER BY updated_at DESC').all(owner) as {data:string}[];
   for (const row of groups) {
     const group=JSON.parse(row.data) as GroupChat;
+    if(group.demonstration)continue;
     if (!group.members.some(member=>member.id==='liu') || group.plan?.status!=='confirmed' || !group.plan.days.every(day=>day.date<start)) continue;
     return {id:group.plan.id,title:group.goal,steps:group.plan.days.map(day=>({title:day.label,scheduledDate:day.date,
       instructions:[`早餐 ${day.breakfast}`,`午餐 ${day.lunch}`,`晚餐 ${day.dinner}`]}))};

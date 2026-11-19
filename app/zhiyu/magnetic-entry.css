@@ -1,0 +1,6 @@
+/* Independent translate/scale preserve the auth card's own reflection tilt. */
+@media(hover:hover) and (pointer:fine) {
+ button[data-zy-magnetic-entry][data-zy-magnetic-active]:not(:disabled):not([aria-busy='true']) {translate:var(--zy-entry-magnet-x,0px) var(--zy-entry-magnet-y,0px);will-change:translate;}
+}
+button[data-zy-magnetic-entry]:active:not(:disabled) {scale:.985;}
+@media(prefers-reduced-motion:reduce) {button[data-zy-magnetic-entry],button[data-zy-magnetic-entry]:active:not(:disabled) {translate:none;scale:none;will-change:auto;}}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import {CAPTION_CASE_CLIP,CAPTION_CASE_TIME} from './caption-case-intent';
 
 const clips = [
   '/desktop-npc/video/xu-xiaoman/00-idle.mp4',
@@ -13,7 +14,50 @@ const clips = [
 
 type Slots = [number, number];
 
-export default function XiaomanVideoScene({ fallback }: { fallback: string }) {
+export default function XiaomanVideoScene({fallback,caseFrame=false,onCaseReady,onCaseError}:{fallback:string;caseFrame?:boolean;onCaseReady?:()=>void;onCaseError?:()=>void}) {
+  return caseFrame?<XiaomanCaseFrame fallback={fallback} onReady={onCaseReady} onError={onCaseError}/>:<XiaomanLoopScene fallback={fallback}/>;
+}
+
+function XiaomanCaseFrame({fallback,onReady,onError}:{fallback:string;onReady?:()=>void;onError?:()=>void}) {
+  const video=useRef<HTMLVideoElement>(null),canvas=useRef<HTMLCanvasElement>(null);
+  const [ready,setReady]=useState(false);
+  useEffect(()=>{
+    const element=video.current,surface=canvas.current;if(!element||!surface)return;
+    const context=surface.getContext('2d',{alpha:false});
+    let active=true,failed=false,seeked=false,drawn=false;
+    setReady(false);
+    const fail=()=>{failed=true;element.pause();if(active){setReady(false);onError?.();}};
+    const seek=()=>{
+      element.pause();
+      if(!Number.isFinite(element.duration)||element.duration<=CAPTION_CASE_TIME){fail();return;}
+      seeked=false;
+      element.currentTime=CAPTION_CASE_TIME;
+    };
+    const draw=()=>{
+      element.pause();
+      if(!active||failed||drawn||!seeked||element.seeking||Math.abs(element.currentTime-CAPTION_CASE_TIME)>.08||element.readyState<2)return;
+      if(!context||element.videoWidth!==1920||element.videoHeight!==1080){fail();return;}
+      try{
+        // Copy only the original, decoded video frame at native resolution. This
+        // avoids Electron retaining a paused video's old compositor texture.
+        context.drawImage(element,0,0);
+        drawn=true;setReady(true);onReady?.();
+      }catch{fail();}
+    };
+    const completedSeek=()=>{seeked=true;draw();};
+    element.addEventListener('loadedmetadata',seek);element.addEventListener('seeked',completedSeek);element.addEventListener('loadeddata',draw);element.addEventListener('canplay',draw);element.addEventListener('error',fail);
+    if(!context)fail();else if(element.readyState>=1)seek();
+    return()=>{active=false;element.pause();element.removeEventListener('loadedmetadata',seek);element.removeEventListener('seeked',completedSeek);element.removeEventListener('loadeddata',draw);element.removeEventListener('canplay',draw);element.removeEventListener('error',fail);context?.clearRect(0,0,surface.width,surface.height);};
+  },[onReady,onError]);
+  return <>
+    {/* eslint-disable-next-line @next/next/no-img-element -- Exact existing desktop fallback. */}
+    <img className="zy-character-window-scene-direct" src={fallback} alt="小满" draggable={false}/>
+    <video ref={video} className="zy-character-window-scene-video" src={CAPTION_CASE_CLIP} preload="auto" muted playsInline aria-hidden="true" tabIndex={-1} data-caption-case-video="true" data-caption-case-video-ready={ready}/>
+    <canvas ref={canvas} className={`zy-character-window-scene-video${ready?' is-active':''}`} width={1920} height={1080} aria-hidden="true" data-caption-case-canvas="true" data-caption-case-canvas-ready={ready}/>
+  </>;
+}
+
+function XiaomanLoopScene({fallback}:{fallback:string}) {
   const firstVideo = useRef<HTMLVideoElement>(null);
   const secondVideo = useRef<HTMLVideoElement>(null);
   const activeSlot = useRef(0);

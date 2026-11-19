@@ -1,3 +1,8 @@
+import {openPrivateDialogue, commitPrivateDialogueInput, privateDialoguePrompt} from './private-dialogue-experience';
+import {commitPrivateArrangement} from './arrangement-dialogue';
+import {arrangementsFor} from './arrangements-plugin';
+import {persistBetaProfessionalState} from './beta-task-events';
+import {initBetaUsage,persistBetaPrivateMessage} from './beta-usage-events';
 import {statusFromState} from '../../lib/npc/character-status';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
 import {parseTaskPageContext} from '../../lib/npc/task-page-context';
@@ -33,12 +38,13 @@ export function liuLocal(deps?: {
       const now = deps?.now || Date.now;
       mkdirSync(join(root, '.npc-runtime'), { recursive: true });
       const db = new DatabaseSync(join(root, '.npc-runtime/state.sqlite'));
+      initBetaUsage(db);
       db.exec(
         'PRAGMA journal_mode=WAL; CREATE TABLE IF NOT EXISTS liu_sessions (id TEXT PRIMARY KEY, data TEXT NOT NULL)',
       );
       const save = (id: string, s: LiuState) => {
         s.revision=(s.revision||0)+1;
-        db.prepare('INSERT OR REPLACE INTO liu_sessions VALUES (?,?)').run(id,JSON.stringify(s));
+        persistBetaProfessionalState(db,{sessionId:id,npcId:'liu',table:'liu_sessions',after:s,at:now()},()=>db.prepare('INSERT OR REPLACE INTO liu_sessions VALUES (?,?)').run(id,JSON.stringify(s)));
       };
       const load = (id: string): LiuState => {
         const row = db
@@ -108,7 +114,7 @@ export function liuLocal(deps?: {
           const out = parseLiu(
             await (deps?.generate || generate)(
               root,
-              liuPrompt(root, s, incoming, kind, now()),
+              privateDialoguePrompt(db,root,id.split(':')[0],'liu',liuPrompt(root, s, incoming, kind, now()),incoming,proactive,now),
               { requestId: job, images: imageInputs(root,id.split(':')[0],s.messages.slice(-80)) },
             ),
             incoming,
@@ -137,7 +143,7 @@ export function liuLocal(deps?: {
           if (out.action === 'end_conversation') fresh.contactLife!.quietUntil = now() + 2 * 3600000;
           fresh.queue = fresh.queue.filter((q) => !ids.includes(q));
           fresh.error = '';
-          save(id, fresh);
+          commitPrivateArrangement({db,store:arrangementsFor(root),owner:id.split(':')[0],characterId:'liu',state:fresh,before:before,incoming,turnId:job,now:now(),startedAt:s.pending!.since},()=>save(id,fresh));
         } catch (error) {
           if (!closed) {
             const fresh = load(id);
@@ -189,7 +195,7 @@ export function liuLocal(deps?: {
             );
           }
           const id = `${user}:liu`;
-          if (req.method === 'GET') return reply(200, expose(load(id)));
+          if (req.method === 'GET') {openPrivateDialogue(db,root,user,'liu',now); return reply(200, expose(load(id)));}
           if (req.method !== 'POST')
             return reply(405, { error: '不支持的方法' });
           let text = '';
@@ -283,7 +289,7 @@ export function liuLocal(deps?: {
             contactUserActivity(s, partInput(mediaPart!), now());
             s.error = '';
             s.retryAt = 0;
-            save(id, s);
+            persistBetaPrivateMessage(db,{ownerId:user,npcId:'liu',turnId:body.turnId,messages:privateHistoryMessages(s),at:now()},()=>commitPrivateDialogueInput(db,root,user,'liu',s,partInput(mediaPart!),()=>save(id,s),now));
           }
           reply(200, expose(s));
           void run(id);

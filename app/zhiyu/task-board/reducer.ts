@@ -1,12 +1,20 @@
 import {createHistoryDay,createMockTaskBoard,shiftMockDate} from './mock';
+import {applyManualTaskRecord,boardShanghaiToday,isBoardDate,parseBoardPlan} from './manual-task-record';
+import {validContentResetAt} from '../../../lib/npc/content-reset';
 import type {Task,TaskBoardAction,TaskBoardModel,TaskTimer} from './types';
 
 export const HISTORY_MOCK_LIMIT_DAYS=365;
 export const createInitialTaskBoard=(now=Date.now()):TaskBoardModel=>createMockTaskBoard(now);
 export function createEmptyTaskBoard(today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())):TaskBoardModel {
-  return {version:1,today,tasks:[],page:{view:'today',futureRange:7,historyFilter:'all',activeExpanded:false,expandedTaskIds:[],weeklyReview:{time:''}},timers:{},historyLoadedDays:0};
+  return {version:1,today,tasks:[],plans:[],page:{view:'today',futureRange:7,historyFilter:'all',activeExpanded:false,expandedTaskIds:[],weeklyReview:{time:''}},timers:{},historyLoadedDays:0};
 }
 export const shiftBoardDate=shiftMockDate;
+export const boardSelectedDate=(model:TaskBoardModel)=>model.page.selectedDate||model.today;
+/** Only explicitly authored records can be operated on a selected non-current day. */
+export const canOperateBoardTask=(model:TaskBoardModel,task:Task)=>task.date===boardSelectedDate(model)&&(task.date===model.today||!!task.manualRecord);
+export const boardTimerRemainingSeconds=(timer:TaskTimer|undefined,now:number)=>timer?Math.max(0,Math.ceil((timer.pausedRemainingMs??timer.endsAt-now)/1000)):0;
+function freezeTimer(timer:TaskTimer,now:number):TaskTimer{return timer.pausedRemainingMs!==undefined?timer:{...timer,pausedRemainingMs:Math.max(0,timer.endsAt-now)};}
+function freezeTaskTimers(model:TaskBoardModel,id:string,now:number){return Object.fromEntries(Object.entries(model.timers).map(([key,timer])=>[key,timer.taskId===id?freezeTimer(timer,now):timer]));}
 export const isTaskFinished=(task:Task)=>task.status==='done'||task.status==='ended';
 export function taskStepProgress(task:Task) {
   const total=task.steps?.length||0,done=task.steps?.filter(step=>step.done).length||0;
@@ -37,17 +45,17 @@ function finish(model:TaskBoardModel,task:Task,now?:number) {
 }
 function toggleFinished(model:TaskBoardModel,task:Task,now?:number):TaskBoardModel {
   if(isTaskFinished(task)) {
-    const history=task.date<model.today;
+    const history=task.date<model.today&&!task.manualRecord;
     const recorded=history&&task.missText?Number(task.missText.match(/\d+/)?.[0]):NaN;
     return {...replaceTask(model,task.id,current=>({...current,status:history?'missed':current.type==='steps'&&current.steps?.some(step=>step.done)?'paused':'todo',completedAt:undefined,...(current.count?{count:{...current.count,current:Math.max(0,Number.isFinite(recorded)?Math.min(current.count.target-current.count.perTime,recorded):current.count.target-current.count.perTime)}}:{})})),rest:remainingRest(model,task.id),timers:removeTaskTimers(model,task.id),page:{...model.page,activeTaskId:model.page.activeTaskId===task.id?undefined:model.page.activeTaskId}};
   }
-  if(task.date<model.today) {
+  if(task.date<model.today&&!task.manualRecord) {
     return replaceTask(model,task.id,current=>({...current,status:'done',completedAt:timestamp(now),count:current.count?{...current.count,current:current.count.target}:undefined}));
   }
   return task.type==='steps'?finish(model,task,now):replaceTask(model,task.id,current=>({...current,status:'done',completedAt:timestamp(now)}));
 }
 function updateStep(model:TaskBoardModel,task:Task,stepId:string,change:(step:NonNullable<Task['steps']>[number])=>NonNullable<Task['steps']>[number],now?:number) {
-  if(task.date!==model.today||isTaskFinished(task))return model;
+  if(!canOperateBoardTask(model,task)||isTaskFinished(task))return model;
   const before=task.steps?.find(step=>step.id===stepId);
   if(!before)return model;
   const after=change(before);
@@ -65,10 +73,23 @@ function updateStep(model:TaskBoardModel,task:Task,stepId:string,change:(step:No
 export function taskBoardReducer(model:TaskBoardModel,action:TaskBoardAction):TaskBoardModel {
   switch(action.type) {
     case 'hydrate': return action.model;
-    case 'reset': return createInitialTaskBoard(action.now);
+    case 'reset': return createEmptyTaskBoard(boardShanghaiToday(action.now));
+    case 'set-selected-date': {
+      if(action.date!==undefined&&!isBoardDate(action.date))return model;
+      const date=action.date||model.today,active=model.tasks.find(task=>task.date===date&&task.status==='in_progress');
+      return {...model,page:{...model.page,selectedDate:action.date===model.today?undefined:action.date,activeTaskId:active?.id,expandedStepId:undefined,categoryFilter:undefined}};
+    }
+    case 'import-manual-record':return applyManualTaskRecord(model,action.record,action.now);
+    case 'upsert-plan': {
+      const plan=parseBoardPlan(action.plan),exists=model.plans?.some(current=>current.id===plan.id);
+      return {...model,plans:exists?model.plans!.map(current=>current.id===plan.id?plan:current):[...(model.plans||[]),plan]};
+    }
+    case 'delete-plan':return {...model,plans:(model.plans||[]).filter(plan=>plan.id!==action.planId)};
     case 'enable-live-import':return model.liveImport||!Number.isFinite(new Date(action.now).getTime())?model:{...model,liveImport:{since:timestamp(action.now)}};
-    case 'import-tasks': {
-      const since=Date.parse(model.liveImport?.since||'');
+    case 'import-tasks':
+    case 'import-arrangement-records': {
+      const historical=action.type==='import-arrangement-records';
+      const since=historical?(validContentResetAt(model.contentResetAt)?model.contentResetAt:0):Date.parse(model.liveImport?.since||'');
       if(!Number.isFinite(since))return model;
       const keys=new Set(model.tasks.flatMap(task=>task.source?[task.source.key]:[]));
       const ids=new Set(model.tasks.map(task=>task.id));
@@ -86,7 +107,7 @@ export function taskBoardReducer(model:TaskBoardModel,action:TaskBoardAction):Ta
         // must neither drop a different source nor replace an existing row.
         while(ids.has(id))id=`${task.id.slice(0,110)}-${++collision}`;
         order++;
-        added.push({...structuredClone(task),id,date:model.today,order,appendOrder:order,pinned:undefined});
+        added.push({...structuredClone(task),id,date:historical?task.date:model.today,order,appendOrder:order,pinned:undefined});
         keys.add(source.key);ids.add(id);
       }
       return added.length?{...model,tasks:[...model.tasks,...added]}:model;
@@ -111,24 +132,30 @@ export function taskBoardReducer(model:TaskBoardModel,action:TaskBoardAction):Ta
   const task=model.tasks.find(item=>item.id===action.taskId);
   if(!task)return model;
   switch(action.type) {
-    case 'pin':return replaceTask(model,task.id,current=>({...current,pinned:!current.pinned}));
+    case 'pin':return canOperateBoardTask(model,task)&&task.appendOrder===undefined?replaceTask(model,task.id,current=>({...current,pinned:!current.pinned})):model;
     case 'start': {
-      if(task.type!=='steps'||task.date!==model.today||isTaskFinished(task))return model;
+      if(task.type!=='steps'||!canOperateBoardTask(model,task)||isTaskFinished(task))return model;
       const oldId=model.page.activeTaskId;
       const tasks=model.tasks.map(current=>current.id===task.id?{...current,status:'in_progress' as const}:current.id===oldId&&current.status==='in_progress'?{...current,status:'paused' as const}:current);
       const first=task.steps?.find(step=>!step.done);
       const rest:TaskTimer|undefined=first?.restSeconds&&((first.sets?.done||0)>0)?{taskId:task.id,stepId:first.id,endsAt:(action.now??Date.now())+first.restSeconds*1000}:undefined;
-      return {...model,tasks,rest,page:{...model.page,activeTaskId:task.id,activeExpanded:false,expandedStepId:undefined}};
+      return {...model,tasks,rest,timers:oldId&&oldId!==task.id?freezeTaskTimers(model,oldId,action.now??Date.now()):model.timers,page:{...model.page,activeTaskId:task.id,activeExpanded:false,expandedStepId:undefined}};
     }
-    case 'finish':return task.date===model.today&&!isTaskFinished(task)?finish(model,task,action.now):model;
+    case 'pause': {
+      if(!canOperateBoardTask(model,task)||isTaskFinished(task))return model;
+      const now=action.now??Date.now();
+      return {...replaceTask(model,task.id,current=>({...current,status:'paused'})),timers:freezeTaskTimers(model,task.id,now),rest:model.rest?.taskId===task.id?freezeTimer(model.rest,now):model.rest};
+    }
+    case 'finish':return canOperateBoardTask(model,task)&&!isTaskFinished(task)?finish(model,task,action.now):model;
     case 'toggle-status': {
-      if(task.date>model.today)return model;
-      if(task.type==='count'&&!isTaskFinished(task)&&task.date===model.today)return taskBoardReducer(model,{type:'increment-count',taskId:task.id,now:action.now});
+      if(task.date>model.today&&!canOperateBoardTask(model,task))return model;
+      if(task.manualRecord&&!canOperateBoardTask(model,task))return model;
+      if(task.type==='count'&&!isTaskFinished(task)&&canOperateBoardTask(model,task))return taskBoardReducer(model,{type:'increment-count',taskId:task.id,now:action.now});
       return toggleFinished(model,task,action.now);
     }
     case 'increment-count':
     case 'complete-count': {
-      if(task.type!=='count'||!task.count||task.date!==model.today||isTaskFinished(task))return model;
+      if(task.type!=='count'||!task.count||!canOperateBoardTask(model,task)||isTaskFinished(task))return model;
       const current=action.type==='complete-count'?task.count.target:Math.min(task.count.target,task.count.current+task.count.perTime);
       const done=current>=task.count.target;
       return replaceTask(model,task.id,value=>({...value,count:{...value.count!,current},status:done?'done':'todo',completedAt:done?timestamp(action.now):undefined}));
@@ -142,9 +169,18 @@ export function taskBoardReducer(model:TaskBoardModel,action:TaskBoardAction):Ta
     },action.now);
     case 'start-timer': {
       const step=task.steps?.find(item=>item.id===action.stepId);
-      if(task.date!==model.today||isTaskFinished(task)||!step?.timerSeconds)return model;
+      if(!canOperateBoardTask(model,task)||isTaskFinished(task)||task.status==='paused'||!step?.timerSeconds||step.done||step.skipped)return model;
       const key=`${task.id}:${step.id}`;
+      if(model.timers[key]&&(model.timers[key].pausedRemainingMs!==undefined||model.timers[key].endsAt>(action.now??Date.now())))return model;
       return {...model,timers:{...model.timers,[key]:{taskId:task.id,stepId:step.id,endsAt:(action.now??Date.now())+step.timerSeconds*1000}}};
+    }
+    case 'pause-timer':
+    case 'resume-timer': {
+      const key=`${task.id}:${action.stepId}`,timer=model.timers[key],step=task.steps?.find(item=>item.id===action.stepId),now=action.now??Date.now();
+      if(!canOperateBoardTask(model,task)||isTaskFinished(task)||!timer||!step||step.done||step.skipped)return model;
+      if(action.type==='resume-timer'&&(timer.pausedRemainingMs===undefined||task.status==='paused'))return model;
+      const next=action.type==='pause-timer'?freezeTimer(timer,now):{taskId:timer.taskId,stepId:timer.stepId,endsAt:now+timer.pausedRemainingMs!};
+      return {...model,timers:{...model.timers,[key]:next}};
     }
   }
 }

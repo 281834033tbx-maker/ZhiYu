@@ -1,4 +1,5 @@
 'use client';
+import {useDialogLightDismiss} from './use-dialog-light-dismiss';
 import {reportUserFacingError} from '../../lib/user-facing-errors';
 /* eslint-disable next/no-img-element */
 
@@ -40,6 +41,7 @@ export function GroupCreateDialog({source, people, initialGoal = '', initialMemb
   const [submitting, setSubmitting] = useState(false);
   const [localError, setLocalError] = useState('');
   const blocked = busy || submitting;
+  useDialogLightDismiss(dialog,onClose,blocked);
   const isMolly = source.id === 'molly';
   const titleId = useId();
   const goalId = useId();

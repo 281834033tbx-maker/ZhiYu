@@ -1,5 +1,8 @@
 'use client';
 
+import {accountStorage,flushAccountStorage} from './account-storage';
+import {useDialogLightDismiss} from './use-dialog-light-dismiss';
+
 // Stitch assets are already hosted locally; native images also support user-selected data URLs.
 /* eslint-disable next/no-img-element */
 import { useNpcMoments } from './use-npc-moments';
@@ -9,9 +12,14 @@ import {hideMessage, isMessageHidden, useMessageVisibility} from './message-visi
 import LocalChatHeader from './local-chat-header';
 import ChatAddMenu from './chat-add-menu';
 import TaskBoard from './task-board/task-board';
+import {OPEN_ARRANGEMENT,useArrangements} from './task-board/use-arrangements';
+import {isArrangementSectionId,type ArrangementSectionId} from '../../lib/npc/arrangement-sections';
+import {arrangementMessagePreview} from '../../lib/npc/arrangement-chat';
 import {useTaskBoard} from './task-board/use-task-board';
 import {useLiveTaskImport} from './task-board/use-live-task-import';
 import DirectoryDivider from './directory-divider';
+import MainWindowResizeHandles from './MainWindowResizeHandles';
+import DesktopAppearanceEditor from './desktop-appearance-editor';
 import type {Task as BoardTask} from './task-board/types';
 import {taskPageContextFor} from './task-board/task-context';
 import {refreshTaskCompletions} from './task-completion-sync';
@@ -19,26 +27,31 @@ import {shanghaiToday,taskCalendarRange,taskItemsForDate} from './task-items';
 import {openTaskCalendarWindow, bindTaskCalendarWindowLifecycle} from './task-calendar-window';
 import {ingestProfessionalTasks,useProfessionalTasks} from './professional-task-store';
 import AppSettings from './app-settings';
+import {beginCaptionCase,clearCaptionCase,readCaptionCase} from '../character-window/caption-case-intent';
 import RailNavigation, {RailNotificationDot} from './rail-navigation';
 import LiquidBasePlate from './liquid-base-plate';
 import PageErrorBoundary from './page-error-boundary';
-import {ChatIdentityNotice} from './user-facing-ui';
 import {resolveCharacterStatus} from '../../lib/npc/character-status';
 import {contactSourceLabel,type CharacterStatus} from '../../lib/npc/experience';
 import {reportUserFacingError} from '../../lib/user-facing-errors';
 import {features} from './features';
 import {useContinuousUse} from './use-continuous-use';
 import './me-page.css';
+import './desktop-layout-classic.css';
 import ProfessionalProfile from './professional-profile';
 import ProfilePopover from './profile-popover';
 import { SelfProfileCard } from './self-profile-card';
+import {readSelfProfile,useSelfProfile} from './self-profile-store';
 import {appendLocalCharacterMessage,localCharacterChatKey,localCharacterIds,readLocalCharacterChat} from './local-character-chat';
 import BrandEntrance from './brand-entrance';
-import ChatComposer from './chat-composer';
+import ChatComposer,{type ComposePayload} from './chat-composer';
+import {momentCommentMedia} from '../../lib/npc/moment-comment';
 import MessageReceipt from './message-receipt';
 import MomentPostInteractions from './moment-post-interactions';
 import MomentCommentEditor from './moment-comment-editor';
 import MomentImageViewer from './moment-image-viewer';
+import {openImageViewer} from './image-gallery';
+import Media from './moment-media';
 import PhosphorActionIcon from './phosphor-action-icon';
 import './moments-refinement.css';
 import {formatConversationTime} from '../../lib/npc/conversation-time';
@@ -52,6 +65,7 @@ import PetPage from './pets';
 import { PET_STATE_CHANGED_EVENT, petStorageKey, readDisplayedPet, type DisplayPet } from './pet-storage';
 import { npcFetch } from './npc-fetch';
 import { useAccount } from './auth-gate';
+import BetaSurveyInbox from './beta-survey-inbox';
 import { useGroupChats } from './use-group-chats';
 import { GroupAvatar, GroupChatPanel, groupPreview } from './group-chat';
 import { GroupCreateDialog } from './group-create-dialog';
@@ -75,7 +89,6 @@ import {
   useRef,
   useState,
   type ReactNode,
-  type PointerEvent as ReactPointerEvent,
 } from 'react';
 import {
   MessageSquare,
@@ -90,7 +103,6 @@ import {
   Heart,
   MapPin,
   ChevronRight,
-  ChevronLeft,
   X,
   Camera,
   ImagePlus,
@@ -106,7 +118,6 @@ import {
   asset,
   people,
   allPeople,
-  self as defaultSelf,
   initialMessages,
   initialPosts,
   uid,
@@ -117,6 +128,12 @@ import {
   type Post,
 } from './data';
 import './app.css';
+import MobileNavigation from './mobile-navigation';
+import {useMobileFirstEntry} from './mobile-effects';
+import {MobileComposerContext} from './mobile-composer-context';
+import {MobileHeaderContext,MobilePageHeader,MobileSearch,MobileContacts,MobileGroupList,MobileNewFriends,MobileProfileDrawer,MobileMePage,MobileGroupCreate,MobileMessageBanner} from './mobile-pages';
+import MobileCallLayer from './mobile-call';
+import MobileMomentMedia from './mobile-moment-media';
 import './conversation-status.css';
 
 
@@ -129,7 +146,7 @@ const DESKTOP_LIQUID_BASE_ENABLED = true;
 
 type Modal =
   | { kind: 'publish' }
-  | { kind: 'image'|'moment-image'; images: string[]; index: number }
+  | { kind: 'image'|'moment-image'; images: string[]; index: number; origin?:HTMLImageElement|null }
   | { kind: 'settings' }
   | { kind: 'profile'; person: Person; anchor: HTMLElement | null }
   | null;
@@ -201,7 +218,7 @@ function Dialog({
   close,
   children,
   className = '',
-  dismissOutside = false,
+  dismissOutside = true,
   hideClose = false,
 }: {
   title: string;
@@ -212,6 +229,7 @@ function Dialog({
   hideClose?: boolean;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
+  useDialogLightDismiss(ref,close,!dismissOutside);
   useEffect(() => {
     const el = ref.current;
     el?.showModal();
@@ -220,16 +238,10 @@ function Dialog({
     };
   }, []);
   return (
-    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions -- Native dialog handles Escape through onCancel; click only dismisses its backdrop.
     <dialog
       ref={ref}
       className={'zy-dialog ' + className}
-      onCancel={close}
-      onClick={event => {
-        if (!dismissOutside || event.target !== event.currentTarget) return;
-        const rect = event.currentTarget.getBoundingClientRect();
-        if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) close();
-      }}
+      onCancel={event => {event.preventDefault();if(event.target===event.currentTarget)close();}}
       aria-label={title}
     >
       <header className="zy-dialog-head">
@@ -242,106 +254,6 @@ function Dialog({
     </dialog>
   );
 }
-function Media({
-  post,
-  open,
-}: {
-  post: Post;
-  open: (images: string[], index: number) => void;
-}) {
-  const [index, setIndex] = useState(0);
-  const start = useRef({ x: 0, y: 0 });
-  const dragged = useRef(false);
-  const imgs = post.images;
-  const carousel = post.carousel || imgs.length >= 4;
-  if (!imgs.length) return null;
-  const change = (i: number) =>
-    setIndex(Math.max(0, Math.min(imgs.length - 1, i)));
-  function end(e: ReactPointerEvent) {
-    const dx = e.clientX - start.current.x;
-    const dy = e.clientY - start.current.y;
-    dragged.current = Math.abs(dx) > 25;
-    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy))
-      change(index + (dx < 0 ? 1 : -1));
-  }
-  return (
-    <div
-      className={
-        'zy-media ' + (carousel ? 'is-carousel' : 'count-' + imgs.length)
-      }
-    >
-      {carousel ? (
-        <>
-          <button
-            className="zy-image-hit"
-            aria-label={`查看第 ${index + 1} 张图片`}
-            onPointerDown={(e) => {
-              start.current = { x: e.clientX, y: e.clientY };
-              dragged.current = false;
-              e.currentTarget.setPointerCapture(e.pointerId);
-            }}
-            onPointerUp={end}
-            onClick={() => {
-              if (!dragged.current) open(imgs, index);
-            }}
-          >
-            <img
-              src={imgs[index]}
-              alt={`${post.text} · 第 ${index + 1} 张`}
-              draggable={false}
-            />
-          </button>
-          {index > 0 && (
-            <IconButton
-              label="上一张图片"
-              className="zy-carousel-arrow prev"
-              onClick={() => change(index - 1)}
-            >
-              <ChevronLeft />
-            </IconButton>
-          )}
-          {index < imgs.length - 1 && (
-            <IconButton
-              label="下一张图片"
-              className="zy-carousel-arrow next"
-              onClick={() => change(index + 1)}
-            >
-              <ChevronRight />
-            </IconButton>
-          )}
-          <div className="zy-dots" aria-label="图片分页">
-            {imgs.map((_, i) => (
-              <button
-                key={i}
-                aria-label={`切换至第 ${i + 1} 张图片`}
-                aria-current={i === index ? 'true' : undefined}
-                onClick={() => change(i)}
-              >
-                <i className={index === i ? 'current' : ''} />
-              </button>
-            ))}
-          </div>
-        </>
-      ) : (
-        imgs.map((src, i) => (
-          <button
-            className="zy-image-hit"
-            key={src + i}
-            aria-label={`查看第 ${i + 1} 张图片`}
-            onClick={() => open(imgs, i)}
-          >
-            <img
-              src={src}
-              alt={`${post.text} · 图片 ${i + 1}`}
-              draggable={false}
-            />
-          </button>
-        ))
-      )}
-    </div>
-  );
-}
-
 function MomentChatScreenshot({post,person}:{post:Post;person:Person}) {
   const shot=post.chatScreenshot;
   if(!shot)return null;
@@ -378,14 +290,29 @@ function PageSection({render}:{render:()=>ReactNode}) {return render();}
 
 export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'}) {
   const mobile = mode === 'mobile';
+  const [mobileSubpage,setMobileSubpage]=useState<'groups'|'new'|null>(null);
+  const [mobileCall,setMobileCall]=useState<string|null>(null);
+  const [mobileNoticeSeen,setMobileNoticeSeen]=useState<string[]>([]);
+  const [mobileLeaving,setMobileLeaving]=useState(false);
+  const [mobileDetails,setMobileDetails]=useState<string[]>([]);
+  const onMobileDetailChange=useCallback((id:string,open:boolean)=>setMobileDetails(previous=>open?(previous.includes(id)?previous:[...previous,id]):previous.includes(id)?previous.filter(item=>item!==id):previous),[]);
+  const [removedContacts,setRemovedContacts]=useState<string[]>([]);
+  const [contactsLoadedFor,setContactsLoadedFor]=useState('');
+  const mobileBackTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
+  useEffect(()=>()=>{if(mobileBackTimer.current)clearTimeout(mobileBackTimer.current);},[]);
   const liquidBaseEnabled = !mobile && DESKTOP_LIQUID_BASE_ENABLED;
   const {account,logout,firstUse}=useAccount();
+  const [surveyMount,setSurveyMount]=useState<HTMLDivElement|null>(null);
+  const [surveyUnread,setSurveyUnread]=useState(0);
   const [statusClock,setStatusClock]=useState(()=>Date.now());
   const [characterStatuses,setCharacterStatuses]=useState<Record<string,CharacterStatus>>({});
   const rememberStatus=useCallback((id:string,session:PublicSession)=>{if(session.characterStatus)setCharacterStatuses(old=>old[id]?.text===session.characterStatus!.text&&old[id]?.until===session.characterStatus!.until?old:{...old,[id]:session.characterStatus!});},[]);
   const statusFor=(id:string)=>characterStatuses[id]&&characterStatuses[id].until>statusClock?characterStatuses[id].text:resolveCharacterStatus(id,statusClock).text;
   useEffect(()=>{const timer=setInterval(()=>setStatusClock(Date.now()),30000);return()=>clearInterval(timer);},[]);
   const store=`zhiyu-stitch-desktop-v2:${account.id}`;
+  const contactRemovalKey='zhiyu-removed-contacts-v1:'+account.id;
+  // oxlint-disable-next-line react/react-compiler -- Restore and subscribe to the account's contact visibility; chat records are independent.
+  useEffect(()=>{const sync=()=>{try{const raw:unknown=JSON.parse(accountStorage(account.id).getItem(contactRemovalKey)||'[]');setRemovedContacts(Array.isArray(raw)?raw.filter((id):id is string=>typeof id==='string'&&id!=='molly'):[]);}catch{setRemovedContacts([]);}setContactsLoadedFor(account.id);};sync();const changed=(event:StorageEvent)=>{if(event.key===contactRemovalKey)sync();};window.addEventListener('storage',changed);return()=>window.removeEventListener('storage',changed);},[account.id,contactRemovalKey]);
   const [dockPersonId, setDockPersonId] = useState<string | null>(null);
   const characterPopup = useRef<Window | null>(null);
   const calendarOpenRequest = useRef(0);
@@ -394,6 +321,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     return () => {dispose();};
   }, [account.id]);
   const openTaskCalendar = async (id: string) => {
+    if(mobile){taskBoard.dispatch({type:'set-view',view:'history'});navigate('tasks');return;}
     const request = ++calendarOpenRequest.current;
     const shown = await openTaskCalendarWindow({personId: id, accountId: account.id});
     if (!shown && request === calendarOpenRequest.current) notify('日历页面暂时无法显示，请再点击一次重试。');
@@ -407,22 +335,41 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       characterPopup.current = null;
     };
   }, []);
-  const openDesktopCharacter = (id: string) => {
+  const openDesktopCharacter = async (id: string, captionCase=false):Promise<boolean> => {
+    if(mobile&&!captionCase){setMobileCall(id);return true;}
     const desktop = window.zhiyuDesktop;
+    if(!captionCase){
+      if(readCaptionCase(account.id)&&desktop?.closeCharacterWindow){
+        try{await desktop.closeCharacterWindow();}catch{notify('人物窗口暂时无法打开，请重试。');return false;}
+      }
+      clearCaptionCase(account.id);
+    }
     if (desktop?.openCharacterWindow) {
-      void desktop.openCharacterWindow(id).then(open => { if (open) setDockPersonId(id); });
-      return;
+      try {const open=await desktop.openCharacterWindow(id);if(open)setDockPersonId(id);return open;}
+      catch {notify('人物窗口暂时无法打开，请重试。');return false;}
     }
     if (desktop) {
       notify('请退出并重新打开智域，以启用独立人物窗口。');
-      return;
+      return false;
     }
     const popup = window.open(`/character-window?npc=${encodeURIComponent(id)}`, 'zhiyu-character', 'width=768,height=680');
     characterPopup.current = popup;
     if (popup) { setDockPersonId(id); popup.focus(); }
+    return !!popup;
+  };
+  const openDesktopCaptionCase=async()=>{
+    const desktop=window.zhiyuDesktop;
+    if(!desktop?.openCharacterWindow)throw Error('请在智域桌面程序中打开字幕案例。');
+    await desktop.closeCharacterWindow?.();
+    beginCaptionCase(account.id);
+    try {if(!await openDesktopCharacter('yuan-xiaoman',true))throw Error('案例窗口暂时无法打开，请重试。');}
+    catch(error){
+      try{const closed=await desktop.closeCharacterWindow?.();if(closed!==false)clearCaptionCase(account.id);}catch{/* Keep the expiring intent if a late window could still mount. */}
+      throw error;
+    }
   };
   const momentSeenKey=`zhiyu-moments-seen-v1:${account.id}`;
-  const [self,setSelf]=useState(()=>({...defaultSelf,name:account.username,nickname:account.username,account:account.username}));
+  const [self,setSelf]=useSelfProfile(account);
   const [remarks,setRemarks]=useState<Record<string,string>>({});
   const displayPerson=(p:Person):Person=>({...p,name:remarks[p.id]?.trim()||p.nickname||p.name});
   const [pinned,setPinned]=useState<string[]>([]);
@@ -437,12 +384,15 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
   useEffect(()=>{if(!chatMenu)return;const close=(e:Event)=>{if(e.type==='keydown'&&(e as KeyboardEvent).key!=='Escape')return;if(e.type==='pointerdown'&&(e.target as Element)?.closest('.zy-chat-context'))return;setChatMenu(null);};window.addEventListener('pointerdown',close);window.addEventListener('keydown',close);return()=>{window.removeEventListener('pointerdown',close);window.removeEventListener('keydown',close);};},[chatMenu]);
 
   const [page, setPage] = useState<Page>('chat');
+  const [arrangementSection,setArrangementSection]=useState<ArrangementSectionId|'overview'>('overview');
+  const arrangements=useArrangements(account.id);
+  useEffect(()=>{const open=(event:Event)=>{const section=(event as CustomEvent<{section?:string}>).detail?.section;if(isArrangementSectionId(section)){setArrangementSection(section);setPage('tasks');}};window.addEventListener(OPEN_ARRANGEMENT,open);return()=>window.removeEventListener(OPEN_ARRANGEMENT,open);},[]);
   const [selected, setSelected] = useState('');
   const [reportQuote,setReportQuote]=useState<{characterId:string;messageId:string;text?:string;referenceId:string}|null>(null);
   const [taskConversation, setTaskConversation] = useState<{npcId:string;task:BoardTask;referenceId:string}|null>(null);
   const taskBoard=useTaskBoard(account.id);
   const professionalBoardTasks=useProfessionalTasks(account.id);
-  const hasTaskInProgress=taskBoard.ready&&taskBoard.model.tasks.some(task=>task.date===taskBoard.model.today&&task.status==='in_progress');
+  const hasTaskInProgress=arrangements.items.some(item=>item.status==='active')||taskBoard.ready&&taskBoard.model.tasks.some(task=>task.date===(taskBoard.model.page.selectedDate||taskBoard.model.today)&&task.status==='in_progress');
   // oxlint-disable-next-line react/react-compiler -- Reconcile account-scoped browser persistence or an external feed subscription after commit.
   useEffect(()=>{setTaskConversation(null);},[account.id]);
   // oxlint-disable-next-line react/react-compiler -- Reconcile account-scoped browser persistence or an external feed subscription after commit.
@@ -462,6 +412,8 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     };
   }, [account.id]);
   const [dirWidth, setDirWidth] = useState(260);
+  const [appearanceAccount, setAppearanceAccount] = useState<string | null>(null);
+  const closeAppearance = useCallback(() => setAppearanceAccount(null), []);
   const [contact, setContact] = useState('');
   const [messages, setMessages] = useState(initialMessages);
   const hiddenMessages = useMessageVisibility(account.id);
@@ -565,7 +517,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
   useEffect(()=>{
     const listener=(event:Event)=>{
       const session=(event as CustomEvent<PublicSession>).detail;
-      setMessages(old=>({...old,molly:session.messages.map(m=>({id:m.id,at:m.at,mine:m.role==='user',text:m.part.type==='choice'?choicePlainText(m.part):'text'in m.part?m.part.text:'',time:new Date(m.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}))}));
+      setMessages(old=>({...old,molly:session.messages.map(m=>({id:m.id,at:m.at,mine:m.role==='user',text:arrangementMessagePreview(m)|| (m.part.type==='team_card'?'[图片]':m.part.type==='choice'?choicePlainText(m.part):'text'in m.part?m.part.text:''),time:new Date(m.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}))}));
     };
     window.addEventListener('molly-session',listener);return()=>window.removeEventListener('molly-session',listener);
   },[]);
@@ -633,10 +585,10 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     if (!ready || preferencesAccount !== account.id) throw new Error('聊天记录正在加载，请稍后重试。');
     // Keep the original snapshot; clearing only changes the visible conversation.
     const prior=messages[id]||[];
-    localStorage.setItem(`zhiyu-cleared-local-chat:${account.id}:${id}:${crypto.randomUUID()}`,JSON.stringify(prior));
-    const saved=JSON.parse(localStorage.getItem(store)||'{}');
-    localStorage.setItem(store,JSON.stringify({...saved,messages:{...saved.messages,[id]:[]}}));
-    if(localCharacterIds.some(item=>item===id))localStorage.setItem(localCharacterChatKey(account.id,id),'[]');
+    accountStorage(account.id).setItem(`zhiyu-cleared-local-chat:${account.id}:${id}:${crypto.randomUUID()}`,JSON.stringify(prior));
+    const saved=JSON.parse(accountStorage(account.id).getItem(store)||'{}');
+    accountStorage(account.id).setItem(store,JSON.stringify({...saved,messages:{...saved.messages,[id]:[]}}));
+    if(localCharacterIds.some(item=>item===id))accountStorage(account.id).setItem(localCharacterChatKey(account.id,id),'[]');
     setMessages(old=>({...old,[id]:[]}));
     setQuoteDrafts(old=>({...old,[id]:''}));
     setUnread(old=>({...old,[id]:0}));
@@ -646,8 +598,8 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     if (!ready || preferencesAccount !== account.id) throw new Error('资料正在加载，请稍后重试。');
     const next = {...remarks,[id]:value};
     try {
-      const saved = JSON.parse(localStorage.getItem(store) || '{}');
-      localStorage.setItem(store, JSON.stringify({...saved,remarks:next}));
+      const saved = JSON.parse(accountStorage(account.id).getItem(store) || '{}');
+      accountStorage(account.id).setItem(store, JSON.stringify({...saved,remarks:next}));
     } catch {throw new Error('备注未保存，请检查本机存储空间后重试。');}
     setRemarks(next);
   };
@@ -668,7 +620,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       notify('赵一帆旧留言备份暂未完成，原归档已保留，暂不覆盖本机归档。');
     }
     try {
-      const raw = localStorage.getItem(store);
+      const raw = accountStorage(account.id).getItem(store);
       if (raw) {
         const d = JSON.parse(raw);
         if (
@@ -688,7 +640,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
           setMarkedUnread((d.markedUnread||[]).filter((id:string)=>allowed.has(id)));
           setDismissed(d.dismissed||{});
           setRemarks(d.remarks||{});
-          if(d.selfProfile)setSelf({...defaultSelf,...d.selfProfile,id:'self',account:account.username});
+          // The shared profile hook restores this field independently of chat state.
           const keepRecords = <T,>(records: Record<string, T>): Record<string, T> =>
             Object.fromEntries(Object.entries(records).filter(([id]) => !removed.has(id)));
           // eslint-disable-next-line react/react-compiler -- Hydrate browser-only saved state once.
@@ -714,14 +666,14 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       return next;
     });
     try {
-      const savedSeen = localStorage.getItem(momentSeenKey);
+      const savedSeen = accountStorage(account.id).getItem(momentSeenKey);
       if (savedSeen !== null) {
         const ids: unknown = JSON.parse(savedSeen);
         if (Array.isArray(ids)) momentSeen.current = new Set(ids.filter((id): id is string => typeof id === 'string'));
       } else if (savedPosts) {
         // Existing accounts start from their last saved feed, not all historical server posts.
         momentSeen.current = new Set(savedPosts.filter(post => post.source === 'npc-moment' && post.personId !== 'self').map(post => post.id));
-        localStorage.setItem(momentSeenKey, JSON.stringify([...momentSeen.current]));
+        accountStorage(account.id).setItem(momentSeenKey, JSON.stringify([...momentSeen.current]));
       }
     } catch { /* A bad marker must not prevent the app from opening. */ }
     const hash = location.hash.replace('#', '').split('/')[0];
@@ -737,6 +689,34 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       if (timer.current) clearTimeout(timer.current);
     };
   }, [store,account.id,account.username,momentSeenKey]);
+  useEffect(()=>{
+    // A successful cloud merge may add fields edited on another device. Keep
+    // React's whole-record view aligned before its next autosave.
+    const sync=(event:StorageEvent)=>{
+      if(event.key!==store)return;
+      try{
+        const raw=accountStorage(account.id).getItem(store);
+        const d=raw?JSON.parse(raw):null;
+        if(d?.version!==2||!d.messages||!Array.isArray(d.posts)||!d.posts.every((p:Post)=>typeof p.text==='string'&&Array.isArray(p.images)&&Array.isArray(p.comments)))return;
+        const allowed=new Set(['molly',...allPeople.map(p=>p.id)]),removed=new Set(['shen','yun','group','chen','lin','xu','zhou']);
+        const keep=<T,>(records:Record<string,T>):Record<string,T>=>Object.fromEntries(Object.entries(records).filter(([id])=>!removed.has(id)));
+        const unchanged=<T,>(previous:T,next:T)=>JSON.stringify(previous)===JSON.stringify(next)?previous:next;
+        setMessages(previous=>unchanged(previous,{...keep(d.messages),liu:[]}));
+        setPosts(previous=>unchanged(previous,d.posts.filter((p:Post)=>!removed.has(p.personId))));
+        setChatIds(previous=>unchanged(previous,[...new Set<string>([...(d.chatIds||[]).filter((id:string)=>allowed.has(id)&&!removed.has(id)),'he-jiawei','zhou-chef'])]));
+        setUnread(previous=>unchanged(previous,{...keep(d.unread||{}),liu:0}));
+        setPinned(previous=>unchanged(previous,(d.pinned||[]).filter((id:string)=>allowed.has(id)&&id!=='molly')));
+        setMarkedUnread(previous=>unchanged(previous,(d.markedUnread||[]).filter((id:string)=>allowed.has(id))));
+        setDismissed(previous=>unchanged(previous,d.dismissed||{}));
+        setRemarks(previous=>unchanged(previous,d.remarks||{}));
+        setMuted(previous=>unchanged(previous,(d.muted||[]).filter((id:string)=>!removed.has(id))));
+        setHidden(previous=>unchanged(previous,(d.hidden||[]).filter((id:string)=>!removed.has(id))));
+        setAccepted(previous=>unchanged(previous,(d.accepted||[]).filter((id:string)=>!removed.has(id))));
+      }catch{/* Keep the current page if a malformed remote preference is received. */}
+    };
+    window.addEventListener('storage',sync);
+    return()=>window.removeEventListener('storage',sync);
+  },[store,account.id]);
   useEffect(() => {
     const sync = () => setMuted(previous => {
       const next = readMutedChats(account.id).filter(id=>!id.startsWith('group-'));
@@ -759,10 +739,10 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       const key = `zhiyu-group-last-read:${account.id}:${group.id}`;
       const last = group.messages.at(-1)?.id;
       if (page === 'chat' && selected === group.id) {
-        if (last) localStorage.setItem(key,last);
+        if (last) accountStorage(account.id).setItem(key,last);
         counts[group.id] = 0;
       } else {
-        const readId = localStorage.getItem(key);
+        const readId = accountStorage(account.id).getItem(key);
         const index = group.messages.findIndex(message=>message.id===readId);
         counts[group.id] = group.messages.slice(index+1).filter(message=>message.type==='text' && message.senderId!=='user' && !isMessageHidden(account.id, group.id, message.id)).length;
       }
@@ -792,7 +772,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     if (momentSeen.current === null) {
       // On a new account, the first server response establishes the baseline.
       momentSeen.current = new Set(currentIds);
-      try { localStorage.setItem(momentSeenKey, JSON.stringify(currentIds)); } catch { /* Keep the in-memory baseline. */ }
+      try { accountStorage(account.id).setItem(momentSeenKey, JSON.stringify(currentIds)); } catch { /* Keep the in-memory baseline. */ }
   // oxlint-disable-next-line react/react-compiler -- Reconcile account-scoped browser persistence or an external feed subscription after commit.
       setMomentBadge(false);
       return;
@@ -800,16 +780,16 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     if (page === 'moments') {
       let changed = false;
       for (const id of currentIds) if (!momentSeen.current.has(id)) { momentSeen.current.add(id); changed = true; }
-      if (changed) try { localStorage.setItem(momentSeenKey, JSON.stringify([...momentSeen.current])); } catch { /* Keep the in-memory read state. */ }
+      if (changed) try { accountStorage(account.id).setItem(momentSeenKey, JSON.stringify([...momentSeen.current])); } catch { /* Keep the in-memory read state. */ }
   // oxlint-disable-next-line react/react-compiler -- Reconcile account-scoped browser persistence or an external feed subscription after commit.
       setMomentBadge(false);
     } else setMomentBadge(currentIds.some(id => !momentSeen.current!.has(id)));
-  }, [ready, momentFeedLoaded, posts, page, momentSeenKey]);
+  }, [ready, momentFeedLoaded, posts, page, momentSeenKey, account.id]);
   // Report storage quota failures while retaining the in-memory draft.
   useEffect(() => {
     if (!ready || chefHistoryProtectedFor !== account.id) return;
     try {
-      localStorage.setItem(
+      accountStorage(account.id).setItem(
         store,
         JSON.stringify({
           version: 2,
@@ -820,14 +800,14 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
           muted,
           hidden,
           accepted,
-          pinned,markedUnread,dismissed,remarks,selfProfile:self,
+          pinned,markedUnread,dismissed,remarks,selfProfile:readSelfProfile({id:account.id,username:account.username},accountStorage(account.id)),
         }),
       );
     } catch {
       // eslint-disable-next-line react/react-compiler -- Surface a storage failure without losing the in-memory state.
       notify('浏览器存储空间不足，本次修改仍保留在当前页面。');
     }
-  }, [messages, posts, chatIds, unread, muted, hidden, accepted, pinned, markedUnread, dismissed, remarks, self, ready, store, chefHistoryProtectedFor, account.id]);
+  }, [messages, posts, chatIds, unread, muted, hidden, accepted, pinned, markedUnread, dismissed, remarks, self, ready, store, chefHistoryProtectedFor, account.id, account.username]);
   useEffect(() => {
     if (!ready) return;
     let active = true;
@@ -846,14 +826,14 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
         let newGroup=false;
         for(const message of session.messages){const event=message.secretaryEvent;if(event?.kind!=='group'||!event.groupId)continue;const key=account.id+':'+event.id;if(!receivedSecretaryGroups.current.has(key)){receivedSecretaryGroups.current.add(key);newGroup=true;}}
         if(newGroup)window.dispatchEvent(new Event('npc-groups-changed'));
-        const list = session.messages.map(message=>({id:message.id,at:message.at,mine:message.role==='user',text:message.part.type==='choice'?choicePlainText(message.part):'text' in message.part?message.part.text:'[消息]',time:new Date(message.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}));
+        const list = session.messages.map(message=>({id:message.id,at:message.at,mine:message.role==='user',text:arrangementMessagePreview(message)||(message.part.type==='team_card'?'[图片]':message.part.type==='choice'?choicePlainText(message.part):'text' in message.part?message.part.text:'[消息]'),time:new Date(message.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}));
         setMessages(previous=>previous.molly?.at(-1)?.id===list.at(-1)?.id && previous.molly?.length===list.length?previous:{...previous,molly:list});
         const key = `zhiyu-molly-last-read:${account.id}`;
         if (page==='chat' && selected==='molly') {
-          if (list.length) localStorage.setItem(key,list.at(-1)!.id);
+          if (list.length) accountStorage(account.id).setItem(key,list.at(-1)!.id);
           setUnread(previous=>previous.molly?{...previous,molly:0}:previous);
         } else {
-          const index = session.messages.findIndex(message=>message.id===localStorage.getItem(key));
+          const index = session.messages.findIndex(message=>message.id===accountStorage(account.id).getItem(key));
           const count = session.messages.slice(index+1).filter(message=>message.role==='assistant' && !isMessageHidden(account.id,'molly',message.id)).length;
           setUnread(previous=>previous.molly===count?previous:{...previous,molly:count});
         }
@@ -875,14 +855,14 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
         const session=await response.json() as PublicSession;
         if(!alive||!Array.isArray(session.messages))return;
         rememberStatus('xia-xia',session);setXiaPresence(session.presence||'offline');
-        const list=session.messages.map(m=>({id:m.id,at:m.at,mine:m.role==='user',text:m.part.type==='choice'?choicePlainText(m.part):m.part.type==='professional_task'?'[任务] '+(session.professionalTasks?.find(task=>m.part.type==='professional_task'&&task.id===m.part.taskId)?.title||'任务'):'text' in m.part?(m.part.text||'[图片]'):'[图片]',time:new Date(m.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}),...('assetId' in m.part?{image:npcAssets[m.part.assetId].url}:{})}));
+        const list=session.messages.map(m=>({id:m.id,at:m.at,mine:m.role==='user',text:arrangementMessagePreview(m)|| (m.part.type==='team_card'?'[图片]':m.part.type==='choice'?choicePlainText(m.part):m.part.type==='professional_task'?'[安排] '+(session.professionalTasks?.find(task=>m.part.type==='professional_task'&&task.id===m.part.taskId)?.title||'安排'):'text' in m.part?(m.part.text||'[图片]'):'[图片]'),time:new Date(m.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}),...('assetId' in m.part?{image:npcAssets[m.part.assetId].url}:{})}));
         setMessages(old=>old['xia-xia']?.at(-1)?.id===list.at(-1)?.id?old:{...old,'xia-xia':list});
         const key=`zhiyu-xia-last-read:${account.id}`;
         if(page==='chat'&&selected==='xia-xia') {
-          if(list.length)localStorage.setItem(key,list.at(-1)!.id);
+          if(list.length)accountStorage(account.id).setItem(key,list.at(-1)!.id);
           setUnread(old=>old['xia-xia']?{...old,'xia-xia':0}:old);
         } else {
-          const readId=localStorage.getItem(key),index=session.messages.findIndex(m=>m.id===readId);
+          const readId=accountStorage(account.id).getItem(key),index=session.messages.findIndex(m=>m.id===readId);
           const count=session.messages.slice(index+1).filter(m=>m.role==='assistant' && !isMessageHidden(account.id,'xia-xia',m.id)).length;
           setUnread(old=>old['xia-xia']===count?old:{...old,'xia-xia':count});
         }
@@ -902,14 +882,14 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
         const session=await response.json() as PublicSession;
         if(!alive||!Array.isArray(session.messages))return;
         rememberStatus('yuan-xiaoman',session);setYuanPresence(session.presence||'offline');
-        const list=session.messages.map(m=>({id:m.id,at:m.at,mine:m.role==='user',text:m.part.type==='choice'?choicePlainText(m.part):m.part.type==='professional_task'?'[任务] '+(session.professionalTasks?.find(task=>m.part.type==='professional_task'&&task.id===m.part.taskId)?.title||'任务'):'text' in m.part?(m.part.text||'[图片]'):'[图片]',time:new Date(m.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}),...('assetId' in m.part?{image:npcAssets[m.part.assetId].url}:{})}));
+        const list=session.messages.map(m=>({id:m.id,at:m.at,mine:m.role==='user',text:arrangementMessagePreview(m)|| (m.part.type==='team_card'?'[图片]':m.part.type==='choice'?choicePlainText(m.part):m.part.type==='professional_task'?'[安排] '+(session.professionalTasks?.find(task=>m.part.type==='professional_task'&&task.id===m.part.taskId)?.title||'安排'):'text' in m.part?(m.part.text||'[图片]'):'[图片]'),time:new Date(m.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}),...('assetId' in m.part?{image:npcAssets[m.part.assetId].url}:{})}));
         setMessages(old=>old['yuan-xiaoman']?.at(-1)?.id===list.at(-1)?.id?old:{...old,'yuan-xiaoman':list});
         const key=`zhiyu-yuan-last-read:${account.id}`;
         if(page==='chat'&&selected==='yuan-xiaoman') {
-          if(list.length)localStorage.setItem(key,list.at(-1)!.id);
+          if(list.length)accountStorage(account.id).setItem(key,list.at(-1)!.id);
           setUnread(old=>old['yuan-xiaoman']?{...old,'yuan-xiaoman':0}:old);
         } else {
-          const readId=localStorage.getItem(key),index=session.messages.findIndex(m=>m.id===readId);
+          const readId=accountStorage(account.id).getItem(key),index=session.messages.findIndex(m=>m.id===readId);
           const count=session.messages.slice(index+1).filter(m=>m.role==='assistant' && !isMessageHidden(account.id,'yuan-xiaoman',m.id)).length;
           setUnread(old=>old['yuan-xiaoman']===count?old:{...old,'yuan-xiaoman':count});
         }
@@ -930,14 +910,14 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
         if(!alive||!Array.isArray(session.messages))return;
         rememberStatus('liu',session);setLiuPresence(session.presence||'offline');
         if(session.professionalTasks)ingestProfessionalTasks(account.id,session.professionalTasks,session.revision,'liu');
-        const list=session.messages.map(m=>({id:m.id,at:m.at,mine:m.role==='user',text:m.part.type==='choice'?choicePlainText(m.part):m.part.type==='professional_task'?'[任务] '+(session.professionalTasks?.find(task=>m.part.type==='professional_task'&&task.id===m.part.taskId)?.title||'任务'):'text' in m.part?(m.part.text||'[图片]'):'[图片]',time:new Date(m.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}),...('assetId' in m.part?{image:npcAssets[m.part.assetId].url}:{})}));
+        const list=session.messages.map(m=>({id:m.id,at:m.at,mine:m.role==='user',text:arrangementMessagePreview(m)|| (m.part.type==='team_card'?'[图片]':m.part.type==='choice'?choicePlainText(m.part):m.part.type==='professional_task'?'[安排] '+(session.professionalTasks?.find(task=>m.part.type==='professional_task'&&task.id===m.part.taskId)?.title||'安排'):'text' in m.part?(m.part.text||'[图片]'):'[图片]'),time:new Date(m.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}),...('assetId' in m.part?{image:npcAssets[m.part.assetId].url}:{})}));
         setMessages(old=>old['liu']?.at(-1)?.id===list.at(-1)?.id?old:{...old,'liu':list});
         const key=`zhiyu-liu-last-read:${account.id}`;
         if(page==='chat'&&selected==='liu') {
-          if(list.length)localStorage.setItem(key,list.at(-1)!.id);
+          if(list.length)accountStorage(account.id).setItem(key,list.at(-1)!.id);
           setUnread(old=>old['liu']?{...old,'liu':0}:old);
         } else {
-          const readId=localStorage.getItem(key),index=session.messages.findIndex(m=>m.id===readId);
+          const readId=accountStorage(account.id).getItem(key),index=session.messages.findIndex(m=>m.id===readId);
           const count=session.messages.slice(index+1).filter(m=>m.role==='assistant' && !isMessageHidden(account.id,'liu',m.id)).length;
           setUnread(old=>old['liu']===count?old:{...old,'liu':count});
         }
@@ -958,14 +938,14 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
         if(!alive||!Array.isArray(session.messages))return;
         rememberStatus('chen-nian',session);setChenPresence(session.presence||'offline');
         if(session.professionalTasks)ingestProfessionalTasks(account.id,session.professionalTasks,session.revision,'chen-nian');
-        const list=session.messages.map(m=>({id:m.id,at:m.at,mine:m.role==='user',text:m.part.type==='choice'?choicePlainText(m.part):m.part.type==='professional_task'?'[任务] '+(session.professionalTasks?.find(task=>m.part.type==='professional_task'&&task.id===m.part.taskId)?.title||'任务'):'text' in m.part?(m.part.text||'[图片]'):'[图片]',time:new Date(m.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}),...('assetId' in m.part?{image:npcAssets[m.part.assetId].url}:{})}));
+        const list=session.messages.map(m=>({id:m.id,at:m.at,mine:m.role==='user',text:arrangementMessagePreview(m)|| (m.part.type==='team_card'?'[图片]':m.part.type==='choice'?choicePlainText(m.part):m.part.type==='professional_task'?'[安排] '+(session.professionalTasks?.find(task=>m.part.type==='professional_task'&&task.id===m.part.taskId)?.title||'安排'):'text' in m.part?(m.part.text||'[图片]'):'[图片]'),time:new Date(m.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}),...('assetId' in m.part?{image:npcAssets[m.part.assetId].url}:{})}));
         setMessages(old=>old['chen-nian']?.at(-1)?.id===list.at(-1)?.id?old:{...old,'chen-nian':list});
         const key=`zhiyu-chen-last-read:${account.id}`;
         if(page==='chat'&&selected==='chen-nian') {
-          if(list.length)localStorage.setItem(key,list.at(-1)!.id);
+          if(list.length)accountStorage(account.id).setItem(key,list.at(-1)!.id);
           setUnread(old=>old['chen-nian']?{...old,'chen-nian':0}:old);
         } else {
-          const readId=localStorage.getItem(key),index=session.messages.findIndex(m=>m.id===readId);
+          const readId=accountStorage(account.id).getItem(key),index=session.messages.findIndex(m=>m.id===readId);
           const count=session.messages.slice(index+1).filter(m=>m.role==='assistant' && !isMessageHidden(account.id,'chen-nian',m.id)).length;
           setUnread(old=>old['chen-nian']===count?old:{...old,'chen-nian':count});
         }
@@ -990,16 +970,16 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
         if (!alive || !Array.isArray(session.messages)) return;
         setHePresence(session.presence || 'offline');
         const list = session.messages.map(m => ({id:m.id,at:m.at,mine:m.role==='user',
-          text:m.part.type==='choice'?choicePlainText(m.part):'text' in m.part ? m.part.text : '[图片]',
+          text:arrangementMessagePreview(m)|| (m.part.type==='team_card'?'[图片]':m.part.type==='choice'?choicePlainText(m.part):'text' in m.part ? m.part.text : '[图片]'),
           time:m.legacyTime || new Date(m.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}),
           ...m.legacyContent,...(m.replyTo?{replyTo:m.replyTo}:{})}));
         setMessages(old => old['he-jiawei']?.at(-1)?.id === list.at(-1)?.id && old['he-jiawei']?.length === list.length ? old : {...old,'he-jiawei':list});
         const key = `zhiyu-he-last-read:${account.id}`;
         if (page==='chat' && selected==='he-jiawei') {
-          if (list.length) localStorage.setItem(key,list.at(-1)!.id);
+          if (list.length) accountStorage(account.id).setItem(key,list.at(-1)!.id);
           setUnread(old => old['he-jiawei'] ? {...old,'he-jiawei':0} : old);
         } else {
-          const index = session.messages.findIndex(m => m.id===localStorage.getItem(key));
+          const index = session.messages.findIndex(m => m.id===accountStorage(account.id).getItem(key));
           const count = session.messages.slice(index+1).filter(m => m.role==='assistant' && !isMessageHidden(account.id,'he-jiawei',m.id)).length;
           setUnread(old => old['he-jiawei']===count ? old : {...old,'he-jiawei':count});
         }
@@ -1027,16 +1007,16 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
         setChefPresence(session.presence || 'offline');
         if(session.professionalTasks)ingestProfessionalTasks(account.id,session.professionalTasks,session.revision,'zhou-chef');
         const list = session.messages.map(m => ({id:m.id,at:m.at,chefApiPreview:true,mine:m.role==='user',
-          text:m.part.type==='choice'?choicePlainText(m.part):m.part.type==='professional_task'?'[任务] '+(session.professionalTasks?.find(task=>m.part.type==='professional_task'&&task.id===m.part.taskId)?.title||'任务'):'text' in m.part ? m.part.text : '[图片]',
+          text:arrangementMessagePreview(m)|| (m.part.type==='team_card'?'[图片]':m.part.type==='choice'?choicePlainText(m.part):m.part.type==='professional_task'?'[安排] '+(session.professionalTasks?.find(task=>m.part.type==='professional_task'&&task.id===m.part.taskId)?.title||'安排'):'text' in m.part ? m.part.text : '[图片]'),
           time:m.legacyTime || new Date(m.at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}),
           ...m.legacyContent,...(m.replyTo?{replyTo:m.replyTo}:{})}));
         setMessages(old => old['zhou-chef']?.at(-1)?.id === list.at(-1)?.id && old['zhou-chef']?.length === list.length ? old : {...old,'zhou-chef':list});
         const key = `zhiyu-chef-last-read:${account.id}`;
         if (page==='chat' && selected==='zhou-chef') {
-          if (list.length) localStorage.setItem(key,list.at(-1)!.id);
+          if (list.length) accountStorage(account.id).setItem(key,list.at(-1)!.id);
           setUnread(old => old['zhou-chef'] ? {...old,'zhou-chef':0} : old);
         } else {
-          const index = session.messages.findIndex(m => m.id===localStorage.getItem(key));
+          const index = session.messages.findIndex(m => m.id===accountStorage(account.id).getItem(key));
           const count = session.messages.slice(index+1).filter(m => m.role==='assistant' && !isMessageHidden(account.id,'zhou-chef',m.id)).length;
           setUnread(old => old['zhou-chef']===count ? old : {...old,'zhou-chef':count});
         }
@@ -1070,6 +1050,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       feed.current.scrollTop = feedScroll.current;
   }, [page]);
   function navigate(next: Page) {
+    if(mobile){if(mobileBackTimer.current)clearTimeout(mobileBackTimer.current);mobileBackTimer.current=null;setMobileLeaving(false);setMobileSubpage(null);setModal(null);}
     if(next==='pets'&&!features.extras)return;
     if (page === 'moments' && feed.current)
       feedScroll.current = feed.current.scrollTop;
@@ -1078,6 +1059,20 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     setQuery('');
     setMenu('');
     window.history.pushState(null,'','#'+next);
+  }
+  async function restoreContact(id:string) {
+    if(contactsLoadedFor!==account.id)return;
+    const expectedScope=groupAccountScope.current,storage=accountStorage(account.id),previous=removedContacts,next=removedContacts.filter(item=>item!==id);
+    try{storage.setItem(contactRemovalKey,JSON.stringify(next));await flushAccountStorage(account.id);if(groupAccountScope.current!==expectedScope)return;setRemovedContacts(next);notify('联系人已重新添加');}catch{if(groupAccountScope.current===expectedScope){storage.setItem(contactRemovalKey,JSON.stringify(previous));notify('联系人暂时没能保存，请重试。');}}
+  }
+  async function removeContact(id:string) {
+    if(id==='molly'||contactsLoadedFor!==account.id)throw Error('账号已变化，请重新操作。');
+    const expectedScope=groupAccountScope.current,storage=accountStorage(account.id),previous=removedContacts,next=[...new Set([...removedContacts,id])];
+    try{storage.setItem(contactRemovalKey,JSON.stringify(next));await flushAccountStorage(account.id);if(groupAccountScope.current!==expectedScope)return;setRemovedContacts(next);setSelected('');setModal(null);notify('已移除联系人，聊天记录保留');}catch{if(groupAccountScope.current===expectedScope)storage.setItem(contactRemovalKey,JSON.stringify(previous));throw Error('联系人暂时没能保存，请重试。');}
+  }
+  function mobileBack(){
+    if(mobileBackTimer.current)return;
+    setMobileLeaving(true);mobileBackTimer.current=setTimeout(()=>{mobileBackTimer.current=null;setMobileLeaving(false);if(mobileSubpage)setMobileSubpage(null);else if(page==='moments'&&filter)openMoments();else setSelected('');},matchMedia('(prefers-reduced-motion: reduce)').matches?0:300);
   }
   function navigateMain(next: Page) {
     if (mobile && next === 'chat') setSelected('');
@@ -1097,11 +1092,32 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     setModal(null);
     navigate('chat');
   }
+  useEffect(()=>{
+    if(mobile)return;
+    return window.zhiyuDesktop?.onTopbarOpenMolly?.(()=>openChat(molly));
+  });
   function openGroupDialog(source:Person, goal='', memberIds:string[]=['molly',...(source.id==='molly'?[]:[source.id])]) {
     setGroupError('');
     setGroupCreate({source,goal,memberIds,requestId:crypto.randomUUID()});
   }
-  async function createGroup(source:Person,goal:string,memberIds:string[],requestId:string) {
+  async function openDinnerRecord() {
+    const expectedScope=groupAccountScope.current;
+    const previous=groupChats.groups.find(group=>group.authoredRecord?.scenario==='friday-dinner-v1'||group.demonstration?.scenario==='friday-dinner-v1');
+    const inheritHidden=!!previous&&(!previous.authoredRecord||previous.authoredRecord.revision<3);
+    const hiddenBefore=new Set(previous?hiddenMessages[previous.id]||[]:[]);
+    const member=await groupSelf('我',self.avatar);
+    if(groupAccountScope.current!==expectedScope)return;
+    const group=await groupChats.importRecord(member.avatar);
+    if(groupAccountScope.current!==expectedScope)return;
+    // A previously hidden whole message stays hidden after this one-time split.
+    // Later deletion of just the first new bubble must not hide its siblings.
+    if(inheritHidden)for(const message of group.messages){
+      const source=message.authoredRecord?.sourceMessageId;
+      if(source&&hiddenBefore.has(source))hideMessage(account.id,group.id,message.id);
+    }
+    setQuery('');setPage('chat');setSelected(group.id);
+  }
+  async function createGroup(source:Person,goal:string,memberIds:string[],requestId:string,deferOpen=false) {
     if(groupCreateLock.current)throw Error('Molly 正在创建群聊，请稍等');
     const expectedScope=groupAccountScope.current;
     const flight=crypto.randomUUID();
@@ -1113,8 +1129,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       if(groupAccountScope.current!==expectedScope)throw Error('账号已切换，请重新操作。');
       const group=await groupChats.create({requestId,sourceCharacterId:source.id,goal,memberIds,consent:source.id!=='molly',self:selfMember});
       if(groupAccountScope.current!==expectedScope)return group;
-      setGroupCreate(null);
-      openChat(groupPerson(group));
+      if(!deferOpen){setGroupCreate(null);openChat(groupPerson(group));}
       notify('群聊已建立，Molly 会先介绍目标和分工。');
       return group;
     }catch(error){
@@ -1143,6 +1158,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     setGroupCreate(null);setGroupError('');
   }
   function openProfile(p: Person, anchor?: HTMLElement) {
+    if(mobile){setProfileEditing(null);setModal({kind:'profile',person:p,anchor:anchor||null});return;}
     const origin = anchor || document.querySelector<HTMLElement>('.zy-self-avatar-button .zy-avatar') || document.querySelector<HTMLElement>('.zy-self-avatar-button');
     if (modal?.kind === 'profile' && modal.person.id === p.id && modal.anchor === origin && origin) {
       // Let the mounted card finish/reverse its motion before clearing modal state.
@@ -1242,19 +1258,19 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       }),
     );
   }
-  async function interactWithPost(post:Post, action:'like'|'comment', text='') {
+  async function interactWithPost(post:Post, action:'like'|'comment', text='',payload?:ComposePayload) {
     if(interactionBusy)return false;
     const expectedScope=groupAccountScope.current;
     if(post.source!=='npc-moment') {
       if(action==='like')patchPost(post.id,{liked:!post.liked,likeCount:(post.likeCount||Number(post.liked))+ (post.liked?-1:1)});
-      else patchPost(post.id,{comments:[...post.comments,{id:uid(),actorId:'self',name:self.nickname||self.name,text,time:now(),replyTo:commentReply?.id,replyToName:commentReply?.name}]});
+      else {const entry={id:uid(),actorId:'self' as const,name:self.nickname||self.name,text:payload?.audioText||text,time:now(),replyTo:commentReply?.id,replyToName:commentReply?.name,...(payload&&momentCommentMedia(payload)?{media:momentCommentMedia(payload)}:{})};setPosts(current=>current.map(item=>item.id===post.id?{...item,comments:[...item.comments,entry]}:item));}
       return true;
     }
     setInteractionBusy(post.id);
-    const key=post.id+'|'+text+'|'+(commentReply?.id||'');
+    const key=post.id+'|'+text+'|'+(commentReply?.id||'')+'|'+(payload?.imageId||payload?.audioId||payload?.assetId||'');
     if(action==='comment' && commentRequest.current?.key!==key)commentRequest.current={key,id:uid()};
     try {
-      const response=await npcFetch(`/api/npc/moments/${encodeURIComponent(post.id)}/interaction`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,liked:!post.liked,text,name:self.nickname||self.name,requestId:commentRequest.current?.id,replyTo:commentReply?.id})});
+      const response=await npcFetch(`/api/npc/moments/${encodeURIComponent(post.id)}/interaction`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,liked:!post.liked,text,name:self.nickname||self.name,requestId:commentRequest.current?.id,replyTo:commentReply?.id,...(payload?{imageId:payload.imageId,audioId:payload.audioId,assetId:payload.assetId}:{})})});
       if(!response.ok){const data=await response.json() as {error?:string};throw Error(data.error||'互动未成功');}
       const data=await response.json() as {items:Array<Post & {createdAt:number;status:string}>};
       if(groupAccountScope.current!==expectedScope)return false;
@@ -1299,7 +1315,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     if(chefHistoryProtectedFor!==account.id){notify('旧留言备份暂未完成，请稍后再发布，原归档已保留。');return;}
     const post:Post={id:uid(),personId:'self',createdAt:new Date().toISOString(),text:postText.trim(),time:'刚刚',location:postLocation.trim(),images:[...uploads],liked:false,comments:[]};
     const next=[post,...posts];
-    try{localStorage.setItem(store,JSON.stringify({version:2,messages,posts:next,chatIds,unread,muted,hidden,accepted,pinned,markedUnread,dismissed,remarks,selfProfile:self}));}
+    try{accountStorage(account.id).setItem(store,JSON.stringify({version:2,messages,posts:next,chatIds,unread,muted,hidden,accepted,pinned,markedUnread,dismissed,remarks,selfProfile:readSelfProfile({id:account.id,username:account.username},accountStorage(account.id))}));}
     catch{notify('本机存储空间不足，内容仍保留在发布窗口，请减少图片后重试');return;}
     setPosts(next);setPostText('');setPostLocation('');setUploads([]);close();
     setHidden(ids=>ids.filter(id=>id!=='self'));openMoments();notify('动态已发布并保存到本机');
@@ -1357,7 +1373,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
   const matches = (p: Person, q: string) =>
     (p.name + (p.nickname||'') + (p.realName||'') + p.account).toLowerCase().includes(q.toLowerCase());
   const listPeople = [molly,...people].map(displayPerson).filter(
-    (p) => !p.group && matches(p, query),
+    (p) => !p.group && (!mobile||!removedContacts.includes(p.id)) && matches(p, query),
   );
   const groupPeople = groupChats.groups.map(groupPerson).filter(p=>matches(p,query));
   const toggleContactSection = (section: keyof typeof contactSections) =>
@@ -1380,15 +1396,16 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
     (p) => !hidden.includes(p.personId) && (!filter || p.personId === filter),
   );
   const momentsNotifications = posts.filter(post=>post.personId==='self').flatMap(post=>[
-    ...(post.likes||[]).filter(like=>like.actorId!=='self').map(like=>({id:`like:${post.id}:${like.actorId}`,postId:post.id,name:like.name,action:'赞了你的动态',detail:post.text,time:post.createdAt||post.time,sortAt:Date.parse(post.createdAt||'')||0})),
-    ...post.comments.filter(comment=>!!comment.actorId&&comment.actorId!=='self').map(comment=>({id:`comment:${post.id}:${comment.id}`,postId:post.id,name:comment.name,action:'评论了你的动态',detail:comment.text,time:comment.time,sortAt:Date.parse(comment.time)||Date.parse(post.createdAt||'')||0})),
+    ...(post.likes||[]).filter(like=>like.actorId!=='self').map(like=>({id:`like:${post.id}:${like.actorId}`,postId:post.id,actorId:like.actorId,name:like.name,action:'赞了你的动态',detail:post.text,time:post.createdAt||post.time,sortAt:Date.parse(post.createdAt||'')||0})),
+    ...post.comments.filter(comment=>!!comment.actorId&&comment.actorId!=='self').map(comment=>({id:`comment:${post.id}:${comment.id}`,postId:post.id,actorId:comment.actorId,name:comment.name,action:'评论了你的动态',detail:comment.text,time:comment.time,sortAt:Date.parse(comment.time)||Date.parse(post.createdAt||'')||0})),
   ]).sort((a,b)=>b.sortAt-a.sortAt).slice(0,30);
+  const mobileNotices=momentsNotifications.filter(item=>!mobileNoticeSeen.includes(account.id+':'+item.id));
   const close = () => {
     setModal(null);
     setComment('');
     setProfileEditing(null);
   };
-  const selfHeader = (
+  const _selfHeader = (
     <div className="zy-self">
       <button type="button" className="zy-self-avatar-button" aria-label="查看我的资料" onClick={event => openProfile(self, event.currentTarget.querySelector<HTMLElement>('.zy-avatar') || event.currentTarget)}>
         <Avatar person={self} size={38} />
@@ -1417,23 +1434,22 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       <ChatAddMenu groups={groupChats.groups} onCreateGroup={()=>openGroupDialog(displayPerson(molly))} onSelectGroup={id=>{const group=groupChats.groups.find(item=>item.id===id);if(group)openChat(groupPerson(group));}} onSelectCharacter={id=>{const person=people.find(item=>item.id===id);if(person)openChat(displayPerson(person));}}/>
     </div>
   );
-  const mobileDetail = mobile && ((page === 'chat' && !!selected) || (page === 'contacts' && !!contact));
+  const mobileDetail = mobile && ((page === 'chat' && !!selected) || !!mobileSubpage || !!groupCreate || (page==='moments'&&!!filter));
+  const mobileOverlayDetail=mobile&&(mobileDetails.length>0||modal?.kind==='profile');
+  const ProfileContainer=mobile?MobileProfileDrawer:ProfilePopover;
+  const mobileIncoming=mobile?[...[molly,...people].map(p=>{const last=visibleMessages[p.id]?.at(-1);return {id:p.id,person:displayPerson(p),text:last?.text||'',messageId:last&&!last.mine?last.id:''};}),...visibleGroups.map(g=>{const last=g.messages.at(-1);return {id:g.id,person:groupPerson(g),text:groupPreview(g),messageId:last&&last.senderId!=='user'?last.id:''};})]:[];
   const personNames=Object.fromEntries([molly,...people].map(item=>[item.id,item.name]));
-  const pageTitles: Record<Page, string> = {chat:'消息', contacts:'智友', tasks:'任务', moments:'动态', pets:'多功能',me:'我'};
+  const pageTitles: Record<Page, string> = {chat:'消息', contacts:'智友', tasks:'安排', moments:'动态', pets:'多功能',me:'我'};
+  const mobileFirstEntry=useMobileFirstEntry(account.id+':'+page);
   const renderClient = () => (
-    <main className={'zy-app zy-page-' + page + ' zy-desktop' + (mobile ? ' zy-mobile' : '') + (mobileDetail ? ' is-mobile-detail' : '') + (liquidBaseEnabled ? ' has-liquid-base-plate' : '')}>
+    <main className={'zy-app zy-page-' + page + ' zy-desktop' + (mobile ? ' zy-mobile' : ' zy-layout-classic') + (mobileDetail ? ' is-mobile-detail' : '') + (mobileOverlayDetail?' is-mobile-overlay-detail':'') + (mobile&&!mobileDetail&&['chat','contacts','me'].includes(page)?' is-mobile-list':'') + (liquidBaseEnabled ? ' has-liquid-base-plate' : '') + (mobile&&mobileFirstEntry?' is-first-entry':'') + (mobile&&mobileLeaving?' is-mobile-chat-leaving':'')}>
       {liquidBaseEnabled && <LiquidBasePlate/>}
-      {mobile && (mobileDetail ? <header className="zy-mobile-detail-head">
-        <button type="button" aria-label={page === 'contacts' ? '返回联系人列表' : '返回聊天列表'} onClick={() => {if (page === 'contacts') setContact(''); else setSelected('');}}><ArrowLeft/></button>
-        <h1>{pageTitles[page]}</h1>
-      </header> : <header className="zy-mobile-page-head">
-        <button type="button" className="zy-mobile-brand" aria-label="智域首页" onClick={() => navigateMain('chat')}><img data-navigation-logo src={asset('chat',0)} alt="智域"/></button>
-        <h1>{pageTitles[page]}</h1>
-        <button type="button" className="zy-mobile-self" aria-label="查看我的资料" onClick={event => openProfile(self, event.currentTarget)}><Avatar person={self} size={32}/></button>
-        <button type="button" className="zy-mobile-settings" aria-label="设置与菜单" onClick={() => setModal({kind:'settings'})}><Menu/></button>
-      </header>)}
+      {!mobile&&<MainWindowResizeHandles/>}
+      {!mobile&&<DesktopAppearanceEditor key={account.id} accountId={account.id} layout="classic" editing={appearanceAccount===account.id} onClose={closeAppearance}/>}
+      {mobile&&<MobileNavigation page={page} self={self} unread={notificationUnreadCount} tasks={hasTaskInProgress} moments={momentBadge} hidden={mobileDetail&&!mobileOverlayDetail} onNavigate={next=>next==='moments'?openMoments():navigateMain(next)}/>}
+      {mobile&&page==='chat'&&!!selected&&<div className="zy-mobile-chat-safe-plane" aria-hidden="true"/>}
       <BrandEntrance src={asset('chat', 0)} />
-      <nav className="zy-rail" aria-label="主导航">
+      {!mobile&&<nav className="zy-rail" aria-label="主导航">
         <button
           className="zy-logo"
           aria-label="智域首页"
@@ -1467,9 +1483,9 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
             <Users fill={page === 'contacts' ? 'currentColor' : 'none'} />
             <span className="zy-mobile-nav-label" aria-hidden="true">智友</span>
           </IconButton>
-          <IconButton label={hasTaskInProgress?'任务，有正在进行的任务':'任务'} pressed={page === 'tasks'} className={page === 'tasks' ? 'active' : ''} onClick={() => navigateMain('tasks')}>
-            <span className="zy-nav-glyph"><CalendarCheck/>{hasTaskInProgress&&<RailNotificationDot label="有正在进行的任务"/>}</span>
-            <span className="zy-mobile-nav-label" aria-hidden="true">任务</span>
+          <IconButton label={hasTaskInProgress?'安排，有正在进行的安排':'安排'} pressed={page === 'tasks'} className={page === 'tasks' ? 'active' : ''} onClick={() => navigateMain('tasks')}>
+            <span className="zy-nav-glyph"><CalendarCheck/>{hasTaskInProgress&&<RailNotificationDot label="有正在进行的安排"/>}</span>
+            <span className="zy-mobile-nav-label" aria-hidden="true">安排</span>
           </IconButton>
           <IconButton
             label={momentBadge ? '动态，有新内容' : '动态'}
@@ -1498,27 +1514,28 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
         >
           <Menu/>
         </IconButton>
-      </nav>
+      </nav>}
       <div className="zy-base"><PageErrorBoundary key={page} resetKey={page}><PageSection render={()=> <>
         {page !== 'moments' && page !== 'pets' && page !== 'tasks' && page !== 'me' && (
           <>
           <aside
-            className="zy-directory"
+            className={'zy-directory'+(mobile?' zy-mobile-page-underlay':'')}
             style={{ width: mobile?undefined:dirWidth }}
             aria-label={page === 'chat' ? '会话列表' : '联系人列表'}
           >
-            {selfHeader}
-            {search}
+            {mobile&&<MobilePageHeader title={page==='contacts'?'通讯录':pageTitles[page]} onCreate={page==='chat'?()=>openGroupDialog(displayPerson(molly)):undefined}/>}
+            {mobile?(page==='chat'?<MobileSearch value={query} onChange={setQuery}/>:null):search}
             {page === 'chat' ? (
               <div className="zy-list-scroll zy-chat-list">
                 {orderedChatIds
                   .map((id) => personById(id))
-                  .filter((p) => p.id === 'molly' || matches(p, query))
-                  .map((p) => (
+                  .filter((p) => (!mobile||!removedContacts.includes(p.id))&&(p.id === 'molly' || matches(p, query)))
+                  .map((p,index) => (
                     <button
                       key={p.id}
+                      style={mobile?{'--zy-m-entry-delay':Math.min(index,11)*35+'ms'} as import('react').CSSProperties:undefined}
                       className={
-                        'zy-conversation ' + (p.id === 'molly' ? 'zy-molly-pinned ' : '') +
+                        'zy-conversation '+(mobile&&index<12?'zy-mobile-entry ':'') + (p.id === 'molly' ? 'zy-molly-pinned ' : '') +
                         (isChatPinned(p.id) ? 'zy-conversation-pinned ' : '') +
                         (selected === p.id ? 'selected' : '')
                       }
@@ -1530,18 +1547,18 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                       }}
                     >
                       <span className="zy-list-avatar">
-                        {p.group ? <GroupAvatar members={groupChats.groups.find(group=>group.id===p.id)!.members} size={34}/> : <Avatar
+                        {p.group ? <GroupAvatar members={groupChats.groups.find(group=>group.id===p.id)!.members} size={mobile?48:34}/> : <Avatar
                           person={p.id==='xia-xia'?{...p,presence:xiaPresence}:p.id==='yuan-xiaoman'?{...p,presence:yuanPresence}:p.id==='liu'?{...p,presence:liuPresence}:p.id==='chen-nian'?{...p,presence:chenPresence}:p.id==='he-jiawei'?{...p,presence:hePresence}:p.id==='zhou-chef'?{...p,presence:chefPresence}:p}
-                          size={34}
+                          size={mobile?48:34}
                         />}
-                        {(!!unread[p.id]||markedUnread.includes(p.id)) && (
+                        {(!!((unread[p.id]||0)+(p.id==='molly'?surveyUnread:0))||markedUnread.includes(p.id)) && (
                           <span
                             className={
                               'zy-badge ' + (isChatMuted(p.id) ? 'is-muted-dot' : p.id === 'yun' ? 'brown' : '')
                             }
-                            aria-label={isChatMuted(p.id)?'有未读消息':`${unread[p.id]||1}条未读消息`}
+                            aria-label={isChatMuted(p.id)?'有未读消息':`${(unread[p.id]||0)+(p.id==='molly'?surveyUnread:0)||1}条未读消息`}
                           >
-                            {isChatMuted(p.id)?null:unread[p.id]||1}
+                            {isChatMuted(p.id)?null:(unread[p.id]||0)+(p.id==='molly'?surveyUnread:0)||1}
                           </span>
                         )}
                       </span>
@@ -1551,7 +1568,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                             <strong>{p.name}{p.id === 'molly' && <span className="zy-system-label">系统</span>}</strong>
                           </span>
                           <time>
-                            {p.id === 'molly' ? null : isChatPinned(p.id) ? <Pin size={13} aria-label="已置顶" /> : (()=>{const formatted=formatConversationTime(conversationAt(p.id));return <span className={formatted.yesterday?'is-yesterday':''}>{formatted.label}</span>;})()}
+                            {p.id === 'molly'&&!mobile ? null : isChatPinned(p.id)&&!mobile ? <Pin size={13} aria-label="已置顶" /> : (()=>{const formatted=formatConversationTime(conversationAt(p.id));return <span className={formatted.yesterday?'is-yesterday':''}>{formatted.label}</span>;})()}
                           </time>
                         </span>
                         <span className="zy-conversation-preview"><small>
@@ -1572,7 +1589,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                 )}
               </div>
             ) : (
-              <div className="zy-list-scroll zy-address-list">
+              mobile?<MobileContacts accountId={account.id} people={listPeople} query={query} onQuery={setQuery} statusFor={statusFor} onProfile={openProfile} onGroups={()=>setMobileSubpage('groups')} onNew={()=>setMobileSubpage('new')}/>:<div className="zy-list-scroll zy-address-list">
                 <button type="button" className="zy-directory-row zy-contact-section-toggle" aria-expanded={contactSections.new} onClick={() => toggleContactSection('new')}>
                   <ChevronRight className="zy-disclosure-chevron" size={16} /><span>新的朋友</span>
                 </button>
@@ -1630,21 +1647,18 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
           onRetry={()=>groupChats.retry(activeGroup.id)}
           onSend={(text,mentionIds,requestId,replyTo,media)=>groupChats.send(activeGroup.id,text,mentionIds,requestId,replyTo,media)}
           onConfirmPlan={(planId,requestId)=>groupChats.confirmPlan(activeGroup.id,planId,requestId)}
+          onConfirmRecordOrder={requestId=>groupChats.confirmRecordOrder(activeGroup.id,requestId)}
+          onImportCutOpeningRecord={requestId=>groupChats.importCutOpeningRecord(activeGroup.id,requestId)}
+          onRestoreCutOpeningRecord={requestId=>groupChats.restoreCutOpeningRecord(activeGroup.id,requestId)}
           onReminder={(reminderId,operation,requestId)=>groupChats.reminder(activeGroup.id,reminderId,operation,requestId)}
         />}
-        {page === 'chat' && (selected === 'xia-xia'||selected === 'molly'||selected === 'yuan-xiaoman'||selected === 'liu'||selected === 'chen-nian'||selected === 'he-jiawei'||selected === 'zhou-chef') && <XiaxiaChat key={`${account.id}:${selected}`} onForward={beginForward} taskPageContext={taskConversation?.npcId===selected?taskPageContextFor(taskConversation.task):undefined} taskPageContextKey={taskConversation?.npcId===selected?taskConversation.referenceId:undefined} onDismissTaskPageContext={()=>setTaskConversation(null)} onOpenTasks={openTasks} onOpenGroup={id=>{const group=groupChats.groups.find(item=>item.id===id);if(group)openChat(groupPerson(group));else notify('群聊正在同步，请稍后再试。');}} displayName={person.name} character={selected} legacyDraft={selected==='zhou-chef'?drafts[selected]:undefined} onLegacyDraftConsumed={()=>setDrafts(previous=>({...previous,[selected]:''}))} companion={displayPet} onProfile={anchor=>openProfile(person,anchor)} reportQuote={reportQuote?.characterId===selected?reportQuote:undefined} onReportQuoteConsumed={referenceId=>setReportQuote(current=>!referenceId||current?.referenceId===referenceId?null:current)} onOpenNpc={(id,quoteId,text)=>{const p=people.find(p=>p.id===id);if(p){if(quoteId){setTaskConversation(null);setReportQuote({characterId:id,messageId:quoteId,text,referenceId:crypto.randomUUID()});}openChat(p);}}} onDesktop={()=>openDesktopCharacter(selected)} onCalendar={person.dialoguePurpose==='professional' && person.id!=='molly'?()=>openTaskCalendar(selected):undefined} desktopOpen={dockPersonId===selected} onRealtimeCall={()=>openDesktopCharacter(selected)} onCreateGroup={()=>openGroupDialog(person)} onBeforeSend={selected==='molly'?undefined:text=>interceptGroupRequest(text,selected)} muted={isChatMuted(selected)} onToggleMute={()=>{void toggleChatMute(selected);}} pinned={isChatPinned(selected)} onTogglePin={selected==='molly'?undefined:()=>{void toggleChatPin(selected);}} />}
+        {page === 'chat' && (selected === 'xia-xia'||selected === 'molly'||selected === 'yuan-xiaoman'||selected === 'liu'||selected === 'chen-nian'||selected === 'he-jiawei'||selected === 'zhou-chef') && <XiaxiaChat threadSupplement={selected==='molly'?<div ref={setSurveyMount}/>:undefined} key={`${account.id}:${selected}`} onForward={beginForward} taskPageContext={taskConversation?.npcId===selected?taskPageContextFor(taskConversation.task):undefined} taskPageContextKey={taskConversation?.npcId===selected?taskConversation.referenceId:undefined} onDismissTaskPageContext={()=>setTaskConversation(null)} onOpenTasks={openTasks} onOpenGroup={id=>{const group=groupChats.groups.find(item=>item.id===id);if(group)openChat(groupPerson(group));else notify('群聊正在同步，请稍后再试。');}} displayName={person.name} character={selected} legacyDraft={selected==='zhou-chef'?drafts[selected]:undefined} onLegacyDraftConsumed={()=>setDrafts(previous=>({...previous,[selected]:''}))} companion={displayPet} onProfile={anchor=>openProfile(person,anchor)} reportQuote={reportQuote?.characterId===selected?reportQuote:undefined} onReportQuoteConsumed={referenceId=>setReportQuote(current=>!referenceId||current?.referenceId===referenceId?null:current)} onOpenNpc={(id,quoteId,text)=>{const p=people.find(p=>p.id===id);if(p){if(quoteId){setTaskConversation(null);setReportQuote({characterId:id,messageId:quoteId,text,referenceId:crypto.randomUUID()});}openChat(p);}}} onDesktop={mobile&&selected==='molly'?undefined:()=>openDesktopCharacter(selected)} onCalendar={person.id==='molly'?()=>openTaskCalendar('molly'):undefined} desktopOpen={dockPersonId===selected} onRealtimeCall={()=>openDesktopCharacter(selected)} onCreateGroup={()=>openGroupDialog(person)} onBeforeSend={selected==='molly'?undefined:text=>interceptGroupRequest(text,selected)} muted={isChatMuted(selected)} onToggleMute={()=>{void toggleChatMute(selected);}} pinned={isChatPinned(selected)} onTogglePin={selected==='molly'?undefined:()=>{void toggleChatPin(selected);}} />}
         {page === 'chat' && !activeGroup && !selected.startsWith('group-') && selected !== '' && selected !== 'xia-xia' && selected !== 'molly' && selected !== 'yuan-xiaoman' && selected !== 'liu' && selected !== 'chen-nian' && selected !== 'he-jiawei' && selected !== 'zhou-chef' && (
           <section className="zy-chat" aria-label="聊天内容">
-            <LocalChatHeader key={`${account.id}:${selected}`} messages={visibleMessages[selected]||[]} self={self} thread={thread} name={person.name} avatar={person.avatar} bio={person.bio} status={statusFor(person.id)} dialoguePurpose={person.dialoguePurpose} professionalTitle={person.professionalProfile?.title||person.professionalTitle} onProfile={anchor=>openProfile(person,anchor)}  onDesktop={()=>openDesktopCharacter(selected)} onCalendar={person.dialoguePurpose==='professional' && person.id!=='molly'?()=>openTaskCalendar(selected):undefined} desktopOpen={dockPersonId===selected} onCreateGroup={()=>openGroupDialog(person)} muted={isChatMuted(selected)} onToggleMute={()=>{void toggleChatMute(selected);}} pinned={isChatPinned(selected)} onTogglePin={()=>{void toggleChatPin(selected);}} onClear={()=>clearLocalChat(selected)}/>
+            <LocalChatHeader key={`${account.id}:${selected}`} messages={visibleMessages[selected]||[]} self={self} thread={thread} name={person.name} avatar={person.avatar} bio={person.bio} status={statusFor(person.id)} dialoguePurpose={person.dialoguePurpose} professionalTitle={person.professionalProfile?.title||person.professionalTitle} onProfile={anchor=>openProfile(person,anchor)}  onDesktop={mobile&&selected==='molly'?undefined:()=>openDesktopCharacter(selected)} onCalendar={person.id==='molly'?()=>openTaskCalendar('molly'):undefined} desktopOpen={dockPersonId===selected} onCreateGroup={()=>openGroupDialog(person)} muted={isChatMuted(selected)} onToggleMute={()=>{void toggleChatMute(selected);}} pinned={isChatPinned(selected)} onTogglePin={()=>{void toggleChatPin(selected);}} onClear={()=>clearLocalChat(selected)}/>
             <>
             <div className="zy-thread" ref={thread}>
               <div className="zy-thread-inner">
-                {!visibleMessages[selected]?.length && (
-                  <div className="zy-chat-welcome">
-                    <Avatar person={person} size={64} />
-                    <h2>{person.name}</h2><ChatIdentityNotice name={person.name} purpose={person.dialoguePurpose} molly={person.id==='molly'}/>
-                  </div>
-                )}
                 {(visibleMessages[selected] || []).map((m, i, arr) => {
                   const before = arr[i - 1];
                   const after = arr[i + 1];
@@ -1683,7 +1697,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                         <div className="zy-message-content">
                           <div className="zy-bubble-wrap" id={'local-message-'+m.id}>
                             {m.replyTo&&(()=>{const original=arr.find(x=>x.id===m.replyTo);return original?<button className="npc-quote" onClick={()=>document.getElementById('local-message-'+original.id)?.scrollIntoView({behavior:'smooth',block:'center'})}><strong>{original.mine?'你':person.name}</strong><span>{original.text||'[图片]'}</span></button>:null;})()}
-                            <MessageActions text={m.text} voice={!!m.audio} onQuote={()=>setQuoteDrafts(q=>({...q,[selected]:m.id}))} onDelete={()=>deleteLocalMessage(selected,m.id)} onForward={()=>beginForward(m.text)}>
+                            <MessageActions text={m.text} voice={!!m.audio} voiceSrc={m.audio} accountId={account.id} onQuote={()=>setQuoteDrafts(q=>({...q,[selected]:m.id}))} onDelete={()=>deleteLocalMessage(selected,m.id)} onForward={()=>beginForward(m.text)}>
                             <div className={'zy-bubble'+(m.audio?' zy-bubble-voice':'')}>
                               {m.image && (
                                 <ChatImage className="zy-message-photo" messageId={m.id} src={m.image} alt="发送的图片" gallery={{conversationId:selected,images:arr.filter(item=>!!item.image).map(item=>({id:item.id,src:item.image!,alt:'聊天图片',at:item.at,sender:item.mine?'你':person.name}))}}/>
@@ -1694,7 +1708,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                                   {m.file}
                                 </span>
                               )}
-                              {m.audio?<VoiceBubble src={m.audio} durationSeconds={m.audioDurationSeconds}/>:m.text}
+                              {m.audio?<VoiceBubble src={m.audio} durationSeconds={m.audioDurationSeconds} transcript={m.text}/>:m.text}
                             </div>
                             </MessageActions>
                             {m.id === 'm2' && (
@@ -1755,7 +1769,7 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
           <section className="zy-contact-detail" aria-label={`${friend.id === 'molly' ? 'Molly' : friend.name}的资料`}>
             <div className={`zy-contact-profile${friend.id === 'molly' ? ' zy-molly-contact-profile' : ''}`}>
               <div className="zy-contact-profile-head">
-                <button type="button" className="zy-contact-profile-avatar" aria-label={`查看${friend.name}头像`} disabled={!friend.avatar} onClick={() => friend.avatar && setModal({ kind: 'image', images: [friend.avatar], index: 0 })}><Avatar person={friend} size={60}/></button>
+                <button type="button" className="zy-contact-profile-avatar" aria-label={`查看${friend.name}头像`} disabled={!friend.avatar} onClick={event => friend.avatar && setModal({ kind: 'image', images: [friend.avatar], index: 0, origin:event.currentTarget.querySelector('img') })}><Avatar person={friend} size={60}/></button>
                 <div className="zy-contact-profile-identity"><h1>{friend.id === 'molly' ? 'Molly' : friend.name}</h1>{friend.id !== 'molly' && <><p>{friend.account}</p>{friend.region && <p>{friend.region}</p>}</>}</div>
                 {friend.id !== 'molly' && <div className="zy-menu-anchor zy-contact-profile-menu">
                   <IconButton label="朋友管理" onClick={() => toggleMenu('friend')}><MoreHorizontal size={18}/></IconButton>
@@ -1787,8 +1801,8 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
             </div>
           </section>
         )}
-        {page === 'me'&&<section className="zy-me-page" aria-label="我"><header><h1>我</h1></header><div className="zy-me-card"><button type="button" className="zy-me-avatar" onClick={event=>openProfile(self,event.currentTarget)} aria-label="编辑我的资料"><Avatar person={self} size={60}/></button><h2>{self.nickname||self.name}</h2><p>{self.bio}</p><button type="button" onClick={event=>openProfile(self,event.currentTarget)}>编辑资料</button></div><button className="zy-me-settings" type="button" onClick={()=>setModal({kind:'settings'})}>设置<ChevronRight size={18}/></button></section>}
-        {page === 'tasks' && <TaskBoard key={account.id} board={taskBoard} dirWidth={dirWidth} onDirectoryWidthChange={setDirWidth} onOpenConversation={(npcId,task)=>{const target=[molly,...people].find(item=>item.id===npcId);if(target){if(task){setReportQuote(null);setTaskConversation({npcId,task,referenceId:crypto.randomUUID()});}else setTaskConversation(null);openChat(displayPerson(target));}}}/>}
+        {page === 'me'&&mobile?<MobileMePage self={self} accountId={account.id} onEdit={anchor=>openProfile(self,anchor)} settings={<AppSettings inline mobile desktop={false} person={self} username={account.username} onLogout={logout} onClose={()=>{}}/>}/>:page === 'me'&&<section className="zy-me-page" aria-label="我"><header><h1>我</h1></header><div className="zy-me-card"><button type="button" className="zy-me-avatar" onClick={event=>openProfile(self,event.currentTarget)} aria-label="编辑我的资料"><Avatar person={self} size={60}/></button><h2>{self.nickname||self.name}</h2><p>{self.bio}</p><button type="button" onClick={event=>openProfile(self,event.currentTarget)}>编辑资料</button></div><button className="zy-me-settings" type="button" onClick={()=>setModal({kind:'settings'})}>设置<ChevronRight size={18}/></button></section>}
+        {page === 'tasks' && <TaskBoard initialSection={arrangementSection} mobile={mobile} key={account.id} board={taskBoard} onCommitRecord={taskBoard.commitRecord} dirWidth={dirWidth} onDirectoryWidthChange={setDirWidth} onOpenConversation={(npcId,task)=>{const target=[molly,...people].find(item=>item.id===npcId);if(target){if(task){setReportQuote(null);setTaskConversation({npcId,task,referenceId:crypto.randomUUID()});}else setTaskConversation(null);openChat(displayPerson(target));}}}/>}
         {page === 'pets' && <PetPage accountId={account.id} dirWidth={dirWidth} onDirectoryWidthChange={setDirWidth} />}
         {page === 'moments' && (
           <section className="zy-moments" ref={feed} aria-label="好友动态">
@@ -1798,19 +1812,20 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                 <button type="button" className="zy-moments-cover-change" aria-label="更换动态圈封面" title="更换动态圈封面" onClick={()=>coverInput.current?.click()} />
                 <input ref={coverInput} hidden type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>{const file=e.target.files?.[0];if(!file)return;if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>12*1024*1024){notify('请选择12MB以内的PNG、JPEG或WebP图片');e.target.value='';return;}void readPhoto(file).then(src=>{setSelf(old=>({...old,cover:src,coverAlt:'我的动态封面'}));notify('动态圈封面已更新');}).catch(error=>notify(reportUserFacingError(error,'save','main')));e.target.value='';}} />
               </>}
+              {mobile&&filter&&<button type="button" className="zy-mobile-moments-back" aria-label="返回动态" onClick={mobileBack}><ArrowLeft size={24}/></button>}
               <div className="zy-moments-tools" aria-label="动态圈操作">
-                <button type="button" className="zy-moments-tool" aria-label="刷新动态圈" title="刷新" onClick={()=>{setMomentsNotificationsOpen(false);feed.current?.scrollTo({top:0,behavior:'smooth'});window.dispatchEvent(new Event('npc-moments-changed'));notify('正在刷新朋友圈');}}><RefreshCw size={18}/></button>
+                {!mobile&&<button type="button" className="zy-moments-tool" aria-label="刷新动态圈" title="刷新" onClick={()=>{setMomentsNotificationsOpen(false);feed.current?.scrollTo({top:0,behavior:'smooth'});window.dispatchEvent(new Event('npc-moments-changed'));notify('正在刷新朋友圈');}}><RefreshCw size={18}/></button>}
                 <div className="zy-moments-notification-anchor">
-                  <button type="button" className="zy-moments-tool" aria-label="动态圈通知" title="通知" aria-expanded={momentsNotificationsOpen} onClick={()=>setMomentsNotificationsOpen(open=>!open)}><Bell size={19}/>{momentsNotifications.length>0&&<i className="zy-moments-notification-dot"/>}</button>
+                  {mobile?(mobileNotices.length>0&&!filter&&<button type="button" className="zy-mobile-moment-notice" aria-label="动态圈通知" aria-expanded={momentsNotificationsOpen} onClick={()=>{setMomentsNotificationsOpen(true);setMobileNoticeSeen(old=>[...new Set([...old,...momentsNotifications.map(item=>account.id+':'+item.id)])]);}}>{(()=>{const latest=mobileNotices[0],person=[molly,...people].find(p=>p.id===latest.actorId);return person?<Avatar person={person} size={22}/>:<span>{latest.name.slice(0,1)}</span>;})()}{mobileNotices.length} 条新消息</button>):<button type="button" className="zy-moments-tool" aria-label="动态圈通知" title="通知" aria-expanded={momentsNotificationsOpen} onClick={()=>setMomentsNotificationsOpen(open=>!open)}><Bell size={19}/>{momentsNotifications.length>0&&<i className="zy-moments-notification-dot"/>}</button>}
                   {momentsNotificationsOpen&&<section className="zy-moments-notifications" aria-label="动态圈通知">
                     <header><strong>互动通知</strong><button type="button" aria-label="关闭通知" onClick={()=>setMomentsNotificationsOpen(false)}><X size={15}/></button></header>
                     {momentsNotifications.length?momentsNotifications.map(item=><button type="button" className="zy-moments-notification" key={item.id} onClick={()=>{setMomentsNotificationsOpen(false);openMoments();requestAnimationFrame(()=>requestAnimationFrame(()=>document.getElementById(item.postId)?.scrollIntoView({behavior:'smooth',block:'center'})));}}><span><strong>{item.name}</strong> {item.action}</span>{item.detail&&<small>{item.detail}</small>}<time>{item.time}</time></button>):<p className="zy-moments-notifications-empty">暂时没有新的点赞或评论</p>}
                   </section>}
                 </div>
-                <button type="button" className="zy-moments-tool" aria-label="发布动态" title="发布动态" onClick={()=>setModal({kind:'publish'})}><Camera size={19}/></button>
+                {(!mobile||!filter)&&<button type="button" className="zy-moments-tool" aria-label="发布动态" title="发布动态" onClick={()=>setModal({kind:'publish'})}><Camera size={19}/></button>}
               </div>
               <div className="zy-moments-cover-identity">
-              <span className="zy-moments-cover-name">{filter ? personById(filter).name : self.nickname||self.name}</span>
+              <span className="zy-moments-cover-name">{filter ? personById(filter).name : mobile?(self.nickname?.trim()&&self.nickname!==self.account?self.nickname:self.name?.trim()&&self.name!==self.account?self.name:'我'):(self.name||self.nickname)}</span>
               <button
                 className="zy-self-cover-avatar zy-moments-cover-profile"
                 aria-label={filter ? `查看${personById(filter).name}的资料` : '查看我的资料'}
@@ -1822,23 +1837,24 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                       ? personById(filter)
                       : self
                   }
-                  size={80}
+                  size={mobile?64:80}
                 />
               </button>
               </div>
             </div>
+            
             <div className="zy-feed-stream">
-              {filter && (
+              {filter && !mobile && (
                 <button className="zy-back-feed" onClick={() => openMoments()}>
                   <ArrowLeft size={16} />
                   返回全部好友动态
                 </button>
               )}
-              {currentPosts.map((post) => {
+              {currentPosts.map((post,index) => {
                 const author = personById(post.personId);
                 const publishedTime=post.createdAt?formatMomentTime(post.createdAt):post.time;
                 return (
-                  <article className={`zy-post ${post.personId==='self'?'is-self':'is-npc'}`} key={post.id} id={post.id}>
+                  <article style={mobile?{'--zy-m-entry-delay':Math.min(index,11)*35+'ms'} as import('react').CSSProperties:undefined} className={`zy-post ${post.personId==='self'?'is-self':'is-npc'} ${mobile&&index<12?'zy-mobile-entry':''}`} key={post.id} id={post.id}>
                     <button type="button" className="zy-post-avatar" aria-label={`查看${author.name}的资料`} onClick={event=>openProfile(author,event.currentTarget.querySelector<HTMLElement>('.zy-avatar')||event.currentTarget)}>
                       <Avatar person={post.personId==='lin'?{...author,avatar:asset('moments',3)}:post.personId==='shen'?{...author,avatar:asset('moments',7)}:author} size={42}/>
                     </button>
@@ -1857,12 +1873,12 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                       </button>
                     </header>
                     {post.text && <p className="zy-post-caption">{post.text}</p>}
-                    <Media
+                    {mobile?<MobileMomentMedia post={post} open={(images,index,origin)=>setModal({kind:'moment-image',images,index,origin})}/>:<Media
                       post={post}
-                      open={(images, index) =>
-                        setModal({ kind: 'moment-image', images, index })
+                      open={(images, index, origin) =>
+                        setModal({ kind: 'moment-image', images, index, origin })
                       }
-                    />
+                    />}
                     <MomentChatScreenshot post={post} person={author}/>
                     {(publishedTime||post.location)&&<div className="zy-post-metadata">
                       {publishedTime&&<time className="zy-post-published-time" dateTime={momentTimestamp(post.createdAt)}>{publishedTime}</time>}
@@ -1871,11 +1887,12 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
                         {post.location}
                       </div>}
                     </div>}
-                    <MomentPostInteractions post={post} authorName={author.name} selfName={self.nickname||self.name}
+                    <MomentPostInteractions mobile={mobile} post={post} authorName={author.name} selfName={self.nickname||self.name}
                       actorName={(id,fallback)=>[molly,...allPeople].some(person=>person.id===id)?personById(id).name:fallback} busy={interactionBusy===post.id}
                       onLike={()=>void interactWithPost(post,'like')} onComment={()=>beginMomentComment(post)} onReply={reply=>beginMomentComment(post,reply)}
                       editor={momentCommentTarget?.accountId===account.id&&momentCommentTarget.postId===post.id?<MomentCommentEditor key={`${account.id}:${post.id}:${momentCommentTarget.id}`}
                         value={comment} onChange={setComment} disabled={!!interactionBusy} replyName={commentReply?.name} onCancelReply={()=>setCommentReply(null)} onCancel={cancelMomentComment}
+                        onSendPayload={async payload=>{const target=momentCommentTargetRef.current;if(!target||target.accountId!==account.id||target.postId!==post.id||(!payload.text.trim()&&!payload.imageId&&!payload.audioId&&!payload.assetId)||interactionBusy)return false;return await interactWithPost(post,'comment',payload.text.trim(),payload);}}
                         onSubmit={async()=>{const target=momentCommentTargetRef.current;if(!target||target.accountId!==account.id||target.postId!==post.id||!comment.trim()||interactionBusy)return;
                           if(await interactWithPost(post,'comment',comment.trim())&&momentCommentTargetRef.current?.id===target.id)cancelMomentComment();}}/>:undefined}/>
                     </div>
@@ -1936,10 +1953,10 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
         }}
       />
       {modal?.kind === 'image' && (
-        <Lightbox images={modal.images} start={modal.index} close={close} />
+        <MomentImageViewer images={modal.images} start={modal.index} close={close} origin={modal.origin} onOpenNative={mobile?undefined:async index=>{await openImageViewer({conversationId:'image:'+account.id,images:modal.images.map((src,i)=>({id:'image-'+i,src,alt:'图片 '+(i+1)})),index});}} />
       )}
       {modal?.kind === 'moment-image' && (
-        <MomentImageViewer images={modal.images} start={modal.index} close={close} />
+        <MomentImageViewer images={modal.images} start={modal.index} close={close} origin={modal.origin} onOpenNative={mobile?undefined:async index=>{await openImageViewer({conversationId:'moments:'+account.id,images:modal.images.map((src,i)=>({id:'moment-image-'+i,src,alt:'动态图片 '+(i+1)})),index});}} />
       )}
       {modal?.kind === 'publish' && (
         <Dialog title="记录此刻" close={close} className="zy-publish-dialog">
@@ -2002,9 +2019,11 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
           </div>
         </Dialog>
       )}
-      {modal?.kind === 'settings' && <AppSettings person={self} username={account.username} onLogout={logout} onClose={close}/> }
+      {modal?.kind === 'settings' && <AppSettings person={self} username={account.username} desktop={!mobile} appearanceLayout="classic" onLogout={logout} onClose={close} onAdjustAppearance={mobile?undefined:()=>setAppearanceAccount(account.id)} onOpenRecord={mobile?undefined:openDinnerRecord} onOpenCaptionCase={mobile?undefined:openDesktopCaptionCase}/> }
       {groupCreating && !groupCreate && <output className="zy-group-creation-status">Molly 正在起群名并创建群聊…</output>}
-      {groupCreate && <GroupCreateDialog key={groupCreate.requestId} source={groupCreate.source} people={[molly,...people].map(displayPerson)} initialGoal={groupCreate.goal} initialMemberIds={groupCreate.memberIds} busy={groupCreating} error={groupError} onClose={closeGroupDialog} onCreate={input=>createGroup(groupCreate.source,input.goal,input.memberIds,groupCreate.requestId)}/>}
+      {mobileSubpage==='groups'&&mobile&&<MobileGroupList groups={visibleGroups} onBack={mobileBack} onOpen={id=>{const group=visibleGroups.find(g=>g.id===id);if(group)openChat(groupPerson(group));}}/>}
+      {mobileSubpage==='new'&&mobile&&<MobileNewFriends onBack={mobileBack} removedPeople={[molly,...people].filter(p=>removedContacts.includes(p.id)).map(displayPerson)} onRestore={restoreContact}/>}
+      {groupCreate && mobile?<MobileGroupCreate key={groupCreate.requestId} people={[molly,...people].map(displayPerson)} source={groupCreate.source} initialGoal={groupCreate.goal} initialMemberIds={groupCreate.memberIds} onClose={closeGroupDialog} onCreate={async(goal,ids)=>{const group=await createGroup(groupCreate.source,goal,ids,groupCreate.requestId,true);if(!group)throw Error('账号已切换，请重新操作');return group;}} onComplete={group=>{setGroupCreate(null);openChat(groupPerson(group));}}/>:groupCreate&&<GroupCreateDialog key={groupCreate.requestId} source={groupCreate.source} people={[molly,...people].map(displayPerson)} initialGoal={groupCreate.goal} initialMemberIds={groupCreate.memberIds} busy={groupCreating} error={groupError} onClose={closeGroupDialog} onCreate={input=>createGroup(groupCreate.source,input.goal,input.memberIds,groupCreate.requestId)}/>}
       {forwardDraft?.accountId===account.id && <MessageForwardDialog key={forwardDraft.id} text={forwardDraft.text} targets={[
         ...[molly,...people].map(displayPerson).map(target=>({id:target.id,name:target.name,face:<Avatar person={target} size={36}/>})),
         ...visibleGroups.map(group=>({id:group.id,name:group.name,face:<GroupAvatar members={group.members} size={36}/>,pending:group.pending,disabled:!group.chatEnabled?'群聊尚未开放发言':undefined})),
@@ -2016,25 +2035,27 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
         <button role="menuitem" disabled={chatMenu.id==='molly'} onClick={()=>{const id=chatMenu.id;setDismissed(old=>({...old,[id]:messages[id]?.at(-1)?.id||''}));if(selected===id)setSelected('molly');setChatMenu(null);notify('已移除会话；可从联系人重新打开，聊天记录保留。');}}>删除会话</button>
       </div>}
       {modal?.kind === 'profile' && (
-        <ProfilePopover key={`${account.id}:${modal.person.id}`} title={modal.person.id==='self'?'我的资料':modal.person.id==='molly'?'Molly的资料':'朋友资料'} anchor={modal.anchor} close={close} className={`${modal.person.id === 'self' ? 'zy-self-profile-popover' : ''} ${modal.person.professionalProfile ? 'zy-professional-profile-popover' : ''} ${modal.person.dialoguePurpose === 'companion' ? 'zy-companion-profile-popover' : ''}`}>
+        <ProfileContainer key={`${account.id}:${modal.person.id}`} title={modal.person.id==='self'?'我的资料':modal.person.id==='molly'?'Molly的资料':'朋友资料'} anchor={modal.anchor} close={close} className={`${modal.person.id === 'self' ? 'zy-self-profile-popover' : ''} ${modal.person.professionalProfile ? 'zy-professional-profile-popover' : ''} ${modal.person.dialoguePurpose === 'companion' ? 'zy-companion-profile-popover' : ''}`}>
           {modal.person.id==='self'?<>
-            <SelfProfileCard name={self.nickname || self.name} account={self.account} signature={self.bio} background={self.profileBackground} avatar={<Avatar person={self} size={56}/>} editing={profileEditing} draft={profileDraft} onBeginEdit={beginProfileEdit} onDraftChange={setProfileDraft} onSaveEdit={saveProfileEdit} onCancelEdit={()=>setProfileEditing(null)} onAvatar={()=>avatarInput.current?.click()} onBackground={()=>profileBackgroundInput.current?.click()}/>
+            <SelfProfileCard name={self.nickname || self.name} account={self.account} signature={self.bio} background={self.profileBackground} avatar={<Avatar person={self} size={mobile?64:56}/>} editing={profileEditing} draft={profileDraft} onBeginEdit={beginProfileEdit} onDraftChange={setProfileDraft} onSaveEdit={saveProfileEdit} onCancelEdit={()=>setProfileEditing(null)} onAvatar={()=>avatarInput.current?.click()} onBackground={()=>profileBackgroundInput.current?.click()}/>
             <input ref={avatarInput} hidden type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>{const file=e.target.files?.[0];if(!file)return;if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>4*1024*1024){notify('请选择4MB以内的PNG、JPEG或WebP图片');return;}const reader=new FileReader();reader.onload=()=>{setSelf(old=>({...old,avatar:typeof reader.result==='string'?reader.result:''}));notify('头像已更新');};reader.readAsDataURL(file);e.target.value='';}}/>
             <input ref={profileBackgroundInput} hidden type="file" accept="image/png,image/jpeg,image/webp" aria-label="选择个人资料背景图片" onChange={e=>{const file=e.target.files?.[0];e.target.value='';if(file)void changeProfileBackground(file);}}/>
           </>:modal.person.id==='molly'?<div className="zy-npc-profile-card zy-molly-profile-card">
-            <div className="zy-npc-profile-top"><Avatar person={modal.person} size={48}/><div className="zy-npc-identity"><h3>Molly</h3></div></div>
+            <div className="zy-npc-profile-top"><Avatar person={modal.person} size={mobile?64:48}/><div className="zy-npc-identity"><h3>Molly</h3></div></div>
             <dl className="zy-friend-details"><dt>状态</dt><dd><span className="zy-character-status">{statusFor('molly')}</span></dd><dt className="zy-profile-signature-label">个性签名</dt><dd className="zy-profile-signature-value" title={modal.person.bio || '暂无个性签名'}>{modal.person.bio}</dd></dl><dl className="zy-friend-source"><dt>添加来源</dt><dd>{contactSourceLabel('default')}</dd></dl>
             <div className="zy-npc-profile-actions"><button type="button" onClick={()=>openChat(modal.person)}><PhosphorActionIcon name="message"/>发消息</button></div>
           </div>:<div className="zy-npc-profile-card">
-            <div className="zy-npc-profile-top"><Avatar person={modal.person} size={48}/><div className="zy-npc-identity"><h3>{displayPerson(modal.person).name}{modal.person.gender&&<span className={'zy-gender '+modal.person.gender} aria-label={modal.person.gender==='female'?'女生':'男生'}>{modal.person.gender==='female'?'♀':'♂'}</span>}</h3><p>{modal.person.account}</p>{modal.person.region&&<p>{modal.person.region}</p>}</div></div>
+            <div className="zy-npc-profile-top"><Avatar person={modal.person} size={mobile?64:48}/><div className="zy-npc-identity"><h3>{displayPerson(modal.person).name}{modal.person.gender&&<span className={'zy-gender '+modal.person.gender} aria-label={modal.person.gender==='female'?'女生':'男生'}>{modal.person.gender==='female'?'♀':'♂'}</span>}{mobile&&modal.person.dialoguePurpose==='professional'&&<span className="zy-mobile-pro-label">专业智友</span>}</h3><p>{modal.person.account}</p>{modal.person.region&&<p>{modal.person.region}</p>}</div></div>
             <section className="zy-friend-details"><h4>朋友资料</h4><InlineNameEdit key={`${account.id}:${modal.person.id}`} label="备注" value={remarks[modal.person.id] || modal.person.nickname || allPeople.find(item=>item.id===modal.person.id)?.name || modal.person.name} onSave={value=>saveContactRemark(modal.person.id,value)}/><dl><dt>状态</dt><dd><span className="zy-character-status">{statusFor(modal.person.id)}</span></dd><dt className="zy-profile-signature-label">个性签名</dt><dd className="zy-profile-signature-value" title={modal.person.bio || '暂无个性签名'}>{modal.person.bio || '暂无个性签名'}</dd>{!modal.person.professionalProfile&&modal.person.professionalTitle&&<><dt>职业</dt><dd>{modal.person.professionalTitle}</dd></>}</dl></section>
-            {modal.person.professionalProfile && <ProfessionalProfile profile={modal.person.professionalProfile} />}
+            {modal.person.professionalProfile && <><ProfessionalProfile profile={modal.person.professionalProfile} />{mobile&&<p className="zy-mobile-credential-issuer">由{modal.person.professionalProfile.issuer}颁发 · 智域世界内资质</p>}</>}
             <button type="button" className="zy-profile-moments" onClick={()=>{const id=modal.person.id;close();openMoments(id);}}><span className="zy-profile-moments-label">动态圈</span><span className="zy-profile-moments-content">{posts.filter(p=>p.personId===modal.person.id).flatMap(p=>p.images).slice(0,4).map((src,i)=><img key={`${src}-${i}`} src={src} alt="动态预览"/>)}</span><ChevronRight className="zy-profile-moments-chevron" size={15}/></button>
             {contactSourceLabel(modal.person.source,personNames)&&<dl className="zy-friend-source"><dt>添加来源</dt><dd>{contactSourceLabel(modal.person.source,personNames)}</dd></dl>}
-            <div className="zy-npc-profile-actions"><button type="button" onClick={()=>openChat(modal.person)}><PhosphorActionIcon name="message"/>发消息</button><button type="button" aria-label={`打开${displayPerson(modal.person).name}的桌面人物`} onClick={()=>{const id=modal.person.id;close();openDesktopCharacter(id);}}><PhosphorActionIcon name="video"/>视频</button></div>
+            <div className="zy-npc-profile-actions"><button type="button" onClick={()=>openChat(modal.person)}><PhosphorActionIcon name="message"/>发消息</button><button type="button" aria-label={`打开${displayPerson(modal.person).name}的桌面人物`} onClick={()=>{const id=modal.person.id;close();void openDesktopCharacter(id);}}><PhosphorActionIcon name="video"/>视频</button></div>
           </div>}
-        </ProfilePopover>
+        </ProfileContainer>
       )}
+      {mobile&&<MobileMessageBanner items={mobileIncoming} currentChat={page==='chat'?selected:''} onMessagesPage={page==='chat'&&!selected&&!mobileSubpage} onOpen={id=>openChat(personById(id))}/>}
+      {mobile&&mobileCall&&<MobileCallLayer key={`${account.id}:${mobileCall}`} person={personById(mobileCall)} onClose={()=>setMobileCall(null)}/>}
       {toast && (
         <output className="zy-toast">
           <Check size={17} />
@@ -2043,55 +2064,6 @@ export default function Zhiyu({mode = 'desktop'}: {mode?: 'desktop' | 'mobile'})
       )}
     </main>
   );
-  return <PageErrorBoundary><div className="zy-dual-preview"><div className="zy-desktop-slot">{renderClient()}</div></div></PageErrorBoundary>;
+  return <MobileComposerContext.Provider value={mobile}><MobileHeaderContext.Provider value={{mobile,onBack:mobileBack,onDetailChange:onMobileDetailChange,onRemoveContact:mobile&&selected&&selected!=='molly'&&!selected.startsWith('group-')&&!removedContacts.includes(selected)?()=>removeContact(selected):undefined,onRestoreContact:mobile&&removedContacts.includes(selected)?()=>restoreContact(selected):undefined}}><PageErrorBoundary><BetaSurveyInbox accountId={account.id} visible={!!surveyMount} container={surveyMount} onUnread={setSurveyUnread}/><div className="zy-dual-preview"><div className="zy-desktop-slot">{renderClient()}</div></div></PageErrorBoundary></MobileHeaderContext.Provider></MobileComposerContext.Provider>;
 }
 
-function Lightbox({
-  images,
-  start,
-  close,
-}: {
-  images: string[];
-  start: number;
-  close: () => void;
-}) {
-  const [index, setIndex] = useState(start);
-  useEffect(() => {
-    const key = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight')
-        setIndex((i) => Math.min(images.length - 1, i + 1));
-      if (e.key === 'ArrowLeft') setIndex((i) => Math.max(0, i - 1));
-    };
-    window.addEventListener('keydown', key);
-    return () => window.removeEventListener('keydown', key);
-  }, [images.length]);
-  return (
-    <Dialog
-      title={`${index + 1} / ${images.length}`}
-      close={close}
-      className="zy-lightbox"
-    >
-      <div className="zy-lightbox-image">
-        <img src={images[index]} alt={`图片 ${index + 1}`} />
-        {index > 0 && (
-          <IconButton
-            label="上一张"
-            className="prev"
-            onClick={() => setIndex(index - 1)}
-          >
-            <ChevronLeft />
-          </IconButton>
-        )}
-        {index < images.length - 1 && (
-          <IconButton
-            label="下一张"
-            className="next"
-            onClick={() => setIndex(index + 1)}
-          >
-            <ChevronRight />
-          </IconButton>
-        )}
-      </div>
-    </Dialog>
-  );
-}

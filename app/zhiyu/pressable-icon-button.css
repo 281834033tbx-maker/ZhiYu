@@ -25,14 +25,15 @@ html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press=
   animation:none;
 }
 html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press='release']>svg {
-  animation:zy-icon-pressure-release 360ms cubic-bezier(.2,.75,.25,1) both;
+  transform:scale(var(--zy-pressure-scale,1));
+  transition:none;
+  animation:none;
 }
-@keyframes zy-icon-pressure-release {
-  0% { transform:scale(.96); }
-  42% { transform:scale(1.025); }
-  72% { transform:scale(.996); }
-  100% { transform:scale(1); }
-}
+/* The same physical response is available in the mobile and character surfaces. */
+button.zy-pressable-icon>svg { transform-origin:center; }
+button.zy-pressable-icon[data-icon-press='pressed']>svg { transform:scale(.96); }
+button.zy-pressable-icon[data-icon-press='release']>svg { transform:scale(var(--zy-pressure-scale,1)); transition:none; animation:none; }
+button.zy-pressable-icon[data-icon-press='idle']>svg { transform:scale(1); }
 @media(prefers-reduced-motion:reduce) {
   html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press]>svg,
   html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press][data-icon-rotate='true']>svg {
@@ -40,4 +41,5 @@ html[data-zy-theme] .zy-app.zy-desktop button.zy-pressable-icon[data-icon-press=
     animation:none;
     transition:none;
   }
+  button.zy-pressable-icon[data-icon-press]>svg { transform:none; animation:none; transition:none; }
 }

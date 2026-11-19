@@ -1,6 +1,7 @@
 import {parseChoicePart, type ChoicePart} from './choice-chat';
 import type { ChatMessage } from './contracts';
 import { enabledCharacterDirectory, companionDirectory, getCharacter, type CharacterService } from './character-directory';
+import {DIALOGUE_CRISIS_FALLBACK,isDialogueCrisisInput} from './dialogue-output-guard';
 export const MOLLY_ID = 'molly-system-secretary';
 // Compatibility export; public facts and responsibilities have one source.
 export const mollyCatalog = enabledCharacterDirectory();
@@ -95,7 +96,30 @@ export type MollyOutput = {
   noMatch?: boolean;
   // Derived from the user input by parseMolly; never accepted from model JSON.
   genderDirective?: '男' | '女' | 'any';
+  /** Derived from this user's clear current input, never trusted from model JSON. */
+  comfortContact?: true;
 };
+
+/** This narrow, app-owned response is for an unambiguous short disclosure.
+ * Longer/quoted/third-party text and professional requests keep their normal
+ * semantic routing. Crisis handling always takes precedence over a contact. */
+export function mollyComfortOutput(incoming:string):MollyOutput|null {
+  if(isDialogueCrisisInput(incoming)||/[“”‘’"'「」『』《》]/u.test(incoming))return null;
+  const text=incoming.trim().replace(/^\[语音转写[^\]]*\]\s*/u,'')
+    .replace(/^Molly(?=[，,：:\s]|我)[，,：:\s]*/iu,'')
+    .replace(/(?:[，,；;\s]*)(别损我|别怼我|想找人聊聊|想找个人聊聊|想说说话|陪我聊聊|陪我说说话)$/u,'，$1')
+    .replace(/[。.!！?？～~… \t\r\u3000]/gu,'');
+  if(text.length>120)return null;
+  const clauses=text.split(/[，,；;\n]/u).filter(Boolean);
+  const feeling=/^(?:(?:我|唉|哎|今天|现在|这会儿|最近|这两天|刚刚|真的|实在|有点儿?|好|很|特别|太|挺|非常|感觉|觉得|有些))*?(?:累|疲惫|疲倦|难受|不开心|伤心|委屈|想哭|心烦|心累|烦躁|沮丧|失落|低落|心情(?:有点儿?|好|很|特别|太|挺|非常)?(?:不好|差|低落|糟糕?))(?:极了|死了|透了|得很|啊|呀|呢|了|哦|唉|哎)*$/u;
+  // A current first-person disclosure, not a keyword search over someone
+  // else's story, a negation/hypothesis, or a request to do professional work.
+  const badNews=/^(?:唉|哎|今天|现在|这会儿|最近|这两天|刚|又|真的)*(?:我(?:今天|现在|这会儿|最近|这两天|刚|又|真的)*)?(?:被(?:公司)?(?:裁员|裁|辞退|解雇|开除|甩|分手)|失业|失恋|分手|丢(?:了)?工作|(?:和|跟)(?:男朋友|女朋友|对象|男友|女友)(?:刚刚|刚)?分手|遇到(?:了)?(?:坏事|不好的事|糟心事|倒霉事)|遭遇(?:了)?变故)(?:了|啊|呀|呢|哦|唉|哎)*$/u;
+  const disclosure=(clause:string)=>feeling.test(clause)||badNews.test(clause);
+  const accompaniment=/^(?:别损我|别怼我|想找人聊聊|想找个人聊聊|想说说话|陪我聊聊|陪我说说话)$/u;
+  if(!clauses.length||clauses.length>3||!clauses.some(disclosure)||!clauses.every(clause=>disclosure(clause)||accompaniment.test(clause)))return null;
+  return {intent:'chat',messages:['1'],address:null,query:null,candidateIds:['yuan-xiaoman'],comfortContact:true};
+}
 
 export function mollyCompanionChoice(query: MollyQuery = emptyQuery()): ChoicePart | null {
   const eligible = new Set(matchMolly(query).map(person => person.id));
@@ -194,7 +218,8 @@ function explicitGender(incoming: string): MollyOutput['genderDirective'] {
   return excluded.size === 1 ? ([...excluded][0] === '男' ? '女' : '男') : undefined;
 }
 
-const mollyText = (text: string) => text.replace(/[“”‘’"'《》：:]/g, '').trim();
+// Drop quotation styling, preserving meaningful numerical time/ratio colons.
+const mollyText = (text: string) => text.replace(/[“”‘’"'《》]/g, '').replace(/(?<!\d)[:：]|[:：](?!\d)/gu,'').trim();
 
 // Conservative guard for recognizable misspellings used to address Molly.
 // The dialogue Skill handles broader semantic cases; this never spellchecks
@@ -219,11 +244,15 @@ export function mollyNameCorrection(incoming: string): string | null {
 }
 
 export function parseMolly(raw: unknown, incoming: string, state?: MollyState): MollyOutput {
-  const source = raw as MollyOutput;
+  const comfort=mollyComfortOutput(incoming);
+  const crisis=isDialogueCrisisInput(incoming);
+  const source = comfort || raw as MollyOutput;
   const o = source && {
     intent: source.intent, messages: source.messages, address: source.address,
     query: source.query, replyTo: source.replyTo, candidateIds: source.candidateIds,
     queryMode: source.queryMode, noMatch: source.noMatch,
+    ...(comfort?{comfortContact:true as const}:{}),
+    ...(crisis?{intent:'chat' as const,address:null,query:null,candidateIds:[]}:{}),
   } as MollyOutput;
   if (
     !o ||
@@ -231,7 +260,7 @@ export function parseMolly(raw: unknown, incoming: string, state?: MollyState): 
       o.intent,
     ) ||
     !Array.isArray(o.messages) ||
-    o.messages.length > 2 ||
+    o.messages.length > 2 && !(crisis&&o.messages.length===3&&o.messages.at(-1)===DIALOGUE_CRISIS_FALLBACK) ||
     o.messages.some((t) => typeof t === 'string' ? !t.trim() || t.length > 600 : !t || typeof t !== 'object' || t.type !== 'choice')
   )
     throw Error('Invalid Molly reply');
@@ -274,7 +303,7 @@ export function parseMolly(raw: unknown, incoming: string, state?: MollyState): 
   }
   if (o.candidateIds !== undefined && (!Array.isArray(o.candidateIds) || o.candidateIds.length > 4 || o.candidateIds.some(id => typeof id !== 'string' || !mollyCatalog.some(c => c.id === id)))) throw Error('Invalid Molly candidates');
   if (o.noMatch !== undefined && typeof o.noMatch !== 'boolean') throw Error('Invalid Molly no-result declaration');
-  const actions = validateMollyActions(source.actions, incoming, state, o.query);
+  const actions = crisis?[]:validateMollyActions(source.actions, incoming, state, o.query);
   if (actions.length) {
     if (o.intent !== 'operation') throw Error('Molly actions require operation intent');
     if (actions.some(action => action.type === 'handoff' || action.type === 'create-group') && o.candidateIds?.length)
@@ -283,7 +312,7 @@ export function parseMolly(raw: unknown, incoming: string, state?: MollyState): 
   }
   o.messages = o.messages.map(message => typeof message === 'string' ? mollyText(message) : parseChoicePart(message));
   if (o.messages.some(text => !text)) throw Error('Empty Molly message');
-  if (mollyNameCorrection(incoming) && !o.messages.some(message => /\bMolly\b/i.test(typeof message === 'string' ? message : message.text))) {
+  if (!comfort && mollyNameCorrection(incoming) && !o.messages.some(message => /\bMolly\b/i.test(typeof message === 'string' ? message : message.text))) {
     // Preserve the generated reaction and recommendation intent. A brief name
     // correction shares the first bubble instead of adding a third message.
     if (o.messages.length) {
@@ -326,7 +355,12 @@ export function applyMolly(
   }
   let lines = out.messages,
     candidates: typeof mollyCatalog = [];
-  if (out.intent === 'reject') {
+  if(out.comfortContact){
+    // This is a new, explicit comfort recommendation, not a refinement of an
+    // old people search. Preserve its filters and project the actual directory.
+    lines=['1'];candidates=mollyCatalog.filter(person=>person.id==='yuan-xiaoman');
+    if(candidates.length!==1)throw Error('Molly comfort contact is unavailable');
+  } else if (out.intent === 'reject') {
     lines = out.messages.length ? out.messages : ['这项业务不接'];
   } else if (out.intent === 'rename') lines = out.messages.length ? out.messages : ['1'];
   else if (out.intent === 'search') {

@@ -1,0 +1,57 @@
+.zy-demo-order-card {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:10px 14px;
+  box-sizing:border-box;
+  width:fit-content;
+  max-width:100%;
+  padding:10px 12px;
+  border:1px solid var(--zy-line);
+  border-radius:12px;
+  background:var(--zy-canvas);
+  color:var(--zy-ink);
+}
+.zy-demo-order-copy { flex:1 1 230px;min-width:0; }
+.zy-demo-order-copy strong {
+  display:block;
+  font-size:calc(13px + var(--zy-font-adjust,0px));
+  font-weight:600;
+  line-height:1.5;
+}
+.zy-demo-order-copy p {
+  margin:3px 0 0;
+  color:var(--zy-secondary);
+  font-size:calc(12px + var(--zy-font-adjust,0px));
+  line-height:1.5;
+  overflow-wrap:anywhere;
+}
+.zy-demo-order-card>button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  flex:0 0 auto;
+  min-width:88px;
+  min-height:36px;
+  padding:7px 12px;
+  border:0;
+  border-radius:10px;
+  background:var(--zy-ink);
+  color:var(--zy-canvas);
+  font:inherit;
+  font-size:calc(12px + var(--zy-font-adjust,0px));
+  line-height:1.5;
+  cursor:pointer;
+  -webkit-app-region:no-drag;
+}
+.zy-demo-order-card>button:focus-visible { outline:2px solid var(--zy-interaction-ink);outline-offset:3px; }
+.zy-demo-order-card>button:disabled { background:var(--zy-incoming);color:var(--zy-secondary);cursor:default; }
+.zy-demo-order-card .zy-demo-order-error {
+  flex-basis:100%;
+  margin:0;
+  color:var(--zy-secondary);
+  font-size:calc(12px + var(--zy-font-adjust,0px));
+  line-height:1.5;
+  overflow-wrap:anywhere;
+}

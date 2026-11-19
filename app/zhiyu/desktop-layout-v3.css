@@ -1,0 +1,131 @@
+/* Desktop background paint only. The directory/detail seam and controls keep
+   their geometry, semantic colours, input handlers and motion definitions. */
+html[data-zy-theme]:has(.zy-layout-v3),
+html[data-zy-theme]:has(.zy-layout-v3) body {
+  background:transparent;
+  overflow:hidden;
+}
+html[data-zy-theme] body .zy-desktop-stage:has(.zy-layout-v3) {
+  background:transparent;
+}
+html[data-zy-theme] body .zy-desktop-slot>.zy-app.zy-desktop.zy-layout-v3 {
+  /* One coat on both detached side surfaces. Keep text/icons fully opaque,
+     and keep these local roles out of the sign-in palette and mobile app. */
+  --zy-detached-tint-strength:80%;
+  --zy-detached-tint-base:var(--zy-canvas);
+  --zy-detached-alpha:96%;
+  --zy-detached-start:color-mix(in srgb,color-mix(in srgb,var(--zy-directory-tone-start) var(--zy-detached-tint-strength),var(--zy-detached-tint-base)) var(--zy-detached-alpha),transparent);
+  --zy-detached-middle:color-mix(in srgb,color-mix(in srgb,var(--zy-directory-tone-middle) var(--zy-detached-tint-strength),var(--zy-detached-tint-base)) var(--zy-detached-alpha),transparent);
+  --zy-detached-end:color-mix(in srgb,color-mix(in srgb,var(--zy-directory-tone-end) var(--zy-detached-tint-strength),var(--zy-detached-tint-base)) var(--zy-detached-alpha),transparent);
+  --zy-main-canvas-fill:color-mix(in srgb,var(--zy-canvas) var(--zy-detached-alpha),transparent);
+  position:relative;
+  display:block;
+  padding:14px 14px 14px 64px;
+  overflow:visible;
+  background:transparent;
+}
+html[data-zy-theme='dark'] body .zy-desktop-slot>.zy-app.zy-desktop.zy-layout-v3 {
+  --zy-detached-tint-strength:40%;
+  --zy-detached-tint-base:var(--zy-sidebar);
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3>.zy-liquid-base-plate {
+  display:none;
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3>.zy-base {
+  width:100%;
+  height:100%;
+  margin:0;
+  border-radius:12px;
+  background:transparent;
+  box-shadow:none;
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3>.zy-base>.zy-directory {
+  padding-top:44px;
+  border-radius:12px 0 0 12px;
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3 .zy-directory {
+  --directory-background:transparent;
+  background:linear-gradient(90deg,var(--zy-detached-start) 0%,var(--zy-detached-middle) 48%,var(--zy-detached-end) 100%);
+}
+/* No second white coat, vertical fade, or opaque task-board underlay. */
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3 .zy-directory::before {
+  content:none;
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3>.zy-base>.zy-task-board {
+  background:transparent;
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3 .zy-task-board>.zy-task-board-guide {
+  border-radius:12px 0 0 12px;
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3 .zy-task-board>.zy-task-board-content {
+  border-radius:0 12px 12px 0;
+}
+/* Paint the right canvas exactly once, in both chat and contacts. Header,
+   thread and footer previously repainted opaque white above the chat root. */
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3>.zy-base>:is(.xx-layout,.zy-chat,.zy-contact-detail,.zy-pets,.zy-moments,.zy-me-page,.zy-user-facing-error),
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3 .zy-task-board>.zy-task-board-content {
+  background:var(--zy-main-canvas-fill);
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3.zy-page-chat>.zy-base :is(.xx-chat,.unified-chat-head,.xx-thread,.zy-thread,.zy-composer-area) {
+  background:transparent;
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3 .zy-directory-heading {
+  flex-shrink:0;
+  margin:0 0 14px;
+  color:var(--zy-ink);
+  font-size:calc(16px + var(--zy-font-adjust,0px));
+  font-weight:600;
+  line-height:22px;
+}
+/* Strict continuous clipping belongs to the actual painted child surfaces.
+   Keep native Mac structural plates exempt from extra compositor clips;
+   square inner seams and equal outward radii form the same full contour. */
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3>.zy-base>:is(.xx-layout,.zy-chat,.zy-contact-detail,.zy-pets) {
+  border-radius:0 12px 12px 0;
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3>.zy-base>:is(.zy-task-board,.zy-moments,.zy-me-page,.zy-user-facing-error) {
+  border-radius:12px;
+}
+
+/* Native coordinates use the same 14 + 40 + 10 left inset and 14 top inset.
+   A detached topbar lives above the main window, so it adds no second gutter. */
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3>.zy-rail {
+  position:absolute;
+  inset:var(--zy-rail-top,calc(50% - 172px)) auto auto var(--zy-rail-left,14px);
+  z-index:2;
+  box-sizing:border-box;
+  width:40px;
+  height:248px;
+  padding:8px 4px;
+  border-radius:12px;
+  background:linear-gradient(180deg,var(--zy-detached-start) 0%,var(--zy-detached-middle) 48%,var(--zy-detached-end) 100%);
+  color:var(--zy-secondary);
+  /* CSS blur here sampled the neighbouring panel instead of the desktop,
+     making the narrow rail more opaque than the same directory material. */
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+  box-shadow:none;
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3 .zy-rail .zy-sliding-navigation {
+  --zy-nav-size:32px;
+  --zy-nav-gap:8px;
+  width:32px;
+  gap:8px;
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3 .zy-rail .zy-nav-highlight {
+  border-radius:10px;
+  background:var(--zy-selected);
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3 .zy-rail :is(.zy-nav-items .zy-icon,.zy-rail-bottom) {
+  width:32px;
+  height:32px;
+  border-radius:10px;
+  color:var(--zy-secondary);
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3 .zy-rail :is(.zy-nav-items .zy-icon,.zy-rail-bottom):hover {
+  color:var(--zy-ink);
+}
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3 .zy-rail .zy-nav-items .zy-icon.active,
+html[data-zy-theme] body .zy-app.zy-desktop.zy-layout-v3 .zy-rail .zy-nav-items .zy-icon.active:hover {
+  color:var(--zy-ink);
+}

@@ -36,7 +36,8 @@
     }
   },
   "addressing": {
-    "default": "不用称呼"
+    "default": "默认称呼老大；用户指定称呼时用用户指定的",
+    "pronoun": "始终用您"
   },
   "swearing": true,
   "swearingNote": "很少用",

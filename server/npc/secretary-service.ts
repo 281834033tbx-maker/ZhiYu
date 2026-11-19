@@ -1,6 +1,7 @@
 import {MollyReportDemos} from './molly-report-demos';
+import {ScheduledMollyReports,type ScheduledReportSettings} from './scheduled-molly-reports';
 import {ExperienceReportsStore,type ReportStoreDependencies} from './experience-reports-store';
-import {parseReportCity} from './weather-provider';
+import {createWeatherProvider,parseReportCity} from './weather-provider';
 import type {SecretarySettings} from '../../lib/npc/experience';
 export type {SecretarySettings} from '../../lib/npc/experience';
 import {createHash, randomUUID} from 'node:crypto';
@@ -15,7 +16,7 @@ import {getCharacter} from '../../lib/npc/character-directory';
 import {readSecretaryTasks, readSecretaryCompletions, secretaryTaskContext, secretaryPlanContext, existingTables, reconcileStoredPrivateTasks} from './secretary-tasks';
 import {reconcileGroupTaskExpiry,readGroupTaskSkips} from './group-task-expiry';
 
-type SavedSettings=SecretarySettings&{effectiveSince:number};
+type SavedSettings=SecretarySettings&{effectiveSince:number;dailyEffectiveSince?:number;weeklyEffectiveSince?:number};
 type DelegationInput=Parameters<typeof receivePrivateDelegation>[2];
 type JobRow={owner:string;id:string;data:string;attempts:number;next_at:number;status:string;notified:number};
 export type SecretaryDependencies={now?:()=>number;receiver?:typeof receivePrivateDelegation;receiverDeps?:PrivateDelegationReceiverDeps;groups?:GroupChatStore}&ReportStoreDependencies;
@@ -33,6 +34,8 @@ export class SecretaryStore {
   private stopped=false;
   private reports:ExperienceReportsStore;
   private demos:MollyReportDemos;
+  private scheduled:ScheduledMollyReports;
+  private registeredOwners=new Set<string>();
   constructor(private db:DatabaseSync,private root:string,private deps:SecretaryDependencies={}){
     this.now=deps.now||Date.now;
     db.exec(`CREATE TABLE IF NOT EXISTS npc_secretary_settings(owner TEXT PRIMARY KEY,data TEXT NOT NULL);
@@ -45,17 +48,31 @@ export class SecretaryStore {
     db.prepare("UPDATE npc_secretary_jobs SET status='queued' WHERE status='running'").run();
     this.reports=new ExperienceReportsStore(db,root,this.now,deps);
     this.demos=new MollyReportDemos(db,this.now);
+    this.scheduled=new ScheduledMollyReports(db,{now:this.now,settings:owner=>this.scheduledSettings(owner),inputs:owner=>this.reports.readInputs(owner),weather:deps.weather||createWeatherProvider()});
   }
   private checkOwner(owner:string){if(!OWNER.test(owner))throw Error('请先登录智域');}
   private savedSettings(owner:string):SavedSettings{
     this.checkOwner(owner);
     const row=this.db.prepare('SELECT data FROM npc_secretary_settings WHERE owner=?').get(owner) as {data:string}|undefined;
-    if(row)return JSON.parse(row.data) as SavedSettings;
+    if(row){
+      const value=JSON.parse(row.data) as SavedSettings;
+      const effectiveSince=Number.isFinite(value.effectiveSince)?value.effectiveSince:this.now();
+      const dailyEffectiveSince=Number.isFinite(value.dailyEffectiveSince)?value.dailyEffectiveSince!:effectiveSince;
+      const weeklyEffectiveSince=Number.isFinite(value.weeklyEffectiveSince)?value.weeklyEffectiveSince!:effectiveSince;
+      const normalized={...value,effectiveSince,dailyEffectiveSince,weeklyEffectiveSince};
+      if(value.effectiveSince!==effectiveSince||value.dailyEffectiveSince!==dailyEffectiveSince||value.weeklyEffectiveSince!==weeklyEffectiveSince)
+        this.db.prepare('UPDATE npc_secretary_settings SET data=? WHERE owner=?').run(JSON.stringify(normalized),owner);
+      return normalized;
+    }
     const settings={enabled:true,time:'07:00',effectiveSince:this.now()};
     this.db.prepare('INSERT INTO npc_secretary_settings VALUES(?,?)').run(owner,JSON.stringify(settings));
     return settings;
   }
-  settings(owner:string):SecretarySettings{const {enabled,time,city,weeklyEnabled=true,weeklyDay=0,weeklyTime='21:30'}=this.savedSettings(owner);return {enabled,time,...(city?{city}:{}),weeklyEnabled,weeklyDay,weeklyTime};}
+  private scheduledSettings(owner:string):ScheduledReportSettings{
+    const value=this.savedSettings(owner);
+    return {...value,dailyEffectiveSince:value.dailyEffectiveSince??value.effectiveSince,weeklyEffectiveSince:value.weeklyEffectiveSince??value.effectiveSince};
+  }
+  settings(owner:string):SecretarySettings{const {enabled,time,city,weeklyEnabled=true,weeklyDay=0,weeklyTime='21:30'}=this.savedSettings(owner);this.registeredOwners.add(owner);return {enabled,time,...(city?{city}:{}),weeklyEnabled,weeklyDay,weeklyTime};}
   updateSettings(owner:string,value:unknown):SecretarySettings{
     this.checkOwner(owner);
     const input=value as SecretarySettings;
@@ -64,7 +81,11 @@ export class SecretaryStore {
     if(input.weeklyEnabled!==undefined&&typeof input.weeklyEnabled!=='boolean'||input.weeklyDay!==undefined&&(!Number.isInteger(input.weeklyDay)||input.weeklyDay<0||input.weeklyDay>6)||input.weeklyTime!==undefined&&!validTime(input.weeklyTime))throw Error('请选择有效的周报时间');
     const city=input.city===undefined?old.city:parseReportCity(input.city);
     if(input.city!==undefined&&!city)throw Error('请选择有效城市');
-    const saved:SavedSettings={enabled:input.enabled,time:input.time,effectiveSince:this.now(),...(city?{city}:{}),weeklyEnabled:input.weeklyEnabled??old.weeklyEnabled??true,weeklyDay:input.weeklyDay??old.weeklyDay??0,weeklyTime:input.weeklyTime??old.weeklyTime??'21:30'};
+    const weeklyEnabled=input.weeklyEnabled??old.weeklyEnabled??true,weeklyDay=input.weeklyDay??old.weeklyDay??0,weeklyTime=input.weeklyTime??old.weeklyTime??'21:30';
+    const saved:SavedSettings={enabled:input.enabled,time:input.time,effectiveSince:old.effectiveSince,
+      dailyEffectiveSince:old.enabled!==input.enabled||old.time!==input.time?this.now():old.dailyEffectiveSince??old.effectiveSince,
+      weeklyEffectiveSince:(old.weeklyEnabled??true)!==weeklyEnabled||(old.weeklyDay??0)!==weeklyDay||(old.weeklyTime??'21:30')!==weeklyTime?this.now():old.weeklyEffectiveSince??old.effectiveSince,
+      ...(city?{city}:{}),weeklyEnabled,weeklyDay,weeklyTime};
     this.db.prepare('INSERT OR REPLACE INTO npc_secretary_settings VALUES(?,?)').run(owner,JSON.stringify(saved));
     return this.settings(owner);
   }
@@ -172,26 +193,29 @@ export class SecretaryStore {
       }finally{this.active.delete(key);}
     }
   }
-  // This release intentionally has no real scheduled report producer. Keep old
-  // messages and pure arithmetic available for historical rendering only.
-  async morning(owner:string){this.checkOwner(owner);return false;}
-  async scanMorning(){return;}
-  async scanReports(){return;}
+  async morning(owner:string){this.checkOwner(owner);if(this.stopped)return false;return this.scheduled.scan(owner,'daily');}
+  async scanMorning(){if(this.stopped)return;for(const owner of this.registeredOwners)try{await this.scheduled.scan(owner,'daily');}catch{/* Keep other owners and the delegation outbox available; retry is bounded. */}}
+  async scanReports(){if(this.stopped)return;for(const owner of this.registeredOwners)try{await this.scheduled.scan(owner,'weekly');}catch{/* A transient read/provider failure retries this occurrence, never a historical backlog. */}}
   async locateCity(owner:string,query:unknown,source:unknown){
     this.checkOwner(owner);if(source!=='manual'||typeof query!=='string'||query.length>100)return undefined;
     return parseReportCity({name:query,source:'manual'});
   }
   ensureReportDemos(owner:string){this.checkOwner(owner);if(this.stopped)return {};return this.demos.ensure(owner);}
   regenerateReportDemo(owner:string,kind:unknown){this.checkOwner(owner);if(this.stopped)throw Error('服务已停止');return this.demos.regenerate(owner,kind);}
-  reportDemoAction(owner:string,input:Record<string,unknown>){this.checkOwner(owner);if(this.stopped)throw Error('服务已停止');return this.demos.action(owner,input);}
-  reportDemoQuote(owner:string,input:Record<string,unknown>){this.checkOwner(owner);if(this.stopped)throw Error('服务已停止');return this.demos.quote(owner,input);}
+  private betaReportOwner(owner:string){
+    if(!this.db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='zhiyu_accounts'").get())return false;
+    if(!(this.db.prepare('PRAGMA table_info(zhiyu_accounts)').all() as {name:string}[]).some(column=>column.name==='is_beta'))return false;
+    return (this.db.prepare('SELECT is_beta FROM zhiyu_accounts WHERE owner_id=?').get(owner) as {is_beta:number}|undefined)?.is_beta===1;
+  }
+  reportDemoAction(owner:string,input:Record<string,unknown>){this.checkOwner(owner);if(this.stopped)throw Error('服务已停止');if(this.scheduled.ownsCard(owner,input.messageId))return this.scheduled.action(owner,input);if(this.betaReportOwner(owner))throw Error('简报不存在于当前账号的真实记录');return this.demos.action(owner,input);}
+  reportDemoQuote(owner:string,input:Record<string,unknown>){this.checkOwner(owner);if(this.stopped)throw Error('服务已停止');if(this.scheduled.ownsCard(owner,input.messageId))return this.scheduled.quote(owner,input);if(this.betaReportOwner(owner))throw Error('简报不存在于当前账号的真实记录');return this.demos.quote(owner,input);}
   updateCity(owner:string,value:unknown):SecretarySettings{
     this.checkOwner(owner);const city=parseReportCity(value);if(!city)throw Error('请选择有效城市');
     const saved={...this.savedSettings(owner),city};this.db.prepare('INSERT OR REPLACE INTO npc_secretary_settings VALUES(?,?)').run(owner,JSON.stringify(saved));
     return this.settings(owner);
   }
   reportQuote(owner:string,reportId:unknown,characterId:unknown){this.checkOwner(owner);return this.reports.reportQuote(owner,reportId,characterId);}
-  usage(owner:string,value:{currentNpc:string;visible:boolean;busy?:boolean;clientId:string}){this.checkOwner(owner);return this.reports.usage(owner,value);}
+  usage(owner:string,value:{currentNpc:string;visible:boolean;busy?:boolean;clientId:string}){this.checkOwner(owner);const result=this.reports.usage(owner,value);this.registeredOwners.add(owner);return result;}
   scanTaskExpiry(){
     if(this.stopped)return;
     reconcileStoredPrivateTasks(this.db,this.now());
@@ -204,5 +228,5 @@ export class SecretaryStore {
     await this.scanReports();
     await this.drain();
   }
-  stop(){this.stopped=true;this.reports.stop();}
+  stop(){this.stopped=true;this.scheduled.stop();this.reports.stop();}
 }

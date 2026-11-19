@@ -1,3 +1,7 @@
+import {openPrivateDialogue, commitPrivateDialogueInput, privateDialoguePrompt} from './private-dialogue-experience';
+import {commitPrivateArrangement} from './arrangement-dialogue';
+import {arrangementsFor} from './arrangements-plugin';
+import {initBetaUsage,persistBetaPrivateMessage} from './beta-usage-events';
 import {statusFromState} from '../../lib/npc/character-status';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
 import {clearPrivateHistory, privateHistoryMessages} from './private-history';
@@ -21,6 +25,7 @@ export function heLocal(deps?: { now?: () => number; generate: typeof generate; 
       const now = deps?.now || Date.now;
       mkdirSync(join(root, '.npc-runtime'), { recursive: true });
       const db = new DatabaseSync(join(root, '.npc-runtime/state.sqlite'));
+      initBetaUsage(db);
       db.exec('PRAGMA journal_mode=WAL; CREATE TABLE IF NOT EXISTS he_sessions (id TEXT PRIMARY KEY, data TEXT NOT NULL)');
       const save = (id: string, state: HeState) => {
         state.revision++;
@@ -67,7 +72,7 @@ export function heLocal(deps?: { now?: () => number; generate: typeof generate; 
         for (const message of state.messages) if (ids.includes(message.turnId) && message.role === 'user') message.readAt = new Date(now()).toISOString();
         save(id, state);
         try {
-          const out = parseHe(await (deps?.generate || generate)(root, hePrompt(root, state, incoming, now()), { characterId: 'he-jiawei', requestId: job }), incoming);
+          const out = parseHe(await (deps?.generate || generate)(root, privateDialoguePrompt(db,root,id.split(':')[0],'he-jiawei',hePrompt(root, state, incoming, now()),incoming,false,now), { characterId: 'he-jiawei', requestId: job }), incoming);
           if (closed) return;
           const fresh = load(id);
           if (fresh.pending?.id !== job) return;
@@ -82,7 +87,7 @@ export function heLocal(deps?: { now?: () => number; generate: typeof generate; 
           scheduleDelivery(fresh.messages, before, startedAt, now(),{characterId:'he-jiawei'});
           fresh.queue = fresh.queue.filter(turn => !ids.includes(turn));
           fresh.error = ''; fresh.retryAt = 0;
-          save(id, fresh);
+          commitPrivateArrangement({db,store:arrangementsFor(root),owner:id.split(':')[0],characterId:'he-jiawei',state:fresh,before:before,incoming,turnId:job,now:now(),startedAt:startedAt},()=>save(id,fresh));
         } catch {
           if (!closed) {
             const fresh = load(id);
@@ -117,7 +122,7 @@ export function heLocal(deps?: { now?: () => number; generate: typeof generate; 
           const user = /(?:^|; )zhiyu_npc=([a-f0-9-]{36})(?:;|$)/i.exec(req.headers.cookie || '')?.[1];
           if (!user || !UUID.test(user)) return reply(401, { error: '请先登录智域' });
           const id = `${user}:he-jiawei`;
-          if (req.method === 'GET') return reply(200, expose(load(id)));
+          if (req.method === 'GET') {openPrivateDialogue(db,root,user,'he-jiawei',now); return reply(200, expose(load(id)));}
           if (req.method !== 'POST') return reply(405, { error: '不支持的方法' });
           let raw = '';
           for await (const chunk of req) {
@@ -198,7 +203,7 @@ export function heLocal(deps?: { now?: () => number; generate: typeof generate; 
             choiceReply?.commit();
             state.completed.push(body.turnId); state.queue.push(body.turnId);
             state.error = ''; state.retryAt = 0;
-            save(id, state);
+            persistBetaPrivateMessage(db,{ownerId:user,npcId:'he-jiawei',turnId:body.turnId,messages:privateHistoryMessages(state),at:now()},()=>commitPrivateDialogueInput(db,root,user,'he-jiawei',state,(body.text as string).trim(),()=>save(id,state),now));
           }
           reply(200, expose(state)); void run(id);
         })().catch(() => {

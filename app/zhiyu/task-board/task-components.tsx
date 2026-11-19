@@ -3,11 +3,15 @@
 
 import {useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject} from 'react';
 import {createPortal} from 'react-dom';
-import {Activity, Check, ChevronDown, ClipboardList, CookingPot, Droplet, Dumbbell, HeartPulse, Image as ImageIcon, Mic, Moon, PersonStanding, Pin, Play, ShoppingBag, Timer, Utensils, type LucideIcon} from 'lucide-react';
+import {Activity, Check, ChevronDown, ClipboardList, CookingPot, Droplet, Dumbbell, HeartPulse, Image as ImageIcon, MessageCircle, Moon, Pause, Pencil, PersonStanding, Pin, Play, ShoppingBag, Timer, Utensils, type LucideIcon} from 'lucide-react';
 import PressableIconButton from '../pressable-icon-button';
+import {MobileSubmitButton} from '../mobile-effects';
+import {reportUserFacingError} from '../../../lib/user-facing-errors';
 import {useAnchoredPopupPresence} from '../anchored-popup-motion';
 import type {Task, Step, Category, Npc, TaskTimer, TaskView} from './types';
 import {trainingTitlePresentation} from '../../../lib/npc/training-task-presentation';
+import {boardTimerRemainingSeconds} from './reducer';
+import {arrangementSectionForTask,arrangementSectionName} from '../../../lib/npc/arrangement-sections';
 import './task-components.css';
 
 export type TaskActions = {
@@ -19,14 +23,22 @@ export type TaskActions = {
   /** The set index is zero-based. */
   onSetClick:(task:Task,step:Step,index:number)=>void;
   onTimerStart:(task:Task,step:Step)=>void;
+  onTimerPause?:(task:Task,step:Step)=>void;
+  onTimerResume?:(task:Task,step:Step)=>void;
+  onPause?:(task:Task)=>void;
+  onEdit?:(task:Task)=>void;
   onExpandTask:(task:Task)=>void;
   onExpandStep:(stepId:string)=>void;
   onPin?:(task:Task)=>void;
+  onCommitFinish?:(task:Task)=>Promise<void>;
+  onCommitComplete?:()=>void;
+  onCommitError?:(error:unknown)=>void;
+  submissionPending?:boolean;
 };
 export type TaskComponentProps = {
   task:Task; category:Category; npc:Npc; mode:TaskView;
   expanded:boolean; expandedStepId?:string; active?:boolean; now:number;
-  rest?:TaskTimer; timers?:Record<string,TaskTimer>; actions:TaskActions; today?:string;
+  rest?:TaskTimer; timers?:Record<string,TaskTimer>; actions:TaskActions; today?:string; canOperate?:boolean; mobile?:boolean;
 };
 const iconMap:Record<string,LucideIcon> = {
   Dumbbell, Activity, Utensils, CookingPot, ShoppingBag, Moon, Droplet,
@@ -39,7 +51,6 @@ const finished = (task:Task) => task.status==='done'||task.status==='ended';
 const stepDone = (task:Task) => task.steps?.filter(step=>step.done).length||0;
 const hasStepProgress = (task:Task) => task.steps?.some(step=>step.done||(step.sets?.done||0)>0)||false;
 const styleColor = (color?:string):CSSProperties => ({'--tb-category-color':color||'var(--zy-task-accent,var(--zy-chat-control-accent))'} as CSSProperties);
-const timeLeft = (endsAt:number|undefined,now:number) => endsAt?Math.max(0,Math.ceil((endsAt-now)/1000)):0;
 const clock = (seconds:number) => `${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;
 const restLabel = (seconds:number) => seconds>=60?`${Math.floor(seconds/60)}分${seconds%60?String(seconds%60)+'秒':''}`:`${seconds}秒`;
 const durationLabel = (seconds:number) => seconds%60===0?`${seconds/60} 分钟`:restLabel(seconds);
@@ -81,12 +92,12 @@ function Disclosure({open,children,id}:{open:boolean;children:ReactNode;id?:stri
 function Chevron({open,label,onClick,controls}:{open:boolean;label:string;onClick:()=>void;controls?:string}) {
   return <PressableIconButton className={'tb-expand-icon'+(open?' is-open':'')} aria-label={label} aria-expanded={open} aria-controls={controls} onClick={event=>{event.stopPropagation();onClick();}}><ChevronDown size={18}/></PressableIconButton>;
 }
-function CounterCircle({task,mode,onClick}:{task:Task;mode:TaskView;onClick:()=>void}) {
-  const done=finished(task),disabled=mode==='future';
-  const label=mode==='history'?(done?'补记为没做到：':'补记为已完成：'):done?'取消完成：':task.type==='count'?`记一次 ${task.count?.perTime||0}${task.count?.unit||''}：`:task.type==='steps'?'结束任务：':'完成：';
-  return <button type="button" className={'tb-status-circle'+(done?' is-done':'')+(mode==='history'?' is-history':'')} disabled={disabled} aria-label={disabled?'未来任务，暂不可完成：'+taskTitle(task):label+taskTitle(task)} aria-pressed={done} onClick={event=>{event.stopPropagation();onClick();}}>{done&&<Check size={13} strokeWidth={2.5}/>}</button>;
+function CounterCircle({task,mode,onClick,canOperate=true}:{task:Task;mode:TaskView;onClick:()=>void;canOperate?:boolean}) {
+  const done=finished(task),disabled=mode==='future'||!canOperate;
+  const label=mode==='history'?(done?'补记为没做到：':'补记为已完成：'):done?'取消完成：':task.type==='count'?`记一次 ${task.count?.perTime||0}${task.count?.unit||''}：`:task.type==='steps'?'结束安排：':'完成：';
+  return <button type="button" className={'tb-status-circle'+(done?' is-done':'')+(mode==='history'?' is-history':'')} disabled={disabled} aria-label={disabled?(mode==='future'?'未来安排，暂不可完成：':'此日期的安排暂不可完成：')+taskTitle(task):label+taskTitle(task)} aria-pressed={done} onClick={event=>{event.stopPropagation();onClick();}}>{done&&<Check size={13} strokeWidth={2.5}/>}</button>;
 }
-function TaskContextMenu({task,point,onClose,onPin,trigger}:{task:Task;point:{x:number;y:number}|null;onClose:()=>void;onPin:()=>void;trigger:RefObject<HTMLButtonElement|null>}) {
+function TaskContextMenu({task,point,onClose,onPin,onEdit,trigger}:{task:Task;point:{x:number;y:number}|null;onClose:()=>void;onPin?:()=>void;onEdit?:()=>void;trigger:RefObject<HTMLButtonElement|null>}) {
   const menu=useRef<HTMLDivElement>(null);
   const [savedPoint,setSavedPoint]=useState(point);
   if(point&&(point.x!==savedPoint?.x||point.y!==savedPoint?.y))setSavedPoint(point);
@@ -95,7 +106,7 @@ function TaskContextMenu({task,point,onClose,onPin,trigger}:{task:Task;point:{x:
   useLayoutEffect(()=>{if(point)menu.current?.querySelector<HTMLButtonElement>('button')?.focus();},[point]);
   const position=savedPoint;
   if(!present||!position)return null;
-  return createPortal(<div className="zy-chat-context tb-task-context" ref={menu} role="menu" aria-label="任务操作" aria-hidden={!point} inert={!point} style={{left:position.x,top:position.y}}><button type="button" role="menuitem" onClick={()=>{onPin();onClose();trigger.current?.focus();}}><Pin size={15}/>{task.pinned?'取消置顶':'置顶'}</button></div>,document.body);
+  return createPortal(<div className="zy-chat-context tb-task-context" ref={menu} role="menu" aria-label="安排操作" aria-hidden={!point} inert={!point} style={{left:position.x,top:position.y}}><>{onPin&&<button type="button" role="menuitem" onClick={()=>{onPin();onClose();trigger.current?.focus();}}><Pin size={15}/>{task.pinned?'取消置顶':'置顶'}</button>}{onEdit&&<button type="button" role="menuitem" onClick={()=>{onClose();onEdit();}}><Pencil size={15}/>编辑安排</button>}</></div>,document.body);
 }
 export function TaskRow(props:TaskComponentProps) {
   const {task,category,npc,mode,expanded,actions}=props;
@@ -110,14 +121,15 @@ export function TaskRow(props:TaskComponentProps) {
   const closeContext=()=>setContextPoint(null);
   return <article className={'tb-task-item'+(done?' is-done':'')+(miss?' is-missed':'')+' tb-mode-'+mode} style={styleColor(category.color)} data-task-id={task.id}>
     <div className="tb-task-line">
-      <CounterCircle task={task} mode={mode} onClick={()=>actions.onToggleStatus(task)}/>
+      <CounterCircle task={task} mode={mode} canOperate={props.canOperate} onClick={()=>actions.onToggleStatus(task)}/>
       <button ref={mainButton} type="button" className="tb-task-main" aria-expanded={expanded} aria-controls={id} onClick={()=>actions.onExpandTask(task)}
-        onContextMenu={event=>{if(mode!=='today'||!actions.onPin)return;event.preventDefault();const r=event.currentTarget.getBoundingClientRect();setContextPoint({x:Math.max(8,Math.min(event.clientX||r.left+30,window.innerWidth-180)),y:Math.max(8,Math.min(event.clientY||r.bottom,window.innerHeight-58))});}}>
+        onContextMenu={event=>{if(!(mode==='today'&&actions.onPin)&&!(task.manualRecord&&actions.onEdit))return;event.preventDefault();const r=event.currentTarget.getBoundingClientRect();setContextPoint({x:Math.max(8,Math.min(event.clientX||r.left+30,window.innerWidth-180)),y:Math.max(8,Math.min(event.clientY||r.bottom,window.innerHeight-96))});}}>
         <span className="tb-task-copy">
         <span className="tb-task-name">{task.pinned&&mode==='today'&&<Pin className="tb-task-pin" size={14}/>}<span>{taskTitle(task)}</span>{badgeVisible&&<span className="tb-step-badge">{steps}</span>}</span>
-        <span className="tb-task-meta"><NpcAvatar npc={npc} muted={done&&mode==='today'}/><span>{task.amount}{!isTrainingTask(task)&&task.amount&&task.tip?' · ':''}{!isTrainingTask(task)&&task.tip}</span></span>
+        <span className="tb-task-meta"><NpcAvatar npc={npc} muted={done&&mode==='today'}/><span>{arrangementSectionName(arrangementSectionForTask(task.categoryId))} · {npc.name}{task.amount?' · '+task.amount:''}{!isTrainingTask(task)&&task.tip?' · '+task.tip:''}</span></span>
         </span>
       <span className="tb-task-row-progress">
+        {task.status==='paused'&&<span className="tb-missed-tag">已暂停</span>}
         {miss&&(task.missText||task.missReason)&&<span className="tb-missed-tag">{task.missText||'没做 · '+task.missReason}</span>}
         {progressVisible&&<ProgressPill current={doneSteps} total={steps} color={category.color}/>}
         {countVisible&&task.count&&<ProgressPill current={task.count.current} total={task.count.target} unit={task.count.unit} color={category.color}/>}
@@ -126,7 +138,7 @@ export function TaskRow(props:TaskComponentProps) {
       <Chevron open={expanded} controls={id} label={(expanded?'收起：':'展开：')+taskTitle(task)} onClick={()=>actions.onExpandTask(task)}/>
     </div>
     <Disclosure open={expanded} id={id}><TaskExpand {...props}/></Disclosure>
-    {actions.onPin&&<TaskContextMenu task={task} point={contextPoint} trigger={mainButton} onClose={closeContext} onPin={()=>actions.onPin?.(task)}/>}
+    {(actions.onPin||task.manualRecord&&actions.onEdit)&&<TaskContextMenu task={task} point={contextPoint} trigger={mainButton} onClose={closeContext} onPin={mode==='today'&&actions.onPin?()=>actions.onPin?.(task):undefined} onEdit={task.manualRecord&&actions.onEdit?()=>actions.onEdit?.(task):undefined}/>}
   </article>;
 }
 function futureStartText(task:Task,now:number,today?:string) {
@@ -134,45 +146,49 @@ function futureStartText(task:Task,now:number,today?:string) {
   const tomorrow=new Date(`${base}T12:00:00Z`);tomorrow.setUTCDate(tomorrow.getUTCDate()+1);
   return task.repeat==='daily'||task.date===tomorrow.toISOString().slice(0,10)?'明天才能开始':`${Number(task.date.slice(5,7))}月${Number(task.date.slice(8,10))}日才能开始`;
 }
-function TaskFooter({task,category,mode,active=false,actions,now,today}:TaskComponentProps) {
+function TaskFooter({task,category,mode,active=false,actions,now,today,canOperate=true,mobile=false}:TaskComponentProps) {
   const done=finished(task),verb=category.verb||'执行';
+  const submitFinish=(label:string)=>mobile&&actions.onCommitFinish?<MobileSubmitButton className="zy-m-task-submit" disabled={actions.submissionPending} onSubmit={()=>actions.onCommitFinish!(task)} onComplete={actions.onCommitComplete} onError={actions.onCommitError}>{label}</MobileSubmitButton>:null;
   return <footer className="tb-task-footer">
-    <button type="button" className="tb-action tb-action-brand" onClick={()=>actions.onTalk(task)}><Mic size={16}/>与智友对话</button>
+    <button type="button" className="tb-action tb-action-brand" onClick={()=>actions.onTalk(task)}><MessageCircle size={16}/>与智友对话</button>
     <div className="tb-task-footer-right">
-      {mode==='future'?<span className="tb-task-footnote">{futureStartText(task,now,today)}</span>:mode==='history'?null:done?<span className="tb-task-footnote">{task.status==='ended'?'已结束':'已完成'}</span>:task.type==='steps'?<>
-        <button type="button" className="tb-action tb-action-white" onClick={()=>actions.onFinish(task)}><Check size={16}/>{verb}完成</button>
-        {!active&&<button type="button" className="tb-action tb-action-dark" onClick={()=>actions.onStart(task)}><Play size={15}/>{task.status==='paused'||hasStepProgress(task)?'继续':'开始'}{verb}</button>}
+      {active&&task.status==='paused'&&<span className="tb-task-footnote">已暂停</span>}
+      {task.manualRecord&&actions.onEdit&&<button type="button" className="tb-action tb-action-white" onClick={()=>actions.onEdit?.(task)}><Pencil size={14}/>编辑安排</button>}
+      {mode==='today'&&canOperate&&active&&!done&&task.status==='in_progress'&&actions.onPause&&<button type="button" className="tb-action tb-action-white" onClick={()=>actions.onPause?.(task)}><Pause size={14}/>暂停</button>}
+      {mode==='future'?<span className="tb-task-footnote">{futureStartText(task,now,today)}</span>:mode==='history'?null:!canOperate?<span className="tb-task-footnote">请选择今天查看并执行此安排</span>:done?<span className="tb-task-footnote">{task.status==='ended'?'已结束':'已完成'}</span>:task.type==='steps'?<>
+        <button type="button" className="tb-action tb-action-white" disabled={mobile&&actions.submissionPending} onClick={()=>actions.onFinish(task)}><Check size={16}/>{verb}完成</button>
+        {(!active||task.status==='paused')&&<button type="button" className="tb-action tb-action-dark" onClick={()=>actions.onStart(task)}><Play size={15}/>{task.status==='paused'||hasStepProgress(task)?'继续':'开始'}{verb}</button>}
       </>:task.type==='count'&&task.count?<>
-        <button type="button" className="tb-action tb-action-white" onClick={()=>actions.onFinish(task)}>{task.count.unit==='ml'?'喝完了':'完成'}</button>
-        <button type="button" className="tb-action tb-action-dark" onClick={()=>actions.onToggleStatus(task)}>记一次 {task.count.perTime}{task.count.unit}</button>
-      </>:<button type="button" className="tb-action tb-action-white" onClick={()=>actions.onToggleStatus(task)}><Check size={16}/>完成</button>}
+        {mobile&&actions.onCommitFinish?submitFinish(task.count.unit==='ml'?'喝完了':'完成'):<button type="button" className="tb-action tb-action-white" onClick={()=>actions.onFinish(task)}>{task.count.unit==='ml'?'喝完了':'完成'}</button>}
+        <button type="button" className="tb-action tb-action-dark" disabled={mobile&&actions.submissionPending} onClick={()=>actions.onToggleStatus(task)}>记一次 {task.count.perTime}{task.count.unit}</button>
+      </>:mobile&&actions.onCommitFinish?submitFinish('完成'):<button type="button" className="tb-action tb-action-white" onClick={()=>actions.onToggleStatus(task)}><Check size={16}/>完成</button>}
     </div>
   </footer>;
 }
-function StepDetails({step,task,mode,actions,now,timers}: {step:Step;task:Task;mode:TaskView;actions:TaskActions;now:number;timers?:Record<string,TaskTimer>}) {
-  const timer=timers?.[`${task.id}:${step.id}`],remaining=timeLeft(timer?.endsAt,now);
+function StepDetails({step,task,mode,actions,now,timers,canOperate=true}: {step:Step;task:Task;mode:TaskView;actions:TaskActions;now:number;timers?:Record<string,TaskTimer>;canOperate?:boolean}) {
+  const timer=timers?.[`${task.id}:${step.id}`],remaining=boardTimerRemainingSeconds(timer,now),paused=timer?.pausedRemainingMs!==undefined;
   const titleCues=trainingTitlePresentation(step.name,isTrainingTask(task)).cues.filter(cue=>!step.detail.includes(cue));
   return <div className="tb-step-details"><div className="tb-step-detail-copy">
     {titleCues.length>0&&<p className="tb-single-note" aria-label="动作要点">{titleCues.join('\n')}</p>}
     {(step.sets||step.detail||step.actual)&&<div className="tb-set-line">{step.sets&&<span className="tb-set-buttons">{Array.from({length:step.sets.total},(_,index)=>{
       const done=index<step.sets!.done,current=index===step.sets!.done&&!step.done&&!finished(task);
-      return <button type="button" key={index} className={'tb-set'+(done?' is-done':'')+(current?' is-current':'')} disabled={mode!=='today'||finished(task)} aria-label={`${stepTitle(task,step)}，第${index+1}组${done?'，已完成':''}`} aria-pressed={done} onClick={()=>actions.onSetClick(task,step,index)}>第{index+1}组{done&&<Check size={11}/>}</button>;
+      return <button type="button" key={index} className={'tb-set'+(done?' is-done':'')+(current?' is-current':'')} disabled={mode!=='today'||finished(task)||!canOperate} aria-label={`${stepTitle(task,step)}，第${index+1}组${done?'，已完成':''}`} aria-pressed={done} onClick={()=>actions.onSetClick(task,step,index)}>第{index+1}组{done&&<Check size={11}/>}</button>;
     })}</span>}<span className="tb-set-detail">{mode==='history'?(step.actual||step.detail):step.detail}</span></div>}
     {!!step.tips?.length&&<ul className="tb-step-tips">{step.tips.map((tip,index)=><li key={index}>{tip}</li>)}</ul>}
-    {step.timerSeconds&&mode==='today'&&!finished(task)&&<button type="button" className="tb-action tb-action-white tb-step-timer" onClick={()=>actions.onTimerStart(task,step)}><Timer size={15}/>{remaining?`计时中 ${clock(remaining)}`:timer?'重新计时':`开始 ${durationLabel(step.timerSeconds)}计时`}</button>}
+    {step.timerSeconds&&mode==='today'&&canOperate&&!finished(task)&&!step.done&&!step.skipped&&<button type="button" className="tb-action tb-action-white tb-step-timer" onClick={()=>{if(paused&&actions.onTimerResume)actions.onTimerResume(task,step);else if(remaining&&actions.onTimerPause)actions.onTimerPause(task,step);else actions.onTimerStart(task,step);}}>{paused?<Play size={15}/>:remaining?<Pause size={15}/>:<Timer size={15}/>}<span>{paused?`继续计时 ${clock(remaining)}`:remaining?`暂停计时 ${clock(remaining)}`:timer?'重新计时':`开始 ${durationLabel(step.timerSeconds)}计时`}</span></button>}
     {timer&&mode==='today'&&remaining===0&&<output className="tb-timer-finished">计时结束</output>}
   </div>{step.image?<img className="tb-step-image" src={step.image} alt={stepTitle(task,step)+'示意图'}/>:<span className="tb-step-image tb-step-image-placeholder" aria-hidden="true"><ImageIcon size={23}/></span>}</div>;
 }
 function StepRows(props:TaskComponentProps) {
-  const {task,mode,expandedStepId,actions,now,rest,timers,active}=props;
+  const {task,mode,expandedStepId,actions,now,rest,timers,active,canOperate=true}=props;
   const steps=task.steps||[],currentIndex=task.status==='in_progress'?steps.findIndex(step=>!step.done&&!step.skipped):-1;
-  const readonly=mode!=='today'||finished(task);
+  const readonly=mode!=='today'||finished(task)||!canOperate;
   const detailBase=useId();
   return <div className="tb-vertical-steps">{steps.map((step,index)=>{
     const current=active&&index===currentIndex,canExpand=mode!=='future'||isTrainingTask(task),open=canExpand&&expandedStepId===step.id;
-    const remaining=rest?.taskId===task.id&&rest.stepId===step.id?timeLeft(rest.endsAt,now):0;
-    const cookingTimer=timers?.[`${task.id}:${step.id}`],cookingRemaining=timeLeft(cookingTimer?.endsAt,now);
-    const tag=remaining?`休息中 ${clock(remaining)}`:cookingRemaining?`计时中 ${clock(cookingRemaining)}`:isTrainingTask(task)?step.durationText||(step.restSeconds?'休息 '+restLabel(step.restSeconds):''):mode==='future'?step.detail:mode==='history'?(step.actual||step.detail):step.durationText||(step.restSeconds?'休息 '+restLabel(step.restSeconds):step.detail);
+    const remaining=rest?.taskId===task.id&&rest.stepId===step.id?boardTimerRemainingSeconds(rest,now):0;
+    const cookingTimer=timers?.[`${task.id}:${step.id}`],cookingRemaining=boardTimerRemainingSeconds(cookingTimer,now);
+    const tag=remaining?`${rest?.pausedRemainingMs!==undefined?'休息已暂停':'休息中'} ${clock(remaining)}`:cookingRemaining?`${cookingTimer?.pausedRemainingMs!==undefined?'计时已暂停':'计时中'} ${clock(cookingRemaining)}`:isTrainingTask(task)?step.durationText||(step.restSeconds?'休息 '+restLabel(step.restSeconds):''):mode==='future'?step.detail:mode==='history'?(step.actual||step.detail):step.durationText||(step.restSeconds?'休息 '+restLabel(step.restSeconds):step.detail);
     const detailsId=detailBase+'-'+index;
     return <div key={step.id} className={'tb-step'+(step.done?' is-done':'')+(current?' is-current':'')}>
       <div className="tb-step-line">
@@ -181,7 +197,7 @@ function StepRows(props:TaskComponentProps) {
         {tag&&<span className={'tb-step-tag'+(remaining||cookingRemaining?' is-counting':'')}>{tag}</span>}
         {canExpand&&<Chevron open={open} controls={detailsId} label={(open?'收起步骤：':'展开步骤：')+stepTitle(task,step)} onClick={()=>actions.onExpandStep(step.id)}/>}
       </div>
-      {canExpand&&<Disclosure open={open} id={detailsId}><StepDetails step={step} task={task} mode={mode} actions={actions} now={now} timers={timers}/></Disclosure>}
+      {canExpand&&<Disclosure open={open} id={detailsId}><StepDetails step={step} task={task} mode={mode} actions={actions} now={now} timers={timers} canOperate={canOperate}/></Disclosure>}
     </div>;
   })}</div>;
 }
@@ -195,23 +211,26 @@ export function TaskExpand(props:TaskComponentProps) {
   </div>;
 }
 export function ActiveTaskCard(props:TaskComponentProps) {
-  const {task,category,npc,expanded,actions,now,rest}=props;
+  const {task,category,npc,expanded,actions,now,rest,timers}=props;
   const steps=task.steps||[],done=finished(task),current=task.status==='in_progress'?steps.findIndex(step=>!step.done&&!step.skipped):-1;
   const id=useId();
-  return <section className={'tb-active-card'+(done?' is-ended':'')} style={styleColor(category.color)} aria-label={'进行中任务：'+taskTitle(task)} data-active-task-id={task.id}>
-    <header className="tb-active-header"><CategoryIcon category={category} size={40}/><button type="button" className="tb-active-copy" aria-expanded={expanded} aria-controls={id} onClick={()=>actions.onExpandTask(task)}><strong>{taskTitle(task)}</strong><span className="tb-task-meta"><NpcAvatar npc={npc}/><span>{task.amount}{!isTrainingTask(task)&&task.tip?' · '+task.tip:''}</span></span></button><ProgressPill current={stepDone(task)} total={steps.length} color={category.color}/><Chevron open={expanded} controls={id} label={(expanded?'收起进行中任务：':'展开进行中任务：')+taskTitle(task)} onClick={()=>actions.onExpandTask(task)}/></header>
+  return <section className={'tb-active-card'+(done?' is-ended':'')} style={styleColor(category.color)} aria-label={'进行中安排：'+taskTitle(task)} data-active-task-id={task.id}>
+    <header className="tb-active-header"><CategoryIcon category={category} size={40}/><button type="button" className="tb-active-copy" aria-expanded={expanded} aria-controls={id} onClick={()=>actions.onExpandTask(task)}><strong>{taskTitle(task)}</strong><span className="tb-task-meta"><NpcAvatar npc={npc}/><span>{task.amount}{!isTrainingTask(task)&&task.tip?' · '+task.tip:''}</span></span></button><ProgressPill current={stepDone(task)} total={steps.length} color={category.color}/><Chevron open={expanded} controls={id} label={(expanded?'收起进行中安排：':'展开进行中安排：')+taskTitle(task)} onClick={()=>actions.onExpandTask(task)}/></header>
     <div id={id}><Disclosure open={expanded}><TrainingTaskNotes task={task}/><StepRows {...props} active/></Disclosure><Disclosure open={!expanded}><div className="tb-horizontal-steps" style={{gridTemplateColumns:`repeat(${Math.min(6,Math.max(1,steps.length))},minmax(0,1fr))`}}>{steps.map((step,index)=>{
-      const isCurrent=index===current,remaining=rest?.taskId===task.id&&rest.stepId===step.id?timeLeft(rest.endsAt,now):0;
+      const isCurrent=index===current,remaining=rest?.taskId===task.id&&rest.stepId===step.id?boardTimerRemainingSeconds(rest,now):0;
+      const stepTimer=timers?.[`${task.id}:${step.id}`],timerRemaining=boardTimerRemainingSeconds(stepTimer,now);
+      const timerText=stepTimer?(timerRemaining?`${stepTimer.pausedRemainingMs!==undefined?'已暂停':'计时中'} ${clock(timerRemaining)}`:'计时结束'):'';
       const ratio=step.done?1:step.sets&&step.sets.total?Math.min(1,step.sets.done/step.sets.total):0;
-      const detail=done&&!step.done?'没做':isCurrent&&step.sets?`第 ${Math.min(step.sets.total,step.sets.done+1)} 组${remaining?' · 休息 '+clock(remaining):''}`:isCurrent&&remaining?'休息 '+clock(remaining):isTrainingTask(task)?step.sets?`${step.sets.done} / ${step.sets.total} 组`:step.durationText||'':step.detail;
+      const detail=done&&!step.done?'没做':timerText?timerText:isCurrent&&step.sets?`第 ${Math.min(step.sets.total,step.sets.done+1)} 组${remaining?' · 休息 '+clock(remaining):''}`:isCurrent&&remaining?'休息 '+clock(remaining):isTrainingTask(task)?step.sets?`${step.sets.done} / ${step.sets.total} 组`:step.durationText||'':step.detail;
       return <div key={step.id} className={'tb-horizontal-step'+(step.done?' is-done':'')+(isCurrent?' is-current':'')+(done&&!step.done?' is-skipped':'')}><div className="tb-mini-track"><span style={{width:`${ratio*100}%`}}/></div><strong>{step.done&&<Check size={12}/>}<span>{stepTitle(task,step)}</span></strong><small>{detail}</small></div>;
     })}</div></Disclosure></div>
     <TaskFooter {...props} active/>
   </section>;
 }
-export function EndTaskConfirm({task,category,open=true,onConfirm,onCancel,anchor}:{task:Task|null;category?:Category;open?:boolean;onConfirm:(task:Task)=>void;onCancel:()=>void;anchor?:HTMLElement|null}) {
+export function EndTaskConfirm({task,category,open=true,onConfirm,onCancel,anchor,onSubmit}:{task:Task|null;category?:Category;open?:boolean;onConfirm:(task:Task)=>void;onCancel:()=>void;anchor?:HTMLElement|null;onSubmit?:(task:Task)=>Promise<void>}) {
   const dialog=useRef<HTMLDialogElement>(null),opener=useRef<HTMLElement|null>(null),latestAnchor=useRef(anchor);
   const [cached,setCached]=useState({task,category});
+  const [submitting,setSubmitting]=useState(false),[submitError,setSubmitError]=useState<{id:string;text:string}|null>(null);
   if(task&&cached.task!==task)setCached({task,category});
   const titleId=useId(),descriptionId=useId();
   useLayoutEffect(()=>{latestAnchor.current=anchor;},[anchor]);
@@ -229,5 +248,5 @@ export function EndTaskConfirm({task,category,open=true,onConfirm,onCancel,ancho
   if(!present||!shown)return null;
   const total=shown.steps?.length||0,complete=stepDone(shown),unit=['fitness','recovery'].includes(cached.category?.id||'')?'动作':'步骤';
   const explanation=complete===total?`全部 ${total} 个${unit}都做完了。`:`还有 ${total-complete} 个${unit}没做，结束后按 ${complete} / ${total} 记录。`;
-  return <dialog ref={dialog} className="zy-dialog tb-end-confirm" aria-labelledby={titleId} aria-describedby={descriptionId} onCancel={event=>{event.preventDefault();onCancel();}} onPointerDown={event=>{if(event.target!==event.currentTarget||event.button!==0)return;const r=event.currentTarget.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)onCancel();}}><div className="tb-end-confirm-copy"><h2 id={titleId}>结束{shown.title}？</h2><p id={descriptionId}>{explanation}</p></div><div className="tb-end-confirm-actions"><button type="button" autoFocus onClick={onCancel}>否</button><button type="button" onClick={()=>onConfirm(shown)}>是</button></div></dialog>;
+  return <dialog ref={dialog} className="zy-dialog tb-end-confirm" aria-labelledby={titleId} aria-describedby={descriptionId} onCancel={event=>{event.preventDefault();if(!submitting)onCancel();}} onPointerDown={event=>{if(event.target!==event.currentTarget||event.button!==0||submitting)return;const r=event.currentTarget.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)onCancel();}}><div className="tb-end-confirm-copy"><h2 id={titleId}>结束{shown.title}？</h2><p id={descriptionId}>{explanation}</p>{onSubmit&&submitError?.id===shown.id&&<p role="alert">{submitError.text}</p>}</div><div className="tb-end-confirm-actions"><button type="button" autoFocus disabled={submitting} onClick={onCancel}>否</button>{onSubmit?<MobileSubmitButton onSubmit={async()=>{setSubmitting(true);setSubmitError(null);await onSubmit(shown);}} onComplete={()=>{setSubmitting(false);onConfirm(shown);}} onError={error=>{setSubmitting(false);setSubmitError({id:shown.id,text:reportUserFacingError(error,'save','保存安排状态')});}}>是</MobileSubmitButton>:<button type="button" onClick={()=>onConfirm(shown)}>是</button>}</div></dialog>;
 }

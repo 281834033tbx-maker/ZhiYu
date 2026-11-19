@@ -1,4 +1,6 @@
 'use client';
+
+import {accountStorage} from './account-storage';
 import {mergeTaskCompletions,readTaskCompletions,setTaskComplete,taskCompletionKey} from './task-completion';
 import {npcFetch} from './npc-fetch';
 
@@ -7,17 +9,17 @@ type SyncState={pending:Map<string,{value:boolean;version:number}>;allowed:Set<s
 const states=new Map<string,SyncState>();
 const syncKey=(accountId:string)=>taskCompletionKey(accountId)+':pending';
 const migratedKey=(accountId:string)=>taskCompletionKey(accountId)+':migrated';
-function storedFlags(key:string):Record<string,boolean>{
-  try{const value:unknown=JSON.parse(localStorage.getItem(key)||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))return Object.fromEntries(Object.entries(value).filter(([id,flag])=>!!id&&typeof flag==='boolean'));}catch{}
+function storedFlags(key:string,accountId:string):Record<string,boolean>{
+  try{const value:unknown=JSON.parse(accountStorage(accountId).getItem(key)||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))return Object.fromEntries(Object.entries(value).filter(([id,flag])=>!!id&&typeof flag==='boolean'));}catch{}
   return {};
 }
 function stateFor(accountId:string){
   let state=states.get(accountId);
-  if(!state){state={pending:new Map(Object.entries(storedFlags(syncKey(accountId))).map(([id,value])=>[id,{value,version:0}])),allowed:new Set(),tail:Promise.resolve(),version:0};states.set(accountId,state);}
+  if(!state){state={pending:new Map(Object.entries(storedFlags(syncKey(accountId),accountId)).map(([id,value])=>[id,{value,version:0}])),allowed:new Set(),tail:Promise.resolve(),version:0};states.set(accountId,state);}
   return state;
 }
 function persistPending(accountId:string,state:SyncState){
-  try{localStorage.setItem(syncKey(accountId),JSON.stringify(Object.fromEntries([...state.pending].map(([id,item])=>[id,item.value]))));}catch{throw Error('完成状态同步记录未保存，请稍后重试。');}
+  try{accountStorage(accountId).setItem(syncKey(accountId),JSON.stringify(Object.fromEntries([...state.pending].map(([id,item])=>[id,item.value]))));}catch{throw Error('完成状态同步记录未保存，请稍后重试。');}
 }
 function completionsFrom(result:CompletionResponse){
   if(!result.completions||typeof result.completions!=='object'||Array.isArray(result.completions))throw Error('任务完成状态暂时无法同步。');
@@ -44,15 +46,15 @@ async function flush(accountId:string,state:SyncState,remote?:Record<string,true
   if(!remote)return;
   const pending=Object.fromEntries([...state.pending].map(([id,item])=>[id,item.value]));
   mergeTaskCompletions(accountId,remote,[...state.allowed],pending);
-  const migrated=storedFlags(migratedKey(accountId));for(const id of state.allowed)migrated[id]=true;
-  try{localStorage.setItem(migratedKey(accountId),JSON.stringify(migrated));}catch{throw Error('完成状态已同步，本机同步记录暂时未保存。');}
+  const migrated=storedFlags(migratedKey(accountId),accountId);for(const id of state.allowed)migrated[id]=true;
+  try{accountStorage(accountId).setItem(migratedKey(accountId),JSON.stringify(migrated));}catch{throw Error('完成状态已同步，本机同步记录暂时未保存。');}
 }
 /** Legacy local completions are migrated once per real task, without erasing history. */
 export function refreshTaskCompletions(accountId:string,taskIds:readonly string[]){
   if(!accountId||typeof window==='undefined')return Promise.resolve();
   const state=stateFor(accountId);state.allowed=new Set(taskIds);
   return serialize(state,async()=>{
-    const remote=await request(accountId),migrated=storedFlags(migratedKey(accountId)),local=readTaskCompletions(accountId);
+    const remote=await request(accountId),migrated=storedFlags(migratedKey(accountId),accountId),local=readTaskCompletions(accountId);
     for(const id of taskIds)if(local[id]&&!migrated[id]&&!state.pending.has(id))state.pending.set(id,{value:true,version:++state.version});
     persistPending(accountId,state);await flush(accountId,state,remote);
   });

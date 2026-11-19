@@ -12,7 +12,7 @@
 .zy-contact-create-option { position:relative; display:flex; align-items:center; gap:12px; min-width:0; height:54px; padding:6px 10px; border-radius:6px; cursor:pointer; box-sizing:border-box; }
 .zy-contact-create-option:hover { background:var(--zy-incoming,#e9e9e7); }
 .zy-contact-create-option.is-fixed { cursor:default; }
-.zy-contact-create-option:has(input:focus-visible) { outline:2px solid #ee827d; outline-offset:-2px; }
+.zy-contact-create-option:has(input:focus-visible) { outline:2px solid var(--zy-glass-focus); outline-offset:-2px; }
 .zy-contact-create-option>input { position:absolute; width:1px; height:1px; opacity:0; }
 .zy-contact-create-check { display:flex; align-items:center; justify-content:center; flex-shrink:0; box-sizing:border-box; width:20px; height:20px; border:1px solid var(--zy-muted,#a3a5a0); border-radius:50%; color:white; }
 .zy-contact-create-option.is-selected .zy-contact-create-check { border-color:#ed7b7b; background:linear-gradient(110deg,#ff946f,#ed628e); }
@@ -46,7 +46,7 @@
 .zy-contact-create-submit:hover:not(:disabled) { filter:brightness(.96); }
 .zy-contact-create-submit:disabled { color:var(--zy-muted,#979992); background:var(--zy-incoming,#efefec); cursor:default; }
 .zy-contact-create-cancel:disabled,.zy-contact-create-remove:disabled { opacity:.5; cursor:default; }
-.zy-contact-create button:focus-visible { outline:2px solid #ee827d; outline-offset:3px; }
+.zy-contact-create button:focus-visible { outline:2px solid var(--zy-glass-focus); outline-offset:3px; }
 @media(max-width:620px) {
   .zy-dialog.zy-contact-create { width:calc(100vw - 28px); max-width:calc(100vw - 28px); }
   .zy-contact-create-contacts { padding:18px 7px 14px; }

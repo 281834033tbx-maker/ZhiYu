@@ -1,16 +1,47 @@
 'use client';
 
-import {useEffect,useRef,useState} from 'react';
+import {useContext,useEffect,useRef,useState} from 'react';
+import {createPortal} from 'react-dom';
 import {Send,Smile,X} from 'lucide-react';
 import catalog from './emoji-data/catalog.json';
 import './moment-comment-controls.css';
+import {MobileComposerContext} from './mobile-composer-context';
+import MobileComposer from './mobile-composer';
+import type {ComposePayload} from './chat-composer';
 
 const limit=1000;
 
-export default function MomentCommentEditor({value,onChange,onSubmit,onCancel,replyName,onCancelReply,disabled=false}: {
+type MomentCommentEditorProps={
   value:string;onChange:(value:string)=>void;onSubmit:()=>Promise<void>|void;onCancel:()=>void;
   replyName?:string;onCancelReply:()=>void;disabled?:boolean;
-}) {
+  onSendPayload?:(payload:ComposePayload)=>Promise<void|boolean>|void|boolean;
+};
+
+export default function MomentCommentEditor(props:MomentCommentEditorProps) {
+  const mobile=useContext(MobileComposerContext);
+  return mobile?<MobileMomentCommentEditor {...props}/>:<DesktopMomentCommentEditor {...props}/>;
+}
+
+function MobileMomentCommentEditor({value,onChange,onSubmit,onSendPayload,onCancel,replyName,onCancelReply,disabled=false}:MomentCommentEditorProps) {
+  const input=useRef<HTMLTextAreaElement>(null);
+  useEffect(()=>{
+    const previous=document.activeElement instanceof HTMLElement?document.activeElement:null;
+    const frame=requestAnimationFrame(()=>input.current?.focus());
+    return()=>{cancelAnimationFrame(frame);if(previous?.isConnected)previous.focus({preventScroll:true});};
+  },[]);
+  if(typeof document==='undefined')return null;
+  const main=document.querySelector('main.zy-mobile');if(!main)return null;
+  return createPortal(<div className="zy-mobile-comment-compose" aria-label="评论输入">
+    <MobileComposer value={value} onChange={text=>onChange(text.slice(0,limit))} textareaRef={input} placeholder={replyName?'回复 '+replyName:'发表评论'} label="评论"
+      allowImages={!!onSendPayload} allowVoice={!!onSendPayload} disabled={disabled}
+      onSend={async payload=>{if(disabled)return false;if(onSendPayload)return onSendPayload(payload);if(!payload.text.trim())return false;await onSubmit();}}
+      onSendComplete={onCancel}
+      onEditorKeyDown={event=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();onCancel();}}}
+      aboveInput={<div className="zy-mobile-comment-reply"><span>{replyName?'回复 '+replyName:'发表评论'}</span>{replyName&&<button type="button" aria-label="取消回复" disabled={disabled} onClick={onCancelReply}><X size={16}/></button>}<button type="button" aria-label="关闭评论" disabled={disabled} onClick={onCancel}><X size={18}/></button></div>}/>
+  </div>,main);
+}
+
+function DesktopMomentCommentEditor({value,onChange,onSubmit,onCancel,replyName,onCancelReply,disabled=false}:MomentCommentEditorProps) {
   const input=useRef<HTMLTextAreaElement>(null),working=useRef(false);
   const [emojiOpen,setEmojiOpen]=useState(false);
   useEffect(()=>{input.current?.focus();},[]);

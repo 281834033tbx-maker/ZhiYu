@@ -1,3 +1,7 @@
+import {openPrivateDialogue, commitPrivateDialogueInput, privateDialoguePrompt} from './private-dialogue-experience';
+import {commitPrivateArrangement} from './arrangement-dialogue';
+import {arrangementsFor} from './arrangements-plugin';
+import {initBetaUsage,persistBetaPrivateMessage} from './beta-usage-events';
 import {statusFromState} from '../../lib/npc/character-status';
 import {isReportDemoMessage} from '../../lib/npc/report-demo-history';
 import {ChoiceReplyError, prepareChoiceReply} from './choice-reply';
@@ -13,6 +17,7 @@ import {
   createMolly,
   parseMolly,
   applyMolly,
+  mollyComfortOutput,
   type MollyState,
 } from '../../lib/npc/molly';
 import { codexAvailable, generate, mollySkillVersion } from './codex';
@@ -33,6 +38,7 @@ export function mollyLocal(deps?: {
       const now = deps?.now || Date.now;
       mkdirSync(join(root, '.npc-runtime'), { recursive: true });
       const db = new DatabaseSync(join(root, '.npc-runtime/state.sqlite'));
+      initBetaUsage(db);
       db.exec(
         'PRAGMA journal_mode=WAL; CREATE TABLE IF NOT EXISTS molly_sessions (id TEXT PRIMARY KEY, data TEXT NOT NULL)',
       );
@@ -92,9 +98,9 @@ export function mollyLocal(deps?: {
         try {
           const secretary=deps?.secretary||secretaryFor(root),owner=id.split(':')[0];
           const out = parseMolly(
-            await (deps?.generate || generate)(
+            mollyComfortOutput(incoming) || await (deps?.generate || generate)(
               root,
-              mollyPrompt(root, s, incoming,secretary?.context(owner)),
+              privateDialoguePrompt(db,root,id.split(':')[0],'molly-system-secretary',mollyPrompt(root, s, incoming,secretary?.context(owner)),incoming,false,now),
               { requestId: job, protocol: 'molly', images: imageInputs(root,id.split(':')[0],s.messages.slice(-80)) },
             ),
             incoming,
@@ -129,7 +135,7 @@ export function mollyLocal(deps?: {
           scheduleDelivery(fresh.messages,before,s.pending!.since,now(),{characterId:'molly'});
           fresh.queue = fresh.queue.filter((q) => !ids.includes(q));
           fresh.error = '';
-          save(id, fresh);
+          commitPrivateArrangement({db,store:arrangementsFor(root),owner:id.split(':')[0],characterId:'molly-system-secretary',state:fresh,before:before,incoming,turnId:job,now:now(),startedAt:s.pending!.since},()=>save(id,fresh));
         } catch {
           if (!closed) {
             const fresh = load(id);
@@ -184,7 +190,7 @@ export function mollyLocal(deps?: {
             );
           }
           const id = `${user}:molly-system-secretary`;
-          if (req.method === 'GET') return reply(200, expose(load(id)));
+          if (req.method === 'GET') {openPrivateDialogue(db,root,user,'molly-system-secretary',now); return reply(200, expose(load(id)));}
           if (req.method !== 'POST')
             return reply(405, { error: '不支持的方法' });
           let text = '';
@@ -272,7 +278,7 @@ export function mollyLocal(deps?: {
             s.queue.push(body.turnId);
             s.error = '';
             s.retryAt = 0;
-            save(id, s);
+            persistBetaPrivateMessage(db,{ownerId:user,npcId:'molly',turnId:body.turnId,messages:privateHistoryMessages(s),at:now()},()=>commitPrivateDialogueInput(db,root,user,'molly-system-secretary',s,partInput(mediaPart!),()=>save(id,s),now));
           }
           reply(200, expose(s));
           void run(id);

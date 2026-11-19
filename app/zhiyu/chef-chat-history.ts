@@ -1,3 +1,5 @@
+
+import {accountStorage} from './account-storage';
 import type { Message } from './data';
 import { localCharacterChatKey } from './local-character-chat';
 import { npcFetch } from './npc-fetch';
@@ -8,13 +10,13 @@ const pending = new Map<string, Promise<void>>();
 /** Capture both stores before App hydration can replace an archive with a local preview. */
 export function captureChefChatHistorySources(accountId: string): void {
   const key = `zhiyu-chef-pre-ai-sources:v1:${accountId}`;
-  if (localStorage.getItem(key) !== null) return;
-  const archive = localStorage.getItem(`zhiyu-stitch-desktop-v2:${accountId}`);
+  if (accountStorage(accountId).getItem(key) !== null) return;
+  const archive = accountStorage(accountId).getItem(`zhiyu-stitch-desktop-v2:${accountId}`);
   const saved = archive ? JSON.parse(archive) : null;
-  localStorage.setItem(key, JSON.stringify({
-    local: localStorage.getItem(localCharacterChatKey(accountId, 'zhou-chef')),
+  accountStorage(accountId).setItem(key, JSON.stringify({
+    local: accountStorage(accountId).getItem(localCharacterChatKey(accountId, 'zhou-chef')),
     archive: JSON.stringify(saved?.messages?.['zhou-chef'] || []),
-    backup: localStorage.getItem(`zhiyu-chef-pre-ai-history:v1:${accountId}`),
+    backup: accountStorage(accountId).getItem(`zhiyu-chef-pre-ai-history:v1:${accountId}`),
   }));
 }
 
@@ -27,14 +29,14 @@ function records(value: unknown): Message[] {
 /** Archive old local messages once per snapshot; never clear their original keys. */
 export async function ensureChefChatHistory(accountId: string): Promise<void> {
   captureChefChatHistorySources(accountId);
-  const local = localStorage.getItem(localCharacterChatKey(accountId, 'zhou-chef'));
-  const archive = localStorage.getItem(`zhiyu-stitch-desktop-v2:${accountId}`);
+  const local = accountStorage(accountId).getItem(localCharacterChatKey(accountId, 'zhou-chef'));
+  const archive = accountStorage(accountId).getItem(`zhiyu-stitch-desktop-v2:${accountId}`);
   const backupKey = `zhiyu-chef-pre-ai-history:v1:${accountId}`;
-  const backup = localStorage.getItem(backupKey);
+  const backup = accountStorage(accountId).getItem(backupKey);
   let old: Message[];
   try {
     const saved = archive ? JSON.parse(archive) : null;
-    const sources = JSON.parse(localStorage.getItem(`zhiyu-chef-pre-ai-sources:v1:${accountId}`) || '{}');
+    const sources = JSON.parse(accountStorage(accountId).getItem(`zhiyu-chef-pre-ai-sources:v1:${accountId}`) || '{}');
     const merged = new Map<string, Message>();
     const snapshots = [sources.backup, sources.archive, sources.local].flatMap(value => records(value ? JSON.parse(value) : []));
     for (const item of [...snapshots, ...records(backup ? JSON.parse(backup) : []), ...records(saved?.messages?.['zhou-chef'] || []), ...records(local ? JSON.parse(local) : [])]) {
@@ -59,7 +61,7 @@ export async function ensureChefChatHistory(accountId: string): Promise<void> {
   }
   // An optional second local copy must not block the migration when storage is full.
   // The source keys remain intact; the API persists all bytes before live previews replace the archive.
-  if (!backup && old.length) { try { localStorage.setItem(backupKey, JSON.stringify(old)); } catch { /* Preserve existing source keys. */ } }
+  if (!backup && old.length) { try { accountStorage(accountId).setItem(backupKey, JSON.stringify(old)); } catch { /* Preserve existing source keys. */ } }
   // Only legacy records affect the signature. The App's live preview changes on every poll.
   const signature = JSON.stringify(old);
   if (completed.get(accountId) === signature) return;
