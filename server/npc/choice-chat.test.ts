@@ -45,10 +45,10 @@ function promptMessage(part: ChatMessage['part'] = structuredClone(question)): C
   return {id: randomUUID(), turnId: randomUUID(), role: 'assistant', at: new Date(now - 1000).toISOString(), part};
 }
 
-void test('六个普通角色解析选择气泡、混合消息及旧文字，模型不能预选或偷塞操作', () => {
-  const parsers = [parseOutput, parseYuan, parseLiu, parseChen, parseHe, parseChef];
+void test('专业角色仍能读取历史选择气泡；陪伴型拒绝新的选择输出', () => {
   const messages = [{type: 'text', text: '行，挑一个'}, question, {type: 'emoji', text: '👌'}];
-  for (const parse of parsers) {
+  const professional: Array<(value: unknown, incoming: string, id?: string) => {parts: unknown[]}> = [parseLiu, parseChen, parseChef];
+  for (const parse of professional) {
     assert.deepEqual(parse(raw(messages), '我想练胸').parts, messages);
     assert.deepEqual(parse(raw([{type: 'text', text: '旧消息'}]), '你好').parts, [{type: 'text', text: '旧消息'}]);
     for (const invalid of [
@@ -57,6 +57,10 @@ void test('六个普通角色解析选择气泡、混合消息及旧文字，模
       {...question, options: ['长'.repeat(81), '正常']}, {...question, text: '长'.repeat(161)},
       {...question, selection: {index: 1}}, {...question, selected: 1}, {...question, action: 'task_create'},
     ]) assert.throws(() => parse(raw([invalid]), '你好'), /选择消息格式无效/);
+  }
+  assert.deepEqual(parseOutput(raw(messages), '我想练胸', 'chen-nian').parts, messages);
+  for (const parse of [parseYuan, parseHe, (value: unknown, incoming: string) => parseOutput(value, incoming)]) {
+    assert.throws(() => parse(raw([question]), '你好'), /陪伴人物不能发送任务或选择类对话/);
   }
   assert.equal(choicePlainText(question), '想练成哪种？\n1. 肌肉更饱满\n2. 线条更清晰\n3. 先保持习惯');
 });
@@ -132,26 +136,32 @@ void test('七个私聊人物实际generate链路采用同一选择协议；choi
   try {
     for (const role of roles) {
       let generation = 0, review = 0;
+      const companion = ['xia-xia', 'yuan-xiaoman', 'he-jiawei'].includes(role.id);
       const result = await generate(root, role.prompt(), {requestId: randomUUID(), runRaw: async (_root, prompt) => {
         if (prompt.startsWith('你是NPC聊天案例检索器')) return {ids: [], fitnessEntryIds: [], recipeIds: [], westernDessertRecipeIds: [], chefPlan};
+        if (prompt.startsWith('你是人物知识范围判定器')) return {decision: 'not_knowledge', basis: '闲聊'};
         if (prompt.startsWith('你是NPC私聊成品编辑')) {
-          review++; assert.match(prompt, /当前可点击选择聊天协议/); assert.ok(prompt.includes(JSON.stringify(question)));
-          return {verdict: 'keep', edits: [], chefCheck: {verdict: 'pass', issues: []}};
+          review++;
+          if (companion) assert.ok(!prompt.includes('【选择对话已关闭】'));
+          else {assert.match(prompt, /选择对话已关闭/); assert.ok(prompt.includes(JSON.stringify(question)));}
+          return {verdict: 'keep', edits: [], chefCheck: {verdict: 'pass', issues: []}, companionOutputCheck: {verdict: 'pass', issues: []}, chenSourceCheck: {verdict: 'pass', issues: []}, liuClinicalCheck: {verdict: 'pass', issues: []}};
         }
-        generation++; assert.match(prompt, /当前可点击选择聊天协议/); return raw([question]);
+        generation++;
+        if (companion) {assert.ok(!prompt.includes('【选择对话已关闭】')); return raw([{type: 'text', text: '想练成哪种？'}]);}
+        assert.match(prompt, /选择对话已关闭/); return raw([question]);
       }});
-      assert.deepEqual(role.parse(result, incoming).parts, [question], `${role.id} preserves the choice`);
+      assert.deepEqual(role.parse(result, incoming).parts, [companion ? {type: 'text', text: '想练成哪种？'} : question], `${role.id} ${companion ? 'answers in prose' : 'can still read a stored choice'}`);
       assert.equal(generation, 1); assert.equal(review, 1, `${role.id} cannot skip review of choice-only content`);
     }
     let review = 0;
     const result = await generate(root, mollyPrompt(root, createMolly(), '找个有趣的人'), {protocol: 'molly', requestId: randomUUID(), runRaw: async (_root, prompt) => {
       if (prompt.startsWith('你是NPC聊天案例检索器')) return {ids: []};
       if (prompt.startsWith('你是人物知识范围判定器')) return {decision: 'not_knowledge', basis: '找人'};
-      if (prompt.startsWith('你是Molly专属成品复核器')) {
-        review++; assert.match(prompt, /当前可点击选择聊天协议/); assert.ok(prompt.includes(JSON.stringify(question)));
+      if (prompt.startsWith('你是Molly成品复核器') || prompt.startsWith('你是Molly专属成品复核器')) {
+        review++; assert.match(prompt, /选择对话已关闭/); assert.ok(!prompt.includes('想聊哪种'));
         return {verdict: 'keep', edits: []};
       }
-      assert.match(prompt, /当前可点击选择聊天协议/);
+      assert.match(prompt, /选择对话已关闭/);
       return {intent: 'clarify', messages: [question], query: null, address: null};
     }});
     assert.deepEqual(parseMolly(result, '找个有趣的人').messages, [question]); assert.equal(review, 1);
@@ -193,6 +203,11 @@ for (const config of plugins) void test(`${config.id}真实middleware选择持�
   });
   try {
     const input = {action: 'send', turnId: randomUUID(), choice: {messageId: target.id, index: 0}};
+    if (['xia-xia', 'yuan-xiaoman', 'he-jiawei'].includes(config.id)) {
+      assert.equal((await request(input)).status, 403, '陪伴型不接受选择式回复');
+      assert.equal(read().messages.at(-1).role, 'assistant');
+      return;
+    }
     assert.equal((await request({...input, choice: {...input.choice, index: 50}})).status, 400);
     assert.equal((await request({...input, text: '另一个文本'})).status, 400);
     assert.equal((await request(input, randomUUID())).status, 400, 'another account cannot select this question');

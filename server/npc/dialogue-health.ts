@@ -47,7 +47,7 @@ export function dialogueHealth(): Plugin {
               characterId:id, backendConnected:connected.has(id),
               skillVersion:loaded.metadata.skillVersion, rulesHash:loaded.metadata.rulesHash,
               dialogueMode:loaded.profile.mode,traits:loaded.profile.traits,
-              outputPolicy:{companionNaturalDialogueOnly:!allowsCharacterChoice(id),choiceMessages:allowsCharacterChoice(id)},
+              outputPolicy:{companionNaturalDialogueOnly:!allowsCharacterChoice(id),choiceMessages:false},
               momentRulesHash:createHash('sha256').update(loadMomentRules(root,id)).digest('hex'),
               momentInteractionRulesHash:createHash('sha256').update(loadMomentRules(root,id,'interaction')).digest('hex'),
               sources:loaded.metadata.sources.map(({path,sha256,selectedHash}) => ({path,sha256,selectedHash})),

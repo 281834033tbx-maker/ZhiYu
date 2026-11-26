@@ -65,7 +65,7 @@ try {
       characterId: id, runRaw: async (_root, prompt) => {
         if (prompt.startsWith('你是NPC聊天案例检索器')) return {ids: []};
         if (prompt.startsWith('你是人物知识范围判定器')) {classified++;return {decision: unknown?'unknown':'not_knowledge', basis:'合成知识判定', unknownReplyId:'direct'};}
-        assert.ok(!prompt.includes('【当前可点击选择聊天协议】'), 'companions must not be taught choice protocol');
+        assert.ok(!prompt.includes('【选择对话已关闭】'), 'companions must not be taught the retired choice protocol');
         assert.ok(prompt.includes('陪伴人物对话输出硬边界'));
         if (prompt.startsWith('你是NPC私聊成品编辑')) {
           reviews++;
@@ -103,7 +103,7 @@ try {
         if (prompt.startsWith('你是NPC聊天案例检索器')) return {ids:[],recipeIds:[],westernDessertRecipeIds:[],fitnessEntryIds:[],coachKnowledgeIds:[],
           chefPlan:{taskMode:'not_cooking',knownFacts:[],conditions:[],answerMode:'not_cooking',routeBasis:'合成闲聊',qualityBasis:'合成闲聊',kitchenVerified:false}};
         if (prompt.startsWith('你是人物知识范围判定器')) throw Error('professional must not enter companion gate');
-        assert.ok(prompt.includes('【当前可点击选择聊天协议】'));
+        assert.ok(prompt.includes('【选择对话已关闭】'));
         if (prompt.startsWith('你是NPC私聊成品编辑')) return {verdict:'keep',edits:[],chenSourceCheck:{verdict:'pass',issues:[]},chefCheck:{verdict:'pass',issues:[]}};
         return reply(choice);
       },
@@ -113,7 +113,7 @@ try {
   const mollyOut = await generate(runtime.root,'你是智域系统机神Molly，只处理文字和找人。', {protocol:'molly',runRaw:async(_root,prompt)=>{
     if(prompt.startsWith('你是人物知识范围判定器'))return {decision:'not_knowledge',basis:'秘书职责'};
     if(prompt.startsWith('你是NPC聊天案例检索器'))return {ids:[]};
-    if(prompt.startsWith('你是Molly专属成品复核器'))return {verdict:'keep',edits:[]};
+    if(prompt.startsWith('你是Molly成品复核器')||prompt.startsWith('你是Molly专属成品复核器'))return {verdict:'keep',edits:[]};
     return {intent:'chat',messages:[choice],address:null,query:null};
   }});assert.equal(mollyOut.messages[0].type,'choice');
 

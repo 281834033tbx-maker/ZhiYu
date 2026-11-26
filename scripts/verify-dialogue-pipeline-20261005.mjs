@@ -111,8 +111,8 @@ try {
       if (input.startsWith('你是NPC私聊成品编辑')) return { verdict: 'keep', edits: [] };
       if (role.id === 'chen-nian') {
         assert.match(input, /【陈年实际语音能力】/);
-        assert.match(input, /普通回复仅文字、emoji或choice，不输出generate_photo/);
-        assert.match(input, /【当前可点击选择聊天协议】/);
+        assert.match(input, /普通回复仅文字或emoji，不要输出choice，不输出generate_photo/);
+        assert.match(input, /【选择对话已关闭】/);
         assert.ok(!input.includes('【全角色实际发图能力】'), 'Chen must not receive unsupported shared media permissions');
         assert.ok(!input.includes('【语音能力】'), 'Chen must not receive the generic voice protocol');
       }

@@ -3,7 +3,7 @@ import {modelHistoryMessages} from '../../lib/npc/report-demo-history';
 import {choiceChatProtocol} from '../../lib/npc/choice-chat';
 import { replyContext } from './reply-context';
 import { deliveredMessages } from '../../lib/npc/delivery';
-import { mollyCatalog, mollyCompanionChoice, mollyNameCorrection, type MollyState } from '../../lib/npc/molly';
+import { mollyCatalog, mollyNameCorrection, type MollyState } from '../../lib/npc/molly';
 import { publicCharacterDirectoryVersion } from '../../lib/npc/character-directory';
 
 /** Server-owned summaries only. Never include another character's entire private chat. */
@@ -29,7 +29,7 @@ ${reportDemoContext(state.messages)}
 【职责与动作选择】
 1. 用户问今天/全部任务：intent=operation，提出tasks，taskScope=today/all。文字短摘要以程序提供数据为准，后端附真正任务入口；查询不新建任务，不重复整套卡片。
 2. 用户明确要做饭/某道菜、安排训练/饮食，或希望某NPC承接具体问题：intent=operation并提出handoff，把当前原始目标和必要已知条件交给真正负责者。Molly不代做专业问卷，不问要不要推荐，也不只说谁合适却不交接。接收者会在自己私聊接着说，用户无需重述。Molly如让赵一帆来、让柳智敏来、OK即可，已交接不再发名片、不用长确认解释流程。若只是问谁是厨师/找谁/看名片且无待承接问题，可search给真实卡；用户明确仅要推荐或禁止交接时尊重。
-3. 泛泛说想找人聊天/无聊且没有姓名、性格、性别或随机等偏好：intent=clarify，仅发这一条choice ${JSON.stringify(mollyCompanionChoice())}。当前只有三位，不加第四项，不说挑一个。明确名字或性格可直接search给对应名片；用户选定后可handoff companionship让本人接话。用户明确随机/随便则直接选符合条件的一位，不再给选择题。
+3. 泛泛说想找人聊天/无聊且没有姓名、性格、性别或随机等偏好：直接选目录里符合条件的一位，search给真实名片，不要输出choice、选项按钮、A/B或编号菜单，也不要说挑一个。明确名字或性格可直接search给对应名片；需要本人接话时再handoff companionship。用户明确随机/随便同样直接选一位。
 4. 真正要拉群或明确要求多专业共同安排：operation/create-group，memberIds为真实普通NPC id，Molly由程序自动加入，goal带当前目标。不要把单项做饭求助擅自变成建群。只邀请相关人物，不按名字字符串编成员。
 5. 安排下周饮食交柳智敏；Molly有旧计划仅回OK，无旧计划回让柳智敏来。未明确照旧：mode=confirm-plan，让柳智敏先问是否继续上周方案、上周有无不喜欢吃的可换；用户只是说安排下周不等于同意复制。明确按原计划/照旧：mode=continue-plan，后台验证可用旧计划后续排；没旧计划mode=new，柳智敏只补问未知必要条件。只预约本次所说时间范围，不开启永久每周续排。
 6. 每日简报按用户已保存的每日时间，周报按已保存的星期和时间，由程序定时发送并统一使用既有简报/周报卡片模板；开关、时间修改必须以设置保存结果为准，不由口头回复假装更改。以北京时间为准，智域本机服务运行时到点发送；退出或休眠期间无法保证送达，重新运行后由程序检查当期未送达项且不重复，月报本期不做。报告只使用本账号可核任务、完成记录和已核测量，缺失数据不补造；没有天气/限行来源时省略。旧演示卡仍只供展示，不能当成本用户的体重、费用、家人、日程或实际行为；报告的统计/计划也不代表用户真的已执行，不据此新增事实记忆或专业任务。任务和步骤计时原能力保留。
