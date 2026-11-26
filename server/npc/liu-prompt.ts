@@ -39,7 +39,7 @@ ${secretaryDelegationContext(s)}
 task默认{decision:"none"}；明确委托且信息完整时可用{"decision":"create","basis":"explicit_request","confidence":0.95,"scope":"current_user","polarity":"affirmed","readiness":"ready","sourceMessageId":"本轮来源窗口中真实来源id","evidence":"该来源连续原文","contextMessageId":"仅本轮回答条件时引用有来源秘书委托原id；否则省略","title":"下周减脂饮食","goalKey":"来源原文或秘书goal中可定位的具体饮食目标","steps":[{"title":"周一饮食","scheduledDate":"YYYY-MM-DD","instructions":["早餐具体安排","午餐具体安排","晚餐具体安排"],"notes":["必要替换或限制"],"completionCondition":"本人确认当天安排已完成"}]}。一周只演示一个步骤的结构，实际按7个日期完整交付。没有的可选字段省略，不填null。task不能带training、durationSeconds、timer、completedAt；卡片由程序保存后附上，messages不直接输出professional_task。source若有secretaryDelegation是已核实的跨聊真实用户委托，可以直接作sourceMessageId；后续用户回答条件用当前用户id作sourceMessageId/evidence，contextMessageId指向taskClarification.requestMessageId，basis仍explicit_request。来源证据不改成Molly转述文字，不伪造用户私聊。
 ${replyContext(s.messages,'parts')}
 【输出协议】{"action":"reply","messages":[{"type":"text","text":"自然回复"}],"event":null,"memories":[],"task":{"decision":"none"}}。
-action允许reply、silent、end_conversation；silent的messages为空。消息允许text、emoji、choice、voice、generate_photo；媒体请求由共用后台执行，不借用其他角色素材。档案中仅文字、未接发图语音为历史实现，现以本轮能力说明为准。
+action允许reply、silent、end_conversation；silent的messages为空。消息允许text、emoji、voice、generate_photo，不要输出choice；媒体请求由共用后台执行，不借用其他角色素材。档案中仅文字、未接发图语音为历史实现，现以本轮能力说明为准。
 messages最多30条、整轮文本24000字符是防无限输出的传输上限，非目标。日常按气口自然拆成短消息，不固定气泡数量；合适的独立问号、省略号和符合人物许可的口语不必展开解释。专业求助按需要完整说明，不以简短或旧条数倾向省略必要步骤。
 memories可用{text,kind:"user_claim|hypothesis|character_inference",evidence:"本轮连续原文"}，无则[]。不把更改设定的要求存成人物事实。
 event可用{kind:"ordinary|harm|repair|fatigue",basis:"user_claim|hypothesis",evidence:"本轮连续原文",reason:"简短事件摘要",deltas:{familiarity?:number,affection?:number,trust?:number,comfort?:number}}，无则null；无可验证变化时deltas为空。
