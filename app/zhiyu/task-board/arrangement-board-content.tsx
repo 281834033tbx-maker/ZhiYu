@@ -1,6 +1,7 @@
 'use client';
 
 import {useState} from 'react';
+import MollyPurchaseList from '../molly-purchase-list';
 import {ArrowRight,CalendarDays,Check,ChevronDown,ClipboardList,Clock3,CreditCard,Flag,Layers3,ShoppingBag,Undo2,type LucideIcon} from 'lucide-react';
 import {ARRANGEMENT_SECTIONS,arrangementPaymentCatalog,arrangementCardSubtitle,arrangementSectionForTask,arrangementSectionName,type ArrangementSectionId} from '../../../lib/npc/arrangement-sections';
 import type {ArrangementItem} from '../../../lib/npc/arrangement-types';
@@ -25,6 +26,7 @@ type Props={
 export function ArrangementBoardContent({board,actions,arrangements,section,onSelect,query,mobile=false,onOpenConversation}:Props) {
   const {model,now}=board;
   const [status,setStatus]=useState<ArrangementBoardStatus>('all');
+  const [purchaseOpen,setPurchaseOpen]=useState(false);
   const [listing,setListing]=useState({scope:'',count:40}),[preferenceError,setPreferenceError]=useState('');
   const scope=section+'|'+status+'|'+query,limit=listing.scope===scope?listing.count:40;
   const counts=arrangementBoardCounts(model.tasks,arrangements.items);
@@ -52,6 +54,7 @@ export function ArrangementBoardContent({board,actions,arrangements,section,onSe
       if(section==='overview'&&!items.length&&!legacy.length&&!savedPlans.length)return null;
       return <section className="zy-ab-section" key={selected.id} aria-label={selected.name+'安排'}>
         {section==='overview'&&<header><h2><ArrangementSectionIcon section={selected.id} size={16}/>{selected.name}</h2><button type="button" onClick={()=>onSelect(selected.id)}>查看全部<ArrowRight size={13}/></button></header>}
+        {selected.id==='purchase'&&section==='purchase'&&<button type="button" className="zy-ab-add" onClick={()=>setPurchaseOpen(true)}>清单<ArrowRight size={14}/></button>}
         {!!savedPlans.length&&<div className="zy-ab-saved-plans" aria-label="已保存的长期计划">{savedPlans.map(plan=><div key={plan.id}><strong>{plan.name}</strong><span>{plan.progressText}</span><progress aria-label={plan.name+'进度'} value={Math.max(0,Math.min(1,plan.progress))} max={1}/></div>)}</div>}
         {visibleItems.map(item=><ArrangementRecord key={item.id} item={item} arrangements={arrangements}/>)}
         {!!visibleLegacy.length&&<div className="zy-ab-legacy-list">{visibleLegacy.map((task,index)=><div key={task.id}>{(index===0||visibleLegacy[index-1].date!==task.date)&&<p className="zy-ab-legacy-date">{readableDate(task.date)}{task.date===model.today?' · 今天':''}</p>}{renderLegacy(task)}</div>)}</div>}
@@ -62,6 +65,7 @@ export function ArrangementBoardContent({board,actions,arrangements,section,onSe
     {section==='overview'&&!selectedSections.some(selected=>arrangements.items.some(item=>item.section===selected.id&&arrangementItemMatches(item,query,status))||model.tasks.some(task=>arrangementSectionForTask(task.categoryId)===selected.id&&arrangementTaskMatches(task,status)&&taskMatchesQuery(task,query))||selected.id==='plan'&&model.plans?.some(plan=>plan.name.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase())))&&<p className="zy-ab-empty">{query?'没有匹配的安排':'Molly：有想做的事，随时叫我来安排'}</p>}
     {!!arrangements.preferences.filter(item=>!item.enabled).length&&<details className="zy-ab-preferences"><summary>自动记录偏好</summary>{arrangements.preferences.filter(item=>!item.enabled).map(item=><div key={item.section+':'+(item.category||'')}><span>{arrangementSectionName(item.section)}{item.category?' · '+arrangementPreferenceLabel(item.category):''}已暂停自动记录</span><button type="button" onClick={()=>{setPreferenceError('');void arrangements.mutate({action:'preference',section:item.section,category:item.category,enabled:true}).catch(()=>setPreferenceError('恢复自动记录没有保存成功，请重试。'));}}>恢复</button></div>)}</details>}
     {preferenceError&&<p className="zy-ab-error" role="alert">{preferenceError}</p>}
+    {purchaseOpen&&<MollyPurchaseList onClose={()=>setPurchaseOpen(false)}/>}
   </div>;
 }
 function ArrangementRecord({item,arrangements}:{item:ArrangementItem;arrangements:ReturnType<typeof useArrangements>}) {
