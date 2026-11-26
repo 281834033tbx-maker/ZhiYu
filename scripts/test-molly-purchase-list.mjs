@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import vm from 'node:vm';
+import ts from 'typescript';
+
+const context=vm.createContext({});
+const js=ts.transpileModule(readFileSync('app/zhiyu/molly-purchase-model.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
+const sandbox={exports:{}};
+vm.runInContext(`(function(module,exports){\n${js}\n})`,context)(sandbox,sandbox.exports);
+const {mollyPurchaseGroups,mollyPurchasePlainText,purchaseGroupComplete,purchaseCheckKey}=sandbox.exports;
+const item=(patch)=>({id:'a',section:'purchase',title:'周末买菜',time:{valid:true,date:'2026-11-28',deadline:null,time:null,display:'周六'},sourceText:'买土豆、鸡蛋',sourceId:'s',sourceNpcId:'molly',createdAt:1,updatedAt:1,status:'active',details:{items:['土豆',' 鸡蛋 ']},preferenceKey:'grocery',...patch});
+const groups=mollyPurchaseGroups([item({}),item({id:'b',section:'todo',title:'开会',details:{}}),item({id:'c',status:'completed',title:'已买',details:{items:['牛奶']}}),item({id:'d',title:'抽纸',details:{items:[]},sourceText:''})]);
+assert.equal(JSON.stringify(groups.map(group=>group.id)),JSON.stringify(['a','d']));
+assert.equal(JSON.stringify(groups[0].lines),JSON.stringify(['土豆','鸡蛋']));
+assert.equal(JSON.stringify(groups[1].lines),JSON.stringify(['抽纸']));
+const checked=new Set([purchaseCheckKey('a',0)]);
+assert.equal(purchaseGroupComplete(groups[0],checked),false);
+checked.add(purchaseCheckKey('a',1));
+assert.equal(purchaseGroupComplete(groups[0],checked),true);
+assert.match(mollyPurchasePlainText(groups),/Molly 采购\n周末买菜\n· 土豆\n· 鸡蛋\n来源：买土豆、鸡蛋/);
+assert.equal(mollyPurchasePlainText([]),'Molly 采购\n还没有要买的东西');
+console.log('PASS: Molly purchase list uses saved purchase arrangements');
