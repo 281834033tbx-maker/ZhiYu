@@ -11,6 +11,7 @@
 .zy-ab-content{color:var(--zy-ink);font-size:calc(14px + var(--zy-font-adjust,0px))}
 .zy-ab-heading{margin-bottom:24px}
 .zy-ab-heading h1{line-height:1.5}
+.zy-ab-heading-actions{display:flex;align-items:center;gap:16px}
 .zy-ab-add{display:flex;align-items:center;gap:8px;padding:8px 0;border:0;background:none;color:var(--zy-interaction-ink);font:inherit;font-size:calc(13px + var(--zy-font-adjust,0px));white-space:nowrap}
 .zy-ab-overview-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 30px}
 .zy-ab-overview-grid>button{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:17px 15px;border:0;border-radius:12px;background:var(--zy-incoming);color:var(--zy-ink);text-align:left;transition:background 180ms}
